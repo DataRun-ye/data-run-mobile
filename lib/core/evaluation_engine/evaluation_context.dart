@@ -30,9 +30,9 @@ class EvaluationContext {
   /// Notifies dependent fields of updates
   void _notifyDependents(String key) {
     if (!dependencies.containsKey(key)) return;
-    for (var dependent in dependencies[key]!) {
-      print('Field $dependent needs to be recomputed due to update in $key');
-      // Recompute logic (depends on expression evaluation system)
-    }
+    // for (var dependent in dependencies[key]!) {
+    //   // print('Field $dependent needs to be recomputed due to update in $key');
+    //   // Recompute logic (depends on expression evaluation system)
+    // }
   }
 }

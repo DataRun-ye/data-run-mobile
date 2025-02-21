@@ -6,7 +6,7 @@ part of 'assignment_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filterAssignmentsHash() => r'b0d346a4f2e2fa053a2902c84c09b95dac80a91b';
+String _$filterAssignmentsHash() => r'f8cffd85ece88bfd8dd48033c1baebd7c1b752f5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -447,7 +447,7 @@ class _AssignmentSubmissionsProviderElement
   String get form => (origin as AssignmentSubmissionsProvider).form;
 }
 
-String _$filterQueryHash() => r'e9b231b7ab451bc9d6ab4286075ad15934b2773f';
+String _$filterQueryHash() => r'a68b50397ff2453e39cfae241108214737a4d6fa';
 
 /// filter query model notifier that store filtering cretirias
 ///

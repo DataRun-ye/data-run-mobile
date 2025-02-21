@@ -7,7 +7,7 @@ part of 'submission_count_provider.dart';
 // **************************************************************************
 
 String _$submissionsSyncStateCountHash() =>
-    r'aa367158d827fd3280e15bf7cc3bad42836b2c74';
+    r'f265105cb8efb71de18fd7ceee43a27d93a830bd';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -39,9 +39,11 @@ class RepeatTableSliver extends HookConsumerWidget {
         ]),
       ),
       sliver: SliverToBoxAdapter(
-        child: RepeatTable(
-          key: Key(repeatInstance.elementPath!),
-          repeatInstance: repeatInstance,
+        child: Scrollbar(
+          child: RepeatTable(
+            key: Key(repeatInstance.elementPath!),
+            repeatInstance: repeatInstance,
+          ),
         ),
       ),
     );

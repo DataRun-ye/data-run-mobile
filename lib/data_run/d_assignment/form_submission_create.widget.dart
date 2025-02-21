@@ -73,7 +73,7 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
         children: [
           Row(
             children: [
-              Icon(Icons.document_scanner, size: 30, color: Theme.of(context).primaryColor),
+              Icon(Icons.document_scanner, size: 30),
               const SizedBox(width: 8.0),
               Expanded(
                 child: Text(
@@ -93,54 +93,53 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
             ],
           ),
           const SizedBox(height: 20.0),
-          Divider(color: Colors.grey.shade300, thickness: 1.0),
+          Divider(color: Colors.grey.shade400, thickness: 1.0),
           const SizedBox(height: 10.0),
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.assignment.forms.length,
-              itemBuilder: (context, index) {
-                final form = widget.assignment.forms[index];
-                if (!ActivityInheritedWidget.of(context).assignedForms.contains(form)) {
-                  return const SizedBox.shrink();
-                }
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.assignment.forms.length,
+            itemBuilder: (context, index) {
+              final form = widget.assignment.forms[index];
+              if (!ActivityInheritedWidget.of(context).assignedForms.contains(form)) {
+                return const SizedBox.shrink();
+              }
 
-                final formTemplateAsync = ref.watch(
-                  latestFormTemplateProvider(formId: form),
-                );
+              final formTemplateAsync = ref.watch(
+                latestFormTemplateProvider(formId: form),
+              );
 
-                return AsyncValueWidget(
-                  value: formTemplateAsync,
-                  valueBuilder: (formTemplate) {
-                    return ListTile(
-                      leading: Icon(Icons.description, color: Theme.of(context).primaryColor),
-                      title: Text(
-                        getItemLocalString(formTemplate.label),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        softWrap: true,
+              return AsyncValueWidget(
+                value: formTemplateAsync,
+                valueBuilder: (formTemplate) {
+                  return ListTile(
+                    leading: Icon(Icons.description),
+                    title: Text(
+                      getItemLocalString(formTemplate.label),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      subtitle: formTemplate.description != null
-                          ? Text(
-                        formTemplate.description!,
-                        style: Theme.of(context).textTheme.bodySmall,
-                        softWrap: true,
-                      )
-                          : null,
-                      onTap: () => createAndPopupWithResult(context, formTemplate),
-                      trailing: const Icon(Icons.chevron_right),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      tileColor: Colors.grey.shade100,
-                      hoverColor: Theme.of(context).primaryColor.withOpacity(0.1),
-                    );
-                  },
-                );
-              },
-            ),
+                      softWrap: true,
+                    ),
+                    subtitle: formTemplate.description != null
+                        ? Text(
+                      formTemplate.description!,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      softWrap: true,
+                    )
+                        : null,
+                    onTap: () => createAndPopupWithResult(context, formTemplate),
+                    trailing: const Icon(Icons.chevron_right),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    // tileColor: Colors.grey.shade100,
+                    hoverColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),

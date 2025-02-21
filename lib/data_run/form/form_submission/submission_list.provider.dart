@@ -1,6 +1,5 @@
 import 'package:d2_remote/core/datarun/exception/d_error.dart';
 import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/core/datarun/utilities/date_utils.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/form/models/geometry.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
@@ -41,6 +40,8 @@ class FormSubmissions extends _$FormSubmissions {
     submission!
       // ..status = EntryStatus.COMPLETED.name
       ..isFinal = true
+      ..synced = false
+      ..dirty = true
       ..lastModifiedDate = DateHelper.nowUtc()
       ..finishedEntryTime = completedDate;
 
@@ -108,6 +109,7 @@ class FormSubmissions extends _$FormSubmissions {
   Future<DataFormSubmission> updateSubmission(
       DataFormSubmission submission) async {
     submission.dirty = true;
+    submission.synced = false;
     submission.lastModifiedDate = DateHelper.nowUtc();
 
     // if (submission.assignment != null && submission.status != null) {
@@ -142,7 +144,16 @@ class FormSubmissions extends _$FormSubmissions {
       await Future.forEach(
           syncableIds,
           (uid) =>
-              D2Remote.formSubmissionModule.formSubmission.byId(uid!).delete());
+              D2Remote.formSubmissionModule.formSubmission
+                  .byId(uid!)
+                  .delete()
+      );
+
+      ref.invalidateSelf();
+      // ref.invalidate(formSubmissionsProvider(form));
+      await future;
+
+
       ref.invalidateSelf();
 
       await future;

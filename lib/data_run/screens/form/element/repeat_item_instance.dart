@@ -12,6 +12,7 @@ class RepeatItemInstance extends Section {
       : _uid = uid;
 
   bool selected;
+
   // final String parentUid;
   String? _uid;
 

@@ -1,6 +1,7 @@
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarun/data_run/d_assignment/assignment_page.dart';
 import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
+import 'package:datarun/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datarun/data_run/screens/form/element/form_element.dart';
@@ -37,13 +38,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
         enabled: element.elementControl.enabled,
         labelText: element.label,
       ),
-      onChanged: (control) async {
-        await formInstance
-            .onChangeStatus(AssignmentStatus.getType(control.value));
-        ref.read(assignmentsProvider.notifier).updateStatus(
-            AssignmentStatus.getType(control.value),
-            formInstance.formMetadata.assignmentModel.id);
-      },
+      onChanged: (control) async {},
     );
   }
 
@@ -62,5 +57,43 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
                   ]),
             ))
         .toList();
+  }
+
+  Future<void> _confirmDelete(
+      BuildContext context, String? status, WidgetRef ref) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.of(context).confirm),
+          content: Text(S.of(context).changingStateMightResultClearingDependentsElements),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(S.of(context).cancel),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text(S.of(context).confirm),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      final formInstance = ref
+          .watch(formInstanceProvider(
+              formMetadata: FormMetadataWidget.of(context)))
+          .requireValue;
+
+      await formInstance
+          .updateSubmissionStatus(AssignmentStatus.getType(status));
+      ref.read(assignmentsProvider.notifier).updateAssignmentStatus(
+          AssignmentStatus.getType(status),
+          formInstance.formMetadata.assignmentModel.id);
+    }
   }
 }

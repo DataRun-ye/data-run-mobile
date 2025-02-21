@@ -98,7 +98,7 @@ class FormInstance {
     return updatedSubmission;
   }
 
-  Future<DataFormSubmission> onChangeStatus(AssignmentStatus? status) async {
+  Future<DataFormSubmission> updateSubmissionStatus(AssignmentStatus? status) async {
     final formSubmission =
     await formSubmissionList.getSubmission(submissionUid!);
     formSubmission!.status = status;

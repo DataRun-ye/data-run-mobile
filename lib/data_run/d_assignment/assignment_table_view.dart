@@ -8,7 +8,6 @@ import 'package:datarun/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:d2_remote/core/datarun/utilities/date_utils.dart' as sdk;
 
 class AssignmentTableView extends HookConsumerWidget {
   AssignmentTableView({super.key, required this.onViewDetails, this.scope});

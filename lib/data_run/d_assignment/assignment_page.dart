@@ -250,3 +250,4 @@ Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
                 ),
               )));
 }
+

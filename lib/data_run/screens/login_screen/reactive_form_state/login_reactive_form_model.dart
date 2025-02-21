@@ -43,6 +43,7 @@ class LoginReactiveFormModel {
     form.markAsDisabled();
     final authResult = AuthenticationResult();
     try {
+
       final authResult = await _authService.login(usernameControl.value!,
           passwordControl.value!, serverUrlControl.value ?? kApiBaseUrl);
 

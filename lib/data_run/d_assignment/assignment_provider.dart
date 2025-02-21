@@ -1,18 +1,10 @@
-import 'package:d2_remote/core/datarun/utilities/date_utils.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:d2_remote/shared/utilities/save_option.util.dart';
-import 'package:datarun/commons/helpers/map.dart';
 import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarun/data_run/d_assignment/model/extract_and_sum_allocated_actual.dart';
-import 'package:datarun/data_run/d_team/team_model.dart';
 import 'package:datarun/data_run/d_team/team_provider.dart';
 import 'package:datarun/data_run/form/form_submission/submission_list.provider.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assignment_provider.g.dart';
@@ -48,7 +40,8 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
     [EntityScope? scope]) async {
   final assignments = await ref.watch(assignmentsProvider.future);
   final query = ref.watch(filterQueryProvider);
-
+  final teamsAsync =
+      await ref.watch(teamsProvider(EntityScope.Assigned).future);
   final lowerCaseQuery = query.searchQuery.toLowerCase();
   assignments.sort((a, b) => (a.startDay ?? 11).compareTo((b.startDay ?? 11)));
   final filteredAssignments = assignments
@@ -58,12 +51,28 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
       final key = entry.key;
       final value = entry.value;
 
-      if (key == 'status' && assignment.status != value) {
+      final selectedTeams = teamsAsync
+          .where((t) =>
+              key == 'teams' &&
+              value is Iterable &&
+              value.isNotEmpty &&
+              value.contains(t.name))
+          .map((t) => t.id!)
+          .toList();
+
+      if (key == 'status' &&
+          value is Iterable &&
+          value.isNotEmpty &&
+          (!value.contains(assignment.status))) {
         return false;
       }
-      if (key == 'scope' && assignment.scope != value) {
+      if (key == 'scope' &&
+          value is Iterable &&
+          value.isNotEmpty &&
+          (!value.contains(assignment.scope.name))) {
         return false;
       }
+      // TODO add date range
       if (key == 'days' &&
           value is Iterable &&
           value.isNotEmpty &&
@@ -71,13 +80,34 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
               !value.contains(assignment.startDay))) {
         return false;
       }
+
       if (key == 'teams' &&
           value is Iterable &&
           value.isNotEmpty &&
-          (!value.contains(assignment.teamId))) {
+          (!selectedTeams.contains(assignment.teamId))) {
         return false;
       }
     }
+    //   if (key == 'status' && assignment.status != value) {
+    //     return false;
+    //   }
+    //   if (key == 'scope' && assignment.scope != value) {
+    //     return false;
+    //   }
+    //   if (key == 'days' &&
+    //       value is Iterable &&
+    //       value.isNotEmpty &&
+    //       (assignment.startDay == null ||
+    //           !value.contains(assignment.startDay))) {
+    //     return false;
+    //   }
+    //   if (key == 'teams' &&
+    //       value is Iterable &&
+    //       value.isNotEmpty &&
+    //       (!value.contains(assignment.teamId))) {
+    //     return false;
+    //   }
+    // }
 
     if (query.searchQuery.isNotEmpty) {
       final lowerCaseActivity = assignment.activity.toLowerCase();
@@ -145,6 +175,20 @@ class FilterQuery extends _$FilterQuery {
     state = state.copyWith(searchQuery: searchQuery);
   }
 
+  //
+  void updateFilters(Map<String, dynamic> selectedFilters) {
+    final updatedFilters = Map.of(state.filters);
+    for (final entry in selectedFilters.entries) {
+      if (entry.value == null ||
+          (entry.value is Iterable && entry.value.isEmpty)) {
+        updatedFilters.remove(entry.key); // Remove filter if null or empty
+      } else {
+        updatedFilters[entry.key] = entry.value; // Update or add filter
+      }
+    }
+    state = state.copyWith(filters: updatedFilters);
+  }
+
   // Update or add a filter
   void updateFilter(String filterKey, dynamic filterValue) {
     final updatedFilters = Map.of(state.filters);
@@ -169,9 +213,15 @@ class FilterQuery extends _$FilterQuery {
   }
 
   // Toggle card/table view
-  void toggleCardTableView() {
-    state = state.copyWith(isCardView: !state.isCardView);
+  void toggleCardTableView([bool? isCardView]) {
+    state = state.copyWith(
+        isCardView: isCardView == null ? !state.isCardView : isCardView);
   }
+
+// // Toggle card/table view
+// void toggleCardTableView(bool isCardView) {
+//   state = state.copyWith(isCardView: isCardView);
+// }
 }
 
 class AssignmentFilterQuery with EquatableMixin {

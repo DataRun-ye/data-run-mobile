@@ -1,4 +1,5 @@
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:datarun/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarun/core/common/state.dart';
 import 'package:datarun/data_run/d_activity/activity_card.dart';
 import 'package:datarun/data_run/d_activity/activity_inherited_widget.dart';
@@ -9,25 +10,17 @@ import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarun/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
 import 'package:datarun/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class AssignmentOverviewItem extends ConsumerWidget {
   const AssignmentOverviewItem({
     super.key,
-    // required this.assignment,
-    // required this.onFormSubmission,
     required this.onViewDetails,
-    // required this.onChangeStatus,
   });
 
-  // final AssignmentModel assignment;
-  // final Function(DataFormSubmission submission,
-  //     AssignmentModel assignment)
-  //     onFormSubmission;
   final Function(AssignmentModel assignment) onViewDetails;
-
-  // final void Function(AssignmentStatus newStatus) onChangeStatus;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -78,11 +71,14 @@ class AssignmentOverviewItem extends ConsumerWidget {
             const SizedBox(height: 8),
 
             // Entity and Team Info
-            _buildDetailIcon(
-              Icons.location_on,
-              '${assignment.entityCode} - ${assignment.entityName}',
-              searchQuery,
-              context,
+            CopyToClipboard(
+              value: '${assignment.entityCode} - ${assignment.entityName}',
+              child: _buildDetailIcon(
+                Icons.location_on,
+                '${assignment.entityCode} - ${assignment.entityName}',
+                searchQuery,
+                context,
+              ),
             ),
             const SizedBox(height: 4),
             _buildDetailIcon(
@@ -237,9 +233,10 @@ class AssignmentOverviewItem extends ConsumerWidget {
         spans.add(TextSpan(text: text.substring(start, match.start)));
       }
       spans.add(TextSpan(
-          text: text.substring(match.start, match.end),
-          style: style //const TextStyle(backgroundColor: Colors.yellow),
-          ));
+        text: text.substring(match.start, match.end),
+        style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
+            .merge(style),
+      ));
       start = match.end;
     }
 
@@ -252,6 +249,42 @@ class AssignmentOverviewItem extends ConsumerWidget {
           TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
     );
   }
+
+// Widget _buildHighlightedText(
+//     String text, String searchQuery, BuildContext context,
+//     {TextStyle? style}) {
+//   if (searchQuery.isEmpty) {
+//     return Text(text, softWrap: true);
+//   }
+//
+//   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
+//   if (matches.isEmpty) {
+//     return Text(text, softWrap: true);
+//   }
+//
+//   final List<TextSpan> spans = [];
+//   int start = 0;
+//
+//   for (final match in matches) {
+//     if (match.start > start) {
+//       spans.add(TextSpan(text: text.substring(start, match.start)));
+//     }
+//     spans.add(TextSpan(
+//       text: text.substring(match.start, match.end),
+//       style: TextStyle(backgroundColor: Colors.yellow).merge(style),
+//     ));
+//     start = match.end;
+//   }
+//
+//   if (start < text.length) {
+//     spans.add(TextSpan(text: text.substring(start)));
+//   }
+//
+//   return RichText(
+//     text:
+//         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
+//   );
+// }
 
 // Widget _buildResourcesComparison(BuildContext context) {
 //   // Enhanced resource comparison layout

@@ -1,36 +1,40 @@
+import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
+import 'package:datarun/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ActiveFiltersWidget extends StatelessWidget {
-  const ActiveFiltersWidget({
-    required this.activeFilters,
-    required this.onClearAll,
-    required this.onRemoveFilter,
-    super.key,
-  });
+class ActiveFiltersWidget extends ConsumerWidget {
+  const ActiveFiltersWidget({super.key});
 
-  final Map<String, dynamic> activeFilters;
-  final VoidCallback onClearAll;
-  final Function(String) onRemoveFilter;
+  // final VoidCallback onClearAll;
+  // final Function(String) onRemoveFilter;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Map<String, dynamic> activeFilters = ref.watch(filterQueryProvider
+        .select((assignmentFilter) => assignmentFilter.filters));
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Wrap(
         spacing: 8.0,
         runSpacing: 4.0,
         children: [
+          if (activeFilters.isNotEmpty)
+            ActionChip(
+              avatar: Icon(Icons.clear_all),
+              tooltip: S.of(context).clearAll,
+              label: Text(S.of(context).clearAll),
+              onPressed: ref.read(filterQueryProvider.notifier).clearAllFilters,
+            ),
           for (var entry in activeFilters.entries)
             Chip(
               label: Text('${entry.key}: ${entry.value}'),
               deleteIcon: Icon(Icons.close),
-              onDeleted: () => onRemoveFilter(entry.key),
+              onDeleted: () => ref
+                  .read(filterQueryProvider.notifier)
+                  .removeFilter(entry.key),
             ),
-          if (activeFilters.isNotEmpty)
-            ActionChip(
-              label: Text('Clear All'),
-              onPressed: onClearAll,
-            ),
+
         ],
       ),
     );

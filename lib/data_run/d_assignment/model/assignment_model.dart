@@ -1,5 +1,4 @@
 import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/core/datarun/utilities/date_utils.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
@@ -12,6 +11,7 @@ import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
 import 'package:datarun/data_run/d_assignment/model/extract_and_sum_allocated_actual.dart';
 import 'package:datarun/data_run/d_team/team_model.dart';
 import 'package:datarun/data_run/d_team/team_provider.dart';
+import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -105,7 +105,7 @@ class Assignments extends _$Assignments {
                 .filter((entry) =>
                     entry.key != 'Latitude' && entry.key != 'Longitude')
                 .map((key, value) => MapEntry(key, value ?? 0))
-            : {'ITNs': 0, 'Population': 0, 'Households': 0},
+            : {},
         reportedResources: sumActualResources(
             submissions, assignment.allocatedResources.keys.toList()),
         forms: assignment.forms,
@@ -116,7 +116,8 @@ class Assignments extends _$Assignments {
     return assignmentModels;
   }
 
-  void updateStatus(AssignmentStatus? status, String assignmentId) async {
+  void updateAssignmentStatus(
+      AssignmentStatus? status, String assignmentId) async {
     // final previousState = await future;
 
     DAssignment? assignment =
@@ -134,7 +135,7 @@ class Assignments extends _$Assignments {
   }
 }
 
-class AssignmentModel {
+class AssignmentModel with EquatableMixin {
   AssignmentModel({
     required this.id,
     required this.activityId,
@@ -157,8 +158,8 @@ class AssignmentModel {
   });
 
   final String id;
-  String activityId;
-  String activity;
+  final String activityId;
+  final String activity;
   final String entityId;
   final String entityCode;
   final String entityName;
@@ -232,4 +233,26 @@ class AssignmentModel {
         DateHelper.fromDbUtcToUiLocalFormat(activityStartDate));
     return activityStart?.add(Duration(days: (startDay ?? 1) - 1));
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        activityId,
+        activity,
+        entityId,
+        entityCode,
+        entityName,
+        teamId,
+        teamCode,
+        teamName,
+        scope,
+        status,
+        startDay,
+        startDate,
+        dueDate,
+        rescheduledDate,
+        forms,
+        allocatedResources,
+        reportedResources
+      ];
 }

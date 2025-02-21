@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:datarun/utils/mass_utils/utils.dart';
 
+bool isDesktop(BuildContext context) {
+  final data = MediaQueryData.fromView(View.of(context));
+  return data.size.width >= 600; // Adjust breakpoint as needed
+}
 
 // TODOremove this function
 bool supportsInlineBrowser() => !isDesktopOS();
@@ -177,8 +181,8 @@ bool isMobile(BuildContext context) =>
 
 bool isNotMobile(BuildContext context) => !isMobile(context);
 
-bool isDesktop(BuildContext context) =>
-    false; //getLayout(context) == AppLayout.desktop;
+// bool isDesktop(BuildContext context) =>
+//     false; //getLayout(context) == AppLayout.desktop;
 
 bool isNotDesktop(BuildContext context) => !isDesktop(context);
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:d2_remote/core/datarun/exception/exception.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
@@ -9,6 +11,7 @@ import 'package:datarun/data_run/screens/login_screen/login_page.dart';
 import 'package:datarun/utils/navigator_key.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../network/connectivy_service.dart';
 
@@ -20,8 +23,8 @@ AuthService authService(AuthServiceRef ref) {
 }
 
 class AuthService {
-
   AuthService(this._sessionManager);
+
   final UserSessionManager _sessionManager;
 
   Future<bool> isAuthenticatedOnline() async {
@@ -30,11 +33,16 @@ class AuthService {
         await ConnectivityService.instance.isNetworkAvailable();
     // final isOnline = await ConnectivityService.instance.isOnline;
 
-    if (!networkAvailable/* || !isOnline*/) {
+    if (!networkAvailable /* || !isOnline*/) {
       return await _attemptNetworkAuthentication();
     } else {
+      DatabaseFactory? databaseFactory;
+      if(Platform.isWindows) {
+        sqfliteFfiInit();
+        databaseFactory = databaseFactoryFfi;
+      }
       /// Allow offline access with valid session
-      return D2Remote.isAuthenticated();
+      return D2Remote.isAuthenticated(databaseFactory: databaseFactory);
     }
   }
 
@@ -59,7 +67,14 @@ class AuthService {
             errorCode: DErrorCode.noAuthenticatedUser);
       }
 
+      DatabaseFactory? databaseFactory;
+      if (Platform.isWindows) {
+        sqfliteFfiInit();
+        databaseFactory = databaseFactoryFfi;
+      }
+
       final result = await D2Remote.authenticate(
+          databaseFactory: databaseFactory,
           username: sessionData.username!,
           password: sessionData.password!,
           url: sessionData.serverUrl!);
@@ -94,9 +109,16 @@ class AuthService {
     );
     try {
       await throwIfFirstTimeAndNoActiveNetwork();
+      DatabaseFactory? databaseFactory;
+      if(Platform.isWindows) {
+        sqfliteFfiInit();
+        databaseFactory = databaseFactoryFfi;
+      }
+
       final authResult = await D2Remote.authenticate(
           username: username,
           password: password,
+          databaseFactory: databaseFactory,
           url: serverUrl ?? kApiBaseUrl);
 
       if (authResult.success) {

@@ -222,3 +222,87 @@ class SearchFilterBar extends ConsumerWidget {
 //     );
 //   }
 // }
+
+// class SearchFilterBar extends StatelessWidget {
+//   const SearchFilterBar({
+//     super.key,
+//     required this.onSearchChanged,
+//     required this.onStatusChanged,
+//     required this.onScopeChanged,
+//     required this.onDateRangeChanged,
+//     required this.onToggleView,
+//     required this.isCardView,
+//   });
+//
+//   final ValueChanged<String> onSearchChanged;
+//   final ValueChanged<AssignmentStatus?> onStatusChanged;
+//   final ValueChanged<EntityScope?> onScopeChanged;
+//   final ValueChanged<DateTimeRange?> onDateRangeChanged;
+//   final ValueChanged<bool> onToggleView;
+//   final bool isCardView;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Wrap(
+//       spacing: 8,
+//       alignment: WrapAlignment.spaceBetween,
+//       children: [
+//         IconButton(
+//           tooltip: 'Toggle between List and Card view',
+//           icon: Icon(isCardView ? Icons.view_list : Icons.view_module),
+//           onPressed: () {
+//             onToggleView(!isCardView);
+//           },
+//         ),
+//         SizedBox(
+//           width: 200,
+//           child: TextField(
+//             decoration: InputDecoration(
+//               hintText: 'Search...',
+//               prefixIcon: Icon(Icons.search),
+//               suffixIcon: IconButton(
+//                 icon: Icon(Icons.clear),
+//                 onPressed: () => onSearchChanged(''),
+//               ),
+//               border: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(8.0),
+//               ),
+//             ),
+//             onChanged: onSearchChanged,
+//           ),
+//         ),
+//         FilterChip(
+//           label: Text('Status'),
+//           onSelected: (isSelected) {
+//             // Open a dropdown/modal for detailed filtering
+//           },
+//         ),
+//         FilterChip(
+//           label: Text('Scope'),
+//           onSelected: (isSelected) {
+//             // Open a dropdown/modal for detailed filtering
+//           },
+//         ),
+//         IconButton(
+//           tooltip: 'Select Date Range',
+//           icon: Icon(Icons.date_range),
+//           onPressed: () async {
+//             final DateTimeRange? picked = await showDateRangePicker(
+//               context: context,
+//               firstDate: DateTime(2000),
+//               lastDate: DateTime(2101),
+//             );
+//             onDateRangeChanged(picked);
+//           },
+//         ),
+//         TextButton.icon(
+//           onPressed: () {
+//             // Clear all filters logic
+//           },
+//           icon: Icon(Icons.clear_all),
+//           label: Text('Clear Filters'),
+//         ),
+//       ],
+//     );
+//   }
+// }

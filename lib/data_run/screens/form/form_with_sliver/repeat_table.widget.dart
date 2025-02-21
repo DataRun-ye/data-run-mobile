@@ -39,6 +39,8 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   late final RepeatTableDataSource _dataSource;
   late final RepeatSection _repeatInstance;
 
+  int defaultRowsPerPage = 5;
+
   // late final int tableColumnsLength;
 
   // late final FormInstance formInstance;
@@ -102,32 +104,49 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
         ..sort((a, b) => a.order.compareTo(b.order));
     }, [_repeatInstance.elementPath]);
 
+    final rowsPerPage = useState(defaultRowsPerPage);
+
     return Opacity(
       opacity: _dataSource.editable ? 1 : 0.5,
-      child: PaginatedDataTable(
-        showFirstLastButtons: true,
-        actions: [
-          ElevatedButton(
-            onPressed: _dataSource.editable
-                ? () async {
-                    final repeatItem =
-                        formInstance.onAddRepeatedItem(_repeatInstance);
-                    _dataSource.addItem(repeatItem);
-                    await _showEditPanel(
-                        context, formInstance, activityModel, repeatItem);
-                  }
-                : null,
-            child: Icon(Icons.add),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: PaginatedDataTable(
+          primary: true,
+          showFirstLastButtons: true,
+          actions: [
+            ElevatedButton(
+              onPressed: _dataSource.editable
+                  ? () async {
+                      final repeatItem =
+                          formInstance.onAddRepeatedItem(_repeatInstance);
+                      _dataSource.addItem(repeatItem);
+                      await _showEditPanel(
+                          context, formInstance, activityModel, repeatItem);
+                    }
+                  : null,
+              child: Icon(Icons.add),
+            ),
+          ],
+          header: Text(
+            '${_repeatInstance.label}',
+            softWrap: true,
           ),
-        ],
-        header: Text(
-          '${_repeatInstance.label}',
-          softWrap: true,
+          rowsPerPage: rowsPerPage.value,
+          availableRowsPerPage: <int>[
+            defaultRowsPerPage,
+            defaultRowsPerPage * 2,
+            defaultRowsPerPage * 5,
+            defaultRowsPerPage * 10
+          ],
+          onRowsPerPageChanged: (rows) {
+            if (rows != null) {
+              rowsPerPage.value = rows;
+            }
+          },
+          columns: _buildColumns(tableColumns, context,
+              editMode: _dataSource.editable),
+          source: _dataSource,
         ),
-        rowsPerPage: 5,
-        columns: _buildColumns(tableColumns, context,
-            editMode: _dataSource.editable),
-        source: _dataSource,
       ),
     );
   }

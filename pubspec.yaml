@@ -37,11 +37,10 @@ dependencies:
   device_info_plus: ^11.1.1
   connectivity_plus: ^6.1.0
   mobile_scanner: ^6.0.2
-#  image_picker: ^1.1.2
   sentry_flutter: ^8.10.1
 #  dropdown_search: ^6.0.1
 #  fl_chart: ^0.69.2
-  flutter_riverpod: 3.0.0-dev.3
+#  flutter_riverpod: 3.0.0-dev.3
   hooks_riverpod: 3.0.0-dev.3
   freezed_annotation: ^2.4.1
   riverpod_annotation: 3.0.0-dev.3
@@ -50,6 +49,10 @@ dependencies:
   package_info_plus: ^8.1.2
   http: ^0.13.4
   timeago: ^3.7.0
+  sqflite_common_ffi: ^2.3.4+4
+  pluto_grid: ^8.0.0
+  get_it: ^8.0.3
+  injectable: ^2.5.0
 #  flutter_barcode_scanner: ^2.0.0
 
 ## for Expression need to override petitparser
@@ -69,12 +72,7 @@ dev_dependencies:
   riverpod_lint: 3.0.0-dev.4
   custom_lint: ^0.5.11
   flutter_launcher_icons: ^0.13.1
-
-#flutter_launcher_icons:
-#  android: "launcher_icon"
-#  adaptive_icon_background: "assets/launcher_icon/ic_launcher.png"
-#  image_path: "assets/launcher_icon/ic_launcher.png"
-#  min_sdk_android: 21 # android min sdk min:16, default 21
+  injectable_generator: ^2.6.2
 
 flutter:
   uses-material-design: true
@@ -82,10 +80,6 @@ flutter:
   assets:
     - lib/l10n/
     - assets/launcher_icon/
-#    - assets/images/
-# analyzer:
-#   strong-mode: true
-#   language:
-#     enableSuperMixins: true
+
 flutter_intl:
   enabled: true

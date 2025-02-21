@@ -26,24 +26,24 @@ class ContextManager {
   }
 }
 
-void main() {
-  var manager = ContextManager();
-
-  // Create contexts
-  var contextA = manager.createContext('contextA');
-  var contextB = manager.createContext('contextB', parentName: 'contextA');
-
-  // Set values
-  contextA.setValue('field1', 100);
-  contextB.setValue('field3', 'field1 * 2', notify: false); // Expression
-
-  // Register dependency
-  contextA.registerDependency('field3', 'field1');
-
-  // Simulate update
-  print("Before Update: field3 = ${contextB.getValue('field3')}");
-  contextA.setValue('field1', 200); // Should trigger re-evaluation
-
-  print("After Update: field1 = ${contextB.getValue('field1')}");
-
-}
+// void main() {
+//   var manager = ContextManager();
+//
+//   // Create contexts
+//   var contextA = manager.createContext('contextA');
+//   var contextB = manager.createContext('contextB', parentName: 'contextA');
+//
+//   // Set values
+//   contextA.setValue('field1', 100);
+//   contextB.setValue('field3', 'field1 * 2', notify: false); // Expression
+//
+//   // Register dependency
+//   contextA.registerDependency('field3', 'field1');
+//
+//   // Simulate update
+//   print("Before Update: field3 = ${contextB.getValue('field3')}");
+//   contextA.setValue('field1', 200); // Should trigger re-evaluation
+//
+//   print("After Update: field1 = ${contextB.getValue('field1')}");
+//
+// }

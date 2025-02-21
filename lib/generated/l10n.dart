@@ -150,30 +150,30 @@ class S {
     );
   }
 
-  /// `Database returned an Error ${error}.`
+  /// `Database returned an Error {error}.`
   String databaseInternalError(Object error) {
     return Intl.message(
-      'Database returned an Error \$$error.',
+      'Database returned an Error $error.',
       name: 'databaseInternalError',
       desc: '',
       args: [error],
     );
   }
 
-  /// `Error While Trying to Sync data ${error}.`
+  /// `Error While Trying to Sync data {error}.`
   String syncError(Object error) {
     return Intl.message(
-      'Error While Trying to Sync data \$$error.',
+      'Error While Trying to Sync data $error.',
       name: 'syncError',
       desc: '',
       args: [error],
     );
   }
 
-  /// `Error: ${error}.`
+  /// `Error: {error}.`
   String unknownError(Object error) {
     return Intl.message(
-      'Error: \$$error.',
+      'Error: $error.',
       name: 'unknownError',
       desc: '',
       args: [error],
@@ -190,10 +190,10 @@ class S {
     );
   }
 
-  /// `An error occurred while interacting with the API ${error}.`
+  /// `An error occurred while interacting with the API {error}.`
   String apiError(Object error) {
     return Intl.message(
-      'An error occurred while interacting with the API \$$error.',
+      'An error occurred while interacting with the API $error.',
       name: 'apiError',
       desc: '',
       args: [error],
@@ -844,30 +844,30 @@ class S {
     );
   }
 
-  /// `The value must be greater than or equal to ${error}.`
+  /// `The value must be greater than or equal to {error}.`
   String valueMustBeGreaterThanOrEqualToError(Object error) {
     return Intl.message(
-      'The value must be greater than or equal to \$$error.',
+      'The value must be greater than or equal to $error.',
       name: 'valueMustBeGreaterThanOrEqualToError',
       desc: '',
       args: [error],
     );
   }
 
-  /// `The value must be less than or equal to ${error}.`
+  /// `The value must be less than or equal to {error}.`
   String valueMustBeLessThanOrEqualToError(Object error) {
     return Intl.message(
-      'The value must be less than or equal to \$$error.',
+      'The value must be less than or equal to $error.',
       name: 'valueMustBeLessThanOrEqualToError',
       desc: '',
       args: [error],
     );
   }
 
-  /// `The maximum allowed length is ${error}.`
+  /// `The maximum allowed length is {error}.`
   String maximumAllowedLengthIsError(Object error) {
     return Intl.message(
-      'The maximum allowed length is \$$error.',
+      'The maximum allowed length is $error.',
       name: 'maximumAllowedLengthIsError',
       desc: '',
       args: [error],
@@ -2183,6 +2183,96 @@ class S {
     return Intl.message(
       'Last Sync',
       name: 'synced',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Toggle between List and Card view`
+  String get toggleBetweenListAndCardView {
+    return Intl.message(
+      'Toggle between List and Card view',
+      name: 'toggleBetweenListAndCardView',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filters`
+  String get filters {
+    return Intl.message(
+      'Filters',
+      name: 'filters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message(
+      'Reset',
+      name: 'reset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message(
+      'Apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `teams`
+  String get teams {
+    return Intl.message(
+      'teams',
+      name: 'teams',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear All`
+  String get clearAll {
+    return Intl.message(
+      'Clear All',
+      name: 'clearAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{value} Copied To Clipboard`
+  String copiedToClipboard(Object value) {
+    return Intl.message(
+      '$value Copied To Clipboard',
+      name: 'copiedToClipboard',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Changing state might result clearing dependents elements`
+  String get changingStateMightResultClearingDependentsElements {
+    return Intl.message(
+      'Changing state might result clearing dependents elements',
+      name: 'changingStateMightResultClearingDependentsElements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restore Item`
+  String get restoreItem {
+    return Intl.message(
+      'Restore Item',
+      name: 'restoreItem',
       desc: '',
       args: [],
     );

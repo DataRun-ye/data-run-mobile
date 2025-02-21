@@ -6,7 +6,6 @@ import 'package:datarun/data_run/screens/form/element/form_element.dart';
 import 'package:datarun/data_run/screens/form/element/providers/form_instance.provider.dart';
 import 'package:datarun/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:d2_remote/core/datarun/utilities/date_utils.dart' as sdk;
 
 class QDatePickerField<T> extends ConsumerWidget {
   const QDatePickerField({super.key, required this.element});
@@ -61,7 +60,7 @@ class QDateTimeValueAccessor<T> extends ControlValueAccessor<String, String> {
       // to local formated for the ui
       value = DateHelper.fromDbUtcToUiLocalFormat(modelValue);
     } on FormatException catch (e) {
-      logError('Date format Exception, date: $modelValue');
+      logError('Date format Exception, date: $modelValue, $e');
     }
 
     // return modelValue == null ? null : sdk.DDateUtils.format(modelValue);

@@ -20,32 +20,34 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(error) => "حدث خطأ أثناء التواصل API النظام: \$${error}.";
+  static String m0(error) => "حدث خطأ أثناء التواصل API النظام: ${error}.";
 
-  static String m1(error) => "واجهت قاعدة البيانات خطأ: \$${error}.";
+  static String m1(value) => "${value} نسخ للحافظة";
 
-  static String m2(count) =>
+  static String m2(error) => "واجهت قاعدة البيانات خطأ: ${error}.";
+
+  static String m3(count) =>
       "${Intl.plural(count, zero: 'لا تتوفر استمارات لهذا النشاط', one: 'تتوفر 1 استمارة', two: 'تتوفر استمارتان', other: '${count} استمارة متوفرة')}";
 
-  static String m3(error) => "الحد الأقصى للطول المسموح به هو \$${error}.";
+  static String m4(error) => "الحد الأقصى للطول المسموح به هو ${error}.";
 
-  static String m4(count) =>
+  static String m5(count) =>
       "${Intl.plural(count, zero: ' ', one: 'شهر', two: 'شهران', few: '${count} أشهر', other: '${count} شهر')}";
 
-  static String m5(error) =>
-      "حدث خطأ أثناء مزامنة البيانات: \$${error}. يرجى المحاولة مرة أخرى.";
+  static String m6(error) =>
+      "حدث خطأ أثناء مزامنة البيانات: ${error}. يرجى المحاولة مرة أخرى.";
 
-  static String m6(count) =>
+  static String m7(count) =>
       "${Intl.plural(count, zero: 'لا تتوفر استمارات نهائية', one: 'عدد 1 استمارة', two: 'عدد استمارتان', other: 'عدد ${count} استمارة')}";
 
-  static String m7(error) =>
-      "حدث خطأ غير متوقع: \$${error}. يرجى المحاولة مرة أخرى.";
+  static String m8(error) =>
+      "حدث خطأ غير متوقع: ${error}. يرجى المحاولة مرة أخرى.";
 
-  static String m8(error) => "يجب أن تكون القيمة أكبر من أو تساوي \$${error}.";
+  static String m9(error) => "يجب أن تكون القيمة أكبر من أو تساوي ${error}.";
 
-  static String m9(error) => "يجب أن تكون القيمة أقل من أو تساوي \$${error}.";
+  static String m10(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
 
-  static String m10(count) =>
+  static String m11(count) =>
       "${Intl.plural(count, zero: '', one: 'سنة', two: 'سنتان', few: '${count} سنوات', other: '${count} سنة')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -69,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "appName": MessageLookupByLibrary.simpleMessage("Datarun"),
         "appVersion": MessageLookupByLibrary.simpleMessage("إصدار التطبيق"),
         "appearance": MessageLookupByLibrary.simpleMessage("المظهر"),
+        "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
         "assigned": MessageLookupByLibrary.simpleMessage("مهام"),
         "assignedAssignments": MessageLookupByLibrary.simpleMessage("مهام"),
         "assignedTeam": MessageLookupByLibrary.simpleMessage("فريقك"),
@@ -85,8 +88,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
         "changePassword":
             MessageLookupByLibrary.simpleMessage("تغيير كلمة السر"),
+        "changingStateMightResultClearingDependentsElements":
+            MessageLookupByLibrary.simpleMessage(
+                "قد يؤدي إلى تفريغ بيانات حقول تعتمد على الحالة!"),
         "checkFieldsLater": MessageLookupByLibrary.simpleMessage("ليس الآن"),
         "clear": MessageLookupByLibrary.simpleMessage("تصفية"),
+        "clearAll": MessageLookupByLibrary.simpleMessage("تفريق الكل"),
         "clearFilters": MessageLookupByLibrary.simpleMessage("إلغا التصفية"),
         "closeWithoutSaving":
             MessageLookupByLibrary.simpleMessage("إغلاق وحذف؟"),
@@ -100,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد أنك تريد إزالة هذا القسم؟"),
         "controllerNotReady":
             MessageLookupByLibrary.simpleMessage("المتحكم غير جاهز."),
+        "copiedToClipboard": m1,
         "count": MessageLookupByLibrary.simpleMessage("الكمية"),
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "currentUsername":
@@ -108,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dashboard": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "databaseConnectionFailed": MessageLookupByLibrary.simpleMessage(
             "فشل في الاتصال بقاعدة البيانات. يرجى المحاولة مرة أخرى أو الاتصال بالدعم."),
-        "databaseInternalError": m1,
+        "databaseInternalError": m2,
         "databaseQueryFailed": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء معالجة طلب قاعدة البيانات. يرجى المحاولة مرة أخرى."),
         "day": MessageLookupByLibrary.simpleMessage("اليوم"),
@@ -150,9 +158,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يحوي أخطاء"),
         "fieldsWithErrorInfo": MessageLookupByLibrary.simpleMessage(
             "قم بالرجوع ومراجعة الإخطاء أو (ليس الآن) للحفظ والمراجعة في وقت لاحق! لن يتسنى لك تعيين الاستمارة كنهائية وإرسالها إلا بعد تصحيح الأخطاء: "),
+        "filters": MessageLookupByLibrary.simpleMessage("تصفية البيانات"),
         "finalData": MessageLookupByLibrary.simpleMessage("بيانات نهائية"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
-        "form": m2,
+        "form": m3,
         "formContainsSomeErrors":
             MessageLookupByLibrary.simpleMessage(" يوجد أخطاء في بعض الحقول"),
         "formSummaryView":
@@ -195,11 +204,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "managedTeams": MessageLookupByLibrary.simpleMessage("فرق تحت إدارتك"),
         "markAsFinalData": MessageLookupByLibrary.simpleMessage(
             "حقول مكتملة، هل تبريد تعيين هذه البيانات كنهائية وجاهزة للإرسال؟"),
-        "maximumAllowedLengthIsError": m3,
+        "maximumAllowedLengthIsError": m4,
         "merged": MessageLookupByLibrary.simpleMessage("مدمج"),
         "middleName": MessageLookupByLibrary.simpleMessage("الاسم الأوسط"),
         "mobile": MessageLookupByLibrary.simpleMessage("رقم الموبايل"),
-        "month": m4,
+        "month": m5,
         "monthly": MessageLookupByLibrary.simpleMessage("شهري"),
         "months": MessageLookupByLibrary.simpleMessage("أشهر"),
         "networkConnectionFailed": MessageLookupByLibrary.simpleMessage(
@@ -256,7 +265,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("موارد المرسلة"),
         "rescan": MessageLookupByLibrary.simpleMessage("إعادة مسح"),
         "rescheduled": MessageLookupByLibrary.simpleMessage("جدولة"),
+        "reset": MessageLookupByLibrary.simpleMessage("تفريغ"),
         "resources": MessageLookupByLibrary.simpleMessage("الموارد"),
+        "restoreItem": MessageLookupByLibrary.simpleMessage(
+            "إلغاء الحذف واستعادة هذا العنصر"),
         "reviewFormData":
             MessageLookupByLibrary.simpleMessage("مراجعة الأخطاء"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -293,7 +305,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submissionDataEntry": MessageLookupByLibrary.simpleMessage("بيانات"),
         "submissionInitialData":
             MessageLookupByLibrary.simpleMessage("الرئيسة"),
-        "syncError": m5,
+        "syncError": m6,
         "syncFormData":
             MessageLookupByLibrary.simpleMessage("مزامنة بيانات الاستمارة"),
         "syncInterval":
@@ -301,7 +313,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syncNow": MessageLookupByLibrary.simpleMessage("التحديث الآن"),
         "syncSettings":
             MessageLookupByLibrary.simpleMessage("التحديث التلقائي"),
-        "syncSubmissions": m6,
+        "syncSubmissions": m7,
         "synced": MessageLookupByLibrary.simpleMessage("مزامنة"),
         "syncingConfiguration":
             MessageLookupByLibrary.simpleMessage("إعدادات المزامنة"),
@@ -309,16 +321,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "syncingEvents":
             MessageLookupByLibrary.simpleMessage("مزامنة الإستمارات"),
         "team": MessageLookupByLibrary.simpleMessage("الفريق"),
+        "teams": MessageLookupByLibrary.simpleMessage("الفرق"),
         "thisFieldIsRequired":
             MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب."),
         "to_post": MessageLookupByLibrary.simpleMessage("نهائية"),
         "to_update": MessageLookupByLibrary.simpleMessage("مسودة"),
+        "toggleBetweenListAndCardView":
+            MessageLookupByLibrary.simpleMessage("تغيير بين قائمة/جدول"),
         "toggleBrightness":
             MessageLookupByLibrary.simpleMessage("تبديل الإضاءة"),
         "toggleListTableView":
             MessageLookupByLibrary.simpleMessage("تحويل بين قائمة/جدول"),
         "undo": MessageLookupByLibrary.simpleMessage("تراجع"),
-        "unknownError": m7,
+        "unknownError": m8,
         "unsavedChangesWarning":
             MessageLookupByLibrary.simpleMessage("تغييرات غير محفوظة"),
         "user": MessageLookupByLibrary.simpleMessage("مستخدم"),
@@ -327,15 +342,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validationError": MessageLookupByLibrary.simpleMessage(
             "يرجى تصحيح الأخطاء في النموذج قبل المتابعة."),
-        "valueMustBeGreaterThanOrEqualToError": m8,
-        "valueMustBeLessThanOrEqualToError": m9,
+        "valueMustBeGreaterThanOrEqualToError": m9,
+        "valueMustBeLessThanOrEqualToError": m10,
         "version": MessageLookupByLibrary.simpleMessage("الإصدار"),
         "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
             "افتح لاستعرض الاستمارات المتاحة"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
         "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
-        "year": m10,
+        "year": m11,
         "years": MessageLookupByLibrary.simpleMessage("سنوات"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم")
       };

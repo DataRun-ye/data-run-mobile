@@ -7,6 +7,7 @@ import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.e
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:d2_remote/shared/utilities/save_option.util.dart';
 import 'package:datarun/commons/helpers/map.dart';
+import 'package:datarun/data_run/d_activity/activity_provider.dart';
 import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
 import 'package:datarun/data_run/d_assignment/model/extract_and_sum_allocated_actual.dart';
 import 'package:datarun/data_run/d_team/team_model.dart';
@@ -29,11 +30,16 @@ AssignmentModel assignment(AssignmentRef ref) {
 }
 
 /// a notifier that retrieves all assignments with their data populated
-@riverpod
+@Riverpod(dependencies: [activityModel])
 class Assignments extends _$Assignments {
   @override
   Future<List<AssignmentModel>> build() async {
+    final activityModel = ref.watch(activityModelProvider);
     final query = D2Remote.assignmentModuleD.assignment;
+    if (activityModel.activity != null) {
+      query.where(attribute: 'activity', value: activityModel.activity!.id);
+    }
+
     final List<DAssignment> assignments = await query.get();
     final futures =
         assignments.map<Future<AssignmentModel>>((assignment) async {

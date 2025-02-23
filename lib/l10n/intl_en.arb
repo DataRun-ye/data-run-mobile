@@ -295,5 +295,6 @@
   "clearAll": "Clear All",
   "copiedToClipboard": "{value} Copied To Clipboard",
   "changingStateMightResultClearingDependentsElements": "Changing state might result clearing dependents elements",
-  "restoreItem": "Restore Item"
+  "restoreItem": "Restore Item",
+  "deleteRestore": "Delete / Restore"
 }

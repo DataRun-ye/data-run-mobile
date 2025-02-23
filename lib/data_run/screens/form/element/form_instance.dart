@@ -24,20 +24,22 @@ const versionControlName = 'formData';
 class FormInstance {
   FormInstance(FormInstanceRef ref,
       {required this.form,
-        required this.formFlatTemplate,
-        required this.formMetadata,
-        Map<String, Object?> initialValue = const {},
-        required Section rootSection,
-        Map<String, FormElementInstance<dynamic>> elements = const {},
-        required this.enabled})
+      required this.formFlatTemplate,
+      required this.formMetadata,
+      AssignmentStatus? assignmentStatus,
+      Map<String, Object?> initialValue = const {},
+      required Section rootSection,
+      Map<String, FormElementInstance<dynamic>> elements = const {},
+      required this.enabled})
       : _ref = ref,
-  /*  _formDataUid =
+        /*  _formDataUid =
             initialValue['_${formUid}'] ?? CodeGenerator.generateCompositeUid(),*/
-        _formSection = rootSection {
+        _formSection = rootSection,
+        _assignmentStatus = assignmentStatus {
     var formElementMap = {
       for (var x
-      in getFormElementIterator<FormElementInstance<dynamic>>(rootSection)
-          .where((e) => e.elementPath != null))
+          in getFormElementIterator<FormElementInstance<dynamic>>(rootSection)
+              .where((e) => e.elementPath != null))
         x.elementPath!: x
     };
     _forElementMap.addAll(formElementMap);
@@ -57,6 +59,7 @@ class FormInstance {
   final FormInstanceRef _ref;
   final Map<String, FormElementInstance<dynamic>> _forElementMap = {};
   final Section _formSection;
+  AssignmentStatus? _assignmentStatus;
 
   // final FormConfiguration formConfiguration;
 
@@ -74,35 +77,35 @@ class FormInstance {
 
   Future<DataFormSubmission> saveFormData() async {
     final formSubmission =
-    await formSubmissionList.getSubmission(submissionUid!);
+        await formSubmissionList.getSubmission(submissionUid!);
 
     return _saveSubmission(formSubmission!);
   }
 
   Future<DataFormSubmission> _saveSubmission(
       DataFormSubmission formSubmission) async {
-    formSection.value.forEach((key, value) {
+    final formValue = formSection.value;
+    formValue.forEach((key, value) {
       _initialValue.update(
         key,
-            (_) => value,
+        (_) => value,
         ifAbsent: () => value,
       );
     });
 
+    formSubmission.status = _assignmentStatus;
     formSubmission.formData
-      ..clear()
-      ..addAll(_initialValue);
+      ..removeWhere((k, v) => !metadata.contains(k))
+      ..['_status'] = _assignmentStatus?.name
+      ..addAll(formValue);
 
     final updatedSubmission =
-    await formSubmissionList.updateSubmission(formSubmission);
+        await formSubmissionList.updateSubmission(formSubmission);
     return updatedSubmission;
   }
 
-  Future<DataFormSubmission> updateSubmissionStatus(AssignmentStatus? status) async {
-    final formSubmission =
-    await formSubmissionList.getSubmission(submissionUid!);
-    formSubmission!.status = status;
-    return _saveSubmission(formSubmission);
+  void updateSubmissionStatus(AssignmentStatus? status) async {
+    _assignmentStatus = status;
   }
 
   RepeatItemInstance onAddRepeatedItem(RepeatSection parent) {
@@ -120,10 +123,8 @@ class FormInstance {
       ..add(itemInstance)
       ..resolveDependencies()
       ..evaluate();
-    // _forElementMap[itemInstance.elementPath!] = itemInstance;
     itemInstance.resolveDependencies();
     itemInstance.evaluate();
-    // parent.evaluate();
     parent.elementControl.markAsDirty();
     return itemInstance;
   }
@@ -252,3 +253,23 @@ class FormInstance {
 //         repeatInstance); // No more items to edit
 //   }
 }
+
+const List<String> metadata = [
+  '_deleted',
+  '_submissionUid',
+  '_form',
+  '_deviceId',
+  '_orgUnit',
+  '_orgUnitName',
+  '_assignment',
+  '_activity',
+  '_orgUnitCode',
+  '_teamOld',
+  '_version',
+  '_username',
+  '_workDay',
+  '_status',
+  '_team',
+  '_teamCode',
+  '_serialNumber'
+];

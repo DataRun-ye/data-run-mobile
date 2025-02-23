@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(error) => "حدث خطأ أثناء التواصل API النظام: ${error}.";
 
-  static String m1(value) => "${value} نسخ للحافظة";
+  static String m1(value) => "${value} نسخ للحافظة:";
 
   static String m2(error) => "واجهت قاعدة البيانات خطأ: ${error}.";
 
@@ -123,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleteConfirmationMessage": MessageLookupByLibrary.simpleMessage(
             "هل تريد بالتأكيد حذف هذا العنصر؟"),
+        "deleteRestore": MessageLookupByLibrary.simpleMessage("حذف/استعادة"),
         "developer": MessageLookupByLibrary.simpleMessage(
             "البرنامج الوطني لمكافحة الملاريا"),
         "developerInfoText":

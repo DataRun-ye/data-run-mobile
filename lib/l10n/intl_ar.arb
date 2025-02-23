@@ -255,7 +255,8 @@
   "apply": "تطبيق",
   "teams": "الفرق",
   "clearAll": "تفريق الكل",
-  "copiedToClipboard": "{value} نسخ للحافظة",
+  "copiedToClipboard": "{value} نسخ للحافظة:",
   "changingStateMightResultClearingDependentsElements": "قد يؤدي إلى تفريغ بيانات حقول تعتمد على الحالة!",
-  "restoreItem": "إلغاء الحذف واستعادة هذا العنصر"
+  "restoreItem": "إلغاء الحذف واستعادة هذا العنصر",
+  "deleteRestore": "حذف/استعادة"
 }

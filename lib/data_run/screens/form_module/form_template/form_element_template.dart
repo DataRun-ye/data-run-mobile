@@ -25,6 +25,7 @@ class FormFlatTemplate
         TemplatePathWalkingService<FormElementTemplate>,
         PathDependencyWalkingService<FormElementTemplate>,
         EquatableMixin {
+
   factory FormFlatTemplate.fromTemplate(FormVersion template) {
     return FormFlatTemplate(
       formTemplate: template,

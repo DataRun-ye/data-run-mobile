@@ -127,6 +127,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteConfirmationMessage": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this item?"),
+        "deleteRestore":
+            MessageLookupByLibrary.simpleMessage("Delete / Restore"),
         "developer": MessageLookupByLibrary.simpleMessage("NMCP Yemen"),
         "developerInfoText":
             MessageLookupByLibrary.simpleMessage("info@nmcpye.org"),

@@ -1,3 +1,4 @@
+import 'package:datarun/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarun/data_run/d_activity/activity_card.dart';
 import 'package:datarun/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarun/data_run/d_activity/activity_model.dart';
@@ -22,7 +23,7 @@ class AssignmentDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activityModel = ActivityInheritedWidget.of(context);
     // final activityModel = ref.watch(activityModelProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).assignmentDetail),
@@ -101,8 +102,10 @@ class AssignmentDetailPage extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildDetailRow(context, S.of(context).entity,
-            '${assignment.entityCode} - ${assignment.entityName}'),
+        CopyToClipboard(
+            value: assignment.entityCode,
+            child: _buildDetailRow(context, S.of(context).entity,
+                '${assignment.entityCode} - ${assignment.entityName}')),
         _buildDetailRow(context, S.of(context).team, '${assignment.teamCode}'),
         _buildDetailRow(
             context, S.of(context).scope, assignment.scope.name.toLowerCase()),

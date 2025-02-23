@@ -153,7 +153,8 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                         ascending);
                                   },
                                 ),
-                                DataColumn(label: Text(S.of(context).delete)),
+                                DataColumn(
+                                    label: Text(S.of(context).deleteRestore)),
                               ],
                               rows: submissions.value.map((submission) {
                                 final deleted = (submission.deleted ?? false);
@@ -385,17 +386,16 @@ class FormSubmissionsTable extends HookConsumerWidget {
   void _showUndoSnackBar(
       BuildContext context, String? toDeleteUid, WidgetRef ref) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
-    ref
-        .read(formSubmissionsProvider(formId).notifier)
-        .deleteSubmission([toDeleteUid]);
-
+    final listSubmissionsNotifier =
+        ref.read(formSubmissionsProvider(formId).notifier);
+    listSubmissionsNotifier.deleteSubmission([toDeleteUid]);
     scaffoldMessenger.showSnackBar(
       SnackBar(
         content: Text(S.of(context).itemRemoved),
         action: SnackBarAction(
           label: S.of(context).undo,
           onPressed: () {
-            // Code to undo deletion
+            listSubmissionsNotifier.deleteSubmission([toDeleteUid]);
           },
         ),
       ),

@@ -72,7 +72,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
 
             // Entity and Team Info
             CopyToClipboard(
-              value: '${assignment.entityCode} - ${assignment.entityName}',
+              value: assignment.entityCode,
               child: _buildDetailIcon(
                 Icons.location_on,
                 '${assignment.entityCode} - ${assignment.entityName}',

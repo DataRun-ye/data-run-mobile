@@ -2277,6 +2277,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Delete / Restore`
+  String get deleteRestore {
+    return Intl.message(
+      'Delete / Restore',
+      name: 'deleteRestore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,6 +1,7 @@
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:datarun/data_run/d_activity/activity_provider.dart';
 import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarun/data_run/d_team/team_provider.dart';
 import 'package:datarun/data_run/form/form_submission/submission_list.provider.dart';
@@ -34,8 +35,8 @@ class AssignmentSubmissions extends _$AssignmentSubmissions {
   }
 }
 
-/// filters the list of assignmnet by certain cretiria
-@riverpod
+/// filters the list of assignment by certain
+@Riverpod(dependencies: [activityModel])
 Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
     [EntityScope? scope]) async {
   final assignments = await ref.watch(assignmentsProvider.future);

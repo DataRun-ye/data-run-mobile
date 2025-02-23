@@ -151,17 +151,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     );
   }
 
-  // RepeatTableDataSource buildTableDataSource(BuildContext context,
-  //     FormInstance formInstance, List<RepeatItemInstance> elements,
-  //     {void Function(int index)? onEdit, void Function(int index)? onDelete}) {
-  //   return RepeatTableDataSource(
-  //     elements: elements,
-  //     onEdit: onEdit,
-  //     onDelete: onDelete,
-  //     editable: repeatInstance.elementControl.enabled,
-  //   );
-  // }
-
   List<DataColumn> _buildColumns(
       List<FormElementTemplate> tableColumns, BuildContext context,
       {bool editMode = true}) {

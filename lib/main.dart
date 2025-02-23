@@ -7,7 +7,6 @@ import 'package:datarun/commons/prefs/preference_provider.dart';
 import 'package:datarun/core/auth/auth_service.dart';
 import 'package:datarun/core/auth/user_session_manager.dart';
 import 'package:datarun/data_run/screens/login_screen/auth_wrapper.dart';
-import 'package:datarun/di/injection.dart';
 import 'package:datarun/generated/l10n.dart';
 import 'package:datarun/main.reflectable.dart';
 import 'package:datarun/main_constants/main_constants.dart';
@@ -29,7 +28,6 @@ AuthenticationResult? authenticationResult;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeReflectable();
-  configureDependencies();
   await PreferenceProvider.initialize();
   final sharedPreferences = await SharedPreferences.getInstance();
 
@@ -56,7 +54,7 @@ Future<void> main() async {
   final bool hasExistingSession = userSessionManager.isAuthenticated;
   final bool needsSync = userSessionManager.needsSync();
   DatabaseFactory? databaseFactory;
-  if(Platform.isWindows) {
+  if (Platform.isWindows) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }

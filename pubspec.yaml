@@ -51,8 +51,8 @@ dependencies:
   timeago: ^3.7.0
   sqflite_common_ffi: ^2.3.4+4
   pluto_grid: ^8.0.0
-  get_it: ^8.0.3
-  injectable: ^2.5.0
+#  get_it: ^8.0.3
+#  injectable: ^2.5.0
 #  flutter_barcode_scanner: ^2.0.0
 
 ## for Expression need to override petitparser
@@ -72,7 +72,7 @@ dev_dependencies:
   riverpod_lint: 3.0.0-dev.4
   custom_lint: ^0.5.11
   flutter_launcher_icons: ^0.13.1
-  injectable_generator: ^2.6.2
+#  injectable_generator: ^2.6.2
 
 flutter:
   uses-material-design: true

@@ -65,15 +65,6 @@ Future<FormVersion> submissionVersionFormTemplate(
         .orderBy(attribute: 'version', order: SortOrder.DESC)
         .getOne();
 
-    // final Map<String, FormVersion> latestFormTemplates = {};
-    // for (var formTemplate in allFormTemplates) {
-    //   final formTemplateId = formTemplate.id!.split('_').first;
-    //   if (!latestFormTemplates.containsKey(formTemplateId) ||
-    //       latestFormTemplates[formTemplateId]!.version < formTemplate.version) {
-    //     latestFormTemplates[formTemplateId] = formTemplate;
-    //   }
-    // }
-
     return formTemplate!;
   }
 }
@@ -149,6 +140,7 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       initialValue: {...?initialFormValue, ...attributeMap},
       elements: elements,
       formMetadata: formMetadata,
+      assignmentStatus: submission.status,
       form: form,
       rootSection: _formSection,
       formFlatTemplate: formFlatTemplate);

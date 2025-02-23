@@ -66,7 +66,8 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(S.of(context).confirm),
-          content: Text(S.of(context).changingStateMightResultClearingDependentsElements),
+          content: Text(
+              S.of(context).changingStateMightResultClearingDependentsElements),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
@@ -89,8 +90,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
               formMetadata: FormMetadataWidget.of(context)))
           .requireValue;
 
-      await formInstance
-          .updateSubmissionStatus(AssignmentStatus.getType(status));
+      formInstance.updateSubmissionStatus(AssignmentStatus.getType(status));
       ref.read(assignmentsProvider.notifier).updateAssignmentStatus(
           AssignmentStatus.getType(status),
           formInstance.formMetadata.assignmentModel.id);

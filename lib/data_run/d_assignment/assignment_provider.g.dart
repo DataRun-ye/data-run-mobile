@@ -6,7 +6,7 @@ part of 'assignment_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filterAssignmentsHash() => r'f8cffd85ece88bfd8dd48033c1baebd7c1b752f5';
+String _$filterAssignmentsHash() => r'26bcc4b3391fd71d3c63fa4cc34dad5a3913b047';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,24 +29,30 @@ class _SystemHash {
   }
 }
 
-/// filters the list of assignmnet by certain cretiria
+/// filters the list of assignment by certain
 ///
 /// Copied from [filterAssignments].
 @ProviderFor(filterAssignments)
 const filterAssignmentsProvider = FilterAssignmentsFamily();
 
-/// filters the list of assignmnet by certain cretiria
+/// filters the list of assignment by certain
 ///
 /// Copied from [filterAssignments].
 class FilterAssignmentsFamily extends Family {
-  /// filters the list of assignmnet by certain cretiria
+  /// filters the list of assignment by certain
   ///
   /// Copied from [filterAssignments].
   const FilterAssignmentsFamily();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
+    activityModelProvider
+  ];
 
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
+      <ProviderOrFamily>{
+    activityModelProvider,
+    ...?activityModelProvider.allTransitiveDependencies
+  };
 
   @override
   Iterable<ProviderOrFamily>? get dependencies => _dependencies;
@@ -58,7 +64,7 @@ class FilterAssignmentsFamily extends Family {
   @override
   String? get name => r'filterAssignmentsProvider';
 
-  /// filters the list of assignmnet by certain cretiria
+  /// filters the list of assignment by certain
   ///
   /// Copied from [filterAssignments].
   FilterAssignmentsProvider call([
@@ -104,12 +110,12 @@ class _$FilterAssignmentsFamilyOverride implements FamilyOverride {
   }
 }
 
-/// filters the list of assignmnet by certain cretiria
+/// filters the list of assignment by certain
 ///
 /// Copied from [filterAssignments].
 class FilterAssignmentsProvider
     extends AutoDisposeFutureProvider<List<AssignmentModel>> {
-  /// filters the list of assignmnet by certain cretiria
+  /// filters the list of assignment by certain
   ///
   /// Copied from [filterAssignments].
   FilterAssignmentsProvider([

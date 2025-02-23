@@ -36,7 +36,7 @@ final assignmentProvider = AutoDisposeProvider<AssignmentModel>.internal(
 );
 
 typedef AssignmentRef = AutoDisposeProviderRef<AssignmentModel>;
-String _$assignmentsHash() => r'ec2bdb9a608632644c3615dbcdcc948dfa2624c5';
+String _$assignmentsHash() => r'f88f955445f83df672214b43a7e63c236e74df49';
 
 /// a notifier that retrieves all assignments with their data populated
 ///
@@ -48,8 +48,11 @@ final assignmentsProvider = AutoDisposeAsyncNotifierProvider<Assignments,
   name: r'assignmentsProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$assignmentsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[activityModelProvider],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    activityModelProvider,
+    ...?activityModelProvider.allTransitiveDependencies
+  },
 );
 
 typedef _$Assignments = AutoDisposeAsyncNotifier<List<AssignmentModel>>;

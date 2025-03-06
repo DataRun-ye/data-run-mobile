@@ -94,7 +94,7 @@ class RepeatState extends SectionState {
   // }
 
   @override
-  void accept(ElementVisitor visitor) {
-    visitor.visitRepeatSection(this);
+  void accept(ElementVisitor<dynamic> visitor) {
+    visitor.doForRepeatSection(this);
   }
 }

@@ -5,7 +5,7 @@ abstract class ElementStat with EquatableMixin {
   String? get id;
   String? get templatePath;
 
-  void accept(ElementVisitor visitor);
+  void accept(ElementVisitor<dynamic> visitor);
 
   @override
   List<Object?> get props => [id];

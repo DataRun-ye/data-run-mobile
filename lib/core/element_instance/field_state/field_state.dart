@@ -55,7 +55,7 @@ class FieldState extends ElementStat {
   }
 
   @override
-  void accept(ElementVisitor visitor) {
-    visitor.visitField(this);
+  void accept(ElementVisitor<dynamic> visitor) {
+    visitor.doForField(this);
   }
 }

@@ -1,15 +1,15 @@
 import 'package:datarun/core/element_instance/field_state/field_state.dart';
+import 'package:datarun/core/element_instance/repeat_instance/repeat_row_state.dart';
 import 'package:datarun/core/element_instance/repeat_instance/repeat_state.dart';
 import 'package:datarun/core/element_instance/sction_instance/section_state.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
 
-abstract class ElementVisitor {
-  void visitField(FieldState field);
+abstract class ElementVisitor<T> {
+  T doForField(FieldState field);
 
-  void visitSection(SectionState section);
+  T doForSection(SectionState section);
 
-  void visitRepeatSection(RepeatState section);
+  T doForRepeatSection(RepeatState section);
 
-  void visitRepeatItem(RepeatItemInstance section);
+  T doForRepeatItem(RowState section);
 }
 

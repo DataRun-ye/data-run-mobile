@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:datarun/commons/extensions/list_extensions.dart';
 
 class FormElementState with EquatableMixin {
-
   const FormElementState({
     this.hidden = false,
     this.readOnly = false,
@@ -45,7 +44,7 @@ class FormElementState with EquatableMixin {
   }
 
   @override
-  List<Object?> get props => [hidden, mandatory, readOnly, ...errors.values];
+  List<Object?> get props => [hidden, mandatory, readOnly];
 }
 
 class FieldElementState<T> extends FormElementState {
@@ -113,7 +112,7 @@ class FieldElementState<T> extends FormElementState {
   }
 
   @override
-  List<Object?> get props => super.props..addAll([visibleOptions, value]);
+  List<Object?> get props => super.props..addAll([...visibleOptions, value]);
 }
 
 // class SectionElementState extends FormElementState {

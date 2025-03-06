@@ -55,7 +55,7 @@ class QReferenceDropDownSearchFieldState
     //     .where((element) => element.type == ValueType.OrganisationUnit)
     //     .firstOrNull;
 
-    final ou = formInstance.formMetadata.assignmentModel.entityId;
+    // final ou = formInstance.formMetadata.assignmentModel.entityId;
 
     final listValuesAsync = ref.watch(systemMetadataSubmissionsProvider(
         query: '',

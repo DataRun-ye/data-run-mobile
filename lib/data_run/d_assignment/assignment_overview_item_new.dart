@@ -6,6 +6,7 @@ import 'package:datarun/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarun/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
 import 'package:datarun/data_run/d_assignment/assignment_page.dart';
 import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
+import 'package:datarun/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarun/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
 import 'package:datarun/generated/l10n.dart';
@@ -44,7 +45,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: _buildHighlightedText(
+                  child: buildHighlightedText(
                     assignment.activity,
                     searchQuery,
                     context,
@@ -106,7 +107,8 @@ class AssignmentOverviewItem extends ConsumerWidget {
             const SizedBox(height: 8),
 
             // Resources
-            if (assignment.allocatedResources.isNotEmpty)
+            if (assignment.allocatedResources.isNotEmpty ||
+                assignment.reportedResources.isNotEmpty)
               ResourcesComparisonWidget(
                 headerStyle: Theme.of(context).textTheme.bodySmall,
                 bodyStyle: Theme.of(context).textTheme.bodySmall,
@@ -208,47 +210,47 @@ class AssignmentOverviewItem extends ConsumerWidget {
       children: [
         Icon(icon, size: 20, color: Colors.grey[600]),
         const SizedBox(width: 4),
-        _buildHighlightedText(value, searchQuery, context),
+        buildHighlightedText(value, searchQuery, context),
       ],
     );
   }
 
-  Widget _buildHighlightedText(
-      String text, String searchQuery, BuildContext context,
-      {TextStyle? style}) {
-    if (searchQuery.isEmpty) {
-      return Text(text, softWrap: true);
-    }
-
-    final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
-    if (matches.isEmpty) {
-      return Text(text, softWrap: true);
-    }
-
-    final List<TextSpan> spans = [];
-    int start = 0;
-
-    for (final match in matches) {
-      if (match.start > start) {
-        spans.add(TextSpan(text: text.substring(start, match.start)));
-      }
-      spans.add(TextSpan(
-        text: text.substring(match.start, match.end),
-        style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
-            .merge(style),
-      ));
-      start = match.end;
-    }
-
-    if (start < text.length) {
-      spans.add(TextSpan(text: text.substring(start)));
-    }
-
-    return RichText(
-      text:
-          TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
-    );
-  }
+  // Widget _buildHighlightedText(
+  //     String text, String searchQuery, BuildContext context,
+  //     {TextStyle? style}) {
+  //   if (searchQuery.isEmpty) {
+  //     return Text(text, softWrap: true);
+  //   }
+  //
+  //   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
+  //   if (matches.isEmpty) {
+  //     return Text(text, softWrap: true);
+  //   }
+  //
+  //   final List<TextSpan> spans = [];
+  //   int start = 0;
+  //
+  //   for (final match in matches) {
+  //     if (match.start > start) {
+  //       spans.add(TextSpan(text: text.substring(start, match.start)));
+  //     }
+  //     spans.add(TextSpan(
+  //       text: text.substring(match.start, match.end),
+  //       style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
+  //           .merge(style),
+  //     ));
+  //     start = match.end;
+  //   }
+  //
+  //   if (start < text.length) {
+  //     spans.add(TextSpan(text: text.substring(start)));
+  //   }
+  //
+  //   return RichText(
+  //     text:
+  //         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
+  //   );
+  // }
 
 // Widget _buildHighlightedText(
 //     String text, String searchQuery, BuildContext context,
@@ -333,20 +335,22 @@ class ResourcesComparisonWidget extends ConsumerWidget {
           S.of(context).resources,
           style: headerStyle,
         ),
-        ...assignment.allocatedResources.keys.map((key) {
-          final allocated = assignment.allocatedResources[key] ?? 0;
+        ...assignment.reportedResources.keys.map((key) {
+          final allocated = assignment.reportedResources[key] ?? 0;
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   Intl.message(key.toLowerCase()),
                   style: bodyStyle,
                 ),
+                SizedBox(width: 30,),
                 Text(
-                  '${assignment.reportedResources[key.toLowerCase()] ?? 0} / $allocated',
+                  '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
                   style: bodyStyle?.copyWith(
                     color: Colors.grey.shade700,
                   ),

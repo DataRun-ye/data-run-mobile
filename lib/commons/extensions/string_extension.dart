@@ -1,55 +1,40 @@
-// // ignore_for_file: strict_raw_type
+import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
+import 'package:intl/intl.dart';
+
+extension StringNullExtension on String? {
+  bool get isNullOrEmpty => this?.isEmpty ?? true;
+
+  bool get isNotNullOrEmpty => !isNullOrEmpty;
+
+  bool toBoolean() {
+    return this == 'true' || this == 'TRUE';
+  }
+
+  DateTime? toDate() {
+    DateTime? date;
+
+    // "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    date = DateFormat(DateHelper.DATABASE_FORMAT_EXPRESSION, 'en_US')
+        .tryParse(this ?? '');
+
+    if (date == null) {
+      //"yyyy-MM-dd HH:mm"
+      date = DateFormat(DateHelper.DATABASE_FORMAT_EXPRESSION, 'en_US')
+          .tryParse(this ?? '');
+    }
+
+    if (date == null) {
+      //'yyyy-MM-dd'
+      date =
+          DateFormat(DateHelper.UI_DATE_FORMAT, 'en_US').tryParse(this ?? '');
+    }
+
+    return date;
+  }
+
+// double toDouble() => double.parse(this!);
 //
-// import 'package:d2_remote/core/datarun/utilities/date_utils.dart';
-// import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-//
-// extension StringNullExtension on String? {
-//   DateTime? toDate() {
-//     DateTime? date;
-//     try {
-//       return DDateUtils.databaseDateFormat().parse(this ?? '');
-//     } catch (e) {
-//       logError('wrong DateTime format');
-//     }
-//
-//     try {
-//       return DDateUtils.uiDateFormat().parse(this ?? '');
-//     } catch (e) {
-//       logError('wrong DateTime format');
-//     }
-//
-//     try {
-//       return DDateUtils.oldUiDateFormat().parse(this ?? '');
-//     } catch (e) {
-//       logError('wrong DateTime format');
-//     }
-//
-//     try {
-//       return DDateUtils.databaseDateFormatNoZone().parse(this ?? '');
-//     } catch (e) {
-//       logError('wrong DateTime format');
-//     }
-//
-//     try {
-//       return DDateUtils.dateTimeFormat().parse(this ?? '');
-//     } catch (e) {
-//       logError('wrong DateTime format');
-//     }
-//
-//     return date;
-//   }
-//
-//   bool get isNullOrEmpty => this?.isEmpty ?? true;
-//
-//   bool get isNotNullOrEmpty => !isNullOrEmpty;
-//
-//   bool toBoolean() {
-//     return this == 'true' || this == 'TRUE';
-//   }
-//
-//   double toDouble() => double.parse(this!);
-//
-//   int toInt({int? radix}) => int.parse(this!, radix: radix);
+// int toInt({int? radix}) => int.parse(this!, radix: radix);
 //
 //   String? format(List args, {String needleRegex = '%s'}) {
 //     final RegExp exp = RegExp(needleRegex);
@@ -78,4 +63,4 @@
 //       return '${args[i]}';
 //     });
 //   }
-// }
+}

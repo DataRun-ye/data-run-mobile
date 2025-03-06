@@ -19,9 +19,7 @@ class SectionWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // useRegisterDependencies(element);
 
-    // final formElementHook = useFormElement(element, control);
     final elementPropertiesSnapshot = useStream(element.propertiesChanged);
 
     if (!elementPropertiesSnapshot.hasData) {

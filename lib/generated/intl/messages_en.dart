@@ -163,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sync Configuration"),
         "fieldContainErrors":
             MessageLookupByLibrary.simpleMessage("field Contain Errors"),
+        "fieldIsMandatory":
+            MessageLookupByLibrary.simpleMessage("Field Is Mandatory"),
         "fieldsWithErrorInfo":
             MessageLookupByLibrary.simpleMessage("Fields with Error"),
         "filters": MessageLookupByLibrary.simpleMessage("Filters"),
@@ -344,6 +346,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validationError": MessageLookupByLibrary.simpleMessage(
             "Please correct the errors in the form."),
+        "validationErrorMessage":
+            MessageLookupByLibrary.simpleMessage("Validation Error Message"),
         "valueMustBeGreaterThanOrEqualToError": m9,
         "valueMustBeLessThanOrEqualToError": m10,
         "version": MessageLookupByLibrary.simpleMessage("Version"),

@@ -67,91 +67,11 @@ class EditPanel extends StatelessWidget {
                 label: Text(S.of(context).saveAndClose),
                 icon: Icon(MdiIcons.contentSaveCheck),
               ),
-              // ReactiveValidButton(
-              //   onPressed: () {
-              //     if(formGroup.dirty) {
-              //       onSave(formGroup, EditActionType.EXIT_WITHOUT_SAVING);
-              //     }
-              //     formGroup.markAllAsTouched();
-              //   },
-              //   label: Text(S.of(context).cancel),
-              //   icon: Icon(MdiIcons.contentSaveCheck),
-              // ),
-              // ElevatedButton.icon(
-              //   onPressed: () =>
-              //       onSave(formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
-              //   label: Text(S.of(context).saveAndAddAnother),
-              //   icon: Icon(MdiIcons.contentSavePlus),
-              // ),
-              // ElevatedButton.icon(
-              //   onPressed: () =>
-              //       onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
-              //   label: Text(S.of(context).saveAndClose),
-              //   icon: Icon(MdiIcons.contentSaveCheck),
-              // ),
-              // ElevatedButton.icon(
-              //   onPressed: () =>
-              //       onSave(formGroup, EditActionType.SAVE_AND_EDIT_NEXT),
-              //   label: Text(S.of(context).saveAndEditNext),
-              //   icon: Icon(MdiIcons.contentSaveMove),
-              // ),
             ],
           ),
           const SizedBox(height: 10),
         ],
       ),
     );
-
-    // return ReactiveFormBuilder(
-    //   form: () => control.itemFormGroup,
-    //   builder: (BuildContext context, FormGroup formGroup, Widget? child) {
-    //     return Padding(
-    //       padding: const EdgeInsets.all(16.0),
-    //       child: Column(
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: <Widget>[
-    //           const SizedBox(height: 10),
-    //           Text(title ?? S.of(context).edit),
-    //           const Divider(),
-    //           const SizedBox(height: 10),
-    //           Flexible(
-    //             child: SingleChildScrollView(
-    //               child: Padding(
-    //                 padding: const EdgeInsets.all(8.0),
-    //                 child: PopupFormElementWidgetFactory.createWidget(
-    //                     control.item),
-    //               ),
-    //             ),
-    //           ),
-    //           const SizedBox(height: 20),
-    //           Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //             children: <Widget>[
-    //               ElevatedButton.icon(
-    //                 onPressed: () =>
-    //                     onSave(formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
-    //                 label: Text(S.of(context).saveAndAddAnother),
-    //                 icon: Icon(MdiIcons.contentSavePlus),
-    //               ),
-    //               ElevatedButton.icon(
-    //                 onPressed: () =>
-    //                     onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
-    //                 label: Text(S.of(context).saveAndClose),
-    //                 icon: Icon(MdiIcons.contentSaveCheck),
-    //               ),
-    //               // ElevatedButton.icon(
-    //               //   onPressed: () =>
-    //               //       onSave(formGroup, EditActionType.SAVE_AND_EDIT_NEXT),
-    //               //   label: Text(S.of(context).saveAndEditNext),
-    //               //   icon: Icon(MdiIcons.contentSaveMove),
-    //               // ),
-    //             ],
-    //           ),
-    //           const SizedBox(height: 10),
-    //         ],
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }

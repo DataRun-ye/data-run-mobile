@@ -7,7 +7,6 @@ import 'package:reactive_forms/reactive_forms.dart';
 class FieldValidators {
   static String ArReg1 =
       r'^[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{0,1}[\u0621-\u064A]{0,}[ ]{0,1}$';
-  static String ArReg2 = r'^([\u0621-\u064A]+\s){3}[\u0621-\u064A]+$';
 
   static List<Validator<dynamic>> getValidators(
       ElementAttributesMixin element) {

@@ -33,6 +33,7 @@ Map<T, Set<T>> buildTransitiveReverseDependencyMap<T>(
 
   // Invert the dependency map
   for (var dependent in dependencyMap.keys) {
+    reverseDependencyMap.putIfAbsent(dependent, () => {});
     for (var dependency in dependencyMap[dependent] ?? <T>[]) {
       reverseDependencyMap.putIfAbsent(dependency, () => {}).add(dependent);
     }
@@ -86,89 +87,10 @@ void main() {
   final reverseDependencyMap =
   buildTransitiveReverseDependencyMap(dependencies);
 
+  print(reverseDependencyMap);
   reverseDependencyMap.forEach((key, value) {
   });
 
   // for (var element in propagateChange('transaction', reverseDependencyMap)) {
   // }
 }
-
-// import 'dart:collection';
-//
-// /// Returns the [transitive closure][] of [graph].
-// ///
-// /// [transitive closure]: https://en.wikipedia.org/wiki/Transitive_closure
-// Map<T, Set<T>> transitiveClosure<T>(Map<T, Iterable<T>> graph) {
-//   var result = <T, Set<T>>{};
-//   for (var vertex in graph.keys) {
-//     result[vertex] = Set<T>.from(graph[vertex] ?? <T>[]);
-//   }
-//
-//   for (var k in graph.keys) {
-//     for (var i in graph.keys) {
-//       for (var j in graph.keys) {
-//         if (result[i]!.contains(k) && result[k]!.contains(j)) {
-//           result[i]!.add(j);
-//         }
-//       }
-//     }
-//   }
-//
-//   return result;
-// }
-//
-// Map<T, Set<T>> buildTransitiveReverseDependencyMap<T>(
-//     Map<T, Iterable<T>> dependencyMap) {
-//   final reverseDependencyMap = <T, Set<T>>{};
-//   for (var element in dependencyMap.keys) {
-//     for (var dependency in dependencyMap[element] ?? <T>[]) {
-//       reverseDependencyMap.putIfAbsent(dependency, () => {}).add(element);
-//     }
-//   }
-//
-//   return transitiveClosure(reverseDependencyMap);
-// }
-//
-// /// topologicalSort and propagateChange for a given element
-// Iterable<T> propagateChange<T>(
-//     T changedElement, Map<T, Set<T>> reverseDependencyMap) sync* {
-//   final queue = Queue<T>();
-//   final visited = <T>{};
-//   queue.add(changedElement);
-//
-//   while (queue.isNotEmpty) {
-//     final element = queue.removeFirst();
-//     if (visited.contains(element)) {
-//       print('Circular dependency detected: $element');
-//       continue;
-//     }
-//
-//     visited.add(element);
-//
-//     yield element;
-//
-//     for (var affected in reverseDependencyMap[element] ?? <T>[]) {
-//       if (!visited.contains(affected)) {
-//         queue.add(affected);
-//       }
-//     }
-//   }
-// }
-//
-// void main() {
-//   final dependencies = <String, Set<String>>{
-//     'warehouse': {'country'},
-//     'country': {'continent', 'transaction'},
-//     'continent': {},
-//     'transaction': {'warehouse', 'country'},
-//     'fieldE': {'fieldF'},
-//     'fieldF': {'transaction'},
-//   };
-//
-//   final reverseDependencyMap =
-//       buildTransitiveReverseDependencyMap(dependencies);
-//
-//   for (var element in propagateChange('transaction', reverseDependencyMap)) {
-//     print('Evaluate: $element');
-//   }
-// }

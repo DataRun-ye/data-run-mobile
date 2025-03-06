@@ -11,7 +11,7 @@ import '../../core/models/d_run_entity.dart';
 class ActivityModel with EquatableMixin {
   ActivityModel(
       {Iterable<TeamModel> managedTeams = const [],
-      Iterable<DRunEntity> orgUnits = const [],
+      Iterable<DIdentifiable> orgUnits = const [],
       Iterable<String> assignedForms = const [],
       this.assignedAssignments = 0,
       this.managedAssignments = 0,
@@ -37,12 +37,12 @@ class ActivityModel with EquatableMixin {
       assignedForms: assignedForms,
       managedTeams: managedTeams.map((e) => TeamModel.fromIdentifiable(
           identifiableEntity: e, formPermissions: e.formPermissions)),
-      orgUnits: orgUnits.map((e) => DRunEntity(
+      orgUnits: orgUnits.map((e) => DIdentifiable(
             id: e.id,
             code: e.code,
             name: e.name,
           )),
-      user: DRunEntity(
+      user: DIdentifiable(
         id: user!.id,
         code: user.code,
         name: user.name,
@@ -53,7 +53,7 @@ class ActivityModel with EquatableMixin {
               formPermissions: userTeam.formPermissions)
           : null,
       activity: activity != null
-          ? DRunEntity(
+          ? DIdentifiable(
               id: activity.id,
               code: activity.code,
               name: activity.name,
@@ -63,22 +63,22 @@ class ActivityModel with EquatableMixin {
   }
 
   final IList<TeamModel> managedTeams;
-  final IList<DRunEntity> orgUnits;
+  final IList<DIdentifiable> orgUnits;
   final IList<String> assignedForms;
-  final DRunEntity user;
+  final DIdentifiable user;
   final TeamModel? assignedTeam;
-  final DRunEntity? activity;
+  final DIdentifiable? activity;
 
   final int assignedAssignments;
   final int managedAssignments;
 
   ActivityModel copyWith({
     Iterable<TeamModel>? managedTeams,
-    Iterable<DRunEntity>? orgUnits,
+    Iterable<DIdentifiable>? orgUnits,
     Iterable<String>? assignedForms,
-    DRunEntity? user,
+    DIdentifiable? user,
     TeamModel? userTeam,
-    DRunEntity? activity,
+    DIdentifiable? activity,
   }) {
     return ActivityModel(
       assignedForms: assignedForms ?? this.assignedForms,

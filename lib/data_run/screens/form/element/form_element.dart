@@ -35,7 +35,7 @@ part 'section_instance.dart';
 
 // part 'field_reference_instance.dart';
 
-part '../../../form/scanned_code/gs1_scanned_item.dart';
+part 'gs1_scanned_item.dart';
 
 typedef ElementControl<T> = AbstractControl<T>? Function(String path);
 
@@ -241,36 +241,6 @@ sealed class FormElementInstance<T> {
   }
 
   void reset({T? value});
-
-  // @mustCallSuper
-  // void evaluate(
-  //     {String? changedDependency,
-  //     bool updateParent = true,
-  //     bool emitEvent = true}) {
-  //   logDebug('$name, context: $evalContext}, isEval: $_isEvaluating');
-  //   if (_isEvaluating) {
-  //     return;
-  //   }
-  //
-  //   _isEvaluating = true;
-  //
-  //   try {
-  //     elementRuleActions.forEach((ruleAction) {
-  //       logDebug(
-  //           info:
-  //               '$name\'s: ${ruleAction.expression}, action: ${ruleAction.action}');
-  //       ruleAction.evaluate(evalContext)
-  //           ? ruleAction.apply(this,
-  //               updateParent: updateParent, emitEvent: emitEvent)
-  //           : ruleAction.reset(this,
-  //               updateParent: updateParent, emitEvent: emitEvent);
-  //     });
-  //   } catch (e) {
-  //     logError('Error Evaluating: ');
-  //   } finally {
-  //     _isEvaluating = false;
-  //   }
-  // }
 
   static final Set<String> _evaluationStack = {};
 

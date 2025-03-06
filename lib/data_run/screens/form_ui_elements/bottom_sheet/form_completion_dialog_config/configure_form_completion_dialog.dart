@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:datarun/data_run/form/form_element/form_element_iterators/form_element_iterator.dart';
+import 'package:datarun/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarun/data_run/screens/form/element/form_element.dart';
 import 'package:datarun/data_run/screens/form/element/validation/form_element_validator.dart';
 import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/bottom_sheet_content_model.dart';
@@ -98,8 +98,7 @@ class ConfigureFormCompletionDialog {
     return flatMap;
   }
 
-  Map<String, List<FieldWithIssue>> _getFieldsWithIssues(
-      Section rootSection) {
+  Map<String, List<FieldWithIssue>> _getFieldsWithIssues(Section rootSection) {
     // logDebug('formErrorsMap: $formErrors');
     // logDebug('formErrorsMapFlatt: $formErrorsFlatt');
     final Iterable<FieldInstance<dynamic>> fieldsWithErrors =
@@ -108,6 +107,7 @@ class ConfigureFormCompletionDialog {
     final fieldsIssues = fieldsWithErrors.map((element) => FieldWithIssue(
         parent: element.parentSection?.label,
         fieldPath: element.elementPath!,
+        fieldUid: element.name!,
         fieldName: element.label,
         message: _getErrorMessage(element)));
 

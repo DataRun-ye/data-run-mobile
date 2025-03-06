@@ -4,7 +4,7 @@ import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarun/commons/extensions/list_extensions.dart';
 import 'package:datarun/core/utils/get_item_local_string.dart';
 import 'package:datarun/data_run/d_assignment/assignment_page.dart';
-import 'package:datarun/data_run/form/form_element/form_element_iterators/form_element_iterator.dart';
+import 'package:datarun/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarun/data_run/screens/form/element/form_element.dart';
 import 'package:datarun/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -19,12 +19,10 @@ class RepeatTableDataSource extends DataTableSource {
       this.onEdit,
       this.editable = true,
       required this.activityModel,
-      // required this.colsLength,
       List<RepeatItemInstance> elements = const []}) {
     this.elements.addAll(elements);
   }
 
-  // int colsLength;
   final ActivityModel Function() activityModel;
 
   void markEnabled() {
@@ -56,7 +54,6 @@ class RepeatTableDataSource extends DataTableSource {
     notifyListeners();
   }
 
-  // final RepeatInstance repeatInstance;
   final Function(int)? onDelete;
   final Function(int)? onEdit;
   final List<RepeatItemInstance> elements = [];
@@ -195,7 +192,6 @@ class RepeatTableDataSource extends DataTableSource {
     }
 
     if (field.hidden) {
-      // Wrapping the content in a shaded container when hidden
       return Container(
         color: Colors.grey.shade300,
         padding: const EdgeInsets.all(8.0),

@@ -179,21 +179,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     ];
   }
 
-  // List<DataColumn> _buildVisibleColumns(
-  //     Iterable<FieldTemplate> tableColumns, BuildContext context) {
-  //   return [
-  //     const DataColumn(label: Text('#')),
-  //     ...tableColumns
-  //         .map((fieldTemplate) => DataColumn(
-  //             label: Text(getItemLocalString(fieldTemplate.label.unlockView,
-  //                 defaultString: fieldTemplate.name)),
-  //             numeric: fieldTemplate.isNumeric))
-  //         .toList(),
-  //     DataColumn(label: Text(S.of(context).edit)),
-  //     DataColumn(label: Text(S.of(context).delete)),
-  //   ];
-  // }
-
   Future<void> _showEditPanel(BuildContext context, FormInstance formInstance,
       ActivityModel activityModel,
       [RepeatItemInstance? repeatItem]) async {

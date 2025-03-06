@@ -12,17 +12,17 @@ class TeamModel with EquatableMixin {
     return TeamModel._(
         activity: activity,
         team:
-            DRunEntity.fromIdentifiable(identifiableEntity: identifiableEntity),
+            DIdentifiable.fromIdentifiable(identifiableEntity: identifiableEntity),
         formPermissions: formPermissions);
   }
 
   TeamModel._(
-      {required DRunEntity team,
+      {required DIdentifiable team,
       Iterable<TeamFormPermission>? formPermissions,
       this.activity})
       : this._team = team,this.formPermissions = IList.orNull(formPermissions) ?? IList();
 
-  final DRunEntity _team;
+  final DIdentifiable _team;
 
   String? get name => _team.name;
 

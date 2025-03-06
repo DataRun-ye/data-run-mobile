@@ -2,6 +2,7 @@ import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/core/utilities/list_extensions.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
+import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
@@ -274,7 +275,8 @@ class FormSubmissionsTable extends HookConsumerWidget {
       fields.forEach((field) {
         if (field.name != null) {
           if (field.type!.isSection && data.containsKey(field.name)) {
-            _extract(data[field.name], field.fields.toList());
+            _extract(
+                data[field.name], (field as SectionTemplate).fields.toList());
           } else if (field.type!.isRepeatSection &&
               data.containsKey(field.name)) {
             // extractedValues[field.name!] = data[field.name];

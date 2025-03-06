@@ -6,7 +6,7 @@ import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:d2_remote/shared/utilities/save_option.util.dart';
-import 'package:datarun/commons/helpers/map.dart';
+import 'package:datarun/commons/extensions/list_extensions.dart';
 import 'package:datarun/data_run/d_activity/activity_provider.dart';
 import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
 import 'package:datarun/data_run/d_assignment/model/extract_and_sum_allocated_actual.dart';
@@ -41,6 +41,7 @@ class Assignments extends _$Assignments {
     }
 
     final List<DAssignment> assignments = await query.get();
+
     final futures =
         assignments.map<Future<AssignmentModel>>((assignment) async {
       final activityEntity = await D2Remote.activityModuleD.activity
@@ -73,6 +74,7 @@ class Assignments extends _$Assignments {
             assignmentSubmissionsProvider(assignment.id!, form: form).future));
       }
 
+
       AssignmentStatus status;
 
       // if (submissions.isEmpty) {
@@ -83,6 +85,14 @@ class Assignments extends _$Assignments {
       //   status = sortedSubmissions.first.status!;
       status = assignment.status ?? AssignmentStatus.NOT_STARTED;
       // }
+
+      final resourceHeaders = assignments
+              .maxBy((item) => item.allocatedResources.length)
+              ?.allocatedResources
+              .keys
+              .where((t) => t != 'Latitude' && t != 'Longitude')
+              .toList() ??
+          [];
 
       return AssignmentModel(
         id: assignment.id!,
@@ -100,20 +110,19 @@ class Assignments extends _$Assignments {
             ? AssignmentModel.calculateAssignmentDate(
                 activityEntity.startDate, assignment.startDay)
             : null,
-        // DateTime.parse(assignment.startDate!)
         startDay: assignment.startDay,
         rescheduledDate: assignment.startDate != null
             ? DateTime.parse(
                 DateHelper.fromDbUtcToUiLocalFormat(assignment.startDate!))
             : null,
         allocatedResources: managedTeams.length > 0
-            ? assignment.allocatedResources
-                .filter((entry) =>
-                    entry.key != 'Latitude' && entry.key != 'Longitude')
-                .map((key, value) => MapEntry(key, value ?? 0))
-            : {},
+            ? resourceHeaders
+                .asMap()
+                .map((k, v) => MapEntry(v, assignment.allocatedResources[v]))
+            : {for (var i in resourceHeaders) i: 0},
         reportedResources: sumActualResources(
-            submissions, assignment.allocatedResources.keys.toList()),
+            submissions,
+            resourceHeaders),
         forms: assignment.forms,
       );
     }).toList();

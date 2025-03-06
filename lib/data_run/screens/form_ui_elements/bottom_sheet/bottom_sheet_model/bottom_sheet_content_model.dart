@@ -16,7 +16,7 @@ class DialogContentModel with _$DialogContentModel {
 @freezed
 abstract class BottomSheetBodyModel with _$BottomSheetBodyModel {
   factory BottomSheetBodyModel.messageBody({required String message}) =
-  MessageBody;
+      MessageBody;
 
   factory BottomSheetBodyModel.errorsBody({
     required String message,
@@ -24,12 +24,14 @@ abstract class BottomSheetBodyModel with _$BottomSheetBodyModel {
   }) = ErrorsBody;
 }
 
-
 @freezed
 class FieldWithIssue with _$FieldWithIssue {
   const factory FieldWithIssue({
+    String? repeatGroupUid,
+    String? rowUid,
     String? parent,
     required String fieldPath, // path to the leaf field with an error
+    required String fieldUid, // path to the leaf field with an error
     required String fieldName, // name of the leaf field
     @Default(IssueType.Error) IssueType issueType,
     @Default('Error') String message,

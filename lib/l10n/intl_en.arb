@@ -296,5 +296,7 @@
   "copiedToClipboard": "{value} Copied To Clipboard",
   "changingStateMightResultClearingDependentsElements": "Changing state might result clearing dependents elements",
   "restoreItem": "Restore Item",
-  "deleteRestore": "Delete / Restore"
+  "deleteRestore": "Delete / Restore",
+  "fieldIsMandatory": "Field Is Mandatory",
+  "validationErrorMessage": "Validation Error Message"
 }

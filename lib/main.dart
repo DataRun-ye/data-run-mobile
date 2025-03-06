@@ -3,23 +3,23 @@ import 'dart:io';
 
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
-import 'package:datarun/commons/prefs/preference_provider.dart';
+
 import 'package:datarun/core/auth/auth_service.dart';
 import 'package:datarun/core/auth/user_session_manager.dart';
 import 'package:datarun/data_run/screens/login_screen/auth_wrapper.dart';
 import 'package:datarun/generated/l10n.dart';
 import 'package:datarun/main.reflectable.dart';
 import 'package:datarun/main_constants/main_constants.dart';
-import 'package:datarun/utils/app_appearance.dart';
+import 'package:datarun/utils/appearance_utils.dart';
 import 'package:datarun/utils/navigator_key.dart';
 import 'package:datarun/utils/user_preferences/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 // import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -28,11 +28,7 @@ AuthenticationResult? authenticationResult;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeReflectable();
-  await PreferenceProvider.initialize();
   final sharedPreferences = await SharedPreferences.getInstance();
-
-  // // SDK initialization and repository setup
-  // await D2Remote.initialize();
 
   // await ConnectivityService.instance.initialize();
 
@@ -53,11 +49,11 @@ Future<void> main() async {
   // does the user have active session in preference (local check)
   final bool hasExistingSession = userSessionManager.isAuthenticated;
   final bool needsSync = userSessionManager.needsSync();
-  DatabaseFactory? databaseFactory;
-  if (Platform.isWindows) {
+  if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
+
   // is has active session initialize, otherwise it will be initialized
   // by user login in.
   if (hasExistingSession) {
@@ -115,7 +111,12 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(preferenceNotifierProvider(Preference.language));
-
+    final colorSeed = ColorSeed
+        .values[ref.watch(preferenceNotifierProvider(Preference.colorSeed))];
+    final useMaterial3 =
+        ref.watch(preferenceNotifierProvider(Preference.useMaterial3));
+    final themeMode = ThemeMode
+        .values[ref.watch(preferenceNotifierProvider(Preference.themeMode))];
     Locale locale = Locale(language, language == 'en' ? 'en_US' : '');
     timeago.setLocaleMessages(
         language,
@@ -126,12 +127,13 @@ class App extends ConsumerWidget {
         });
 
     return MaterialApp(
+      restorationScopeId: 'Test__',
       navigatorKey: navigatorKey,
       title: 'Datarun',
       debugShowCheckedModeBanner: false,
-      themeMode: ref.watch(appAppearanceNotifierProvider).themeMode,
-      theme: getTheme(ref),
-      darkTheme: getDarkTheme(ref),
+      themeMode: themeMode,
+      theme: getTheme(colorSeed, useMaterial3),
+      darkTheme: getDarkTheme(colorSeed, useMaterial3),
       localizationsDelegates: localizationsDelegates,
       supportedLocales: supportedLocales,
       locale: locale,
@@ -142,29 +144,19 @@ class App extends ConsumerWidget {
     );
   }
 
-  ThemeData getTheme(WidgetRef ref) => ThemeData(
-        colorSchemeSeed:
-            ref.watch(appAppearanceNotifierProvider).colorSelectionMethod ==
-                    ColorSelectionMethod.colorSeed
-                ? ref.watch(appAppearanceNotifierProvider).colorSelected.color
-                : null,
-        colorScheme:
-            ref.watch(appAppearanceNotifierProvider).colorSelectionMethod ==
-                    ColorSelectionMethod.image
-                ? ref.watch(appAppearanceNotifierProvider).imageColorScheme
-                : null,
-        useMaterial3: ref.watch(appAppearanceNotifierProvider).useMaterial3,
+  ThemeData getTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
+        // colorSchemeSeed: colorSeed.color,
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: colorSeed.color, brightness: Brightness.light),
+        useMaterial3: useMaterial3,
         brightness: Brightness.light,
       );
 
-  ThemeData getDarkTheme(WidgetRef ref) => ThemeData(
-        colorSchemeSeed: ref
-                    .watch(appAppearanceNotifierProvider)
-                    .colorSelectionMethod ==
-                ColorSelectionMethod.colorSeed
-            ? ref.watch(appAppearanceNotifierProvider).colorSelected.color
-            : ref.watch(appAppearanceNotifierProvider).imageColorScheme.primary,
-        useMaterial3: ref.watch(appAppearanceNotifierProvider).useMaterial3,
+  ThemeData getDarkTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
+        // colorSchemeSeed: colorSeed.color,
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: colorSeed.color, brightness: Brightness.dark),
+        useMaterial3: useMaterial3,
         brightness: Brightness.dark,
       );
 

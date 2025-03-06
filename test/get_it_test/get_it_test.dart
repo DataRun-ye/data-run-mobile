@@ -1,3 +1,39 @@
+// import 'package:datarun/main.reflectable.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:xwidget_el/xwidget_el.dart';
+
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   SharedPreferences.setMockInitialValues({});
+//   initializeReflectable();
+//   final dependencies = Dependencies({
+//     'size': {'width': 300.0, 'height': 200},
+//     'indexes': [1, 0, 2],
+//     'users': [
+//       {'name': 'Mike Jones'},
+//       {'name': 'Sally Smith'}
+//     ],
+//     'myFunctions': {
+//       'func1': (a) => a,
+//       'func2': (a, b) => [a, b],
+//     },
+//   });
+//
+//   final parser = ELParser();
+//
+//   // final result = parser.parse("users[indexes[0]].name + ', ' + users[0].name");
+//   // expect(result.value.evaluate(dependencies), "Sally Smith, Mike Jones");
+//
+//   final result =
+//       parser.evaluate('users[4 % length(indexes)].name', dependencies);
+//   expect(result, 'Sally Smith');
+//
+//   // final result2 = parser.evaluateEmbedded("Hello, ${"users[4 % length(indexes)].name"}", dependencies);
+//   // expect(result, "Hello, Sally Smith");
+// }
+
 // // ignore_for_file: unnecessary_type_check, unused_local_variable, unreachable_from_main
 //
 // import 'package:get_it/get_it.dart';

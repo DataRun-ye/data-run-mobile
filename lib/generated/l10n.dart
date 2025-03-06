@@ -2287,6 +2287,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Field Is Mandatory`
+  String get fieldIsMandatory {
+    return Intl.message(
+      'Field Is Mandatory',
+      name: 'fieldIsMandatory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation Error Message`
+  String get validationErrorMessage {
+    return Intl.message(
+      'Validation Error Message',
+      name: 'validationErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

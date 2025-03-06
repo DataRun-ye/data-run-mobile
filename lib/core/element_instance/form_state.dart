@@ -6,6 +6,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormState extends SectionState {
   FormState({
+    this.version = 0,
     required super.id,
     super.fields = const IMapConst({}),
     this.isValid = true,
@@ -17,11 +18,14 @@ class FormState extends SectionState {
       [Map<String, dynamic>? value]) {
     return FormState(
         id: template.name!,
+        version: 0,
         fields: IMap.fromIterable(template.rootElementTemplate.children,
             keyMapper: (t) => t.id!,
             valueMapper: (t) => fromTemplate(t, value: value?[t.path])),
         templatePath: null);
   }
+
+  final int version;
 
   // final Map<String, SectionState> sections; // Keyed by section IDs
   // final String id;
@@ -35,15 +39,20 @@ class FormState extends SectionState {
     IMap<String, ElementStat>? fields,
     bool? isValid,
     bool? isSubmitting,
+    int? version,
   }) {
     return FormState(
       id: id ?? this.id,
       fields: fields ?? this.fields,
       isValid: isValid ?? this.isValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
+      version: version ?? this.version,
       templatePath: null,
     );
   }
+
+  @override
+  List<Object?> get props => super.props..addAll([version]);
 // FormState updateCell(path, int? newValue) {
 //   final updatedCellKey = '${rowKey}_$colKey';
 //   final updatedCell = fields[path]?.copyWith(value: newValue);

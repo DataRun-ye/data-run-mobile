@@ -287,8 +287,8 @@ class CodeValidator {
 }
 
 class ParsingException extends DException {
-  ParsingException(String? message, {super.cause})
-      : super(message ?? 'FormElementException: element error.');
+  ParsingException(String? message, Object? cause)
+      : super(message ?? 'FormElementException: element error.', cause);
 }
 
 class ScannerOverlay extends CustomPainter {

@@ -3,7 +3,7 @@ import 'package:d2_remote/modules/datarun/form/shared/field_template/section_tem
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:datarun/core/utils/get_item_local_string.dart';
-import 'package:datarun/data_run/form/form_template/field_template_traverse.extension.dart';
+import 'package:datarun/core/form/element_iterator/field_template_traverse.extension.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -157,7 +157,6 @@ class SubmissionInfoState extends ConsumerState<SubmissionInfo> {
   String generateFormSummary(
       Map<String, dynamic> fields, SectionTemplate rootSection,
       [int itemsToTake = 5]) {
-
     final flatFormValue = flattenValueMap(fields);
 
     final flatTemplate =
@@ -254,12 +253,16 @@ List<dynamic> extractValues(
     if (criteria == null || criteria(template)) {
       if (formValues.containsKey(template.name)) {
         final value = formValues[template.name];
-        if (template.fields.isNotEmpty && value is Map<String, dynamic>) {
+        if (template is SectionTemplate &&
+            template.fields.isNotEmpty &&
+            value is Map<String, dynamic>) {
           // If the value is a nested Map, recurse into it
           extractedValues.addAll(extractValues(
               value, template.fields.unlockView,
               criteria: criteria));
-        } else if (template.fields.isNotEmpty && value is List) {
+        } else if (template is SectionTemplate &&
+            template.fields.isNotEmpty &&
+            value is List) {
           // If the value is a List, iterate through it
           for (final item in value) {
             if (item is Map<String, dynamic>) {

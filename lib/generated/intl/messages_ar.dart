@@ -157,6 +157,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fetchUpdates": MessageLookupByLibrary.simpleMessage("مزامنة إعدادات"),
         "fieldContainErrors":
             MessageLookupByLibrary.simpleMessage("يحوي أخطاء"),
+        "fieldIsMandatory":
+            MessageLookupByLibrary.simpleMessage("Field Is Mandatory"),
         "fieldsWithErrorInfo": MessageLookupByLibrary.simpleMessage(
             "قم بالرجوع ومراجعة الإخطاء أو (ليس الآن) للحفظ والمراجعة في وقت لاحق! لن يتسنى لك تعيين الاستمارة كنهائية وإرسالها إلا بعد تصحيح الأخطاء: "),
         "filters": MessageLookupByLibrary.simpleMessage("تصفية البيانات"),
@@ -343,6 +345,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validationError": MessageLookupByLibrary.simpleMessage(
             "يرجى تصحيح الأخطاء في النموذج قبل المتابعة."),
+        "validationErrorMessage":
+            MessageLookupByLibrary.simpleMessage("Validation Error Message"),
         "valueMustBeGreaterThanOrEqualToError": m9,
         "valueMustBeLessThanOrEqualToError": m10,
         "version": MessageLookupByLibrary.simpleMessage("الإصدار"),

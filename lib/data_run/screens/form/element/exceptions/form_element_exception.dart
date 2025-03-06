@@ -8,8 +8,8 @@ class CircularDependencyException extends FormElementException {
 }
 
 class FormElementException extends DException {
-  FormElementException(String? message, {super.cause})
-      : super(message ?? 'FormElementException: element error.');
+  FormElementException(String? message, {Object? cause})
+      : super(message ?? 'FormElementException: element error.', cause);
 }
 
 class FormElementNotFoundException extends FormElementException {
@@ -18,8 +18,7 @@ class FormElementNotFoundException extends FormElementException {
 }
 
 class FormRepeatElementInvalidIndexException extends FormElementException {
-  FormRepeatElementInvalidIndexException(
-      {Object? source, required this.index})
+  FormRepeatElementInvalidIndexException({Object? source, required this.index})
       : super(
             'FormRepeatElementInvalidIndexException: Index \'$index\' is not a valid index for FormRepeatElement',
             cause: source);
@@ -36,7 +35,7 @@ class FormElementParentNotFoundException extends DException {
   FormElementParentNotFoundException(this.widget)
       : super(
             'FormElementParentNotFoundException: couldn\'t find a parent widget. An instance of ${widget.runtimeType.toString()} widget must be under a FormElement Widget in the widgets tree.',
-            cause: widget);
+            widget);
 
   /// The widget that throws this exception.
   Widget widget;
@@ -50,7 +49,7 @@ class FormSectionParentNotFoundException extends DException {
   FormSectionParentNotFoundException(this.widget)
       : super(
             'FormSectionParentNotFoundException: couldn\'t find a parent widget. An instance of ${widget.runtimeType.toString()} widget must be under a SectionElement Widget in the widgets tree.',
-            cause: widget);
+            widget);
 
   /// The widget that throws this exception.
   Widget widget;
@@ -64,7 +63,7 @@ class FormRepeatedParentNotFoundException extends DException {
   FormRepeatedParentNotFoundException(this.widget)
       : super(
             'FormRepeatedParentNotFoundException: couldn\'t find a parent widget. An instance of ${widget.runtimeType.toString()} widget must be under a Repeat Element type Widget in the widgets tree.',
-            cause: widget);
+            widget);
 
   /// The widget that throws this exception.
   Widget widget;

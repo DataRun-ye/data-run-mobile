@@ -231,7 +231,7 @@ class AssignmentFilterQuery with EquatableMixin {
     Map<String, dynamic>? filters,
     this.sortBy,
     this.ascending = true,
-    this.isCardView = true,
+    this.isCardView = false,
   }) : filters = filters ?? {};
 
   final String searchQuery;

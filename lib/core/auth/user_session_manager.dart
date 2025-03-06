@@ -19,8 +19,8 @@ Future<DUser?> userInfo(UserInfoRef ref) {
 }
 
 class UserSessionManager {
-
   UserSessionManager(this.prefs);
+
   static const IS_AUTHENTICATED = 'IS_AUTHENTICATED';
   static const SECURE_SESSION = 'SECURE_SESSION';
 
@@ -98,11 +98,11 @@ class UserSessionManager {
 
   SyncInterval getSyncInterval() {
     // final prefs = ref.watch(sharedPreferencesProvider);
-    final intervalMs =
-        prefs.getInt(SyncService.SYNC_INTERVAL) ?? SyncInterval.daily.milliseconds;
+    final intervalMs = prefs.getInt(SyncService.SYNC_INTERVAL) ??
+        SyncInterval.biweekly.milliseconds;
     return SyncInterval.values.firstWhere(
-            (interval) => interval.milliseconds == intervalMs,
-        orElse: () => SyncInterval.daily);
+        (interval) => interval.milliseconds == intervalMs,
+        orElse: () => SyncInterval.biweekly);
   }
 
   bool needsSync() {
@@ -114,6 +114,7 @@ class UserSessionManager {
     final currentTime = DateTime.now().millisecondsSinceEpoch;
     return (currentTime - lastSyncTime) > syncInterval.milliseconds;
   }
+
   // Clear user data from SharedPreferences
   Future<void> clearSessionFromPreferences() async {
     prefs.remove(D2Remote.currentDatabaseNameKey);
@@ -134,7 +135,6 @@ class UserSessionManager {
 }
 
 class SessionData {
-
   SessionData({
     required this.username,
     required this.password,
@@ -154,6 +154,7 @@ class SessionData {
           : null,
     );
   }
+
   final String? username;
   final String? password;
   final String? serverUrl;

@@ -5,10 +5,52 @@ part 'preference.g.dart';
 
 enum Preference<T> {
   shouldShowWalkthrough('should_show_walkthrough', true),
-  themeMode('theme_mode', 0),
-  material3('material_3', false),
   language('language', 'ar'),
-  appColor('app_color', '');
+  // appearance
+  useMaterial3('useMaterial3', false),
+
+  /// system, light, dark,
+  themeMode('themeMode', 0),
+
+  /// Available values and preference string value is the name string
+  /// of the enum value
+  /// ```dart
+  /// enum ColorSeed {
+  ///   baseColor,
+  ///   indigo,
+  ///   blue,
+  ///   teal,
+  ///   green,
+  ///   yellow,
+  ///   orange,
+  ///   deepOrange;
+  /// }
+  /// ```
+  colorSeed('colorSeed', 0),
+
+  // /// Available values and preference string value is the name string
+  // /// of the enum value
+  // /// ```dart
+  // /// enum ColorImageProvider {
+  // ///   leaves,
+  // ///   peonies,
+  // ///   bubbles,
+  // ///   seaweed,
+  // ///   seagrapes,
+  // ///   petals;
+  // /// }
+  // /// ```
+  // colorImageProvider('colorImageProvider', null),
+
+  // /// light => const ColorScheme.light()
+  // ///
+  // /// dark => const ColorScheme.dark()
+  // imageColorScheme('imageColorScheme', 'light'),
+
+  /// colorSeed => ColorSelectionMethod.colorSeed
+  ///
+  /// image => ColorSelectionMethod.image
+  colorSelectionMethod('colorSelectionMethod', 'colorSeed');
   // credentialsSet(SECURE_CREDENTIALS, false),
   // serverUrl(SECURE_SERVER_URL, ''),
   // username(SECURE_USER_NAME, '');

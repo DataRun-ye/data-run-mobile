@@ -1,9 +1,11 @@
 import 'package:d2_remote/shared/entities/identifiable.entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/cupertino.dart';
 
-class DRunEntity with EquatableMixin {
-  DRunEntity(
+@immutable
+class DIdentifiable with EquatableMixin {
+  DIdentifiable(
       {this.id,
       this.code,
       this.name,
@@ -14,13 +16,13 @@ class DRunEntity with EquatableMixin {
       : this.label = label,
         this.properties = properties;
 
-  factory DRunEntity.fromIdentifiable(
+  factory DIdentifiable.fromIdentifiable(
       {required IdentifiableEntity identifiableEntity,
       IMap<String, dynamic> label = const IMapConst({}),
       IMap<String, dynamic> properties = const IMapConst({}),
       bool disabled = false,
       bool deleted = false}) {
-    return DRunEntity(
+    return DIdentifiable(
         id: identifiableEntity.id,
         code: identifiableEntity.code,
         name: identifiableEntity.name,
@@ -38,14 +40,14 @@ class DRunEntity with EquatableMixin {
   final IMap<String, dynamic> label;
   final IMap<String, dynamic> properties;
 
-  DRunEntity copyWith({
+  DIdentifiable copyWith({
     String? id,
     String? code,
     String? name,
     IMap<String, dynamic>? label,
     IMap<String, dynamic>? properties,
   }) {
-    return DRunEntity(
+    return DIdentifiable(
       id: id ?? this.id,
       code: code ?? this.code,
       name: name ?? this.name,

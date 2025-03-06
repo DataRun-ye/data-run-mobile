@@ -47,8 +47,8 @@ class SectionState extends ElementStat {
   }
 
   @override
-  void accept(ElementVisitor visitor) {
-    visitor.visitSection(this);
+  void accept(ElementVisitor<dynamic> visitor) {
+    visitor.doForSection(this);
   }
 
   @override

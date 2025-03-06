@@ -60,9 +60,9 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
 
     userActivities.add(
       ActivityModel(
-        user: DRunEntity.fromIdentifiable(identifiableEntity: user!),
+        user: DIdentifiable.fromIdentifiable(identifiableEntity: user!),
         assignedTeam: activityAssignedTeam,
-        activity: DRunEntity.fromIdentifiable(
+        activity: DIdentifiable.fromIdentifiable(
             identifiableEntity: activity,
             properties: IMap({
               'startDate': activity.startDate,
@@ -75,7 +75,7 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
                 <String>[],
         managedTeams: activityManagedTeams,
         orgUnits: [...managedOrgUnits, ...assignedOrgUnits]
-            .map((o) => DRunEntity.fromIdentifiable(identifiableEntity: o)),
+            .map((o) => DIdentifiable.fromIdentifiable(identifiableEntity: o)),
       ),
     );
   }

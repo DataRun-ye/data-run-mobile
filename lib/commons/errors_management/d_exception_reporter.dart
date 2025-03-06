@@ -13,7 +13,7 @@ class DExceptionReporter {
   void report(Object? error, {bool showToUser = false}) {
     final message = ErrorMessage.getMessage(error);
 
-    logException(DException(error.toString(), cause: error));
+    logException(DException(error.toString(), error));
 
     if (showToUser) {
       _showUserAlert(message);

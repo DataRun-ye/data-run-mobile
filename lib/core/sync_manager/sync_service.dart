@@ -44,31 +44,6 @@ class SyncService extends _$SyncService {
     // return needsSync();
   }
 
-  // Future<void> setSyncInterval(SyncInterval interval) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setInt(SYNC_INTERVAL, interval.milliseconds);
-  // }
-  //
-  // SyncInterval getSyncInterval() {
-  //   final prefs = ref.watch(sharedPreferencesProvider);
-  //   final intervalMs =
-  //       prefs.getInt(SYNC_INTERVAL) ?? SyncInterval.daily.milliseconds;
-  //   return SyncInterval.values.firstWhere(
-  //       (interval) => interval.milliseconds == intervalMs,
-  //       orElse: () => SyncInterval.daily);
-  // }
-  //
-  // Future<bool> needsSync() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final lastSyncTime = prefs.getInt(LAST_SYNC_TIME) ?? 0;
-  //   final syncInterval = await getSyncInterval();
-  //   final syncDone = prefs.getBool(SYNC_DONE) ?? false;
-  //   if (!syncDone) return true;
-  //
-  //   final currentTime = DateTime.now().millisecondsSinceEpoch;
-  //   return (currentTime - lastSyncTime) > syncInterval.milliseconds;
-  // }
-
   Future<void> performSync(
       {OnProgressUpdate? onProgressUpdate,
       ProgressCallback? onFinish,

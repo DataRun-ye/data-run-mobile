@@ -10,7 +10,6 @@ import 'package:datarun/data_run/screens/login_screen/auth_wrapper.dart';
 import 'package:datarun/generated/l10n.dart';
 import 'package:datarun/main.reflectable.dart';
 import 'package:datarun/main_constants/main_constants.dart';
-import 'package:datarun/utils/appearance_utils.dart';
 import 'package:datarun/utils/navigator_key.dart';
 import 'package:datarun/utils/user_preferences/preference.dart';
 import 'package:flutter/material.dart';

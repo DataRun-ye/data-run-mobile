@@ -19,12 +19,13 @@ import 'package:datarun/core/form/model/section_ui_model_impl.dart';
 import 'package:datarun/core/form/model/store_result.dart';
 import 'package:datarun/core/form/ui/validation/field_error_message_provider.dart';
 import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/bottom_sheet_content_model.dart';
+import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const int loopThreshold = 5;
 
-class FormRepositoryImpl implements FormRepository {
+class FormRepositoryImpl with EquatableMixin implements FormRepository {
   FormRepositoryImpl(
     this.formValueStore,
     this.fieldErrorMessageProvider,
@@ -880,4 +881,7 @@ class FormRepositoryImpl implements FormRepository {
       return [];
     }
   }
+
+  @override
+  List<Object?> get props => [formValueStore.recordUid];
 }

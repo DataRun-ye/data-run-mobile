@@ -7,10 +7,10 @@ enum Preference<T> {
   shouldShowWalkthrough('should_show_walkthrough', true),
   language('language', 'ar'),
   // appearance
-  useMaterial3('useMaterial3', false),
+  useMaterial3('useMaterial3', true),
 
   /// system, light, dark,
-  themeMode('themeMode', 0),
+  themeMode('themeMode', 1),
 
   /// Available values and preference string value is the name string
   /// of the enum value
@@ -26,7 +26,7 @@ enum Preference<T> {
   ///   deepOrange;
   /// }
   /// ```
-  colorSeed('colorSeed', 0),
+  colorSeed('colorSeed', 2),
 
   // /// Available values and preference string value is the name string
   // /// of the enum value

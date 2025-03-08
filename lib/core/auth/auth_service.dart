@@ -3,29 +3,23 @@ import 'dart:io';
 import 'package:d2_remote/core/datarun/exception/exception.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
+import 'package:datarun/app/app.router.dart';
 import 'package:datarun/commons/constants.dart';
 import 'package:datarun/commons/errors_management/d_exception_reporter.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:datarun/core/auth/user_session_manager.dart';
-import 'package:datarun/data_run/screens/login_screen/login_page.dart';
-import 'package:datarun/utils/navigator_key.dart';
+import 'package:datarun/core/network/connectivy_service.dart';
 import 'package:flutter/material.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:stacked_services/stacked_services.dart';
 
-import '../network/connectivy_service.dart';
-
-part 'auth_service.g.dart';
-
-@riverpod
-AuthService authService(AuthServiceRef ref) {
-  throw UnimplementedError('authenticationServiceProvider is not implemented');
-}
-
+@injectable
 class AuthService {
-  AuthService(this._sessionManager);
+  AuthService(this._sessionManager, this._navigationService);
 
   final UserSessionManager _sessionManager;
+  final NavigationService _navigationService;
 
   Future<bool> isAuthenticatedOnline() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -37,10 +31,11 @@ class AuthService {
       return await _attemptNetworkAuthentication();
     } else {
       DatabaseFactory? databaseFactory;
-      if(Platform.isWindows) {
+      if (Platform.isWindows) {
         sqfliteFfiInit();
         databaseFactory = databaseFactoryFfi;
       }
+
       /// Allow offline access with valid session
       return D2Remote.isAuthenticated(databaseFactory: databaseFactory);
     }
@@ -109,11 +104,6 @@ class AuthService {
     );
     try {
       await throwIfFirstTimeAndNoActiveNetwork();
-      DatabaseFactory? databaseFactory;
-      if(Platform.isWindows) {
-        sqfliteFfiInit();
-        databaseFactory = databaseFactoryFfi;
-      }
 
       final authResult = await D2Remote.authenticate(
           username: username,
@@ -144,10 +134,11 @@ class AuthService {
   Future<void> logout() async {
     await D2Remote.logOut();
     await _sessionManager.clearAllPreferences();
-    Navigator.pushAndRemoveUntil(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-        (Route<dynamic> route) => false);
+    _navigationService.replaceWithLoginPage();
+    // Navigator.pushAndRemoveUntil(
+    //     navigatorKey.currentContext!,
+    //     MaterialPageRoute(builder: (context) => LoginPage()),
+    //     (Route<dynamic> route) => false);
   }
 
   Future<void> throwIfFirstTimeAndNoActiveNetwork() async {

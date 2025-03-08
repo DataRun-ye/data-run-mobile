@@ -31,7 +31,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
     return ReactiveChoiceChips<String>(
       formControl: formInstance.form.control(element.elementPath!)
           as FormControl<String>,
-      validationMessages: validationMessages(context),
+      validationMessages: validationMessages(),
       selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
       options: _getChipOptions(progressStatuses),
       decoration: InputDecoration(

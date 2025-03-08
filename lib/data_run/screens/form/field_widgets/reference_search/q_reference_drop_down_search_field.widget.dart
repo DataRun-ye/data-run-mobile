@@ -69,7 +69,7 @@ class QReferenceDropDownSearchFieldState
           widgetKey: _dropDownCustomBGKey,
           formControl: formInstance.form.control(widget.element.elementPath!)
               as FormControl<String>,
-          validationMessages: validationMessages(context),
+          validationMessages: validationMessages(),
           // valueAccessor: NameToLabelValueAccessor(households),
           dropdownDecoratorProps: DropDownDecoratorProps(
             decoration: InputDecoration(

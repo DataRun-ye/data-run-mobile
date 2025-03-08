@@ -56,21 +56,6 @@ class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
                     ],
                   ),
                 ),
-                Container(
-                  width: _graphicSize,
-                  height: _graphicSize,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF6E7B0),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(_graphicSize / 2),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    '⭐️',
-                    style: TextStyle(fontSize: 30),
-                  ),
-                )
               ],
             ),
             verticalSpaceMedium,

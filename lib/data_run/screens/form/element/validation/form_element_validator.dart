@@ -1,7 +1,6 @@
 import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:datarun/generated/l10n.dart';
-import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FieldValidators {
@@ -67,8 +66,7 @@ class FieldValidators {
   }
 }
 
-Map<String, ValidationMessageFunction> validationMessages(
-        BuildContext context) =>
+Map<String, ValidationMessageFunction> validationMessages() =>
     {
       'required': (error) => S.current.thisFieldIsRequired,
       'email': (error) => S.current.pleaseEnterAValidEmailAddress,

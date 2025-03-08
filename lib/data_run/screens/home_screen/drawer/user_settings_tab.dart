@@ -1,3 +1,4 @@
+import 'package:datarun/app/app.locator.dart';
 import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarun/core/auth/auth_service.dart';
 import 'package:datarun/core/auth/user_session_manager.dart';
@@ -13,7 +14,7 @@ class UserSettingsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userInfoAsync = ref.watch(userInfoProvider);
-
+    final authService = locator<AuthService>();
     return AsyncValueWidget(
       value: userInfoAsync,
       valueBuilder: (user) => ListView(
@@ -137,7 +138,8 @@ class UserSettingsTab extends ConsumerWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               onTap: () async {
-                await ref.read(authServiceProvider).logout();
+                await authService.logout();
+                // await ref.read(authServiceProvider).logout();
               },
             ),
           ),

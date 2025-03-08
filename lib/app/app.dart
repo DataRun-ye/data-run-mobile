@@ -1,10 +1,11 @@
+import 'package:datarun/data_run/screens/home_screen/drawer/settings_page.dart';
 import 'package:datarun/data_run/screens/home_screen/home_screen.widget.dart';
 import 'package:datarun/data_run/screens/login_screen/login_page.dart';
 import 'package:datarun/data_run/screens/sync_screen/sync_screen.widget.dart';
 import 'package:datarun/ui/info_alert/info_alert_dialog.dart';
 import 'package:datarun/ui/notice/notice_sheet.dart';
+import 'package:datarun/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
-import 'package:stacked_services/stacked_services.dart';
 // @stacked-import
 
 @StackedApp(
@@ -12,12 +13,11 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: HomeScreen),
     MaterialRoute(page: SyncScreen),
     MaterialRoute(page: LoginPage),
+    MaterialRoute(page: StartupView),
+    MaterialRoute(page: SettingsPage),
     // @stacked-route
   ],
   dependencies: [
-    LazySingleton(classType: BottomSheetService),
-    LazySingleton(classType: DialogService),
-    LazySingleton(classType: NavigationService),
     // @stacked-service
   ],
   bottomsheets: [

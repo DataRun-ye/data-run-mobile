@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 part 'preference_provider.g.dart';
 
@@ -8,7 +9,7 @@ PreferenceProvider preferencesInstance(PreferencesInstanceRef ref) {
   return PreferenceProvider();
 }
 
-class PreferenceProvider {
+class PreferenceProvider implements InitializableDependency {
   static late final SharedPreferences? _sharedPreferences;
 
   //
@@ -23,6 +24,17 @@ class PreferenceProvider {
   static Future<SharedPreferences> sharedPreferences() async {
     _sharedPreferences ??= await SharedPreferences.getInstance();
     return _sharedPreferences!;
+  }
+
+  static SharedPreferences sharedPreferencesSync() {
+    if (_sharedPreferences == null)
+      throw StateError('un initialized sharedPreferences');
+    return _sharedPreferences!;
+  }
+
+  @override
+  Future<void> init() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
   }
 
   Future<bool> setValue(String key, dynamic value) async {
@@ -160,6 +172,7 @@ class PreferenceProvider {
     assert(_sharedPreferences != null, 'PreferenceProvider is not initialized');
     // TODO: implement closeJiraSession
   }
+
 // SharedPreferences sharedPreferences();
 // void saveUserCredentials(String serverUrl, String userName, String pass);
 // bool areCredentialsSet();

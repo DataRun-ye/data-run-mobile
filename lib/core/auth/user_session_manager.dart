@@ -3,21 +3,23 @@ import 'dart:convert';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
 import 'package:datarun/core/sync_manager/sync_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'user_session_manager.g.dart';
 
-@riverpod
-UserSessionManager userSessionManager(UserSessionManagerRef ref) {
-  throw UnimplementedError('userSessionManagerProvider is not implemented');
-}
+// @riverpod
+// UserSessionManager userSessionManager(UserSessionManagerRef ref) {
+//   throw UnimplementedError('userSessionManagerProvider is not implemented');
+// }
 
 @riverpod
 Future<DUser?> userInfo(UserInfoRef ref) {
   return D2Remote.userModule.user.getOne();
 }
 
+@injectable
 class UserSessionManager {
   UserSessionManager(this.prefs);
 
@@ -28,7 +30,7 @@ class UserSessionManager {
   static const PREFS_URLS = 'pref_urls';
   static const PREFS_USERS = 'pref_users';
 
-  final SharedPreferences prefs;
+  final SharedPreferences prefs;// = PreferenceProvider.sharedPreferencesSync();
 
   bool get isFirstSession {
     // final session = sessionData;

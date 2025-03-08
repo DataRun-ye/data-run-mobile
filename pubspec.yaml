@@ -26,7 +26,7 @@ dependencies:
   reactive_forms: ^17.0.1
   uuid: ^4.5.0
   fast_immutable_collections: ^10.2.4
-#  expressions: ^0.2.3
+  #  expressions: ^0.2.3
   expressions: ^0.2.5+2
   flutter_sticky_header: ^0.7.0
   collection: ^1.18.0
@@ -49,7 +49,9 @@ dependencies:
   fpdart: ^1.1.1
   stacked: ^3.4.4
   stacked_services: ^1.6.0
-
+  data_table_2: 2.5.16
+  injectable: ^2.5.0
+  flutter_modular: ^6.3.4
 #  dropdown_search: ^6.0.1
 #  fl_chart: ^0.69.2
 #  flutter_riverpod: 3.0.0-dev.3
@@ -72,14 +74,14 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.4
   http_mock_adapter: ^0.4.4
-  reactive_forms_generator:
   riverpod_generator: 3.0.0-dev.11
   riverpod_lint: 3.0.0-dev.4
   custom_lint: ^0.5.11
   flutter_launcher_icons: ^0.13.1
   stacked_generator: ^1.6.1
-  golden_toolkit: ^0.15.0
-  
+  injectable_generator: ^2.6.2
+
+
 #  injectable_generator: ^2.6.2
 
 flutter:
@@ -88,6 +90,11 @@ flutter:
   assets:
     - lib/l10n/
     - assets/launcher_icon/
-
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik/Rubik-VariableFont_wght.ttf
+        - asset: assets/fonts/Rubik/Rubik-Bold.ttf
+          weight: 700
 flutter_intl:
   enabled: true

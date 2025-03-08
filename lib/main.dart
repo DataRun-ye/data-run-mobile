@@ -3,14 +3,15 @@ import 'dart:io';
 
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
-
-import 'package:datarun/core/auth/auth_service.dart';
+import 'package:datarun/app/app.bottomsheets.dart';
+import 'package:datarun/app/app.dialogs.dart';
+import 'package:datarun/app/app.locator.dart';
+import 'package:datarun/app/app.router.dart';
+import 'package:datarun/app/di/injection.dart';
 import 'package:datarun/core/auth/user_session_manager.dart';
-import 'package:datarun/data_run/screens/login_screen/auth_wrapper.dart';
 import 'package:datarun/generated/l10n.dart';
 import 'package:datarun/main.reflectable.dart';
 import 'package:datarun/main_constants/main_constants.dart';
-import 'package:datarun/utils/navigator_key.dart';
 import 'package:datarun/utils/user_preferences/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,6 +19,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
+import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 // import 'package:sentry_flutter/sentry_flutter.dart';
@@ -27,6 +29,14 @@ AuthenticationResult? authenticationResult;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeReflectable();
+
+  // stacked
+  await configureDependencies();
+  await setupLocator();
+  setupDialogUi();
+  setupBottomSheetUi();
+  //
+
   final sharedPreferences = await SharedPreferences.getInstance();
 
   // await ConnectivityService.instance.initialize();
@@ -41,13 +51,15 @@ Future<void> main() async {
     return stack;
   };
 
-  final userSessionManager = UserSessionManager(sharedPreferences);
-
-  final authService = AuthService(userSessionManager);
+  // final userSessionManager = UserSessionManager(sharedPreferences);
+  //
+  // final authService = AuthService(userSessionManager);
 
   // does the user have active session in preference (local check)
-  final bool hasExistingSession = userSessionManager.isAuthenticated;
-  final bool needsSync = userSessionManager.needsSync();
+  // final bool hasExistingSession = userSessionManager.isAuthenticated;
+  // final bool needsSync = userSessionManager.needsSync();
+  final bool hasExistingSession = locator<UserSessionManager>().isAuthenticated;
+  final bool needsSync = locator<UserSessionManager>().needsSync();
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
@@ -86,8 +98,8 @@ Future<void> main() async {
   runApp(ProviderScope(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-      authServiceProvider.overrideWithValue(authService),
-      userSessionManagerProvider.overrideWithValue(userSessionManager),
+      // authServiceProvider.overrideWithValue(authService),
+      // userSessionManagerProvider.overrideWithValue(userSessionManager),
     ],
     child: App(
       key: ValueKey('DATARUN_MAIN_APP'),
@@ -127,7 +139,8 @@ class App extends ConsumerWidget {
 
     return MaterialApp(
       restorationScopeId: 'Test__',
-      navigatorKey: navigatorKey,
+      navigatorKey: StackedService.navigatorKey,
+      // navigatorKey: StackedService.navigatorKey,
       title: 'Datarun',
       debugShowCheckedModeBanner: false,
       themeMode: themeMode,
@@ -136,15 +149,24 @@ class App extends ConsumerWidget {
       localizationsDelegates: localizationsDelegates,
       supportedLocales: supportedLocales,
       locale: locale,
-      home: AuthSyncWrapper(
-        isAuthenticated: isAuthenticated,
-        needsSync: needsSync,
-      ),
+      // stacked
+      initialRoute: Routes.startupView,
+      onGenerateRoute: StackedRouter().onGenerateRoute,
+      navigatorObservers: [
+        StackedService.routeObserver,
+      ],
+
+      // home: AuthSyncWrapper(
+      //   isAuthenticated: isAuthenticated,
+      //   needsSync: needsSync,
+      // ),
     );
   }
 
   ThemeData getTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        // colorSchemeSeed: colorSeed.color,
+        // fontFamily: GoogleFonts.rubik().fontFamily,
+        // textTheme: Typography.blackHelsinki.copyWith(),
+        fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.light),
         useMaterial3: useMaterial3,
@@ -153,6 +175,7 @@ class App extends ConsumerWidget {
 
   ThemeData getDarkTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
         // colorSchemeSeed: colorSeed.color,
+        fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.dark),
         useMaterial3: useMaterial3,

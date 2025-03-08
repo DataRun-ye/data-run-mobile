@@ -13,3 +13,5 @@ linter:
     - sort_constructors_first  # Organizes constructors for readability
     - unnecessary_null_checks  # Flags unnecessary null checks
     - unnecessary_overrides  # Identifies unnecessary overrides
+    - prefer_const_constructors
+    - annotate_overrides

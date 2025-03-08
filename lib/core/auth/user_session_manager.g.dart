@@ -6,23 +6,6 @@ part of 'user_session_manager.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userSessionManagerHash() =>
-    r'07d34892fcfdf93960f329e72544f282a8308cb2';
-
-/// See also [userSessionManager].
-@ProviderFor(userSessionManager)
-final userSessionManagerProvider =
-    AutoDisposeProvider<UserSessionManager>.internal(
-  userSessionManager,
-  name: r'userSessionManagerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$userSessionManagerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef UserSessionManagerRef = AutoDisposeProviderRef<UserSessionManager>;
 String _$userInfoHash() => r'817221884b58b50173df6d7d99b056ff81b97590';
 
 /// See also [userInfo].

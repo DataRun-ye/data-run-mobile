@@ -1,4 +1,5 @@
 # Miscellaneous
+*.nmcpye.org.db
 *.class
 *.log
 *.pyc

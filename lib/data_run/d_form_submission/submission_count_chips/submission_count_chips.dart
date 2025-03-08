@@ -35,14 +35,17 @@ class CountChip extends ConsumerWidget {
                         style: Theme.of(context).textTheme.bodySmall),
                   ],
                 )
-              : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildStatusIcon(syncStatus, colored: count > 0),
-                    const SizedBox(width: 16),
-                    Text('$count',
-                        style: Theme.of(context).textTheme.bodyMedium),
-                  ],
+              : Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildStatusIcon(syncStatus, colored: count > 0),
+                      const SizedBox(width: 16),
+                      Text('$count',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                    ],
+                  ),
                 ),
           backgroundColor: Theme.of(context).chipTheme.backgroundColor,
           padding: showLabel

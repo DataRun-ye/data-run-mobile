@@ -6,7 +6,6 @@ import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sh
 import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/dialog_button_style.dart';
 import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/form_completion_dialog.dart';
 import 'package:datarun/generated/l10n.dart';
-import 'package:datarun/utils/navigator_key.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -126,6 +125,6 @@ class ConfigureFormCompletionDialog {
   }
 
   ValidationMessageFunction? _findValidationMessage(String errorKey) {
-    return validationMessages(navigatorKey.currentContext!)[errorKey];
+    return validationMessages()[errorKey];
   }
 }

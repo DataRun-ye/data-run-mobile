@@ -3,7 +3,6 @@ import 'package:datarun/commons/errors_management/d_error_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datarun/utils/mass_utils/colors.dart';
-import 'package:datarun/utils/navigator_key.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'resource_manager.g.dart';
@@ -64,10 +63,10 @@ class ResourceManager {
     // } ?: -1
   }
 
-  Color getColorOrDefaultFrom(String? hexColor) {
-    return convertHexStringToColor(hexColor) ??
-        Theme.of(navigatorKey.currentContext!).colorScheme.primary;
-  }
+  // Color getColorOrDefaultFrom(String? hexColor) {
+  //   return convertHexStringToColor(hexColor) ??
+  //       Theme.of(navigatorKey.currentContext!).colorScheme.primary;
+  // }
 
   String parseD2Error(Exception throwable) {
     return ErrorMessage.getMessage(throwable);

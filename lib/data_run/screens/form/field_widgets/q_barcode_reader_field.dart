@@ -24,7 +24,7 @@ class QBarcodeReaderField<T> extends ConsumerWidget {
 
     return ReactiveCodeScanField<T>(
         formControl: control,
-        validationMessages: validationMessages(context),
+        validationMessages: validationMessages(),
         decoration: InputDecoration(
           // prefixIcon: ,
           enabled: control.enabled,

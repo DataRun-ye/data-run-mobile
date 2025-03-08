@@ -1,19 +1,19 @@
+import 'package:datarun/app/app.locator.dart';
+import 'package:datarun/app/app.router.dart';
 import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarun/core/auth/internet_aware_screen.dart';
 import 'package:datarun/core/auth/user_session_manager.dart';
 import 'package:datarun/core/network/online_connectivity_provider.dart';
 import 'package:datarun/data_run/d_activity/activity_model.dart';
 import 'package:datarun/data_run/d_activity/activity_page.dart';
+import 'package:datarun/data_run/d_activity/activity_provider.dart';
 import 'package:datarun/data_run/screens/home_screen/drawer/app_about_info_provider.dart';
-import 'package:datarun/data_run/screens/home_screen/drawer/settings_page.dart';
-import 'package:datarun/data_run/screens/sync_screen/sync_screen.widget.dart';
 import 'package:datarun/generated/l10n.dart';
-import 'package:datarun/utils/navigator_key.dart';
 import 'package:datarun/utils/user_preferences/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarun/data_run/d_activity/activity_provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -28,6 +28,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
+  final _navigationService = locator<NavigationService>();
+
   @override
   Widget build(BuildContext context) {
     final userInfoAsync = ref.watch(userInfoProvider);
@@ -66,12 +68,15 @@ class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
                       leading: const Icon(Icons.settings),
                       title: Text(S.of(context).settings),
                       onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                            navigatorKey.currentContext!,
-                            MaterialPageRoute(
-                              builder: (context) => const SettingsPage(),
-                            ));
+                        // Navigator.pop(context);
+                        _navigationService.back();
+                        _navigationService.navigateToSettingsPage();
+
+                        // Navigator.push(
+                        //     navigatorKey.currentContext!,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const SettingsPage(),
+                        //     ));
                       },
                     ),
                     Divider(),
@@ -119,7 +124,9 @@ class SyncButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userSessionManager = ref.watch(userSessionManagerProvider);
+    // final userSessionManager = ref.watch(userSessionManagerProvider);
+    final _navigationService = locator<NavigationService>();
+    final userSessionManager = locator<UserSessionManager>();
     final lastSyncTime = userSessionManager.lastSyncTime;
 
     return AsyncValueWidget(
@@ -147,11 +154,14 @@ class SyncButton extends ConsumerWidget {
               : Icon(MdiIcons.webOff, color: Colors.grey),
           onTap: isOnline
               ? () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    navigatorKey.currentContext!,
-                    MaterialPageRoute(builder: (context) => const SyncScreen()),
-                  );
+                  _navigationService.back();
+                  _navigationService.replaceWithSyncScreen();
+
+                  // Navigator.pop(context);
+                  //       Navigator.push(
+                  //         navigatorKey.currentContext!,
+                  //         MaterialPageRoute(builder: (context) => const SyncScreen()),
+                  //       );
                 }
               : null,
         );

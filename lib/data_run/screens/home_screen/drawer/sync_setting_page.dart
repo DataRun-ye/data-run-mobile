@@ -1,3 +1,4 @@
+import 'package:datarun/app/app.locator.dart';
 import 'package:datarun/core/auth/user_session_manager.dart';
 import 'package:datarun/core/sync_manager/sync_service.dart';
 import 'package:datarun/generated/l10n.dart';
@@ -11,7 +12,7 @@ class SyncSettingTab extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userSessionManager = ref.watch(userSessionManagerProvider);
+    final userSessionManager = locator<UserSessionManager>();
     final selectedInterval = useState(userSessionManager.getSyncInterval());
 
     return ListView(
@@ -49,8 +50,7 @@ class SyncSettingTab extends HookConsumerWidget {
         Card(
           child: ListTile(
             title: Text(S.of(context).lastConfigurationSyncTime),
-            subtitle: Text(
-                ref.watch(userSessionManagerProvider).lastSyncTime.toString()),
+            subtitle: Text(userSessionManager.lastSyncTime.toString()),
             trailing: FilledButton(
                 onPressed: () {
                   ref.read(syncServiceProvider.notifier).performSync(
@@ -67,11 +67,9 @@ class SyncSettingTab extends HookConsumerWidget {
         Card(
           child: ListTile(
             leading: Icon(Icons.check_circle,
-                color: ref.watch(userSessionManagerProvider).syncDone
-                    ? Colors.green
-                    : Colors.red),
+                color: userSessionManager.syncDone ? Colors.green : Colors.red),
             title: Text(S.of(context).lastSyncStatus),
-            subtitle: Text(ref.watch(userSessionManagerProvider).syncDone
+            subtitle: Text(userSessionManager.syncDone
                 ? S.of(context).done
                 : S.of(context).failed),
           ),

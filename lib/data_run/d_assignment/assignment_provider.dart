@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
@@ -231,8 +233,9 @@ class AssignmentFilterQuery with EquatableMixin {
     Map<String, dynamic>? filters,
     this.sortBy,
     this.ascending = true,
-    this.isCardView = false,
-  }) : filters = filters ?? {};
+    bool? isCardView,
+  })  : filters = filters ?? {},
+        this.isCardView = isCardView ?? Platform.isAndroid;
 
   final String searchQuery;
   final Map<String, dynamic> filters;

@@ -1,10 +1,9 @@
-
 // class TeamRepository {
 //   final List<TeamModel> assignedTeams = [];
 //   final List<TeamModel> managedTeams = [];
 //
 //   Future<List<TeamModel>> getTeams() async{
-//     final List<DTeam> teams = await D2Remote.teamModuleD.team
+//     final List<Team> teams = await D2Remote.teamModuleD.team
 //         .where(attribute: 'scope', value: scope.name)
 //         .get();
 //

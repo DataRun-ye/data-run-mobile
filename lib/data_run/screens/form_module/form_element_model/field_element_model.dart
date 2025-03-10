@@ -1,7 +1,6 @@
 part of 'form_element_model.dart';
 
 class FieldElementModel<T> extends FormElementModel<T> {
-
   FieldElementModel({
     required super.templatePath,
     super.value,
@@ -17,10 +16,7 @@ class FieldElementModel<T> extends FormElementModel<T> {
     if (_value != value) {
       _value = value;
     }
-    updateValueAndValidity(
-      updateParent: updateParent,
-      emitEvent: emitEvent
-    );
+    updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
   @override
@@ -47,13 +43,11 @@ class FieldElementModel<T> extends FormElementModel<T> {
   @override
   FieldElementModel<T> getInstance() =>
       FieldElementModel(templatePath: templatePath);
-
 }
 
 class SelectFieldElementModel<T> extends FieldElementModel<T> {
   SelectFieldElementModel(
-      {
-      required super.templatePath,
+      {required super.templatePath,
       super.value,
       super.hidden,
       super.valid,

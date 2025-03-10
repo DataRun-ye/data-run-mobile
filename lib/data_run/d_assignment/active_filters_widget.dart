@@ -34,7 +34,6 @@ class ActiveFiltersWidget extends ConsumerWidget {
                   .read(filterQueryProvider.notifier)
                   .removeFilter(entry.key),
             ),
-
         ],
       ),
     );

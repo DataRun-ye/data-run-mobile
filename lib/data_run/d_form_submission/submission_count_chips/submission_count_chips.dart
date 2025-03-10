@@ -18,43 +18,23 @@ class CountChip extends ConsumerWidget {
     final bool showLabel = !Platform.isWindows;
     return AsyncValueWidget(
       value: countSync,
-      valueBuilder: (count) => Tooltip(
-        message: Intl.message(syncStatus.name.toLowerCase()),
-        child: Chip(
-          shadowColor: Theme.of(context).colorScheme.shadow,
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
-          // avatar: buildStatusIcon(syncStatus, colored: count > 0),
-          label: showLabel
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
+      valueBuilder: (count) => count == 0
+          ? const SizedBox.shrink()
+          : Tooltip(
+              message: Intl.message(syncStatus.name.toLowerCase()),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 2.0),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    buildStatusIcon(syncStatus, colored: count > 0),
+                    const SizedBox(width: 4),
                     Text('$count',
                         style: Theme.of(context).textTheme.bodyMedium),
-                    const SizedBox(width: 4),
-                    Text(Intl.message(syncStatus.name.toLowerCase()),
-                        style: Theme.of(context).textTheme.bodySmall),
                   ],
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      buildStatusIcon(syncStatus, colored: count > 0),
-                      const SizedBox(width: 16),
-                      Text('$count',
-                          style: Theme.of(context).textTheme.bodyMedium),
-                    ],
-                  ),
                 ),
-          backgroundColor: Theme.of(context).chipTheme.backgroundColor,
-          padding: showLabel
-              ? const EdgeInsets.symmetric(horizontal: 8)
-              : EdgeInsets.zero,
-          visualDensity:
-              showLabel ? VisualDensity.standard : VisualDensity.compact,
-        ),
-      ),
+              ),
+            ),
     );
   }
 
@@ -64,16 +44,16 @@ class CountChip extends ConsumerWidget {
         return Icon(Icons.cloud_done,
             color: colored ? Colors.green : Colors.grey, size: 18);
       case SyncStatus.TO_POST:
-        return Icon(Icons.cloud_upload,
+        return Icon(Icons.cloud_off,
             color: colored ? Colors.blue : Colors.grey, size: 18);
       case SyncStatus.TO_UPDATE:
         return Icon(Icons.update,
-            color: colored ? Colors.orange : Colors.grey, size: 18);
+            color: colored ? Colors.grey[500] : Colors.grey, size: 18);
       case SyncStatus.ERROR:
         return Icon(Icons.error,
             color: colored ? Colors.red : Colors.grey, size: 18);
       default:
-        return Icon(Icons.all_inclusive, size: 18);
+        return const Icon(Icons.all_inclusive, size: 18);
     }
   }
 }

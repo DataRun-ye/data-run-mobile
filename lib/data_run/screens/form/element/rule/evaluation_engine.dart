@@ -8,7 +8,8 @@ class EvaluationEngine {
 
   final ExpressionEvaluator evaluator;
 
-  dynamic evaluateExpression(String expressionString, Map<String, dynamic> context) {
+  dynamic evaluateExpression(
+      String expressionString, Map<String, dynamic> context) {
     try {
       Expression parsedExpression = Expression.parse(expressionString);
       var result = evaluator.eval(parsedExpression, context);

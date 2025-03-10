@@ -172,7 +172,6 @@ String getPlatformName() {
 //   return '';
 // }
 
-
 // AppLayout getLayout(BuildContext context) =>
 //     context.read<AppBloc>().state.prefState.appLayout;
 

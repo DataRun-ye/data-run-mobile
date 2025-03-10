@@ -32,7 +32,6 @@ class FormInstanceEntryViewSliver extends HookConsumerWidget {
 
   List<Widget> buildSliverList(Iterable<FormElementInstance<dynamic>> elements,
       BuildContext context, WidgetRef ref) {
-
     return elements.map((element) {
       if (element is Section) {
         return SectionWidget(

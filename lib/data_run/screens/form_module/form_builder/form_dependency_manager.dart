@@ -14,22 +14,21 @@ class FormDependencyManager {
         (path, FormElementTemplate field) =>
             MapEntry(path, buildDependencyGraph(field)));
 
-    _reverseDependencyGraph = buildTransitiveReverseDependencyMap(_dependencyGraph);
+    _reverseDependencyGraph =
+        buildTransitiveReverseDependencyMap(_dependencyGraph);
   }
 
-  List<String> buildDependencyGraph(
-      FormElementTemplate element) {
+  List<String> buildDependencyGraph(FormElementTemplate element) {
     final dependenciesPaths = <String>[];
     for (var dependency in element.dependencies) {
       final dependencyPath =
-      formFlatTemplate.getScopedDependencyByName(dependency, element.path!);
+          formFlatTemplate.getScopedDependencyByName(dependency, element.path!);
       if (dependencyPath != null) {
         dependenciesPaths.add(dependencyPath.path!);
       }
     }
     return dependenciesPaths;
   }
-
 
   /// returns an Iterator of affected elements paths
   Iterable<String> propagateElementChange(String elementPath) {

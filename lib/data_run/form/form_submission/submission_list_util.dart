@@ -8,9 +8,9 @@ class SubmissionListUtil {
   /// returns all entities
   static SyncStatus? getSyncStatus(DataFormSubmission? submission) {
     return switch (submission) {
-      var s? when s.synced == true => SyncStatus.SYNCED,
+      var s? when s.synced == true && s.dirty == false => SyncStatus.SYNCED,
       var s? when s.syncFailed == true && s.dirty == true => SyncStatus.ERROR,
-      var s? when s.isFinal && s.synced == false => SyncStatus.TO_POST,
+      var s? when s.isFinal && (s.synced == false || s.dirty == true) => SyncStatus.TO_POST,
       var s? when !s.isFinal => SyncStatus.TO_UPDATE,
       _ => null,
     };

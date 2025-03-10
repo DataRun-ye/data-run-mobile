@@ -1,7 +1,7 @@
 abstract class FormNode {
   String? path;
   Map<String, dynamic> get data;
-  void validate();              // Field-specific validation
+  void validate(); // Field-specific validation
 }
 
 class FormFieldNode extends FormNode {
@@ -30,7 +30,7 @@ class FormTableNode extends FormNode {
   List<FormSectionNode> rows = [];
 
   @override
-  Map<String, dynamic>  data = {};
+  Map<String, dynamic> data = {};
 
   @override
   void validate() {

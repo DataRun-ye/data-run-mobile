@@ -21,7 +21,7 @@ final activityModelProvider = AutoDisposeProvider<ActivityModel>.internal(
 );
 
 typedef ActivityModelRef = AutoDisposeProviderRef<ActivityModel>;
-String _$activitiesHash() => r'1e31ade33f6f2f63b623d3fd6193d0f77d158b16';
+String _$activitiesHash() => r'1606ff2bd2a5e7b0d11340492b565fcbcc1a044a';
 
 /// See also [activities].
 @ProviderFor(activities)

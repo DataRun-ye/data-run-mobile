@@ -39,14 +39,12 @@ class _TreeTileState extends State<TreeTile> {
     final _selectedColor = widget.selectedColor ?? Colors.blue.withOpacity(0.2);
     final expandable = widget.entry.node.children.length > 0;
     final expandIcon = switch (expandable) {
-      true =>
-          ExpandIcon(
-            key: GlobalObjectKey(widget.entry.node),
-            isExpanded: widget.entry.isExpanded,
-            onPressed: (_) =>
-            TreeViewScope.of<TreeNode>(context)
-              ..controller.toggleExpansion(widget.entry.node),
-          ),
+      true => ExpandIcon(
+          key: GlobalObjectKey(widget.entry.node),
+          isExpanded: widget.entry.isExpanded,
+          onPressed: (_) => TreeViewScope.of<TreeNode>(context)
+            ..controller.toggleExpansion(widget.entry.node),
+        ),
       _ => SizedBox.shrink()
     };
 
@@ -61,7 +59,6 @@ class _TreeTileState extends State<TreeTile> {
         },
         child: Card(
           child: ListTile(
-
             title: Container(
               color: widget.isSelected
                   ? _selectedColor // Highlight color
@@ -108,13 +105,8 @@ class _TreeTileState extends State<TreeTile> {
   }
 
   void setupTextStyles() {
-    final TextStyle style = DefaultTextStyle
-        .of(context)
-        .style;
-    final Color highlightColor = Theme
-        .of(context)
-        .colorScheme
-        .primary;
+    final TextStyle style = DefaultTextStyle.of(context).style;
+    final Color highlightColor = Theme.of(context).colorScheme.primary;
     highlightStyle = style.copyWith(
       color: highlightColor,
       decorationColor: highlightColor,

@@ -6,8 +6,6 @@ final teamListProvider =
         (ref) => TeamListNotifier());
 
 class TeamListNotifier extends StateNotifier<List<TeamSummary>> {
-
-
   TeamListNotifier() : super([]);
 
   void loadTeams(List<TeamSummary> teams) {

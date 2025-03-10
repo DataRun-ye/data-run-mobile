@@ -14,9 +14,10 @@ Future<int> submissionsSyncStateCount(
   for (var form in assignment.forms) {
     final formSubmissions = await ref.watch(formSubmissionsProvider(form)
         .selectAsync((submissions) => submissions
-        .where((s) =>
-    SubmissionListUtil.getSyncStatus(s) == syncStatus && s.assignment == assignment.id)
-        .length));
+            .where((s) =>
+                SubmissionListUtil.getSyncStatus(s) == syncStatus &&
+                s.assignment == assignment.id)
+            .length));
 
     count = count + formSubmissions;
   }

@@ -53,13 +53,14 @@ Future<List<MetadataSubmissionUpdate>> systemMetadataSubmissions(
       metadataSubmission: metadataSubmission.metadataSchema,
       resourceType: metadataSubmission.resourceType);
 
-  return allItems/*.where((item) {
+  return allItems /*.where((item) {
     final lowerQuery = query.toLowerCase();
     return item.formData['householdName'].toLowerCase().contains(lowerQuery) ||
         item.formData['householdHeadSerialNumber']
             .toString()
             .contains(lowerQuery);
-  }).toList()*/;
+  }).toList()*/
+      ;
 }
 
 @riverpod

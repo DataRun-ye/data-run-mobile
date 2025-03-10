@@ -2,16 +2,15 @@ import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
 import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
 import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.dart';
 import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
+import 'package:datarun/core/models/d_identifiable_model.dart';
 import 'package:datarun/data_run/d_team/team_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import '../../core/models/d_run_entity.dart';
-
 class ActivityModel with EquatableMixin {
   ActivityModel(
       {Iterable<TeamModel> managedTeams = const [],
-      Iterable<DIdentifiable> orgUnits = const [],
+      Iterable<IdentifiableModel> orgUnits = const [],
       Iterable<String> assignedForms = const [],
       this.assignedAssignments = 0,
       this.managedAssignments = 0,
@@ -23,12 +22,12 @@ class ActivityModel with EquatableMixin {
         this.assignedForms = IList(assignedForms);
 
   factory ActivityModel.fromIdentifiable(
-      {Iterable<DTeam> managedTeams = const [],
+      {Iterable<Team> managedTeams = const [],
       Iterable<OrgUnit> orgUnits = const [],
       Iterable<String> assignedForms = const [],
       DUser? user,
-      DTeam? userTeam,
-      DActivity? activity,
+      Team? userTeam,
+      Activity? activity,
       int assignedAssignments = 0,
       int managedAssignments = 0}) {
     return ActivityModel(
@@ -37,12 +36,12 @@ class ActivityModel with EquatableMixin {
       assignedForms: assignedForms,
       managedTeams: managedTeams.map((e) => TeamModel.fromIdentifiable(
           identifiableEntity: e, formPermissions: e.formPermissions)),
-      orgUnits: orgUnits.map((e) => DIdentifiable(
+      orgUnits: orgUnits.map((e) => IdentifiableModel(
             id: e.id,
             code: e.code,
             name: e.name,
           )),
-      user: DIdentifiable(
+      user: IdentifiableModel(
         id: user!.id,
         code: user.code,
         name: user.name,
@@ -53,7 +52,7 @@ class ActivityModel with EquatableMixin {
               formPermissions: userTeam.formPermissions)
           : null,
       activity: activity != null
-          ? DIdentifiable(
+          ? IdentifiableModel(
               id: activity.id,
               code: activity.code,
               name: activity.name,
@@ -63,22 +62,22 @@ class ActivityModel with EquatableMixin {
   }
 
   final IList<TeamModel> managedTeams;
-  final IList<DIdentifiable> orgUnits;
+  final IList<IdentifiableModel> orgUnits;
   final IList<String> assignedForms;
-  final DIdentifiable user;
+  final IdentifiableModel user;
   final TeamModel? assignedTeam;
-  final DIdentifiable? activity;
+  final IdentifiableModel? activity;
 
   final int assignedAssignments;
   final int managedAssignments;
 
   ActivityModel copyWith({
     Iterable<TeamModel>? managedTeams,
-    Iterable<DIdentifiable>? orgUnits,
+    Iterable<IdentifiableModel>? orgUnits,
     Iterable<String>? assignedForms,
-    DIdentifiable? user,
+    IdentifiableModel? user,
     TeamModel? userTeam,
-    DIdentifiable? activity,
+    IdentifiableModel? activity,
   }) {
     return ActivityModel(
       assignedForms: assignedForms ?? this.assignedForms,

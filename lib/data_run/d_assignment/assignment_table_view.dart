@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class AssignmentTableView extends HookConsumerWidget {
   AssignmentTableView({super.key, required this.onViewDetails, this.scope});
@@ -24,8 +23,6 @@ class AssignmentTableView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final assignmentsAsync = ref.watch(filterAssignmentsProvider(scope));
     final searchQuery = ref.watch(filterQueryProvider).searchQuery;
-    final horizontalScrollController = useScrollController();
-    final verticalScrollController = useScrollController();
     return AsyncValueWidget(
       value: assignmentsAsync,
       valueBuilder: (assignments) {
@@ -37,25 +34,6 @@ class AssignmentTableView extends HookConsumerWidget {
         };
         return _buildTable(
             context, assignments, searchQuery, resourceHeaders, totalSummary);
-        // Column(
-        //   children: [
-        //     _buildTable(context, assignments, searchQuery,
-        //         resourceHeaders, totalSummary),
-        //     SingleChildScrollView(
-        //       scrollDirection: Axis.horizontal,
-        //       child: Row(
-        //         children: totalSummary.keys
-        //             .map((key) => Card(
-        //                   child: Padding(
-        //                     padding: const EdgeInsets.all(8.0),
-        //                     child: Text('$key: ${totalSummary[key] ?? 0}'),
-        //                   ),
-        //                 ))
-        //             .toList(),
-        //       ),
-        //     )
-        //   ],
-        // );
       },
     );
   }
@@ -74,8 +52,6 @@ class AssignmentTableView extends HookConsumerWidget {
   ) {
     return DataTable2(
       minWidth: 1200,
-      // scrollController: vController,
-      // horizontalScrollController: hController,
       isVerticalScrollBarVisible: true,
       isHorizontalScrollBarVisible: true,
       showBottomBorder: true,
@@ -128,7 +104,7 @@ class AssignmentTableView extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.group),
+                        const Icon(Icons.group),
                         Text('${assignment.teamCode}'),
                         // SizedBox(width: 4),
                       ])),
@@ -145,15 +121,12 @@ class AssignmentTableView extends HookConsumerWidget {
                     overrides: [
                       assignmentProvider.overrideWithValue(assignment)
                     ],
-                    child: Wrap(
+                    child: const Wrap(
                       // mainAxisSize: MainAxisSize.min,
                       children: [
-                        // const SizedBox(width: 2),
-                        const CountChip(syncStatus: SyncStatus.SYNCED),
-                        // const SizedBox(width: 2),
-                        const CountChip(syncStatus: SyncStatus.TO_POST),
-                        // const SizedBox(width: 2),
-                        const CountChip(syncStatus: SyncStatus.TO_UPDATE)
+                        CountChip(syncStatus: SyncStatus.SYNCED),
+                        CountChip(syncStatus: SyncStatus.TO_POST),
+                        CountChip(syncStatus: SyncStatus.TO_UPDATE)
                       ],
                     ),
                   )),

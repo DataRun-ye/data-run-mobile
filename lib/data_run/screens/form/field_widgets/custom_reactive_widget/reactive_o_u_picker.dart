@@ -38,9 +38,7 @@ class ReactiveOuPicker<T> extends ReactiveFormField<T, String> {
               child: Opacity(
                 opacity: field.control.enabled ? 1 : disabledOpacity,
                 child: GestureDetector(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   child: OrgUnitPickerField(
                     initialValueUid: field.value,
                     decoration: effectiveDecoration.copyWith(

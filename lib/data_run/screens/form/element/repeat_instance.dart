@@ -1,7 +1,6 @@
 part of 'form_element.dart';
 
 class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
-
   RepeatSection({
     required super.template,
     required super.form,

@@ -79,29 +79,30 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
                 child: Text(
                   S.of(context).selectForm,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ),
               const SizedBox(width: 8.0),
               Text(
                 '(${S.of(context).form(widget.assignment.forms.length)})',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey,
-                ),
+                      color: Colors.grey,
+                    ),
               ),
             ],
           ),
           const SizedBox(height: 20.0),
           Divider(color: Colors.grey.shade400, thickness: 1.0),
           const SizedBox(height: 10.0),
-
           ListView.builder(
             shrinkWrap: true,
             itemCount: widget.assignment.forms.length,
             itemBuilder: (context, index) {
               final form = widget.assignment.forms[index];
-              if (!ActivityInheritedWidget.of(context).assignedForms.contains(form)) {
+              if (!ActivityInheritedWidget.of(context)
+                  .assignedForms
+                  .contains(form)) {
                 return const SizedBox.shrink();
               }
 
@@ -117,20 +118,22 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
                     title: Text(
                       getItemLocalString(formTemplate.label),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                       softWrap: true,
                     ),
                     subtitle: formTemplate.description != null
                         ? Text(
-                      formTemplate.description!,
-                      style: Theme.of(context).textTheme.bodySmall,
-                      softWrap: true,
-                    )
+                            formTemplate.description!,
+                            style: Theme.of(context).textTheme.bodySmall,
+                            softWrap: true,
+                          )
                         : null,
-                    onTap: () => createAndPopupWithResult(context, formTemplate),
+                    onTap: () =>
+                        createAndPopupWithResult(context, formTemplate),
                     trailing: const Icon(Icons.chevron_right),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),

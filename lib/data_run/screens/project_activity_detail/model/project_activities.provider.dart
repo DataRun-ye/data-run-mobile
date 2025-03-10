@@ -8,10 +8,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'project_activities.provider.g.dart';
 
 @riverpod
-Future<List<DTeam>> userAssignedTeams(UserAssignedTeamsRef ref,
+Future<List<Team>> userAssignedTeams(UserAssignedTeamsRef ref,
     {ActiveStatus activeStatus = ActiveStatus.EnabledOnly,
     String? activity}) async {
-  List<DTeam> teams = await (activity != null
+  List<Team> teams = await (activity != null
       ? D2Remote.teamModuleD.team
           .byActivity(activity)
           .byActivityStatus(activeStatus)
@@ -22,7 +22,7 @@ Future<List<DTeam>> userAssignedTeams(UserAssignedTeamsRef ref,
 }
 
 @riverpod
-FutureOr<List<DActivity>> userAssignedActivities(UserAssignedActivitiesRef ref,
+FutureOr<List<Activity>> userAssignedActivities(UserAssignedActivitiesRef ref,
     {ActiveStatus activeStatus = ActiveStatus.EnabledOnly,
     String? project}) async {
   final teams = await ref
@@ -32,7 +32,7 @@ FutureOr<List<DActivity>> userAssignedActivities(UserAssignedActivitiesRef ref,
       .map((t) => t.activity!)
       .toList();
 
-  final List<DActivity> activities = await D2Remote.activityModuleD.activity
+  final List<Activity> activities = await D2Remote.activityModuleD.activity
       .byIds(userActivitiesUids)
       .byActivityStatus(activeStatus)
       .get();
@@ -44,14 +44,14 @@ FutureOr<List<DActivity>> userAssignedActivities(UserAssignedActivitiesRef ref,
 }
 
 @riverpod
-Future<List<DActivity>> projectActiveActivities(
+Future<List<Activity>> projectActiveActivities(
     ProjectActiveActivitiesRef ref, String project) async {
   /// get the list of active activities
-  final List<DActivity> activeActivities =
+  final List<Activity> activeActivities =
       await ref.watch(userAssignedActivitiesProvider(project: project).future);
 
   /// Filter activities By project Id
-  return activeActivities.where((DActivity t) => t.project == project).toList();
+  return activeActivities.where((Activity t) => t.project == project).toList();
 }
 
 @riverpod
@@ -66,7 +66,8 @@ Future<List<FormTemplate>> activityForms(
 }
 
 @riverpod
-Future<DTeam?> activityTeam(ActivityTeamRef ref, {required String activity}) async {
+Future<Team?> activityTeam(ActivityTeamRef ref,
+    {required String activity}) async {
   return D2Remote.teamModuleD.team
       .where(attribute: 'activity', value: activity)
       .getOne();

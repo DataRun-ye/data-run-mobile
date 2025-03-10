@@ -51,7 +51,6 @@ class QDropDownWithSearchField extends HookConsumerWidget {
 
 class NameToLabelValueAccessor
     extends DropDownSearchValueAccessor<String, String> {
-
   NameToLabelValueAccessor(this.options);
   final List<FormOption> options;
 
@@ -59,8 +58,8 @@ class NameToLabelValueAccessor
   String? modelToViewValue(List<String> items, String? modelValue) {
     return options
         .where((option) => option.name == modelValue)
-        .map((option) =>
-            getItemLocalString(option.label.unlockView, defaultString: option.name))
+        .map((option) => getItemLocalString(option.label.unlockView,
+            defaultString: option.name))
         .firstOrNull;
   }
 
@@ -68,7 +67,8 @@ class NameToLabelValueAccessor
   String? viewToModelValue(List<String> items, String? viewValue) {
     return options
         .where((option) =>
-            getItemLocalString(option.label.unlockView, defaultString: option.name) ==
+            getItemLocalString(option.label.unlockView,
+                defaultString: option.name) ==
             viewValue)
         .map((option) => option.name)
         .firstOrNull;

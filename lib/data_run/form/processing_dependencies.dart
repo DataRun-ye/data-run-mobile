@@ -85,11 +85,10 @@ void main() {
 
   // Build the reverse dependency map with transitive closure
   final reverseDependencyMap =
-  buildTransitiveReverseDependencyMap(dependencies);
+      buildTransitiveReverseDependencyMap(dependencies);
 
   print(reverseDependencyMap);
-  reverseDependencyMap.forEach((key, value) {
-  });
+  reverseDependencyMap.forEach((key, value) {});
 
   // for (var element in propagateChange('transaction', reverseDependencyMap)) {
   // }

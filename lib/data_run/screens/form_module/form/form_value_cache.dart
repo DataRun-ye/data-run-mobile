@@ -1,7 +1,6 @@
 import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
 
 class FormValueCache {
-
   FormValueCache({
     Map<String, dynamic> formElementMap = const {},
     required this.formFlatTemplate,
@@ -15,7 +14,8 @@ class FormValueCache {
   final Map<String, Map<String, dynamic>> metadata = {};
 
   /// Store metadata for repeat sections
-  void updateMetadata(String sectionPath, String itemId, dynamic metadataValue) {
+  void updateMetadata(
+      String sectionPath, String itemId, dynamic metadataValue) {
     metadata.putIfAbsent(sectionPath, () => {});
     metadata[sectionPath]![itemId] = metadataValue;
   }
@@ -30,24 +30,24 @@ class FormValueCache {
     // _formValueMap[absolutePath] = value;
   }
 
-
   String getRepeatPath(String basePath, int index) {
     return '$basePath[$index]';
   }
 
   /// Generate path for nested repeat sections dynamically
-  String generatePath(String parentPath, String parentId, String elementName, String elementId) {
+  String generatePath(String parentPath, String parentId, String elementName,
+      String elementId) {
     return '$parentPath.$parentId.$elementName.$elementId';
   }
 
   /// Dynamically resolve path
-  String resolvePathForNestedItem(String parentPath, String parentId, String nestedId) {
+  String resolvePathForNestedItem(
+      String parentPath, String parentId, String nestedId) {
     return '$parentPath.$parentId.stockItems.$nestedId';
   }
 
   // String relativePath = "stockItemType";
   // String fullPath = getRepeatPath('stockInfo.stockDetails', 0) + ".$relativePath";
-
 
 // String generatePath(String parentPath, List<String> nestedItems, int nestedIndex) {
   //   // Build the path for the nested item dynamically

@@ -4,7 +4,7 @@
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // class TeamCard extends ConsumerWidget {
-//   final DTeam team;
+//   final Team team;
 
 //   const TeamCard({super.key, required this.team});
 
@@ -37,7 +37,6 @@
 //     );
 //   }
 
-  
 //   Widget _buildAssignmentBreakdown() {
 //     return ListTile(
 //       title: const Text('Assignment Breakdown'),

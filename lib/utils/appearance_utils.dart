@@ -12,7 +12,7 @@ ThemeMode getThemeModeValue(String? value) {
 /// parse ThemeMode Value
 ColorSeed? getColorSeedValue(String? value) {
   return ColorSeed.values
-          .firstOrNullWhere((enumValue) => enumValue.label == value);
+      .firstOrNullWhere((enumValue) => enumValue.label == value);
 }
 
 ColorImageProvider? getColorImageProviderValue(String? value) {
@@ -22,7 +22,7 @@ ColorImageProvider? getColorImageProviderValue(String? value) {
 
 ColorSelectionMethod? getColorSelectionMethodValue(String? value) {
   return ColorSelectionMethod.values
-          .firstOrNullWhere((enumValue) => enumValue.name == value);
+      .firstOrNullWhere((enumValue) => enumValue.name == value);
 }
 
 // ColorScheme getColorImageColorSchemeValue(String? value) {

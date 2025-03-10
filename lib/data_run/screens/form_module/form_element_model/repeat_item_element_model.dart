@@ -4,10 +4,10 @@ part of 'form_element_model.dart';
 class RepeatItemElementModel extends SectionElementModel {
   RepeatItemElementModel(
       {super.hidden,
-        super.elements,
-        required String uid,
-        required super.templatePath}) : _uid = uid;
-
+      super.elements,
+      required String uid,
+      required super.templatePath})
+      : _uid = uid;
 
   final String _uid;
 
@@ -18,7 +18,6 @@ class RepeatItemElementModel extends SectionElementModel {
 
   @override
   String get name => '$uid';
-
 
   RepeatElementModel get parent => _parent as RepeatElementModel;
 
@@ -44,7 +43,7 @@ class RepeatItemElementModel extends SectionElementModel {
     final instance = getInstance();
     instance.parent = parent;
     final elements =
-    _elements.map((key, element) => MapEntry(key, element.clone(instance)));
+        _elements.map((key, element) => MapEntry(key, element.clone(instance)));
     instance.addAll(elements);
     return instance;
   }

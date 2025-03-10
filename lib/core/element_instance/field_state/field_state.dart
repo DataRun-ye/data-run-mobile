@@ -12,7 +12,8 @@ class FieldState extends ElementStat {
     required this.templatePath,
   });
 
-  factory FieldState.fromTemplate(FormElementTemplate template, [dynamic value]) {
+  factory FieldState.fromTemplate(FormElementTemplate template,
+      [dynamic value]) {
     return FieldState._(
       id: template.id!,
       isEnabled: template.readOnly,

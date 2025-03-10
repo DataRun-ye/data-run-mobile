@@ -227,7 +227,6 @@ Color? statusColor(AssignmentStatus? status) {
       return Colors.grey.withOpacity(0.3);
     default:
       return Colors.grey.withOpacity(0.3);
-
   }
 }
 
@@ -250,4 +249,3 @@ Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
                 ),
               )));
 }
-

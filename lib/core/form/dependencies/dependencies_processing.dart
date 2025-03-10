@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'dart:math' as math;
 
-
 /// Returns the [transitive closure][] of [graph].
 ///
 /// [transitive closure]: https://en.wikipedia.org/wiki/Transitive_closure

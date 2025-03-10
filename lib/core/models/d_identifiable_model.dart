@@ -4,8 +4,8 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class DIdentifiable with EquatableMixin {
-  DIdentifiable(
+class IdentifiableModel with EquatableMixin {
+  IdentifiableModel(
       {this.id,
       this.code,
       this.name,
@@ -16,13 +16,13 @@ class DIdentifiable with EquatableMixin {
       : this.label = label,
         this.properties = properties;
 
-  factory DIdentifiable.fromIdentifiable(
+  factory IdentifiableModel.fromIdentifiable(
       {required IdentifiableEntity identifiableEntity,
       IMap<String, dynamic> label = const IMapConst({}),
       IMap<String, dynamic> properties = const IMapConst({}),
       bool disabled = false,
       bool deleted = false}) {
-    return DIdentifiable(
+    return IdentifiableModel(
         id: identifiableEntity.id,
         code: identifiableEntity.code,
         name: identifiableEntity.name,
@@ -40,14 +40,14 @@ class DIdentifiable with EquatableMixin {
   final IMap<String, dynamic> label;
   final IMap<String, dynamic> properties;
 
-  DIdentifiable copyWith({
+  IdentifiableModel copyWith({
     String? id,
     String? code,
     String? name,
     IMap<String, dynamic>? label,
     IMap<String, dynamic>? properties,
   }) {
-    return DIdentifiable(
+    return IdentifiableModel(
       id: id ?? this.id,
       code: code ?? this.code,
       name: name ?? this.name,

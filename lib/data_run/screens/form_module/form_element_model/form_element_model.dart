@@ -30,7 +30,6 @@ enum ElementStatus {
 }
 
 sealed class FormElementModel<T> {
-
   FormElementModel({
     this.templatePath,
     T? value,

@@ -160,7 +160,6 @@ class RepeatElementModel
     return false;
   }
 
-
   int RepeatItemIndexWhere(bool test(RepeatItemElementModel item),
       [int start = 0]) {
     return elements.indexWhere(test);
@@ -269,9 +268,8 @@ class RepeatElementModel
     final instance = getInstance();
     instance.parent = parent;
     final elements =
-    _elements.map((element) => element.clone(instance)).toList();
+        _elements.map((element) => element.clone(instance)).toList();
     instance.addAll(elements);
     return instance;
   }
-
 }

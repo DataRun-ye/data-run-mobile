@@ -4,7 +4,6 @@ import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_t
 import 'package:datarun/data_run/form/processing_dependencies.dart';
 
 class FormTreeService {
-
   Map<String, Set<String>> buildDependencyGraph(FormVersion root) {
     Map<String, Set<String>> graph = {};
     for (var element in root.formFlatFields.values) {

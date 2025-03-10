@@ -50,7 +50,6 @@ extension IterableExtension<T> on Iterable<T> {
   /// The elements are ordered by the [compare] [Comparator].
   List<T> sorted(Comparator<T> compare) => [...this]..sort(compare);
 
-
   /// Whether the elements are sorted by the [compare] ordering.
   ///
   /// Compares pairs of elements using `compare` to check that

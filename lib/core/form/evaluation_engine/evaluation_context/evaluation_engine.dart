@@ -1,3 +1,1 @@
-class EvaluationEngine {
-
-}
+class EvaluationEngine {}

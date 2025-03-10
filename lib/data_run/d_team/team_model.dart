@@ -1,8 +1,9 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
 import 'package:d2_remote/shared/entities/identifiable.entity.dart';
-import 'package:datarun/core/models/d_run_entity.dart';
+import 'package:datarun/core/models/d_identifiable_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:intl/intl.dart';
 
 class TeamModel with EquatableMixin {
   factory TeamModel.fromIdentifiable(
@@ -11,20 +12,21 @@ class TeamModel with EquatableMixin {
       Iterable<TeamFormPermission> formPermissions = const IListConst([])}) {
     return TeamModel._(
         activity: activity,
-        team:
-            DIdentifiable.fromIdentifiable(identifiableEntity: identifiableEntity),
+        team: IdentifiableModel.fromIdentifiable(
+            identifiableEntity: identifiableEntity),
         formPermissions: formPermissions);
   }
 
   TeamModel._(
-      {required DIdentifiable team,
+      {required IdentifiableModel team,
       Iterable<TeamFormPermission>? formPermissions,
       this.activity})
-      : this._team = team,this.formPermissions = IList.orNull(formPermissions) ?? IList();
+      : this._team = team,
+        this.formPermissions = IList.orNull(formPermissions) ?? IList();
 
-  final DIdentifiable _team;
+  final IdentifiableModel _team;
 
-  String? get name => _team.name;
+  String? get name => '${Intl.message('team')} ${_team.code}';
 
   String? get id => _team.id;
 

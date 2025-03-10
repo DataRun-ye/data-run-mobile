@@ -11,8 +11,8 @@ class FormFlatTemplateInheritWidget extends InheritedWidget {
   final FormFlatTemplate formContainerTemplate;
 
   static FormFlatTemplate of(BuildContext context) {
-    final FormFlatTemplateInheritWidget? inheritedWidget =
-        context.dependOnInheritedWidgetOfExactType<FormFlatTemplateInheritWidget>();
+    final FormFlatTemplateInheritWidget? inheritedWidget = context
+        .dependOnInheritedWidgetOfExactType<FormFlatTemplateInheritWidget>();
     if (inheritedWidget == null) {
       throw 'No FormElementInheritedWidget found in context.';
     }

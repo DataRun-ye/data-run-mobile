@@ -2,7 +2,6 @@ import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart
 import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
 
 class FormStructureManager {
-
   FormStructureManager(
       {Map<String, dynamic> formValueMap = const {},
       required this.formVersion,

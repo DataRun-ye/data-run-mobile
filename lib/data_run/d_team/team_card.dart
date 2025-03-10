@@ -2,7 +2,7 @@
 // import 'package:flutter/material.dart';
 
 // class TeamCard extends StatelessWidget {
-//   final DTeam team; // Replace with your team model.
+//   final Team team; // Replace with your team model.
 
 //   const TeamCard({Key? key, required this.team}) : super(key: key);
 

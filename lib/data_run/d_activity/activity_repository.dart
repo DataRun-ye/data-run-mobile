@@ -9,15 +9,15 @@
 // class ActivityRepository {
 //   ActivityRepository({required this.query});
 //
-//   final DActivityQuery query;
-//   Future<DTeam> getAssignedTeam(String activity) {
+//   final ActivityQuery query;
+//   Future<Team> getAssignedTeam(String activity) {
 //     return D2Remote.teamModuleD.team.where(attribute: 'activity', value: activity).getOne();
 //   }
-//   Future<List<DActivity>> getUserActivities() {
-//     final List<DTeam> managedTeams =
+//   Future<List<Activity>> getUserActivities() {
+//     final List<Team> managedTeams =
 //         await ref.watch(teamsProvider(EntityScope.Managed).future);
 //
-//     final List<DTeam> assignedTeams =
+//     final List<Team> assignedTeams =
 //         await ref.watch(teamsProvider(EntityScope.Assigned).future);
 //
 //     final DUser? user = await D2Remote.userModule.user.getOne();
@@ -25,19 +25,19 @@
 //     final List<ActivityModel> activities = [];
 //
 //     for (var assigned in assignedTeams) {
-//       final DActivity? activity = await D2Remote.activityModuleD.activity
+//       final Activity? activity = await D2Remote.activityModuleD.activity
 //           .byId(assigned.activity!)
 //           .where(attribute: 'disabled', value: false)
 //           .getOne();
 //       final activityManagedTeams = managedTeams
 //           .where((t) => t.activity == activity?.id && activity!.disabled == false)
 //           .toList();
-//       final List<DAssignment> assignedAssignment = await D2Remote
+//       final List<Assignment> assignedAssignment = await D2Remote
 //           .assignmentModuleD.assignment
 //           .where(attribute: 'team', value: assigned.id)
 //           .get();
 //
-//       final List<DAssignment> managedAssignments = await D2Remote
+//       final List<Assignment> managedAssignments = await D2Remote
 //           .assignmentModuleD.assignment
 //           .whereIn(
 //           attribute: 'team',

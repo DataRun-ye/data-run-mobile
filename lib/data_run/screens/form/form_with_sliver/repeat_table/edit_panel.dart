@@ -14,7 +14,6 @@ enum EditActionType {
 }
 
 class EditPanel extends StatelessWidget {
-
   EditPanel(
       {required this.repeatInstance,
       required this.item,

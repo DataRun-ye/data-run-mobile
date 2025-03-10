@@ -19,7 +19,6 @@ class SectionWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final elementPropertiesSnapshot = useStream(element.propertiesChanged);
 
     if (!elementPropertiesSnapshot.hasData) {

@@ -30,7 +30,6 @@ class RepeatState extends SectionState {
   /// { "row.1_col1": CellState, "row1_col2": CellState, ... }
   // final Map<String, FieldState> cells;
 
-
   // // Immutable update to a specific cell
   // RepeatState updateCell(String rowKey, String colKey, int? newValue) {
   //   final updatedCellKey = '${rowKey}_$colKey';

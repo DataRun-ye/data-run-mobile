@@ -6,7 +6,7 @@ part of 'project_activities.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userAssignedTeamsHash() => r'167026bbd8853834a9af0eedd3a837cdfc86f616';
+String _$userAssignedTeamsHash() => r'484bfa2d3a938181293ccd886c0b63575c98a108';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -76,7 +76,7 @@ class UserAssignedTeamsFamily extends Family {
 
   /// Enables overriding the behavior of this provider, no matter the parameters.
   Override overrideWith(
-      FutureOr<List<DTeam>> Function(UserAssignedTeamsRef ref) create) {
+      FutureOr<List<Team>> Function(UserAssignedTeamsRef ref) create) {
     return _$UserAssignedTeamsFamilyOverride(this, create);
   }
 }
@@ -84,7 +84,7 @@ class UserAssignedTeamsFamily extends Family {
 class _$UserAssignedTeamsFamilyOverride implements FamilyOverride {
   _$UserAssignedTeamsFamilyOverride(this.overriddenFamily, this.create);
 
-  final FutureOr<List<DTeam>> Function(UserAssignedTeamsRef ref) create;
+  final FutureOr<List<Team>> Function(UserAssignedTeamsRef ref) create;
 
   @override
   final UserAssignedTeamsFamily overriddenFamily;
@@ -98,7 +98,7 @@ class _$UserAssignedTeamsFamilyOverride implements FamilyOverride {
 }
 
 /// See also [userAssignedTeams].
-class UserAssignedTeamsProvider extends AutoDisposeFutureProvider<List<DTeam>> {
+class UserAssignedTeamsProvider extends AutoDisposeFutureProvider<List<Team>> {
   /// See also [userAssignedTeams].
   UserAssignedTeamsProvider({
     ActiveStatus activeStatus = ActiveStatus.EnabledOnly,
@@ -138,7 +138,7 @@ class UserAssignedTeamsProvider extends AutoDisposeFutureProvider<List<DTeam>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<DTeam>> Function(UserAssignedTeamsRef ref) create,
+    FutureOr<List<Team>> Function(UserAssignedTeamsRef ref) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -167,12 +167,12 @@ class UserAssignedTeamsProvider extends AutoDisposeFutureProvider<List<DTeam>> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<DTeam>> createElement() {
+  AutoDisposeFutureProviderElement<List<Team>> createElement() {
     return _UserAssignedTeamsProviderElement(this);
   }
 
   UserAssignedTeamsProvider _copyWith(
-    FutureOr<List<DTeam>> Function(UserAssignedTeamsRef ref) create,
+    FutureOr<List<Team>> Function(UserAssignedTeamsRef ref) create,
   ) {
     return UserAssignedTeamsProvider._internal(
       (ref) => create(ref as UserAssignedTeamsRef),
@@ -203,7 +203,7 @@ class UserAssignedTeamsProvider extends AutoDisposeFutureProvider<List<DTeam>> {
   }
 }
 
-mixin UserAssignedTeamsRef on AutoDisposeFutureProviderRef<List<DTeam>> {
+mixin UserAssignedTeamsRef on AutoDisposeFutureProviderRef<List<Team>> {
   /// The parameter `activeStatus` of this provider.
   ActiveStatus get activeStatus;
 
@@ -212,7 +212,7 @@ mixin UserAssignedTeamsRef on AutoDisposeFutureProviderRef<List<DTeam>> {
 }
 
 class _UserAssignedTeamsProviderElement
-    extends AutoDisposeFutureProviderElement<List<DTeam>>
+    extends AutoDisposeFutureProviderElement<List<Team>>
     with UserAssignedTeamsRef {
   _UserAssignedTeamsProviderElement(super.provider);
 
@@ -224,7 +224,7 @@ class _UserAssignedTeamsProviderElement
 }
 
 String _$userAssignedActivitiesHash() =>
-    r'14109189ae5041e2bdc4441a22630216d129deed';
+    r'6c62804dfa7ca25fbfa0a23f342178bb17da447f';
 
 /// See also [userAssignedActivities].
 @ProviderFor(userAssignedActivities)
@@ -273,8 +273,7 @@ class UserAssignedActivitiesFamily extends Family {
 
   /// Enables overriding the behavior of this provider, no matter the parameters.
   Override overrideWith(
-      FutureOr<List<DActivity>> Function(UserAssignedActivitiesRef ref)
-          create) {
+      FutureOr<List<Activity>> Function(UserAssignedActivitiesRef ref) create) {
     return _$UserAssignedActivitiesFamilyOverride(this, create);
   }
 }
@@ -282,8 +281,7 @@ class UserAssignedActivitiesFamily extends Family {
 class _$UserAssignedActivitiesFamilyOverride implements FamilyOverride {
   _$UserAssignedActivitiesFamilyOverride(this.overriddenFamily, this.create);
 
-  final FutureOr<List<DActivity>> Function(UserAssignedActivitiesRef ref)
-      create;
+  final FutureOr<List<Activity>> Function(UserAssignedActivitiesRef ref) create;
 
   @override
   final UserAssignedActivitiesFamily overriddenFamily;
@@ -298,7 +296,7 @@ class _$UserAssignedActivitiesFamilyOverride implements FamilyOverride {
 
 /// See also [userAssignedActivities].
 class UserAssignedActivitiesProvider
-    extends AutoDisposeFutureProvider<List<DActivity>> {
+    extends AutoDisposeFutureProvider<List<Activity>> {
   /// See also [userAssignedActivities].
   UserAssignedActivitiesProvider({
     ActiveStatus activeStatus = ActiveStatus.EnabledOnly,
@@ -338,7 +336,7 @@ class UserAssignedActivitiesProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<DActivity>> Function(UserAssignedActivitiesRef ref) create,
+    FutureOr<List<Activity>> Function(UserAssignedActivitiesRef ref) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -367,12 +365,12 @@ class UserAssignedActivitiesProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<DActivity>> createElement() {
+  AutoDisposeFutureProviderElement<List<Activity>> createElement() {
     return _UserAssignedActivitiesProviderElement(this);
   }
 
   UserAssignedActivitiesProvider _copyWith(
-    FutureOr<List<DActivity>> Function(UserAssignedActivitiesRef ref) create,
+    FutureOr<List<Activity>> Function(UserAssignedActivitiesRef ref) create,
   ) {
     return UserAssignedActivitiesProvider._internal(
       (ref) => create(ref as UserAssignedActivitiesRef),
@@ -404,7 +402,7 @@ class UserAssignedActivitiesProvider
 }
 
 mixin UserAssignedActivitiesRef
-    on AutoDisposeFutureProviderRef<List<DActivity>> {
+    on AutoDisposeFutureProviderRef<List<Activity>> {
   /// The parameter `activeStatus` of this provider.
   ActiveStatus get activeStatus;
 
@@ -413,7 +411,7 @@ mixin UserAssignedActivitiesRef
 }
 
 class _UserAssignedActivitiesProviderElement
-    extends AutoDisposeFutureProviderElement<List<DActivity>>
+    extends AutoDisposeFutureProviderElement<List<Activity>>
     with UserAssignedActivitiesRef {
   _UserAssignedActivitiesProviderElement(super.provider);
 
@@ -425,7 +423,7 @@ class _UserAssignedActivitiesProviderElement
 }
 
 String _$projectActiveActivitiesHash() =>
-    r'4e3cf6a2ed0f98f219ae5622390ea71a0611fb30';
+    r'ee472177f30735ef1ed1255a6b4f641ce77e78e5';
 
 /// See also [projectActiveActivities].
 @ProviderFor(projectActiveActivities)
@@ -471,7 +469,7 @@ class ProjectActiveActivitiesFamily extends Family {
 
   /// Enables overriding the behavior of this provider, no matter the parameters.
   Override overrideWith(
-      FutureOr<List<DActivity>> Function(ProjectActiveActivitiesRef ref)
+      FutureOr<List<Activity>> Function(ProjectActiveActivitiesRef ref)
           create) {
     return _$ProjectActiveActivitiesFamilyOverride(this, create);
   }
@@ -480,7 +478,7 @@ class ProjectActiveActivitiesFamily extends Family {
 class _$ProjectActiveActivitiesFamilyOverride implements FamilyOverride {
   _$ProjectActiveActivitiesFamilyOverride(this.overriddenFamily, this.create);
 
-  final FutureOr<List<DActivity>> Function(ProjectActiveActivitiesRef ref)
+  final FutureOr<List<Activity>> Function(ProjectActiveActivitiesRef ref)
       create;
 
   @override
@@ -496,7 +494,7 @@ class _$ProjectActiveActivitiesFamilyOverride implements FamilyOverride {
 
 /// See also [projectActiveActivities].
 class ProjectActiveActivitiesProvider
-    extends AutoDisposeFutureProvider<List<DActivity>> {
+    extends AutoDisposeFutureProvider<List<Activity>> {
   /// See also [projectActiveActivities].
   ProjectActiveActivitiesProvider(
     String project,
@@ -531,7 +529,7 @@ class ProjectActiveActivitiesProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<DActivity>> Function(ProjectActiveActivitiesRef ref) create,
+    FutureOr<List<Activity>> Function(ProjectActiveActivitiesRef ref) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -553,12 +551,12 @@ class ProjectActiveActivitiesProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<DActivity>> createElement() {
+  AutoDisposeFutureProviderElement<List<Activity>> createElement() {
     return _ProjectActiveActivitiesProviderElement(this);
   }
 
   ProjectActiveActivitiesProvider _copyWith(
-    FutureOr<List<DActivity>> Function(ProjectActiveActivitiesRef ref) create,
+    FutureOr<List<Activity>> Function(ProjectActiveActivitiesRef ref) create,
   ) {
     return ProjectActiveActivitiesProvider._internal(
       (ref) => create(ref as ProjectActiveActivitiesRef),
@@ -586,13 +584,13 @@ class ProjectActiveActivitiesProvider
 }
 
 mixin ProjectActiveActivitiesRef
-    on AutoDisposeFutureProviderRef<List<DActivity>> {
+    on AutoDisposeFutureProviderRef<List<Activity>> {
   /// The parameter `project` of this provider.
   String get project;
 }
 
 class _ProjectActiveActivitiesProviderElement
-    extends AutoDisposeFutureProviderElement<List<DActivity>>
+    extends AutoDisposeFutureProviderElement<List<Activity>>
     with ProjectActiveActivitiesRef {
   _ProjectActiveActivitiesProviderElement(super.provider);
 
@@ -772,7 +770,7 @@ class _ActivityFormsProviderElement
   String? get activity => (origin as ActivityFormsProvider).activity;
 }
 
-String _$activityTeamHash() => r'5de5ab908ed48532f64dce72edbebe1bcb195370';
+String _$activityTeamHash() => r'fb8b4e30d623c7a89a38c5a8a428424c54efe703';
 
 /// See also [activityTeam].
 @ProviderFor(activityTeam)
@@ -817,7 +815,7 @@ class ActivityTeamFamily extends Family {
   }
 
   /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(FutureOr<DTeam?> Function(ActivityTeamRef ref) create) {
+  Override overrideWith(FutureOr<Team?> Function(ActivityTeamRef ref) create) {
     return _$ActivityTeamFamilyOverride(this, create);
   }
 }
@@ -825,7 +823,7 @@ class ActivityTeamFamily extends Family {
 class _$ActivityTeamFamilyOverride implements FamilyOverride {
   _$ActivityTeamFamilyOverride(this.overriddenFamily, this.create);
 
-  final FutureOr<DTeam?> Function(ActivityTeamRef ref) create;
+  final FutureOr<Team?> Function(ActivityTeamRef ref) create;
 
   @override
   final ActivityTeamFamily overriddenFamily;
@@ -839,7 +837,7 @@ class _$ActivityTeamFamilyOverride implements FamilyOverride {
 }
 
 /// See also [activityTeam].
-class ActivityTeamProvider extends AutoDisposeFutureProvider<DTeam?> {
+class ActivityTeamProvider extends AutoDisposeFutureProvider<Team?> {
   /// See also [activityTeam].
   ActivityTeamProvider({
     required String activity,
@@ -874,7 +872,7 @@ class ActivityTeamProvider extends AutoDisposeFutureProvider<DTeam?> {
 
   @override
   Override overrideWith(
-    FutureOr<DTeam?> Function(ActivityTeamRef ref) create,
+    FutureOr<Team?> Function(ActivityTeamRef ref) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -898,12 +896,12 @@ class ActivityTeamProvider extends AutoDisposeFutureProvider<DTeam?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<DTeam?> createElement() {
+  AutoDisposeFutureProviderElement<Team?> createElement() {
     return _ActivityTeamProviderElement(this);
   }
 
   ActivityTeamProvider _copyWith(
-    FutureOr<DTeam?> Function(ActivityTeamRef ref) create,
+    FutureOr<Team?> Function(ActivityTeamRef ref) create,
   ) {
     return ActivityTeamProvider._internal(
       (ref) => create(ref as ActivityTeamRef),
@@ -930,13 +928,13 @@ class ActivityTeamProvider extends AutoDisposeFutureProvider<DTeam?> {
   }
 }
 
-mixin ActivityTeamRef on AutoDisposeFutureProviderRef<DTeam?> {
+mixin ActivityTeamRef on AutoDisposeFutureProviderRef<Team?> {
   /// The parameter `activity` of this provider.
   String get activity;
 }
 
 class _ActivityTeamProviderElement
-    extends AutoDisposeFutureProviderElement<DTeam?> with ActivityTeamRef {
+    extends AutoDisposeFutureProviderElement<Team?> with ActivityTeamRef {
   _ActivityTeamProviderElement(super.provider);
 
   @override

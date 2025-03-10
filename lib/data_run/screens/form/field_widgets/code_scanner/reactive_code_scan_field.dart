@@ -53,7 +53,8 @@ class ReactiveCodeScanField<T> extends ReactiveFormField<T, String> {
                       field.context,
                       MaterialPageRoute(
                         builder: (_) => BarcodeScannerWidget(
-                          key: Key('BarcodeScannerWidget_${CodeGenerator.generateUid()}'),
+                          key: Key(
+                              'BarcodeScannerWidget_${CodeGenerator.generateUid()}'),
                           initialRawCode: field.value,
                         ),
                       ),

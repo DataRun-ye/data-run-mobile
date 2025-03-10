@@ -626,7 +626,7 @@ class _SubmissionFilteredByStateProviderElement
   String get sortBy => (origin as SubmissionFilteredByStateProvider).sortBy;
 }
 
-String _$submissionInfoHash() => r'91aa56960ae8858fdac37ed04b822f270d359e19';
+String _$submissionInfoHash() => r'74ae1df679e1153b89a48095e776a67b06f93ccc';
 
 /// See also [submissionInfo].
 @ProviderFor(submissionInfo)
@@ -805,7 +805,7 @@ class _SubmissionInfoProviderElement
       (origin as SubmissionInfoProvider).formMetadata;
 }
 
-String _$formSubmissionsHash() => r'47290774156b0276c2d224cf8232d465b2359bfa';
+String _$formSubmissionsHash() => r'eed2c0a39b7d513db1c6e01016cdd19284907b8b';
 
 abstract class _$FormSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<IList<DataFormSubmission>> {

@@ -68,7 +68,9 @@ Future<void> main() async {
   // is has active session initialize, otherwise it will be initialized
   // by user login in.
   if (hasExistingSession) {
-    await D2Remote.initialize(databaseFactory: databaseFactory);
+    await D2Remote.initialize(
+        databaseFactory:
+            Platform.isWindows || Platform.isLinux ? databaseFactory : null);
   }
 
   // await SentryFlutter.init(

@@ -2,7 +2,8 @@ import 'dart:math';
 import 'dart:convert';
 
 class CodeGenerator {
-  static const String letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  static const String letters =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   static const String allowedChars = '0123456789$letters';
   static const int numberOfCodePoints = allowedChars.length;
   static const int codeSize = 11;
@@ -45,7 +46,8 @@ class CodeGenerator {
   /// The [lengthInBytes] parameter specifies the length in bytes of the token.
   static String getRandomSecureToken(int lengthInBytes) {
     final secureRandom = Random.secure();
-    final tokenBytes = List<int>.generate(lengthInBytes, (_) => secureRandom.nextInt(256));
+    final tokenBytes =
+        List<int>.generate(lengthInBytes, (_) => secureRandom.nextInt(256));
 
     return base64Url.encode(tokenBytes).replaceAll('=', '');
   }

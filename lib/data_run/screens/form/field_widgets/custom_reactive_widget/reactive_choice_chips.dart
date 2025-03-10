@@ -4,7 +4,6 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 /// A list of `Chip`s that acts like radio buttons
 class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
-
   /// Creates a list of `Chip`s that acts like radio buttons
   ReactiveChoiceChips({
     super.key,

@@ -4,7 +4,7 @@ Widget buildHighlightedText(
     String text, String searchQuery, BuildContext context,
     {TextStyle? style}) {
   if (searchQuery.isEmpty) {
-    return Text(text);
+    return Text(text, style: style,);
   }
 
   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
@@ -17,18 +17,17 @@ Widget buildHighlightedText(
 
   for (final match in matches) {
     if (match.start > start) {
-      spans.add(TextSpan(text: text.substring(start, match.start)));
+      spans.add(TextSpan(text: text.substring(start, match.start), style: style));
     }
     spans.add(TextSpan(
       text: text.substring(match.start, match.end),
-      style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
-          .merge(style),
+      style: style?.merge(TextStyle(backgroundColor: Theme.of(context).primaryColorLight)),
     ));
     start = match.end;
   }
 
   if (start < text.length) {
-    spans.add(TextSpan(text: text.substring(start)));
+    spans.add(TextSpan(text: text.substring(start), style: style));
   }
 
   return RichText(

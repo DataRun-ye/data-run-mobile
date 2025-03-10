@@ -148,10 +148,8 @@ class SectionElementModel extends CollectionElementModel<Map<String, Object?>> {
     final instance = getInstance();
     instance.parent = parent;
     final elements =
-    _elements.map((key, element) => MapEntry(key, element.clone(instance)));
+        _elements.map((key, element) => MapEntry(key, element.clone(instance)));
     instance.addAll(elements);
     return instance;
   }
-
-
 }

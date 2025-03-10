@@ -17,9 +17,9 @@ class AsyncValueWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (value) {
       AsyncValue(error: final error?, stackTrace: final stackTrace) =>
-          getErrorWidget(error, stackTrace),
+        getErrorWidget(error, stackTrace),
       AsyncValue(valueOrNull: final valueOrNull?) =>
-          valueBuilder.call(valueOrNull),
+        valueBuilder.call(valueOrNull),
       _ => const CircularProgressIndicator(),
     };
   }

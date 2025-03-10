@@ -48,7 +48,6 @@ class FormElementState with EquatableMixin {
 }
 
 class FieldElementState<T> extends FormElementState {
-
   FieldElementState({
     super.hidden,
     super.readOnly,

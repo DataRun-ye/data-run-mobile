@@ -39,20 +39,26 @@ class SearchFilterBar extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
+            highlightColor: Theme.of(context).highlightColor,
             tooltip: S.of(context).clearFilters,
             onPressed: filterQuery.filters.isNotEmpty ? onClearFilters : null,
-            icon: Icon(Icons.clear)),
+            icon: const Icon(Icons.clear, color:  Colors.orange,)),
         // Search Bar
         TextFormField(
           initialValue: filterQuery.searchQuery,
+
           decoration: InputDecoration(
             hintText: S.of(context).search,
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: const Icon(Icons.search, color: Colors.orange,),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            focusColor: Theme.of(context).focusColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
-            constraints: BoxConstraints(maxWidth: 200, maxHeight: 40),
-          ),
+            constraints: const BoxConstraints(maxWidth: 200, maxHeight: 30),
+          ).applyDefaults(Theme.of(context).inputDecorationTheme),
           onChanged: onSearchChanged,
         ),
         const SizedBox(width: 8),

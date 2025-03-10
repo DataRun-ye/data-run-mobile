@@ -30,7 +30,8 @@ class UserSessionManager {
   static const PREFS_URLS = 'pref_urls';
   static const PREFS_USERS = 'pref_users';
 
-  final SharedPreferences prefs;// = PreferenceProvider.sharedPreferencesSync();
+  final SharedPreferences
+      prefs; // = PreferenceProvider.sharedPreferencesSync();
 
   bool get isFirstSession {
     // final session = sessionData;

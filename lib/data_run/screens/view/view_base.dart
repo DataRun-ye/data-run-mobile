@@ -3,8 +3,7 @@ import 'package:datarun/data_run/screens/view/view_abstract.dart';
 /// any screen ActivityGlobalAbstract
 mixin ViewBase implements ViewAbstract {
   // final PinDialog pinDialog;
-  void onCreate() {
-  }
+  void onCreate() {}
 
   @override
   void back() {}

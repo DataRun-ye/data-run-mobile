@@ -66,8 +66,7 @@ class FieldValidators {
   }
 }
 
-Map<String, ValidationMessageFunction> validationMessages() =>
-    {
+Map<String, ValidationMessageFunction> validationMessages() => {
       'required': (error) => S.current.thisFieldIsRequired,
       'email': (error) => S.current.pleaseEnterAValidEmailAddress,
       'number': (error) => S.current.enterAValidNumber,

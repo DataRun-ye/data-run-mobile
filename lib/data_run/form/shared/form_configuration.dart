@@ -16,7 +16,7 @@ Future<FormConfiguration> formConfiguration(FormConfigurationRef ref,
   final FormVersion? formTemplateVersion = await ref
       .watch(formVersionAsyncProvider(form: form, version: version).future);
 
-  Iterable<String> orgUnits =  [];
+  Iterable<String> orgUnits = [];
 
   // if (formTemplateVersion != null) {
   //   final assignments = await D2Remote.assignmentModuleD.assignment

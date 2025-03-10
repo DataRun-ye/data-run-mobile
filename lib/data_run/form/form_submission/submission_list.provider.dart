@@ -7,6 +7,7 @@ import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submissi
 import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
 import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d2_remote/shared/utilities/dhis_uid_generator.util.dart';
 import 'package:d2_remote/shared/utilities/save_option.util.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:datarun/core/common/state.dart';
@@ -38,15 +39,25 @@ class FormSubmissions extends _$FormSubmissions {
     final String? completedDate = DateHelper.nowUtc();
     final DataFormSubmission? submission =
         await D2Remote.formSubmissionModule.formSubmission.byId(uid).getOne();
-    submission!
-      ..isFinal = true
-      ..synced = false
-      ..dirty = true
-      ..lastModifiedDate = DateHelper.nowUtc()
-      ..finishedEntryTime = completedDate;
+
+    DataFormSubmission toMark = DataFormSubmission.fromJson({
+      ...submission!.toJson(),
+      'isFinal': true,
+      'synced': submission.synced,
+      'dirty': true,
+      'lastModifiedDate': DateHelper.nowUtc(),
+      'finishedEntryTime': completedDate
+    });
+
+    // submission!
+    //   ..isFinal = true
+    //   ..synced = false
+    //   ..dirty = true
+    //   ..lastModifiedDate = DateHelper.nowUtc()
+    //   ..finishedEntryTime = completedDate;
 
     await D2Remote.formSubmissionModule.formSubmission
-        .setData(submission)
+        .setData(toMark)
         .save(saveOptions: SaveOptions(skipLocalSyncStatus: true));
 
     ref.invalidateSelf();
@@ -71,7 +82,10 @@ class FormSubmissions extends _$FormSubmissions {
       required int version,
       Map<String, dynamic> formData = const {},
       Geometry? geometry}) async {
+    final id = DhisUidGenerator.generate();
     final DataFormSubmission submission = DataFormSubmission(
+        id: id,
+        uid: id,
         status: AssignmentStatus.IN_PROGRESS,
         form: form,
         formVersion: formVersion,
@@ -98,6 +112,8 @@ class FormSubmissions extends _$FormSubmissions {
     final savedSubmission = await D2Remote.formSubmissionModule.formSubmission
         .byId(submission.id!)
         .getOne();
+    ref.invalidateSelf();
+    await future;
     return savedSubmission;
   }
 
@@ -108,16 +124,23 @@ class FormSubmissions extends _$FormSubmissions {
 
   Future<DataFormSubmission> updateSubmission(
       DataFormSubmission submission) async {
-    submission.dirty = true;
-    submission.synced = false;
-    submission.lastModifiedDate = DateHelper.nowUtc();
+    DataFormSubmission toUpdate = DataFormSubmission.fromJson({
+      ...submission.toJson(),
+      'dirty': true,
+      'synced': submission.synced,
+      'lastModifiedDate': DateHelper.nowUtc()
+    });
+
+    // submission.dirty = true;
+    // submission.synced = false;
+    // submission.lastModifiedDate = DateHelper.nowUtc();
 
     await D2Remote.formSubmissionModule.formSubmission
-        .setData(submission)
+        .setData(toUpdate)
         .save(saveOptions: SaveOptions(skipLocalSyncStatus: true));
 
     final savedSubmission = await D2Remote.formSubmissionModule.formSubmission
-        .byId(submission.id!)
+        .byId(toUpdate.id!)
         .getOne();
 
     ref.invalidateSelf();
@@ -198,7 +221,7 @@ Future<SubmissionItemSummaryModel> submissionInfo(SubmissionInfoRef ref,
   final submission =
       allSubmissions.firstWhere((t) => t.uid == formMetadata.submission!);
 
-  final DAssignment? assignment = submission.assignment != null
+  final Assignment? assignment = submission.assignment != null
       ? await D2Remote.assignmentModuleD.assignment
           .byId(submission.assignment!)
           .getOne()

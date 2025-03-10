@@ -7,7 +7,8 @@ class FormSubmissionRepository {
   FormSubmissionRepository();
 
   // final DataFormSubmissionQuery _query;
-  FormSubmissionQuery get _query => D2Remote.formSubmissionModule.formSubmission;
+  FormSubmissionQuery get _query =>
+      D2Remote.formSubmissionModule.formSubmission;
 
   Future<IList<DataFormSubmission>> getSubmissions(String form) async {
     final query = _query.byFormTemplate(form);

@@ -1,7 +1,6 @@
 import 'package:reactive_forms/reactive_forms.dart';
 
 class MaxRowsValidator extends Validator<dynamic> {
-
   MaxRowsValidator({
     required this.maxRows,
   }) : super();
@@ -30,7 +29,6 @@ class MaxRowsValidator extends Validator<dynamic> {
 }
 
 class MinRowsValidator extends Validator<dynamic> {
-
   MinRowsValidator({
     required this.maxRows,
     required this.minRows,

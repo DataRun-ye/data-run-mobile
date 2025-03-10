@@ -44,14 +44,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: buildHighlightedText(
-                    assignment.activity,
-                    searchQuery,
-                    context,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
+                Expanded(child: Text(assignment.activity, style: Theme.of(context).textTheme.titleMedium,)),
                 buildStatusBadge(assignment.status),
               ],
             ),
@@ -78,7 +71,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
                 Icons.location_on,
                 '${assignment.entityCode} - ${assignment.entityName}',
                 searchQuery,
-                context,
+                context
               ),
             ),
             const SizedBox(height: 4),
@@ -91,20 +84,20 @@ class AssignmentOverviewItem extends ConsumerWidget {
             const SizedBox(height: 8),
 
             // Counts Section
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  const SizedBox(width: 8),
-                  CountChip(syncStatus: SyncStatus.SYNCED),
-                  const SizedBox(width: 8),
-                  CountChip(syncStatus: SyncStatus.TO_POST),
-                  const SizedBox(width: 8),
-                  CountChip(syncStatus: SyncStatus.TO_UPDATE)
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
+            // const SingleChildScrollView(
+            //   scrollDirection: Axis.horizontal,
+            //   child: Row(
+            //     children: [
+            //       SizedBox(width: 8),
+            //       CountChip(syncStatus: SyncStatus.SYNCED),
+            //       SizedBox(width: 8),
+            //       CountChip(syncStatus: SyncStatus.TO_POST),
+            //       SizedBox(width: 8),
+            //       CountChip(syncStatus: SyncStatus.TO_UPDATE)
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(height: 8),
 
             // Resources
             if (assignment.allocatedResources.isNotEmpty ||
@@ -114,7 +107,22 @@ class AssignmentOverviewItem extends ConsumerWidget {
                 bodyStyle: Theme.of(context).textTheme.bodySmall,
               ),
             // Actions
-            const Divider(height: 16),
+            const SizedBox(height: 5.0),
+
+            // const Divider(height: 16),
+            const Row(
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(width: 2),
+                CountChip(syncStatus: SyncStatus.SYNCED),
+                SizedBox(width: 2),
+                CountChip(syncStatus: SyncStatus.TO_POST),
+                SizedBox(width: 2),
+                CountChip(syncStatus: SyncStatus.TO_UPDATE),
+              ],
+            ),
+            const Divider(height: 5.0),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -205,52 +213,52 @@ class AssignmentOverviewItem extends ConsumerWidget {
   }
 
   Widget _buildDetailIcon(
-      IconData icon, String value, String searchQuery, BuildContext context) {
+      IconData icon, String value, String searchQuery, BuildContext context, {TextStyle? style}) {
     return Row(
       children: [
         Icon(icon, size: 20, color: Colors.grey[600]),
         const SizedBox(width: 4),
-        buildHighlightedText(value, searchQuery, context),
+        buildHighlightedText(value, searchQuery, context, style: style),
       ],
     );
   }
 
-  // Widget _buildHighlightedText(
-  //     String text, String searchQuery, BuildContext context,
-  //     {TextStyle? style}) {
-  //   if (searchQuery.isEmpty) {
-  //     return Text(text, softWrap: true);
-  //   }
-  //
-  //   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
-  //   if (matches.isEmpty) {
-  //     return Text(text, softWrap: true);
-  //   }
-  //
-  //   final List<TextSpan> spans = [];
-  //   int start = 0;
-  //
-  //   for (final match in matches) {
-  //     if (match.start > start) {
-  //       spans.add(TextSpan(text: text.substring(start, match.start)));
-  //     }
-  //     spans.add(TextSpan(
-  //       text: text.substring(match.start, match.end),
-  //       style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
-  //           .merge(style),
-  //     ));
-  //     start = match.end;
-  //   }
-  //
-  //   if (start < text.length) {
-  //     spans.add(TextSpan(text: text.substring(start)));
-  //   }
-  //
-  //   return RichText(
-  //     text:
-  //         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
-  //   );
-  // }
+// Widget _buildHighlightedText(
+//     String text, String searchQuery, BuildContext context,
+//     {TextStyle? style}) {
+//   if (searchQuery.isEmpty) {
+//     return Text(text, softWrap: true);
+//   }
+//
+//   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
+//   if (matches.isEmpty) {
+//     return Text(text, softWrap: true);
+//   }
+//
+//   final List<TextSpan> spans = [];
+//   int start = 0;
+//
+//   for (final match in matches) {
+//     if (match.start > start) {
+//       spans.add(TextSpan(text: text.substring(start, match.start)));
+//     }
+//     spans.add(TextSpan(
+//       text: text.substring(match.start, match.end),
+//       style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
+//           .merge(style),
+//     ));
+//     start = match.end;
+//   }
+//
+//   if (start < text.length) {
+//     spans.add(TextSpan(text: text.substring(start)));
+//   }
+//
+//   return RichText(
+//     text:
+//         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
+//   );
+// }
 
 // Widget _buildHighlightedText(
 //     String text, String searchQuery, BuildContext context,
@@ -348,7 +356,9 @@ class ResourcesComparisonWidget extends ConsumerWidget {
                   Intl.message(key.toLowerCase()),
                   style: bodyStyle,
                 ),
-                SizedBox(width: 30,),
+                const SizedBox(
+                  width: 30,
+                ),
                 Text(
                   '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
                   style: bodyStyle?.copyWith(

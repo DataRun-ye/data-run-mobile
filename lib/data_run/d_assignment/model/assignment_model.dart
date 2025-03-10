@@ -40,7 +40,7 @@ class Assignments extends _$Assignments {
       query.where(attribute: 'activity', value: activityModel.activity!.id);
     }
 
-    final List<DAssignment> assignments = await query.get();
+    final List<Assignment> assignments = await query.get();
 
     final futures =
         assignments.map<Future<AssignmentModel>>((assignment) async {
@@ -73,7 +73,6 @@ class Assignments extends _$Assignments {
         submissions.addAll(await ref.watch(
             assignmentSubmissionsProvider(assignment.id!, form: form).future));
       }
-
 
       AssignmentStatus status;
 
@@ -120,9 +119,7 @@ class Assignments extends _$Assignments {
                 .asMap()
                 .map((k, v) => MapEntry(v, assignment.allocatedResources[v]))
             : {for (var i in resourceHeaders) i: 0},
-        reportedResources: sumActualResources(
-            submissions,
-            resourceHeaders),
+        reportedResources: sumActualResources(submissions, resourceHeaders),
         forms: assignment.forms,
       );
     }).toList();
@@ -135,13 +132,17 @@ class Assignments extends _$Assignments {
       AssignmentStatus? status, String assignmentId) async {
     // final previousState = await future;
 
-    DAssignment? assignment =
+    Assignment? assignment =
         await D2Remote.assignmentModuleD.assignment.byId(assignmentId).getOne();
     if (assignment != null) {
-      assignment.status = status;
-      assignment.lastModifiedDate = DateHelper.nowUtc();
+      DataFormSubmission toUpdate = DataFormSubmission.fromJson({
+        ...assignment.toJson(),
+        'status': status,
+        'lastModifiedDate': DateHelper.nowUtc()
+      });
+
       await D2Remote.assignmentModuleD.assignment
-          .setData(assignment)
+          .setData(toUpdate)
           .save(saveOptions: SaveOptions(skipLocalSyncStatus: false));
     }
 

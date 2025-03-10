@@ -7,13 +7,14 @@ sealed class SectionElement<T> extends FormElementInstance<T> {
       {required SectionTemplate template,
       required super.form,
       FormElementState? elementState})
-      : super(template: template,
-            elementState: elementState ??
-                FormElementState());
+      : super(
+            template: template,
+            elementState: elementState ?? FormElementState());
 
   FormElementInstance<dynamic> element(String name);
 
   SectionTemplate get template => super.template as SectionTemplate;
+
   /// Checks if [SectionElement] contains an element by a given [name].
   ///
   /// Returns true if collection contains the element, otherwise returns false.

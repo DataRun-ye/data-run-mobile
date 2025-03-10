@@ -45,8 +45,7 @@ class FormInstanceService {
           {initialValue}) async =>
       switch (attributeType) {
         AttributeType.uuid => initialValue ?? _uuid,
-        AttributeType.today => initialValue ??
-            DateHelper.nowUtc(),
+        AttributeType.today => initialValue ?? DateHelper.nowUtc(),
         AttributeType.username =>
           initialValue ?? await getUserAttribute(AttributeType.username),
         AttributeType.userUid =>
@@ -64,16 +63,13 @@ class FormInstanceService {
         AttributeType.team => initialValue ??
             (await D2Remote.teamModuleD.team
                     .where(attribute: 'disabled', value: false)
-                    .byActivity(
-                        formMetadata.assignmentModel.teamId)
+                    .byActivity(formMetadata.assignmentModel.teamId)
                     .getOne())
                 ?.uid,
-        AttributeType.activity => initialValue ??
-            formMetadata.assignmentModel.activityId,
-        AttributeType.version =>
-          initialValue ?? formMetadata.formId,
-        AttributeType.scope =>
-          formMetadata.assignmentModel.scope.name,
+        AttributeType.activity =>
+          initialValue ?? formMetadata.assignmentModel.activityId,
+        AttributeType.version => initialValue ?? formMetadata.formId,
+        AttributeType.scope => formMetadata.assignmentModel.scope.name,
       };
 
   Future<Map<String, Object?>> formAttributesControls(initialValue) async {
@@ -121,8 +117,7 @@ class FormInstanceService {
 
       /// form
       '_${AttributeType.form.name}':
-          initialValue['_${AttributeType.form.name}'] ??
-              formMetadata.formId,
+          initialValue['_${AttributeType.form.name}'] ?? formMetadata.formId,
 
       /// activity
       '_${AttributeType.activity.name}': await attributeControl(

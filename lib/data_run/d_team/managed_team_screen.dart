@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ManageTeamsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final teams = teamSummaries;//ref.watch(teamListProvider);
+    final teams = teamSummaries; //ref.watch(teamListProvider);
     final expandedTeams = ref.watch(expandedTeamsProvider);
     final filter = ref.watch(filterProvider);
     final sort = ref.watch(sortProvider);
@@ -136,8 +136,12 @@ class ManageTeamsScreen extends ConsumerWidget {
         Resource(name: 'MedKits', allocated: 150, used: 120),
       ],
       activities: [
-        ActivityFeedItem(title: 'Completed distribution in Zone A', timestamp: '2024-01-15T08:30:00Z'),
-        ActivityFeedItem(title: 'Started new survey in Zone B', timestamp: '2024-01-16T09:00:00Z'),
+        ActivityFeedItem(
+            title: 'Completed distribution in Zone A',
+            timestamp: '2024-01-15T08:30:00Z'),
+        ActivityFeedItem(
+            title: 'Started new survey in Zone B',
+            timestamp: '2024-01-16T09:00:00Z'),
       ],
     ),
     TeamSummary(
@@ -151,8 +155,12 @@ class ManageTeamsScreen extends ConsumerWidget {
         Resource(name: 'MedKits', allocated: 100, used: 90),
       ],
       activities: [
-        ActivityFeedItem(title: 'Completed survey in Zone C', timestamp: '2024-01-10T10:00:00Z'),
-        ActivityFeedItem(title: 'Started distribution in Zone D', timestamp: '2024-01-12T11:30:00Z'),
+        ActivityFeedItem(
+            title: 'Completed survey in Zone C',
+            timestamp: '2024-01-10T10:00:00Z'),
+        ActivityFeedItem(
+            title: 'Started distribution in Zone D',
+            timestamp: '2024-01-12T11:30:00Z'),
       ],
     ),
     TeamSummary(
@@ -166,8 +174,12 @@ class ManageTeamsScreen extends ConsumerWidget {
         Resource(name: 'MedKits', allocated: 200, used: 150),
       ],
       activities: [
-        ActivityFeedItem(title: 'Training session completed', timestamp: '2024-01-05T12:00:00Z'),
-        ActivityFeedItem(title: 'Started new survey in Zone E', timestamp: '2024-01-06T13:30:00Z'),
+        ActivityFeedItem(
+            title: 'Training session completed',
+            timestamp: '2024-01-05T12:00:00Z'),
+        ActivityFeedItem(
+            title: 'Started new survey in Zone E',
+            timestamp: '2024-01-06T13:30:00Z'),
       ],
     ),
     TeamSummary(
@@ -181,8 +193,12 @@ class ManageTeamsScreen extends ConsumerWidget {
         Resource(name: 'MedKits', allocated: 120, used: 100),
       ],
       activities: [
-        ActivityFeedItem(title: 'Completed campaign in Zone F', timestamp: '2024-01-20T14:00:00Z'),
-        ActivityFeedItem(title: 'Preparing for next campaign', timestamp: '2024-01-21T15:30:00Z'),
+        ActivityFeedItem(
+            title: 'Completed campaign in Zone F',
+            timestamp: '2024-01-20T14:00:00Z'),
+        ActivityFeedItem(
+            title: 'Preparing for next campaign',
+            timestamp: '2024-01-21T15:30:00Z'),
       ],
     ),
     TeamSummary(
@@ -196,8 +212,12 @@ class ManageTeamsScreen extends ConsumerWidget {
         Resource(name: 'MedKits', allocated: 300, used: 250),
       ],
       activities: [
-        ActivityFeedItem(title: 'Major distribution event', timestamp: '2024-01-25T16:00:00Z'),
-        ActivityFeedItem(title: 'Started follow-up surveys', timestamp: '2024-01-26T17:30:00Z'),
+        ActivityFeedItem(
+            title: 'Major distribution event',
+            timestamp: '2024-01-25T16:00:00Z'),
+        ActivityFeedItem(
+            title: 'Started follow-up surveys',
+            timestamp: '2024-01-26T17:30:00Z'),
       ],
     ),
   ];

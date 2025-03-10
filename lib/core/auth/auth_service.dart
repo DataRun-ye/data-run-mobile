@@ -24,7 +24,7 @@ class AuthService {
   Future<bool> isAuthenticatedOnline() async {
     WidgetsFlutterBinding.ensureInitialized();
     final networkAvailable =
-        await ConnectivityService.instance.isNetworkAvailable();
+    await ConnectivityService.instance.isNetworkAvailable();
     // final isOnline = await ConnectivityService.instance.isOnline;
 
     if (!networkAvailable /* || !isOnline*/) {
@@ -108,7 +108,7 @@ class AuthService {
       final authResult = await D2Remote.authenticate(
           username: username,
           password: password,
-          databaseFactory: databaseFactory,
+          databaseFactory: Platform.isWindows ? databaseFactory : null,
           url: serverUrl ?? kApiBaseUrl);
 
       if (authResult.success) {
@@ -143,7 +143,7 @@ class AuthService {
 
   Future<void> throwIfFirstTimeAndNoActiveNetwork() async {
     final networkAvailable =
-        await ConnectivityService.instance.isNetworkAvailable();
+    await ConnectivityService.instance.isNetworkAvailable();
     if (_sessionManager.isFirstSession && !networkAvailable) {
       logDebug('First time login user needs an active network');
       throw DError(

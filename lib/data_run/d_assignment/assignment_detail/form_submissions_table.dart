@@ -108,7 +108,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                         child: SingleChildScrollView(
                           keyboardDismissBehavior:
                               ScrollViewKeyboardDismissBehavior.onDrag,
-                          padding: EdgeInsets.only(bottom: 24),
+                          padding: const EdgeInsets.only(bottom: 24),
                           scrollDirection: Axis.horizontal,
                           controller: _horizontalController,
                           child: ConstrainedBox(

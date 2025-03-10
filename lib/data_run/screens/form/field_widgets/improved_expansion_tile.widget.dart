@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ImprovedExpansionTile extends StatelessWidget {
-  ImprovedExpansionTile({
-    super.key,
-    this.title,
-    this.titleWidget,
-    required this.child,
-    this.enabled = true,
-    this.children  = const <Widget>[],
-    this.initiallyExpanded = false,
-    this.onExpansionChanged,
-    this.maintainState = false,
-    this.leading
-  });
+  ImprovedExpansionTile(
+      {super.key,
+      this.title,
+      this.titleWidget,
+      required this.child,
+      this.enabled = true,
+      this.children = const <Widget>[],
+      this.initiallyExpanded = false,
+      this.onExpansionChanged,
+      this.maintainState = false,
+      this.leading});
 
   final String? title;
   final Widget? titleWidget;

@@ -12,4 +12,3 @@ abstract class ElementVisitor<T> {
 
   T doForRepeatItem(RowState section);
 }
-

@@ -1,7 +1,7 @@
 import 'package:d2_remote/modules/datarun/form/shared/rule/choice_filter.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarun/data_run/screens/form/element/exceptions/form_element_exception.dart';
-import 'package:datarun/data_run/screens/form_module/form/code_generator.dart';
+import 'package:datarunmobile/data_run/screens/form/element/exceptions/form_element_exception.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:rxdart/rxdart.dart';

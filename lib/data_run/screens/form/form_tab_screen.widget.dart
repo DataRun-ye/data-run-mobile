@@ -1,21 +1,21 @@
-import 'package:datarun/data_run/screens/form/form_with_sliver/form_entry_view_silver.widget.dart';
-import 'package:datarun/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/screens/form/form_with_sliver/form_entry_view_silver.widget.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/data_run/form/form_submission/submission_list.provider.dart';
-import 'package:datarun/data_run/screens/form/form_initial_view.widget.dart';
-import 'package:datarun/data_run/screens/form/hooks/scroll_controller_for_animation.dart';
-import 'package:datarun/data_run/screens/form/element/providers/form_instance.provider.dart';
-import 'package:datarun/data_run/screens/form/element/form_metadata.dart';
-import 'package:datarun/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
-import 'package:datarun/data_run/screens/form/inherited_widgets/form_template_inherit_widget.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet.widget.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/completion_dialog_config.provider.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/form_completion_dialog.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/get_error_widget.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data_run/screens/form/form_initial_view.widget.dart';
+import 'package:datarunmobile/data_run/screens/form/hooks/scroll_controller_for_animation.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
+import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_template_inherit_widget.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet.widget.dart';
+import 'package:datarunmobile/data/completion_dialog_config.provider.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/form_completion_dialog.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FormSubmissionScreen extends StatefulHookConsumerWidget {
@@ -119,12 +119,12 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
           selectedIndex: currentPageIndex.value,
           destinations: <Widget>[
             NavigationDestination(
-              selectedIcon: Icon(Icons.home),
-              icon: Icon(Icons.home_outlined),
+              selectedIcon: const Icon(Icons.home),
+              icon: const Icon(Icons.home_outlined),
               label: S.of(context).submissionInitialData,
             ),
             NavigationDestination(
-              icon: Badge(child: Icon(Icons.data_array)),
+              icon: const Badge(child: Icon(Icons.data_array)),
               label: S.of(context).submissionDataEntry,
             )
           ],

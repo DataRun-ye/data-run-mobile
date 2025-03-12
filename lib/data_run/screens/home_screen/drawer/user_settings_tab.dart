@@ -1,9 +1,9 @@
-import 'package:datarun/app/app.locator.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/core/auth/auth_service.dart';
-import 'package:datarun/core/auth/user_session_manager.dart';
-import 'package:datarun/generated/l10n.dart';
-import 'package:datarun/utils/user_preferences/preference.dart';
+import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/services/auth.service.dart';
+import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -28,7 +28,7 @@ class UserSettingsTab extends ConsumerWidget {
           const SizedBox(height: 10),
           Card(
             child: ListTile(
-              leading: Icon(
+              leading: const Icon(
                 MdiIcons.accountArrowLeft,
               ),
               title: Text(S.of(context).loginUsername),
@@ -37,13 +37,13 @@ class UserSettingsTab extends ConsumerWidget {
           ),
           Card(
             child: ListTile(
-              leading: Icon(
+              leading: const Icon(
                 MdiIcons.faceMan,
               ),
               title: Text(S.of(context).personInformation),
               subtitle: Text(user.firstName ?? '-'),
               trailing: IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: () {
                   // TODO(Hamza) Implement user info editing
                 },
@@ -52,13 +52,13 @@ class UserSettingsTab extends ConsumerWidget {
           ),
           Card(
             child: ListTile(
-              leading: Icon(
+              leading: const Icon(
                 MdiIcons.phoneSettings,
               ),
               title: Text(S.of(context).mobile),
               subtitle: Text(user.phoneNumber ?? '-'),
               trailing: IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: () {
                   // TODO(Hamza) Implement user info editing
                 },
@@ -67,12 +67,12 @@ class UserSettingsTab extends ConsumerWidget {
           ),
           Card(
             child: ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.lock_outline,
               ),
               title: Text(S.of(context).changePassword),
               trailing: IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: () {
                   // TODO(Hamza) Implement password change
                 },
@@ -89,7 +89,7 @@ class UserSettingsTab extends ConsumerWidget {
           const SizedBox(height: 10),
           Card(
             child: ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.language,
               ),
               title: Text(S.of(context).language),

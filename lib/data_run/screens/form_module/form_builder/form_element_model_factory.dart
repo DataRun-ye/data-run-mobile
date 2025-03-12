@@ -4,8 +4,8 @@ import 'package:d2_remote/modules/datarun/form/shared/field_template/section_tem
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarun/data_run/screens/form_module/form/code_generator.dart';
-import 'package:datarun/data_run/screens/form_module/form_element_model/form_element_model.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_element_model/form_element_model.dart';
 
 class FormElementModelFactory {
   static Map<String, FormElementModel<dynamic>> buildFormElements(

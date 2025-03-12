@@ -2,23 +2,23 @@ import 'dart:convert';
 
 import 'package:d2_remote/modules/datarun/form/shared/validation_strategy.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarun/commons/extensions/list_extensions.dart';
-import 'package:datarun/core/form/data/data_entry_repository.dart';
-import 'package:datarun/core/form/data/data_integrity_check_result.dart';
-import 'package:datarun/core/form/data/display_name_provider.dart';
-import 'package:datarun/core/form/data/form_repository.dart';
-import 'package:datarun/core/form/data/form_value_store.dart';
-import 'package:datarun/core/form/evaluation_engine/rules/rule_effect.dart';
-import 'package:datarun/core/form/evaluation_engine/rules/rule_utils_provider_result.dart'
+import 'package:datarunmobile/commons/extensions/list_extensions.dart';
+import 'package:datarunmobile/core/form/data/data_entry_repository.dart';
+import 'package:datarunmobile/core/form/data/data_integrity_check_result.data.dart';
+import 'package:datarunmobile/core/form/data/display_name_provider.dart';
+import 'package:datarunmobile/core/form/data/form_repository.dart';
+import 'package:datarunmobile/core/form/data/form_value_store.dart';
+import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_effect.dart';
+import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_utils_provider_result.dart'
     as rule_utils;
-import 'package:datarun/core/form/evaluation_engine/rules/rules_utils_provider.dart';
-import 'package:datarun/core/form/model/action_type.dart';
-import 'package:datarun/core/form/model/field_ui_model.dart';
-import 'package:datarun/core/form/model/row_action.dart';
-import 'package:datarun/core/form/model/section_ui_model_impl.dart';
-import 'package:datarun/core/form/model/store_result.dart';
-import 'package:datarun/core/form/ui/validation/field_error_message_provider.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/bottom_sheet_content_model.dart';
+import 'package:datarunmobile/core/form/evaluation_engine/rules/rules_utils_provider.dart';
+import 'package:datarunmobile/core/form/model/action_type.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/row_action.dart';
+import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
+import 'package:datarunmobile/core/form/model/store_result.dart';
+import 'package:datarunmobile/core/form/ui/validation/field_error_message_provider.dart';
+import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -549,7 +549,7 @@ class FormRepositoryImpl with EquatableMixin implements FormRepository {
         canComplete: ruleEffectsResult?.canComplete ?? true,
         onCompleteMessage: ruleEffectsResult?.messageOnComplete,
         allowDiscard: allowDiscard,
-        eventResultDetails: EventResultDetails(),
+        eventResultDetails: const EventResultDetails(),
       );
     } else if (mandatoryItemsWithoutValue.isNotEmpty) {
       return MissingMandatoryResult(
@@ -559,22 +559,22 @@ class FormRepositoryImpl with EquatableMixin implements FormRepository {
         canComplete: ruleEffectsResult?.canComplete ?? true,
         onCompleteMessage: ruleEffectsResult?.messageOnComplete,
         allowDiscard: allowDiscard,
-        eventResultDetails: EventResultDetails(),
+        eventResultDetails: const EventResultDetails(),
       );
     } else if (itemsWithWarning.isNotEmpty) {
       return FieldsWithWarningResult(
         fieldUidWarningList: itemsWithWarning.lock,
         canComplete: ruleEffectsResult?.canComplete ?? true,
         onCompleteMessage: ruleEffectsResult?.messageOnComplete,
-        eventResultDetails: EventResultDetails(),
+        eventResultDetails: const EventResultDetails(),
       );
     } else if (backupOfChangedItems().isNotEmpty && allowDiscard) {
-      return DataIntegrityCheckResult.notSavedResult();
+      return const DataIntegrityCheckResult.notSavedResult();
     } else {
       return SuccessfulResult(
         canComplete: ruleEffectsResult?.canComplete ?? true,
         onCompleteMessage: ruleEffectsResult?.messageOnComplete,
-        eventResultDetails: EventResultDetails(),
+        eventResultDetails: const EventResultDetails(),
       );
     }
   }

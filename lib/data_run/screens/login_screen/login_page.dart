@@ -1,24 +1,22 @@
-import 'package:datarun/app/app.locator.dart';
-import 'package:datarun/data_run/screens/login_screen/auth_wrapper.dart';
-import 'package:datarun/data_run/screens/login_screen/login_header.dart';
-import 'package:datarun/data_run/screens/login_screen/login_submit_button.dart';
-import 'package:datarun/data_run/screens/login_screen/reactive_form_state/login_reactive_form_model.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/data_run/screens/login_screen/login_header.dart';
+import 'package:datarunmobile/data_run/screens/login_screen/login_submit_button.dart';
+import 'package:datarunmobile/data_run/screens/login_screen/reactive_form_state/login_reactive_form.viewmodel.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-
-final passwordVisibilityProvider = StateProvider<bool>((ref) => true);
 
 class LoginPage extends HookConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginFormModel = locator<LoginReactiveFormModel>();
+    final loginFormModel = locator<LoginReactiveFormViewModel>();
 
-    final isPasswordObscured = ref.watch(passwordVisibilityProvider);
-
+    final isPasswordObscured = ref.watch(passwordVisibility);
+    final username = loginFormModel.form.control('username') as FormControl<String>;
+    final password = loginFormModel.form.control('password') as FormControl<String>;
     return ReactiveForm(
       formGroup: loginFormModel.form,
       child: SafeArea(
@@ -49,7 +47,7 @@ class LoginPage extends HookConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const LoginHeader(),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Text(
                           S.of(context).login,
                           textAlign: TextAlign.center,
@@ -61,36 +59,23 @@ class LoginPage extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         ReactiveTextField<String>(
-                          onTapOutside: loginFormModel.serverUrlControl.hasFocus
+                          onTapOutside: username.hasFocus
                               ? (event) =>
-                                  loginFormModel.serverUrlControl.unfocus()
+                      username.unfocus()
                               : null,
-                          formControl: loginFormModel.serverUrlControl,
-                          decoration: InputDecoration(
-                            labelText: S.of(context).serverUrl,
-                            prefixIcon: Icon(Icons.link,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        ReactiveTextField<String>(
-                          onTapOutside: loginFormModel.usernameControl.hasFocus
-                              ? (event) =>
-                                  loginFormModel.usernameControl.unfocus()
-                              : null,
-                          formControl: loginFormModel.usernameControl,
+                          formControl: loginFormModel.form.control('username') as FormControl<String>,
                           decoration: InputDecoration(
                             labelText: S.of(context).username,
                             prefixIcon: Icon(Icons.person,
                                 color: Theme.of(context).primaryColor),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         // Password input with visibility toggle
                         ReactiveTextField<String>(
-                          formControl: loginFormModel.passwordControl,
+                          formControl: password,
                           obscureText: isPasswordObscured,
                           decoration: InputDecoration(
                             labelText: S.of(context).password,
@@ -105,27 +90,25 @@ class LoginPage extends HookConsumerWidget {
                               ),
                               onPressed: () {
                                 ref
-                                    .read(passwordVisibilityProvider.notifier)
-                                    .state = !isPasswordObscured;
+                                    .read(passwordVisibility.notifier)
+                                    .toggle();
                               },
                             ),
                           ),
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         SizedBox(
                           width: double.infinity,
                           child: LoginSubmitButton(
-                            onPressed: () async {
-                              final result = await loginFormModel.login();
-                              if (result.success) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => AuthSyncWrapper(
-                                          isAuthenticated: result.success,
-                                          needsSync: true)),
-                                );
-                              }
-                            },
+                            onPressed: () => loginFormModel.login(),
+                            // if (result.success) {
+                            //   Navigator.of(context).pushReplacement(
+                            //     MaterialPageRoute(
+                            //         builder: (context) => AuthSyncWrapper(
+                            //             isAuthenticated: result.success,
+                            //             needsSync: true)),
+                            //   );
+                            // }
                           ),
                         ),
                       ],

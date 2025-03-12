@@ -1,4 +1,4 @@
-import 'package:datarun/core/element_instance/element_vistor/element_vistor.dart';
+import 'package:datarunmobile/core/element_instance/element_vistor/element_vistor.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ElementStat with EquatableMixin {

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/validation_strategy.dart';
-import 'package:datarun/commons/helpers/collections.dart';
-import 'package:datarun/core/form/model/field_ui_model.dart';
-import 'package:datarun/core/form/model/section_ui_model_impl.dart';
+import 'package:datarunmobile/commons/helpers/collections.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 
 abstract class DataEntryRepository {
   bool? get disableCollapsableSections => null;

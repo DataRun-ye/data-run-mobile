@@ -2,18 +2,18 @@ import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submissi
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarun/core/utils/get_item_local_string.dart';
-import 'package:datarun/core/form/element_iterator/field_template_traverse.extension.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/core/form/element_iterator/field_template_traverse.extension.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarun/data_run/form/form_submission/submission_list.provider.dart';
-import 'package:datarun/data_run/form/form_submission/submission_summary.model.dart';
-import 'package:datarun/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/get_error_widget.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/q_sync_icon_button.widget.dart';
-import 'package:datarun/data_run/screens/form_submission_list/submission_list_screen.widget.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data_run/form/form_submission/submission_summary.model.dart';
+import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/q_sync_icon_button.widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 
 class SubmissionInfo extends ConsumerStatefulWidget {
   const SubmissionInfo({
@@ -73,7 +73,7 @@ class SubmissionInfoState extends ConsumerState<SubmissionInfo> {
             IconButton(
               icon: const Icon(Icons.delete, size: 20),
               onPressed: () =>
-                  _confirmDelete(context, widget.submissionEntity.uid),
+                  _confirmDelete(context, widget.submissionEntity.id),
             ),
           ],
         ),
@@ -97,7 +97,7 @@ class SubmissionInfoState extends ConsumerState<SubmissionInfo> {
         trailing: QSyncIconButton(
           state: submissionSummary.syncStatus,
           onUnsyncedPressed: () =>
-              widget.onSyncPressed?.call(widget.submissionEntity.uid!),
+              widget.onSyncPressed?.call(widget.submissionEntity.id!),
         ),
         onTap: widget.onTap,
       ),

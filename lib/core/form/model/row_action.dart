@@ -1,6 +1,6 @@
 import 'package:d2_remote/core/datarun/exception/d_exception.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarun/core/form/model/action_type.dart';
+import 'package:datarunmobile/core/form/model/action_type.dart';
 import 'package:equatable/equatable.dart';
 
 /// data class that encapsulates a processed form action

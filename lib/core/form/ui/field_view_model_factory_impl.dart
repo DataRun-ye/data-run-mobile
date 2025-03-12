@@ -1,16 +1,16 @@
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
-import 'package:datarun/commons/extensions/dynamic_extensions.dart';
-import 'package:datarun/core/form/data/display_name_provider.dart';
-import 'package:datarun/core/form/model/field_ui_model.dart';
-import 'package:datarun/core/form/model/field_ui_model_impl.dart';
-import 'package:datarun/core/form/model/option_set_configuration.dart';
-import 'package:datarun/core/form/model/section_ui_model_impl.dart';
-import 'package:datarun/core/form/ui/event/ui_event_factory_impl.dart';
-import 'package:datarun/core/form/ui/factories/hint_provider.dart';
-import 'package:datarun/core/form/ui/field_view_model_factory.dart';
-import 'package:datarun/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/commons/extensions/dynamic_extensions.dart';
+import 'package:datarunmobile/core/form/data/display_name_provider.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model_impl.dart';
+import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';
+import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
+import 'package:datarunmobile/core/form/ui/event/ui_event_factory_impl.dart';
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
+import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 
 class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   FieldViewModelFactoryImpl({

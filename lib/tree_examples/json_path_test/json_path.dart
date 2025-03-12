@@ -1,6 +1,6 @@
 //
 // import 'package:json_path/json_path.dart';
-// import 'package:datarun/tree_examples/json_path_test/form_template_json_sample.dart';
+// import 'package:datarunmobile/tree_examples/json_path_test/form_template_json_sample.dart';
 //
 // void main() {
 //     final rules = JsonPath(r'$..rules');

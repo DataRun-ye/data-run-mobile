@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:d2_remote/core/datarun/exception/d_exception.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/scanned_code_properties.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/data_run/screens/form/field_widgets/code_scanner/scanned_items_table.dart';
-import 'package:datarun/data_run/screens/form/field_widgets/code_scanner/scanner_button_widgets.dart';
-import 'package:datarun/data_run/screens/form/field_widgets/code_scanner/scanner_error_widget.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/scanned_items_table.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/scanner_button_widgets.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/scanner_error_widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -198,7 +198,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget>
                 color: Colors.red,
                 child: Text(
                   S.of(context).invalidScannedCode,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
               ),

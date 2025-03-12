@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
 
 class TreeTile extends StatefulWidget {
   const TreeTile({
@@ -45,7 +45,7 @@ class _TreeTileState extends State<TreeTile> {
           onPressed: (_) => TreeViewScope.of<TreeNode>(context)
             ..controller.toggleExpansion(widget.entry.node),
         ),
-      _ => SizedBox.shrink()
+      _ => const SizedBox.shrink()
     };
 
     return TreeIndentation(
@@ -55,7 +55,7 @@ class _TreeTileState extends State<TreeTile> {
           if (expandable)
             TreeViewScope.of<TreeNode>(context)
               ..controller.toggleExpansion(widget.entry.node);
-          widget.onTap?.call(widget.entry.node.uid!);
+          widget.onTap?.call(widget.entry.node.id!);
         },
         child: Card(
           child: ListTile(

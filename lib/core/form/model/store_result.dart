@@ -1,4 +1,4 @@
-import 'package:datarun/core/form/model/value_store_result.dart';
+import 'package:datarunmobile/core/form/model/value_store_result.dart';
 import 'package:equatable/equatable.dart';
 
 class StoreResult with EquatableMixin {

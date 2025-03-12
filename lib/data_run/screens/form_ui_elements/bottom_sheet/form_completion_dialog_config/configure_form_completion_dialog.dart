@@ -1,11 +1,11 @@
 import 'package:collection/collection.dart';
-import 'package:datarun/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/data_run/screens/form/element/validation/form_element_validator.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/bottom_sheet_content_model.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/dialog_button_style.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/form_completion_dialog.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
+import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
+import 'package:datarunmobile/data/model/dialog_button_style.data.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/form_completion_dialog.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 

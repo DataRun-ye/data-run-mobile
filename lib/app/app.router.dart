@@ -5,20 +5,21 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:datarun/data_run/screens/home_screen/drawer/settings_page.dart'
+import 'package:datarunmobile/data_run/screens/home_screen/drawer/settings_page.dart'
     as _i6;
-import 'package:datarun/data_run/screens/home_screen/home_screen.widget.dart'
+import 'package:datarunmobile/data_run/screens/home_screen/home_screen.widget.dart'
     as _i2;
-import 'package:datarun/data_run/screens/login_screen/login_page.dart' as _i4;
-import 'package:datarun/data_run/screens/sync_screen/sync_screen.widget.dart'
+import 'package:datarunmobile/data_run/screens/login_screen/login_page.dart'
+    as _i4;
+import 'package:datarunmobile/data_run/screens/sync_screen/sync_screen.widget.dart'
     as _i3;
-import 'package:datarun/modular/activity_module/activity/activity_detail/activity_detail_view.dart'
+import 'package:datarunmobile/modular/activity_module/activity/activity_detail/activity_detail_view.dart'
     as _i9;
-import 'package:datarun/modular/activity_module/activity/activity_list_view.dart'
+import 'package:datarunmobile/modular/activity_module/activity/activity_list_view.dart'
     as _i8;
-import 'package:datarun/modular/activity_module/assignment/assignment_list_view.dart'
+import 'package:datarunmobile/modular/activity_module/assignment/assignment_list_view.dart'
     as _i7;
-import 'package:datarun/ui/views/startup/startup_view.dart' as _i5;
+import 'package:datarunmobile/ui/views/startup/startup_view.dart' as _i5;
 import 'package:flutter/material.dart' as _i10;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;

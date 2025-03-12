@@ -1,14 +1,14 @@
-import 'package:datarun/core/utils/get_item_local_string.dart';
-import 'package:datarun/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/data_run/screens/form/element/form_instance.dart';
-import 'package:datarun/data_run/screens/form/element/providers/form_instance.provider.dart';
-import 'package:datarun/data_run/screens/form/form_with_sliver/repeat_table/edit_panel.dart';
-import 'package:datarun/data_run/screens/form/form_with_sliver/repeat_table/repeat_table_rows_source.dart';
-import 'package:datarun/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
-import 'package:datarun/data_run/screens/form_module/form/code_generator.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/edit_panel.dart';
+import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/repeat_table_rows_source.dart';
+import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -124,7 +124,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                           context, formInstance, activityModel, repeatItem);
                     }
                   : null,
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
           ],
           header: Text(

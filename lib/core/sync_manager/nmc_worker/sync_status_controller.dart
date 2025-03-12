@@ -1,6 +1,6 @@
 import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress_status.dart';
-import 'package:datarun/core/sync_manager/nmc_worker/sync_status_data.dart';
-import 'package:datarun/utils/mass_utils/utils.dart';
+import 'package:datarunmobile/core/sync_manager/nmc_worker/sync_status_data.dart';
+import 'package:datarunmobile/utils/mass_utils/utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

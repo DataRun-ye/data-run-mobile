@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:datarun/core/common/state.dart';
+import 'package:datarunmobile/core/common/state.dart';
 
 class QSyncIconButton extends StatelessWidget {
   const QSyncIconButton({

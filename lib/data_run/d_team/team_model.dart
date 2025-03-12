@@ -1,6 +1,6 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
 import 'package:d2_remote/shared/entities/identifiable.entity.dart';
-import 'package:datarun/core/models/d_identifiable_model.dart';
+import 'package:datarunmobile/core/models/d_identifiable_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:intl/intl.dart';

@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/core/common/state.dart';
-import 'package:datarun/data_run/d_form_submission/submission_count_chips/submission_count_provider.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
+import 'package:datarunmobile/data/submission_count.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -36,24 +37,5 @@ class CountChip extends ConsumerWidget {
               ),
             ),
     );
-  }
-
-  Widget buildStatusIcon(SyncStatus? status, {bool colored = false}) {
-    switch (status) {
-      case SyncStatus.SYNCED:
-        return Icon(Icons.cloud_done,
-            color: colored ? Colors.green : Colors.grey, size: 18);
-      case SyncStatus.TO_POST:
-        return Icon(Icons.cloud_off,
-            color: colored ? Colors.blue : Colors.grey, size: 18);
-      case SyncStatus.TO_UPDATE:
-        return Icon(Icons.update,
-            color: colored ? Colors.grey[500] : Colors.grey, size: 18);
-      case SyncStatus.ERROR:
-        return Icon(Icons.error,
-            color: colored ? Colors.red : Colors.grey, size: 18);
-      default:
-        return const Icon(Icons.all_inclusive, size: 18);
-    }
   }
 }

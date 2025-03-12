@@ -1,10 +1,10 @@
 import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarun/core/form/data/display_name_provider.dart';
-import 'package:datarun/core/form/data/metadata/option_set_configuration.dart';
-import 'package:datarun/core/form/data/metadata/org_unit_configuration.dart';
-import 'package:datarun/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/core/form/data/display_name_provider.dart';
+import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart';
+import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:intl/intl.dart';
 
 class DisplayNameProviderImpl implements DisplayNameProvider {

@@ -2,7 +2,7 @@ import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:datarun/commons/extensions/list_extensions.dart';
+import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 
 class FormElementState with EquatableMixin {
   const FormElementState({
@@ -89,7 +89,7 @@ class FieldElementState<T> extends FormElementState {
 
   FieldElementState<T> resetValueFromVisibleOptions(
       {required List<FormOption> visibleOptions}) {
-    if (!DeepCollectionEquality.unordered()
+    if (!const DeepCollectionEquality.unordered()
         .equals(this.visibleOptions, visibleOptions)) {
       if (T is List<String>) {
         final selectedValues = (value as List<String>)

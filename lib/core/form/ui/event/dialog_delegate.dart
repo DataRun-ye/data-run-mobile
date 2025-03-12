@@ -1,9 +1,9 @@
 import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarun/commons/extensions/standard_extensions.dart';
-import 'package:datarun/core/form/ui/intent/form_intent_sealed.dart';
+import 'package:datarunmobile/commons/extensions/standard_extensions.dart';
+import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
 
-import 'list_view_ui_events.dart';
+import 'list_view_ui_events.data.dart';
 
 class DialogDelegate {
   static FormIntent handleDateInput(String uid, int year, int month, int day) {

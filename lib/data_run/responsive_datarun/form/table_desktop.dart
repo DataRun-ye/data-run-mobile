@@ -1,5 +1,5 @@
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/data_run/screens/form/form_with_sliver/repeat_table.widget.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table.widget.dart';
 import 'package:flutter/material.dart';
 
 class TableDesktop extends StatelessWidget {

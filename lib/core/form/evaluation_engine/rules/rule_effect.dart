@@ -1,4 +1,4 @@
-import 'package:datarun/core/form/evaluation_engine/rules/rule_action.dart';
+import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_action.dart';
 import 'package:equatable/equatable.dart';
 
 /// example:

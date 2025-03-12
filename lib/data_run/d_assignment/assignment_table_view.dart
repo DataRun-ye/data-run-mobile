@@ -1,13 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/core/common/state.dart';
-import 'package:datarun/data_run/d_assignment/build_highlighted_text.dart';
-import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
-import 'package:datarun/data_run/d_assignment/assignment_page.dart';
-import 'package:datarun/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
+import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_page.dart';
+import 'package:datarunmobile/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -58,15 +58,21 @@ class AssignmentTableView extends HookConsumerWidget {
       showCheckboxColumn: false,
       columns: <DataColumn>[
         DataColumn2(label: Text(S.current.dueDay), size: ColumnSize.S),
-        DataColumn2(label: Text(S.current.status), size: ColumnSize.S),
+        DataColumn2(label: Text(S.current.synced), size: ColumnSize.S),
         DataColumn2(label: Text(S.current.entity), size: ColumnSize.L),
-        DataColumn2(label: Text(S.current.team), size: ColumnSize.S),
         ...resourceHeaders
             .map((header) => DataColumn2(
                 numeric: true,
                 label: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('|${totalSummary[header]}|'),
+                    Text(
+                      '${totalSummary[header]}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium,
+                    ),
+                    const Divider(color: Colors.blueGrey, height: 5.0),
                     Text(
                       '${Intl.message(header.toLowerCase())} ${S.of(context).reported}',
                     ),
@@ -74,8 +80,9 @@ class AssignmentTableView extends HookConsumerWidget {
                 ),
                 size: ColumnSize.S))
             .toList(),
-        DataColumn2(label: Text(S.current.scope), size: ColumnSize.S),
         DataColumn2(label: Text(S.current.status)),
+        DataColumn2(label: Text(S.current.team), size: ColumnSize.S),
+        DataColumn2(label: Text(S.current.scope), size: ColumnSize.S),
       ],
       rows: assignments
           .map((assignment) => DataRow2(
@@ -89,34 +96,6 @@ class AssignmentTableView extends HookConsumerWidget {
                       '${assignment.startDay != null ? S.of(context).day : ''} ${assignment.startDay ?? ''}',
                       searchQuery,
                       context)),
-                  DataCell(buildStatusBadge(assignment.status)),
-                  DataCell(Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        buildHighlightedText(
-                            '${assignment.entityCode}', searchQuery, context),
-                        buildHighlightedText(
-                            '${assignment.entityName}', searchQuery, context)
-                      ])),
-                  DataCell(Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.group),
-                        Text('${assignment.teamCode}'),
-                        // SizedBox(width: 4),
-                      ])),
-                  ...resourceHeaders.map((header) {
-                    return DataCell(Text(
-                      assignment.reportedResources[header.toLowerCase()]
-                              ?.toString() ??
-                          '-',
-                    ));
-                  }),
-                  DataCell(
-                      Text(Intl.message(assignment.scope.name.toLowerCase()))),
                   DataCell(ProviderScope(
                     overrides: [
                       assignmentProvider.overrideWithValue(assignment)
@@ -130,6 +109,34 @@ class AssignmentTableView extends HookConsumerWidget {
                       ],
                     ),
                   )),
+                  DataCell(Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildHighlightedText(
+                            '${assignment.entityCode}', searchQuery, context),
+                        buildHighlightedText(
+                            '${assignment.entityName}', searchQuery, context)
+                      ])),
+                  ...resourceHeaders.map((header) {
+                    return DataCell(Text(
+                      assignment.reportedResources[header.toLowerCase()]
+                              ?.toString() ??
+                          '-',
+                    ));
+                  }),
+                  DataCell(buildStatusBadge(assignment.status)),
+                  DataCell(Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.group),
+                        Text('${assignment.teamCode}'),
+                        // SizedBox(width: 4),
+                      ])),
+                  DataCell(
+                      Text(Intl.message(assignment.scope.name.toLowerCase()))),
                 ],
                 onSelectChanged: (_) => onViewDetails(assignment),
               ))

@@ -17,7 +17,7 @@ class FormMeta {
               .equals(Map.unmodifiable(this.meta), other.meta));
 
   @override
-  int get hashCode => MapEquality().hash(meta);
+  int get hashCode => const MapEquality().hash(meta);
 
   FormMeta copyWith({Map<String, dynamic>? meta}) {
     return FormMeta(

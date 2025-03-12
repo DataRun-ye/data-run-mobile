@@ -1,10 +1,10 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
-import 'package:datarun/data_run/d_team/team_model.dart';
-import 'package:datarun/data_run/d_team/team_provider.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/data_run/d_team/team_model.dart';
+import 'package:datarunmobile/data_run/d_team/team.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

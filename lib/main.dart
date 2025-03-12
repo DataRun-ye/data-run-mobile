@@ -1,22 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
-import 'package:datarun/app/app.bottomsheets.dart';
-import 'package:datarun/app/app.dialogs.dart';
-import 'package:datarun/app/app.locator.dart';
-import 'package:datarun/app/app.router.dart';
-import 'package:datarun/app/di/injection.dart';
-import 'package:datarun/core/auth/user_session_manager.dart';
-import 'package:datarun/generated/l10n.dart';
-import 'package:datarun/main.reflectable.dart';
-import 'package:datarun/main_constants/main_constants.dart';
-import 'package:datarun/utils/user_preferences/preference.dart';
+import 'package:datarunmobile/app/app.bottomsheets.dart';
+import 'package:datarunmobile/app/app.dialogs.dart';
+import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/app/app.router.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/main.reflectable.dart';
+import 'package:datarunmobile/core/main_constants.dart';
+import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:stacked_services/stacked_services.dart';
@@ -37,7 +34,7 @@ Future<void> main() async {
   setupBottomSheetUi();
   //
 
-  final sharedPreferences = await SharedPreferences.getInstance();
+  // final sharedPreferences = await SharedPreferences.getInstance();
 
   // await ConnectivityService.instance.initialize();
 
@@ -58,8 +55,8 @@ Future<void> main() async {
   // does the user have active session in preference (local check)
   // final bool hasExistingSession = userSessionManager.isAuthenticated;
   // final bool needsSync = userSessionManager.needsSync();
-  final bool hasExistingSession = locator<UserSessionManager>().isAuthenticated;
-  final bool needsSync = locator<UserSessionManager>().needsSync();
+  // final bool hasExistingSession = locator<UserSessionManager>().isAuthenticated;
+  // final bool needsSync = locator<UserSessionManager>().needsSync();
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
@@ -67,11 +64,11 @@ Future<void> main() async {
 
   // is has active session initialize, otherwise it will be initialized
   // by user login in.
-  if (hasExistingSession) {
-    await D2Remote.initialize(
-        databaseFactory:
-            Platform.isWindows || Platform.isLinux ? databaseFactory : null);
-  }
+  // if (hasExistingSession) {
+  //   await D2Remote.initialize(
+  //       databaseFactory:
+  //           Platform.isWindows || Platform.isLinux ? databaseFactory : null);
+  // }
 
   // await SentryFlutter.init(
   //   (options) {
@@ -99,14 +96,14 @@ Future<void> main() async {
 
   runApp(ProviderScope(
     overrides: [
-      sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+      // sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       // authServiceProvider.overrideWithValue(authService),
       // userSessionManagerProvider.overrideWithValue(userSessionManager),
     ],
     child: App(
-      key: ValueKey('DATARUN_MAIN_APP'),
-      isAuthenticated: hasExistingSession,
-      needsSync: needsSync,
+      key: const ValueKey('DATARUN_MAIN_APP'),
+      // isAuthenticated: hasExistingSession,
+      // needsSync: needsSync,
     ),
   ));
 }
@@ -114,12 +111,12 @@ Future<void> main() async {
 class App extends ConsumerWidget {
   const App({
     super.key,
-    required this.isAuthenticated,
-    required this.needsSync,
+    // required this.isAuthenticated,
+    // required this.needsSync,
   });
 
-  final bool isAuthenticated;
-  final bool needsSync;
+  // final bool isAuthenticated;
+  // final bool needsSync;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,6 +1,6 @@
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarun/data_run/screens/form/field_widgets/code_scanner/barcode_scanner_widget.dart';
-import 'package:datarun/data_run/screens/form_module/form/code_generator.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/barcode_scanner_widget.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -40,7 +40,7 @@ class ReactiveCodeScanField<T> extends ReactiveFormField<T, String> {
                     .applyDefaults(Theme.of(field.context).inputDecorationTheme)
                     .copyWith(
                         suffixIcon: suffixIcon,
-                        prefixIcon: Icon(Icons.qr_code_scanner));
+                        prefixIcon: const Icon(Icons.qr_code_scanner));
 
             return IgnorePointer(
               ignoring: !field.control.enabled,

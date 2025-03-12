@@ -1,4 +1,4 @@
-import 'package:datarun/data_run/d_team/team_model.dart';
+import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final teamListProvider =

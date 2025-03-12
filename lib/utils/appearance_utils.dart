@@ -1,5 +1,5 @@
-import 'package:datarun/commons/extensions/list_extensions.dart';
-import 'package:datarun/main_constants/main_constants.dart';
+import 'package:datarunmobile/commons/extensions/list_extensions.dart';
+import 'package:datarunmobile/core/main_constants.dart';
 import 'package:flutter/material.dart';
 
 /// parse ThemeMode Value

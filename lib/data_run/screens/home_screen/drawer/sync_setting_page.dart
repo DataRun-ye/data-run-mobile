@@ -1,7 +1,7 @@
-import 'package:datarun/app/app.locator.dart';
-import 'package:datarun/core/auth/user_session_manager.dart';
-import 'package:datarun/core/sync_manager/sync_service.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
+import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -12,7 +12,7 @@ class SyncSettingTab extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userSessionManager = locator<UserSessionManager>();
+    final userSessionManager = locator<UserSessionService>();
     final selectedInterval = useState(userSessionManager.getSyncInterval());
 
     return ListView(
@@ -23,7 +23,7 @@ class SyncSettingTab extends HookConsumerWidget {
 
         Card(
           child: ListTile(
-            leading: Icon(
+            leading: const Icon(
               MdiIcons.update,
             ),
             title: Text(S.of(context).syncInterval),

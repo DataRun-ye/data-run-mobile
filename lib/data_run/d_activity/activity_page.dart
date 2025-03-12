@@ -1,7 +1,7 @@
-import 'package:datarun/data_run/d_activity/activity_card.dart';
-import 'package:datarun/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarun/data_run/d_activity/activity_provider.dart';
-import 'package:datarun/data_run/d_assignment/assignment_page_new.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
+import 'package:datarunmobile/data/activity/activity.provider.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_page_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

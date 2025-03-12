@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node_data_source.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/org_unit_picker_dialog.widget.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node_data_source.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/org_unit_picker_dialog.widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 
 class OrgUnitPickerField extends StatefulWidget {
   const OrgUnitPickerField(
@@ -154,12 +154,12 @@ class _OrgUnitPickerFieldState extends State<OrgUnitPickerField/*<T>*/ > {
       validator: widget.validator,
       decoration: InputDecoration(
         isDense: true,
-        prefixIcon: Icon(Icons.location_on),
+        prefixIcon: const Icon(Icons.location_on),
         suffixIcon: _selectedNode != null && widget.showClearButton
             ? IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: _clearValue,
-                icon: Icon(Icons.close))
+                icon: const Icon(Icons.close))
             : null,
         hintText: widget.fieldHintText ?? S.of(context).orgUnitHelpText,
         labelText: widget.fieldLabelText ?? S.of(context).orgUnitInputLabel,

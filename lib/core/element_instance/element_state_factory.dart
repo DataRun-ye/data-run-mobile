@@ -1,8 +1,8 @@
-import 'package:datarun/core/element_instance/element_state.dart';
-import 'package:datarun/core/element_instance/field_state/field_state.dart';
-import 'package:datarun/core/element_instance/repeat_instance/repeat_state.dart';
-import 'package:datarun/core/element_instance/sction_instance/section_state.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/core/element_instance/element_state.dart';
+import 'package:datarunmobile/core/element_instance/field_state/field_state.dart';
+import 'package:datarunmobile/core/element_instance/repeat_instance/repeat_state.dart';
+import 'package:datarunmobile/core/element_instance/sction_instance/section_state.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 ElementStat fromTemplate(FormElementTemplate template, {dynamic value}) {
   return switch (template) {

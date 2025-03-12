@@ -4,7 +4,7 @@ import 'package:d2_remote/modules/datarun/form/shared/field_template/section_tem
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 class FlatTemplateFactory {
   FlatTemplateFactory(this._formVersion)

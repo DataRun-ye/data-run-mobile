@@ -1,7 +1,7 @@
-import 'package:datarun/commons/custom_widgets/reactive_valid_button.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/data_run/screens/form/element_widgets/form_widget_factory.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/custom_widgets/reactive_valid_button.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data_run/screens/form/element_widgets/form_widget_factory.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -58,13 +58,13 @@ class EditPanel extends StatelessWidget {
                 label: Text(S.of(context).addNew),
                 onPressed: () =>
                     onSave(formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
-                icon: Icon(MdiIcons.contentSavePlus),
+                icon: const Icon(MdiIcons.contentSavePlus),
               ),
               ReactiveValidButton(
                 onPressed: () =>
                     onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
                 label: Text(S.of(context).saveAndClose),
-                icon: Icon(MdiIcons.contentSaveCheck),
+                icon: const Icon(MdiIcons.contentSaveCheck),
               ),
             ],
           ),

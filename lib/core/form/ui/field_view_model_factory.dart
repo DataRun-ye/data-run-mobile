@@ -1,9 +1,9 @@
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
-import 'package:datarun/core/form/model/field_ui_model.dart';
-import 'package:datarun/core/form/model/option_set_configuration.dart';
-import 'package:datarun/core/form/model/section_ui_model_impl.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';
+import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 
 abstract class FieldViewModelFactory {
   FieldViewModelFactory();

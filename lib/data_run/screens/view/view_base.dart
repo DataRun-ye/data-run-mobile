@@ -1,4 +1,4 @@
-import 'package:datarun/data_run/screens/view/view_abstract.dart';
+import 'package:datarunmobile/data_run/screens/view/view_abstract.dart';
 
 /// any screen ActivityGlobalAbstract
 mixin ViewBase implements ViewAbstract {

@@ -21,10 +21,7 @@ class DRunIdentifiable<T extends IdentifiableModel>
   final String? displayName;
 
   @override
-  String? get id => identifiableEntity.uid;
-
-  @override
-  String? get uid => identifiableEntity.uid;
+  String? get id => identifiableEntity.id;
 
   @override
   String? get code => identifiableEntity.code;
@@ -40,5 +37,5 @@ class DRunIdentifiable<T extends IdentifiableModel>
   }
 
   @override
-  List<Object?> get props => [id, uid, code, name, displayName];
+  List<Object?> get props => [id, code, name, displayName];
 }

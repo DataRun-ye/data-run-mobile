@@ -7,18 +7,19 @@ import 'package:d2_remote/modules/datarun/form/shared/field_template/template.da
 import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/core/common/state.dart';
-import 'package:datarun/core/utils/get_item_local_string.dart';
-import 'package:datarun/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarun/data_run/d_activity/activity_model.dart';
-import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarun/data_run/d_assignment/assignment_page.dart';
-import 'package:datarun/data_run/form/form_submission/submission_list.provider.dart';
-import 'package:datarun/data_run/form/form_submission/submission_list_util.dart';
-import 'package:datarun/data_run/screens/form/element/providers/form_instance.provider.dart';
-import 'package:datarun/data_run/screens/form_submission_list/submission_sync_dialog.widget.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_page.dart';
+import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data_run/form/form_submission/submission_list_util.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/screens/form_submission_list/submission_sync_dialog.widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -338,17 +339,17 @@ class FormSubmissionsTable extends HookConsumerWidget {
   }
 
   Future<void> _showSyncDialog(
-      BuildContext context, List<String> entityUids, WidgetRef ref) async {
+      BuildContext context, List<String> entityIds, WidgetRef ref) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return SyncDialog(
-          entityUids: entityUids,
-          syncEntity: (uids) async {
-            if (uids != null) {
+          entityIds: entityIds,
+          syncEntity: (ids) async {
+            if (ids != null) {
               await ref
                   .read(formSubmissionsProvider(formId).notifier)
-                  .syncEntities(uids);
+                  .syncEntities(ids);
             }
           },
         );
@@ -357,7 +358,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, String? uid, String message, WidgetRef ref) async {
+      BuildContext context, String? id, String message, WidgetRef ref) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -381,23 +382,23 @@ class FormSubmissionsTable extends HookConsumerWidget {
     );
 
     if (confirmed == true) {
-      _showUndoSnackBar(context, uid, ref);
+      _showUndoSnackBar(context, id, ref);
     }
   }
 
   void _showUndoSnackBar(
-      BuildContext context, String? toDeleteUid, WidgetRef ref) {
+      BuildContext context, String? toDeleteId, WidgetRef ref) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final listSubmissionsNotifier =
         ref.read(formSubmissionsProvider(formId).notifier);
-    listSubmissionsNotifier.deleteSubmission([toDeleteUid]);
+    listSubmissionsNotifier.deleteSubmission([toDeleteId]);
     scaffoldMessenger.showSnackBar(
       SnackBar(
         content: Text(S.of(context).itemRemoved),
         action: SnackBarAction(
           label: S.of(context).undo,
           onPressed: () {
-            listSubmissionsNotifier.deleteSubmission([toDeleteUid]);
+            listSubmissionsNotifier.deleteSubmission([toDeleteId]);
           },
         ),
       ),
@@ -405,20 +406,6 @@ class FormSubmissionsTable extends HookConsumerWidget {
   }
 }
 
-Widget buildStatusIcon(SyncStatus? status) {
-  switch (status) {
-    case SyncStatus.SYNCED:
-      return const Icon(Icons.cloud_done, color: Colors.green, size: 20);
-    case SyncStatus.TO_POST:
-      return const Icon(Icons.cloud_upload, color: Colors.blue, size: 20);
-    case SyncStatus.TO_UPDATE:
-      return const Icon(Icons.update, color: Colors.orange, size: 20);
-    case SyncStatus.ERROR:
-      return const Icon(Icons.error, color: Colors.red, size: 20);
-    default:
-      return const Icon(Icons.all_inclusive, size: 20);
-  }
-}
 
 String _formatDate(String? dateStr) {
   if (dateStr == null) return '';

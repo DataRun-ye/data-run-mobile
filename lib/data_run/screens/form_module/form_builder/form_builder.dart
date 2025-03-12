@@ -1,5 +1,5 @@
-import 'package:datarun/data_run/screens/form_module/form/form_data.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form/form_data.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 class FormBuilder {
   FormBuilder();

@@ -1,10 +1,10 @@
 import 'package:d2_remote/shared/entities/identifiable_tree_node.entity.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
 
 extension TreeNodeExtension<T extends IdentifiableTreeNode> on T {
   TreeNode toTreeNode({bool selectable = false}) {
     return TreeNode(
-        uid: this.uid,
+        id: this.id,
         code: this.code,
         name: this.name,
         displayName: this.displayName,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 
 import 'activity_model.dart';
 
@@ -40,7 +40,7 @@ class ActivityCard extends StatelessWidget {
               if (activity.assignedTeam?.name != null)
                 Row(
                   children: [
-                    Icon(Icons.group, color: Colors.grey),
+                    const Icon(Icons.group, color: Colors.grey),
                     const SizedBox(width: 8.0),
                     Text(
                       '${S.of(context).assignedTeam}: ${activity.assignedTeam!.name}',

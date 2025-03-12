@@ -1,15 +1,15 @@
-import 'package:datarun/app/app.locator.dart';
-import 'package:datarun/app/app.router.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/core/auth/internet_aware_screen.dart';
-import 'package:datarun/core/auth/user_session_manager.dart';
-import 'package:datarun/core/network/online_connectivity_provider.dart';
-import 'package:datarun/data_run/d_activity/activity_model.dart';
-import 'package:datarun/data_run/d_activity/activity_page.dart';
-import 'package:datarun/data_run/d_activity/activity_provider.dart';
-import 'package:datarun/data_run/screens/home_screen/drawer/app_about_info_provider.dart';
-import 'package:datarun/generated/l10n.dart';
-import 'package:datarun/utils/user_preferences/preference.dart';
+import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/app/app.router.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/auth/internet_aware_screen.dart';
+import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
+import 'package:datarunmobile/core/network/online_connectivity.provider.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_page.dart';
+import 'package:datarunmobile/data/activity/activity.provider.dart';
+import 'package:datarunmobile/data/app_about_info.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -79,9 +79,9 @@ class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
                         //     ));
                       },
                     ),
-                    Divider(),
-                    SyncButton(),
-                    Divider(),
+                    const Divider(),
+                    const SyncButton(),
+                    const Divider(),
                     AsyncValueWidget(
                       value: appAboutAsync,
                       valueBuilder: (AppAbout appInfo) {
@@ -126,7 +126,7 @@ class SyncButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // final userSessionManager = ref.watch(userSessionManagerProvider);
     final _navigationService = locator<NavigationService>();
-    final userSessionManager = locator<UserSessionManager>();
+    final userSessionManager = locator<UserSessionService>();
     final lastSyncTime = userSessionManager.lastSyncTime;
 
     return AsyncValueWidget(
@@ -151,7 +151,7 @@ class SyncButton extends ConsumerWidget {
               ? Icon(Icons.check_circle,
                   color:
                       userSessionManager.syncDone ? Colors.green : Colors.red)
-              : Icon(MdiIcons.webOff, color: Colors.grey),
+              : const Icon(MdiIcons.webOff, color: Colors.grey),
           onTap: isOnline
               ? () {
                   _navigationService.back();

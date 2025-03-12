@@ -1,4 +1,4 @@
-import 'package:datarun/modular/activity_module/assignment/assignment_list_view_model.dart';
+import 'package:datarunmobile/modular/activity_module/assignment/assignment_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 

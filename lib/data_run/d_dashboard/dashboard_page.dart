@@ -1,9 +1,9 @@
-// import 'package:datarun/data_run/d_assignment/assignment_overview.dart';
-// import 'package:datarun/data_run/d_assignment/detail_page.dart';
-// import 'package:datarun/data_run/d_assignment/forms_overview.dart';
-// import 'package:datarun/data_run/d_team/managed_team_screen.dart';
-// import 'package:datarun/data_run/d_team/managed_teams_overview.dart';
-// import 'package:datarun/utils/navigator_key.dart';
+// import 'package:datarunmobile/data_run/d_assignment/assignment_overview.dart';
+// import 'package:datarunmobile/data_run/d_assignment/detail_page.dart';
+// import 'package:datarunmobile/data_run/d_assignment/forms_overview.dart';
+// import 'package:datarunmobile/data_run/d_team/managed_team_screen.dart';
+// import 'package:datarunmobile/data_run/d_team/managed_teams_overview.dart';
+// import 'package:datarunmobile/utils/navigator_key.dart';
 // import 'package:flutter/material.dart';
 //
 // class DashboardPage extends StatelessWidget {

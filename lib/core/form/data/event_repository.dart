@@ -1,8 +1,8 @@
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:datarun/commons/helpers/collections.dart';
-import 'package:datarun/core/form/data/data_entry_base_repository.dart';
-import 'package:datarun/core/form/model/field_ui_model.dart';
-import 'package:datarun/core/form/ui/field_view_model_factory.dart';
+import 'package:datarunmobile/commons/helpers/collections.dart';
+import 'package:datarunmobile/core/form/data/data_entry_base_repository.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
 
 class EventRepository extends DataEntryBaseRepository {
   EventRepository({

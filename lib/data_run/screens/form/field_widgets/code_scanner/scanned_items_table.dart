@@ -1,6 +1,6 @@
 import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class ScannedItemPreview extends StatelessWidget {

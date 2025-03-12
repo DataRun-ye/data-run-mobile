@@ -1,6 +1,6 @@
-import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/template_extension.dart';
-import 'package:datarun/data_run/form/processing_dependencies.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/template_extension.dart';
+import 'package:datarunmobile/data_run/form/processing_dependencies.dart';
 
 class FormDependencyManager {
   FormDependencyManager({required this.formFlatTemplate});

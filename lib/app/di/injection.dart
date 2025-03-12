@@ -1,4 +1,4 @@
-import 'package:datarun/modular/account/user_model.dart';
+import 'package:datarunmobile/modular/account/user_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'injection.config.dart';

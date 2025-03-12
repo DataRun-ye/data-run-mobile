@@ -1,5 +1,5 @@
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarun/core/form/ui/factories/hint_provider.dart';
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 
 class HintProviderImpl implements HintProvider {
   const HintProviderImpl();

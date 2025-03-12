@@ -1,19 +1,20 @@
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:datarun/data_run/screens/form/element/providers/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/core/common/state.dart';
-import 'package:datarun/data_run/form/form_submission/submission_list.provider.dart';
-import 'package:datarun/data_run/screens/form/form_tab_screen.widget.dart';
-import 'package:datarun/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
-import 'package:datarun/data_run/screens/form_submission_list/submission_info.widget.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/get_error_widget.dart';
-import 'package:datarun/data_run/screens/form_submission_list/submission_sync_dialog.widget.dart';
-import 'package:datarun/data_run/screens/project_activity_detail/form_tiles/form_submissions_status.provider.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data_run/screens/form/form_tab_screen.widget.dart';
+import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/data_run/screens/form_submission_list/submission_info.widget.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
+import 'package:datarunmobile/data_run/screens/form_submission_list/submission_sync_dialog.widget.dart';
+import 'package:datarunmobile/data/form_submissions_status.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
 class SubmissionListScreen extends StatefulHookConsumerWidget {
@@ -27,18 +28,18 @@ class SubmissionListState extends ConsumerState<SubmissionListScreen> {
   SyncStatus? _selectedStatus;
   final List<Template> formTemplates = [];
 
-  Future<void> _showSyncDialog(List<String> entityUids) async {
+  Future<void> _showSyncDialog(List<String> entityIds) async {
     final formMetadata = FormMetadataWidget.of(context);
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return SyncDialog(
-          entityUids: entityUids,
-          syncEntity: (uids) async {
-            if (uids != null) {
+          entityIds: entityIds,
+          syncEntity: (ids) async {
+            if (ids != null) {
               await ref
                   .read(formSubmissionsProvider(formMetadata.formId).notifier)
-                  .syncEntities(uids);
+                  .syncEntities(ids);
             }
           },
         );
@@ -80,7 +81,7 @@ class SubmissionListState extends ConsumerState<SubmissionListScreen> {
 
                       return FormMetadataWidget(
                         formMetadata: FormMetadataWidget.of(context)
-                            .copyWith(submission: entity.uid),
+                            .copyWith(submission: entity.id),
                         child: Card(
                           shadowColor: Theme.of(context).colorScheme.shadow,
                           surfaceTintColor:
@@ -93,10 +94,10 @@ class SubmissionListState extends ConsumerState<SubmissionListScreen> {
                               rootSection:
                                   SectionTemplate(fields: formTemplate.fields),
                               submissionEntity: entity,
-                              onSyncPressed: (uid) =>
-                                  _showSyncDialog([entity.uid!]),
+                              onSyncPressed: (id) =>
+                                  _showSyncDialog([entity.id!]),
                               onTap: () => _goToDataEntryForm(
-                                    entity.uid!, /*entity.version*/
+                                    entity.id!, /*entity.version*/
                                   )),
                         ),
                       );
@@ -192,25 +193,10 @@ class SubmissionListState extends ConsumerState<SubmissionListScreen> {
       MaterialPageRoute(
           builder: (context) => FormMetadataWidget(
                 formMetadata: metas,
-                child: FormSubmissionScreen(
+                child: const FormSubmissionScreen(
                   currentPageIndex: 1,
                 ),
               )),
     );
-  }
-}
-
-Widget buildStatusIcon(SyncStatus? status) {
-  switch (status) {
-    case SyncStatus.SYNCED:
-      return const Icon(Icons.cloud_done, color: Colors.green, size: 20);
-    case SyncStatus.TO_POST:
-      return const Icon(Icons.cloud_upload, color: Colors.blue, size: 20);
-    case SyncStatus.TO_UPDATE:
-      return const Icon(Icons.update, color: Colors.orange, size: 20);
-    case SyncStatus.ERROR:
-      return const Icon(Icons.error, color: Colors.red, size: 20);
-    default:
-      return const Icon(Icons.all_inclusive, size: 20);
   }
 }

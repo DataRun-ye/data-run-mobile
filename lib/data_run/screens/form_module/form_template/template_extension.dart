@@ -1,5 +1,5 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 extension TemplateRuleDependencies on FormElementTemplate {
   IList<String> get dependencies {

@@ -1,15 +1,15 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarun/data_run/d_assignment/active_filters_widget.dart';
-import 'package:datarun/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
-import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
-import 'package:datarun/data_run/d_assignment/assignment_table_view.dart';
-import 'package:datarun/data_run/d_assignment/assignments_card_view.dart';
-import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarun/data_run/d_team/team_provider.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
+import 'package:datarunmobile/data_run/d_assignment/active_filters_widget.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
+import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_table_view.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignments_card_view.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
+import 'package:datarunmobile/data_run/d_team/team.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -39,17 +39,17 @@ class AssignmentPageNew extends HookConsumerWidget {
               // initialValue: ref.watch(filterQueryProvider).searchQuery,
               decoration: InputDecoration(
                 hintText: S.of(context).search,
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                constraints: BoxConstraints(maxWidth: 200, maxHeight: 40),
+                constraints: const BoxConstraints(maxWidth: 200, maxHeight: 40),
                 suffixIcon: ref
                         .watch(filterQueryProvider
                             .select((value) => value.searchQuery))
                         .isNotEmpty
                     ? IconButton(
-                        icon: Icon(Icons.clear),
+                        icon: const Icon(Icons.clear),
                         onPressed: () {
                           ref
                               .read(filterQueryProvider.notifier)
@@ -79,7 +79,7 @@ class AssignmentPageNew extends HookConsumerWidget {
             },
           ),
           IconButton(
-            icon: Icon(Icons.filter_alt),
+            icon: const Icon(Icons.filter_alt),
             onPressed: () {
               showFilterBottomSheet(context, ref);
             },
@@ -210,7 +210,7 @@ class AssignmentPageNew extends HookConsumerWidget {
                               selectedFilters.clear();
                             });
                           },
-                          icon: Icon(Icons.filter_alt_off),
+                          icon: const Icon(Icons.filter_alt_off),
                           label: Text(S.of(context).reset),
                         ),
                       ),

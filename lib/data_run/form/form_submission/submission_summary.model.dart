@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:datarun/core/common/state.dart';
+import 'package:datarunmobile/core/common/state.dart';
 
 class SubmissionItemSummaryModel with EquatableMixin {
   SubmissionItemSummaryModel(

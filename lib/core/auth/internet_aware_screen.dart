@@ -1,5 +1,5 @@
-import 'package:datarun/core/network/connectivy_service.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/core/network/connectivy_service.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 

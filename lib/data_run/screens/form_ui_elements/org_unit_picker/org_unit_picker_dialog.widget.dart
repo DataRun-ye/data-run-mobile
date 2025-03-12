@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node_data_source.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/settings/controller.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/tree_tile.widget.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node_data_source.dart';
+import 'package:datarunmobile/data/controller.provider.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/tree_tile.widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 
 // The M3 sizes are coming from the tokens, but are hand coded,
 // as the current token DB does not contain landscape versions.
@@ -159,8 +159,8 @@ class _OrgUnitPickerDialogState
 
     filter = treeController.search((TreeNode node) {
       // Check if either `code` or `name` contains the search pattern
-      return node.uid?.contains(pattern) == true ||
-          node.uid?.contains(pattern) == true;
+      return node.id?.contains(pattern) == true ||
+          node.id?.contains(pattern) == true;
     });
 
     treeController.rebuild();
@@ -281,7 +281,7 @@ class _OrgUnitPickerDialogState
 
     Widget _buildTreeNodes() {
       return Container(
-        constraints: BoxConstraints(maxHeight: 300),
+        constraints: const BoxConstraints(maxHeight: 300),
         child: AnimatedTreeView<TreeNode>(
           key: _nodePickerKey,
           treeController: treeController,
@@ -291,7 +291,7 @@ class _OrgUnitPickerDialogState
               match: filter?.matches[entry.node],
               searchPattern: searchPattern,
               onTap: _handleNodeChanged,
-              isSelected: entry.node.uid == _selectedNode,
+              isSelected: entry.node.id == _selectedNode,
             );
           },
           duration: ref.watch(watchAnimationDurationSettingProvider),
@@ -326,11 +326,11 @@ class _OrgUnitPickerDialogState
     return Column(
       children: [
         _buildSearchField(),
-        SizedBox(
+        const SizedBox(
           height: 32,
         ),
         Expanded(child: _buildTreeNodes()),
-        SizedBox(
+        const SizedBox(
           height: 32,
         ),
         actions,

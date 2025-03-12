@@ -1,4 +1,4 @@
-// import 'package:datarun/data_run/d_team/managed_teams_overview.dart';
+// import 'package:datarunmobile/data_run/d_team/managed_teams_overview.dart';
 // import 'package:flutter/material.dart';
 //
 // class TeamDetailsPage extends StatelessWidget {

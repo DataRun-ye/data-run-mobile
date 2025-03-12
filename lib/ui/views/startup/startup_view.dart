@@ -1,5 +1,5 @@
-import 'package:datarun/ui/common/ui_helpers.dart';
-import 'package:datarun/ui/views/startup/startup_viewmodel.dart';
+import 'package:datarunmobile/ui/common/ui_helpers.dart';
+import 'package:datarunmobile/ui/views/startup/startup_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';

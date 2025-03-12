@@ -1,5 +1,5 @@
 import 'package:d2_remote/modules/datarun/form/entities/metadata_submission_update.dart';
-import 'package:datarun/data_run/screens/form_module/form/code_generator.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -53,14 +53,14 @@ class _AddMetadataSubmissionFormState
             children: [
               TextFormField(
                 controller: _householdNameController,
-                decoration: InputDecoration(labelText: 'Household Name'),
+                decoration: const InputDecoration(labelText: 'Household Name'),
                 validator: (value) => value == null || value.isEmpty
                     ? 'Household name is required'
                     : null,
               ),
               TextFormField(
                 controller: _serialNumberController,
-                decoration: InputDecoration(labelText: 'Serial Number'),
+                decoration: const InputDecoration(labelText: 'Serial Number'),
                 keyboardType: TextInputType.number,
                 validator: (value) =>
                     value == null || int.tryParse(value) == null

@@ -1,7 +1,7 @@
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
-import 'package:datarun/data_run/form/processing_dependencies.dart';
+import 'package:datarunmobile/data_run/form/processing_dependencies.dart';
 
 class FormTreeService {
   Map<String, Set<String>> buildDependencyGraph(FormVersion root) {

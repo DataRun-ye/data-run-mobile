@@ -4,9 +4,9 @@ import 'package:d2_remote/modules/datarun/form/shared/field_template/scanned_cod
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarun/core/form/utils/path_walking_service.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/form_element_template_iterator.dart';
-import 'package:datarun/data_run/screens/form_module/form_template/flat_template_factory.dart';
+import 'package:datarunmobile/core/form/utils/path_walking_service.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template_iterator.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/flat_template_factory.dart';
 import 'package:d2_remote/modules/datarun/form/shared/template_extensions/template_path_walking_service.dart';
 import 'package:equatable/equatable.dart';
 

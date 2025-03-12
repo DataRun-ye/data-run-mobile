@@ -1,11 +1,11 @@
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/data_run/screens/form/element/providers/form_instance.provider.dart';
-import 'package:datarun/data_run/screens/form/element/validation/form_element_validator.dart';
-import 'package:datarun/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
-import 'package:datarun/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
+import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -34,11 +34,11 @@ class QDropDownWithSearchField extends HookConsumerWidget {
       dropdownDecoratorProps: DropDownDecoratorProps(
         decoration: InputDecoration(
           labelText: element.label,
-          contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-          border: OutlineInputBorder(),
+          contentPadding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
+          border: const OutlineInputBorder(),
         ),
       ),
-      popupProps: PopupProps.menu(
+      popupProps: const PopupProps.menu(
         showSelectedItems: true,
       ),
       items: (filter, prop) => options

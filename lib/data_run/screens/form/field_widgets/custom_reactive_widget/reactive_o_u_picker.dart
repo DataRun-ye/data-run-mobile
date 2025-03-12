@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node_data_source.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/org_unit_picker/org_unit_picker_field.widget.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/model/tree_node_data_source.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/org_unit_picker/org_unit_picker_field.widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class ReactiveOuPicker<T> extends ReactiveFormField<T, String> {
@@ -25,7 +25,7 @@ class ReactiveOuPicker<T> extends ReactiveFormField<T, String> {
           formControlName: formControlName,
           builder: (ReactiveFormFieldState<T, String> field) {
             Widget? prefixIcon =
-                decoration?.prefixIcon ?? Icon(Icons.account_tree);
+                decoration?.prefixIcon ?? const Icon(Icons.account_tree);
 
             final InputDecoration effectiveDecoration =
                 (decoration ?? const InputDecoration())

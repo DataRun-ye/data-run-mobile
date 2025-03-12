@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 class TreeNode with EquatableMixin {
   TreeNode({
-    required this.uid,
+    required this.id,
     this.code,
     this.name,
     this.displayName,
@@ -13,7 +13,7 @@ class TreeNode with EquatableMixin {
     this.selectable = false,
   }) : children = children ?? [];
 
-  final String? uid;
+  final String? id;
   final String? code;
   final String? name;
   final String? displayName;
@@ -24,11 +24,11 @@ class TreeNode with EquatableMixin {
 
   @override
   List<Object?> get props =>
-      [uid, code, name, displayName, path, parent, selectable, children];
+      [id, code, name, displayName, path, parent, selectable, children];
 
   Map<String, dynamic> toJson() {
     return {
-      'uid': uid,
+      'uid': id,
       'code': code,
       'name': name,
       'displayName': displayName,
@@ -41,7 +41,7 @@ class TreeNode with EquatableMixin {
 
   static TreeNode fromJson(Map<String, dynamic> json) {
     return TreeNode(
-      uid: json['uid'] as String?,
+      id: json['uid'] as String?,
       code: json['code'] as String?,
       name: json['name'] as String?,
       displayName: json['displayName'] as String?,

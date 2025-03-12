@@ -2,3 +2,6 @@
 	path = data-run-sdk
 	url = https://github.com/Hamza-ye/data-run-sdk.git
 	branch = develop
+[submodule "data-run-sdk-drift"]
+	path = data-run-sdk-drift
+	url = https://github.com/Hamza-ye/data-run-sdk-drift.git

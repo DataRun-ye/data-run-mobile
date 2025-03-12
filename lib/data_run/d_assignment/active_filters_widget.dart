@@ -1,5 +1,5 @@
-import 'package:datarun/data_run/d_assignment/assignment_provider.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -21,7 +21,7 @@ class ActiveFiltersWidget extends ConsumerWidget {
         children: [
           if (activeFilters.isNotEmpty)
             ActionChip(
-              avatar: Icon(Icons.clear_all),
+              avatar: const Icon(Icons.clear_all),
               tooltip: S.of(context).clearAll,
               label: Text(S.of(context).clearAll),
               onPressed: ref.read(filterQueryProvider.notifier).clearAllFilters,
@@ -29,7 +29,7 @@ class ActiveFiltersWidget extends ConsumerWidget {
           for (var entry in activeFilters.entries)
             Chip(
               label: Text('${entry.key}: ${entry.value}'),
-              deleteIcon: Icon(Icons.close),
+              deleteIcon: const Icon(Icons.close),
               onDeleted: () => ref
                   .read(filterQueryProvider.notifier)
                   .removeFilter(entry.key),

@@ -32,7 +32,7 @@ class ImprovedExpansionTile extends StatelessWidget {
       shadowColor: Theme.of(context).colorScheme.shadow,
       surfaceTintColor: Theme.of(context).colorScheme.primary,
       elevation: 2,
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.circular(12),
       // ),
@@ -43,7 +43,7 @@ class ImprovedExpansionTile extends StatelessWidget {
         enabled: enabled,
         onExpansionChanged: onExpansionChanged,
         initiallyExpanded: initiallyExpanded,
-        tilePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        tilePadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         title: titleWidget != null
             ? titleWidget!
             : Text(
@@ -57,7 +57,7 @@ class ImprovedExpansionTile extends StatelessWidget {
         // backgroundColor: !isDarkMode ? Colors.blue.shade50 : null,
         trailing: AnimatedRotation(
           turns: initiallyExpanded ? 0.5 : 0,
-          duration: Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 100),
           child: Icon(
             Icons.keyboard_arrow_down,
             color: Colors.amber[900],

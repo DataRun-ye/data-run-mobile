@@ -2,8 +2,8 @@ import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
 import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
 import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.dart';
 import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
-import 'package:datarun/core/models/d_identifiable_model.dart';
-import 'package:datarun/data_run/d_team/team_model.dart';
+import 'package:datarunmobile/core/models/d_identifiable_model.dart';
+import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
@@ -25,7 +25,7 @@ class ActivityModel with EquatableMixin {
       {Iterable<Team> managedTeams = const [],
       Iterable<OrgUnit> orgUnits = const [],
       Iterable<String> assignedForms = const [],
-      DUser? user,
+      User? user,
       Team? userTeam,
       Activity? activity,
       int assignedAssignments = 0,

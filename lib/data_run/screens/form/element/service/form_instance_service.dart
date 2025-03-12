@@ -4,14 +4,14 @@ import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/attribute_type.dart';
-import 'package:datarun/data_run/screens/form/element/form_metadata.dart';
-import 'package:datarun/data_run/screens/form/element/service/device_info_service.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
+import 'package:datarunmobile/data_run/screens/form/element/service/device_info_service.dart';
 import 'package:uuid/uuid.dart';
 
 class FormInstanceService {
   FormInstanceService(
       {AndroidDeviceInfoService? deviceInfoService, required this.formMetadata})
-      : _uuid = Uuid().v4(),
+      : _uuid = const Uuid().v4(),
         _deviceInfoService = deviceInfoService;
 
   final FormMetadata formMetadata;
@@ -20,11 +20,11 @@ class FormInstanceService {
   final String _uuid;
 
   Future<String?> getUserAttribute(AttributeType userAttributeType) async {
-    DUser? currentUser = await D2Remote.userModule.user.getOne();
+    User? currentUser = await D2Remote.userModule.user.getOne();
 
     return switch (userAttributeType) {
       AttributeType.username => currentUser?.username,
-      AttributeType.userUid => currentUser?.uid,
+      AttributeType.userUid => currentUser?.id,
       AttributeType.phoneNumber => currentUser?.phoneNumber,
       AttributeType.userInfo => currentUser?.firstName,
       _ => null

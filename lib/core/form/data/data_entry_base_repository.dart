@@ -1,9 +1,9 @@
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
 import 'package:d2_remote/modules/datarun/form/shared/validation_strategy.dart';
-import 'package:datarun/core/form/model/field_ui_model.dart';
-import 'package:datarun/core/form/model/section_ui_model_impl.dart';
-import 'package:datarun/core/form/ui/field_view_model_factory.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
+import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
 import 'data_entry_repository.dart';
 
 /// Encapsulate interacting with a FormTemplate's submission data,

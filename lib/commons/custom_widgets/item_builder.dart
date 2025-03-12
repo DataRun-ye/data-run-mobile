@@ -18,10 +18,10 @@ class Item extends StatelessWidget {
         onTap: () =>
             Navigator.push(context, MaterialPageRoute(builder: builder)),
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
         ),

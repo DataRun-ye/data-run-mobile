@@ -1,5 +1,5 @@
-import 'package:datarun/data_run/d_team/team_model.dart';
-import 'package:datarun/data_run/d_team/team_state.dart';
+import 'package:datarunmobile/data_run/d_team/team_model.dart';
+import 'package:datarunmobile/data_run/d_team/team_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,16 +24,16 @@ class ManageTeamsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manage Teams'),
+        title: const Text('Manage Teams'),
         actions: [
           // Filter Button
           PopupMenuButton<String>(
             onSelected: (value) =>
                 ref.read(filterProvider.notifier).state = value,
             itemBuilder: (context) => [
-              PopupMenuItem(value: 'All', child: Text('All')),
-              PopupMenuItem(value: 'Overdue', child: Text('Overdue')),
-              PopupMenuItem(value: 'Completed', child: Text('Completed')),
+              const PopupMenuItem(value: 'All', child: Text('All')),
+              const PopupMenuItem(value: 'Overdue', child: Text('Overdue')),
+              const PopupMenuItem(value: 'Completed', child: Text('Completed')),
             ],
           ),
           // Sort Button
@@ -41,8 +41,8 @@ class ManageTeamsScreen extends ConsumerWidget {
             onSelected: (value) =>
                 ref.read(sortProvider.notifier).state = value,
             itemBuilder: (context) => [
-              PopupMenuItem(value: 'Alphabetical', child: Text('Alphabetical')),
-              PopupMenuItem(
+              const PopupMenuItem(value: 'Alphabetical', child: Text('Alphabetical')),
+              const PopupMenuItem(
                   value: 'Overdue Count', child: Text('Overdue Count')),
             ],
           ),
@@ -89,9 +89,9 @@ class ManageTeamsScreen extends ConsumerWidget {
         // Resource Details
         DataTable(
             columns: [
-              DataColumn(label: Text('Resource')),
-              DataColumn(label: Text('Allocated')),
-              DataColumn(label: Text('Used')),
+              const DataColumn(label: Text('Resource')),
+              const DataColumn(label: Text('Allocated')),
+              const DataColumn(label: Text('Used')),
             ],
             rows: team.resources.map((resource) {
               return DataRow(cells: [
@@ -103,7 +103,7 @@ class ManageTeamsScreen extends ConsumerWidget {
         // Reallocate Button
         TextButton(
           onPressed: () => _showReallocateModal(context, team, ref),
-          child: Text('Reallocate Resources'),
+          child: const Text('Reallocate Resources'),
         ),
         // Activity Feed
         ...team.activities.map((activity) => ListTile(
@@ -237,13 +237,13 @@ class ResourceReallocationModal extends StatelessWidget {
         .toList();
 
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('Reallocate Resources for ${team.name}',
-              style: TextStyle(fontSize: 18)),
-          SizedBox(height: 16),
+              style: const TextStyle(fontSize: 18)),
+          const SizedBox(height: 16),
           ...team.resources.asMap().entries.map((entry) {
             final index = entry.key;
             final resource = entry.value;
@@ -254,7 +254,7 @@ class ResourceReallocationModal extends StatelessWidget {
               keyboardType: TextInputType.number,
             );
           }).toList(),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               final updatedResources =
@@ -273,7 +273,7 @@ class ResourceReallocationModal extends StatelessWidget {
                   .updateResources(team.id, updatedResources);
               Navigator.pop(context);
             },
-            child: Text('Save Changes'),
+            child: const Text('Save Changes'),
           ),
         ],
       ),

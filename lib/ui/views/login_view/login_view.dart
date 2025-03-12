@@ -1,4 +1,4 @@
-import 'package:datarun/ui/common/ui_helpers.dart';
+import 'package:datarunmobile/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -21,7 +21,7 @@ class LoginView extends StackedView<LoginViewModel> {
         padding: const EdgeInsets.only(left: 25.0, right: 25.0),
         child: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -38,7 +38,7 @@ class LoginView extends StackedView<LoginViewModel> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     filled: true,
-                    contentPadding: EdgeInsets.all(16),
+                    contentPadding: const EdgeInsets.all(16),
                   ),
                 ),
                 verticalSpaceSmall,
@@ -52,7 +52,7 @@ class LoginView extends StackedView<LoginViewModel> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     filled: true,
-                    contentPadding: EdgeInsets.all(16),
+                    contentPadding: const EdgeInsets.all(16),
                   ),
                 ),
                 verticalSpaceSmall,
@@ -62,9 +62,9 @@ class LoginView extends StackedView<LoginViewModel> {
                     viewModel.userLogin(
                         _usernameController.text, _passwordController.text);
                   },
-                  child: Text('Log In'),
+                  child: const Text('Log In'),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

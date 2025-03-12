@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarun/commons/constants.dart';
+import 'package:datarunmobile/commons/constants.dart';
 import 'package:http/http.dart' as http;
 
 class ConnectivityService {
@@ -57,7 +57,7 @@ class ConnectivityService {
       logDebug('checkInternetConnection: ping $kApiPingUrl ...',
           data: {'runtimeType': this.runtimeType});
       final response =
-          await http.get(Uri.parse(kApiPingUrl)).timeout(Duration(seconds: 20));
+          await http.get(Uri.parse(kApiPingUrl)).timeout(const Duration(seconds: 20));
       if (response.statusCode == 200) {
         logDebug('Device is online!', data: {'runtimeType': this.runtimeType});
         return true;

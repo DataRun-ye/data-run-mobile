@@ -1,5 +1,5 @@
-import 'package:datarun/data_run/screens/home_screen/drawer/app_about_info_provider.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/data/app_about_info.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

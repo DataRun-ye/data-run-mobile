@@ -1,4 +1,4 @@
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/form_completion_dialog.dart';
+import 'package:datarunmobile/data_run/screens/form_ui_elements/bottom_sheet/form_completion_dialog_config/form_completion_dialog.dart';
 import 'package:flutter/material.dart';
 
 class QBottomSheetDialog extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -13,9 +13,10 @@ class LoginSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final form = ReactiveForm.of(context);
+    final formIsValid = form!.valid;
     return FilledButton(
       child: Text(S.of(context).login),
-      onPressed: form!.valid ? onPressed : null,
+      onPressed: formIsValid ? onPressed : null,
     );
   }
 }

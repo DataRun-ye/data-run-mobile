@@ -1,6 +1,6 @@
 import 'package:d2_remote/core/datarun/exception/d_error.dart';
 import 'package:d2_remote/core/datarun/exception/d_error_code.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 
 class ErrorMessage {
   const ErrorMessage();

@@ -1,6 +1,6 @@
-import 'package:datarun/generated/l10n.dart';
-import 'package:datarun/main_constants/main_constants.dart';
-import 'package:datarun/utils/user_preferences/preference.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/core/main_constants.dart';
+import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -27,13 +27,13 @@ class AppearanceSettingsTab extends ConsumerWidget {
           ),
         ),
         ListTile(
-          title: Text('Material Version'),
+          title: const Text('Material Version'),
           trailing: IconButton(
             icon: useMaterial3
-                ? Icon(
+                ? const Icon(
                     Icons.filter_2,
                   )
-                : Icon(
+                : const Icon(
                     Icons.filter_3,
                   ),
             onPressed: () => ref
@@ -64,7 +64,7 @@ class _ColorSeedButton extends ConsumerWidget {
         .values[ref.watch(preferenceNotifierProvider(Preference.colorSeed))];
 
     return PopupMenuButton(
-      icon: Icon(
+      icon: const Icon(
         Icons.palette_outlined,
       ),
       tooltip: S.of(context).selectASeedColor,

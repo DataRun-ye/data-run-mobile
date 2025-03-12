@@ -19,7 +19,7 @@ class DataValueRepository {
       String? parent}) async {
     final elementPath = path.split('.');
     D2Remote.formSubmissionModule.dataValue.setData(DataValue(
-        uid: _makeCompositeKey(
+        id: _makeCompositeKey(
             submission: submissionId, parent: parent, path: path),
         parent: parent,
         value: value,
@@ -40,7 +40,7 @@ class DataValueRepository {
       String? parent}) async {
     final elementPath = path.split('.');
     D2Remote.formSubmissionModule.dataValue.setData(DataValue(
-        uid: _makeCompositeKey(
+        id: _makeCompositeKey(
             submission: submissionId, parent: parent, path: path),
         parent: parent,
         value: value,

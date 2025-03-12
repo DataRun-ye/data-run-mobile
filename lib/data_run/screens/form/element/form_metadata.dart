@@ -1,4 +1,4 @@
-import 'package:datarun/data_run/d_assignment/model/assignment_model.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:equatable/equatable.dart';
 
 class FormMetadata with EquatableMixin {

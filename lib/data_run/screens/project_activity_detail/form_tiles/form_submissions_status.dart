@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:datarun/core/common/state.dart';
+import 'package:datarunmobile/core/common/state.dart';
 
 class FormSubmissionsStatus with EquatableMixin {
   const FormSubmissionsStatus({

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 
 class SyncDialog extends ConsumerStatefulWidget {
   const SyncDialog({
     super.key,
-    required this.entityUids,
+    required this.entityIds,
     required this.syncEntity,
   });
 
-  final List<String> entityUids;
+  final List<String> entityIds;
   final Function(List<String>? entityUids) syncEntity;
 
   @override
@@ -40,9 +40,9 @@ class SyncDialogState extends ConsumerState<SyncDialog> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        LinearProgressIndicator(),
+        const LinearProgressIndicator(),
         const SizedBox(height: 16),
-        Text('${S.of(context).syncingData} ${widget.entityUids.length}'),
+        Text('${S.of(context).syncingData} ${widget.entityIds.length}'),
         if (_syncErrors.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
@@ -87,9 +87,9 @@ class SyncDialogState extends ConsumerState<SyncDialog> {
     });
 
     try {
-      await widget.syncEntity(widget.entityUids);
+      await widget.syncEntity(widget.entityIds);
     } catch (e) {
-      _syncErrors.addAll(widget.entityUids);
+      _syncErrors.addAll(widget.entityIds);
     }
 
     setState(() {

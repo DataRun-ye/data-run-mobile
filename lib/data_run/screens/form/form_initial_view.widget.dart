@@ -6,9 +6,9 @@ class FormInitialView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Card(
+    return const Card(
       shadowColor: Colors.transparent,
-      margin: const EdgeInsets.all(8.0),
+      margin: EdgeInsets.all(8.0),
       child: Placeholder(),
     );
   }

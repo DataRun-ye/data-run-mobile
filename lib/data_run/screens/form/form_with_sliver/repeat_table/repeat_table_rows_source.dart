@@ -1,12 +1,12 @@
 import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarun/commons/extensions/list_extensions.dart';
-import 'package:datarun/core/utils/get_item_local_string.dart';
-import 'package:datarun/data_run/d_assignment/assignment_page.dart';
-import 'package:datarun/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/generated/l10n.dart';
+import 'package:datarunmobile/commons/extensions/list_extensions.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_page.dart';
+import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -81,13 +81,13 @@ class RepeatTableDataSource extends DataTableSource {
           .toList(),
       if (editable)
         DataCell(IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () {
               onEdit?.call(index);
             })),
       if (editable)
         DataCell(IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.delete,
               color: Colors.red,
             ),
@@ -127,8 +127,8 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.ScannedCode:
         cellContent = Row(
           children: [
-            Icon(MdiIcons.barcode),
-            SizedBox(width: 4),
+            const Icon(MdiIcons.barcode),
+            const SizedBox(width: 4),
             Text(modelToViewValue(field.value) ?? '-'),
           ],
         );
@@ -138,7 +138,7 @@ class RepeatTableDataSource extends DataTableSource {
             ? Row(
                 children: [
                   buildStatusBadge(AssignmentStatus.getType(field.value)!),
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                   Text(field.value ?? ''),
                 ],
               )
@@ -146,8 +146,8 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.Team:
         cellContent = Row(
           children: [
-            Icon(MdiIcons.accountGroup),
-            SizedBox(width: 4),
+            const Icon(MdiIcons.accountGroup),
+            const SizedBox(width: 4),
             Text(activityModel
                     .call()
                     .managedTeams

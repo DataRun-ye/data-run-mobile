@@ -1,5 +1,5 @@
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/bottom_sheet_content_model.dart';
-import 'package:datarun/data_run/screens/form_ui_elements/bottom_sheet/bottom_sheet_model/dialog_button_style.dart';
+import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
+import 'package:datarunmobile/data/model/dialog_button_style.data.dart';
 import 'package:equatable/equatable.dart';
 
 /// data class

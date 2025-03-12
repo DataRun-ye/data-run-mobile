@@ -1,4 +1,4 @@
-import 'package:datarun/data_run/screens/form/element/form_metadata.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:flutter/material.dart';
 
 class FormMetadataWidget extends InheritedWidget {

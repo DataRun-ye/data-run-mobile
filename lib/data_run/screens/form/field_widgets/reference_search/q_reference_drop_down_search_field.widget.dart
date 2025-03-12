@@ -1,12 +1,12 @@
 import 'package:d2_remote/modules/datarun/form/entities/metadata_submission_update.dart';
-import 'package:datarun/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarun/data_run/screens/form/field_widgets/reference_search/metadata_submission_update_provider.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/metadata_submission_update.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarun/data_run/screens/form/element/form_element.dart';
-import 'package:datarun/data_run/screens/form/element/providers/form_instance.provider.dart';
-import 'package:datarun/data_run/screens/form/element/validation/form_element_validator.dart';
-import 'package:datarun/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
+import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -74,8 +74,8 @@ class QReferenceDropDownSearchFieldState
           dropdownDecoratorProps: DropDownDecoratorProps(
             decoration: InputDecoration(
               labelText: widget.element.label,
-              contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-              border: OutlineInputBorder(),
+              contentPadding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
+              border: const OutlineInputBorder(),
             ),
           ),
           // itemAsString: (metadata) =>
@@ -212,7 +212,7 @@ class QReferenceDropDownSearchFieldState
 Widget referenceModelPopupItem(BuildContext context,
     MetadataSubmissionUpdate? item, bool isDisabled, bool isSelected) {
   return Container(
-    margin: EdgeInsets.symmetric(horizontal: 8),
+    margin: const EdgeInsets.symmetric(horizontal: 8),
     decoration: !isSelected
         ? null
         : BoxDecoration(

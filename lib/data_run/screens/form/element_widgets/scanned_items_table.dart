@@ -1,13 +1,13 @@
 // import 'dart:async';
-// import 'package:datarun/data_run/screens/form/element/form_element.dart';
-// import 'package:datarun/data_run/screens/form/field_widgets/code_scanner/reactive_gs1_code_scan_details.dart';
+// import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+// import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/reactive_gs1_code_scan_details.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 // import 'package:gs1_barcode_parser/gs1_barcode_parser.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:datarun/data_run/form/scanned_code/scanned_items_notifier.dart';
-// import 'package:datarun/data_run/form/scanned_code/scan_validator.dart';
+// import 'package:datarunmobile/data_run/form/scanned_code/scanned_items_notifier.dart';
+// import 'package:datarunmobile/data_run/form/scanned_code/scan_validator.dart';
 // import 'package:d2_remote/core/datarun/utilities/date_utils.dart';
 // import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 //

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:datarun/core/form/ui/intent/form_intent_sealed.dart';
+import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
 
 class FormPendingIntentBus {
   final _controller = StreamController<FormIntent>.broadcast();

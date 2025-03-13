@@ -1,7 +1,7 @@
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:datarunmobile/core/d2_remote_extensions/base_query_extension.dart';
-import 'package:datarunmobile/modular/d_data_api/identifiable.repository.dart';
+import 'package:datarunmobile/data/repository/identifiable.repository.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: IdentifiableRepository<FormVersion>)

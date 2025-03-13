@@ -4,9 +4,10 @@ import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data_run/d_team/team.provider.dart';
+import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data/teams.provider.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

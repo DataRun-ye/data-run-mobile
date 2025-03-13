@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
-import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
+import 'package:datarunmobile/core/services/user_session_manager.service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';

@@ -1,5 +1,5 @@
 import 'package:datarunmobile/app/app.locator.dart';
-import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
+import 'package:datarunmobile/core/services/user_session_manager.service.dart';
 import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';

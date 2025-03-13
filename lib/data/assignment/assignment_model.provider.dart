@@ -9,13 +9,11 @@ import 'package:d2_remote/shared/utilities/save_option.util.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/extract_and_sum_allocated_actual.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
-import 'package:datarunmobile/data_run/d_team/team.provider.dart';
-import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assignment_model.provider.g.dart';

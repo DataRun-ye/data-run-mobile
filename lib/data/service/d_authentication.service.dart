@@ -5,9 +5,9 @@ import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
 import 'package:datarunmobile/commons/constants.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
-import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
-import 'package:datarunmobile/services/authentication_service.dart';
+import 'package:datarunmobile/core/services/user_session_manager.service.dart';
+import 'package:datarunmobile/data/service/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 

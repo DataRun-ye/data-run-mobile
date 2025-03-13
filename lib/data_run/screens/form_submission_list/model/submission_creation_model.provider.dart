@@ -1,7 +1,7 @@
 // import 'dart:async';
 //
 // import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-// import 'package:datarunmobile/data_run/form/form_template/template.providers.dart';
+// import 'package:datarunmobile/data_run/form/form_template/template.provider.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/providers/form_instance.provider.dart';

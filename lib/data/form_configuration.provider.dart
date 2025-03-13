@@ -4,7 +4,7 @@ import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
-import 'package:datarunmobile/data/template.providers.dart';
+import 'package:datarunmobile/data/template.provider.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

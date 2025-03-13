@@ -294,7 +294,7 @@ class _OrgUnitPickerDialogState
               isSelected: entry.node.id == _selectedNode,
             );
           },
-          duration: ref.watch(watchAnimationDurationSettingProvider),
+          duration: const Duration(milliseconds: 300),
         ),
       );
     }

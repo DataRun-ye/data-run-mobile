@@ -1,7 +1,7 @@
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
-import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
-import 'package:datarunmobile/services/authentication_service.dart';
+import 'package:datarunmobile/core/services/user_session_manager.service.dart';
+import 'package:datarunmobile/data/service/authentication_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

@@ -1,9 +1,10 @@
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/auth/auth.provider.dart';
 import 'package:datarunmobile/core/auth/internet_aware_screen.dart';
-import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
 import 'package:datarunmobile/core/network/online_connectivity.provider.dart';
+import 'package:datarunmobile/core/services/user_session_manager.service.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_page.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';

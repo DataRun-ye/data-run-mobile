@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data/activity/assignment.provider.dart';

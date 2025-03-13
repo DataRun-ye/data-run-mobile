@@ -4,7 +4,7 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/constants.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/services/auth.service.dart';
-import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
+import 'package:datarunmobile/core/services/user_session_manager.service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:stacked_services/stacked_services.dart';

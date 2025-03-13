@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'sync_status_controller.g.dart';
+part 'sync_status_controller.provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class SyncStatusControllerInstance extends _$SyncStatusControllerInstance {

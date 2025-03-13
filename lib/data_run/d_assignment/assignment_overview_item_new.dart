@@ -1,11 +1,11 @@
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_page.dart';
-import 'package:datarunmobile/data/activity/assignment.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';

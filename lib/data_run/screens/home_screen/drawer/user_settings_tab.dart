@@ -1,7 +1,7 @@
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/auth/auth.provider.dart';
 import 'package:datarunmobile/core/services/auth.service.dart';
-import 'package:datarunmobile/core/auth/user_session_manager.service.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:flutter/material.dart';

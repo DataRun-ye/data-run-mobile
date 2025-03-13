@@ -1,4 +1,5 @@
 import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/data_run/screens/login_screen/login_header.dart';
 import 'package:datarunmobile/data_run/screens/login_screen/login_submit_button.dart';
 import 'package:datarunmobile/data_run/screens/login_screen/reactive_form_state/login_reactive_form.viewmodel.dart';
@@ -14,7 +15,7 @@ class LoginPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loginFormModel = locator<LoginReactiveFormViewModel>();
 
-    final isPasswordObscured = ref.watch(passwordVisibility);
+    final isPasswordObscured = ref.watch(passwordVisibilityProvider);
     final username = loginFormModel.form.control('username') as FormControl<String>;
     final password = loginFormModel.form.control('password') as FormControl<String>;
     return ReactiveForm(
@@ -90,7 +91,7 @@ class LoginPage extends HookConsumerWidget {
                               ),
                               onPressed: () {
                                 ref
-                                    .read(passwordVisibility.notifier)
+                                    .read(passwordVisibilityProvider.notifier)
                                     .toggle();
                               },
                             ),

@@ -4,11 +4,11 @@ import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
 import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
 import 'package:datarunmobile/core/models/d_identifiable_model.dart';
+import 'package:datarunmobile/data/teams.provider.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
-import 'package:datarunmobile/data_run/d_team/team.provider.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../data_run/d_activity/activity_model.dart';
 
 part 'activity.provider.g.dart';
 

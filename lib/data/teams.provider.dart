@@ -5,7 +5,7 @@ import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'team.provider.g.dart';
+part 'teams.provider.g.dart';
 
 @riverpod
 class Teams extends _$Teams {

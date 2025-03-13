@@ -18,15 +18,15 @@ dependencies:
   material_design_icons_flutter: ^5.0.6996
   d2_remote:
     path: ./data-run-sdk
+  d_sdk:
+    path: ./drun-sdk-reactive
   equatable: ^2.0.5
   intl: ^0.19.0
   shared_preferences: ^2.0.15
-#  reflectable: ^4.0.5
   percent_indicator: ^4.2.3
   reactive_forms: ^17.0.1
   uuid: ^4.5.0
   fast_immutable_collections: ^10.2.4
-  #  expressions: ^0.2.3
   expressions: ^0.2.5+2
   flutter_sticky_header: ^0.7.0
   collection: ^1.18.0

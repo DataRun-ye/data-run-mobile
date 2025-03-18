@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   sentry_flutter
+  sqlcipher_flutter_libs
   sqlite3_flutter_libs
 )
 

@@ -18,4 +18,12 @@ abstract class ThirdPartyServicesModule {
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+
+//// SDK Configuration
+//   final appDir = await getApplicationDocumentsDirectory();
+//   final db = await AppDatabase.connect(p.join(appDir.path, 'db.sqlite'));
+//   final apiClient = ApiClient(baseUrl: 'https://api.example.com');
+
+// encrypt db
+// final database = AppDatabase(Platform.createDatabaseConnection('sample'));
 }

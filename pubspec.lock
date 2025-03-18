@@ -1261,8 +1261,16 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0+1"
+  sqlcipher_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: sqlcipher_flutter_libs
+      sha256: "087dcab25175ec7a0747c1c31cb8a966ab985b18decfdc96d5e7f8f07d39b7eb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.5"
   sqlite3:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sqlite3
       sha256: "32b632dda27d664f85520093ed6f735ae5c49b5b75345afb8b19411bc59bb53d"

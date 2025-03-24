@@ -2248,10 +2248,10 @@ class S {
     );
   }
 
-  /// `{value} Copied To Clipboard`
+  /// `{value} is Copied To Clipboard`
   String copiedToClipboard(Object value) {
     return Intl.message(
-      '$value Copied To Clipboard',
+      '$value is Copied To Clipboard',
       name: 'copiedToClipboard',
       desc: '',
       args: [value],
@@ -2303,6 +2303,26 @@ class S {
     return Intl.message(
       'Validation Error Message',
       name: 'validationErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Item`
+  String get deleteItem {
+    return Intl.message(
+      'Delete Item',
+      name: 'deleteItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy To Clipboard`
+  String get copyToClipboard {
+    return Intl.message(
+      'Copy To Clipboard',
+      name: 'copyToClipboard',
       desc: '',
       args: [],
     );

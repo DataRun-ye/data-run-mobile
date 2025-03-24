@@ -13,8 +13,8 @@ import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
+import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data_run/d_assignment/assignment_page.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/form/form_submission/submission_list_util.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
@@ -160,9 +160,9 @@ class FormSubmissionsTable extends HookConsumerWidget {
                               ],
                               rows: submissions.value.map((submission) {
                                 final deleted = (submission.deleted ?? false);
-                                final deletedStyle = deleted
+                                final textStyle = deleted
                                     ? const TextStyle(
-                                        fontStyle: FontStyle.italic)
+                                        decoration: TextDecoration.lineThrough)
                                     : null;
                                 Map<String, dynamic> extractedValues = {};
                                 Map<String, dynamic> totalResources = {};
@@ -180,7 +180,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                 return DataRow(
                                   color: deleted
                                       ? WidgetStateProperty.all(
-                                          Colors.redAccent)
+                                          Colors.grey[700])
                                       : null,
                                   selected: selectedSubmissions.value
                                       .contains(submission),
@@ -200,7 +200,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                         SubmissionListUtil.getSyncStatus(
                                             submission))),
                                     DataCell(IconButton(
-                                      onPressed: !(submission.deleted ?? false)
+                                      onPressed: !deleted
                                           ? () async {
                                               goToDataEntryForm(
                                                   context,
@@ -222,19 +222,16 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                                         header.value.name]
                                                     ?.toString() ??
                                                 '',
-                                            style: deletedStyle),
+                                            style: textStyle),
                                       ),
                                     ),
                                     DataCell(Text(
                                         _formatDate(submission.createdDate),
-                                        style: deletedStyle)),
+                                        style: textStyle)),
                                     DataCell(Text(
                                         _formatDate(
                                             submission.lastModifiedDate),
-                                        style: (submission.deleted ?? false)
-                                            ? const TextStyle(
-                                                fontStyle: FontStyle.italic)
-                                            : null)),
+                                        style: textStyle)),
                                     DataCell(IconButton(
                                       icon: Icon(
                                           deleted
@@ -250,6 +247,9 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                                   .of(context)
                                                   .deleteConfirmationMessage,
                                           ref),
+                                      tooltip: deleted
+                                          ? S.of(context).restoreItem
+                                          : S.of(context).deleteItem,
                                     )),
                                   ],
                                 );
@@ -405,7 +405,6 @@ class FormSubmissionsTable extends HookConsumerWidget {
     );
   }
 }
-
 
 String _formatDate(String? dateStr) {
   if (dateStr == null) return '';

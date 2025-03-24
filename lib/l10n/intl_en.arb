@@ -293,10 +293,12 @@
   "apply": "Apply",
   "teams": "teams",
   "clearAll": "Clear All",
-  "copiedToClipboard": "{value} Copied To Clipboard",
+  "copiedToClipboard": "{value} is Copied To Clipboard",
   "changingStateMightResultClearingDependentsElements": "Changing state might result clearing dependents elements",
   "restoreItem": "Restore Item",
   "deleteRestore": "Delete / Restore",
   "fieldIsMandatory": "Field Is Mandatory",
-  "validationErrorMessage": "Validation Error Message"
+  "validationErrorMessage": "Validation Error Message",
+  "deleteItem": "Delete Item",
+  "copyToClipboard": "Copy To Clipboard"
 }

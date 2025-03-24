@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(error) =>
       "An error occurred while interacting with the API ${error}.";
 
-  static String m1(value) => "${value} Copied To Clipboard";
+  static String m1(value) => "${value} is Copied To Clipboard";
 
   static String m2(error) => "Database returned an Error ${error}.";
 
@@ -112,6 +112,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "controllerNotReady":
             MessageLookupByLibrary.simpleMessage("Controller not ready."),
         "copiedToClipboard": m1,
+        "copyToClipboard":
+            MessageLookupByLibrary.simpleMessage("Copy To Clipboard"),
         "count": MessageLookupByLibrary.simpleMessage("Count"),
         "createdDate": MessageLookupByLibrary.simpleMessage("Created Date"),
         "currentUsername":
@@ -127,6 +129,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteConfirmationMessage": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this item?"),
+        "deleteItem": MessageLookupByLibrary.simpleMessage("Delete Item"),
         "deleteRestore":
             MessageLookupByLibrary.simpleMessage("Delete / Restore"),
         "developer": MessageLookupByLibrary.simpleMessage("NMCP Yemen"),

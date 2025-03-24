@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(error) => "حدث خطأ أثناء التواصل API النظام: ${error}.";
 
-  static String m1(value) => "${value} نسخ للحافظة:";
+  static String m1(value) => "تم نسخ ${value} للحافظة";
 
   static String m2(error) => "واجهت قاعدة البيانات خطأ: ${error}.";
 
@@ -108,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "controllerNotReady":
             MessageLookupByLibrary.simpleMessage("المتحكم غير جاهز."),
         "copiedToClipboard": m1,
+        "copyToClipboard": MessageLookupByLibrary.simpleMessage("نسخ للحافظة"),
         "count": MessageLookupByLibrary.simpleMessage("الكمية"),
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "currentUsername":
@@ -123,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleteConfirmationMessage": MessageLookupByLibrary.simpleMessage(
             "هل تريد بالتأكيد حذف هذا العنصر؟"),
+        "deleteItem": MessageLookupByLibrary.simpleMessage("حذف العنصر"),
         "deleteRestore": MessageLookupByLibrary.simpleMessage("حذف/استعادة"),
         "developer": MessageLookupByLibrary.simpleMessage(
             "البرنامج الوطني لمكافحة الملاريا"),
@@ -157,8 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fetchUpdates": MessageLookupByLibrary.simpleMessage("مزامنة إعدادات"),
         "fieldContainErrors":
             MessageLookupByLibrary.simpleMessage("يحوي أخطاء"),
-        "fieldIsMandatory":
-            MessageLookupByLibrary.simpleMessage("Field Is Mandatory"),
+        "fieldIsMandatory": MessageLookupByLibrary.simpleMessage("الحقل مطلوب"),
         "fieldsWithErrorInfo": MessageLookupByLibrary.simpleMessage(
             "قم بالرجوع ومراجعة الإخطاء أو (ليس الآن) للحفظ والمراجعة في وقت لاحق! لن يتسنى لك تعيين الاستمارة كنهائية وإرسالها إلا بعد تصحيح الأخطاء: "),
         "filters": MessageLookupByLibrary.simpleMessage("تصفية البيانات"),
@@ -270,8 +271,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rescheduled": MessageLookupByLibrary.simpleMessage("جدولة"),
         "reset": MessageLookupByLibrary.simpleMessage("تفريغ"),
         "resources": MessageLookupByLibrary.simpleMessage("الموارد"),
-        "restoreItem": MessageLookupByLibrary.simpleMessage(
-            "إلغاء الحذف واستعادة هذا العنصر"),
+        "restoreItem": MessageLookupByLibrary.simpleMessage("استعادة العنصر"),
         "reviewFormData":
             MessageLookupByLibrary.simpleMessage("مراجعة الأخطاء"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -346,7 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "validationError": MessageLookupByLibrary.simpleMessage(
             "يرجى تصحيح الأخطاء في النموذج قبل المتابعة."),
         "validationErrorMessage":
-            MessageLookupByLibrary.simpleMessage("Validation Error Message"),
+            MessageLookupByLibrary.simpleMessage("خطأ تحقق"),
         "valueMustBeGreaterThanOrEqualToError": m9,
         "valueMustBeLessThanOrEqualToError": m10,
         "version": MessageLookupByLibrary.simpleMessage("الإصدار"),

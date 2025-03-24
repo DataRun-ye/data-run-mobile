@@ -40,6 +40,8 @@ import 'package:datarunmobile/data/service/d_authentication.service.dart'
     as _i443;
 import 'package:datarunmobile/data/use_case/activity/assignment_detail.service.dart'
     as _i359;
+import 'package:datarunmobile/data_run/screens/login_screen/reactive_form_state/login_reactive_form.viewmodel.dart'
+    as _i676;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -77,6 +79,12 @@ Future<_i174.GetIt> init(
       ));
   gh.factory<_i236.IdentifiableRepository<_i603.Assignment>>(
       () => _i158.DAssignmentListLocalRepository());
+  gh.lazySingleton<_i676.LoginReactiveFormViewModel>(
+      () => _i676.LoginReactiveFormViewModel(
+            gh<_i409.AuthService>(),
+            gh<_i775.UserSessionService>(),
+            gh<_i1055.NavigationService>(),
+          ));
   gh.factory<_i236.IdentifiableRepository<_i381.Activity>>(
       () => _i684.DActivityLocalRepository());
   gh.factory<_i236.IdentifiableRepository<_i587.FormVersion>>(

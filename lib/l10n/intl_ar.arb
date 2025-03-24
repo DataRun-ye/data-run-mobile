@@ -255,10 +255,12 @@
   "apply": "تطبيق",
   "teams": "الفرق",
   "clearAll": "تفريق الكل",
-  "copiedToClipboard": "{value} نسخ للحافظة:",
+  "copiedToClipboard": "تم نسخ {value} للحافظة",
   "changingStateMightResultClearingDependentsElements": "قد يؤدي إلى تفريغ بيانات حقول تعتمد على الحالة!",
-  "restoreItem": "إلغاء الحذف واستعادة هذا العنصر",
+  "restoreItem": "استعادة العنصر",
   "deleteRestore": "حذف/استعادة",
-  "fieldIsMandatory": "Field Is Mandatory",
-  "validationErrorMessage": "Validation Error Message"
+  "fieldIsMandatory": "الحقل مطلوب",
+  "validationErrorMessage": "خطأ تحقق",
+  "deleteItem": "حذف العنصر",
+  "copyToClipboard": "نسخ للحافظة"
 }

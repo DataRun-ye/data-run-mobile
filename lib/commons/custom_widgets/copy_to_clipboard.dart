@@ -7,14 +7,12 @@ class CopyToClipboard extends StatelessWidget {
     super.key,
     required this.value,
     this.child,
-    this.showBorder = false,
     this.onLongPress,
     this.prefix,
   });
 
   final Widget? child;
   final String? value;
-  final bool showBorder;
   final Function()? onLongPress;
   final String? prefix;
 
@@ -33,22 +31,17 @@ class CopyToClipboard extends StatelessWidget {
 
     void onTap() => _onTap(context);
 
-    if (showBorder) {
-      return ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 180),
-        child: OutlinedButton(
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        widget,
+        IconButton(
           onPressed: onTap,
-          onLongPress: onLongPress,
-          child: widget,
-        ),
-      );
-    } else {
-      return InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        child: widget,
-      );
-    }
+          icon: const Icon(Icons.copy),
+          tooltip: S.of(context).copyToClipboard,
+        )
+      ],
+    );
   }
 
   void _onTap(BuildContext context) {

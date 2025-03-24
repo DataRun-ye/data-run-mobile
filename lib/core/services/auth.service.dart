@@ -114,6 +114,7 @@ class AuthService {
       final authResult = await D2Remote.authenticate(
           username: username,
           password: password,
+          timeout: Duration(seconds: 5),
           databaseFactory:
               Platform.isWindows || Platform.isLinux ? databaseFactory : null,
           url: serverUrl ?? kApiBaseUrl);

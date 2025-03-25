@@ -1,7 +1,7 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
 import 'package:datarunmobile/app/app.router.dart';
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/commons/constants.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/services/auth.service.dart';
 import 'package:datarunmobile/core/services/user_session_manager.service.dart';
@@ -38,14 +38,14 @@ class LoginReactiveFormViewModel {
     final authResult = const AuthenticationResult();
     try {
       final authResult = await _authService.login(
-          usernameControl.value!, passwordControl.value!, kApiBaseUrl);
+          usernameControl.value!, passwordControl.value!, AppEnvironment.apiBaseUrl);
 
       if (authResult.success) {
         // save UserCredentials to preference
         await _userSessionManager.saveUserCredentials(
             serverUrl: authResult.sessionUser!.baseUrl,
             username: authResult.sessionUser!.username!,
-            pass: authResult.sessionUser!.password!);
+            langKey: authResult.sessionUser?.langKey);
 
         // return successful result
         // if (authResult.sessionUser != null) {

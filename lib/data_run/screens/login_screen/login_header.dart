@@ -1,4 +1,6 @@
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 
 class LoginHeader extends StatelessWidget {
@@ -37,7 +39,8 @@ class LoginHeader extends StatelessWidget {
             width: 100,
             // fit: BoxFit.contain,
           ),
-          const SizedBox(height: 8),
+          verticalSpaceSmall,
+          if (AppEnvironment.isDev) const Text(AppEnvironment.apiBaseUrl),
           // Spacer between logo and text
           Text(
             S.of(context).nmcpYemen,

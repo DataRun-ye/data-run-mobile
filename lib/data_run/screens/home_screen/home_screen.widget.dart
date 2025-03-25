@@ -30,6 +30,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
   final _navigationService = locator<NavigationService>();
+  final _userSessionService = locator<UserSessionService>();
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +106,22 @@ class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    final sessionData = _userSessionService.sessionData;
+    if (sessionData?.langKey != null &&
+        sessionData?.langKey !=
+            ref.read(preferenceNotifierProvider(Preference.language))) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref
+            .read(preferenceNotifierProvider(Preference.language).notifier)
+            .update(sessionData!.langKey);
+      });
+    }
+
+    super.initState();
   }
 
   @override

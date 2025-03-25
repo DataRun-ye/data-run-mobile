@@ -1,5 +1,6 @@
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table.widget.dart';
+import 'package:datarunmobile/data_run/screens/form/hooks/register_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,15 +17,9 @@ class RepeatTableSliver extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elementPropertiesSnapshot =
-        useStream(repeatInstance.propertiesChanged);
-
-    if (!elementPropertiesSnapshot.hasData) {
-      return const SliverToBoxAdapter(child: CircularProgressIndicator());
-    }
-
-    if (elementPropertiesSnapshot.data!.hidden) {
-      return const SliverToBoxAdapter(child: SizedBox.shrink());
+    final elementStatus = useRegisterDependencies(repeatInstance);
+    if (elementStatus.value.hidden) {
+      return const SliverToBoxAdapter(child: null);
     }
 
     return SliverStickyHeader(
@@ -40,6 +35,7 @@ class RepeatTableSliver extends HookConsumerWidget {
       ),
       sliver: SliverToBoxAdapter(
         child: Scrollbar(
+          interactive: true,
           child: RepeatTable(
             key: Key(repeatInstance.elementPath!),
             repeatInstance: repeatInstance,

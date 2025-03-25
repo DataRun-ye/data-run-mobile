@@ -131,7 +131,7 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       elements: elements,
       form: form)
     ..resolveDependencies()
-    ..evaluate();
+    ..evaluateDependencies();
   final attributeMap =
       await formInstanceService.formAttributesControls(initialFormValue);
 

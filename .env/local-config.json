@@ -1,0 +1,6 @@
+{
+  "env_label": "local",
+  "api_base_url": "http://192.168.80.1:8080",
+  "default_locale": "en",
+  "api_request_send_timeout": 5
+}

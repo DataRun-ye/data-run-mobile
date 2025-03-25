@@ -203,6 +203,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastmodifiedDate":
             MessageLookupByLibrary.simpleMessage("LastModified Date"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
+        "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginUsername": MessageLookupByLibrary.simpleMessage("Login Username"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
@@ -231,7 +232,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nmcpYemen": MessageLookupByLibrary.simpleMessage("NMCP Yemen"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noAuthenticatedUser": MessageLookupByLibrary.simpleMessage(
-            "Credentials do not match authenticated user. Cannot login offline."),
+            "First time login user needs an active network."),
         "noAuthenticatedUserOffline": MessageLookupByLibrary.simpleMessage(
             "The user hasn\'t been previously authenticated. Cannot login offline."),
         "noFormsAvailable":

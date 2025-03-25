@@ -1,0 +1,6 @@
+{
+  "env_label": "prod",
+  "api_base_url": "https://api.nmcpye.org",
+  "default_locale": "ar",
+  "api_request_send_timeout": 30
+}

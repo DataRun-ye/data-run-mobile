@@ -55,21 +55,12 @@ class Section extends SectionElement<Map<String, Object?>> {
   }
 
   @override
-  void evaluate(
-      {String? changedDependency,
-      bool updateParent = true,
-      bool emitEvent = true}) {
+  void evaluateDependencies<T>() {
     for (final element in _elements.values) {
-      element.evaluate(
-          changedDependency: changedDependency,
-          updateParent: updateParent,
-          emitEvent: emitEvent);
+      element.evaluateDependencies();
     }
 
-    super.evaluate(
-        changedDependency: changedDependency,
-        updateParent: updateParent,
-        emitEvent: emitEvent);
+    super.evaluateDependencies();
   }
 
   @override
@@ -150,14 +141,6 @@ class Section extends SectionElement<Map<String, Object?>> {
       element.markAsVisible(updateParent: true);
     });
     super.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
-  }
-
-  @override
-  void reset(
-      {Map<String, Object?>? value,
-      bool updateParent = true,
-      bool emitEvent = true}) {
-    updateValue(value, updateParent: updateParent, emitEvent: emitEvent);
   }
 
   @override

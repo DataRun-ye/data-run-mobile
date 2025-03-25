@@ -195,6 +195,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastmodifiedDate":
             MessageLookupByLibrary.simpleMessage("تاريخ آخر تعديل"),
         "level": MessageLookupByLibrary.simpleMessage("المستوى"),
+        "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginUsername":
             MessageLookupByLibrary.simpleMessage("حساب تسجيل الدخول"),

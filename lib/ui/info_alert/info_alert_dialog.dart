@@ -1,3 +1,4 @@
+import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/ui/common/app_colors.dart';
 import 'package:datarunmobile/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +10,15 @@ import 'info_alert_dialog_model.dart';
 const double _graphicSize = 60;
 
 class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
+  const InfoAlertDialog(
+      {Key? key,
+      required this.request,
+      required this.completer,
+      this.canCopyMessage = false})
+      : super(key: key);
   final DialogRequest<dynamic> request;
   final Function(DialogResponse<dynamic>) completer;
-
-  const InfoAlertDialog({
-    Key? key,
-    required this.request,
-    required this.completer,
-  }) : super(key: key);
+  final bool canCopyMessage;
 
   @override
   Widget builder(
@@ -46,13 +48,15 @@ class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
                             fontSize: 16, fontWeight: FontWeight.w900),
                       ),
                       verticalSpaceTiny,
-                      Text(
-                        request.description!,
-                        style:
-                            const TextStyle(fontSize: 14, color: kcMediumGrey),
-                        maxLines: 3,
-                        softWrap: true,
-                      ),
+                      canCopyMessage
+                          ? CopyToClipboard(value: request.description)
+                          : Text(
+                              request.description!,
+                              style: const TextStyle(
+                                  fontSize: 14, color: kcMediumGrey),
+                              maxLines: 3,
+                              softWrap: true,
+                            ),
                     ],
                   ),
                 ),

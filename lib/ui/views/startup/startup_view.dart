@@ -1,8 +1,12 @@
+import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/core/services/user_session_manager.service.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/ui/common/ui_helpers.dart';
 import 'package:datarunmobile/ui/views/startup/startup_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class StartupView extends StackedView<StartupViewModel> {
   const StartupView({Key? key}) : super(key: key);
@@ -16,21 +20,22 @@ class StartupView extends StackedView<StartupViewModel> {
     StartupViewModel viewModel,
     Widget? child,
   ) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               'DATARUN',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Loading ...', style: TextStyle(fontSize: 16)),
+                Text(S.of(context).loading,
+                    style: const TextStyle(fontSize: 16)),
                 horizontalSpaceSmall,
-                SizedBox(
+                const SizedBox(
                   width: 16,
                   height: 16,
                   child: CircularProgressIndicator(
@@ -50,7 +55,8 @@ class StartupView extends StackedView<StartupViewModel> {
   StartupViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      StartupViewModel();
+      StartupViewModel(
+          locator<UserSessionService>(), locator<NavigationService>());
 
   @override
   void onViewModelReady(StartupViewModel viewModel) => SchedulerBinding.instance

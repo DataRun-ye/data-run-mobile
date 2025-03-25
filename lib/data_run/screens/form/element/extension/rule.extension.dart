@@ -14,29 +14,14 @@ extension RuleHandler on Template {
 extension ApplyAction on RuleAction {
   void apply(FormElementInstance<dynamic> element,
       {bool updateParent = true, bool emitEvent = true}) {
-    if (element.mandatory && element.hidden) {
-      element.markAsUnMandatory(updateParent: updateParent, emitEvent: false);
-    }
-
     switch (action) {
-      case ActionType.Visibility:
-        if (element.hidden) {
-          logDebug('${element.name}, applying action: ${ActionType.Show}');
-          element.markAsVisible(
-              updateParent: updateParent, emitEvent: emitEvent);
-        } else {
-          logDebug('${element.name}, applying action: ${ActionType.Hide}');
-          element.markAsHidden(
-              updateParent: updateParent, emitEvent: emitEvent);
-        }
-        break;
       case ActionType.Show:
         logDebug('${element.name}, applying action: ${ActionType.Show}');
-        element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+        element.markAsVisible(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Hide:
         logDebug('${element.name}, applying action: ${ActionType.Hide}');
-        element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+        element.markAsHidden(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Error:
         if (element.visible) {
@@ -48,16 +33,16 @@ extension ApplyAction on RuleAction {
         break;
       case ActionType.Mandatory:
         if (element.visible) {
-          element.markAsMandatory(
-              updateParent: updateParent, emitEvent: emitEvent);
+          element.markAsMandatory(updateParent: updateParent, emitEvent: false);
         }
         break;
       case ActionType.Assign:
         if (element.visible) {
           element.updateValue(assignedValue,
-              updateParent: updateParent, emitEvent: emitEvent);
+              updateParent: updateParent, emitEvent: false);
         }
         break;
+      case ActionType.Visibility:
       case ActionType.Filter:
       case ActionType.StopRepeat:
       case ActionType.Warning:
@@ -70,41 +55,26 @@ extension ApplyAction on RuleAction {
 
   void reset(FormElementInstance<dynamic> element,
       {bool updateParent = true, bool emitEvent = true}) {
-    if (element.mandatory && element.hidden) {
-      element.markAsUnMandatory(
-          updateParent: updateParent, emitEvent: emitEvent);
-    }
-
     switch (action) {
-      case ActionType.Visibility:
-        if (element.hidden) {
-          element.markAsVisible(
-              updateParent: updateParent, emitEvent: emitEvent);
-        } else {
-          logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
-          element.markAsHidden(
-              updateParent: updateParent, emitEvent: emitEvent);
-        }
-        break;
       case ActionType.Show:
         logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
-        element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+        element.markAsHidden(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Hide:
         logDebug('${element.name}, resetting action to: ${ActionType.Show}');
-        element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+        element.markAsVisible(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Error:
         element.removeError(getItemLocalString(message.unlockView),
-            updateParent: updateParent, emitEvent: emitEvent);
+            updateParent: updateParent);
         break;
       case ActionType.Mandatory:
-        element.markAsUnMandatory(
-            updateParent: updateParent, emitEvent: emitEvent);
+        element.markAsUnMandatory(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Assign:
       // element.reset(value: element.template.defaultValue);
       // break;
+      case ActionType.Visibility:
       case ActionType.Filter:
       case ActionType.StopRepeat:
       case ActionType.Warning:

@@ -9,8 +9,10 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class StartupViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
-  final _userSessionManager = locator<UserSessionService>();
+  StartupViewModel(this._userSessionManager, this._navigationService);
+
+  final NavigationService _navigationService;
+  final UserSessionService _userSessionManager;
 
   // Place anything here that needs to happen before we get into the application
   Future<void> runStartupLogic() async {
@@ -23,7 +25,6 @@ class StartupViewModel extends BaseViewModel {
       await D2Remote.initialize(
           databaseFactory:
               Platform.isWindows || Platform.isLinux ? databaseFactory : null);
-
       if (needSync) {
         _navigationService.replaceWithSyncScreen();
       } else {

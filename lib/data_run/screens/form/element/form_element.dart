@@ -61,14 +61,13 @@ sealed class FormElementInstance<T> {
 
   ValueType? get type => template.type;
 
-  FormGroup form;
-
   bool _isEvaluating = false;
+  FormGroup form;
 
   Iterable<RuleAction> get elementRuleActions => _template.ruleActions();
 
   List<RuleAction> get inEffectRuleActions => elementRuleActions
-      .where((ruleAction) => ruleAction.evaluate(evalContext))
+      .where((ruleAction) => ruleAction.evaluate(elementContext))
       .toList();
 
   final Set<FormElementInstance<dynamic>> _dependents = Set();
@@ -168,41 +167,29 @@ sealed class FormElementInstance<T> {
 
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
     logDebug('${name}, mark as Hidden');
-    if (hidden) {
-      return;
-    }
-    updateStatus(_elementState.copyWith(hidden: true, errors: {}),
-        emitEvent: emitEvent);
     elementControl!.reset(
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
-    // elementControl!.updateValueAndValidity(
-    //     updateParent: updateParent, emitEvent: emitEvent);
-    // _updateAncestors(updateParent);
-    // elementControl!.markAsDisabled();
   }
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
     logDebug('${name}, mark as visible');
-    if (template is FieldTemplate && (template as FieldTemplate).mandatory) {
-      markAsMandatory(emitEvent: false);
-    }
-    if (!hidden) {
+    if (visible) {
       return;
     }
-
-    updateStatus(_elementState.copyWith(hidden: false), emitEvent: emitEvent);
+    _elementState = _elementState.copyWith(hidden: false);
+    if (template.mandatory) {
+      markAsMandatory(emitEvent: false);
+    }
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-    // updateValueAndValidity(updateParent: true, emitEvent: emitEvent);
-    // _updateAncestors(updateParent);
   }
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
-    // logDebug('${name}, markAsMandatory');
     if (mandatory) {
       return;
     }
-    updateStatus(_elementState.copyWith(mandatory: true), emitEvent: emitEvent);
+
+    _elementState = _elementState.copyWith(mandatory: true);
 
     final elementValidators = [
       ...elementControl!.validators,
@@ -212,8 +199,11 @@ sealed class FormElementInstance<T> {
   }
 
   void markAsUnMandatory({bool updateParent = true, bool emitEvent = true}) {
-    updateStatus(_elementState.copyWith(mandatory: false),
-        emitEvent: emitEvent);
+    if (mandatory) {
+      return;
+    }
+    _elementState = _elementState.copyWith(mandatory: false);
+
     final elementValidators = [
       ...elementControl!.validators,
     ]..remove(Validators.required);
@@ -223,76 +213,83 @@ sealed class FormElementInstance<T> {
   }
 
   void setErrors(Map<String, dynamic> errors, {bool markAsDirty = true}) {
-    // if (visible) {
-    updateStatus(_elementState.copyWith(errors: errors));
-    // _updateControlsErrors();
+    _elementState = _elementState.copyWith(errors: errors);
     elementControl?.setErrors(errors, markAsDirty: markAsDirty);
-    // }
   }
 
-  void removeError(String key,
-      {bool updateParent = true, bool emitEvent = true}) {
-    // if (visible) {
-    updateStatus(_elementState.copyWith(errors: {...errors}..remove(key)),
-        emitEvent: emitEvent);
-    // _updateControlsErrors();
+  void removeError(String key, {bool updateParent = true}) {
+    _elementState = _elementState.copyWith(errors: {...errors}..remove(key));
     elementControl?.removeError(key);
-    // }
   }
-
-  void reset({T? value});
 
   static final Set<String> _evaluationStack = {};
+  final Map<String, dynamic> _elementContext = {};
 
-  void evaluate(
-      {String? changedDependency,
-      bool updateParent = true,
-      bool emitEvent = true}) {
-    if (_isEvaluating) {
-      return;
-    }
+  Map<String, dynamic> get elementContext => Map.unmodifiable(_elementContext);
 
-    _isEvaluating = true;
+  void updateContext<T>({required String name, T? value}) {
+    _elementContext.update(name, (_) => value, ifAbsent: () => value);
+  }
 
-    // if(hidden) {
-    //   return;
-    // }
-    // if (dependencies.length == 0 || !dependencies.contains(changedDependency)) {
-    //   return;
-    // }
-
-    logDebug(
-        'Evaluating ${name ?? 'root'} due to change in $changedDependency');
-    logDebug('Evaluation Context for ${name ?? 'root'}: ${evalContext}');
-
-    if (_evaluationStack.contains(name)) {
-      logError('Circular dependency detected on: ${name ?? 'root'}');
-      return;
-    }
-
-    _evaluationStack.add(name ?? 'root'); // Track current element
-
-    try {
-      // final previousState = elementState;
-      for (var ruleAction in elementRuleActions) {
-        logDebug('Expression: ${ruleAction.expression}');
-        logDebug('Evaluation Result: ${ruleAction.evaluate(evalContext)}');
-        ruleAction.evaluate(evalContext)
-            ? ruleAction.apply(this)
-            : ruleAction.reset(this);
-      }
-      // FormElementState newState = calculateState();
-
-      // if (newState != previousState) {
-      //   updateStatus(newState, emitEvent: emitEvent);
-      // }
-    } catch (e) {
-      logError('Error Evaluating: ${name ?? 'root'}');
-    } finally {
-      _isEvaluating = false;
-      _evaluationStack.remove(name); // Remove from stack after evaluation
+  void evaluateDependencies<T>() {
+    for (var ruleAction in elementRuleActions) {
+      logDebug('Expression: ${ruleAction.expression}');
+      logDebug('Evaluation Result: ${ruleAction.evaluate(elementContext)}');
+      ruleAction.evaluate(elementContext)
+          ? ruleAction.apply(this)
+          : ruleAction.reset(this);
     }
   }
+
+  // void evaluate(
+  //     {String? changedDependency,
+  //     bool updateParent = true,
+  //     bool emitEvent = true}) {
+  //   if (_isEvaluating) {
+  //     return;
+  //   }
+  //
+  //   _isEvaluating = true;
+  //
+  //   // if(hidden) {
+  //   //   return;
+  //   // }
+  //   // if (dependencies.length == 0 || !dependencies.contains(changedDependency)) {
+  //   //   return;
+  //   // }
+  //
+  //   logDebug(
+  //       'Evaluating ${name ?? 'root'} due to change in $changedDependency');
+  //   logDebug('Evaluation Context for ${name ?? 'root'}: ${evalContext}');
+  //
+  //   if (_evaluationStack.contains(name)) {
+  //     logError('Circular dependency detected on: ${name ?? 'root'}');
+  //     return;
+  //   }
+  //
+  //   _evaluationStack.add(name ?? 'root'); // Track current element
+  //
+  //   try {
+  //     // final previousState = elementState;
+  //     for (var ruleAction in elementRuleActions) {
+  //       logDebug('Expression: ${ruleAction.expression}');
+  //       logDebug('Evaluation Result: ${ruleAction.evaluate(evalContext)}');
+  //       ruleAction.evaluate(evalContext)
+  //           ? ruleAction.apply(this)
+  //           : ruleAction.reset(this);
+  //     }
+  //     // FormElementState newState = calculateState();
+  //
+  //     // if (newState != previousState) {
+  //     //   updateStatus(newState, emitEvent: emitEvent);
+  //     // }
+  //   } catch (e) {
+  //     logError('Error Evaluating: ${name ?? 'root'}');
+  //   } finally {
+  //     _isEvaluating = false;
+  //     _evaluationStack.remove(name); // Remove from stack after evaluation
+  //   }
+  // }
 
   // FormElementState calculateState() {
   //   FormElementState newState = elementState.copyWith();

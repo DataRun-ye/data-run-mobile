@@ -20,16 +20,9 @@ class RepeatTable extends StatefulHookConsumerWidget {
   const RepeatTable({
     super.key,
     required this.repeatInstance,
-    // this.onEdit,
-    // this.onDelete,
-    // this.onAdd,
   });
 
   final RepeatSection repeatInstance;
-
-  // final void Function(int index)? onEdit;
-  // final void Function(int index)? onDelete;
-  // final void Function()? onAdd;
 
   @override
   RepeatTableState createState() => RepeatTableState();
@@ -40,10 +33,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   late final RepeatSection _repeatInstance;
 
   int defaultRowsPerPage = 5;
-
-  // late final int tableColumnsLength;
-
-  // late final FormInstance formInstance;
 
   Future<void> onEdit(int index) async {
     final formInstance = ref

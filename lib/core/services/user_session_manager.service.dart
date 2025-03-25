@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,7 @@ class UserSessionService {
   static const SECURE_SESSION = 'SECURE_SESSION';
 
   // PREFERENCES
+  static const PREFS_LangKey = 'lang_key';
   static const PREFS_URLS = 'pref_urls';
   static const PREFS_USERS = 'pref_users';
 
@@ -34,10 +36,10 @@ class UserSessionService {
   Future<void> saveUserCredentials(
       {required String serverUrl,
       required String username,
-      required String pass}) async {
+      String? langKey}) async {
     await prefs.setBool(IS_AUTHENTICATED, true);
     final sessionData =
-        SessionData(username: username, password: pass, serverUrl: serverUrl);
+        SessionData(username: username, langKey: langKey, serverUrl: serverUrl);
     await prefs.setString(SECURE_SESSION, jsonEncode(sessionData.toJson()));
     // Add the database name to the set of known databases
     final urls = prefs.getStringList(PREFS_URLS) ?? [];
@@ -126,17 +128,19 @@ class UserSessionService {
 class SessionData {
   SessionData({
     required this.username,
-    required this.password,
+    // required this.password,
     required this.serverUrl,
+    String? langKey,
     this.token,
     this.expirationDate,
-  });
+  }) : this.langKey = langKey ?? AppEnvironment.defaultLocale;
 
   factory SessionData.fromJson(Map<String, dynamic> json) {
     return SessionData(
       username: json['username'],
-      password: json['password'],
+      // password: json['password'],
       serverUrl: json['serverUrl'],
+      langKey: json['langKey'],
       token: json['token'],
       expirationDate: json['expirationDate'] != null
           ? DateTime.parse(json['expirationDate'])
@@ -145,16 +149,19 @@ class SessionData {
   }
 
   final String? username;
-  final String? password;
+
+  // final String? password;
   final String? serverUrl;
+  final String langKey;
   final String? token;
   final DateTime? expirationDate;
 
   Map<String, dynamic> toJson() {
     return {
       'username': username,
-      'password': password,
+      // 'password': password,
       'serverUrl': serverUrl,
+      'langKey': langKey,
       'token': token,
       'expirationDate': expirationDate?.toIso8601String(),
     };

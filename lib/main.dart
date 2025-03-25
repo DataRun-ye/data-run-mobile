@@ -6,6 +6,7 @@ import 'package:datarunmobile/app/app.bottomsheets.dart';
 import 'package:datarunmobile/app/app.dialogs.dart';
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/main.reflectable.dart';
@@ -14,6 +15,7 @@ import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:stacked_services/stacked_services.dart';
@@ -48,15 +50,6 @@ Future<void> main() async {
     return stack;
   };
 
-  // final userSessionManager = UserSessionManager(sharedPreferences);
-  //
-  // final authService = AuthService(userSessionManager);
-
-  // does the user have active session in preference (local check)
-  // final bool hasExistingSession = userSessionManager.isAuthenticated;
-  // final bool needsSync = userSessionManager.needsSync();
-  // final bool hasExistingSession = locator<UserSessionManager>().isAuthenticated;
-  // final bool needsSync = locator<UserSessionManager>().needsSync();
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
@@ -94,29 +87,13 @@ Future<void> main() async {
   //   )),
   // );
 
-  runApp(ProviderScope(
-    overrides: [
-      // sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-      // authServiceProvider.overrideWithValue(authService),
-      // userSessionManagerProvider.overrideWithValue(userSessionManager),
-    ],
-    child: App(
-      key: const ValueKey('DATARUN_MAIN_APP'),
-      // isAuthenticated: hasExistingSession,
-      // needsSync: needsSync,
-    ),
+  runApp(const ProviderScope(
+    child: App(key: ValueKey('DATARUN_MAIN_APP')),
   ));
 }
 
 class App extends ConsumerWidget {
-  const App({
-    super.key,
-    // required this.isAuthenticated,
-    // required this.needsSync,
-  });
-
-  // final bool isAuthenticated;
-  // final bool needsSync;
+  const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -136,35 +113,37 @@ class App extends ConsumerWidget {
           String() => timeago.ArMessages(),
         });
 
-    return MaterialApp(
-      restorationScopeId: 'Test__',
-      navigatorKey: StackedService.navigatorKey,
-      // navigatorKey: StackedService.navigatorKey,
-      title: 'Datarun',
-      debugShowCheckedModeBanner: false,
-      themeMode: themeMode,
-      theme: getTheme(colorSeed, useMaterial3),
-      darkTheme: getDarkTheme(colorSeed, useMaterial3),
-      localizationsDelegates: localizationsDelegates,
-      supportedLocales: supportedLocales,
-      locale: locale,
-      // stacked
-      initialRoute: Routes.startupView,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-      navigatorObservers: [
-        StackedService.routeObserver,
-      ],
-
-      // home: AuthSyncWrapper(
-      //   isAuthenticated: isAuthenticated,
-      //   needsSync: needsSync,
-      // ),
+    return GlobalLoaderOverlay(
+      child: MaterialApp(
+        restorationScopeId: 'Test__',
+        navigatorKey: StackedService.navigatorKey,
+        title: 'Datarun',
+        debugShowCheckedModeBanner: false,
+        themeMode: themeMode,
+        theme: getTheme(colorSeed, useMaterial3),
+        darkTheme: getDarkTheme(colorSeed, useMaterial3),
+        localizationsDelegates: localizationsDelegates,
+        supportedLocales: supportedLocales,
+        locale: locale,
+        // stacked
+        initialRoute: Routes.startupView,
+        onGenerateRoute: StackedRouter().onGenerateRoute,
+        navigatorObservers: [
+          StackedService.routeObserver,
+        ],
+        builder: (context, child) {
+          return Banner(
+            message: AppEnvironment.envLabel,
+            location: BannerLocation.topEnd,
+            color: Colors.redAccent,
+            child: child,
+          );
+        },
+      ),
     );
   }
 
   ThemeData getTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        // fontFamily: GoogleFonts.rubik().fontFamily,
-        // textTheme: Typography.blackHelsinki.copyWith(),
         fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.light),
@@ -173,7 +152,6 @@ class App extends ConsumerWidget {
       );
 
   ThemeData getDarkTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        // colorSchemeSeed: colorSeed.color,
         fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.dark),
@@ -187,7 +165,6 @@ class App extends ConsumerWidget {
   ];
 
   final localizationsDelegates = const <LocalizationsDelegate<dynamic>>[
-    // L.delegate,
     S.delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,

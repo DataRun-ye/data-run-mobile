@@ -1,4 +1,5 @@
 import 'package:datarunmobile/app/app.locator.dart';
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,7 +7,7 @@ part 'preference.provider.g.dart';
 
 enum Preference<T> {
   shouldShowWalkthrough('should_show_walkthrough', true),
-  language('language', 'ar'),
+  language('language', AppEnvironment.defaultLocale),
   // appearance
   useMaterial3('useMaterial3', true),
 

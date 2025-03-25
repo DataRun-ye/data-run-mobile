@@ -3,7 +3,7 @@ import 'package:d2_remote/core/datarun/exception/d_error_code.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
-import 'package:datarunmobile/commons/constants.dart';
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:datarunmobile/core/services/user_session_manager.service.dart';
@@ -24,7 +24,7 @@ class DAuthenticationService implements AuthenticationService {
 
   @override
   Future<AuthenticationResult> login(String username, String password,
-      [String serverUrl = kApiBaseUrl]) async {
+      [String serverUrl = AppEnvironment.apiBaseUrl]) async {
     WidgetsFlutterBinding.ensureInitialized();
     AuthenticationResult result = const AuthenticationResult(
       success: false,
@@ -40,7 +40,7 @@ class DAuthenticationService implements AuthenticationService {
         await _sessionManager.saveUserCredentials(
             serverUrl: authResult.sessionUser!.baseUrl,
             username: authResult.sessionUser!.username!,
-            pass: authResult.sessionUser!.password!);
+            langKey: authResult.sessionUser?.langKey);
 
         // return successful result
         return result.copyWith(
@@ -59,7 +59,13 @@ class DAuthenticationService implements AuthenticationService {
   Future<void> throwIfFirstTimeAndNoActiveNetwork() async {
     final networkAvailable =
         await ConnectivityService.instance.isNetworkAvailable();
-    if (_sessionManager.isFirstSession && !networkAvailable) {
+    if (!networkAvailable) {
+      logDebug('Network is not available active network');
+      throw DError(
+          errorCode: DErrorCode.networkConnectionFailed,
+          errorComponent: DErrorComponent.SDK,
+          message: 'Network is not available active network');
+    } else if (_sessionManager.isFirstSession && !networkAvailable) {
       logDebug('First time login user needs an active network');
       throw DError(
           errorCode: DErrorCode.noAuthenticatedUser,

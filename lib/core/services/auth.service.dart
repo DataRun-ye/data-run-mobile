@@ -5,7 +5,7 @@ import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
-import 'package:datarunmobile/commons/constants.dart';
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
@@ -23,79 +23,80 @@ class AuthService {
   final UserSessionService _sessionManager;
   final NavigationService _navigationService;
 
-  Future<bool> isAuthenticatedOnline() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final networkAvailable =
-        await ConnectivityService.instance.isNetworkAvailable();
-    // final isOnline = await ConnectivityService.instance.isOnline;
+  // Future<bool> isAuthenticatedOnline() async {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   final networkAvailable =
+  //       await ConnectivityService.instance.isNetworkAvailable();
+  //   // final isOnline = await ConnectivityService.instance.isOnline;
+  //
+  //   if (!networkAvailable /* || !isOnline*/) {
+  //     return await _attemptNetworkAuthentication();
+  //   } else {
+  //     DatabaseFactory? databaseFactory;
+  //     if (Platform.isWindows) {
+  //       sqfliteFfiInit();
+  //       databaseFactory = databaseFactoryFfi;
+  //     }
+  //
+  //     /// Allow offline access with valid session
+  //     return D2Remote.isAuthenticated(databaseFactory: databaseFactory);
+  //   }
+  // }
 
-    if (!networkAvailable /* || !isOnline*/) {
-      return await _attemptNetworkAuthentication();
-    } else {
-      DatabaseFactory? databaseFactory;
-      if (Platform.isWindows) {
-        sqfliteFfiInit();
-        databaseFactory = databaseFactoryFfi;
-      }
-
-      /// Allow offline access with valid session
-      return D2Remote.isAuthenticated(databaseFactory: databaseFactory);
-    }
-  }
-
-  /// used only when user is already logged in to just authenticate and
-  /// check with the server and renew session in case of password change
-  /// or not active session it will log the user out;
-  Future<bool> _attemptNetworkAuthentication() async {
-    try {
-      final sessionData = _sessionManager.sessionData;
-
-      // this method should only be called after
-      // user session was available.
-      // for no reason if no active session found in cached preference,
-      // log the user out
-      if (sessionData == null) {
-        logDebug(
-            'No Active Session, user should not be logged in, logging-user-out');
-        await logout();
-
-        throw AccountException(
-            'No Active Session Data, user should not be logged in',
-            errorCode: DErrorCode.noAuthenticatedUser);
-      }
-
-      DatabaseFactory? databaseFactory;
-      if (Platform.isWindows) {
-        sqfliteFfiInit();
-        databaseFactory = databaseFactoryFfi;
-      }
-
-      final result = await D2Remote.authenticate(
-          databaseFactory: databaseFactory,
-          username: sessionData.username!,
-          password: sessionData.password!,
-          url: sessionData.serverUrl!);
-
-      if (result.success) {
-        await _sessionManager.saveUserCredentials(
-            serverUrl: result.sessionUser!.baseUrl,
-            username: result.sessionUser!.username!,
-            pass: result.sessionUser!.password!);
-      }
-      return true;
-    } on AuthenticationException catch (e) {
-      // in case of password change, rethrow the
-      // error, but first log the user out.
-      if (e.errorCode == DErrorCode.authInvalidCredentials) {
-        await logout();
-        rethrow;
-      }
-
-      // other exception such as slow line timeout, or server not responding
-      // user will stay logged in until another check
-      return true;
-    }
-  }
+  // /// used only when user is already logged in to just authenticate and
+  // /// check with the server and renew session in case of password change
+  // /// or not active session it will log the user out;
+  // Future<bool> _attemptNetworkAuthentication() async {
+  //   try {
+  //     final sessionData = _sessionManager.sessionData;
+  //
+  //     // this method should only be called after
+  //     // user session was available.
+  //     // for no reason if no active session found in cached preference,
+  //     // log the user out
+  //     if (sessionData == null) {
+  //       logDebug(
+  //           'No Active Session, user should not be logged in, logging-user-out');
+  //       await logout();
+  //
+  //       throw AccountException(
+  //           'No Active Session Data, user should not be logged in',
+  //           errorCode: DErrorCode.noAuthenticatedUser);
+  //     }
+  //
+  //     DatabaseFactory? databaseFactory;
+  //     if (Platform.isWindows) {
+  //       sqfliteFfiInit();
+  //       databaseFactory = databaseFactoryFfi;
+  //     }
+  //
+  //     final result = await D2Remote.authenticate(
+  //         databaseFactory: databaseFactory,
+  //         username: sessionData.username!,
+  //         password: sessionData.password!,
+  //         url: sessionData.serverUrl!);
+  //
+  //     if (result.success) {
+  //       await _sessionManager.saveUserCredentials(
+  //           serverUrl: result.sessionUser!.baseUrl,
+  //           username: result.sessionUser!.username!,
+  //           langKey:
+  //               result.sessionUser?.langKey ?? AppEnvironment.defaultLocale);
+  //     }
+  //     return true;
+  //   } on AuthenticationException catch (e) {
+  //     // in case of password change, rethrow the
+  //     // error, but first log the user out.
+  //     if (e.errorCode == DErrorCode.authInvalidCredentials) {
+  //       await logout();
+  //       rethrow;
+  //     }
+  //
+  //     // other exception such as slow line timeout, or server not responding
+  //     // user will stay logged in until another check
+  //     return true;
+  //   }
+  // }
 
   Future<AuthenticationResult> login(String username, String password,
       [String? serverUrl]) async {
@@ -114,16 +115,17 @@ class AuthService {
       final authResult = await D2Remote.authenticate(
           username: username,
           password: password,
-          timeout: Duration(seconds: 5),
+          timeout:
+              const Duration(seconds: AppEnvironment.apiRequestSentTimeout),
           databaseFactory:
               Platform.isWindows || Platform.isLinux ? databaseFactory : null,
-          url: serverUrl ?? kApiBaseUrl);
+          url: serverUrl ?? AppEnvironment.apiBaseUrl);
 
       if (authResult.success) {
         await _sessionManager.saveUserCredentials(
             serverUrl: authResult.sessionUser!.baseUrl,
             username: authResult.sessionUser!.username!,
-            pass: authResult.sessionUser!.password!);
+            langKey: authResult.sessionUser?.langKey);
 
         // return successful result
         return result.copyWith(
@@ -140,7 +142,8 @@ class AuthService {
   }
 
   Future<void> logout() async {
-    await D2Remote.logOut(sharedPreferenceInstance: locator<SharedPreferences>());
+    await D2Remote.logOut(
+        sharedPreferenceInstance: locator<SharedPreferences>());
     await _sessionManager.clearAllPreferences();
     _navigationService.clearStackAndShow(Routes.loginPage);
     // Navigator.pushAndRemoveUntil(
@@ -152,7 +155,13 @@ class AuthService {
   Future<void> throwIfFirstTimeAndNoActiveNetwork() async {
     final networkAvailable =
         await ConnectivityService.instance.isNetworkAvailable();
-    if (_sessionManager.isFirstSession && !networkAvailable) {
+    if (!networkAvailable) {
+      logDebug('Network is not available active network');
+      throw DError(
+          errorCode: DErrorCode.networkConnectionFailed,
+          errorComponent: DErrorComponent.SDK,
+          message: 'Network is not available active network');
+    } else if (_sessionManager.isFirstSession && !networkAvailable) {
       logDebug('First time login user needs an active network');
       throw DError(
           errorCode: DErrorCode.noAuthenticatedUser,

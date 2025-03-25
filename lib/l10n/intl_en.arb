@@ -4,7 +4,7 @@
   "networkConnectionFailed": "Connection failed. Check your network.",
   "authInvalidCredentials": "Invalid login credentials provided.",
   "authSessionExpired": "Your session has expired. Please log in again.",
-  "noAuthenticatedUser": "Credentials do not match authenticated user. Cannot login offline.",
+  "noAuthenticatedUser": "First time login user needs an active network.",
   "noAuthenticatedUserOffline": "The user hasn't been previously authenticated. Cannot login offline.",
   "differentOfflineUser": "Different authenticated user offline",
   "accountDisabled": "This account is disabled. contact Administrator for details.",
@@ -300,5 +300,6 @@
   "fieldIsMandatory": "Field Is Mandatory",
   "validationErrorMessage": "Validation Error Message",
   "deleteItem": "Delete Item",
-  "copyToClipboard": "Copy To Clipboard"
+  "copyToClipboard": "Copy To Clipboard",
+  "loading": "Loading ..."
 }

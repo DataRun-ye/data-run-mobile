@@ -90,10 +90,10 @@ class S {
     );
   }
 
-  /// `Credentials do not match authenticated user. Cannot login offline.`
+  /// `First time login user needs an active network.`
   String get noAuthenticatedUser {
     return Intl.message(
-      'Credentials do not match authenticated user. Cannot login offline.',
+      'First time login user needs an active network.',
       name: 'noAuthenticatedUser',
       desc: '',
       args: [],
@@ -2323,6 +2323,16 @@ class S {
     return Intl.message(
       'Copy To Clipboard',
       name: 'copyToClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading ...`
+  String get loading {
+    return Intl.message(
+      'Loading ...',
+      name: 'loading',
       desc: '',
       args: [],
     );

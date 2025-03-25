@@ -262,5 +262,6 @@
   "fieldIsMandatory": "الحقل مطلوب",
   "validationErrorMessage": "خطأ تحقق",
   "deleteItem": "حذف العنصر",
-  "copyToClipboard": "نسخ للحافظة"
+  "copyToClipboard": "نسخ للحافظة",
+  "loading": "Loading ..."
 }

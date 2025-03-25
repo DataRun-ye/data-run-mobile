@@ -50,10 +50,10 @@ class FieldInstance<T> extends FormElementInstance<T>
   @override
   void updateValue(T? value,
       {bool updateParent = true, bool emitEvent = true}) {
-    if (value == this.value) {
-      return;
-    }
-    updateStatus(elementState.reset(value: value));
+    // if (value == this.value) {
+    //   return;
+    // }
+    // updateStatus(elementState.reset(value: value));
     elementControl.updateValue(
       value,
       updateParent: updateParent,
@@ -69,22 +69,11 @@ class FieldInstance<T> extends FormElementInstance<T>
           void Function(FormElementInstance<dynamic> element) callback) =>
       <FormElementInstance<dynamic>>[];
 
-  @override
-  void reset({T? value}) {
-    updateStatus(elementState.reset(value: value));
-    elementControl.reset(value: template.defaultValue);
-  }
-
   List<FormOption> get visibleOption => elementState.visibleOptions;
 
-  @override
-  void evaluate(
-      {String? changedDependency,
-      bool updateParent = true,
-      bool emitEvent = true}) {
-    super.evaluate(updateParent: updateParent, emitEvent: emitEvent);
+  void evaluateFilterDependencies<T>() {
     if (filterExpressionDependencies.isNotEmpty) {
-      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
+      final visibleOptionsUpdate = choiceFilter!.evaluate(elementContext);
       logDebug(
           'all field options: ${choiceFilter!.options.map((o) => o.name)}');
       logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
@@ -93,10 +82,10 @@ class FieldInstance<T> extends FormElementInstance<T>
           visibleOptions: visibleOptionsUpdate);
       logDebug(
           '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
+      // updateStatus(newState /* notify: oldState.value != newState.value*/);
+      elementControl.updateValue(newState.value, emitEvent: false);
     } else if (choiceFilter?.expression != null) {
-      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
+      final visibleOptionsUpdate = choiceFilter!.evaluate(elementContext);
       logDebug(
           'all field options: ${choiceFilter!.options.map((o) => o.name)}');
       logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
@@ -105,8 +94,7 @@ class FieldInstance<T> extends FormElementInstance<T>
           visibleOptions: visibleOptionsUpdate);
       logDebug(
           '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
+      elementControl.updateValue(newState.value, emitEvent: false);
     }
   }
 }
@@ -125,24 +113,24 @@ class CalculatedFieldInstance<T> extends FieldInstance<T>
   List<String> get dependencies =>
       [...template.dependencies, ...template.calculationDependencies];
 
-  @override
-  void evaluate(
-      {String? changedDependency,
-      bool updateParent = true,
-      bool emitEvent = true}) {
-    super.evaluate(updateParent: updateParent, emitEvent: emitEvent);
-    if (calculatedExpression?.expression != null) {
-      final result = calculatedExpression!.evaluate(evalContext);
-      logDebug(
-          'calculated field evaluation: ${name}, expression: ${calculatedExpression?.expression} ');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.copyWith(value: result);
-      logDebug(
-          '$name, calculate Field changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState);
-      elementControl.updateValue(newState.value);
-    }
-  }
+// @override
+// void evaluate(
+//     {String? changedDependency,
+//     bool updateParent = true,
+//     bool emitEvent = true}) {
+//   super.evaluate(updateParent: updateParent, emitEvent: emitEvent);
+//   if (calculatedExpression?.expression != null) {
+//     final result = calculatedExpression!.evaluate(evalContext);
+//     logDebug(
+//         'calculated field evaluation: ${name}, expression: ${calculatedExpression?.expression} ');
+//     final oldState = elementState.copyWith(); // clone
+//     final newState = elementState.copyWith(value: result);
+//     logDebug(
+//         '$name, calculate Field changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
+//     // updateStatus(newState);
+//     elementControl.updateValue(newState.value);
+//   }
+// }
 }
 
 extension FormFieldModelExtensions<T> on FieldInstance<T> {

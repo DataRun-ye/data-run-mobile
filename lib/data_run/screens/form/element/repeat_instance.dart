@@ -15,6 +15,7 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
 
     // _visibilityDependencies.addAll(visibilityDependencies);
   }
+
   // final _collectionChanges =
   //     StreamController<List<RepeatItemInstance>>.broadcast();
   Stream<List<RepeatItemInstance>> get collectionChanges =>
@@ -74,21 +75,12 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
   }
 
   @override
-  void evaluate(
-      {String? changedDependency,
-      bool updateParent = true,
-      bool emitEvent = true}) {
+  void evaluateDependencies<T>() {
     for (final element in _elements) {
-      element.evaluate(
-          changedDependency: changedDependency,
-          updateParent: updateParent,
-          emitEvent: emitEvent);
+      element.evaluateDependencies();
     }
 
-    super.evaluate(
-        changedDependency: changedDependency,
-        updateParent: updateParent,
-        emitEvent: emitEvent);
+    super.evaluateDependencies();
   }
 
   // @override
@@ -198,11 +190,6 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
   //     updateParent: updateParent,
   //   );
   // }
-
-  void reset({List<Map<String, Object?>?>? value}) {
-    // updateValue(value);
-    // elementControl.reset(value: value);
-  }
 
   /// Checks if repeatSection contains a element by a given [name].
   /// The name here must be the string representation of the children index.

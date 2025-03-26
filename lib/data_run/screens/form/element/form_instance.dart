@@ -115,11 +115,11 @@ class FormInstance {
       parent.template,
     );
     parent
-      ..add(itemInstance)
-      ..resolveDependencies()
-      ..evaluateDependencies();
-    itemInstance.resolveDependencies();
-    itemInstance.evaluateDependencies();
+      ..add(itemInstance);
+      // ..resolveDependencies()
+      // ..evaluateDependencies();
+    // itemInstance.resolveDependencies();
+    // itemInstance.evaluateDependencies();
     parent.elementControl.markAsDirty();
     return itemInstance;
   }

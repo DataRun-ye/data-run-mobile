@@ -12,8 +12,10 @@ class FieldWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elementStatus = useRegisterDependencies(element);
-    if (elementStatus.value.hidden) {
+    useRegisterDependencies(element);
+    final elementState = useListenable(element.elementState);
+
+    if (elementState.value.hidden) {
       return const SizedBox.shrink();
     }
 

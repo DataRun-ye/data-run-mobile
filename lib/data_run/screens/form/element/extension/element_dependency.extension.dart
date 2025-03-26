@@ -8,54 +8,16 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
           : dependency.template.type!.isBoolean
               ? false
               : null;
-    } else if (dependency.template.isNumeric && dependency.value == null) {
+    } else if (dependency.template.isNumeric &&
+        dependency.elementControl!.value == null) {
       return 0;
     } else if (dependency.template.type!.isBoolean &&
-        dependency.value == null) {
+        dependency.elementControl!.value == null) {
       return false;
     } else {
-      return dependency.value;
+      return dependency.elementControl!.value;
     }
   }
-
-  // void updateStatus(FormElementState newValue, {bool emitEvent = true}) {
-  //   // if (newValue != _elementState) {
-  //   _elementState = newValue;
-  //   if (emitEvent) {
-  //     logDebug('${name ?? 'root'}, changed, --> Notifying subscribers');
-  //     propertiesChangedSubject?.add(newValue);
-  //   } else {
-  //     logDebug('${name ?? 'root'}, not emitting status update');
-  //   }
-  //   // applyStateToControl(newValue, updateParent: true, emitEvent: emitEvent);
-  //   notifySubscribers(emitEvent: emitEvent);
-  // }
-
-  void addDependency(FormElementInstance<dynamic> dependency) {
-    _resolvedDependencies.add(dependency);
-    dependency._addDependent(this);
-  }
-
-  // void removeDependent(FormElementInstance<dynamic> dependent) {
-  //   _dependents.remove(dependent);
-  // }
-  //
-  // void removeDependency(FormElementInstance<dynamic> dependency) {
-  //   _resolvedDependencies.remove(dependency);
-  // }
-
-  void _addDependent(FormElementInstance<dynamic> dependent) {
-    _dependents.add(dependent);
-  }
-
-  List<String> get resolvedDependentsNames =>
-      _dependents.map((dependent) => dependent.name!).toList();
-
-  // void notifySubscribers({bool emitEvent = true}) {
-  //   logDebug('${name ?? 'root'}, notifying: ${resolvedDependentsNames}');
-  //   _dependents.forEach(
-  //       (s) => s.evaluate(changedDependency: name, emitEvent: emitEvent));
-  // }
 
   /// the element use name to find the dependency in closest parent
   /// and register itself and add them to their dependencies

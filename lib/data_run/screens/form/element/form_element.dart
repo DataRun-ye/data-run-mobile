@@ -44,13 +44,13 @@ sealed class FormElementInstance<T> {
       {required this.form,
       required Template template,
       required FormElementState elementState})
-      : _elementState = elementState,
+      : _elementState = ValueNotifier(elementState),
         _template = template;
 
-  Stream<FormElementState> get propertiesChanged =>
-      (propertiesChangedSubject ??=
-              BehaviorSubject<FormElementState>.seeded(_elementState))
-          as Stream<FormElementState>;
+  // Stream<FormElementState> get propertiesChanged =>
+  //     (propertiesChangedSubject ??=
+  //             BehaviorSubject<FormElementState>.seeded(_elementState))
+  //         as Stream<FormElementState>;
 
   @protected
   BehaviorSubject<FormElementState?>? propertiesChangedSubject;
@@ -71,13 +71,14 @@ sealed class FormElementInstance<T> {
       .toList();
 
   final Set<FormElementInstance<dynamic>> _dependents = Set();
-  final Set<FormElementInstance<dynamic>> _resolvedDependencies = Set();
+
+  // final Set<FormElementInstance<dynamic>> _resolvedDependencies = Set();
 
   Set<FormElementInstance<dynamic>> get dependents =>
       Set.unmodifiable(_dependents);
 
-  Set<FormElementInstance<dynamic>> get resolvedDependencies =>
-      Set.unmodifiable(_resolvedDependencies);
+  // Set<FormElementInstance<dynamic>> get resolvedDependencies =>
+  //     Set.unmodifiable(_resolvedDependencies);
 
   String? get name => template.name;
 
@@ -94,19 +95,19 @@ sealed class FormElementInstance<T> {
     _parentSection = parent;
   }
 
-  FormElementState _elementState;
+  ValueNotifier<FormElementState> _elementState;
 
-  FormElementState get elementState => _elementState;
+  ValueNotifier<FormElementState> get elementState => _elementState;
 
-  Map<String, dynamic> get errors => _elementState.errors;
+  Map<String, dynamic> get errors => _elementState.value.errors;
 
   bool get hasErrors => errors.isNotEmpty;
 
-  bool get hidden => _elementState.hidden;
+  bool get hidden => _elementState.value.hidden;
 
   bool get visible => !hidden;
 
-  bool get mandatory => _elementState.mandatory;
+  bool get mandatory => _elementState.value.mandatory;
 
   String? get elementPath => name == null ? null : pathBuilder(name!);
 
@@ -114,28 +115,6 @@ sealed class FormElementInstance<T> {
       [parentSection?.elementPath, pathItem].whereType<String>().join('.');
 
   T? get value => reduceValue();
-
-  Object? getError(String errorCode, [String? path]) {
-    final control = path != null ? findElement(path) : this;
-    return control!.errors[errorCode];
-  }
-
-  // void _updateControlsErrors() {
-  //   _elementState = _calculateStatus();
-  //   // _statusChanges.add(_status);
-  //
-  //   _parentSection?._updateControlsErrors();
-  // }
-
-  // FormElementState _calculateStatus() {
-  //   if (allElementsHidden()) {
-  //     return _elementState.copyWith(hidden: true);
-  //   } else if (hasErrors) {
-  //     return _elementState.copyWith(errors: errors);
-  //   }
-  //
-  //   return _elementState;
-  // }
 
   T? reduceValue();
 
@@ -163,20 +142,19 @@ sealed class FormElementInstance<T> {
   @protected
   FormElementInstance<dynamic>? findElement(String path);
 
-  // void validate({bool updateParent = true, bool emitEvent = true}) {}
-
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('${name}, mark as Hidden');
+    if (hidden) return;
+
+    _elementState.value = _elementState.value.copyWith(hidden: true);
+
     elementControl!.reset(
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
   }
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('${name}, mark as visible');
-    if (visible) {
-      return;
-    }
-    _elementState = _elementState.copyWith(hidden: false);
+    if (visible) return;
+
+    _elementState.value = _elementState.value.copyWith(hidden: false);
     if (template.mandatory) {
       markAsMandatory(emitEvent: false);
     }
@@ -185,11 +163,9 @@ sealed class FormElementInstance<T> {
   }
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
-    if (mandatory) {
-      return;
-    }
+    if (mandatory) return;
 
-    _elementState = _elementState.copyWith(mandatory: true);
+    _elementState.value = _elementState.value.copyWith(mandatory: true);
 
     final elementValidators = [
       ...elementControl!.validators,
@@ -199,10 +175,9 @@ sealed class FormElementInstance<T> {
   }
 
   void markAsUnMandatory({bool updateParent = true, bool emitEvent = true}) {
-    if (mandatory) {
-      return;
-    }
-    _elementState = _elementState.copyWith(mandatory: false);
+    if (!mandatory) return;
+
+    _elementState.value = _elementState.value.copyWith(mandatory: false);
 
     final elementValidators = [
       ...elementControl!.validators,
@@ -212,211 +187,53 @@ sealed class FormElementInstance<T> {
         autoValidate: true, updateParent: updateParent, emitEvent: emitEvent);
   }
 
-  void setErrors(Map<String, dynamic> errors, {bool markAsDirty = true}) {
-    _elementState = _elementState.copyWith(errors: errors);
+  void addError(String error, {bool markAsDirty = true}) {
+    if (elementState.value.errors.keys.contains(error)) return;
+    _elementState.value = _elementState.value
+        .copyWith(errors: {..._elementState.value.errors, error: error});
     elementControl?.setErrors(errors, markAsDirty: markAsDirty);
   }
 
   void removeError(String key, {bool updateParent = true}) {
-    _elementState = _elementState.copyWith(errors: {...errors}..remove(key));
+    _elementState.value =
+        _elementState.value.copyWith(errors: {...errors}..remove(key));
     elementControl?.removeError(key);
   }
 
-  static final Set<String> _evaluationStack = {};
   final Map<String, dynamic> _elementContext = {};
 
   Map<String, dynamic> get elementContext => Map.unmodifiable(_elementContext);
 
   void updateContext<T>({required String name, T? value}) {
-    _elementContext.update(name, (_) => value, ifAbsent: () => value);
+    final oldValue = _elementContext[name];
+    if (oldValue == value) return;
+    _elementContext[name] = value;
   }
 
   void evaluateDependencies<T>() {
     for (var ruleAction in elementRuleActions) {
-      logDebug('Expression: ${ruleAction.expression}');
-      logDebug('Evaluation Result: ${ruleAction.evaluate(elementContext)}');
+      logDebug('Expression: ${ruleAction.expression}, of: $name');
+      logDebug('Evaluation Context: $elementContext, of: $name');
+      logDebug(
+          'Evaluation Result: ${ruleAction.evaluate(elementContext)}, of: $name');
       ruleAction.evaluate(elementContext)
           ? ruleAction.apply(this)
           : ruleAction.reset(this);
     }
   }
 
-  // void evaluate(
-  //     {String? changedDependency,
-  //     bool updateParent = true,
-  //     bool emitEvent = true}) {
-  //   if (_isEvaluating) {
-  //     return;
-  //   }
-  //
-  //   _isEvaluating = true;
-  //
-  //   // if(hidden) {
-  //   //   return;
-  //   // }
-  //   // if (dependencies.length == 0 || !dependencies.contains(changedDependency)) {
-  //   //   return;
-  //   // }
-  //
-  //   logDebug(
-  //       'Evaluating ${name ?? 'root'} due to change in $changedDependency');
-  //   logDebug('Evaluation Context for ${name ?? 'root'}: ${evalContext}');
-  //
-  //   if (_evaluationStack.contains(name)) {
-  //     logError('Circular dependency detected on: ${name ?? 'root'}');
-  //     return;
-  //   }
-  //
-  //   _evaluationStack.add(name ?? 'root'); // Track current element
-  //
-  //   try {
-  //     // final previousState = elementState;
-  //     for (var ruleAction in elementRuleActions) {
-  //       logDebug('Expression: ${ruleAction.expression}');
-  //       logDebug('Evaluation Result: ${ruleAction.evaluate(evalContext)}');
-  //       ruleAction.evaluate(evalContext)
-  //           ? ruleAction.apply(this)
-  //           : ruleAction.reset(this);
-  //     }
-  //     // FormElementState newState = calculateState();
-  //
-  //     // if (newState != previousState) {
-  //     //   updateStatus(newState, emitEvent: emitEvent);
-  //     // }
-  //   } catch (e) {
-  //     logError('Error Evaluating: ${name ?? 'root'}');
-  //   } finally {
-  //     _isEvaluating = false;
-  //     _evaluationStack.remove(name); // Remove from stack after evaluation
-  //   }
-  // }
-
-  // FormElementState calculateState() {
-  //   FormElementState newState = elementState.copyWith();
-  //
-  //   ///
-  //   for (var ruleAction in elementRuleActions) {
-  //     logDebug('Expression: ${ruleAction.expression}');
-  //     logDebug('Evaluation Result: ${ruleAction.evaluate(evalContext)}');
-  //     newState = ruleAction.evaluate(evalContext)
-  //         ? ruleAction.apply(this)
-  //         : ruleAction.reset(this);
-  //   }
-  //   return newState;
-  // }
-  //
-  // void _updateAncestors(bool updateParent) {
-  //   if (updateParent) {
-  //     _parentSection?.updateValueAndValidity(updateParent: updateParent);
-  //   }
-  // }
-
-  // FormElementState _calculateStatus() {
-  //   if (allElementsHidden()) {
-  //     elementControl?.markAsDisabled();
-  //     return _elementState.copyWith(hidden: true, errors: {});
-  //   } else if (elementControl?.hasErrors == true) {
-  //     return _elementState.copyWith(errors: elementControl!.errors);
-  //   }
-  //
-  //   elementControl?.markAsDisabled();
-  //   return _elementState.copyWith(hidden: false, errors: {});
-  // }
-
-  void updateValueAndValidity({
-    bool updateParent = true,
-    bool emitEvent = true,
-  }) {
-    // if (visible) {
-    //   _elementState = _calculateStatus();
-    // }
-
-    // if (emitEvent) {
-    //   updateStatus(_elementState);
-    // }
-
-    // _updateAncestors(updateParent);
-  }
-
   List<String> get dependencies => template.dependencies;
-
-  List<String> get resolvedDependencyNames =>
-      _resolvedDependencies.map((dependency) => dependency.name!).toList();
-
-  void resolveDependencies() {
-    if (dependencies.isEmpty) {
-      logDebug('${name ?? 'root'} has no dependencies to resolve.');
-      return;
-    }
-
-    logDebug('Resolving dependencies', data: {
-      'element': name ?? 'root',
-      'dependencies': dependencies,
-    });
-
-    for (final dependencyName in dependencies) {
-      final dependency = findElementInParentSection(dependencyName);
-      if (dependency != null) {
-        _resolvedDependencies.add(dependency);
-        dependency._addDependent(this);
-      }
-    }
-
-    final unresolvedDependencies = dependencies
-        .where((dependency) => !resolvedDependencyNames.contains(dependency))
-        .toList();
-
-    if (unresolvedDependencies.isNotEmpty) {
-      logWarning('Could not resolve some dependencies', data: {
-        'element': name ?? 'root',
-        'unresolved_dependencies': unresolvedDependencies,
-      });
-    }
-
-    if (resolvedDependencies.isNotEmpty) {
-      logDebug('Resolved dependencies', data: {
-        'element': name ?? 'root',
-        'resolved_dependencies': resolvedDependencyNames,
-      });
-    }
-  }
-
-  //
-  // void resolveDependencies() {
-  //   if (dependencies.length > 0) {
-  //     logDebug('$name, resolving dependencies: $dependencies');
-  //   }
-  //
-  //   for (final dependencyName in dependencies) {
-  //     final dependency = findElementInParentSection(dependencyName);
-  //     if (dependency != null) {
-  //       _resolvedDependencies.add(dependency);
-  //       dependency._addDependent(this);
-  //     }
-  //   }
-  //
-  //   if (resolvedDependencies.length != dependencies.length) {
-  //     logDebug(
-  //         info:
-  //             '$name, could not resolve dependencies: ${dependencies..where((dependency) => !resolvedDependencyNames.contains(dependency))}');
-  //   }
-  //
-  //   if (resolvedDependencies.length > 0) {
-  //     logDebug(
-  //         info:
-  //         '$name, resolve dependencies: $resolvedDependencyNames');
-  //   }
-  // }
 
   void dispose() {
     // elementControl?.dispose();
     logDebug('element: ${name ?? 'root'}, disposeMethod');
-    if (_resolvedDependencies.isNotEmpty)
-      // propertiesChangedSubject?.close();
-      _resolvedDependencies.forEach((FormElementInstance<dynamic> d) {
-        logDebug('${name ?? 'root'}, unsubscribing from: ${d.name ?? 'root'}');
-        d._dependents.remove(this);
-      });
-    _resolvedDependencies.clear();
+    //   if (_resolvedDependencies.isNotEmpty)
+    //     // propertiesChangedSubject?.close();
+    //     _resolvedDependencies.forEach((FormElementInstance<dynamic> d) {
+    //       logDebug('${name ?? 'root'}, unsubscribing from: ${d.name ?? 'root'}');
+    //       d._dependents.remove(this);
+    //     });
+    //   _resolvedDependencies.clear();
+    // }
   }
 }

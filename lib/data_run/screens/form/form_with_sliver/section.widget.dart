@@ -20,18 +20,21 @@ class SectionWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elementStatus = useRegisterDependencies(element);
-
-    if (elementStatus.value.hidden) {
+    useRegisterDependencies(element);
+    final elementState = useListenable(element.elementState);
+    if (elementState.value.hidden) {
       return const SliverToBoxAdapter(child: null);
     }
 
     return SliverStickyHeader(
         header: Container(
-          color: headerColor ?? Theme.of(context).colorScheme.primary,
+          color: headerColor ?? Theme
+              .of(context)
+              .colorScheme
+              .primary,
           padding: const EdgeInsets.all(16),
           child:
-              Text(element.label, style: const TextStyle(color: Colors.white)),
+          Text(element.label, style: const TextStyle(color: Colors.white)),
         ),
         sliver: MultiSliver(
           pushPinnedChildren: true,
@@ -40,8 +43,7 @@ class SectionWidget extends HookConsumerWidget {
   }
 
   List<Widget> buildSliverList(
-    Iterable<FormElementInstance<dynamic>> elements,
-  ) {
+      Iterable<FormElementInstance<dynamic>> elements,) {
     return elements.map((element) {
       if (element is Section) {
         return SectionWidget(

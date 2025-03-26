@@ -16,11 +16,11 @@ extension ApplyAction on RuleAction {
       {bool updateParent = true, bool emitEvent = true}) {
     switch (action) {
       case ActionType.Show:
-        logDebug('${element.name}, applying action: ${ActionType.Show}');
+        // logDebug('${element.name}, applying action: ${ActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Hide:
-        logDebug('${element.name}, applying action: ${ActionType.Hide}');
+        // logDebug('${element.name}, applying action: ${ActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Error:
@@ -28,7 +28,7 @@ extension ApplyAction on RuleAction {
           final currentElementErrors = {...element.errors};
           currentElementErrors[getItemLocalString(message.unlockView)] =
               getItemLocalString(message.unlockView);
-          element.setErrors(currentElementErrors);
+          element.addError(getItemLocalString(message.unlockView));
         }
         break;
       case ActionType.Mandatory:
@@ -57,11 +57,11 @@ extension ApplyAction on RuleAction {
       {bool updateParent = true, bool emitEvent = true}) {
     switch (action) {
       case ActionType.Show:
-        logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
+        // logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Hide:
-        logDebug('${element.name}, resetting action to: ${ActionType.Show}');
+        // logDebug('${element.name}, resetting action to: ${ActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: false);
         break;
       case ActionType.Error:

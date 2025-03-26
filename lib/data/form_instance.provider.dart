@@ -129,9 +129,9 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
   final _formSection = Section(
       template: SectionTemplate(type: ValueType.Unknown, path: null),
       elements: elements,
-      form: form)
-    ..resolveDependencies()
-    ..evaluateDependencies();
+      form: form);
+    // ..resolveDependencies()
+    // ..evaluateDependencies();
   final attributeMap =
       await formInstanceService.formAttributesControls(initialFormValue);
 

@@ -17,8 +17,10 @@ class RepeatTableSliver extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elementStatus = useRegisterDependencies(repeatInstance);
-    if (elementStatus.value.hidden) {
+    useRegisterDependencies(repeatInstance);
+    final elementState = useListenable(repeatInstance.elementState);
+
+    if (elementState.value.hidden) {
       return const SliverToBoxAdapter(child: null);
     }
 

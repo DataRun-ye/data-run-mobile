@@ -52,7 +52,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     final removed = formInstance.onRemoveRepeatedItem(index, _repeatInstance);
     _dataSource.removeItem(removed);
     _repeatInstance.elementControl.markAsTouched();
-    // formInstance.saveFormData();
   }
 
   @override

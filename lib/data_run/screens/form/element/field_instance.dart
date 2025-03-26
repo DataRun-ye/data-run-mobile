@@ -16,8 +16,8 @@ class FieldInstance<T> extends FormElementInstance<T>
 
   FieldTemplate get template => _template as FieldTemplate;
 
-  FieldElementState<T> get elementState =>
-      _elementState as FieldElementState<T>;
+  FieldElementState<T> get elementStateValue =>
+      (_elementState.value as FieldElementState<T>);
 
   final Map<String, ValidationMessageFunction> validationMessages = {};
 
@@ -41,7 +41,7 @@ class FieldInstance<T> extends FormElementInstance<T>
       ];
 
   @override
-  T? reduceValue() => elementState.value;
+  T? reduceValue() => elementStateValue.value;
 
   @override
   FormControl<T> get elementControl =>
@@ -69,32 +69,27 @@ class FieldInstance<T> extends FormElementInstance<T>
           void Function(FormElementInstance<dynamic> element) callback) =>
       <FormElementInstance<dynamic>>[];
 
-  List<FormOption> get visibleOption => elementState.visibleOptions;
+  List<FormOption> get visibleOption => elementStateValue.visibleOptions;
 
   void evaluateFilterDependencies<T>() {
     if (filterExpressionDependencies.isNotEmpty) {
       final visibleOptionsUpdate = choiceFilter!.evaluate(elementContext);
-      logDebug(
-          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.resetValueFromVisibleOptions(
+      final oldState = elementStateValue.copyWith(); // clone
+      final newState = elementStateValue.resetValueFromVisibleOptions(
           visibleOptions: visibleOptionsUpdate);
-      logDebug(
-          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      // updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value, emitEvent: false);
+      if (oldState != newState) {
+        _elementState.value = newState;
+        elementControl.updateValue(newState.value, emitEvent: false);
+      }
     } else if (choiceFilter?.expression != null) {
       final visibleOptionsUpdate = choiceFilter!.evaluate(elementContext);
-      logDebug(
-          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.resetValueFromVisibleOptions(
+      final oldState = elementStateValue.copyWith(); // clone
+      final newState = elementStateValue.resetValueFromVisibleOptions(
           visibleOptions: visibleOptionsUpdate);
-      logDebug(
-          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      elementControl.updateValue(newState.value, emitEvent: false);
+      if (oldState != newState) {
+        _elementState.value = newState;
+        elementControl.updateValue(newState.value, emitEvent: false);
+      }
     }
   }
 }
@@ -110,6 +105,7 @@ class CalculatedFieldInstance<T> extends FieldInstance<T>
 
   final CalculatedExpression? calculatedExpression;
 
+  @override
   List<String> get dependencies =>
       [...template.dependencies, ...template.calculationDependencies];
 

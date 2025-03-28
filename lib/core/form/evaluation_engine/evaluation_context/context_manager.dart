@@ -30,11 +30,11 @@ class ContextManager {
 }
 
 class CachedComputation<R extends Object> {
+  CachedComputation(this.computation);
+
   final R Function() computation;
 
   WeakReference<R>? _cache;
-
-  CachedComputation(this.computation);
 
   R get result {
     final cachedResult = _cache?.target;

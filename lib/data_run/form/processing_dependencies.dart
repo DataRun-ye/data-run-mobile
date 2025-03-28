@@ -87,7 +87,7 @@ void main() {
   final reverseDependencyMap =
       buildTransitiveReverseDependencyMap(dependencies);
 
-  print(reverseDependencyMap);
+  // print(reverseDependencyMap);
   reverseDependencyMap.forEach((key, value) {});
 
   // for (var element in propagateChange('transaction', reverseDependencyMap)) {

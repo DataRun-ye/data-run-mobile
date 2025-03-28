@@ -9,16 +9,6 @@ import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
 
 class EnrollmentRepository extends DataEntryBaseRepository {
-  static const String ENROLLMENT_DATA_SECTION_UID =
-      'ENROLLMENT_DATA_SECTION_UID';
-  static const String ENROLLMENT_DATE_UID = 'ENROLLMENT_DATE_UID';
-  static const String INCIDENT_DATE_UID = 'INCIDENT_DATE_UID';
-  static const String ORG_UNIT_UID = 'ORG_UNIT_UID';
-  static const String TEI_COORDINATES_UID = 'TEI_COORDINATES_UID';
-  static const String ENROLLMENT_COORDINATES_UID = 'ENROLLMENT_COORDINATES_UID';
-
-  final String enrollmentUid;
-
   //
   // final EnrollmentMode enrollmentMode;
   // final EnrollmentFormLabelsProvider enrollmentFormLabelsProvider;
@@ -34,6 +24,15 @@ class EnrollmentRepository extends DataEntryBaseRepository {
       {required FieldViewModelFactory fieldFactory,
       required this.enrollmentUid})
       : super(fieldFactory);
+  static const String ENROLLMENT_DATA_SECTION_UID =
+      'ENROLLMENT_DATA_SECTION_UID';
+  static const String ENROLLMENT_DATE_UID = 'ENROLLMENT_DATE_UID';
+  static const String INCIDENT_DATE_UID = 'INCIDENT_DATE_UID';
+  static const String ORG_UNIT_UID = 'ORG_UNIT_UID';
+  static const String TEI_COORDINATES_UID = 'TEI_COORDINATES_UID';
+  static const String ENROLLMENT_COORDINATES_UID = 'ENROLLMENT_COORDINATES_UID';
+
+  final String enrollmentUid;
 
   @override
   bool isEvent() {

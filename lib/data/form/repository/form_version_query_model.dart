@@ -1,5 +1,4 @@
 import 'package:datarunmobile/commons/query_model.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormVersionQueryModel extends QueryModel {
   FormVersionQueryModel({this.formTemplate, this.version, super.limit, super.offset});
@@ -32,6 +31,6 @@ class FormVersionQueryModel extends QueryModel {
       'version': this.version,
       ...super.toMap()
     };
-    return map.lock.removeWhere((k, v) => v == null).unlock;
+    return map..removeWhere((k, v) => v == null);
   }
 }

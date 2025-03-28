@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: IdentifiableRepository<DataFormSubmission>)
 class SubmissionListLocalRepository
-    implements IdentifiableRepository<DataFormSubmission> {
+    extends IdentifiableRepository<DataFormSubmission> {
   BaseQuery<DataFormSubmission> get entityQuery =>
       D2Remote.formSubmissionModule.formSubmission;
 

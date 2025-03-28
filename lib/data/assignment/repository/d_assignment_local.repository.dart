@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: IdentifiableRepository<Assignment>)
 class DAssignmentListLocalRepository
-    implements IdentifiableRepository<Assignment> {
+    extends IdentifiableRepository<Assignment> {
   BaseQuery<Assignment> get entityQuery =>
       D2Remote.assignmentModuleD.assignment;
 

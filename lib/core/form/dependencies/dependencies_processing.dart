@@ -170,23 +170,23 @@ Iterable<T> propagateChange2<T>(
 
 void main() {
   // Define a dependency graph
-  final dependencies = <String, Set<String>>{
-    'warehouse': {'country'},
-    'country': {'continent'},
-    'continent': {},
-    'transaction': {'warehouse', 'country'},
-    'fieldE': {'transaction'},
-    'fieldF': {'transaction', 'warehouse'},
-  };
+  // final dependencies = <String, Set<String>>{
+  //   'warehouse': {'country'},
+  //   'country': {'continent'},
+  //   'continent': {},
+  //   'transaction': {'warehouse', 'country'},
+  //   'fieldE': {'transaction'},
+  //   'fieldF': {'transaction', 'warehouse'},
+  // };
 
   // Build the reverse dependency map with transitive closure
-  final reverseDependencyMap = buildReverseDependencyMap(dependencies2);
+  // final reverseDependencyMap = buildReverseDependencyMap(dependencies2);
 
-  final stronglyConnected = stronglyConnectedComponents(reverseDependencyMap);
-  print('stronglyConnected Components:');
-  stronglyConnected.forEach((value) {
-    print('$value');
-  });
+  // final stronglyConnected = stronglyConnectedComponents(reverseDependencyMap);
+  // print('stronglyConnected Components:');
+  // stronglyConnected.forEach((value) {
+  //   print('$value');
+  // });
 
   // final orderedIterator = dependencyOrderedIterator(reverseDependencyMap);
   // print('orderedIterator Components:');
@@ -194,14 +194,14 @@ void main() {
   //   print('$value');
   // });
 
-  final changedElement = 'warehouse';
+  // final changedElement = 'warehouse';
   // print('\n1- Propagating Changes to the effected elements:');
   // propagateChange(changedElement, reverseDependencyMap);
 
-  print('\n2- Propagating Changes to the effected elements: :');
-  for (var element in propagateChange2(changedElement, reverseDependencyMap)) {
-    print('Evaluate: $element');
-  }
+  // print('\n2- Propagating Changes to the effected elements: :');
+  // for (var element in propagateChange2(changedElement, reverseDependencyMap)) {
+  //   print('Evaluate: $element');
+  // }
 }
 
 // temporarily for test

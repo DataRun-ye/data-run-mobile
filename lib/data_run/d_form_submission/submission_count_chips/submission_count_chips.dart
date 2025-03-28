@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
@@ -16,7 +15,6 @@ class CountChip extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final countSync = ref.watch(submissionsSyncStateCountProvider(syncStatus));
-    final bool showLabel = !Platform.isWindows;
     return AsyncValueWidget(
       value: countSync,
       valueBuilder: (count) => count == 0

@@ -7,7 +7,7 @@ import 'package:datarunmobile/commons/query_model.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: IdentifiableRepository<Team>)
-class DTeamLocalRepository implements IdentifiableRepository<Team> {
+class DTeamLocalRepository extends IdentifiableRepository<Team> {
   BaseQuery<Team> get entityQuery => D2Remote.teamModuleD.team;
 
   @override

@@ -6,13 +6,12 @@ import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 
 class DependencyBinder {
+  DependencyBinder({required this.element})
+      : dependencies = resolveDependencies(element);
   final FormElementInstance<dynamic> element;
   final Map<String, FormElementInstance<dynamic>> dependencies;
 
   final List<StreamSubscription<dynamic>> _subscriptions = [];
-
-  DependencyBinder({required this.element})
-      : dependencies = resolveDependencies(element);
 
   static Map<String, FormElementInstance<dynamic>> resolveDependencies(
       FormElementInstance<dynamic> element) {

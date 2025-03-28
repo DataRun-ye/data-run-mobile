@@ -76,6 +76,8 @@ Future<_i174.GetIt> init(
     () => thirdPartyServicesModule.prefs,
     preResolve: true,
   );
+  gh.factory<_i649.AssignmentDetailService>(
+      () => _i649.AssignmentDetailService());
   gh.lazySingleton<_i1055.NavigationService>(
       () => thirdPartyServicesModule.navigationService);
   gh.lazySingleton<_i1055.DialogService>(
@@ -124,18 +126,11 @@ Future<_i174.GetIt> init(
         gh<_i710.IdentifiableRepository<_i813.OrgUnit>>(),
         gh<_i710.IdentifiableRepository<_i813.Team>>(),
       ));
-  gh.factory<_i649.AssignmentDetailService>(() => _i649.AssignmentDetailService(
-      gh<_i710.IdentifiableRepository<_i603.Assignment>>()));
+  gh.factory<_i434.ActivityListService>(() => _i434.ActivityListService(
+      gh<_i710.IdentifiableRepository<_i813.Activity>>()));
   gh.factory<_i199.ActivityDetailService>(() => _i199.ActivityDetailService(
         gh<_i710.IdentifiableRepository<_i813.Activity>>(),
         gh<_i710.IdentifiableRepository<_i813.Assignment>>(),
-        gh<_i710.IdentifiableRepository<_i813.OrgUnit>>(),
-        gh<_i710.IdentifiableRepository<_i813.Team>>(),
-      ));
-  gh.factory<_i434.ActivityListService>(() => _i434.ActivityListService(
-        gh<_i710.IdentifiableRepository<_i813.Activity>>(),
-        gh<_i710.IdentifiableRepository<_i813.Assignment>>(),
-        gh<_i710.IdentifiableRepository<_i813.OrgUnit>>(),
         gh<_i710.IdentifiableRepository<_i813.Team>>(),
       ));
   return getIt;

@@ -8,9 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 /// intentHandler.dispatch(OnSave(...));
 /// ```
 class FormIntentHandler {
-  final Ref ref;
-
   FormIntentHandler(this.ref);
+
+  final Ref ref;
 
   void dispatch(FormIntent intent) {
     ref.read(formNotifierProvider.notifier).handleIntent(intent);

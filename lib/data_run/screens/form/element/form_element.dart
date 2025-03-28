@@ -61,7 +61,7 @@ sealed class FormElementInstance<T> {
 
   ValueType? get type => template.type;
 
-  bool _isEvaluating = false;
+  // bool _isEvaluating = false;
   FormGroup form;
 
   Iterable<RuleAction> get elementRuleActions => _template.ruleActions();

@@ -7,7 +7,7 @@ import 'package:datarunmobile/commons/query_model.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: IdentifiableRepository<Activity>)
-class DActivityLocalRepository implements IdentifiableRepository<Activity> {
+class DActivityLocalRepository extends IdentifiableRepository<Activity> {
   BaseQuery<Activity> get entityQuery => D2Remote.activityModuleD.activity;
 
   @override

@@ -43,10 +43,10 @@ abstract class DataEntryBaseRepository implements DataEntryRepository {
     // options to hide and show are not calculated again, they change based on
     // the rule then keep getting filtered whenever field is updates, hidden show
     // stays hidden...etc,
-    final List<String> optionsInGroupsToHide =
-        await _optionsFromGroups(optionGroupsToHide);
-    final List<String> optionsInGroupsToShow =
-        await _optionsFromGroups(optionGroupsToShow);
+    // final List<String> optionsInGroupsToHide =
+    //     await _optionsFromGroups(optionGroupsToHide);
+    // final List<String> optionsInGroupsToShow =
+    //     await _optionsFromGroups(optionGroupsToShow);
     if (fieldUiModel.optionSet != null) {
       // fieldUiModel.optionSetConfiguration?.updateOptionsToHideAndShow(
       //     optionsToHide: [...optionsToHide, ...optionsInGroupsToHide],

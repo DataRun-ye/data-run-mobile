@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: IdentifiableRepository<OrgUnit>)
 class DOrgUnitLocalRepository
-    implements IdentifiableRepository<OrgUnit> {
+    extends IdentifiableRepository<OrgUnit> {
 
   BaseQuery<OrgUnit> get entityQuery =>
       D2Remote.organisationUnitModuleD.orgUnit;

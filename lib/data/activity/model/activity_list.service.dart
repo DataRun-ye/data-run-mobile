@@ -6,14 +6,14 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class ActivityListService {
-  ActivityListService(this._repository, this._assignmentRepository,
-      this._orgUnitRepository, this._teamRepository);
+  ActivityListService(this._repository, /*this._assignmentRepository,
+      this._orgUnitRepository, this._teamRepository*/);
 
   final IdentifiableRepository<Activity> _repository;
-
-  final IdentifiableRepository<Assignment> _assignmentRepository;
-  final IdentifiableRepository<OrgUnit> _orgUnitRepository;
-  final IdentifiableRepository<Team> _teamRepository;
+  //
+  // final IdentifiableRepository<Assignment> _assignmentRepository;
+  // final IdentifiableRepository<OrgUnit> _orgUnitRepository;
+  // final IdentifiableRepository<Team> _teamRepository;
 
   Future<Iterable<ActivityDetail>> get({ActivityQueryModel? query}) async {
     final List<Activity> entities = await _repository.get(query: query);

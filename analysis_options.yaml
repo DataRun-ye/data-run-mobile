@@ -1,4 +1,6 @@
 analyzer:
+  errors:
+    annotate_overrides: ignore
   language:
     strict-raw-types: true  # Enforces using generic types
   exclude:
@@ -14,4 +16,4 @@ linter:
     - unnecessary_null_checks  # Flags unnecessary null checks
     - unnecessary_overrides  # Identifies unnecessary overrides
     - prefer_const_constructors
-    - annotate_overrides
+#    - annotate_overrides

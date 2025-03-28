@@ -9,7 +9,7 @@ sealed class SectionElement<T> extends FormElementInstance<T> {
       FormElementState? elementState})
       : super(
             template: template,
-            elementState: elementState ?? FormElementState());
+            elementState: elementState ?? const FormElementState());
 
   FormElementInstance<dynamic> element(String name);
 

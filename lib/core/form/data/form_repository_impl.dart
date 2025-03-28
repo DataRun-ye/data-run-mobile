@@ -75,7 +75,7 @@ class FormRepositoryImpl implements FormRepository {
   @override
   Future<List<FieldUiModel>> fetchFormItems() async {
     // Assume dataEntryRepository.list() returns a Future<List<FieldUiModel>>.
-    itemList = await dataEntryRepository.list() ?? [];
+    itemList = await dataEntryRepository.list() /*?? []*/;
     openedSectionUid = getInitialOpenedSection();
     backupList = List.from(itemList);
     return composeList();
@@ -198,7 +198,7 @@ class FormRepositoryImpl implements FormRepository {
 
     int warningCount = ruleEffectsResult
             ?.warningMap()
-            ?.entries
+            /*?*/.entries
             .where((entry) => fields.any((field) =>
                 field.uid == entry.key &&
                 field.programStageSection == sectionFieldUiModel.uid))
@@ -214,7 +214,7 @@ class FormRepositoryImpl implements FormRepository {
 
     int errorCount = ruleEffectsResult
             ?.errorMap()
-            ?.entries
+            /*?*/.entries
             .where((entry) => fields.any((field) =>
                 field.uid == entry.key &&
                 field.programStageSection == sectionFieldUiModel.uid))
@@ -850,7 +850,7 @@ class FormRepositoryImpl implements FormRepository {
 
     ruleEffectsResult
         ?.fieldsWithOptionEffects()
-        ?.forEach((fieldWithOptionEffect) {
+        /*?*/.forEach((fieldWithOptionEffect) {
       final item =
           itemList.firstOrNullWhere((f) => f.uid == fieldWithOptionEffect);
       if (item != null) {

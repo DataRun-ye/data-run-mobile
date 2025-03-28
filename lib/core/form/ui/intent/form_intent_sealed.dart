@@ -4,8 +4,6 @@ import 'package:equatable/equatable.dart';
 // part 'repeat_group_intent.dart';
 
 sealed class FormIntent with EquatableMixin {
-  const FormIntent._();
-
   const factory FormIntent.onFinish({String? extraData}) = OnFinish;
 
   const factory FormIntent.onFocus(String uid, String? value) = OnFocus;

@@ -1,12 +1,18 @@
 import 'package:collection/collection.dart';
 
 class FormMeta {
-  final Map<String, dynamic> meta;
+  factory FormMeta.fromMap(Map<String, dynamic> map) {
+    return FormMeta(
+      meta: map['meta'] as Map<String, dynamic>,
+    );
+  }
 
 //<editor-fold desc="Data Methods">
   const FormMeta({
     required this.meta,
   });
+
+  final Map<String, dynamic> meta;
 
   @override
   bool operator ==(Object other) =>
@@ -33,12 +39,6 @@ class FormMeta {
     return {
       'meta': this.meta,
     };
-  }
-
-  factory FormMeta.fromMap(Map<String, dynamic> map) {
-    return FormMeta(
-      meta: map['meta'] as Map<String, dynamic>,
-    );
   }
 
 //</editor-fold>

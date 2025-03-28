@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: IdentifiableRepository<FormVersion>)
 class DFormTemplateLocalRepository
-    implements IdentifiableRepository<FormVersion> {
+    extends IdentifiableRepository<FormVersion> {
   BaseQuery<FormVersion> get entityQuery => D2Remote.formModule.formTemplateV;
 
   @override

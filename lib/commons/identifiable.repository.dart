@@ -7,6 +7,10 @@ abstract class IdentifiableRepository<T extends DRunBase> {
   /// if attribute is null, get all
   Future<List<T>> get({QueryModel? query});
 
+  Future<int> getCount({QueryModel? query}) async {
+    return (await get(query: query)).length;
+  }
+
   Future<T> save(T identifiable);
 
   Future<int> delete(String id);

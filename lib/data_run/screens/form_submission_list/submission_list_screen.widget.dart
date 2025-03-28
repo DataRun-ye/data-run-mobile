@@ -1,19 +1,19 @@
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
+import 'package:datarunmobile/data/form_submission/form_submissions_status.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
-import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/form_tab_screen.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/data_run/screens/form_submission_list/submission_info.widget.dart';
 import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
 import 'package:datarunmobile/data_run/screens/form_submission_list/submission_sync_dialog.widget.dart';
-import 'package:datarunmobile/data/form_submissions_status.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:intl/intl.dart';
 

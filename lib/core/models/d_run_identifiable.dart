@@ -1,11 +1,10 @@
-import 'package:d2_remote/shared/entities/d_run_identifiable.dart';
+import 'package:d2_remote/shared/mixin/d_run_identifiable.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class DRunIdentifiable<T extends IdentifiableModel>
-    with EquatableMixin
-    implements IdentifiableModel {
+class DRunIdentifiable<T extends DRunIdentifiableBase>
+    extends DRunIdentifiableBase with EquatableMixin {
   DRunIdentifiable({required this.identifiableEntity, this.displayName});
 
   factory DRunIdentifiable.fromIdentifiable(
@@ -30,7 +29,7 @@ class DRunIdentifiable<T extends IdentifiableModel>
   String? get name => identifiableEntity.name;
 
   DRunIdentifiable copyWith({T? identifiableEntity}) {
-    return DRunIdentifiable(
+    return DRunIdentifiable.fromIdentifiable(
       identifiableEntity: identifiableEntity ?? this.identifiableEntity,
       displayName: this.displayName,
     );

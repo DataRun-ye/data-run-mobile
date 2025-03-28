@@ -1,11 +1,8 @@
 import 'dart:io';
 
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type_rendering_type.dart';
 import 'package:datarunmobile/commons/extensions/string_extension.dart';
-import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';
 import 'package:datarunmobile/core/form/model/ui_event_type.dart';
@@ -17,79 +14,61 @@ import 'package:flutter/material.dart';
 @immutable
 class FieldUiModelImpl extends FieldUiModel {
   FieldUiModelImpl({
-    required this.uid,
+    required super.uid,
+    required super.path,
+    required super.label,
+    required super.focused,
+    required super.editable,
+    super.description,
+    super.error,
+    super.warning,
+    super.programStageSection,
+    super.uiEventFactory,
+    super.renderingType,
+    super.sectionRenderingType,
+    super.fieldRendering,
+    super.keyboardActionType,
+    super.isLoadingData = false,
+    super.intentCallback,
+    super.listViewUiEventsCallback,
     this.repeatGroup,
     this.rowUid,
-    required this.path,
-    required this.label,
-    this.description,
     this.value,
     required this.valueType,
     this.optionSet,
-    required this.focused,
-    this.error,
-    required this.editable,
-    this.warning,
     required this.mandatory,
-    this.programStageSection,
-    this.uiEventFactory,
-    this.renderingType,
-    this.sectionRenderingType,
-    this.fieldRendering,
     this.optionSetConfiguration,
-    this.keyboardActionType,
-    this.isLoadingData = false,
-    this.intentCallback,
-    this.listViewUiEventsCallback,
     String? displayValue,
   }) : this.displayValue = displayValue ?? value;
 
-  final String uid;
-  final String path;
-  final String? repeatGroup;
-  final String? rowUid;
-  final String label;
-  final String? description;
-  final String? value;
-  final ValueType valueType;
-  final String? optionSet;
-  final bool mandatory;
-  final String? error;
-  final String? warning;
-  final bool focused;
-  final bool editable;
-
-  final String? programStageSection;
-
-  final UiEventFactory? uiEventFactory;
-
   final String? displayValue;
-
-  final UiRenderType? renderingType;
-
-  /// NMC added provided here instead to providing it
-  /// to the FieldViewModelFactoryImpl
-  /// from ProgramSection of the item
-  final SectionRenderingType? sectionRenderingType;
-
-  /// NMC added provided here instead to providing it
-  /// to the FieldViewModelFactoryImpl
-  /// from ProgramStageDataElement of the item
-  final ValueTypeRenderingType? fieldRendering;
-
   final OptionSetConfiguration? optionSetConfiguration;
-  final TextInputAction? keyboardActionType;
 
-  final bool isLoadingData;
+  @override
+  final String? repeatGroup;
 
-  final IntentCallback? intentCallback;
-  final ListViewUiEventsCallback? listViewUiEventsCallback;
+  @override
+  final String? rowUid;
 
+  @override
+  final String? value;
+
+  @override
+  final ValueType valueType;
+
+  @override
+  final String? optionSet;
+
+  @override
+  final bool mandatory;
+
+  @override
   void onSave(String? value) {
     onItemClick();
     intentCallback?.call(FormIntent.onSave(uid, value, valueType));
   }
 
+  @override
   void onSaveBoolean(bool boolean) {
     onItemClick();
     final result = value == null || value != boolean.toString()
@@ -98,6 +77,7 @@ class FieldUiModelImpl extends FieldUiModel {
     intentCallback?.call(FormIntent.onSave(uid, result, valueType));
   }
 
+  @override
   void onSaveOption(FormOption option) {
     String? nextValue;
     if (option.label.any((k, v) => v == displayValue)) {
@@ -121,6 +101,7 @@ class FieldUiModelImpl extends FieldUiModel {
         uid, (value ?? '').isEmpty == true ? null : value));
   }
 
+  @override
   FieldUiModel setValue(String? value) => copyWith(value: value);
 
   @override
@@ -159,7 +140,6 @@ class FieldUiModelImpl extends FieldUiModel {
 
   @override
   void invokeUiEvent(UiEventType uiEventType) {
-    // intentCallback?.call(FormIntent.onRequestCoordinates(uid));
     if (uiEventType != UiEventType.QR_CODE && !focused) {
       onItemClick();
     }
@@ -193,6 +173,7 @@ class FieldUiModelImpl extends FieldUiModel {
   @override
   FieldUiModel setWarning(String warning) => copyWith(warning: warning);
 
+  @override
   FieldUiModel setFieldMandatory() => copyWith(mandatory: true);
 
   @override

@@ -8,7 +8,7 @@ import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_statu
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/form/form_submission/submission_summary.model.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';

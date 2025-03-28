@@ -1,7 +1,7 @@
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/core/common/state.dart';
-import 'package:datarunmobile/data/data.dart';
+import 'package:datarunmobile/data/assignment/assignment.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';

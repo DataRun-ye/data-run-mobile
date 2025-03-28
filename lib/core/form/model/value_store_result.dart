@@ -6,5 +6,5 @@ enum ValueStoreResult {
   ERROR_UPDATING_VALUE,
   TEXT_CHANGING,
   FINISH,
-  INIT
+  // INIT
 }

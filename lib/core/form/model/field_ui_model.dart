@@ -14,73 +14,86 @@ typedef IntentCallback = void Function(FormIntent intent);
 typedef ListViewUiEventsCallback = void Function(ListViewUiEvents uiEvent);
 
 abstract class FieldUiModel with EquatableMixin {
-  IntentCallback? get intentCallback;
+  FieldUiModel(
+      {required this.uid,
+      required this.path,
+      required this.label,
+      required this.focused,
+      this.error,
+      required this.editable,
+      this.warning,
+      this.programStageSection,
+      this.description,
+      this.uiEventFactory,
+      this.renderingType,
+      this.sectionRenderingType,
+      this.fieldRendering,
+      this.keyboardActionType,
+      this.isLoadingData = false,
+      this.intentCallback,
+      this.listViewUiEventsCallback});
 
-  ListViewUiEventsCallback? get listViewUiEventsCallback;
+  final String uid;
+  final String path;
+  final String label;
 
-  String get uid;
+  ValueType? get valueType => ValueType.Section;
+
+  final bool focused;
+  final String? error;
+  final bool editable;
+  final String? warning;
+
+  final String? programStageSection;
+
+  // final String? hint;
+  final String? description;
+
+  final UiEventFactory? uiEventFactory;
+
+  final UiRenderType? renderingType;
+
+  /// NMC added provided here instead to providing it
+  /// to the FieldViewModelFactoryImpl
+  /// from ProgramSection of the item
+  final SectionRenderingType? sectionRenderingType;
+
+  /// NMC added provided here instead to providing it
+  /// to the FieldViewModelFactoryImpl
+  /// from ProgramStageDataElement of the item
+  final ValueTypeRenderingType? fieldRendering;
+
+  final TextInputAction? keyboardActionType;
+
+  final bool isLoadingData;
+  final IntentCallback? intentCallback;
+  final ListViewUiEventsCallback? listViewUiEventsCallback;
 
   String? get repeatGroup => null;
 
   String? get rowUid => null;
 
-  String get path;
-
   // Template? get template;
 
   String? get value => null;
 
-  ValueType? get valueType;
-
   String? get optionSet => null;
-
-  bool get focused;
 
   bool get mandatory => false;
 
-  String? get programStageSection;
-
-  String? get error;
-
-  bool get editable;
-
-  String? get warning;
-
   String get formattedLabel => label;
-
-  String get label;
 
   // String? get displayValue;
 
   // String? get hint;
 
-  String? get description;
-
-  UiEventFactory? get uiEventFactory;
-
   // OptionSetConfiguration? get optionSetConfiguration;
   //
   // bool get hasImage;
 
-  TextInputAction? get keyboardActionType;
-
   // bool get isAffirmativeChecked;
   //
   // bool get isNegativeChecked;
-
-  bool get isLoadingData;
-
-  /// NMC added provided here instead to providing it
-  /// to the FieldViewModelFactoryImpl
-  /// from ProgramSection of the item
-  SectionRenderingType? get sectionRenderingType;
-
-  /// NMC added provided here instead to providing it
-  /// to the FieldViewModelFactoryImpl
-  /// from ProgramStageDataElement of the item
-  ValueTypeRenderingType? get fieldRendering;
-
-  UiRenderType? get renderingType;
 
   FieldUiModel setCallback(
       {IntentCallback? intentCallback,

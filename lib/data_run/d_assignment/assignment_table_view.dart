@@ -6,7 +6,7 @@ import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/activity/assignment.provider.dart';
-import 'package:datarunmobile/data/teams.provider.dart';
+import 'package:datarunmobile/data/assignment/assignment.provider.dart';
+import 'package:datarunmobile/data/team/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

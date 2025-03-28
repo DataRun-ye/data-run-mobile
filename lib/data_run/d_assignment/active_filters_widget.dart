@@ -1,4 +1,4 @@
-import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

@@ -5,9 +5,9 @@ import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.d
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
-import 'package:datarunmobile/data/submission_list.provider.dart';
+import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 

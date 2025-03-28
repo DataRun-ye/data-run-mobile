@@ -2,7 +2,7 @@ import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/edit_panel.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/repeat_table_rows_source.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';

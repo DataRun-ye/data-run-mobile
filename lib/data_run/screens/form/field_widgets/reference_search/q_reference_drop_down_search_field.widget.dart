@@ -1,10 +1,10 @@
 import 'package:d2_remote/modules/datarun/form/entities/metadata_submission_update.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/metadata_submission_update.provider.dart';
+import 'package:datarunmobile/data/form_submission/metadata_submission_update.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';

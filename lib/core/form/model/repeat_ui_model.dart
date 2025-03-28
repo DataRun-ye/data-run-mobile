@@ -13,19 +13,24 @@ import 'package:flutter/material.dart';
 @immutable
 class RepeatableSectionUiModel extends FieldUiModel {
   RepeatableSectionUiModel({
-    required this.uid,
-    this.programStageSection,
-    required this.path,
-    required this.label,
-    this.focused = false,
-    this.error,
-    this.editable = true,
-    this.warning,
-    this.description,
-    this.uiEventFactory,
+    required super.uid,
+    required super.path,
+    required super.label,
+    super.programStageSection,
+    super.focused = false,
+    super.error,
+    super.editable = true,
+    super.warning,
+    super.description,
+    super.uiEventFactory,
+    super.renderingType,
+    super.keyboardActionType,
+    super.isLoadingData = false,
+    super.fieldRendering,
+    super.sectionRenderingType,
+    super.intentCallback,
+    super.listViewUiEventsCallback,
     this.displayName,
-    this.renderingType,
-    this.keyboardActionType,
     this.isOpen = false,
     this.totalFields = 0,
     this.completedFields = 0,
@@ -33,30 +38,14 @@ class RepeatableSectionUiModel extends FieldUiModel {
     this.warnings = 0,
     this.rendering,
     this.selectedField,
-    this.isLoadingData = false,
     required this.maxLimit,
     required this.currentInstanceCount,
-    this.fieldRendering,
-    this.sectionRenderingType,
     this.sectionNumber = 0,
     this.showBottomShadow = false,
-    this.intentCallback,
-    this.listViewUiEventsCallback,
   });
 
-  final String uid;
-  final String? programStageSection;
-  final String path;
-  final String label;
-  final String? description;
-  final bool focused;
-  final String? error;
-  final bool editable;
-  final String? warning;
-  final UiEventFactory? uiEventFactory;
   final String? displayName;
-  final UiRenderType? renderingType;
-  final TextInputAction? keyboardActionType;
+
   final bool isOpen;
   final int totalFields;
   final int completedFields;
@@ -64,17 +53,12 @@ class RepeatableSectionUiModel extends FieldUiModel {
   final int warnings;
   final String? rendering;
   final String? selectedField;
-  final bool isLoadingData;
   final int maxLimit;
   final int currentInstanceCount;
   final int sectionNumber;
   final bool showBottomShadow;
-  final ValueTypeRenderingType? fieldRendering;
-  final SectionRenderingType? sectionRenderingType;
 
-  final IntentCallback? intentCallback;
-  final ListViewUiEventsCallback? listViewUiEventsCallback;
-
+  @override
   ValueType get valueType => ValueType.RepeatableSection;
 
   bool canAddInstance() => currentInstanceCount < maxLimit;
@@ -112,7 +96,6 @@ class RepeatableSectionUiModel extends FieldUiModel {
   bool get isSelected => selectedField == uid;
 
   FieldUiModel setSectionNumber(int sectionNumber) {
-    // this.sectionNumber = sectionNumber;
     return copyWith(sectionNumber: sectionNumber);
   }
 
@@ -270,12 +253,11 @@ class RepeatableSectionUiModel extends FieldUiModel {
         isOpen,
         totalFields,
         completedFields,
-        errors,
-        warnings,
         selectedField,
         maxLimit,
         currentInstanceCount,
         sectionNumber,
-        showBottomShadow
+        showBottomShadow,
+        displayName,
       ];
 }

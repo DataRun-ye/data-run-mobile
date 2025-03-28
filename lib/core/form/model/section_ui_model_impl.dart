@@ -1,6 +1,3 @@
-import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type_rendering_type.dart';
 import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';
@@ -15,76 +12,44 @@ const String CLOSING_SECTION_UID = 'closing_section';
 
 @immutable
 class SectionUiModelImpl extends FieldUiModel {
-  SectionUiModelImpl(
-      {required this.uid,
-      required this.path,
-      required this.label,
-      required this.focused,
-      this.error,
-      required this.editable,
-      this.warning,
-      this.programStageSection,
-      // this.style,
-      // this.hint,
-      this.description,
-      this.uiEventFactory,
-      this.renderingType,
-      this.keyboardActionType,
-      this.isOpen = false,
-      this.totalFields = 0,
-      this.completedFields = 0,
-      this.errors = 0,
-      this.warnings = 0,
-      this.rendering,
-      this.sectionRenderingType,
-      this.fieldRendering,
+  SectionUiModelImpl({
+    required super.uid,
+    required super.path,
+    required super.label,
+    required super.focused,
+    required super.editable,
+    super.error,
+    super.warning,
+    super.programStageSection,
+    super.description,
+    super.uiEventFactory,
+    super.renderingType,
+    super.keyboardActionType,
+    super.sectionRenderingType,
+    super.fieldRendering,
+    super.isLoadingData = false,
+    super.intentCallback,
+    super.listViewUiEventsCallback,
+    // super.style,
+    // super.hint,
+    this.isOpen = false,
+    this.totalFields = 0,
+    this.completedFields = 0,
+    this.errors = 0,
+    this.warnings = 0,
+    this.rendering,
 
-      /// NMCP can't define a default value
-      /// here we have to provide initial value Rx<String?>(null)
-      /// whenever we create an object of SectionUiModelImpl
-      //   /*@Default(Rx<String?>(null))*/ required Rx<String?> selectedField,
-      /*@Default(Rx<String?>(null))*/ this.selectedField,
-      this.isLoadingData = false,
-      this.optionSetConfiguration,
-      this.sectionNumber = 0,
-      this.showBottomShadow = false,
-      this.lastPositionShouldChangeHeight = false,
-      this.intentCallback,
-      this.listViewUiEventsCallback});
+    /// NMCP can't define a default value
+    /// here we have to provide initial value Rx<String?>(null)
+    /// whenever we create an object of SectionUiModelImpl
+    //   /*@Default(Rx<String?>(null))*/ required Rx<String?> selectedField,
+    /*@Default(Rx<String?>(null))*/ this.selectedField,
+    this.optionSetConfiguration,
+    this.sectionNumber = 0,
+    this.showBottomShadow = false,
+    this.lastPositionShouldChangeHeight = false,
+  });
 
-  final String uid;
-  final String path;
-  final String label;
-
-  ValueType? get valueType => ValueType.Section;
-
-  final bool focused;
-  final String? error;
-  final bool editable;
-  final String? warning;
-
-  final String? programStageSection;
-
-  // final String? hint;
-  final String? description;
-
-  final UiEventFactory? uiEventFactory;
-
-  final UiRenderType? renderingType;
-
-  /// NMC added provided here instead to providing it
-  /// to the FieldViewModelFactoryImpl
-  /// from ProgramSection of the item
-  final SectionRenderingType? sectionRenderingType;
-
-  /// NMC added provided here instead to providing it
-  /// to the FieldViewModelFactoryImpl
-  /// from ProgramStageDataElement of the item
-  final ValueTypeRenderingType? fieldRendering;
-
-  final TextInputAction? keyboardActionType;
-
-  // final String? fieldMask;
   final bool isOpen;
   final int totalFields;
   final int completedFields;
@@ -93,14 +58,10 @@ class SectionUiModelImpl extends FieldUiModel {
   final String? rendering;
 
   final String? selectedField;
-  final bool isLoadingData;
   final OptionSetConfiguration? optionSetConfiguration;
   final int sectionNumber;
   final bool showBottomShadow;
   final bool lastPositionShouldChangeHeight;
-
-  final IntentCallback? intentCallback;
-  final ListViewUiEventsCallback? listViewUiEventsCallback;
 
   bool hasToShowDescriptionIcon(bool isTitleEllipsed) {
     return description != null && description?.isNotEmpty == true ||

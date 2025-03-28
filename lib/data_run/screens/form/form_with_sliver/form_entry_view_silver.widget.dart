@@ -4,7 +4,7 @@ import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_tabl
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/section.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 
 class FormInstanceEntryViewSliver extends HookConsumerWidget {

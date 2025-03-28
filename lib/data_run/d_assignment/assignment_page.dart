@@ -1,10 +1,10 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_table_view.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignments_card_view.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data/activity/assignment.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/search_filter_bar.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';

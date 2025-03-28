@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/data/form_submission/submission_count.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
-import 'package:datarunmobile/data/submission_count.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

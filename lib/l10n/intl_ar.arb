@@ -263,5 +263,8 @@
   "validationErrorMessage": "خطأ تحقق",
   "deleteItem": "حذف العنصر",
   "copyToClipboard": "نسخ للحافظة",
-  "loading": "Loading ..."
+  "loading": "Loading ...",
+  "loadMore": "Load More",
+  "noMoreItems": "No more items.",
+  "assignmentList": "Assignment List"
 }

@@ -3,20 +3,20 @@ import 'package:datarunmobile/core/models/d_run_identifiable.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class ActivityDetail extends DRunIdentifiable<Activity> {
-  ActivityDetail._({
-    required Activity identifiableEntity,
+class ActivityModel extends DRunIdentifiable<Activity> {
+  ActivityModel._({
+    required Activity baseEntity,
     this.assignmentCount = 0,
     this.assignedTeam,
     this.managedTeamCount,
-  }) : super(identifiableEntity: identifiableEntity);
+  }) : super(baseEntity: baseEntity);
 
-  factory ActivityDetail.fromIdentifiable(
-      {required Activity identifiableEntity,
+  factory ActivityModel.fromIdentifiable(
+      {required Activity baseEntity,
       int assignmentCount = 0,
       String? assignedTeam,
       int? managedTeamCount}) {
-    return ActivityDetail._(identifiableEntity: identifiableEntity);
+    return ActivityModel._(baseEntity: baseEntity);
   }
 
   final int assignmentCount;
@@ -24,13 +24,13 @@ class ActivityDetail extends DRunIdentifiable<Activity> {
   final int? managedTeamCount;
 
   @override
-  ActivityDetail copyWith(
-      {Activity? identifiableEntity,
+  ActivityModel copyWith(
+      {Activity? baseEntity,
       int? assignmentCount,
       String? assignedTeam,
       int? managedTeamCount}) {
-    return ActivityDetail._(
-      identifiableEntity: identifiableEntity ?? this.identifiableEntity,
+    return ActivityModel._(
+      baseEntity: baseEntity ?? this.baseEntity,
       assignmentCount: assignmentCount ?? this.assignmentCount,
       assignedTeam: assignedTeam ?? this.assignedTeam,
       managedTeamCount: managedTeamCount ?? this.managedTeamCount,

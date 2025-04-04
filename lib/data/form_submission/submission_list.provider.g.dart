@@ -25,7 +25,7 @@ final formSubmissionRepositoryProvider =
 typedef FormSubmissionRepositoryRef
     = AutoDisposeProviderRef<FormSubmissionRepository>;
 String _$submissionEditStatusHash() =>
-    r'bf676887d255d82841c5a3009f5bde86af29dc96';
+    r'18e9fee46f97118ffd5559546279dde53446eebb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -805,7 +805,7 @@ class _SubmissionInfoProviderElement
       (origin as SubmissionInfoProvider).formMetadata;
 }
 
-String _$formSubmissionsHash() => r'd93ec3aca65c080162f9637185feb2c21edbc9af';
+String _$formSubmissionsHash() => r'6fe5490fe2f0ea8cc28fae0588121bb0ce7766b7';
 
 abstract class _$FormSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<IList<DataFormSubmission>> {

@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "assignedTeam": MessageLookupByLibrary.simpleMessage("Assigned Team"),
         "assignmentDetail":
             MessageLookupByLibrary.simpleMessage("Assignment Detail"),
+        "assignmentList":
+            MessageLookupByLibrary.simpleMessage("Assignment List"),
         "authInvalidCredentials": MessageLookupByLibrary.simpleMessage(
             "Invalid login credentials provided."),
         "authSessionExpired": MessageLookupByLibrary.simpleMessage(
@@ -203,6 +205,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastmodifiedDate":
             MessageLookupByLibrary.simpleMessage("LastModified Date"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
+        "loadMore": MessageLookupByLibrary.simpleMessage("Load More"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginUsername": MessageLookupByLibrary.simpleMessage("Login Username"),
@@ -239,6 +242,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No forms available"),
         "noInternetAccess":
             MessageLookupByLibrary.simpleMessage("No internet access"),
+        "noMoreItems": MessageLookupByLibrary.simpleMessage("No more items."),
         "noSubmissions": MessageLookupByLibrary.simpleMessage("No Submissions"),
         "noSyncYet": MessageLookupByLibrary.simpleMessage("No sync yet"),
         "notNow": MessageLookupByLibrary.simpleMessage("Not Now"),

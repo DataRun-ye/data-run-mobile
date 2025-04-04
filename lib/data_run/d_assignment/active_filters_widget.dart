@@ -5,10 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ActiveFiltersWidget extends ConsumerWidget {
   const ActiveFiltersWidget({super.key});
-
-  // final VoidCallback onClearAll;
-  // final Function(String) onRemoveFilter;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Map<String, dynamic> activeFilters = ref.watch(filterQueryProvider

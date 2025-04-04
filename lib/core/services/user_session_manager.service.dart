@@ -36,10 +36,14 @@ class UserSessionService {
   Future<void> saveUserCredentials(
       {required String serverUrl,
       required String username,
+      required String userId,
       String? langKey}) async {
     await prefs.setBool(IS_AUTHENTICATED, true);
-    final sessionData =
-        SessionData(username: username, langKey: langKey, serverUrl: serverUrl);
+    final sessionData = SessionData(
+        username: username,
+        userId: userId,
+        langKey: langKey,
+        serverUrl: serverUrl);
     await prefs.setString(SECURE_SESSION, jsonEncode(sessionData.toJson()));
     // Add the database name to the set of known databases
     final urls = prefs.getStringList(PREFS_URLS) ?? [];
@@ -128,7 +132,7 @@ class UserSessionService {
 class SessionData {
   SessionData({
     required this.username,
-    // required this.password,
+    required this.userId,
     required this.serverUrl,
     String? langKey,
     this.token,
@@ -138,7 +142,7 @@ class SessionData {
   factory SessionData.fromJson(Map<String, dynamic> json) {
     return SessionData(
       username: json['username'],
-      // password: json['password'],
+      userId: json['userId'],
       serverUrl: json['serverUrl'],
       langKey: json['langKey'],
       token: json['token'],
@@ -149,6 +153,7 @@ class SessionData {
   }
 
   final String? username;
+  final String? userId;
 
   // final String? password;
   final String? serverUrl;
@@ -159,7 +164,7 @@ class SessionData {
   Map<String, dynamic> toJson() {
     return {
       'username': username,
-      // 'password': password,
+      'userId': userId,
       'serverUrl': serverUrl,
       'langKey': langKey,
       'token': token,

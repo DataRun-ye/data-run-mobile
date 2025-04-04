@@ -77,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "assignedTeam": MessageLookupByLibrary.simpleMessage("فريقك"),
         "assignmentDetail":
             MessageLookupByLibrary.simpleMessage("تفاصيل المهمة"),
+        "assignmentList":
+            MessageLookupByLibrary.simpleMessage("Assignment List"),
         "authInvalidCredentials": MessageLookupByLibrary.simpleMessage(
             "بيانات الدخول التي تم إدخالها غير صحيحة. يرجى التحقق والمحاولة مرة أخرى."),
         "authSessionExpired": MessageLookupByLibrary.simpleMessage(
@@ -195,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastmodifiedDate":
             MessageLookupByLibrary.simpleMessage("تاريخ آخر تعديل"),
         "level": MessageLookupByLibrary.simpleMessage("المستوى"),
+        "loadMore": MessageLookupByLibrary.simpleMessage("Load More"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginUsername":
@@ -231,6 +234,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noFormsAvailable": MessageLookupByLibrary.simpleMessage(
             "لا تتوفر استمارات لهذا النشاط"),
         "noInternetAccess": MessageLookupByLibrary.simpleMessage("غير متصل"),
+        "noMoreItems": MessageLookupByLibrary.simpleMessage("No more items."),
         "noSubmissions": MessageLookupByLibrary.simpleMessage("لا توجد بيانات"),
         "noSyncYet": MessageLookupByLibrary.simpleMessage("لم يحدث بعد"),
         "notNow": MessageLookupByLibrary.simpleMessage("ليس الآن"),

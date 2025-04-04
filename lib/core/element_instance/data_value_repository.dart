@@ -9,7 +9,7 @@ class DataValueRepository {
       required String path,
       String? parent}) async {
     return D2Remote.formSubmissionModule.dataValue.byId(_makeCompositeKey(
-        submission: submissionId, parent: parent, path: path));
+        submission: submissionId, parent: parent, path: path)).getOne();
   }
 
   static Future<DataValue> create(

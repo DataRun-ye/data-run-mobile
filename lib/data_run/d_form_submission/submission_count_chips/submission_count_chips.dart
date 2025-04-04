@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class CountChip extends ConsumerWidget {
-  const CountChip({super.key, required this.syncStatus});
+class SyncStatusChip extends ConsumerWidget {
+  const SyncStatusChip({super.key, required this.syncStatus});
 
   final SyncStatus syncStatus;
 
@@ -26,7 +26,7 @@ class CountChip extends ConsumerWidget {
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    buildStatusIcon(syncStatus, colored: count > 0),
+                    buildStatusIcon(syncStatus),
                     const SizedBox(width: 4),
                     Text('$count',
                         style: Theme.of(context).textTheme.bodyMedium),

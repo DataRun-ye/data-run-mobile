@@ -8,15 +8,15 @@ class OptionSetConfigurations {
 
   Future<FormOption?> optionInDataSetByCode(
       String optionSetUid, String optionCode) async {
-    final OptionSet optionSet =
+    final OptionSet? optionSet =
         await D2Remote.optionSetModule.optionSet.byId(optionSetUid).getOne();
-    return optionSet.options.firstOrNullWhere((o) => o.code == optionCode);
+    return optionSet!.options.firstOrNullWhere((o) => o.code == optionCode);
   }
 
   Future<FormOption?> optionInDataSetByName(
       String optionSetUid, String optionName) async {
-    final OptionSet optionSet =
+    final OptionSet? optionSet =
         await D2Remote.optionSetModule.optionSet.byId(optionSetUid).getOne();
-    return optionSet.options.firstOrNullWhere((o) => o.name == optionName);
+    return optionSet!.options.firstOrNullWhere((o) => o.name == optionName);
   }
 }

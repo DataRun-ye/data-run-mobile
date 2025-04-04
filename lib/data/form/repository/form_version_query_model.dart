@@ -1,25 +1,15 @@
-import 'package:datarunmobile/commons/query_model.dart';
+import 'package:datarunmobile/commons/query/query_model.dart';
 
 class FormVersionQueryModel extends QueryModel {
-  FormVersionQueryModel({this.formTemplate, this.version, super.limit, super.offset});
+  FormVersionQueryModel(
+      {this.formTemplate,
+      this.version,
+      super.limit,
+      super.offset,
+      super.orderBy});
 
   final String? formTemplate;
   final int? version;
-
-  @override
-  FormVersionQueryModel copyWith({
-    String? formTemplate,
-    int? version,
-    int? limit,
-    int? offset,
-  }) {
-    return FormVersionQueryModel(
-      formTemplate: formTemplate ?? this.formTemplate,
-      version: version ?? this.version,
-      limit: limit ?? this.limit,
-      offset: offset ?? this.offset,
-    );
-  }
 
   @override
   List<Object?> get props => super.props + [formTemplate, version];

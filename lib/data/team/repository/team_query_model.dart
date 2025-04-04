@@ -1,5 +1,5 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:datarunmobile/commons/query_model.dart';
+import 'package:datarunmobile/commons/query/query_model.dart';
 
 class TeamQueryModel extends QueryModel {
   TeamQueryModel(
@@ -8,31 +8,13 @@ class TeamQueryModel extends QueryModel {
       this.disabled = false,
       this.scope,
       super.limit,
-      super.offset});
+      super.offset,
+      super.orderBy});
 
   final String? code;
   final bool disabled;
   final String? activity;
   final EntityScope? scope;
-
-  @override
-  TeamQueryModel copyWith({
-    String? code,
-    String? activity,
-    bool? disabled,
-    EntityScope? scope,
-    int? limit,
-    int? offset,
-  }) {
-    return TeamQueryModel(
-      code: code ?? this.code,
-      activity: activity ?? this.activity,
-      disabled: disabled ?? this.disabled,
-      scope: scope ?? this.scope,
-      limit: limit ?? this.limit,
-      offset: offset ?? this.offset,
-    );
-  }
 
   @override
   List<Object?> get props => super.props + [activity, disabled, code, scope];

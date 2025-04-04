@@ -36,7 +36,7 @@ final assignmentProvider = AutoDisposeProvider<AssignmentModel>.internal(
 );
 
 typedef AssignmentRef = AutoDisposeProviderRef<AssignmentModel>;
-String _$assignmentsHash() => r'9af07cf09e7ea41c918bfc37174cff6d00200a58';
+String _$assignmentsHash() => r'ac5d1dbef14705fb6d3c6f300edcfda6089a9c73';
 
 /// a notifier that retrieves all assignments with their data populated
 ///

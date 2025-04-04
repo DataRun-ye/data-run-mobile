@@ -1,47 +1,28 @@
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarunmobile/commons/query_model.dart';
+import 'package:datarunmobile/commons/query/order_by.dart';
+import 'package:datarunmobile/commons/query/query_model.dart';
 
 class AssignmentQueryModel extends QueryModel {
   AssignmentQueryModel(
       {this.activity,
       this.orgUnit,
       this.team,
+      this.form,
       this.date,
       this.scope,
       this.status,
       super.limit,
-      super.offset});
+      super.offset,
+      super.orderBy});
 
   final String? activity;
   final String? orgUnit;
   final String? team;
+  final String? form;
   final String? date;
   final EntityScope? scope;
   final AssignmentStatus? status;
-
-  @override
-  AssignmentQueryModel copyWith({
-    String? activity,
-    String? orgUnit,
-    String? team,
-    String? date,
-    EntityScope? scope,
-    AssignmentStatus? status,
-    int? limit,
-    int? offset,
-  }) {
-    return AssignmentQueryModel(
-      activity: activity ?? this.activity,
-      orgUnit: orgUnit ?? this.orgUnit,
-      team: team ?? this.team,
-      date: date ?? this.date,
-      scope: scope ?? this.scope,
-      status: status ?? this.status,
-      limit: limit ?? this.limit,
-      offset: offset ?? this.offset,
-    );
-  }
 
   @override
   List<Object?> get props =>
@@ -53,6 +34,7 @@ class AssignmentQueryModel extends QueryModel {
       'activity': this.activity,
       'orgUnit': this.orgUnit,
       'team': this.team,
+      'form': this.form,
       'date': this.date,
       'scope': this.scope?.name,
       'status': this.status?.name,

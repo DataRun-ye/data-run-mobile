@@ -4,6 +4,7 @@ import 'package:d2_remote/core/utilities/list_extensions.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/form/models/geometry.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
+import 'package:d2_remote/modules/datarun_shared/queries/syncable.query.dart';
 import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
 import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
@@ -113,7 +114,7 @@ class FormSubmissions extends _$FormSubmissions {
         .getOne();
     ref.invalidateSelf();
     await future;
-    return savedSubmission;
+    return savedSubmission!;
   }
 
   Future<DataFormSubmission?> getSubmission(String uid) async {
@@ -144,7 +145,7 @@ class FormSubmissions extends _$FormSubmissions {
 
     ref.invalidateSelf();
     await future;
-    return savedSubmission;
+    return savedSubmission!;
   }
 
   Future<bool> deleteSubmission(Iterable<String?> syncableIds) async {
@@ -164,7 +165,9 @@ class FormSubmissions extends _$FormSubmissions {
   }
 
   Future<void> syncEntities(List<String> uids) async {
-    await D2Remote.formSubmissionModule.formSubmission.byIds(uids).upload();
+    await (D2Remote.formSubmissionModule.formSubmission.byIds(uids)
+            as SyncableQuery)
+        .upload();
 
     ref.invalidateSelf();
     await future;
@@ -174,8 +177,8 @@ class FormSubmissions extends _$FormSubmissions {
 @riverpod
 Future<bool> submissionEditStatus(SubmissionEditStatusRef ref,
     {required FormMetadata formMetadata}) async {
-  return D2Remote.formSubmissionModule.formSubmission
-      .byId(formMetadata.submission!)
+  return (D2Remote.formSubmissionModule.formSubmission
+      .byId(formMetadata.submission!) as SyncableQuery)
       .canEdit();
 }
 

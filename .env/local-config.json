@@ -2,5 +2,9 @@
   "env_label": "local",
   "api_base_url": "http://192.168.80.1:8080",
   "default_locale": "en",
-  "api_request_send_timeout": 5
+  "api_request_send_timeout": 5,
+  "in_memory": false,
+  "secure_database": true,
+  "secure_cache": true,
+  "encryption_key": "e@ar2-9Fd!g64Ds-1rat3d#Str0r3&-Sdk8abl7"
 }

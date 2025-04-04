@@ -3,12 +3,14 @@ import 'package:datarunmobile/data_run/screens/home_screen/home_screen.widget.da
 import 'package:datarunmobile/data_run/screens/login_screen/login_page.dart';
 import 'package:datarunmobile/data_run/screens/sync_screen/sync_screen.widget.dart';
 import 'package:datarunmobile/modular/activity_module/activity/activity_list_view.dart';
+import 'package:datarunmobile/ui/create_submission_sheet/create_submission_sheet.dart';
 import 'package:datarunmobile/ui/info_alert/info_alert_dialog.dart';
 import 'package:datarunmobile/ui/notice/notice_sheet.dart';
+import 'package:datarunmobile/ui/views/activity/activity_detail_view.dart';
+import 'package:datarunmobile/ui/views/assignment/detail/assignment_detail_view.dart';
+import 'package:datarunmobile/ui/views/assignment/list_tab/assignment_list_view.dart';
 import 'package:datarunmobile/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
-import 'package:datarunmobile/modular/activity_module/assignment/assignment_list_view.dart';
-import 'package:datarunmobile/modular/activity_module/activity/activity_detail/activity_detail_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -18,9 +20,10 @@ import 'package:datarunmobile/modular/activity_module/activity/activity_detail/a
     MaterialRoute(page: LoginPage),
     MaterialRoute(page: StartupView),
     MaterialRoute(page: SettingsPage),
-    MaterialRoute(page: AssignmentListView),
     MaterialRoute(page: ActivityListView),
     MaterialRoute(page: ActivityDetailView),
+    MaterialRoute(page: AssignmentListView),
+    MaterialRoute(page: AssignmentDetailView),
 // @stacked-route
   ],
   dependencies: [
@@ -28,6 +31,7 @@ import 'package:datarunmobile/modular/activity_module/activity/activity_detail/a
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),
+    StackedBottomsheet(classType: CreateSubmissionSheet),
     // @stacked-bottom-sheet
   ],
   dialogs: [

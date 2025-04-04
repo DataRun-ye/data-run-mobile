@@ -1,21 +1,21 @@
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarunmobile/commons/query_model.dart';
+import 'package:datarunmobile/commons/query/query_model.dart';
 
 class SubmissionQueryModel extends QueryModel {
-  SubmissionQueryModel({
-    this.deleted,
-    this.synced,
-    this.syncFailed,
-    this.isFinal,
-    this.lastSyncDate,
-    this.version,
-    this.form,
-    required this.formVersion,
-    this.assignment,
-    this.status,
-    required this.team,
-    this.orgUnit,
-  });
+  SubmissionQueryModel(
+      {this.deleted,
+      this.synced,
+      this.syncFailed,
+      this.isFinal,
+      this.lastSyncDate,
+      this.version,
+      this.form,
+      required this.formVersion,
+      this.assignment,
+      this.status,
+      required this.team,
+      this.orgUnit,
+      super.orderBy});
 
   final bool? deleted;
   final bool? synced;
@@ -62,6 +62,7 @@ class SubmissionQueryModel extends QueryModel {
       'status': this.status,
       'team': this.team,
       'orgUnit': this.orgUnit,
+      ...super.toMap()
     };
     return map..removeWhere((_, v) => v == null);
   }

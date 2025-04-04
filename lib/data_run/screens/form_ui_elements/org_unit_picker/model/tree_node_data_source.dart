@@ -54,11 +54,11 @@ class TreeNodeDataSource {
 
   Future<List<IdentifiableTreeNode>> fetchTreeNodeList() async {
     final List<IdentifiableTreeNode> selectedOrgUnits =
-        await getQuery().byIds(_selectableNodesUids).get();
+        (await getQuery().byIds(_selectableNodesUids).get() as List<IdentifiableTreeNode>);
     final allUids = selectedOrgUnits.getPathsUids();
 
     final List<IdentifiableTreeNode> combinedUnits =
-        await getQuery().byIds(allUids.toList()).get();
+       (await getQuery().byIds(allUids.toList()).get()) as List<IdentifiableTreeNode>;
     return combinedUnits;
   }
 

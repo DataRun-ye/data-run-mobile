@@ -2337,6 +2337,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Load More`
+  String get loadMore {
+    return Intl.message(
+      'Load More',
+      name: 'loadMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No more items.`
+  String get noMoreItems {
+    return Intl.message(
+      'No more items.',
+      name: 'noMoreItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assignment List`
+  String get assignmentList {
+    return Intl.message(
+      'Assignment List',
+      name: 'assignmentList',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

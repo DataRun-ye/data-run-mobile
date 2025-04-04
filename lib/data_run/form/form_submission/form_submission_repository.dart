@@ -7,8 +7,8 @@ class FormSubmissionRepository {
   FormSubmissionRepository();
 
   // final DataFormSubmissionQuery _query;
-  FormSubmissionQuery get _query =>
-      D2Remote.formSubmissionModule.formSubmission;
+  DataFormSubmissionQuery get _query =>
+      (D2Remote.formSubmissionModule.formSubmission as DataFormSubmissionQuery);
 
   Future<IList<DataFormSubmission>> getSubmissions(String form) async {
     final query = _query.byFormTemplate(form);
@@ -21,8 +21,8 @@ class FormSubmissionRepository {
     return submission;
   }
 
-  Future<DataFormSubmission?> deleteSubmission(String uid) async {
-    final DataFormSubmission? submission = await _query.byId(uid).delete();
-    return submission;
+  Future<int> deleteSubmission(String uid) async {
+    return _query.byId(uid).delete();
+    ;
   }
 }

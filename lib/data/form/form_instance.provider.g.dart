@@ -425,7 +425,7 @@ class _SubmissionVersionFormTemplateProviderElement
   String get formId => (origin as SubmissionVersionFormTemplateProvider).formId;
 }
 
-String _$formFlatTemplateHash() => r'ac189e4d781e46d33ff929f9eb4554a3aed3fb30';
+String _$formFlatTemplateHash() => r'b46c33187863369611173c902a415b54ff2005b8';
 
 /// See also [formFlatTemplate].
 @ProviderFor(formFlatTemplate)
@@ -781,7 +781,7 @@ class _FormInstanceServiceProviderElement
       (origin as FormInstanceServiceProvider).formMetadata;
 }
 
-String _$formInstanceHash() => r'21732a50fbe2095ff2c0ed503a1a53f5190270f5';
+String _$formInstanceHash() => r'b34887982840126773bc9172853bea60a25b26a9';
 
 /// See also [formInstance].
 @ProviderFor(formInstance)

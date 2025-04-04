@@ -6,6 +6,7 @@ import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submissi
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d2_remote/modules/datarun_shared/queries/syncable.query.dart';
 import 'package:d2_remote/shared/utilities/sort_order.util.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -75,12 +76,12 @@ Future<FormFlatTemplate> formFlatTemplate(
   required FormMetadata formMetadata,
 }) async {
   if (formMetadata.submission != null) {
-    final DataFormSubmission submission = await D2Remote
+    final DataFormSubmission? submission = await D2Remote
         .formSubmissionModule.formSubmission
         .byId(formMetadata.submission!)
         .getOne();
     final FormVersion formVersion = await ref.watch(
-        submissionVersionFormTemplateProvider(formId: submission.formVersion)
+        submissionVersionFormTemplateProvider(formId: submission!.formVersion)
             .future);
     return FormFlatTemplate.fromTemplate(formVersion);
   }
@@ -104,15 +105,15 @@ Future<FormInstanceService> formInstanceService(FormInstanceServiceRef ref,
 @riverpod
 Future<FormInstance> formInstance(FormInstanceRef ref,
     {required FormMetadata formMetadata}) async {
-  final enabled = await D2Remote.formSubmissionModule.formSubmission
-      .byId(formMetadata.submission!)
+  final enabled = await (D2Remote.formSubmissionModule.formSubmission
+          .byId(formMetadata.submission!) as SyncableQuery)
       .canEdit();
 
   final submission = await D2Remote.formSubmissionModule.formSubmission
       .byId(formMetadata.submission!)
       .getOne();
 
-  final Map<String, dynamic>? initialFormValue = submission.formData;
+  final Map<String, dynamic>? initialFormValue = submission?.formData;
 
   final formInstanceService = await ref
       .watch(formInstanceServiceProvider(formMetadata: formMetadata).future);
@@ -130,8 +131,8 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       template: SectionTemplate(type: ValueType.Unknown, path: null),
       elements: elements,
       form: form);
-    // ..resolveDependencies()
-    // ..evaluateDependencies();
+  // ..resolveDependencies()
+  // ..evaluateDependencies();
   final attributeMap =
       await formInstanceService.formAttributesControls(initialFormValue);
 
@@ -140,7 +141,7 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       initialValue: {...?initialFormValue, ...attributeMap},
       elements: elements,
       formMetadata: formMetadata,
-      assignmentStatus: submission.status,
+      assignmentStatus: submission?.status,
       form: form,
       rootSection: _formSection,
       formFlatTemplate: formFlatTemplate);

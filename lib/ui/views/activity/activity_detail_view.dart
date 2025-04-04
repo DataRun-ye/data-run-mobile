@@ -1,9 +1,9 @@
-import 'package:datarunmobile/modular/activity_module/activity/activity_detail/activity_detail_viewmodel.dart';
+import 'package:datarunmobile/ui/views/activity/activity_detail_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class ActivityDetailView extends StackedView<ActivityDetailViewModel> {
-  const ActivityDetailView({Key? key}) : super(key: key);
+  const ActivityDetailView({super.key});
 
   @override
   Widget builder(

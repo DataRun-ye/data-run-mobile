@@ -1,23 +1,54 @@
+import 'dart:async';
+
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
+import 'package:d2_remote/modules/metadatarun/metadatarun.dart';
+import 'package:d2_remote/shared/utilities/sort_order.util.dart';
+import 'package:datarunmobile/commons/d_run_base_service.dart';
 import 'package:datarunmobile/commons/identifiable.repository.dart';
+import 'package:datarunmobile/commons/query/order_by.dart';
+import 'package:datarunmobile/data/assignment/model/assignment_model_new.dart';
+import 'package:datarunmobile/data/form/form.dart';
 import 'package:datarunmobile/data/form/model/form_version_model.dart';
-import 'package:datarunmobile/data/form/repository/form_version_query_model.dart';
+import 'package:datarunmobile/data/team/repository/d_team_local.repository.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
-class FormListService {
-  FormListService(this._repository);
+@lazySingleton
+class FormListService extends DRunBaseService<FormVersion, FormVersionModel> {
+  FormListService(
+    super.repository,
+    this._teamRepository,
+  );
 
-  final IdentifiableRepository<FormVersion> _repository;
+  final DRunBaseRepository<Team> _teamRepository;
 
-  Future<Iterable<FormVersionModel>> get({FormVersionQueryModel? query}) async {
-    final List<FormVersion> entities = await _repository.get(query: query);
+  Future<List<FormVersionModel>> getLinkedToAssignment(
+      AssignmentModelNew assignment) async {
+    final teamAssignedForms = await (_teamRepository as DTeamLocalRepository)
+        .getTeamAssignedForms(assignment.team.id);
 
-    List<FormVersionModel> entityModels = [];
-    for (final a in entities) {
-      entityModels
-          .add(FormVersionModel.fromIdentifiable(identifiableEntity: a));
+    final assignmentAssignedForms =
+        assignment.forms.where((t) => teamAssignedForms.contains(t));
+
+    List<FormVersionModel> models = [];
+
+    for (final form in assignmentAssignedForms) {
+      final formVersion = await getLatestVersion(form);
+      models.add(formVersion);
     }
-    return entityModels;
+
+    return models;
+  }
+
+  Future<FormVersionModel> getLatestVersion(String formId) async {
+    final formTemplates = await repository.get(
+        query: FormVersionQueryModel(
+            formTemplate: formId,
+            orderBy: OrderBy(attribute: 'version', sortOrder: SortOrder.DESC)));
+    return createModel(formTemplates.first);
+  }
+
+  @override
+  FutureOr<FormVersionModel> createModel(FormVersion identifiable) {
+    return FormVersionModel.fromIdentifiable(identifiableEntity: identifiable);
   }
 }

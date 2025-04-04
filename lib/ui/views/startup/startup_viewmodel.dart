@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:d2_remote/d2_remote.dart';
 import 'package:datarunmobile/app/app.router.dart';
+import 'package:datarunmobile/app/app_environment.dart';
 import 'package:datarunmobile/core/services/user_session_manager.service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stacked/stacked.dart';
@@ -22,6 +23,7 @@ class StartupViewModel extends BaseViewModel {
 
     if (authenticated) {
       await D2Remote.initialize(
+          config: AppEnvironment.getDbConfig(),
           databaseFactory:
               Platform.isWindows || Platform.isLinux ? databaseFactory : null);
       if (needSync) {

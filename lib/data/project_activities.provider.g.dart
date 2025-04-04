@@ -224,7 +224,7 @@ class _UserAssignedTeamsProviderElement
 }
 
 String _$userAssignedActivitiesHash() =>
-    r'6c62804dfa7ca25fbfa0a23f342178bb17da447f';
+    r'f94cdf8e0bf6a0479cee554a4d79fc8c1fae27d4';
 
 /// See also [userAssignedActivities].
 @ProviderFor(userAssignedActivities)

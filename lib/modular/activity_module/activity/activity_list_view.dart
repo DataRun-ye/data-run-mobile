@@ -1,4 +1,4 @@
-import 'package:datarunmobile/modular/activity_module/activity/activity_list_viewmodel.dart';
+import 'package:datarunmobile/ui/views/activity/activity_list_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 

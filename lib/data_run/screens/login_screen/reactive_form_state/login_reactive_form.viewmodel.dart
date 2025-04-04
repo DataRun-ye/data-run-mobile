@@ -37,14 +37,15 @@ class LoginReactiveFormViewModel {
     form.markAsDisabled();
     final authResult = const AuthenticationResult();
     try {
-      final authResult = await _authService.login(
-          usernameControl.value!, passwordControl.value!, AppEnvironment.apiBaseUrl);
+      final authResult = await _authService.login(usernameControl.value!,
+          passwordControl.value!, AppEnvironment.apiBaseUrl);
 
       if (authResult.success) {
         // save UserCredentials to preference
         await _userSessionManager.saveUserCredentials(
             serverUrl: authResult.sessionUser!.baseUrl,
             username: authResult.sessionUser!.username!,
+            userId: authResult.sessionUser!.id!,
             langKey: authResult.sessionUser?.langKey);
 
         // return successful result

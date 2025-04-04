@@ -2,7 +2,7 @@ import 'package:datarunmobile/data/activity/activity.dart';
 import 'package:stacked/stacked.dart';
 
 class ActivityListViewModel extends BaseViewModel {
-  List<ActivityDetail> activities = [];
+  List<ActivityModel> activities = [];
   int assignedCount = 0;
   String project = '';
   bool isLoading = false;

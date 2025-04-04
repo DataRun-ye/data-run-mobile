@@ -301,5 +301,8 @@
   "validationErrorMessage": "Validation Error Message",
   "deleteItem": "Delete Item",
   "copyToClipboard": "Copy To Clipboard",
-  "loading": "Loading ..."
+  "loading": "Loading ...",
+  "loadMore": "Load More",
+  "noMoreItems": "No more items.",
+  "assignmentList": "Assignment List"
 }

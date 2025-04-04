@@ -94,19 +94,19 @@ class Assignments extends _$Assignments {
 
       return AssignmentModel(
         id: assignment.id!,
-        activityId: activityEntity.id,
-        activity: activityEntity.name,
-        entityId: orgUnitEntity.id!,
+        activityId: activityEntity!.id!,
+        activity: activityEntity.name!,
+        entityId: orgUnitEntity!.id!,
         entityCode: orgUnitEntity.code!,
         entityName: orgUnitEntity.name!,
-        teamId: teamEntity.id,
-        teamCode: teamEntity.code,
-        teamName: teamEntity.name,
+        teamId: teamEntity!.id!,
+        teamCode: teamEntity.code!,
+        teamName: teamEntity.name!,
         scope: assignment.scope ?? EntityScope.Assigned,
         status: status,
         dueDate: activityEntity.startDate != null
             ? AssignmentModel.calculateAssignmentDate(
-                activityEntity.startDate, assignment.startDay)
+                activityEntity.startDate!, assignment.startDay)
             : null,
         startDay: assignment.startDay,
         rescheduledDate: assignment.startDate != null

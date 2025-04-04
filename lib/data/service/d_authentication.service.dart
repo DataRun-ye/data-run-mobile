@@ -40,6 +40,7 @@ class DAuthenticationService implements AuthenticationService {
         await _sessionManager.saveUserCredentials(
             serverUrl: authResult.sessionUser!.baseUrl,
             username: authResult.sessionUser!.username!,
+            userId: authResult.sessionUser!.id!,
             langKey: authResult.sessionUser?.langKey);
 
         // return successful result

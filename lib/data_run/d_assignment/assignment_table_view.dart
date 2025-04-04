@@ -104,9 +104,9 @@ class AssignmentTableView extends HookConsumerWidget {
                     child: const Wrap(
                       // mainAxisSize: MainAxisSize.min,
                       children: [
-                        CountChip(syncStatus: SyncStatus.SYNCED),
-                        CountChip(syncStatus: SyncStatus.TO_POST),
-                        CountChip(syncStatus: SyncStatus.TO_UPDATE)
+                        SyncStatusChip(syncStatus: SyncStatus.SYNCED),
+                        SyncStatusChip(syncStatus: SyncStatus.TO_POST),
+                        SyncStatusChip(syncStatus: SyncStatus.TO_UPDATE)
                       ],
                     ),
                   )),

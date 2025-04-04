@@ -2,6 +2,7 @@ import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/form/entities/form_template.entity.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/active_status.dart';
 import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
+import 'package:d2_remote/modules/metadatarun/metadatarun.dart';
 import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,8 +33,8 @@ FutureOr<List<Activity>> userAssignedActivities(UserAssignedActivitiesRef ref,
       .map((t) => t.activity!)
       .toList();
 
-  final List<Activity> activities = await D2Remote.activityModuleD.activity
-      .byIds(userActivitiesUids)
+  final List<Activity> activities = await (D2Remote.activityModuleD.activity
+      .byIds(userActivitiesUids) as ActivityQuery)
       .byActivityStatus(activeStatus)
       .get();
 

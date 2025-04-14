@@ -1,44 +1,83 @@
-import 'dart:io';
-
-import 'package:d2_remote/d2_remote.dart';
-import 'package:datarunmobile/app/app.router.dart';
-import 'package:datarunmobile/app/app_environment.dart';
-import 'package:datarunmobile/core/services/user_session_manager.service.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/core/user_session/session_storage_manager.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/use_cases/authentication/auth_scope_initialization.dart';
+import 'package:datarunmobile/stacked/app.locator.dart';
+import 'package:datarunmobile/stacked/app.router.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
+import 'package:datarunmobile/core/sync/sync_scheduler.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class StartupViewModel extends BaseViewModel {
-  StartupViewModel(this._userSessionManager, this._navigationService);
+  // sdk dependencies
+  // final AuthManager _authManager = DSdk.authManager;
+  // final AuthScopeInitializer _scopeInitializer = DSdk.authScopeInitializer;
+  final UserSessionRepository _userSessionRepository =
+      DSdk.userSessionRepository;
 
-  final NavigationService _navigationService;
-  final UserSessionService _userSessionManager;
+  // app dependencies
+  final NavigationService _navigationService = appLocator<NavigationService>();
+  final SyncScheduler _syncScheduler = appLocator<SyncScheduler>();
 
-  // Place anything here that needs to happen before we get into the application
-  Future<void> runStartupLogic() async {
-    // await Future.delayed(const Duration(seconds: 3));
+  Future<dynamic> runStartupLogic() async {
+    try {
+      final authenticated = await _authManager.isAuthenticated();
 
-    final authenticated = _userSessionManager.isAuthenticated;
-    final needSync = _userSessionManager.needsSync();
-
-    if (authenticated) {
-      await D2Remote.initialize(
-          config: AppEnvironment.getDbConfig(),
-          databaseFactory:
-              Platform.isWindows || Platform.isLinux ? databaseFactory : null);
-      if (needSync) {
-        _navigationService.replaceWithSyncScreen();
+      if (authenticated) {
+        await initAuthUserScope();
       } else {
-        _navigationService.replaceWithHomeScreen();
+        return _navigationService.replaceWithLoginPage();
       }
-    } else {
-      _navigationService.replaceWithLoginPage();
-    }
-    // final bool hasExistingSession = userSessionManager.isAuthenticated;
-    // final bool needsSync = userSessionManager.needsSync();
-    // This is where you can make decisions on where your app should navigate when
-    // you have custom startup logic
 
-    // _navigationService.replaceWithHomeView();
+      final needSync = await _syncScheduler.shouldSync();
+      if (needSync) {
+        await _navigationService.navigateToSyncProgressView();
+        _navigationService.replaceWithHomeScreen();
+      } else {
+        return _navigationService.replaceWithHomeScreen();
+      }
+    } on DError catch (e, s) {
+      _navigationService.replaceWithLoginPage();
+      logException(e, source: e.cause);
+      debugPrintStack(stackTrace: s);
+      DExceptionReporter.instance.report(e, showToUser: true);
+    } catch (e, s) {
+      _navigationService.replaceWithLoginPage();
+      debugPrintStack(stackTrace: s);
+      DExceptionReporter.instance.report(e, showToUser: true);
+    }
+  }
+
+  Future<void> initAuthUserScope() async {
+    final cachedUser = await _userSessionRepository.loadCurrentCachedUserData();
+    throwIf(
+        cachedUser == null,
+        NoCachedAuthenticatedUser(
+            message: 'no Cached user, login',
+            cause: this,
+            stackTrace: StackTrace.current));
+
+    final User? userAuthData =
+        await DSdk.dbManager.loadAuthUserData(cachedUser!);
+
+    if (userAuthData != null) {
+      _scopeInitializer.registerAuthUser(
+          authUser: AuthenticatedUser.fromMap({
+        ...userAuthData.toJson(),
+        'baseUrl': AppEnvironment.apiBaseUrl
+      }));
+    } else {
+      await _scopeInitializer.popScope();
+      throw NoCachedAuthenticatedUser(message: '''
+                cached user has no user data in db,
+                login and sync properly
+                ''', cause: this, stackTrace: StackTrace.current);
+    }
   }
 }

@@ -1,6 +1,6 @@
-import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type_rendering_type.dart';
+import 'package:d_sdk/core/form/section_rendering_type.dart';
+import 'package:d_sdk/core/form/value_type_rendering_type.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';

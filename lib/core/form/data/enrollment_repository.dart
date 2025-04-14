@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:datarunmobile/core/form/data/data_entry_base_repository.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';

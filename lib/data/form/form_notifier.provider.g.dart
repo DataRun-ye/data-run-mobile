@@ -20,6 +20,8 @@ final formRepositoryProvider = AutoDisposeProvider<FormRepository>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef FormRepositoryRef = AutoDisposeProviderRef<FormRepository>;
 String _$submissionFormFlatTemplateHash() =>
     r'0cd8a1df49affd581d325b1e909eb282c06ab8cd';
@@ -37,6 +39,8 @@ final submissionFormFlatTemplateProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef SubmissionFormFlatTemplateRef
     = AutoDisposeProviderRef<FormFlatTemplate>;
 String _$formNotifierHash() => r'3acaf653dc49b630f694896bb01e8cc215395c2c';
@@ -58,4 +62,4 @@ final formNotifierProvider =
 
 typedef _$FormNotifier = AutoDisposeAsyncNotifier<FormState>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

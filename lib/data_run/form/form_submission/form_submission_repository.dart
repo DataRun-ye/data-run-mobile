@@ -1,28 +1,33 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/modules/datarun/data_value/queries/data_form_submission.query.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormSubmissionRepository {
   FormSubmissionRepository();
 
   // final DataFormSubmissionQuery _query;
-  DataFormSubmissionQuery get _query =>
-      (D2Remote.formSubmissionModule.formSubmission as DataFormSubmissionQuery);
+  // DataFormSubmissionQuery get _query =>
+  final db = DSdk.db;
 
-  Future<IList<DataFormSubmission>> getSubmissions(String form) async {
-    final query = _query.byFormTemplate(form);
-    final List<DataFormSubmission> submissions = await query.get();
+  Future<IList<DataSubmission>> getSubmissions(String form) async {
+    // final query = _query.byFormTemplate(form);
+    final List<DataSubmission> submissions =
+        await (db.select(db.dataSubmissions)
+              ..where((tbl) => tbl.form.equals(form)))
+            .get();
+
     return submissions.lock;
   }
 
-  Future<DataFormSubmission?> getSubmission(String uid) async {
-    final DataFormSubmission? submission = await _query.byId(uid).getOne();
+  Future<DataSubmission?> getSubmission(String uid) async {
+    final DataSubmission? submission = await (db.select(db.dataSubmissions)
+          ..where((tbl) => tbl.id.equals(uid)))
+        .getSingleOrNull();
     return submission;
   }
 
   Future<int> deleteSubmission(String uid) async {
-    return _query.byId(uid).delete();
-    ;
+    return (db.delete(db.dataSubmissions)..where((tbl) => tbl.id.equals(uid)))
+        .go();
   }
 }

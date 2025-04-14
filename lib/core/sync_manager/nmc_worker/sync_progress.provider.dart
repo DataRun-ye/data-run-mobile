@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress.dart';
+import 'package:d_sdk/core/sync/d2_progress.dart';
 import 'package:datarunmobile/core/sync_manager/nmc_worker/work_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

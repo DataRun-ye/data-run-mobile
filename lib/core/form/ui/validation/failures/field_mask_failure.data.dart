@@ -1,10 +1,10 @@
-import 'package:d2_remote/core/datarun/exception/exception.dart';
+import 'package:d_sdk/core/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'field_mask_failure.data.freezed.dart';
 
 @freezed
-class FieldMaskFailure with _$FieldMaskFailure implements DException {
+sealed class FieldMaskFailure with _$FieldMaskFailure implements DException {
   @Implements<DException>()
   const factory FieldMaskFailure.wrongPatternException(
       [@Default('Exception') String message,

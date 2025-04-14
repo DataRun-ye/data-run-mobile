@@ -1,6 +1,6 @@
-import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/core/main_constants.dart';
-import 'package:datarunmobile/data/preference.provider.dart';
+import 'package:datarunmobile/data/preference2.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -60,8 +60,9 @@ class _ColorSeedButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorSeed = ColorSeed
-        .values[ref.watch(preferenceNotifierProvider(Preference.colorSeed))];
+    final ff = ref.watch(preferenceNotifierProvider(Preference.colorSeed));
+
+    final colorSeed = ColorSeed.values[ff];
 
     return PopupMenuButton(
       icon: const Icon(

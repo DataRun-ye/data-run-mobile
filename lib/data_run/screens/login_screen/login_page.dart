@@ -1,4 +1,6 @@
-import 'package:datarunmobile/app/app.locator.dart';
+import 'package:auto_route/annotations.dart';
+import 'package:datarunmobile/stacked/app.locator.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/data/password_visibility.provider.dart';
 import 'package:datarunmobile/data_run/screens/login_screen/login_header.dart';
 import 'package:datarunmobile/data_run/screens/login_screen/login_submit_button.dart';
@@ -8,12 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
+@RoutePage()
 class LoginPage extends HookConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginFormModel = locator<LoginReactiveFormViewModel>();
+    final loginFormModel = appLocator<LoginReactiveFormViewModel>();
 
     final isPasswordObscured = ref.watch(passwordVisibilityProvider);
     final username = loginFormModel.form.control('username') as FormControl<String>;

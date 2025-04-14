@@ -1,7 +1,6 @@
 import 'package:datarunmobile/ui/views/assignment/filter/filter_query.dart';
-import 'package:injectable/injectable.dart';
 
-@lazySingleton
+// @lazySingleton
 class FilterQueryService {
   FilterQuery filterQuery = FilterQuery();
 

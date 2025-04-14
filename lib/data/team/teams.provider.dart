@@ -1,8 +1,9 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'teams.provider.g.dart';
@@ -11,14 +12,21 @@ part 'teams.provider.g.dart';
 class Teams extends _$Teams {
   @override
   Future<IList<TeamModel>> build(EntityScope scope) async {
-    final List<Team> teams = await D2Remote.teamModuleD.team
-        .where(attribute: 'scope', value: scope.name)
+    final db = DSdk.db;
+
+    final List<Team> teams = await (db.select(db.teams)
+          ..where((tbl) => tbl.scope.equals(scope.name)))
         .get();
+    // await D2Remote.teamModuleD.team
+    //     .where(attribute: 'scope', value: scope.name)
+    //     .get();
 
     return teams
-        .where((t) => !t.disabled)
+        .where((t) => !(t.disabled ?? false))
         .map((t) => TeamModel.fromIdentifiable(
-            identifiableEntity: t,
+            id: t.id,
+            name: '${Intl.message('team')} ${t.code}',
+            disabled: t.disabled ?? false,
             activity: t.activity,
             formPermissions: t.formPermissions))
         .toList()

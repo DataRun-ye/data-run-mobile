@@ -1,9 +1,8 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -127,7 +126,7 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.ScannedCode:
         cellContent = Row(
           children: [
-            const Icon(MdiIcons.barcode),
+            Icon(MdiIcons.barcode),
             const SizedBox(width: 4),
             Text(modelToViewValue(field.value) ?? '-'),
           ],
@@ -146,7 +145,7 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.Team:
         cellContent = Row(
           children: [
-            const Icon(MdiIcons.accountGroup),
+            Icon(MdiIcons.accountGroup),
             const SizedBox(width: 4),
             Text(activityModel
                     .call()
@@ -181,8 +180,7 @@ class RepeatTableDataSource extends DataTableSource {
           cellContent = Text(getItemLocalString(
               field.visibleOption
                   .firstOrNullWhere((option) => option.name == field.value)
-                  ?.label
-                  .unlockView,
+                  ?.label,
               defaultString: '-'));
         }
         break;

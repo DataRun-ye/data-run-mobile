@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_overview_item.dart';

@@ -111,7 +111,7 @@
 //       BuildContext context,
 //       ) =>
 //       ActivityCardViewModel(
-//           locator<UserSessionService>(), locator<NavigationService>());
+//           appLocator<UserSessionService>(), appLocator<NavigationService>());
 //
 //   @override
 //   void onViewModelReady(ActivityCardViewModel viewModel) => SchedulerBinding.instance

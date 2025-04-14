@@ -27,28 +27,28 @@ class StartupViewModel extends BaseViewModel {
 
   Future<dynamic> runStartupLogic() async {
     try {
-      final authenticated = await _authManager.isAuthenticated();
+      // final authenticated = await _authManager.isAuthenticated();
 
-      if (authenticated) {
-        await initAuthUserScope();
-      } else {
-        return _navigationService.replaceWithLoginPage();
-      }
+      // if (authenticated) {
+      //   await initAuthUserScope();
+      // } else {
+      //   return _navigationService.replaceWithLoginPage();
+      // }
 
       final needSync = await _syncScheduler.shouldSync();
       if (needSync) {
-        await _navigationService.navigateToSyncProgressView();
-        _navigationService.replaceWithHomeScreen();
+        // await _navigationService.navigateToSyncProgressView();
+        // _navigationService.replaceWithHomeScreen();
       } else {
-        return _navigationService.replaceWithHomeScreen();
+        // return _navigationService.replaceWithHomeScreen();
       }
     } on DError catch (e, s) {
-      _navigationService.replaceWithLoginPage();
+      // _navigationService.replaceWithLoginPage();
       logException(e, source: e.cause);
       debugPrintStack(stackTrace: s);
       DExceptionReporter.instance.report(e, showToUser: true);
     } catch (e, s) {
-      _navigationService.replaceWithLoginPage();
+      // _navigationService.replaceWithLoginPage();
       debugPrintStack(stackTrace: s);
       DExceptionReporter.instance.report(e, showToUser: true);
     }
@@ -63,21 +63,21 @@ class StartupViewModel extends BaseViewModel {
             cause: this,
             stackTrace: StackTrace.current));
 
-    final User? userAuthData =
-        await DSdk.dbManager.loadAuthUserData(cachedUser!);
+    // final User? userAuthData =
+    //     await DSdk.dbManager.loadAuthUserData(cachedUser!);
 
-    if (userAuthData != null) {
-      _scopeInitializer.registerAuthUser(
-          authUser: AuthenticatedUser.fromMap({
-        ...userAuthData.toJson(),
-        'baseUrl': AppEnvironment.apiBaseUrl
-      }));
-    } else {
-      await _scopeInitializer.popScope();
-      throw NoCachedAuthenticatedUser(message: '''
-                cached user has no user data in db,
-                login and sync properly
-                ''', cause: this, stackTrace: StackTrace.current);
-    }
+    // if (userAuthData != null) {
+      // _scopeInitializer.registerAuthUser(
+      //     authUser: AuthenticatedUser.fromMap({
+      //   ...userAuthData.toJson(),
+      //   'baseUrl': AppEnvironment.apiBaseUrl
+      // }));
+    // } else {
+      // await _scopeInitializer.popScope();
+      // throw NoCachedAuthenticatedUser(message: '''
+      //           cached user has no user data in db,
+      //           login and sync properly
+      //           ''', cause: this, stackTrace: StackTrace.current);
+    // }
   }
 }

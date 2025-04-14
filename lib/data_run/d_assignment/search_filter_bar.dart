@@ -1,5 +1,5 @@
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/data/team/teams.provider.dart';

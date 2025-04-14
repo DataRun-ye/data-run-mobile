@@ -1,8 +1,8 @@
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
-import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/edit_panel.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/repeat_table_rows_source.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
@@ -149,7 +149,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
           .entries
           .map((e) => DataColumn(
               label: Text(
-                  '${getItemLocalString(e.value.label, defaultString: e.value.name)}'),
+                  '${getItemLocalString(e.value.label.unlock, defaultString: e.value.name)}'),
               numeric: e.value.type.isNumeric))
           .toList(),
       if (editMode)
@@ -214,9 +214,9 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                       title: title,
                       repeatInstance: _repeatInstance,
                       item: repeatItem,
-                      onSave: (formGroup, action) {
+                      onSave: (formGroup, action) async {
                         _repeatInstance.elementControl.markAsTouched();
-                        formInstance.saveFormData();
+                        await formInstance.saveFormData();
                         _dataSource.updateItems(_repeatInstance.elements);
                         repeatItem.updateValue(formGroup.value);
                         if (formGroup.valid) {

@@ -1,4 +1,4 @@
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
+// import 'package:d_sdk/core/form/field_template/field_template.dart';
 // import 'package:datarunmobile/data_run/form/form_state/form_state.data.dart';
 //
 // extension FormStateExtension on FormState {

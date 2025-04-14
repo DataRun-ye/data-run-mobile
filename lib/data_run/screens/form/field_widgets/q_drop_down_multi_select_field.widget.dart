@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
@@ -39,7 +39,7 @@ class QDropDownMultiSelectWithSearchField extends HookConsumerWidget {
       compareFn: (item, selectedItem) => item == selectedItem,
       items: (String filter, LoadProps? loadProps) {
         return element.visibleOption
-            .map((option) => getItemLocalString(option.label.unlockView))
+            .map((option) => getItemLocalString(option.label))
             .toSet()
             .toList();
       },
@@ -59,7 +59,7 @@ class NameToLabelValueAccessor
   List<String>? modelToViewValue(List<String> items, List<String>? modelValue) {
     return options
         .where((option) => (modelValue?.contains(option.name) ?? false))
-        .map((option) => getItemLocalString(option.label.unlockView,
+        .map((option) => getItemLocalString(option.label,
             defaultString: option.name))
         .toList();
   }
@@ -68,7 +68,7 @@ class NameToLabelValueAccessor
   List<String>? viewToModelValue(List<String> items, List<String>? modelValue) {
     return options
         .where((option) =>
-            modelValue?.contains(getItemLocalString(option.label.unlockView,
+            modelValue?.contains(getItemLocalString(option.label,
                 defaultString: option.name)) ==
             true)
         .map((option) => option.name)

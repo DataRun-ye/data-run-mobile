@@ -2,7 +2,7 @@
 // import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 // import 'package:datarunmobile/data_run/screens/form_module/form_template/template_extension.dart';
 // import 'package:flutter_hooks/flutter_hooks.dart';
-// import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+// import 'package:d_sdk/core/logging/new_app_logging.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 // import 'package:reactive_forms/reactive_forms.dart';
 //

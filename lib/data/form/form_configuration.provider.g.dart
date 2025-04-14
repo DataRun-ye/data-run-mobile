@@ -6,7 +6,7 @@ part of 'form_configuration.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$formConfigurationHash() => r'8f554b9bf9acb6c357b8e26e245e96eb08d1ed4b';
+String _$formConfigurationHash() => r'd08d2be29534e0e37e1df4a7eb1f68c334bf78ad';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,23 +34,9 @@ class _SystemHash {
 const formConfigurationProvider = FormConfigurationFamily();
 
 /// See also [formConfiguration].
-class FormConfigurationFamily extends Family {
+class FormConfigurationFamily extends Family<AsyncValue<FormConfiguration>> {
   /// See also [formConfiguration].
   const FormConfigurationFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formConfigurationProvider';
 
   /// See also [formConfiguration].
   FormConfigurationProvider call({
@@ -63,7 +49,6 @@ class FormConfigurationFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   FormConfigurationProvider getProviderOverride(
     covariant FormConfigurationProvider provider,
@@ -74,27 +59,19 @@ class FormConfigurationFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<FormConfiguration> Function(FormConfigurationRef ref) create) {
-    return _$FormConfigurationFamilyOverride(this, create);
-  }
-}
-
-class _$FormConfigurationFamilyOverride implements FamilyOverride {
-  _$FormConfigurationFamilyOverride(this.overriddenFamily, this.create);
-
-  final FutureOr<FormConfiguration> Function(FormConfigurationRef ref) create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final FormConfigurationFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  FormConfigurationProvider getProviderOverride(
-    covariant FormConfigurationProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'formConfigurationProvider';
 }
 
 /// See also [formConfiguration].
@@ -124,7 +101,7 @@ class FormConfigurationProvider
         );
 
   FormConfigurationProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -139,7 +116,7 @@ class FormConfigurationProvider
 
   @override
   Override overrideWith(
-    FutureOr<FormConfiguration> Function(FormConfigurationRef ref) create,
+    FutureOr<FormConfiguration> Function(FormConfigurationRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -157,34 +134,8 @@ class FormConfigurationProvider
   }
 
   @override
-  ({
-    String form,
-    int version,
-  }) get argument {
-    return (
-      form: form,
-      version: version,
-    );
-  }
-
-  @override
   AutoDisposeFutureProviderElement<FormConfiguration> createElement() {
     return _FormConfigurationProviderElement(this);
-  }
-
-  FormConfigurationProvider _copyWith(
-    FutureOr<FormConfiguration> Function(FormConfigurationRef ref) create,
-  ) {
-    return FormConfigurationProvider._internal(
-      (ref) => create(ref as FormConfigurationRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      form: form,
-      version: version,
-    );
   }
 
   @override
@@ -204,6 +155,8 @@ class FormConfigurationProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin FormConfigurationRef on AutoDisposeFutureProviderRef<FormConfiguration> {
   /// The parameter `form` of this provider.
   String get form;
@@ -223,4 +176,4 @@ class _FormConfigurationProviderElement
   int get version => (origin as FormConfigurationProvider).version;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

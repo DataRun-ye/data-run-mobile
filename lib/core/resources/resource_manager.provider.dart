@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/common/standard_extensions.dart';
+import 'package:d_sdk/core/common/standard_extensions.dart';
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

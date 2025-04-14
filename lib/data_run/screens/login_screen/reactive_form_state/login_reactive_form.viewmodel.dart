@@ -1,18 +1,18 @@
-import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
-import 'package:datarunmobile/app/app.router.dart';
-import 'package:datarunmobile/app/app_environment.dart';
-import 'package:datarunmobile/app/di/injection.dart';
+import 'package:d_sdk/auth/auth_manager.dart';
+import 'package:d_sdk/core/config/app_environment_instance.dart';
+import 'package:d_sdk/core/config/server_config.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
-import 'package:datarunmobile/core/services/auth.service.dart';
-import 'package:datarunmobile/core/services/user_session_manager.service.dart';
+import 'package:datarunmobile/di/app_environment.dart';
+import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 @lazySingleton
 class LoginReactiveFormViewModel {
-  LoginReactiveFormViewModel(
-      this._authService, this._userSessionManager, this._navigationService)
+  LoginReactiveFormViewModel(this._navigationService)
       : this.form = FormGroup({
           'username': FormControl<String>(validators: [Validators.required]),
           'password': FormControl<String>(validators: [Validators.required]),
@@ -21,9 +21,11 @@ class LoginReactiveFormViewModel {
   static String URL_PATTERN =
       r'^(http|https):\/\/[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?$';
 
-  final AuthService _authService;
-  final UserSessionService _userSessionManager;
   final NavigationService _navigationService;
+  final AuthManager _authManager = DSdk.authManager;
+
+  // final UserSessionRepository _userSessionRepository =
+  //     DSdk.userSessionRepository;
 
   final FormGroup form;
 
@@ -35,38 +37,37 @@ class LoginReactiveFormViewModel {
         form.control('password') as FormControl<String>;
 
     form.markAsDisabled();
-    final authResult = const AuthenticationResult();
     try {
-      final authResult = await _authService.login(usernameControl.value!,
-          passwordControl.value!, AppEnvironment.apiBaseUrl);
+      // final Result<User, AuthenticationException> authResult =
+      await _authManager.authenticate(
+          username: usernameControl.value!,
+          password: passwordControl.value!,
+          server: ServerConfig(AppEnvironment.apiBaseUrl));
 
-      if (authResult.success) {
-        // save UserCredentials to preference
-        await _userSessionManager.saveUserCredentials(
-            serverUrl: authResult.sessionUser!.baseUrl,
-            username: authResult.sessionUser!.username!,
-            userId: authResult.sessionUser!.id!,
-            langKey: authResult.sessionUser?.langKey);
 
-        // return successful result
-        // if (authResult.sessionUser != null) {
-        //   registerUser(UserModel.fromJson(authResult.sessionUser!.toJson()));
-        // }
-        await _navigationService.replaceWithSyncScreen();
-        // return authResult.copyWith(
-        //     success: true, sessionUser: authResult.sessionUser);
-      }
-    } catch (e) {
+      // if (authResult.isSuccess()) {
+      //   await init(authResult.getOrThrow());
+      //   await _navigationService.replaceWithSyncProgressView();
+      // } else {
+      //   authResult.whenError((failure) => throw failure);
+      // }
+    } catch (e, s) {
+      // if (appLocator.currentScopeName == 'authenticated') {
+      //   await _scopeInitializer.popScope();
+      // }
       usernameControl.markAsEnabled();
       passwordControl.markAsEnabled();
-      _userSessionManager.clearSessionFromPreferences();
-      if (authResult.sessionUser != null) {
-        unregisterLogin();
-      }
+      debugPrintStack(stackTrace: s);
       DExceptionReporter.instance.report(e, showToUser: true);
-      rethrow;
     }
-    // return authResult.copyWith(
-    //     success: false, sessionUser: authResult.sessionUser);
   }
+
+// Future<void> init(User userAuthData) async {
+//   final currentUser = AuthenticatedUser.fromMap(
+//       {...userAuthData.toJson(), 'baseUrl': AppEnvironment.apiBaseUrl});
+//   await _userSessionRepository.cacheCurrentAuthUserData(currentUser);
+//   _scopeInitializer.initScope(currentUser);
+//   _scopeInitializer.registerAuthUser(authUser: currentUser);
+//   return DSdk.dbManager.saveAuthUserData(userAuthData);
+// }
 }

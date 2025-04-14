@@ -1,15 +1,20 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_value.entity.dart';
-import 'package:d2_remote/shared/utilities/merge_mode.util.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:drift/drift.dart';
 
 class DataValueRepository {
+  static AppDatabase get db => DSdk.db;
+
   static Future<DataValue?> get(
       {required String submissionId,
       required String path,
       String? parent}) async {
-    return D2Remote.formSubmissionModule.dataValue.byId(_makeCompositeKey(
-        submission: submissionId, parent: parent, path: path)).getOne();
+    await db.select(db.dataValues)
+      ..where((row) => row.submission.equals(submissionId));
+    return (db.select(db.dataValues)
+          ..where((tbl) => tbl.id.equals(_makeCompositeKey(
+              submission: submissionId, parent: parent, path: path))))
+        .getSingleOrNull();
   }
 
   static Future<DataValue> create(
@@ -18,7 +23,7 @@ class DataValueRepository {
       dynamic value,
       String? parent}) async {
     final elementPath = path.split('.');
-    D2Remote.formSubmissionModule.dataValue.setData(DataValue(
+    final dv = DataValue(
         id: _makeCompositeKey(
             submission: submissionId, parent: parent, path: path),
         parent: parent,
@@ -26,35 +31,43 @@ class DataValueRepository {
         submission: submissionId,
         templatePath: path,
         dataElement: elementPath[elementPath.length - 1],
-        dirty: true));
+        lastModifiedDate: DateTime.now().toUtc(),
+        createdDate: DateTime.now().toUtc());
 
-    await D2Remote.formSubmissionModule.dataValue.save();
+    await db.into(db.dataValues).insert(dv);
 
-    return D2Remote.formSubmissionModule.dataValue.data;
+    return dv;
   }
 
-  static Future<DataValue> save(
+  static Future<DataValue> update(
       {required String submissionId,
       required String path,
       dynamic value,
       String? parent}) async {
     final elementPath = path.split('.');
-    D2Remote.formSubmissionModule.dataValue.setData(DataValue(
-        id: _makeCompositeKey(
-            submission: submissionId, parent: parent, path: path),
-        parent: parent,
-        value: value,
+    final dv =
+        await get(submissionId: submissionId, path: path, parent: parent);
+    dv!.copyWith(
+        parent: Value(parent),
+        value: Value(value),
         submission: submissionId,
         templatePath: path,
         dataElement: elementPath[elementPath.length - 1],
-        lastModifiedDate: DateHelper.nowUtc(),
-        dirty: true));
+        lastModifiedDate: DateTime.now().toUtc());
+    await db.update(db.dataValues).replace(dv);
 
-    await D2Remote.formSubmissionModule.dataValue
-      ..mergeMode = MergeMode.Merge
-      ..save();
+    // DataValue(
+    //     id: _makeCompositeKey(
+    //         submission: submissionId, parent: parent, path: path),
+    //     parent: parent,
+    //     value: value,
+    //     submission: submissionId,
+    //     templatePath: path,
+    //     dataElement: elementPath[elementPath.length - 1],
+    //     lastModifiedDate: DateHelper.nowUtc(),
+    //     dirty: true);
 
-    return D2Remote.formSubmissionModule.dataValue.data;
+    return dv;
   }
 
   static String _makeCompositeKey(

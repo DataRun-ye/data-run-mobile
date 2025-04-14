@@ -1,5 +1,5 @@
-import 'package:d2_remote/modules/datarun/form/entities/metadata_submission_update.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/form_submission/metadata_submission_update.dart';
 import 'package:datarunmobile/data/form_submission/metadata_submission_update.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,14 +14,14 @@ List<String> getFilteredData(
     String filter, List<MetadataSubmissionUpdate> data) {
   return data
       .where((item) {
-        final lowerQuery = filter.toLowerCase();
-        return item.formData['householdName']
-                .toLowerCase()
-                .contains(lowerQuery) ||
-            item.formData['householdHeadSerialNumber']
-                .toString()
-                .contains(lowerQuery);
-      })
+    final lowerQuery = filter.toLowerCase();
+    return item.formData['householdName']
+        .toLowerCase()
+        .contains(lowerQuery) ||
+        item.formData['householdHeadSerialNumber']
+            .toString()
+            .contains(lowerQuery);
+  })
       .map((item) => item.householdName!)
       .toList();
   // return data
@@ -48,7 +48,7 @@ class QReferenceDropDownSearchFieldState
   Widget build(BuildContext context) {
     final formInstance = ref
         .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+        formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
 
     // final orgUnitElement = formInstance.forElementMap.values
@@ -68,7 +68,7 @@ class QReferenceDropDownSearchFieldState
         return ReactiveDropdownSearch<String, String>(
           widgetKey: _dropDownCustomBGKey,
           formControl: formInstance.form.control(widget.element.elementPath!)
-              as FormControl<String>,
+          as FormControl<String>,
           validationMessages: validationMessages(),
           // valueAccessor: NameToLabelValueAccessor(households),
           dropdownDecoratorProps: DropDownDecoratorProps(
@@ -164,7 +164,7 @@ class QReferenceDropDownSearchFieldState
       bool isDisabled, bool isSelected) {
     return Tooltip(
       message:
-          'Household: ${item.householdName}\n Serial: ${item.householdHeadSerialNumber}',
+      'Household: ${item.householdName}\n Serial: ${item.householdHeadSerialNumber}',
       child: Container(
         decoration: BoxDecoration(
           color: isSelected ? Colors.blue[50] : Colors.white,
@@ -216,10 +216,10 @@ Widget referenceModelPopupItem(BuildContext context,
     decoration: !isSelected
         ? null
         : BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.white,
-          ),
+      border: Border.all(color: Theme.of(context).primaryColor),
+      borderRadius: BorderRadius.circular(5),
+      color: Colors.white,
+    ),
     child: ListTile(
       selected: isSelected,
       title: Text(item?.householdName ?? 'No name'),
@@ -239,7 +239,7 @@ class NameToLabelValueAccessor
     return metadataUpdates
         .where((item) => item.id == modelValue)
         .firstOrNull
-        ?.name;
+        ?.householdName;
   }
 
   @override

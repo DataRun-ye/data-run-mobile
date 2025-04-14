@@ -1,18 +1,17 @@
 import 'package:collection/collection.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/core/common/state.dart';
+import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data/assignment/assignment.provider.dart';
-import 'package:datarunmobile/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/ui/shared/sync_badges/sync_status_badges_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:data_table_2/data_table_2.dart';
 
 class AssignmentTableView extends HookConsumerWidget {
   AssignmentTableView({super.key, required this.onViewDetails, this.scope});
@@ -69,9 +68,7 @@ class AssignmentTableView extends HookConsumerWidget {
                   children: [
                     Text(
                       '${totalSummary[header]}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const Divider(color: Colors.blueGrey, height: 5.0),
                     Text(
@@ -101,14 +98,9 @@ class AssignmentTableView extends HookConsumerWidget {
                     overrides: [
                       assignmentProvider.overrideWithValue(assignment)
                     ],
-                    child: const Wrap(
-                      // mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SyncStatusChip(syncStatus: SyncStatus.SYNCED),
-                        SyncStatusChip(syncStatus: SyncStatus.TO_POST),
-                        SyncStatusChip(syncStatus: SyncStatus.TO_UPDATE)
-                      ],
-                    ),
+                    child: SyncStatusBadgesView(
+                        id: assignment.id,
+                        aggregationLevel: StatusAggregationLevel.assignment),
                   )),
                   DataCell(Column(
                       mainAxisAlignment: MainAxisAlignment.start,

@@ -1,13 +1,12 @@
 import 'package:datarunmobile/core/form/data/data_integrity_check_result.data.dart';
 import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_utils_provider_result.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'form_state.data.freezed.dart';
 
 @freezed
-class FormState with _$FormState {
+abstract class FormState with _$FormState {
   const factory FormState({
     required List<FieldUiModel> fields,
     required double completionPercentage,
@@ -15,7 +14,7 @@ class FormState with _$FormState {
     required bool calculationLoop,
     required DataIntegrityCheckResult? integrityResult,
     required List<ConfigurationError> configErrors,
-    required Option<String> focusedFieldId,
+    // required Option<String> focusedFieldId,
   }) = _FormState;
 
   factory FormState.initial() => const FormState(
@@ -25,6 +24,6 @@ class FormState with _$FormState {
         calculationLoop: false,
         integrityResult: null,
         configErrors: [],
-        focusedFieldId: None(),
+        // focusedFieldId: None(),
       );
 }

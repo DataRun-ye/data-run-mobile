@@ -1,4 +1,5 @@
 # dart fix --apply --code unused_import
+# flutter run --dart-define-from-file=.env/prod-config.json
 # flutter build appbundle --release
 
 # split per platform ARM64, ARM, x86_64
@@ -19,6 +20,6 @@
 
 
 # with obfuscate
-
+# flutter create --platforms=windows .
 # fat apk for all platforms types ARM64, ARM, and x86_64
 flutter build apk

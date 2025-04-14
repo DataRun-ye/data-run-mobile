@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:flutter/material.dart';
 
 import 'activity_model.dart';
 
@@ -78,9 +77,8 @@ class ActivityCard extends StatelessWidget {
                   context,
                   icon: Icons.calendar_today,
                   label: S.of(context).startDate,
-                  value: formatDateString(
+                  value: MaterialLocalizations.of(context).formatFullDate(
                     activity.activity!.properties['startDate'],
-                    context,
                   ),
                 ),
               if (activity.activity?.properties['endDate'] != null)
@@ -88,9 +86,8 @@ class ActivityCard extends StatelessWidget {
                   context,
                   icon: Icons.event,
                   label: S.of(context).endDate,
-                  value: formatDateString(
+                  value: MaterialLocalizations.of(context).formatFullDate(
                     activity.activity!.properties['endDate'],
-                    context,
                   ),
                 ),
             ],
@@ -126,11 +123,4 @@ class ActivityCard extends StatelessWidget {
 
 String formatDate(DateTime date, BuildContext context) {
   return MaterialLocalizations.of(context).formatFullDate(date);
-}
-
-String formatDateString(String date, BuildContext context) {
-  final dateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", 'en_US');
-  final formattedDate = dateFormat.tryParse(date);
-  if (formattedDate == null) return '';
-  return MaterialLocalizations.of(context).formatFullDate(formattedDate);
 }

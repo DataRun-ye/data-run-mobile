@@ -1,6 +1,6 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option_set.entity.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/utils/mass_utils/strings.dart';
 
 class SearchOptionSetOption {
@@ -12,14 +12,11 @@ class SearchOptionSetOption {
   //       List<String> optionsToShow, List<String> optionsToHide)
   Future<List<FormOption>> call(String? optionSetUid, String textToSearch,
       List<String> optionsToShow, List<String> optionsToHide) async {
-    OptionSet? optionSet;
-    var query = D2Remote.optionSetModule.optionSet.byId(optionSet!.id!);
-    // query = query.byOptionSet(optionSet?.id ?? '');
-    optionSet = await query
-        // .orderBy(attribute: 'sortOrder', order: SortOrder.ASC)
-        .getOne();
+    DataOptionSet? optionSet = await DSdk.db.managers.dataOptionSets
+        .filter((f) => f.id.equals(optionSetUid))
+        .getSingleOrNull();
 
-    final List<FormOption> formOptions = optionSet!.options.unlock;
+    final List<FormOption> formOptions = optionSet!.options ?? [];
 
     if (textToSearch.isNotEmpty) {
       // query = query.like(attribute: 'displayName', value: '%$textToSearch%');

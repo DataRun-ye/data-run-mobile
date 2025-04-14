@@ -1,11 +1,9 @@
-import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
-import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
-import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.dart';
-import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/core/models/d_identifiable_model.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:intl/intl.dart';
 
 class ActivityModel with EquatableMixin {
   ActivityModel(
@@ -35,7 +33,11 @@ class ActivityModel with EquatableMixin {
       managedAssignments: managedAssignments,
       assignedForms: assignedForms,
       managedTeams: managedTeams.map((e) => TeamModel.fromIdentifiable(
-          identifiableEntity: e, formPermissions: e.formPermissions)),
+          id: e.id,
+          name: '${Intl.message('team')} ${e.code}',
+          formPermissions: e.formPermissions,
+          activity: e.activity,
+          disabled: e.disabled ?? false)),
       orgUnits: orgUnits.map((e) => IdentifiableModel(
             id: e.id,
             code: e.code,
@@ -43,12 +45,14 @@ class ActivityModel with EquatableMixin {
           )),
       user: IdentifiableModel(
         id: user!.id,
-        code: user.code,
-        name: user.name,
+        name: user.username,
       ),
       assignedTeam: userTeam != null
           ? TeamModel.fromIdentifiable(
-              identifiableEntity: userTeam,
+              id: userTeam.id,
+              name: '${Intl.message('team')} ${userTeam.code}',
+              activity: userTeam.activity,
+              disabled: userTeam.disabled ?? false,
               formPermissions: userTeam.formPermissions)
           : null,
       activity: activity != null

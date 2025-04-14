@@ -1,8 +1,6 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
-import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/models/d_identifiable_model.dart';
 import 'package:datarunmobile/data/team/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
@@ -25,12 +23,15 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
   final IList<TeamModel> assignedTeams =
       await ref.watch(teamsProvider(EntityScope.Assigned).future);
 
-  final User? user = await D2Remote.userModule.user.getOne();
+  final user = DSdk.currentAuthUser;
+  //await D2Remote.userModule.user.getOne();
 
-  final List<Activity> userEnabledActivities = await D2Remote
-      .activityModuleD.activity
-      .where(attribute: 'disabled', value: false)
-      .get();
+  final List<Activity> userEnabledActivities =
+      await DSdk.db.managers.activities.filter((f) => f.disabled(false)).get();
+  // await D2Remote
+  //     .activityModuleD.activity
+  //     .where(attribute: 'disabled', value: false)
+  //     .get();
   //
   final List<ActivityModel> userActivities = [];
 
@@ -39,31 +40,52 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
         assignedTeams.where((t) => t.activity == activity.id).firstOrNull;
     final List<TeamModel> activityManagedTeams =
         managedTeams.where((t) => t.activity == activity.id).toList();
-    final List<Assignment> assignedAssignment = await D2Remote
-        .assignmentModuleD.assignment
-        .where(attribute: 'team', value: activityAssignedTeam?.id ?? '')
+    final List<Assignment> assignedAssignment = await DSdk
+        .db.managers.assignments
+        .filter((f) => f.team.id(activityAssignedTeam?.id))
         .get();
-    final List<Assignment> managedAssignments = await D2Remote
-        .assignmentModuleD.assignment
-        .whereIn(
-            attribute: 'team',
-            values: managedTeams.map((t) => t.id!).toList(),
-            merge: true)
+    // await D2Remote
+    //     .assignmentModuleD.assignment
+    //     .where(attribute: 'team', value: activityAssignedTeam?.id ?? '')
+    //     .get();
+    final List<Assignment> managedAssignments = await DSdk
+        .db.managers.assignments
+        .filter((f) => f.team.id.isIn(managedTeams.map((t) => t.id)))
         .get();
-    final assignedOrgUnits = await D2Remote.organisationUnitModuleD.orgUnit
-        .byIds(assignedAssignment.map((a) => a.orgUnit as String).toList())
+    // await D2Remote
+    //     .assignmentModuleD.assignment
+    //     .whereIn(
+    //         attribute: 'team',
+    //         values: managedTeams.map((t) => t.id!).toList(),
+    //         merge: true)
+    //     .get();
+    final assignedOrgUnits = await DSdk.db.managers.orgUnits
+        .filter((f) => f.id.isIn(assignedAssignment.map((a) => a.orgUnit)))
+        .get();
+    // await D2Remote.organisationUnitModuleD.orgUnit
+    //     .byIds(assignedAssignment.map((a) => a.orgUnit as String).toList())
+    //     .get();
+
+    final managedOrgUnits = await DSdk.db.managers.orgUnits
+        .filter((f) => f.id.isIn(managedAssignments.map((a) => a.orgUnit)))
         .get();
 
-    final managedOrgUnits = await D2Remote.organisationUnitModuleD.orgUnit
-        .byIds(managedAssignments.map((a) => a.orgUnit as String).toList())
-        .get();
+    // await D2Remote.organisationUnitModuleD.orgUnit
+    //     .byIds(managedAssignments.map((a) => a.orgUnit as String).toList())
+    //     .get();
 
     userActivities.add(
       ActivityModel(
-        user: IdentifiableModel.fromIdentifiable(identifiableEntity: user!),
+        user: IdentifiableModel(
+          id: user.id,
+          code: user.username,
+          name: user.username,
+        ),
         assignedTeam: activityAssignedTeam,
-        activity: IdentifiableModel.fromIdentifiable(
-            identifiableEntity: activity,
+        activity: IdentifiableModel(
+            id: activity.id,
+            code: activity.code,
+            name: activity.name,
             properties: IMap({
               'startDate': activity.startDate,
               'endDate': activity.endDate,
@@ -77,7 +99,7 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
         orgUnits: [
           ...managedOrgUnits,
           ...assignedOrgUnits
-        ].map((o) => IdentifiableModel.fromIdentifiable(identifiableEntity: o)),
+        ].map((o) => IdentifiableModel(id: o.id, name: o.name, code: o.code)),
       ),
     );
   }

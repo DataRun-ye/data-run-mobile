@@ -1,4 +1,4 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
 import 'package:intl/intl.dart';
 
 extension StringNullExtension on String? {

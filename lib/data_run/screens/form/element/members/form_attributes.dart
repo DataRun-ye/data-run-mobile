@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/attribute_type.dart';
+import 'package:d_sdk/core/form/attribute_type.dart';
 import 'package:equatable/equatable.dart';
 
 class FormAttributes with EquatableMixin {

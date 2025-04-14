@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:stacked/stacked.dart';
 
 // Assume you have an Assignment model defined elsewhere

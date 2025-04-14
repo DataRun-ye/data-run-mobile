@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data_run/screens/form/element_widgets/popup_section.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_barcode_reader_field.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/reactive_team_select_chip.widget.dart';
@@ -67,7 +67,9 @@ class FieldFactory {
       case ValueType.TrueOnly:
         return QSwitchField(element: element as FieldInstance<bool>);
       case ValueType.OrganisationUnit:
-        return QOrgUnitPickerField(element: element as FieldInstance<String>);
+        return QTextTypeField(element: element as FieldInstance<String>);
+      // case ValueType.OrganisationUnit:
+      //   return QOrgUnitPickerField(element: element as FieldInstance<String>);
       case ValueType.Progress:
         return QReactiveProgressSelectChip(
             element: element as FieldInstance<String>);

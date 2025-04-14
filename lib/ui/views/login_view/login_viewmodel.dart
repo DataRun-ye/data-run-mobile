@@ -8,9 +8,9 @@
 // class LoginViewModel extends BaseViewModel {
 //   String data =
 //       'Data which we can assign to ui'; //notify after changing value to reflect in ui
-//   final _navigationService = locator<NavigationService>();
-//   final _authenticationService = locator<AuthenticationService>();
-//   final _userSessionManager = locator<UserSessionService>();
+//   final _navigationService = appLocator<NavigationService>();
+//   final _authenticationService = appLocator<AuthenticationService>();
+//   final _userSessionManager = appLocator<UserSessionService>();
 //
 //   Future<void> userLogin(String username, String password) async {
 //     setBusy(true);

@@ -9,7 +9,7 @@
 // import 'package:datarunmobile/data_run/form/scanned_code/scanned_items_notifier.dart';
 // import 'package:datarunmobile/data_run/form/scanned_code/scan_validator.dart';
 // import 'package:d2_remote/core/datarun/utilities/date_utils.dart';
-// import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+// import 'package:d_sdk/core/logging/new_app_logging.dart';
 //
 // import '../field_widgets/code_scanner/reactive_code_scan_field.dart';
 //

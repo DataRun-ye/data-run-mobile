@@ -1,15 +1,15 @@
-import 'package:datarunmobile/core/common/state.dart';
-import 'package:datarunmobile/data/sync_status_aggregator/sync_status_aggregator_factory.dart';
-import 'package:injectable/injectable.dart';
-
-enum AggregationLevel { Assignment, Form }
-
-@Injectable()
-abstract class SyncStatusAggregator {
-  @factoryMethod
-  factory SyncStatusAggregator.create(
-          {@factoryParam AggregationLevel? level}) =>
-      SyncStatusAggregatorFactory.getAggregator(level!);
-
-  Future<Map<SyncStatus, int>> aggregate(String id);
-}
+// import 'package:d_sdk/database/dao/dao.dart';
+// import 'package:d_sdk/database/dao/status_aggregation_level.dart';
+// import 'package:d_sdk/database/shared/shared.dart';
+// import 'package:injectable/injectable.dart';
+//
+// enum AggregationLevel { Assignment, Activity, Form }
+//
+// @LazySingleton()
+// class SyncStatusAggregator {
+//   SyncStatusAggregator(this.submissionsDao);
+//
+//   final DataSubmissionsDao submissionsDao;
+//
+//
+// }

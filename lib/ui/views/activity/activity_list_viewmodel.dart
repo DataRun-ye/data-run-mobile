@@ -1,4 +1,4 @@
-import 'package:datarunmobile/data/activity/activity.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:stacked/stacked.dart';
 
 class ActivityListViewModel extends BaseViewModel {

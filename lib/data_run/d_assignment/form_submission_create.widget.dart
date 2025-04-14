@@ -1,21 +1,20 @@
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
+import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data/form/form_instance.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 
 class FormSubmissionCreate extends ConsumerStatefulWidget {
   const FormSubmissionCreate(
       {super.key, required this.assignment, required this.onNewFormCreated});
 
   final AssignmentModel assignment;
-  final Function(DataFormSubmission submissionId) onNewFormCreated;
+  final Function(DataSubmission submissionId) onNewFormCreated;
 
   @override
   FormSubmissionCreateState createState() => FormSubmissionCreateState();
@@ -24,16 +23,16 @@ class FormSubmissionCreate extends ConsumerStatefulWidget {
 class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
   // bool _isLoading = false;
 
-  Future<DataFormSubmission> _createEntity(
+  Future<DataSubmission> _createEntity(
       BuildContext context, FormVersion formTemplate) async {
     final activityModel = ActivityInheritedWidget.of(context);
     final submissionInitialRepository =
-        ref.read(formSubmissionsProvider(formTemplate.formTemplate).notifier);
+        ref.read(formSubmissionsProvider(formTemplate.form).notifier);
 
     final submission = await submissionInitialRepository.createNewSubmission(
       formVersion: formTemplate.id,
       assignmentId: widget.assignment.id,
-      form: formTemplate.id!.split('_').first,
+      form: formTemplate.id.split('_').first,
       team: activityModel.assignedTeam!.id!,
       version: formTemplate.version,
     );
@@ -46,7 +45,7 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
     //   _isLoading = true;
     // });
 
-    DataFormSubmission? createdSubmission;
+    DataSubmission? createdSubmission;
     try {
       createdSubmission = await _createEntity(context, formTemplate);
       // setState(() {

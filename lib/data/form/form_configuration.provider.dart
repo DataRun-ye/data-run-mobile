@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
+import 'package:d_sdk/core/form/field_template/field_template.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/data/form/template.provider.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -29,7 +29,7 @@ Future<FormConfiguration> formConfiguration(FormConfigurationRef ref,
 
   return FormConfiguration(
       label: IMap(formTemplateVersion!.label),
-      fields: formTemplateVersion.fields,
+      fields: formTemplateVersion.treeFields ?? [],
       options: formTemplateVersion.options,
       orgUnits: orgUnits.toList());
 }
@@ -58,7 +58,7 @@ class FormConfiguration {
                     .toIList()),
         this.orgUnitTreeUids = IList(orgUnits);
 
-  final IMap<String, String> label;
+  final IMap<String, dynamic> label;
 
   /// {field.path: field}
   final IMap<String, Template> allFields;

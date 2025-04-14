@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
+import 'package:d_sdk/core/form/field_template/field_template.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 
 class ScanValidator {

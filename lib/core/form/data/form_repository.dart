@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/form/data/data_integrity_check_result.data.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/row_action.dart';

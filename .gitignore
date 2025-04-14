@@ -1,5 +1,6 @@
 # Miscellaneous
 *.db
+*.sqflite
 *.class
 *.log
 *.pyc
@@ -50,3 +51,4 @@ app.*.map.json
 
 # Secret keys
 secrets.properties
+.env

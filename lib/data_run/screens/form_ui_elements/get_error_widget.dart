@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 
 Widget getErrorWidget(Object? error, StackTrace? stackTrace,
     {String? message}) {

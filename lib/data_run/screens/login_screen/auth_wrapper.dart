@@ -1,6 +1,6 @@
 import 'package:datarunmobile/data_run/screens/home_screen/home_screen.widget.dart';
 import 'package:datarunmobile/data_run/screens/login_screen/login_page.dart';
-import 'package:datarunmobile/data_run/screens/sync_screen/sync_screen.widget.dart';
+import 'package:datarunmobile/ui/views/sync_with_server/sync_with_server_view.dart';
 import 'package:flutter/material.dart';
 
 class AuthSyncWrapper extends StatelessWidget {
@@ -15,7 +15,7 @@ class AuthSyncWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isAuthenticated
-        ? (needsSync ? const SyncScreen() : const HomeScreen())
+        ? (needsSync ? const SyncProgressView() : const HomeScreen())
         : const LoginPage();
   }
 }

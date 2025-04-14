@@ -1,22 +1,24 @@
-import 'package:datarunmobile/app/app.locator.dart';
-import 'package:datarunmobile/app/app.router.dart';
+import 'package:auto_route/annotations.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:datarunmobile/app_routing/app_route.dart';
+import 'package:datarunmobile/app_routing/app_route.gr.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/core/auth/auth.provider.dart';
-import 'package:datarunmobile/core/auth/internet_aware_screen.dart';
 import 'package:datarunmobile/core/network/online_connectivity.provider.dart';
-import 'package:datarunmobile/core/services/user_session_manager.service.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_page.dart';
+import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
+import 'package:datarunmobile/data/preference2.provider.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_page.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+@RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key, this.refresh = false});
 
@@ -29,80 +31,74 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
-  final _navigationService = locator<NavigationService>();
-  final _userSessionService = locator<UserSessionService>();
+  final _navigationService = appLocator<NavigationService>();
+  final currentAuthUser = DSdk.currentAuthUser;
 
   @override
   Widget build(BuildContext context) {
-    final userInfoAsync = ref.watch(userInfoProvider);
     final appAboutAsync = ref.watch(appAboutInfoProvider);
+    final activitiesAsync = ref.watch(activitiesProvider);
+    final router = appLocator<AppRouter>();
+
     return AsyncValueWidget(
-      value: userInfoAsync,
-      valueBuilder: (userInfo) {
-        final activitiesAsync = ref.watch(activitiesProvider);
-
-        return AsyncValueWidget(
-          value: activitiesAsync,
-          valueBuilder: (List<ActivityModel> activities) {
-            return Scaffold(
-              appBar: InternetAwareAppBar(
-                title: S.of(context).home,
-              ),
-              onDrawerChanged: (isOpen) {
-                final hasValue = ref.read(isOnlineProvider).hasValue;
-                isOpen && hasValue
-                    ? ref.read(isOnlineProvider.notifier).check()
-                    : null;
-              },
-              drawer: Drawer(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-                    UserAccountsDrawerHeader(
-                      accountName: Text(userInfo?.firstName ?? '-'),
-                      accountEmail: Text(userInfo?.username ?? '-'),
-                      currentAccountPicture: CircleAvatar(
-                        child: Text(userInfo?.firstName?.substring(0, 1) ?? ''),
-                      ),
-                    ),
-                    ListTile(
-                      style: ListTileStyle.drawer,
-                      leading: const Icon(Icons.settings),
-                      title: Text(S.of(context).settings),
-                      onTap: () {
-                        // Navigator.pop(context);
-                        _navigationService.back();
-                        _navigationService.navigateToSettingsPage();
-
-                        // Navigator.push(
-                        //     navigatorKey.currentContext!,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => const SettingsPage(),
-                        //     ));
-                      },
-                    ),
-                    const Divider(),
-                    const SyncButton(),
-                    const Divider(),
-                    AsyncValueWidget(
-                      value: appAboutAsync,
-                      valueBuilder: (AppAbout appInfo) {
-                        return ListTile(
-                          leading: const Icon(Icons.info),
-                          title: Text(S.of(context).appVersion),
-                          subtitle: Text(
-                              '${appInfo.version} (${appInfo.buildNumber})'),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              body: ActivityPage(
-                activities: activities,
-              ), // Main content
-            );
+      value: activitiesAsync,
+      valueBuilder: (List<ActivityModel> activities) {
+        return Scaffold(
+          onDrawerChanged: (isOpen) {
+            final hasValue = ref.read(isOnlineProvider).hasValue;
+            isOpen && hasValue
+                ? ref.read(isOnlineProvider.notifier).check()
+                : null;
           },
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  accountName: Text(currentAuthUser.firstname),
+                  accountEmail: Text(currentAuthUser.username),
+                  currentAccountPicture: CircleAvatar(
+                    child: Text(currentAuthUser.firstname.substring(0, 1)),
+                  ),
+                ),
+                ListTile(
+                  style: ListTileStyle.drawer,
+                  leading: const Icon(Icons.settings),
+                  title: Text(S.of(context).settings),
+                  onTap: () {
+                    // Navigator.pop(context);
+                    // _navigationService.back();
+                    // _navigationService.navigateToSettingsPage();
+                    router.back();
+                    router.navigate(const SettingsRoute());
+
+                    // Navigator.push(
+                    //     navigatorKey.currentContext!,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const SettingsPage(),
+                    //     ));
+                  },
+                ),
+                const Divider(),
+                const SyncButton(),
+                const Divider(),
+                AsyncValueWidget(
+                  value: appAboutAsync,
+                  valueBuilder: (AppAbout appInfo) {
+                    return ListTile(
+                      leading: const Icon(Icons.info),
+                      title: Text(S.of(context).appVersion),
+                      subtitle:
+                          Text('${appInfo.version} (${appInfo.buildNumber})'),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          body: ActivityPage(
+            activities: activities,
+          ), // Main content
         );
       },
     );
@@ -110,14 +106,13 @@ class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
 
   @override
   void initState() {
-    final sessionData = _userSessionService.sessionData;
-    if (sessionData?.langKey != null &&
-        sessionData?.langKey !=
-            ref.read(preferenceNotifierProvider(Preference.language))) {
+    final sessionData = currentAuthUser;
+    if (sessionData.langKey !=
+        ref.read(preferenceNotifierProvider(Preference.language))) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref
             .read(preferenceNotifierProvider(Preference.language).notifier)
-            .update(sessionData!.langKey);
+            .update(sessionData.langKey);
       });
     }
 
@@ -142,18 +137,18 @@ class SyncButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final userSessionManager = ref.watch(userSessionManagerProvider);
-    final _navigationService = locator<NavigationService>();
-    final userSessionManager = locator<UserSessionService>();
-    final lastSyncTime = userSessionManager.lastSyncTime;
+    // final syncMetadataRepo = ref.watch(userSessionManagerProvider);
+    final _navigationService = appLocator<NavigationService>();
+    final syncMetadataRepo = appLocator<SyncMetadataRepository>();
+    final lastSyncTime = syncMetadataRepo.lastSyncTime;
+    final router = appLocator<AppRouter>();
 
+    final language = ref.watch(preferenceNotifierProvider(Preference.language));
     return AsyncValueWidget(
       value: ref.watch(isOnlineProvider),
       valueBuilder: (bool isOnline) {
         String lastSynced = lastSyncTime != null
-            ? timeago.format(lastSyncTime.toLocal(),
-                locale:
-                    ref.watch(preferenceNotifierProvider(Preference.language)))
+            ? timeago.format(lastSyncTime.toLocal(), locale: language)
             : S.of(context).noSyncYet;
         return ListTile(
           isThreeLine: true,
@@ -167,14 +162,14 @@ class SyncButton extends ConsumerWidget {
           ),
           trailing: isOnline
               ? Icon(Icons.check_circle,
-                  color:
-                      userSessionManager.syncDone ? Colors.green : Colors.red)
-              : const Icon(MdiIcons.webOff, color: Colors.grey),
+                  color: syncMetadataRepo.isInitialSyncDone
+                      ? Colors.green
+                      : Colors.red)
+              : Icon(MdiIcons.webOff, color: Colors.grey),
           onTap: isOnline
               ? () {
-                  _navigationService.back();
-                  _navigationService.replaceWithSyncScreen();
-
+                  router.back();
+                  router.navigate(const SyncProgressRoute());
                   // Navigator.pop(context);
                   //       Navigator.push(
                   //         navigatorKey.currentContext!,

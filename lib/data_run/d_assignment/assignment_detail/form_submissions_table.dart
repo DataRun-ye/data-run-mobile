@@ -1,24 +1,19 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/core/utilities/list_extensions.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/core/form/field_template/section_template.entity.dart';
+import 'package:d_sdk/core/form/field_template/template.dart';
+import 'package:d_sdk/core/form/form_traverse_extension.dart';
+import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/core/common/state.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
+import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
-import 'package:datarunmobile/data_run/form/form_submission/submission_list_util.dart';
-import 'package:datarunmobile/data/form/form_instance.provider.dart';
-import 'package:datarunmobile/data_run/screens/form_submission_list/submission_sync_dialog.widget.dart';
+import 'package:datarunmobile/data_run/d_assignment/submission_sync_dialog.widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -35,12 +30,10 @@ class FormSubmissionsTable extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedSubmissions = useState<IList<DataFormSubmission>>(IList());
+    final selectedSubmissions = useState<IList<DataSubmission>>(IList());
     final toSync = selectedSubmissions.value
-        .where((s) =>
-            SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_POST ||
-            SubmissionListUtil.getSyncStatus(s) == SyncStatus.ERROR)
-        .map((s) => s.id!)
+        .where((s) => s.status?.isToSync() == true)
+        .map((s) => s.id)
         .toList();
     final activityModel = ActivityInheritedWidget.of(context);
 
@@ -55,7 +48,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
         .where((s) => s.assignment == assignment.id)
         .toList());
 
-    void _sort<T>(Comparable<T> Function(DataFormSubmission d) getField,
+    void _sort<T>(Comparable<T> Function(DataSubmission d) getField,
         int columnIndex, bool ascending) {
       submissions.value.sort((a, b) {
         final aValue = getField(a);
@@ -136,30 +129,22 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                 DataColumn(
                                   label: Text(S.of(context).createdDate),
                                   onSort: (columnIndex, ascending) {
-                                    _sort<DateTime>(
-                                        (d) => DateTime.parse(
-                                            DateHelper.fromUiLocalToDbUtcFormat(
-                                                d.createdDate!)),
-                                        columnIndex,
-                                        ascending);
+                                    _sort<DateTime>((d) => d.createdDate,
+                                        columnIndex, ascending);
                                   },
                                 ),
                                 DataColumn(
                                   label: Text(S.of(context).lastmodifiedDate),
                                   onSort: (columnIndex, ascending) {
-                                    _sort<DateTime>(
-                                        (d) => DateTime.parse(
-                                            DateHelper.fromUiLocalToDbUtcFormat(
-                                                d.lastModifiedDate!)),
-                                        columnIndex,
-                                        ascending);
+                                    _sort<DateTime>((d) => d.lastModifiedDate,
+                                        columnIndex, ascending);
                                   },
                                 ),
                                 DataColumn(
                                     label: Text(S.of(context).deleteRestore)),
                               ],
                               rows: submissions.value.map((submission) {
-                                final deleted = (submission.deleted ?? false);
+                                final deleted = (submission.deleted);
                                 final textStyle = deleted
                                     ? const TextStyle(
                                         decoration: TextDecoration.lineThrough)
@@ -168,11 +153,11 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                 Map<String, dynamic> totalResources = {};
                                 try {
                                   extractedValues = _extractValues(
-                                      submission.formData,
+                                      submission.formData ?? {},
                                       formVersion,
                                       activityModel);
-                                  totalResources =
-                                      _sumNumericResources(submission.formData);
+                                  totalResources = _sumNumericResources(
+                                      submission.formData ?? {});
                                 } catch (e) {
                                   // log
                                 }
@@ -196,9 +181,8 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                     }
                                   },
                                   cells: <DataCell>[
-                                    DataCell(buildStatusIcon(
-                                        SubmissionListUtil.getSyncStatus(
-                                            submission))),
+                                    DataCell(
+                                        buildStatusIcon(submission.status)),
                                     DataCell(IconButton(
                                       onPressed: !deleted
                                           ? () async {
@@ -301,8 +285,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
             extractedValues[field.name!] = getItemLocalString(
                 formTemplate.options
                     .firstOrNullWhere((t) => t.name == data[field.name])
-                    ?.label
-                    .unlock,
+                    ?.label,
                 defaultString: data[field.name] ?? '');
           } else if (data.containsKey(field.name)) {
             extractedValues[field.name!] = data[field.name];
@@ -311,7 +294,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
       });
     }
 
-    _extract(formData, formTemplate.fields);
+    _extract(formData, formTemplate.treeFields ?? []);
     return extractedValues;
   }
 
@@ -358,7 +341,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, String? id, String message, WidgetRef ref) async {
+      BuildContext context, String id, String message, WidgetRef ref) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -387,7 +370,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
   }
 
   void _showUndoSnackBar(
-      BuildContext context, String? toDeleteId, WidgetRef ref) {
+      BuildContext context, String toDeleteId, WidgetRef ref) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final listSubmissionsNotifier =
         ref.read(formSubmissionsProvider(formId).notifier);
@@ -406,11 +389,11 @@ class FormSubmissionsTable extends HookConsumerWidget {
   }
 }
 
-String _formatDate(String? dateStr) {
-  if (dateStr == null) return '';
-  final dateTime = DateTime.tryParse(dateStr)?.toLocal();
-  if (dateTime == null) {
-    return '';
-  }
+String _formatDate(DateTime? dateTime) {
+  if (dateTime == null) return '';
+  // final dateTime = DateTime.tryParse(dateStr)?.toLocal();
+  // if (dateTime == null) {
+  //   return '';
+  // }
   return '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
 }

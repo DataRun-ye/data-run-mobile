@@ -38,31 +38,12 @@ const filterAssignmentsProvider = FilterAssignmentsFamily();
 /// filters the list of assignment by certain
 ///
 /// Copied from [filterAssignments].
-class FilterAssignmentsFamily extends Family {
+class FilterAssignmentsFamily
+    extends Family<AsyncValue<List<AssignmentModel>>> {
   /// filters the list of assignment by certain
   ///
   /// Copied from [filterAssignments].
   const FilterAssignmentsFamily();
-
-  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
-    activityModelProvider
-  ];
-
-  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
-      <ProviderOrFamily>{
-    activityModelProvider,
-    ...?activityModelProvider.allTransitiveDependencies
-  };
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'filterAssignmentsProvider';
 
   /// filters the list of assignment by certain
   ///
@@ -75,7 +56,6 @@ class FilterAssignmentsFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   FilterAssignmentsProvider getProviderOverride(
     covariant FilterAssignmentsProvider provider,
@@ -85,29 +65,25 @@ class FilterAssignmentsFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<List<AssignmentModel>> Function(FilterAssignmentsRef ref)
-          create) {
-    return _$FilterAssignmentsFamilyOverride(this, create);
-  }
-}
-
-class _$FilterAssignmentsFamilyOverride implements FamilyOverride {
-  _$FilterAssignmentsFamilyOverride(this.overriddenFamily, this.create);
-
-  final FutureOr<List<AssignmentModel>> Function(FilterAssignmentsRef ref)
-      create;
+  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
+    activityModelProvider
+  ];
 
   @override
-  final FilterAssignmentsFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
+      <ProviderOrFamily>{
+    activityModelProvider,
+    ...?activityModelProvider.allTransitiveDependencies
+  };
 
   @override
-  FilterAssignmentsProvider getProviderOverride(
-    covariant FilterAssignmentsProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'filterAssignmentsProvider';
 }
 
 /// filters the list of assignment by certain
@@ -138,7 +114,7 @@ class FilterAssignmentsProvider
         );
 
   FilterAssignmentsProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -151,7 +127,8 @@ class FilterAssignmentsProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<AssignmentModel>> Function(FilterAssignmentsRef ref) create,
+    FutureOr<List<AssignmentModel>> Function(FilterAssignmentsRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -168,27 +145,8 @@ class FilterAssignmentsProvider
   }
 
   @override
-  (EntityScope?,) get argument {
-    return (scope,);
-  }
-
-  @override
   AutoDisposeFutureProviderElement<List<AssignmentModel>> createElement() {
     return _FilterAssignmentsProviderElement(this);
-  }
-
-  FilterAssignmentsProvider _copyWith(
-    FutureOr<List<AssignmentModel>> Function(FilterAssignmentsRef ref) create,
-  ) {
-    return FilterAssignmentsProvider._internal(
-      (ref) => create(ref as FilterAssignmentsRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      scope: scope,
-    );
   }
 
   @override
@@ -205,6 +163,8 @@ class FilterAssignmentsProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin FilterAssignmentsRef
     on AutoDisposeFutureProviderRef<List<AssignmentModel>> {
   /// The parameter `scope` of this provider.
@@ -221,14 +181,14 @@ class _FilterAssignmentsProviderElement
 }
 
 String _$assignmentSubmissionsHash() =>
-    r'4730a8095f4f5e40edcc38c46837b7b202e948ba';
+    r'd6f59cc35d9338bf0e4fe7b64eca0cb531215942';
 
 abstract class _$AssignmentSubmissions
-    extends BuildlessAutoDisposeAsyncNotifier<List<DataFormSubmission>> {
+    extends BuildlessAutoDisposeAsyncNotifier<List<DataSubmission>> {
   late final String assignmentId;
   late final String form;
 
-  FutureOr<List<DataFormSubmission>> build(
+  FutureOr<List<DataSubmission>> build(
     String assignmentId, {
     required String form,
   });
@@ -243,25 +203,12 @@ const assignmentSubmissionsProvider = AssignmentSubmissionsFamily();
 /// retrieve a certain assignment forms submissions
 ///
 /// Copied from [AssignmentSubmissions].
-class AssignmentSubmissionsFamily extends Family {
+class AssignmentSubmissionsFamily
+    extends Family<AsyncValue<List<DataSubmission>>> {
   /// retrieve a certain assignment forms submissions
   ///
   /// Copied from [AssignmentSubmissions].
   const AssignmentSubmissionsFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'assignmentSubmissionsProvider';
 
   /// retrieve a certain assignment forms submissions
   ///
@@ -276,7 +223,6 @@ class AssignmentSubmissionsFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   AssignmentSubmissionsProvider getProviderOverride(
     covariant AssignmentSubmissionsProvider provider,
@@ -287,26 +233,19 @@ class AssignmentSubmissionsFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(AssignmentSubmissions Function() create) {
-    return _$AssignmentSubmissionsFamilyOverride(this, create);
-  }
-}
-
-class _$AssignmentSubmissionsFamilyOverride implements FamilyOverride {
-  _$AssignmentSubmissionsFamilyOverride(this.overriddenFamily, this.create);
-
-  final AssignmentSubmissions Function() create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final AssignmentSubmissionsFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  AssignmentSubmissionsProvider getProviderOverride(
-    covariant AssignmentSubmissionsProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'assignmentSubmissionsProvider';
 }
 
 /// retrieve a certain assignment forms submissions
@@ -314,7 +253,7 @@ class _$AssignmentSubmissionsFamilyOverride implements FamilyOverride {
 /// Copied from [AssignmentSubmissions].
 class AssignmentSubmissionsProvider
     extends AutoDisposeAsyncNotifierProviderImpl<AssignmentSubmissions,
-        List<DataFormSubmission>> {
+        List<DataSubmission>> {
   /// retrieve a certain assignment forms submissions
   ///
   /// Copied from [AssignmentSubmissions].
@@ -339,7 +278,7 @@ class AssignmentSubmissionsProvider
         );
 
   AssignmentSubmissionsProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -353,7 +292,7 @@ class AssignmentSubmissionsProvider
   final String form;
 
   @override
-  FutureOr<List<DataFormSubmission>> runNotifierBuild(
+  FutureOr<List<DataSubmission>> runNotifierBuild(
     covariant AssignmentSubmissions notifier,
   ) {
     return notifier.build(
@@ -382,37 +321,9 @@ class AssignmentSubmissionsProvider
   }
 
   @override
-  (
-    String, {
-    String form,
-  }) get argument {
-    return (
-      assignmentId,
-      form: form,
-    );
-  }
-
-  @override
   AutoDisposeAsyncNotifierProviderElement<AssignmentSubmissions,
-      List<DataFormSubmission>> createElement() {
+      List<DataSubmission>> createElement() {
     return _AssignmentSubmissionsProviderElement(this);
-  }
-
-  AssignmentSubmissionsProvider _copyWith(
-    AssignmentSubmissions Function() create,
-  ) {
-    return AssignmentSubmissionsProvider._internal(
-      () => create()
-        ..assignmentId = assignmentId
-        ..form = form,
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      assignmentId: assignmentId,
-      form: form,
-    );
   }
 
   @override
@@ -432,8 +343,10 @@ class AssignmentSubmissionsProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin AssignmentSubmissionsRef
-    on AutoDisposeAsyncNotifierProviderRef<List<DataFormSubmission>> {
+    on AutoDisposeAsyncNotifierProviderRef<List<DataSubmission>> {
   /// The parameter `assignmentId` of this provider.
   String get assignmentId;
 
@@ -443,7 +356,7 @@ mixin AssignmentSubmissionsRef
 
 class _AssignmentSubmissionsProviderElement
     extends AutoDisposeAsyncNotifierProviderElement<AssignmentSubmissions,
-        List<DataFormSubmission>> with AssignmentSubmissionsRef {
+        List<DataSubmission>> with AssignmentSubmissionsRef {
   _AssignmentSubmissionsProviderElement(super.provider);
 
   @override
@@ -471,4 +384,4 @@ final filterQueryProvider =
 
 typedef _$FilterQuery = AutoDisposeNotifier<AssignmentFilterQuery>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

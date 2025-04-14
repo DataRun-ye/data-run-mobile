@@ -1,6 +1,6 @@
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:datarunmobile/core/common/state.dart';
 
 class SubmissionItemSummaryModel with EquatableMixin {
   SubmissionItemSummaryModel(
@@ -12,7 +12,7 @@ class SubmissionItemSummaryModel with EquatableMixin {
 
   final String? code;
   final String orgUnit;
-  final SyncStatus syncStatus;
+  final SubmissionStatus syncStatus;
   final IMap<String, dynamic> formData;
 
   @override

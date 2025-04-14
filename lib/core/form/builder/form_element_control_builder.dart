@@ -1,8 +1,6 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/form/field_template/field_template.dart';
+import 'package:d_sdk/core/form/form_traverse_extension.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -12,7 +10,7 @@ class FormElementControlBuilder {
       FormFlatTemplate formFlatTemplate, initialValue) {
     final Map<String, AbstractControl<dynamic>> controls = {};
 
-    for (var element in formFlatTemplate.formTemplate.fields) {
+    for (var element in formFlatTemplate.formTemplate.treeFields ?? []) {
       controls[element.name!] = createElementControl(formFlatTemplate, element,
           initialValue: initialValue?[element.name]);
     }

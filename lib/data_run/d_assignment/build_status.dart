@@ -1,5 +1,5 @@
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
@@ -85,7 +85,7 @@ Color? statusColor(AssignmentStatus? status) {
 }
 
 Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
-    DataFormSubmission submission, ActivityModel activityModel) async {
+    DataSubmission submission, ActivityModel activityModel) async {
   await Navigator.push(
       context,
       MaterialPageRoute(
@@ -94,9 +94,10 @@ Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
                 child: FormMetadataWidget(
                   formMetadata: FormMetadata(
                     assignmentModel: assignment,
-                    formId: submission.formVersion is String
-                        ? submission.formVersion
-                        : submission.formVersion.id,
+                    formId: submission.formVersion,
+                    // formId: submission.formVersion is String
+                    //     ? submission.formVersion
+                    //     : submission.formVersion.id,
                     submission: submission.id,
                   ),
                   child: const FormSubmissionScreen(currentPageIndex: 1),

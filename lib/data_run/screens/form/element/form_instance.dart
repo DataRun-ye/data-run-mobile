@@ -1,14 +1,15 @@
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
+import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
+import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
+import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:drift/drift.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 // const formUid = 'formDataUid';
@@ -70,15 +71,14 @@ class FormInstance {
 
   String? get submissionUid => formMetadata.submission;
 
-  Future<DataFormSubmission> saveFormData() async {
+  Future<void> saveFormData() async {
     final formSubmission =
         await formSubmissionList.getSubmission(submissionUid!);
 
     return _saveSubmission(formSubmission!);
   }
 
-  Future<DataFormSubmission> _saveSubmission(
-      DataFormSubmission formSubmission) async {
+  Future<void> _saveSubmission(DataSubmission formSubmission) async {
     final formValue = formSection.value;
     formValue.forEach((key, value) {
       _initialValue.update(
@@ -88,15 +88,19 @@ class FormInstance {
       );
     });
 
-    formSubmission.status = _assignmentStatus;
-    formSubmission.formData
-      ..removeWhere((k, v) => !metadata.contains(k))
-      ..['_status'] = _assignmentStatus?.name
-      ..addAll(formValue);
+    formSubmission = formSubmission.copyWith(
+        progressStatus: Value(_assignmentStatus),
+        formData: Value(formSubmission.formData
+          ?..removeWhere((k, v) => !metadata.contains(k))
+          ..['_status'] = _assignmentStatus?.name
+          ..addAll(formValue)));
+    // formSubmission.status = _assignmentStatus;
+    // formSubmission.formData
+    //   ?..removeWhere((k, v) => !metadata.contains(k))
+    //   ..['_status'] = _assignmentStatus?.name
+    //   ..addAll(formValue);
 
-    final updatedSubmission =
-        await formSubmissionList.updateSubmission(formSubmission);
-    return updatedSubmission;
+    return formSubmissionList.updateSubmission(formSubmission);
   }
 
   void updateSubmissionStatus(AssignmentStatus? status) async {
@@ -114,10 +118,9 @@ class FormInstance {
       formFlatTemplate,
       parent.template,
     );
-    parent
-      ..add(itemInstance);
-      // ..resolveDependencies()
-      // ..evaluateDependencies();
+    parent..add(itemInstance);
+    // ..resolveDependencies()
+    // ..evaluateDependencies();
     // itemInstance.resolveDependencies();
     // itemInstance.evaluateDependencies();
     parent.elementControl.markAsDirty();

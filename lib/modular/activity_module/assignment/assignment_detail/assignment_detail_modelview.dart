@@ -1,4 +1,4 @@
-// import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+// import 'package:d_sdk/database/shared/shared.dart';
 // import 'package:datarunmobile/core/models/d_run_identifiable.dart';
 // import 'package:datarunmobile/data/assignment/model/assignment_model_new.dart';
 // import 'package:stacked/stacked.dart';

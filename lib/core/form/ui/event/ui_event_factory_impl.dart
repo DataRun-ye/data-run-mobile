@@ -1,6 +1,6 @@
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/extensions/string_extension.dart';
 import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';

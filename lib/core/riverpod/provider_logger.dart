@@ -1,6 +1,6 @@
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 
 class ProviderLogger extends ProviderObserver {
   ProviderLogger({required this.providersNameToLog});

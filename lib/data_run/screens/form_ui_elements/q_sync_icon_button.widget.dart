@@ -1,5 +1,5 @@
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:flutter/material.dart';
-import 'package:datarunmobile/core/common/state.dart';
 
 class QSyncIconButton extends StatelessWidget {
   const QSyncIconButton({
@@ -8,30 +8,31 @@ class QSyncIconButton extends StatelessWidget {
     this.onUnsyncedPressed,
     this.onErrorPressed,
   });
-  final SyncStatus? state;
+
+  final SubmissionStatus? state;
   final VoidCallback? onUnsyncedPressed;
   final VoidCallback? onErrorPressed;
 
   @override
   Widget build(BuildContext context) {
     switch (state) {
-      case SyncStatus.SYNCED:
+      case SubmissionStatus.synced:
         return const IconButton(
           icon: Icon(Icons.check, color: Colors.white60),
           onPressed: null,
         );
-      case SyncStatus.TO_UPDATE:
+      case SubmissionStatus.draft:
         return const IconButton(
           icon: Icon(Icons.check, color: Colors.white60),
           onPressed: null,
         );
-      case SyncStatus.TO_POST:
+      case SubmissionStatus.finalized:
         return IconButton(
           enableFeedback: true,
           icon: const Icon(Icons.sync, color: Colors.black45, size: 35),
           onPressed: onUnsyncedPressed,
         );
-      case SyncStatus.ERROR:
+      case SubmissionStatus.syncFailed:
         return IconButton(
           icon: const Icon(Icons.error, color: Colors.red),
           onPressed: onErrorPressed,

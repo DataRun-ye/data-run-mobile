@@ -1,8 +1,7 @@
 import 'dart:io';
 
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
@@ -17,23 +16,27 @@ part 'assignment.provider.g.dart';
 @riverpod
 class AssignmentSubmissions extends _$AssignmentSubmissions {
   @override
-  Future<List<DataFormSubmission>> build(String assignmentId,
+  Future<List<DataSubmission>> build(String assignmentId,
       {required String form}) async {
     final submissions = await ref.watch(formSubmissionsProvider(form).future);
 
     final futures = submissions
         .where((s) => s.assignment == assignmentId)
         .map((submission) async {
-      return submission
-        ..formVersion = await D2Remote.formModule.formTemplateV
+      return submission;
+        // ..formVersion =
+        // await DSdk.db.managers.formVersions
+        //     .filter((f) => f.id(submission.formVersion))
+        //     .getSingleOrNull();
+      /*await D2Remote.formModule.formTemplateV
             .byId(submission.formVersion is String
                 ? submission.formVersion
                 : submission.formVersion.id)
-            .getOne();
+            .getOne()*/
+      ;
     }).toList();
 
-    final submissionsWithTemplate =
-        await Future.wait<DataFormSubmission>(futures);
+    final submissionsWithTemplate = await Future.wait<DataSubmission>(futures);
     return submissionsWithTemplate;
   }
 }

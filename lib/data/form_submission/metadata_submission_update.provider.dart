@@ -1,6 +1,6 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/form/entities/metadata_submission.entity.dart';
-import 'package:d2_remote/modules/datarun/form/entities/metadata_submission_update.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/data/form_submission/metadata_submission_update.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'metadata_submission_update.provider.g.dart';
@@ -8,30 +8,31 @@ part 'metadata_submission_update.provider.g.dart';
 @riverpod
 Future<MetadataSubmission?> metadataSubmissionRepository(
     MetadataSubmissionRepositoryRef ref, String? orgUnit) {
-  return D2Remote.formModule.metaSubmission
-      .where(attribute: 'resourceId', value: orgUnit ?? '')
-      .getOne();
+  final db = DSdk.db;
+  return (db.select(db.metadataSubmissions)
+        ..where((tbl) => tbl.resourceId.equals(orgUnit ?? '')))
+      .getSingleOrNull();
 }
-
-@riverpod
-class MetadataSubmissionUpdates extends _$MetadataSubmissionUpdates {
-  @override
-  Future<List<MetadataSubmissionUpdate>> build(String submissionId) async {
-    final metadataSubmissionUpdates = await D2Remote
-        .formModule.metaSubmissionUpdate
-        .where(attribute: 'submissionId', value: submissionId)
-        .get();
-    return metadataSubmissionUpdates;
-  }
-
-  void add(MetadataSubmissionUpdate update) async {
-    // Add update to the list here
-    // This method should be implemented in the MetadataSubmissionUpdates class
-    await D2Remote.formModule.metaSubmissionUpdate.setData(update).save();
-    await D2Remote.formModule.metaSubmission;
-    ref.invalidateSelf();
-  }
-}
+//
+// @riverpod
+// class MetadataSubmissionUpdates extends _$MetadataSubmissionUpdates {
+//   @override
+//   Future<List<MetadataSubmissionUpdate>> build(String submissionId) async {
+//     final metadataSubmissionUpdates = await D2Remote
+//         .formModule.metaSubmissionUpdate
+//         .where(attribute: 'submissionId', value: submissionId)
+//         .get();
+//     return metadataSubmissionUpdates;
+//   }
+//
+//   void add(MetadataSubmissionUpdate update) async {
+//     // Add update to the list here
+//     // This method should be implemented in the MetadataSubmissionUpdates class
+//     await D2Remote.formModule.metaSubmissionUpdate.setData(update).save();
+//     await D2Remote.formModule.metaSubmission;
+//     ref.invalidateSelf();
+//   }
+// }
 
 @riverpod
 Future<List<MetadataSubmissionUpdate>> systemMetadataSubmissions(
@@ -63,15 +64,15 @@ Future<List<MetadataSubmissionUpdate>> systemMetadataSubmissions(
       ;
 }
 
-@riverpod
-Future<List<MetadataSubmissionUpdate>> metadataSubmissionUpdateFilter(
-    MetadataSubmissionUpdateFilterRef ref, String query, String orgUnit) async {
-  final allItems =
-      await ref.watch(metadataSubmissionUpdatesProvider(orgUnit).future);
-
-  return allItems.where((item) {
-    final lowerQuery = query.toLowerCase();
-    return item.householdName!.toLowerCase().contains(lowerQuery) ||
-        item.householdHeadSerialNumber.toString().contains(lowerQuery);
-  }).toList();
-}
+// @riverpod
+// Future<List<MetadataSubmissionUpdate>> metadataSubmissionUpdateFilter(
+//     MetadataSubmissionUpdateFilterRef ref, String query, String orgUnit) async {
+//   final allItems =
+//       await ref.watch(metadataSubmissionUpdatesProvider(orgUnit).future);
+//
+//   return allItems.where((item) {
+//     final lowerQuery = query.toLowerCase();
+//     return item.householdName!.toLowerCase().contains(lowerQuery) ||
+//         item.householdHeadSerialNumber.toString().contains(lowerQuery);
+//   }).toList();
+// }

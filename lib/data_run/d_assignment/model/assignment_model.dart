@@ -1,6 +1,4 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
@@ -97,10 +95,13 @@ class AssignmentModel with EquatableMixin {
   }
 
   static DateTime? calculateAssignmentDate(
-      String activityStartDate, int? startDay) {
-    final DateTime? activityStart = DateTime.tryParse(
-        DateHelper.fromDbUtcToUiLocalFormat(activityStartDate));
-    return activityStart?.add(Duration(days: (startDay ?? 1) - 1));
+      DateTime? activityStartDate, int? startDay) {
+    // final DateTime? activityStart = DateTime.tryParse(
+    //     DateHelper.fromDbUtcToUiLocalFormat(activityStartDate));
+    return activityStartDate != null
+        ? activityStartDate.toLocal().add(Duration(days: (startDay ?? 1) - 1))
+        : null;
+    ;
   }
 
   @override

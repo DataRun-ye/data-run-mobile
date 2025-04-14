@@ -29,7 +29,7 @@ class RepeatTableSliver extends HookConsumerWidget {
         color: Colors.black45,
         padding: const EdgeInsets.all(16),
         child: Row(children: [
-          const Icon(MdiIcons.table),
+          Icon(MdiIcons.table),
           Expanded(
             child: Text(repeatInstance.label, softWrap: true),
           )

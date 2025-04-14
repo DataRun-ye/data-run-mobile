@@ -1,5 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
+import 'package:d_sdk/core/form/field_template/field_template.dart';
 
 /// dfs traversal for Template
 Iterable<TemplateType> getDfsTemplateIterator<TemplateType extends Template>(

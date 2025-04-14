@@ -1,7 +1,6 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
-import 'package:d2_remote/modules/metadatarun/project/entities/d_project.entity.dart';
-import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,31 +15,32 @@ ActivitiesAccessRepository activitiesAccessRepository(
 class ActivitiesAccessRepository {
   /// All available teams including disabled
   Future<IList<Team>> getAllTeams() async {
-    final List<Team> teams = await D2Remote.teamModuleD.team.get();
+    final List<Team> teams = await DSdk.db.managers.teams.get();
+    //await D2Remote.teamModuleD.team.get();
 
     return teams.toIList();
   }
 
   /// All available activities including disabled
   Future<IList<Activity>> getAllActivities() async {
-    final List<Activity> activities =
-        await D2Remote.activityModuleD.activity.get();
+    final List<Activity> activities = await DSdk.db.managers.activities.get();
+    // await D2Remote.activityModuleD.activity.get();
 
     return activities.toIList();
   }
 
   /// All available projects including disabled
   Future<IList<Project>> getAllProjects() async {
-    final List<Project> projects = await D2Remote.projectModuleD.project.get();
+    final List<Project> projects = await DSdk.db.managers.projects.get();
+    //await D2Remote.projectModuleD.project.get();
 
     return projects.toIList();
   }
 
   /// the team is in active activity
   Future<bool> teamIsInActiveActivity(Team team) async {
-    final List<Activity> enabledActivities = await D2Remote
-        .activityModuleD.activity
-        .where(attribute: 'disabled', value: false)
+    final List<Activity> enabledActivities = await DSdk.db.managers.activities
+        .filter((f) => f.disabled.equals(false))
         .get();
 
     return enabledActivities
@@ -49,20 +49,26 @@ class ActivitiesAccessRepository {
 
   /// activity is Active and has one or more active teams assigned to user
   Future<bool> activityWithActiveTeams(String activityUid) async {
-    final List<Team> enabledTeams = await D2Remote.teamModuleD.team
-        .byActivity(activityUid)
-        .where(attribute: 'disabled', value: false)
+    final List<Team> enabledTeams = await DSdk.db.managers.teams
+        .filter((f) => f.disabled(false) & f.activity.id.equals(activityUid))
         .get();
+    // await D2Remote.teamModuleD.team
+    //     .byActivity(activityUid)
+    //     .where(attribute: 'disabled', value: false)
+    //     .get();
 
-    return enabledTeams.any((Team team) => team.disabled = false);
+    return enabledTeams.any((Team team) => team.disabled == false);
   }
 
   /// project has one or more active activities
   Future<bool> projectHasActiveActivities(Project project) async {
-    final List<Activity> enabledActivities = await D2Remote
-        .activityModuleD.activity
-        .where(attribute: 'disabled', value: false)
+    final List<Activity> enabledActivities = await DSdk.db.managers.activities
+        .filter((f) => f.disabled(false))
         .get();
+    // await D2Remote
+    //     .activityModuleD.activity
+    //     .where(attribute: 'disabled', value: false)
+    //     .get();
 
     return enabledActivities
         .any((Activity activity) => activity.project == project.id);
@@ -75,7 +81,7 @@ class ActivitiesAccessRepository {
     /// get all teams from teamsProvider and filter disabled
     final IList<Team> enabledTeams = await getAllTeams().then(
         (IList<Team> teams) =>
-            teams.where((Team team) => !team.disabled).toIList());
+            teams.where((Team team) => !(team.disabled ?? false)).toIList());
 
     /// get all activities from activitiesProvider and filter disabled
     final IList<Activity> enabledActivities = await getAllActivities().then(
@@ -95,7 +101,7 @@ class ActivitiesAccessRepository {
     /// get all teams from teamsProvider and filter disabled
     final IList<Team> enabledTeams = await getAllTeams().then(
         (IList<Team> teams) =>
-            teams.where((Team team) => !team.disabled).toIList());
+            teams.where((Team team) => !(team.disabled ?? false)).toIList());
 
     /// get all activities from activitiesProvider and filter disabled
     final IList<Activity> enabledActivities = await getAllActivities().then(
@@ -104,15 +110,17 @@ class ActivitiesAccessRepository {
             .toIList());
 
     /// Predicate<T>
-    bool activityHasActiveTeam(Activity activitie) =>
-        enabledTeams.any((Team team) => team.activity == activitie.id);
+    bool activityHasActiveTeam(Activity activities) =>
+        enabledTeams.any((Team team) => team.activity == activities.id);
 
     return enabledActivities.where(activityHasActiveTeam).toIList();
   }
 
   /// Only Active projects (Enabled)
   Future<IList<Project>> getActiveProjects() async {
-    final List<Project> projects = await D2Remote.projectModuleD.project.get();
+    final List<Project> projects =
+        await DSdk.db.managers.projects.filter((f) => f.disabled(false)).get();
+    // await D2Remote.projectModuleD.project.get();
 
     final List<Project> enabledProjects = <Project>[];
 
@@ -126,49 +134,49 @@ class ActivitiesAccessRepository {
     return enabledProjects.toIList();
   }
 
-  // /// Only Active forms (Enabled)
-  // /// that has active activity and active team
-  // Future<IList<FormTemplate>> getActiveForms() async {
-  //   final List<FormTemplate> forms = await D2Remote.formModule.form.get();
-  //
-  //   final List<FormTemplate> enabledForms = [];
-  //
-  //   for (final form in forms) {
-  //     final formActivityIsActive =
-  //         await activityIsActiveWithActiveTeams(form.activity);
-  //     if (formActivityIsActive) {
-  //       enabledForms.add(form);
-  //     }
-  //   }
-  //   return enabledForms.toIList();
-  // }
+// /// Only Active forms (Enabled)
+// /// that has active activity and active team
+// Future<IList<FormTemplate>> getActiveForms() async {
+//   final List<FormTemplate> forms = await D2Remote.formModule.form.get();
+//
+//   final List<FormTemplate> enabledForms = [];
+//
+//   for (final form in forms) {
+//     final formActivityIsActive =
+//         await activityIsActiveWithActiveTeams(form.activity);
+//     if (formActivityIsActive) {
+//       enabledForms.add(form);
+//     }
+//   }
+//   return enabledForms.toIList();
+// }
 
-  // /// Only Active forms (Enabled)
-  // /// that has active activity and active team
-  // Future<IList<FormTemplate>> getActiveFormsByActivity(
-  //     [String? activityUid]) async {
-  //   FormTemplateQuery query = D2Remote.formModule.form;
-  //   if(activityUid != null) {
-  //     query = query.where(attribute: 'activity', value: activityUid);
-  //   }
-  //   final List<FormTemplate> forms = await D2Remote.formModule.form.get();
-  //
-  //   final List<FormTemplate> enabledForms = [];
-  //
-  //   for (final form in forms) {
-  //     final formActivityIsActive =
-  //         await activityIsActiveWithActiveTeams(form.activity);
-  //     if (formActivityIsActive) {
-  //       enabledForms.add(form);
-  //     }
-  //   }
-  //   return enabledForms.toIList();
-  // }
+// /// Only Active forms (Enabled)
+// /// that has active activity and active team
+// Future<IList<FormTemplate>> getActiveFormsByActivity(
+//     [String? activityUid]) async {
+//   FormTemplateQuery query = D2Remote.formModule.form;
+//   if(activityUid != null) {
+//     query = query.where(attribute: 'activity', value: activityUid);
+//   }
+//   final List<FormTemplate> forms = await D2Remote.formModule.form.get();
+//
+//   final List<FormTemplate> enabledForms = [];
+//
+//   for (final form in forms) {
+//     final formActivityIsActive =
+//         await activityIsActiveWithActiveTeams(form.activity);
+//     if (formActivityIsActive) {
+//       enabledForms.add(form);
+//     }
+//   }
+//   return enabledForms.toIList();
+// }
 
-  // /// Only Active forms (Enabled)
-  // Future<Team?> getActivityTeam(String activityUid) async {
-  //   return D2Remote.teamModuleD.team
-  //       .where(attribute: 'activity', value: activityUid)
-  //       .getOne();
-  // }
+// /// Only Active forms (Enabled)
+// Future<Team?> getActivityTeam(String activityUid) async {
+//   return D2Remote.teamModuleD.team
+//       .where(attribute: 'activity', value: activityUid)
+//       .getOne();
+// }
 }

@@ -1,11 +1,6 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:d2_remote/shared/utilities/save_option.util.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/assignment/assignment.provider.dart';
@@ -13,6 +8,7 @@ import 'package:datarunmobile/data/team/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/extract_and_sum_allocated_actual.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
+import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -34,24 +30,38 @@ class Assignments extends _$Assignments {
   @override
   Future<List<AssignmentModel>> build() async {
     final activityModel = ref.watch(activityModelProvider);
-    final query = D2Remote.assignmentModuleD.assignment;
-    if (activityModel.activity != null) {
-      query.where(attribute: 'activity', value: activityModel.activity!.id);
-    }
+    // final query = D2Remote.assignmentModuleD.assignment;
+    //
+    // if (activityModel.activity != null) {
+    //   query.where(attribute: 'activity', value: activityModel.activity!.id);
+    // }
 
-    final List<Assignment> assignments = await query.get();
+    final List<Assignment> assignments = await (activityModel.activity != null
+        ? DSdk.db.managers.assignments
+            .filter((f) => f.activity.id(activityModel.activity!.id))
+            .get()
+        : DSdk.db.managers.assignments.get());
+    // await query.get();
 
     final futures =
         assignments.map<Future<AssignmentModel>>((assignment) async {
-      final activityEntity = await D2Remote.activityModuleD.activity
-          .byId(assignment.activity!)
-          .getOne();
-      final orgUnitEntity = await D2Remote.organisationUnitModuleD.orgUnit
-          .byId(assignment.orgUnit!)
-          .getOne();
+      final activityEntity = await DSdk.db.managers.activities
+          .filter((f) => f.id(assignment.activity))
+          .getSingleOrNull();
+      // await D2Remote.activityModuleD.activity
+      //     .byId(assignment.activity!)
+      //     .getOne();
+      final orgUnitEntity = await DSdk.db.managers.orgUnits
+          .filter((f) => f.id(assignment.orgUnit))
+          .getSingleOrNull();
+      // await D2Remote.organisationUnitModuleD.orgUnit
+      //     .byId(assignment.orgUnit!)
+      //     .getOne();
 
-      final teamEntity =
-          await D2Remote.teamModuleD.team.byId(assignment.team!).getOne();
+      final teamEntity = await DSdk.db.managers.teams
+          .filter((f) => f.id(assignment.team))
+          .getSingleOrNull();
+      // await D2Remote.teamModuleD.team.byId(assignment.team!).getOne();
 
       final IList<TeamModel> assignedTeams =
           await ref.watch(teamsProvider(EntityScope.Assigned).future);
@@ -66,7 +76,7 @@ class Assignments extends _$Assignments {
 
       final assignmentForms =
           assignment.forms.where((f) => assignedForms.contains(f)).toList();
-      List<DataFormSubmission> submissions = [];
+      List<DataSubmission> submissions = [];
 
       for (var form in assignmentForms) {
         submissions.addAll(await ref.watch(
@@ -106,13 +116,10 @@ class Assignments extends _$Assignments {
         status: status,
         dueDate: activityEntity.startDate != null
             ? AssignmentModel.calculateAssignmentDate(
-                activityEntity.startDate!, assignment.startDay)
+                activityEntity.startDate, assignment.startDay)
             : null,
         startDay: assignment.startDay,
-        rescheduledDate: assignment.startDate != null
-            ? DateTime.parse(
-                DateHelper.fromDbUtcToUiLocalFormat(assignment.startDate!))
-            : null,
+        rescheduledDate: assignment.startDate?.toLocal(),
         allocatedResources: managedTeams.length > 0
             ? resourceHeaders
                 .asMap()
@@ -131,22 +138,26 @@ class Assignments extends _$Assignments {
       AssignmentStatus? status, String assignmentId) async {
     // final previousState = await future;
 
-    Assignment? assignment =
-        await D2Remote.assignmentModuleD.assignment.byId(assignmentId).getOne();
+    Assignment? assignment = await DSdk.db.managers.assignments
+        .filter((f) => f.id(assignmentId))
+        .getSingleOrNull();
+    // await D2Remote.assignmentModuleD.assignment.byId(assignmentId).getOne();
     if (assignment != null) {
-      DataFormSubmission toUpdate = DataFormSubmission.fromJson({
-        ...assignment.toJson(),
-        'status': status,
-        'lastModifiedDate': DateHelper.nowUtc()
-      });
+      Assignment toUpdate = assignment.copyWith(status: Value(status));
+      // DataSubmission.fromJson({
+      //   ...assignment.toJson(),
+      //   'status': status,
+      //   'lastModifiedDate': DateHelper.nowUtc()
+      // });
 
-      await D2Remote.assignmentModuleD.assignment
-          .setData(toUpdate)
-          .save(saveOptions: SaveOptions(skipLocalSyncStatus: false));
+      await DSdk.db.assignmentsDao
+          .updateItem(assignment.copyWith(status: Value(status)));
+      // await D2Remote.assignmentModuleD.assignment
+      //     .setData(toUpdate)
+      //     .save(saveOptions: SaveOptions(skipLocalSyncStatus: false));
     }
 
     ref.invalidateSelf();
     await future;
   }
 }
-

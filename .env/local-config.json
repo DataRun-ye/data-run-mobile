@@ -1,8 +1,9 @@
 {
   "env_label": "local",
   "api_base_url": "http://192.168.80.1:8080",
+  "api_path": "/api/custom",
   "default_locale": "en",
-  "api_request_send_timeout": 5,
+  "api_request_send_timeout": 8,
   "in_memory": false,
   "secure_database": true,
   "secure_cache": true,

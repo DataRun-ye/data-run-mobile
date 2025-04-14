@@ -1,6 +1,5 @@
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
-import 'package:datarunmobile/core/common/state.dart';
 import 'package:datarunmobile/data/assignment/assignment.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
@@ -8,8 +7,8 @@ import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/ui/shared/sync_badges/sync_status_badges_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -99,18 +98,9 @@ class AssignmentOverviewItem extends ConsumerWidget {
             const SizedBox(height: 5.0),
 
             // const Divider(height: 16),
-            const Row(
-              // mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(width: 2),
-                SyncStatusChip(syncStatus: SyncStatus.SYNCED),
-                SizedBox(width: 2),
-                SyncStatusChip(syncStatus: SyncStatus.TO_POST),
-                SizedBox(width: 2),
-                SyncStatusChip(syncStatus: SyncStatus.TO_UPDATE),
-              ],
-            ),
+            SyncStatusBadgesView(
+                id: assignment.id,
+                aggregationLevel: StatusAggregationLevel.assignment),
             const Divider(height: 5.0),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,

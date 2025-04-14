@@ -12,7 +12,7 @@
   "databaseQueryFailed": "Error occurred while querying the database.",
   "databaseInternalError": "Database returned an Error {error}.",
   "syncError": "Error While Trying to Sync data {error}.",
-  "unknownError": "Error: {error}.",
+  "unexpected": "Error: {error}.",
   "validationError": "Please correct the errors in the form.",
   "apiError": "An error occurred while interacting with the API {error}.",
   "appName": "Datarun",
@@ -304,5 +304,15 @@
   "loading": "Loading ...",
   "loadMore": "Load More",
   "noMoreItems": "No more items.",
-  "assignmentList": "Assignment List"
+  "assignmentList": "Assignment List",
+  "noActiveDatabaseFound": "No active database found: {error}.",
+  "sessionExpired": "Session expired: {error}.",
+  "badCertificate": "Bad certificate: {error}.",
+  "invalidData": "Invalid data: {error}.",
+  "badHttpRequest": "Bad http request: {error}.",
+  "badRequestToEndPoint": "Bad request to end point: {error}.",
+  "endPointNotFound": "end point Not found: {error}.",
+  "serverError": "Server error: {error}.",
+  "unauthorizedAccessToEndPoint": "Unauthorized Access to end point: {error}.",
+  "forbidden": "Forbidden: {error}."
 }

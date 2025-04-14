@@ -1,6 +1,6 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart';
 import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart';
@@ -34,14 +34,14 @@ class DisplayNameProviderImpl implements DisplayNameProvider {
         await optionSetConfiguration.optionInDataSetByName(optionSet, value);
 
     if (optionByName != null) {
-      return getItemLocalString(optionByName.label.unlock,
+      return getItemLocalString(optionByName.label,
           defaultString: optionByName.name);
     }
 
     final FormOption? optionByCode =
         await optionSetConfiguration.optionInDataSetByCode(optionSet, value);
     if (optionByCode != null) {
-      return getItemLocalString(optionByCode.label.unlock,
+      return getItemLocalString(optionByCode.label,
           defaultString: optionByCode.code);
     }
 

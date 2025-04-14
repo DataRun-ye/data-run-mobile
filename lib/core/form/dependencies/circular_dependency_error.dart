@@ -1,4 +1,5 @@
-import 'package:d2_remote/core/datarun/exception/exception.dart';
+
+import 'package:d_sdk/core/exception/exception.dart';
 
 class CircularDependencyError extends DException {
   CircularDependencyError(this.fieldId, this.evaluationStack)

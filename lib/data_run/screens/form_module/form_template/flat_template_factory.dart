@@ -1,9 +1,8 @@
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
+import 'package:d_sdk/core/form/form_traverse_extension.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/core/form/field_template/field_template.dart';
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/core/form/rule/rule_parse_extension.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 class FlatTemplateFactory {
@@ -21,13 +20,13 @@ class FlatTemplateFactory {
 
   List<FormElementTemplate> createFlatTemplate() {
     List<FormElementTemplate> result = [];
-    for (var template in _formVersion.flatFieldsList) {
+    for (var template in _formVersion.formFlatFields.values) {
       result.addAll(_flattenElementTemplate(template));
     }
     return result;
   }
 
-  List<FormElementTemplate> _flatSectionWithPath(List<Template> templates,
+  Iterable<FormElementTemplate> _flatSectionWithPath(List<Template> templates,
       {String? initialPath, String? initialRuntimePath}) {
     List<FormElementTemplate> result = [];
     for (var template in templates) {

@@ -1,6 +1,7 @@
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/helpers/lazy.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
 
@@ -37,11 +38,10 @@ class FormValueStore {
   }
 
   Future<bool> eventStateIsFinal() async {
-    final DataFormSubmission? submission = await D2Remote
-        .formSubmissionModule.formSubmission
-        .byId(recordUid)
-        .getOne();
-    return submission?.isFinal ?? false;
+    final DataSubmission? submission = await DSdk.db.managers.dataSubmissions
+        .filter((f) => f.id.equals(recordUid))
+        .getSingleOrNull();
+    return submission?.status == SubmissionStatus.finalized;
   }
 
   Future<StoreResult> saveWithTypeCheck(String uid, String? value) async {

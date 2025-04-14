@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 class FormStructureManager {

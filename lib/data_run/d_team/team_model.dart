@@ -1,46 +1,53 @@
-import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
-import 'package:d2_remote/shared/entities/identifiable.entity.dart';
-import 'package:datarunmobile/core/models/d_identifiable_model.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:intl/intl.dart';
 
 class TeamModel with EquatableMixin {
   factory TeamModel.fromIdentifiable(
-      {required IdentifiableEntity identifiableEntity,
-      String? activity,
+      {required String activity,
+      required String id,
+      required String name,
+      required bool disabled,
+      IMap<String, dynamic>? label,
+      IMap<String, dynamic>? properties,
       Iterable<TeamFormPermission> formPermissions = const IListConst([])}) {
     return TeamModel._(
         activity: activity,
-        team: IdentifiableModel.fromIdentifiable(
-            identifiableEntity: identifiableEntity),
+        id: id,
+        name: name,
+        disabled: disabled,
+        label: label,
+        properties: properties,
         formPermissions: formPermissions);
   }
 
   TeamModel._(
-      {required IdentifiableModel team,
+      {required this.id,
+      required this.name,
+      this.disabled = false,
+      IMap<String, dynamic>? label,
+      IMap<String, dynamic>? properties,
       Iterable<TeamFormPermission>? formPermissions,
       this.activity})
-      : this._team = team,
-        this.formPermissions = IList.orNull(formPermissions) ?? IList();
+      : this.formPermissions = IList.orNull(formPermissions) ?? IList(),
+        this.label = label ?? IMap(),
+        this.properties = properties ?? IMap();
 
-  final IdentifiableModel _team;
+  final String name; // => '${Intl.message('team')} ${_team.code}';
 
-  String? get name => '${Intl.message('team')} ${_team.code}';
+  final String id; // => _team.id;
 
-  String? get id => _team.id;
+  final bool disabled; // => _team.disabled;
 
-  bool get disabled => _team.disabled;
+  final IMap<String, dynamic> label; // => _team.label;
 
-  IMap<String, dynamic> get label => _team.label;
-
-  IMap<String, dynamic> get properties => _team.properties;
+  final IMap<String, dynamic> properties; // => _team.properties;
 
   final String? activity;
   final IList<TeamFormPermission> formPermissions;
 
   @override
-  List<Object?> get props => [_team, formPermissions];
+  List<Object?> get props => [id, name, disabled, activity, formPermissions];
 }
 
 class TeamSummary {

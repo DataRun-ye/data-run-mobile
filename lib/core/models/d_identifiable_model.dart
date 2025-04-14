@@ -1,4 +1,3 @@
-import 'package:d2_remote/shared/entities/identifiable.entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,21 +15,21 @@ class IdentifiableModel with EquatableMixin {
       : this.label = label,
         this.properties = properties;
 
-  factory IdentifiableModel.fromIdentifiable(
-      {required IdentifiableEntity identifiableEntity,
-      IMap<String, dynamic> label = const IMapConst({}),
-      IMap<String, dynamic> properties = const IMapConst({}),
-      bool disabled = false,
-      bool deleted = false}) {
-    return IdentifiableModel(
-        id: identifiableEntity.id,
-        code: identifiableEntity.code,
-        name: identifiableEntity.name,
-        label: label,
-        properties: properties,
-        disabled: disabled,
-        deleted: deleted);
-  }
+  // factory IdentifiableModel.fromIdentifiable(
+  //     {required IdentifiableEntity identifiableEntity,
+  //     IMap<String, dynamic> label = const IMapConst({}),
+  //     IMap<String, dynamic> properties = const IMapConst({}),
+  //     bool disabled = false,
+  //     bool deleted = false}) {
+  //   return IdentifiableModel(
+  //       id: identifiableEntity.id,
+  //       code: identifiableEntity.code,
+  //       name: identifiableEntity.name,
+  //       label: label,
+  //       properties: properties,
+  //       disabled: disabled,
+  //       deleted: deleted);
+  // }
 
   final String? id;
   final String? code;

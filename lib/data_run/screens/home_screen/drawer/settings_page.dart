@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart' show RoutePage;
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data_run/screens/home_screen/drawer/about_page.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+@RoutePage()
 class SettingsPage extends ConsumerWidget {
   const SettingsPage();
 
@@ -31,7 +33,7 @@ class SettingsPage extends ConsumerWidget {
                     text: S.of(context).userSettings,
                   ),
                   Tab(
-                    icon: const Icon(MdiIcons.update),
+                    icon: Icon(MdiIcons.update),
                     text: S.of(context).syncSettings,
                   ),
                   Tab(

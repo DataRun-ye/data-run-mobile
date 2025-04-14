@@ -1,5 +1,5 @@
-import 'package:d2_remote/core/utilities/list_extensions.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/template_path_walking_service.dart';
+import 'package:d_sdk/core/form/template_path_walking_service.dart';
+import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 mixin PathDependencyWalkingService<T extends TreeElement>

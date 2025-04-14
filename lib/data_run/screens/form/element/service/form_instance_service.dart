@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/attribute_type.dart';
-import 'package:d2_remote/modules/metadatarun/metadatarun.dart';
+import 'package:d_sdk/core/form/attribute_type.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/device_info_service.dart';
 import 'package:uuid/uuid.dart';
@@ -13,21 +12,24 @@ class FormInstanceService {
   FormInstanceService(
       {AndroidDeviceInfoService? deviceInfoService, required this.formMetadata})
       : _uuid = const Uuid().v4(),
-        _deviceInfoService = deviceInfoService;
+        _deviceInfoService = deviceInfoService,
+        this.db = DSdk.db;
 
   final FormMetadata formMetadata;
 
   final AndroidDeviceInfoService? _deviceInfoService;
   final String _uuid;
+  final AppDatabase db;
 
   Future<String?> getUserAttribute(AttributeType userAttributeType) async {
-    User? currentUser = await D2Remote.userModule.user.getOne();
+    final currentUser = DSdk.currentAuthUser;
+    // await D2Remote.userModule.user.getOne();
 
     return switch (userAttributeType) {
-      AttributeType.username => currentUser?.username,
-      AttributeType.userUid => currentUser?.id,
-      AttributeType.phoneNumber => currentUser?.phoneNumber,
-      AttributeType.userInfo => currentUser?.firstName,
+      AttributeType.username => currentUser.username,
+      AttributeType.userUid => currentUser.id,
+      AttributeType.phoneNumber => currentUser.mobile,
+      AttributeType.userInfo => currentUser.firstname,
       _ => null
     };
   }
@@ -62,11 +64,10 @@ class FormInstanceService {
         AttributeType.form =>
           initialValue ?? formMetadata.formId.split('-').first,
         AttributeType.team => initialValue ??
-            (await (D2Remote.teamModuleD.team
-                    .where(attribute: 'disabled', value: false) as TeamQuery)
-                    .byActivity(formMetadata.assignmentModel.teamId)
-                    .getOne())
-                ?.id,
+            await (db.select(db.dataValues)
+                  ..where((tbl) =>
+                      tbl.id.equals(formMetadata.assignmentModel.teamId)))
+                .getSingleOrNull(),
         AttributeType.activity =>
           initialValue ?? formMetadata.assignmentModel.activityId,
         AttributeType.version => initialValue ?? formMetadata.formId,

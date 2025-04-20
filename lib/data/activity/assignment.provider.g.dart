@@ -221,7 +221,7 @@ class _FilterAssignmentsProviderElement
 }
 
 String _$assignmentSubmissionsHash() =>
-    r'aae1da21c145959e23bcee601ea808397d4be983';
+    r'add7427397ba0b70cccea5b856402af3c7dbfd44';
 
 abstract class _$AssignmentSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<List<DataFormSubmission>> {

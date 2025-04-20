@@ -40,8 +40,6 @@ import 'package:datarunmobile/data/service/d_authentication.service.dart'
     as _i443;
 import 'package:datarunmobile/data/use_case/activity/assignment_detail.service.dart'
     as _i359;
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart'
-    as _i61;
 import 'package:datarunmobile/data_run/screens/login_screen/reactive_form_state/login_reactive_form.viewmodel.dart'
     as _i676;
 import 'package:get_it/get_it.dart' as _i174;
@@ -89,11 +87,6 @@ Future<_i174.GetIt> init(
           ));
   gh.factory<_i236.IdentifiableRepository<_i381.Activity>>(
       () => _i684.DActivityLocalRepository());
-  gh.factoryParamAsync<_i61.FormFlatTemplate, String?, dynamic>((
-    templateId,
-    _,
-  ) =>
-      _i61.FormFlatTemplate.fromTemplate(templateId: templateId));
   gh.factory<_i236.IdentifiableRepository<_i587.FormVersion>>(
       () => _i298.DFormTemplateLocalRepository());
   gh.factory<_i236.IdentifiableRepository<_i731.OrgUnit>>(

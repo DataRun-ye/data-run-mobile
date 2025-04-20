@@ -425,7 +425,7 @@ class _SubmissionVersionFormTemplateProviderElement
   String get formId => (origin as SubmissionVersionFormTemplateProvider).formId;
 }
 
-String _$formFlatTemplateHash() => r'a5e9881ad6ecb7d12befb9b0be647f2fa63f5746';
+String _$formFlatTemplateHash() => r'65a8ea3085f7102b834bb8b6c4c617a4ed111836';
 
 /// See also [formFlatTemplate].
 @ProviderFor(formFlatTemplate)

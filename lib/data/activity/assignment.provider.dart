@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
@@ -20,18 +19,7 @@ class AssignmentSubmissions extends _$AssignmentSubmissions {
       {required String form}) async {
     final submissions = await ref.watch(formSubmissionsProvider(form).future);
 
-    final futures = submissions
-        .where((s) => s.assignment == assignmentId)
-        .map((submission) async {
-      return submission
-        ..formVersion = await D2Remote.formModule.formTemplateV
-            .byId(submission.formVersion)
-            .getOne();
-    }).toList();
-
-    final submissionsWithTemplate =
-        await Future.wait<DataFormSubmission>(futures);
-    return submissionsWithTemplate;
+    return submissions.where((s) => s.assignment == assignmentId).toList();
   }
 }
 

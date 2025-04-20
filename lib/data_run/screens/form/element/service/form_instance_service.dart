@@ -59,7 +59,7 @@ class FormInstanceService {
         AttributeType.deviceModel =>
           initialValue ?? _deviceInfoService?.model(),
         AttributeType.form =>
-          initialValue ?? formMetadata.formId.split('-').first,
+          initialValue ?? formMetadata.formId.split('_').first,
         AttributeType.team => initialValue ??
             (await D2Remote.teamModuleD.team
                     .where(attribute: 'disabled', value: false)
@@ -117,7 +117,7 @@ class FormInstanceService {
 
       /// form
       '_${AttributeType.form.name}':
-          initialValue['_${AttributeType.form.name}'] ?? formMetadata.formId,
+      initialValue['_${AttributeType.form.name}'] ?? formMetadata.formId,
 
       /// activity
       '_${AttributeType.activity.name}': await attributeControl(

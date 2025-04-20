@@ -31,14 +31,14 @@ FormSubmissionRepository formSubmissionRepository(
 class FormSubmissions extends _$FormSubmissions {
   Future<IList<DataFormSubmission>> build(String form) async {
     final submissions =
-        await ref.watch(formSubmissionRepositoryProvider).getSubmissions(form);
+    await ref.watch(formSubmissionRepositoryProvider).getSubmissions(form);
     return submissions;
   }
 
   Future<void> markSubmissionAsFinal(String uid) async {
     final String? completedDate = DateHelper.nowUtc();
     final DataFormSubmission? submission =
-        await D2Remote.formSubmissionModule.formSubmission.byId(uid).getOne();
+    await D2Remote.formSubmissionModule.formSubmission.byId(uid).getOne();
 
     DataFormSubmission toMark = DataFormSubmission.fromJson({
       ...submission!.toJson(),
@@ -68,20 +68,20 @@ class FormSubmissions extends _$FormSubmissions {
     await future;
 
     final DataFormSubmission? submission =
-        await D2Remote.formSubmissionModule.formSubmission.byId(uid).getOne();
+    await D2Remote.formSubmissionModule.formSubmission.byId(uid).getOne();
 
     return updateSubmission(submission!..assignment = orgUnit);
   }
 
   /// injecting the arguments from the context
   Future<DataFormSubmission> createNewSubmission(
-      {required formVersion,
-      required String assignmentId,
-      required String team,
-      required String form,
+      {required String formVersion,
+        required String assignmentId,
+        required String team,
+        required String form,
         required int version,
-      Map<String, dynamic> formData = const {},
-      Geometry? geometry}) async {
+        Map<String, dynamic> formData = const {},
+        Geometry? geometry}) async {
     final id = DhisUidGenerator.generate();
     final DataFormSubmission submission = DataFormSubmission(
         id: id,
@@ -151,7 +151,7 @@ class FormSubmissions extends _$FormSubmissions {
     try {
       await Future.forEach(
           syncableIds,
-          (uid) =>
+              (uid) =>
               D2Remote.formSubmissionModule.formSubmission.byId(uid!).delete());
 
       ref.invalidateSelf();
@@ -187,7 +187,7 @@ Future<IMap<String, dynamic>> formSubmissionData(FormSubmissionDataRef ref,
       .getSubmission(submissionId);
   final submissionData = await ref.watch(
       formSubmissionsProvider(formSubmission!.form!).selectAsync(
-          (IList<DataFormSubmission> submissions) => submissions
+              (IList<DataFormSubmission> submissions) => submissions
               .firstWhere((item) => item.id == submissionId)
               .formData));
   return IMap.withConfig(submissionData, const ConfigMap(cacheHashCode: false));
@@ -197,8 +197,8 @@ Future<IMap<String, dynamic>> formSubmissionData(FormSubmissionDataRef ref,
 Future<List<DataFormSubmission>> submissionFilteredByState(
     SubmissionFilteredByStateRef ref,
     {required String form,
-    SyncStatus? status,
-    String sortBy = 'name'}) async {
+      SyncStatus? status,
+      String sortBy = 'name'}) async {
   final allSubmissions = await ref.watch(formSubmissionsProvider(form).future);
 
   final filteredSubmission = allSubmissions
@@ -215,21 +215,21 @@ Future<List<DataFormSubmission>> submissionFilteredByState(
 Future<SubmissionItemSummaryModel> submissionInfo(SubmissionInfoRef ref,
     {required FormMetadata formMetadata}) async {
   final allSubmissions =
-      await ref.watch(formSubmissionsProvider(formMetadata.formId).future);
+  await ref.watch(formSubmissionsProvider(formMetadata.formId).future);
 
   final submission =
-      allSubmissions.firstWhere((t) => t.id == formMetadata.submission!);
+  allSubmissions.firstWhere((t) => t.id == formMetadata.submission!);
 
   final Assignment? assignment = submission.assignment != null
       ? await D2Remote.assignmentModuleD.assignment
-          .byId(submission.assignment!)
-          .getOne()
+      .byId(submission.assignment!)
+      .getOne()
       : null;
 
   final OrgUnit? orgUnit = assignment != null
       ? await D2Remote.organisationUnitModuleD.orgUnit
-          .byId(assignment.orgUnit!)
-          .getOne()
+      .byId(assignment.orgUnit!)
+      .getOne()
       : null;
 
   // final extract = extractValues(

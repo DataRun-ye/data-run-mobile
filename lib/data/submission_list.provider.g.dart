@@ -805,7 +805,7 @@ class _SubmissionInfoProviderElement
       (origin as SubmissionInfoProvider).formMetadata;
 }
 
-String _$formSubmissionsHash() => r'd93ec3aca65c080162f9637185feb2c21edbc9af';
+String _$formSubmissionsHash() => r'd8a8ad1583d1fa00df8a0569ed93b78d52afb6f7';
 
 abstract class _$FormSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<IList<DataFormSubmission>> {

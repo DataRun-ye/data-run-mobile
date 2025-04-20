@@ -1,10 +1,10 @@
+import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/calculated_expression.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/choice_filter.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/members/form_element_state.dart';
@@ -17,8 +17,7 @@ class FormElementBuilder {
       {dynamic initialFormValue}) {
     final Map<String, FormElementInstance<dynamic>> elements = {};
 
-    for (var template in formFlatTemplate.formTemplate.fields
-      ..sort((a, b) => (a.order).compareTo(b.order))) {
+    for (var template in formFlatTemplate.formTemplate.treeFields) {
       // template.fields.sort((a, b) => (a.order).compareTo(b.order));
 
       elements[template.name!] = buildFormElement(
@@ -32,17 +31,12 @@ class FormElementBuilder {
   static FormElementInstance<dynamic> buildFormElement(
       FormGroup form, FormFlatTemplate formFlatTemplate, Template template,
       {dynamic initialFormValue}) {
-    if (template.isSection) {
-      return buildSectionInstance(
-          form, formFlatTemplate, template as SectionTemplate,
-          initialFormValue: initialFormValue);
-    } else if (template.isRepeat) {
-      return buildRepeatInstance(
-          form, formFlatTemplate, template as SectionTemplate,
-          initialFormValue: initialFormValue);
-    } else if (template.type == ValueType.ScannedCode) {
-      return buildFieldInstance(
-          form, formFlatTemplate, template as FieldTemplate,
+    if (template is SectionTemplate) {
+      if (template.repeatable) {
+        return buildRepeatInstance(form, formFlatTemplate, template,
+            initialFormValue: initialFormValue);
+      }
+      return buildSectionInstance(form, formFlatTemplate, template,
           initialFormValue: initialFormValue);
     } else {
       return buildFieldInstance(
@@ -58,7 +52,7 @@ class FormElementBuilder {
 
     final section = Section(form: rootFormControl, template: template);
 
-    for (var childTemplate in template.fields) {
+    for (var childTemplate in template.children) {
       elements[childTemplate.name!] = buildFormElement(
           rootFormControl, formFlatTemplate, childTemplate,
           initialFormValue: initialFormValue?[childTemplate.name]);
@@ -79,8 +73,7 @@ class FormElementBuilder {
         form: rootFormControl,
         // parentUid: parentUid,
         uid: initialFormValue?['repeatUid'] as String?);
-    for (var childTemplate
-        in template.fields.sort((a, b) => (a.order).compareTo(b.order))) {
+    for (var childTemplate in template.children) {
       elements[childTemplate.name!] = buildFormElement(
           rootFormControl, formFlatTemplate, childTemplate,
           initialFormValue: initialFormValue?[childTemplate.name]);
@@ -211,17 +204,19 @@ class FormElementBuilder {
           choiceFilter: templateElement.choiceFilter != null
               ? ChoiceFilter(
                   expression: templateElement.evalChoiceFilterExpression,
-                  options:
-                      formFlatTemplate.optionLists[templateElement.listName!] ??
-                          [])
+                  options: formFlatTemplate
+                          .optionLists[templateElement.optionSet!]
+                          ?.toList() ??
+                      [])
               : null,
           elementProperties: FieldElementState<String>(
               readOnly: templateElement.readOnly,
               value: initialFormValue,
               mandatory: templateElement.mandatory,
-              visibleOptions:
-                  formFlatTemplate.optionLists[templateElement.listName!] ??
-                      []),
+              visibleOptions: formFlatTemplate
+                      .optionLists[templateElement.optionSet!]
+                      ?.toList() ??
+                  []),
           template: templateElement,
         );
       case ValueType.SelectMulti:
@@ -231,7 +226,8 @@ class FormElementBuilder {
                 ? ChoiceFilter(
                     expression: templateElement.evalChoiceFilterExpression,
                     options: formFlatTemplate
-                            .optionLists[templateElement.listName!] ??
+                            .optionLists[templateElement.optionSet!]
+                            ?.toList() ??
                         [])
                 : null,
             elementProperties: FieldElementState<List<String>>(
@@ -242,9 +238,10 @@ class FormElementBuilder {
                         : <String>[initialFormValue]
                     : <String>[],
                 mandatory: templateElement.mandatory,
-                visibleOptions:
-                    formFlatTemplate.optionLists[templateElement.listName!] ??
-                        []),
+                visibleOptions: formFlatTemplate
+                        .optionLists[templateElement.optionSet!]
+                        ?.toList() ??
+                    []),
             template: templateElement);
       case ValueType.Reference:
         return FieldInstance<String>(

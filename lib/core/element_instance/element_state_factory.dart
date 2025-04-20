@@ -6,7 +6,7 @@ import 'package:datarunmobile/data_run/screens/form_module/form_template/form_el
 
 ElementStat fromTemplate(FormElementTemplate template, {dynamic value}) {
   return switch (template) {
-    SectionElementTemplate sectionTemplate => sectionTemplate.isRepeat
+    SectionElementTemplate sectionTemplate => sectionTemplate.repeatable
         ? SectionState.fromTemplate(sectionTemplate, value: value)
         : RepeatState.fromTemplate(sectionTemplate, value: value),
     FormElementTemplate fieldTemplate => FieldState.fromTemplate(fieldTemplate),

@@ -5,7 +5,7 @@ import 'package:datarunmobile/core/form/dependencies/dependency_matrix.dart';
 class DependencyGraphBuilder {
   DependencyMatrix buildGraph(FormVersion fromTemplate) {
     DependencyMatrix graph = DependencyMatrix();
-    fromTemplate.fields.forEach((field) {
+    fromTemplate.treeFields.forEach((field) {
       graph.addRelationship(field.name!, [
         ...field.dependencies,
         ...field.calculationDependencies,

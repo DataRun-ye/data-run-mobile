@@ -22,9 +22,9 @@ class FormDependencyManager {
     final dependenciesPaths = <String>[];
     for (var dependency in element.dependencies) {
       final dependencyPath =
-          formFlatTemplate.getScopedDependencyByName(dependency, element.path!);
+          formFlatTemplate.getScopedDependencyByName(dependency, element.namePath!);
       if (dependencyPath != null) {
-        dependenciesPaths.add(dependencyPath.path!);
+        dependenciesPaths.add(dependencyPath.namePath!);
       }
     }
     return dependenciesPaths;

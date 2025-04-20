@@ -6,7 +6,6 @@ import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
-import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -26,9 +25,7 @@ class AssignmentSubmissions extends _$AssignmentSubmissions {
         .map((submission) async {
       return submission
         ..formVersion = await D2Remote.formModule.formTemplateV
-            .byId(submission.formVersion is String
-                ? submission.formVersion
-                : submission.formVersion.id)
+            .byId(submission.formVersion)
             .getOne();
     }).toList();
 
@@ -44,8 +41,8 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
     [EntityScope? scope]) async {
   final assignments = await ref.watch(assignmentsProvider.future);
   final query = ref.watch(filterQueryProvider);
-  final teamsAsync =
-      await ref.watch(teamsProvider(EntityScope.Assigned).future);
+  // final teamsAsync =
+  //     await ref.watch(teamsProvider(EntityScope.Assigned).future);
   final lowerCaseQuery = query.searchQuery.toLowerCase();
   assignments.sort((a, b) => (a.startDay ?? 11).compareTo((b.startDay ?? 11)));
   final filteredAssignments = assignments
@@ -55,14 +52,14 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
       final key = entry.key;
       final value = entry.value;
 
-      final selectedTeams = teamsAsync
-          .where((t) =>
-              key == 'teams' &&
-              value is Iterable &&
-              value.isNotEmpty &&
-              value.contains(t.name))
-          .map((t) => t.id!)
-          .toList();
+      // final selectedTeams = teamsAsync
+      //     .where((t) =>
+      //         key == 'teams' &&
+      //         value is Iterable &&
+      //         value.isNotEmpty &&
+      //         value.contains(t.name))
+      //     .map((t) => t.id!)
+      //     .toList();
 
       if (key == 'status' &&
           value is Iterable &&
@@ -85,12 +82,12 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
         return false;
       }
 
-      if (key == 'teams' &&
-          value is Iterable &&
-          value.isNotEmpty &&
-          (!selectedTeams.contains(assignment.teamId))) {
-        return false;
-      }
+      // if (key == 'teams' &&
+      //     value is Iterable &&
+      //     value.isNotEmpty &&
+      //     (!selectedTeams.contains(assignment.teamId))) {
+      //   return false;
+      // }
     }
     //   if (key == 'status' && assignment.status != value) {
     //     return false;
@@ -114,13 +111,12 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
     // }
 
     if (query.searchQuery.isNotEmpty) {
-      final lowerCaseActivity = assignment.activity.toLowerCase();
+      // final lowerCaseActivity = assignment.activity.toLowerCase();
       final lowerCaseEntityCode = assignment.entityCode.toLowerCase();
       final lowerCaseEntityName = assignment.entityName.toLowerCase();
       final lowerCaseTeamName = assignment.teamName.toLowerCase();
 
-      if (!lowerCaseActivity.contains(lowerCaseQuery) &&
-          !lowerCaseEntityCode.contains(lowerCaseQuery) &&
+      if (!lowerCaseEntityCode.contains(lowerCaseQuery) &&
           !lowerCaseEntityName.contains(lowerCaseQuery) &&
           !lowerCaseTeamName.contains(lowerCaseQuery)) {
         return false;

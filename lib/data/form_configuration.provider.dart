@@ -29,7 +29,7 @@ Future<FormConfiguration> formConfiguration(FormConfigurationRef ref,
 
   return FormConfiguration(
       label: IMap(formTemplateVersion!.label),
-      fields: formTemplateVersion.fields,
+      fields: formTemplateVersion.treeFields.unlock,
       options: formTemplateVersion.options,
       orgUnits: orgUnits.toList());
 }

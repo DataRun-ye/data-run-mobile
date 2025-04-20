@@ -4,7 +4,6 @@ import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submissi
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
@@ -72,8 +71,8 @@ class FormSubmissionsTable extends HookConsumerWidget {
         value: formAsync,
         valueBuilder: (FormVersion formVersion) {
           final columnHeaders =
-              formVersion.formFlatFields.entries.where((entry) {
-            final field = entry.value;
+              formVersion.formFlatFields.values.where((entry) {
+            final field = entry;
             return !field.type!.isSection && field.mainField;
           }).toList();
 
@@ -129,8 +128,8 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                 DataColumn(label: Text(S.of(context).edit)),
                                 ...columnHeaders.map((header) => DataColumn(
                                     label: Text(getItemLocalString(
-                                        header.value.label.unlock,
-                                        defaultString: header.key)))),
+                                        header.label.unlock,
+                                        defaultString: header.name)))),
                                 // DataColumn(label: Text()),
                                 // DataColumn(label: Text()),
                                 DataColumn(
@@ -216,10 +215,10 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                     ...columnHeaders.map(
                                       (header) => DataCell(
                                         Text(
-                                            extractedValues[header.value.name]
+                                            extractedValues[header.name]
                                                     ?.toString() ??
                                                 totalResources[
-                                                        header.value.name]
+                                                        header.name]
                                                     ?.toString() ??
                                                 '',
                                             style: textStyle),
@@ -272,12 +271,12 @@ class FormSubmissionsTable extends HookConsumerWidget {
       FormVersion formTemplate, ActivityModel activityModel) {
     Map<String, dynamic> extractedValues = {};
 
-    void _extract(Map<String, dynamic> data, List<Template> fields) {
+    void _extract(Map<String, dynamic> data, Iterable<Template> fields) {
       fields.forEach((field) {
         if (field.name != null) {
           if (field.type!.isSection && data.containsKey(field.name)) {
             _extract(
-                data[field.name], (field as SectionTemplate).fields.toList());
+                data[field.name], (field as SectionTemplate).children.toList());
           } else if (field.type!.isRepeatSection &&
               data.containsKey(field.name)) {
             // extractedValues[field.name!] = data[field.name];
@@ -311,7 +310,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
       });
     }
 
-    _extract(formData, formTemplate.fields);
+    _extract(formData, formTemplate.treeFields);
     return extractedValues;
   }
 

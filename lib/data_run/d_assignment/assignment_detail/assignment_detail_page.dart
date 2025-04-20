@@ -1,4 +1,5 @@
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
+import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
@@ -6,7 +7,6 @@ import 'package:datarunmobile/data_run/d_assignment/assignment_detail/form_submi
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/form_submission_create.widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -83,16 +83,8 @@ class AssignmentDetailPage extends ConsumerWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-            assignment.activity,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-        ),
         buildStatusBadge(assignment.status),
       ],
     );

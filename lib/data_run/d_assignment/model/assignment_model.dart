@@ -8,7 +8,7 @@ class AssignmentModel with EquatableMixin {
   AssignmentModel({
     required this.id,
     required this.activityId,
-    required this.activity,
+    // required this.activity,
     required this.entityId,
     required this.entityCode,
     required this.entityName,
@@ -28,7 +28,7 @@ class AssignmentModel with EquatableMixin {
 
   final String id;
   final String activityId;
-  final String activity;
+  // final String activity;
   final String entityId;
   final String entityCode;
   final String entityName;
@@ -68,7 +68,7 @@ class AssignmentModel with EquatableMixin {
     return AssignmentModel(
       id: id ?? this.id,
       activityId: activityId ?? this.activityId,
-      activity: activity ?? this.activity,
+      // activity: activity ?? this.activity,
       entityId: entityId ?? this.entityId,
       entityCode: entityCode ?? this.entityCode,
       entityName: entityName ?? this.entityName,
@@ -107,7 +107,7 @@ class AssignmentModel with EquatableMixin {
   List<Object?> get props => [
         id,
         activityId,
-        activity,
+        // activity,
         entityId,
         entityCode,
         entityName,

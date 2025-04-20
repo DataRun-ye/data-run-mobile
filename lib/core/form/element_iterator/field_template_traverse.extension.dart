@@ -9,7 +9,7 @@ Iterable<TemplateType> getDfsTemplateIterator<TemplateType extends Template>(
   }
 
   if (template is SectionTemplate) {
-    for (final item in template.fields) {
+    for (final item in template.children) {
       yield* getDfsTemplateIterator<TemplateType>(item);
     }
   }

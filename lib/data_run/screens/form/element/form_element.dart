@@ -1,41 +1,35 @@
 import 'dart:async';
 
+import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/action.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/choice_filter.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/calculated_expression.dart';
+import 'package:d2_remote/modules/datarun/form/shared/rule/choice_filter.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/data_run/screens/form/element/exceptions/form_element_exception.dart';
 import 'package:datarunmobile/data_run/screens/form/element/extension/rule.extension.dart';
 import 'package:datarunmobile/data_run/screens/form/element/members/form_element_state.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:gs1_barcode_parser/gs1_barcode_parser.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'extension/element_dependency.extension.dart';
-
 part 'field_instance.dart';
-
-part 'repeat_instance.dart';
-
-part 'repeat_item_instance.dart';
-
-part 'section_element.dart';
-
-part 'section_instance.dart';
-
 // part 'field_reference_instance.dart';
 
 part 'gs1_scanned_item.dart';
+part 'repeat_instance.dart';
+part 'repeat_item_instance.dart';
+part 'section_element.dart';
+part 'section_instance.dart';
 
 typedef ElementControl<T> = AbstractControl<T>? Function(String path);
 

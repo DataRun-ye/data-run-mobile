@@ -41,13 +41,8 @@ class AssignmentOverviewItem extends ConsumerWidget {
           children: [
             // Header Row: Name, Status Badge, Due Info
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                    child: Text(
-                  assignment.activity,
-                  style: Theme.of(context).textTheme.titleMedium,
-                )),
                 buildStatusBadge(assignment.status),
               ],
             ),

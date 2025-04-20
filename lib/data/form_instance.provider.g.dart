@@ -221,7 +221,7 @@ class _LatestFormTemplateProviderElement
 }
 
 String _$submissionVersionFormTemplateHash() =>
-    r'44d5053813aec74a8e64bf1c204c66cb105abcb3';
+    r'981836f944173420cb750f1d1f2d4723d0b4ed2f';
 
 /// form id could be on the format of formId-version or formId
 /// look for the latest version of the form template or the form template
@@ -425,7 +425,7 @@ class _SubmissionVersionFormTemplateProviderElement
   String get formId => (origin as SubmissionVersionFormTemplateProvider).formId;
 }
 
-String _$formFlatTemplateHash() => r'ac189e4d781e46d33ff929f9eb4554a3aed3fb30';
+String _$formFlatTemplateHash() => r'a5e9881ad6ecb7d12befb9b0be647f2fa63f5746';
 
 /// See also [formFlatTemplate].
 @ProviderFor(formFlatTemplate)
@@ -781,7 +781,7 @@ class _FormInstanceServiceProviderElement
       (origin as FormInstanceServiceProvider).formMetadata;
 }
 
-String _$formInstanceHash() => r'201f8f1cd0259efda4857f854d07710fadcf59fa';
+String _$formInstanceHash() => r'c77572321ecbfbb191f80ff535c9d2c716d1f2ad';
 
 /// See also [formInstance].
 @ProviderFor(formInstance)

@@ -37,14 +37,6 @@ class AssignmentPage extends HookConsumerWidget {
               ),
             ],
           ),
-
-          // ElevatedButton.icon(
-          //   icon: Icon(Icons.all_inbox),
-          //   onPressed: () {
-          //
-          //   },
-          //   label: Text(S.of(context).allSubmissions),
-          // ),
         ],
       ),
       bottomNavigationBar: Column(

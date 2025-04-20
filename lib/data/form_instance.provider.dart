@@ -7,17 +7,20 @@ import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:d2_remote/shared/utilities/sort_order.util.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/device_info_service.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/form_instance_service.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../data_run/screens/form_module/form_template/util_methods.dart';
 
 part 'form_instance.provider.g.dart';
 
@@ -48,25 +51,7 @@ Future<FormVersion> latestFormTemplate(LatestFormTemplateRef ref,
 Future<FormVersion> submissionVersionFormTemplate(
     SubmissionVersionFormTemplateRef ref,
     {required String formId}) async {
-  /// try to get form versions by the specific form version Ids
-  /// It would retrieve the specific versions of formTemplate
-  final formTemplate = await D2Remote.formModule.formTemplateV
-      .byId(formId)
-      .orderBy(attribute: 'version', order: SortOrder.DESC)
-      .getOne();
-
-  if (formTemplate != null) {
-    return formTemplate;
-  } else {
-    /// try to get form versions by form template Ids
-    /// if more than one value for the same formTemplate, take latest version
-    final FormVersion? formTemplate = await D2Remote.formModule.formTemplateV
-        .where(attribute: 'formTemplate', value: formId)
-        .orderBy(attribute: 'version', order: SortOrder.DESC)
-        .getOne();
-
-    return formTemplate!;
-  }
+  return getTemplateByVersionOrLatest(formId);
 }
 
 @riverpod
@@ -79,16 +64,20 @@ Future<FormFlatTemplate> formFlatTemplate(
         .formSubmissionModule.formSubmission
         .byId(formMetadata.submission!)
         .getOne();
-    final FormVersion formVersion = await ref.watch(
-        submissionVersionFormTemplateProvider(formId: submission.formVersion)
-            .future);
-    return FormFlatTemplate.fromTemplate(formVersion);
+    final flatTemplate = await FormFlatTemplate.fromTemplate(
+        templateId: '${submission.form}_${submission.version}');
+    return flatTemplate;
+    // final FormVersion formVersion = await ref.watch(
+    //     submissionVersionFormTemplateProvider(formId: submission.formVersion)
+    //         .future);
+    // return FormFlatTemplate.fromTemplate(formVersion);
   }
 
-  final FormVersion formVersion = await ref.watch(
-      submissionVersionFormTemplateProvider(formId: formMetadata.formId)
-          .future);
-  return FormFlatTemplate.fromTemplate(formVersion);
+  return await locator.getAsync<FormFlatTemplate>(param1: formMetadata.formId);
+  // final FormVersion formVersion = await ref.watch(
+  //     submissionVersionFormTemplateProvider(formId: formMetadata.formId)
+  //         .future);
+  // return FormFlatTemplate.fromTemplate(formVersion);
 }
 
 @riverpod
@@ -127,7 +116,7 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       initialFormValue: initialFormValue);
 
   final _formSection = Section(
-      template: SectionTemplate(type: ValueType.Unknown, path: null),
+      template: SectionTemplate(type: ValueType.Unknown, path: ''),
       elements: elements,
       form: form)
     ..resolveDependencies()

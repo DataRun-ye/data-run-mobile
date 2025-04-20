@@ -6,12 +6,10 @@ import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
 import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:d2_remote/shared/utilities/save_option.util.dart';
-import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/activity/assignment.provider.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/extract_and_sum_allocated_actual.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -40,24 +38,22 @@ class Assignments extends _$Assignments {
     }
 
     final List<Assignment> assignments = await query.get();
-
+    final IList<TeamModel> assignedTeams =
+        await ref.watch(teamsProvider(EntityScope.Assigned).future);
+    // final activityEntity = await D2Remote.activityModuleD.activity
+    //     .byId(assignment.activity!)
+    //     .getOne();
     final futures =
         assignments.map<Future<AssignmentModel>>((assignment) async {
-      final activityEntity = await D2Remote.activityModuleD.activity
-          .byId(assignment.activity!)
-          .getOne();
-      final orgUnitEntity = await D2Remote.organisationUnitModuleD.orgUnit
-          .byId(assignment.orgUnit!)
-          .getOne();
+      // final orgUnitEntity = await D2Remote.organisationUnitModuleD.orgUnit
+      //     .byId(assignment.orgUnit!)
+      //     .getOne();
 
-      final teamEntity =
-          await D2Remote.teamModuleD.team.byId(assignment.team!).getOne();
+      // final teamEntity =
+      //     await D2Remote.teamModuleD.team.byId(assignment.team!).getOne();
 
-      final IList<TeamModel> assignedTeams =
-          await ref.watch(teamsProvider(EntityScope.Assigned).future);
-
-      final IList<TeamModel> managedTeams =
-          await ref.watch(teamsProvider(EntityScope.Managed).future);
+      // final IList<TeamModel> managedTeams =
+      //     await ref.watch(teamsProvider(EntityScope.Managed).future);
 
       final assignedForms = assignedTeams
           .expand((t) => t.formPermissions)
@@ -73,7 +69,7 @@ class Assignments extends _$Assignments {
             assignmentSubmissionsProvider(assignment.id!, form: form).future));
       }
 
-      AssignmentStatus status;
+      // AssignmentStatus status;
 
       // if (submissions.isEmpty) {
       //   status = AssignmentStatus.NOT_STARTED;
@@ -81,44 +77,44 @@ class Assignments extends _$Assignments {
       //   final sortedSubmissions = submissions.toList()
       //     ..sort((a, b) => b.lastModifiedDate!.compareTo(a.lastModifiedDate!));
       //   status = sortedSubmissions.first.status!;
-      status = assignment.status ?? AssignmentStatus.NOT_STARTED;
+      // status = assignment.status ?? AssignmentStatus.NOT_STARTED;
       // }
 
-      final resourceHeaders = assignments
-              .maxBy((item) => item.allocatedResources.length)
-              ?.allocatedResources
-              .keys
-              .where((t) => t != 'Latitude' && t != 'Longitude')
-              .toList() ??
-          [];
+      // final resourceHeaders = assignments
+      //         .maxBy((item) => item.allocatedResources.length)
+      //         ?.allocatedResources
+      //         .keys
+      //         .where((t) => t != 'Latitude' && t != 'Longitude')
+      //         .toList() ??
+      //     [];
 
       return AssignmentModel(
         id: assignment.id!,
-        activityId: activityEntity.id,
-        activity: activityEntity.name,
-        entityId: orgUnitEntity.id!,
-        entityCode: orgUnitEntity.code!,
-        entityName: orgUnitEntity.name!,
-        teamId: teamEntity.id,
-        teamCode: teamEntity.code,
-        teamName: teamEntity.name,
+        activityId: assignment.activity,
+        // activity: activityEntity.name,
+        entityId: assignment.orgUnit,
+        entityCode: assignment.orgUnitCode ?? '',
+        entityName: assignment.orgUnitName ?? '',
+        teamId: assignment.team,
+        teamCode: assignment.teamCode ?? '',
+        teamName: assignment.teamCode ?? '',
         scope: assignment.scope ?? EntityScope.Assigned,
-        status: status,
-        dueDate: activityEntity.startDate != null
-            ? AssignmentModel.calculateAssignmentDate(
-                activityEntity.startDate, assignment.startDay)
-            : null,
+        status: assignment.status ?? AssignmentStatus.NOT_STARTED,
+        // dueDate: activityEntity.startDate != null
+        //     ? AssignmentModel.calculateAssignmentDate(
+        //         activityEntity.startDate, assignment.startDay)
+        //     : null,
         startDay: assignment.startDay,
         rescheduledDate: assignment.startDate != null
             ? DateTime.parse(
                 DateHelper.fromDbUtcToUiLocalFormat(assignment.startDate!))
             : null,
-        allocatedResources: managedTeams.length > 0
-            ? resourceHeaders
-                .asMap()
-                .map((k, v) => MapEntry(v, assignment.allocatedResources[v]))
-            : {for (var i in resourceHeaders) i: 0},
-        reportedResources: sumActualResources(submissions, resourceHeaders),
+        // allocatedResources: managedTeams.length > 0
+        //     ? resourceHeaders
+        //         .asMap()
+        //         .map((k, v) => MapEntry(v, assignment.allocatedResources[v]))
+        //     : {for (var i in resourceHeaders) i: 0},
+        // reportedResources: sumActualResources(submissions, resourceHeaders),
         forms: assignment.forms,
       );
     }).toList();
@@ -149,4 +145,3 @@ class Assignments extends _$Assignments {
     await future;
   }
 }
-

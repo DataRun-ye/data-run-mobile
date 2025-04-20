@@ -1,7 +1,7 @@
+import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
@@ -12,7 +12,7 @@ class FormElementControlBuilder {
       FormFlatTemplate formFlatTemplate, initialValue) {
     final Map<String, AbstractControl<dynamic>> controls = {};
 
-    for (var element in formFlatTemplate.formTemplate.fields) {
+    for (var element in formFlatTemplate.formTemplate.treeFields) {
       controls[element.name!] = createElementControl(formFlatTemplate, element,
           initialValue: initialValue?[element.name]);
     }
@@ -23,13 +23,12 @@ class FormElementControlBuilder {
   static AbstractControl<dynamic> createElementControl(
       FormFlatTemplate formFlatTemplate, Template fieldTemplate,
       {initialValue}) {
-    if (fieldTemplate.isSection) {
-      return createSectionFormGroup(
-          formFlatTemplate, fieldTemplate as SectionTemplate,
-          initialValue: initialValue);
-    } else if (fieldTemplate.isRepeat) {
-      return createRepeatFormArray(
-          formFlatTemplate, fieldTemplate as SectionTemplate,
+    if (fieldTemplate is SectionTemplate) {
+      if (fieldTemplate.repeatable) {
+        return createRepeatFormArray(formFlatTemplate, fieldTemplate,
+            initialValue: initialValue);
+      }
+      return createSectionFormGroup(formFlatTemplate, fieldTemplate,
           initialValue: initialValue);
     } else {
       return createFieldFormControl(
@@ -43,7 +42,7 @@ class FormElementControlBuilder {
       {dynamic initialValue}) {
     final Map<String, AbstractControl<dynamic>> controls = {};
 
-    for (var childTemplate in fieldTemplate.fields) {
+    for (var childTemplate in fieldTemplate.children) {
       controls[childTemplate.name!] = createElementControl(
           formFlatTemplate, childTemplate,
           initialValue: initialValue?[childTemplate.name]);

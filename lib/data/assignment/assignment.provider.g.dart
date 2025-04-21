@@ -6,7 +6,7 @@ part of 'assignment.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filterAssignmentsHash() => r'26bcc4b3391fd71d3c63fa4cc34dad5a3913b047';
+String _$filterAssignmentsHash() => r'523a76bb6e5079b54e4745984e6b30cc4d5d9997';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -181,7 +181,7 @@ class _FilterAssignmentsProviderElement
 }
 
 String _$assignmentSubmissionsHash() =>
-    r'd6f59cc35d9338bf0e4fe7b64eca0cb531215942';
+    r'8e612fea6b8f34f048c09075c2b1d6bfb4977c36';
 
 abstract class _$AssignmentSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<List<DataSubmission>> {

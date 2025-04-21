@@ -7,7 +7,7 @@ part of 'submission_list.provider.dart';
 // **************************************************************************
 
 String _$formSubmissionRepositoryHash() =>
-    r'fa5d6d41063e018ffd5c882c0407f719aa770d3a';
+    r'563d892c0f3b7f12559b16c0c0e04ed616934624';
 
 /// See also [formSubmissionRepository].
 @ProviderFor(formSubmissionRepository)
@@ -27,7 +27,7 @@ final formSubmissionRepositoryProvider =
 typedef FormSubmissionRepositoryRef
     = AutoDisposeProviderRef<FormSubmissionRepository>;
 String _$submissionEditStatusHash() =>
-    r'cac83008f7356e47b85c7e814cc090af8b4ed3a6';
+    r'7f0a63f655a450ad5fe73984128b3d2a1b0ade01';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -182,7 +182,7 @@ class _SubmissionEditStatusProviderElement
 }
 
 String _$formSubmissionDataHash() =>
-    r'61fddcaf4e80f40cc0971320debc95176031a0bd';
+    r'effcc706ff7ae362ba27f3a23a2eeb41d79b942d';
 
 /// See also [formSubmissionData].
 @ProviderFor(formSubmissionData)

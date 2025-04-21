@@ -16,4 +16,5 @@ linter:
     - unnecessary_null_checks  # Flags unnecessary null checks
     - unnecessary_overrides  # Identifies unnecessary overrides
     - prefer_const_constructors
+    - always_use_package_imports
 #    - annotate_overrides

@@ -40,7 +40,7 @@ final assignmentProvider = AutoDisposeProvider<AssignmentModel>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AssignmentRef = AutoDisposeProviderRef<AssignmentModel>;
-String _$assignmentsHash() => r'53c0de5cc625af698879830cad9f25ecd77587eb';
+String _$assignmentsHash() => r'64461ef4d7401e780e033bbcaae58ce58227b7b8';
 
 /// a notifier that retrieves all assignments with their data populated
 ///

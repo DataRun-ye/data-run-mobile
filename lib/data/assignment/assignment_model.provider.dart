@@ -75,12 +75,12 @@ class Assignments extends _$Assignments {
           .toList();
 
       final assignmentForms =
-          assignment.forms.where((f) => assignedForms.contains(f)).toList();
+          assignment.forms?.where((f) => assignedForms.contains(f)).toList();
       List<DataSubmission> submissions = [];
 
-      for (var form in assignmentForms) {
+      for (var form in assignmentForms ?? []) {
         submissions.addAll(await ref.watch(
-            assignmentSubmissionsProvider(assignment.id!, form: form).future));
+            assignmentSubmissionsProvider(assignment.id, form: form).future));
       }
 
       AssignmentStatus status;
@@ -95,9 +95,9 @@ class Assignments extends _$Assignments {
       // }
 
       final resourceHeaders = assignments
-              .maxBy((item) => item.allocatedResources.length)
+              .maxBy((item) => item.allocatedResources?.length ?? 0)
               ?.allocatedResources
-              .keys
+              ?.keys
               .where((t) => t != 'Latitude' && t != 'Longitude')
               .toList() ??
           [];
@@ -123,10 +123,10 @@ class Assignments extends _$Assignments {
         allocatedResources: managedTeams.length > 0
             ? resourceHeaders
                 .asMap()
-                .map((k, v) => MapEntry(v, assignment.allocatedResources[v]))
+                .map((k, v) => MapEntry(v, assignment.allocatedResources?[v]))
             : {for (var i in resourceHeaders) i: 0},
         reportedResources: sumActualResources(submissions, resourceHeaders),
-        forms: assignment.forms,
+        forms: assignment.forms ?? [],
       );
     }).toList();
 

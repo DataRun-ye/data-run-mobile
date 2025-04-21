@@ -1,12 +1,9 @@
-import 'package:d_sdk/core/cache/cache_storage.dart';
-import 'package:injectable/injectable.dart';
+import 'package:d_sdk/user_session/user_session.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-@Injectable()
-class SharedCacheStorageAdapter extends CacheStorage {
+class SharedCacheStorageAdapter extends CacheStorageAdapter {
   SharedCacheStorageAdapter({required SharedPreferences cacheStorage})
-      : _cacheStorage = cacheStorage,
-        super(prefs: cacheStorage);
+      : _cacheStorage = cacheStorage;
   final SharedPreferences _cacheStorage;
 
   @override

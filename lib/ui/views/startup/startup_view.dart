@@ -10,9 +10,6 @@ import 'package:stacked/stacked.dart';
 class StartupView extends StackedView<StartupViewModel> {
   const StartupView({Key? key}) : super(key: key);
 
-  // final bool isAuthenticated;
-  // final bool needsSync;
-
   @override
   Widget builder(
     BuildContext context,

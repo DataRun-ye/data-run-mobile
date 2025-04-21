@@ -1,18 +1,18 @@
-import 'package:datarunmobile/stacked/app.locator.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
-import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/core/sync/model/sync_state.dart';
-import 'package:datarunmobile/core/sync/model/sync_status.dart';
 import 'package:datarunmobile/core/sync/sync_coordinator.dart';
 import 'package:datarunmobile/core/sync/sync_progress_notifier.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class SyncProgressViewModel extends StreamViewModel<SyncState> {
+  SyncProgressViewModel({this.onResult});
+
   final SyncCoordinator _coordinator = appLocator<SyncCoordinator>();
   final SyncProgressNotifier _progressNotifier =
       appLocator<SyncProgressNotifier>();
+
+  final Function(bool finished)? onResult;
 
   SyncState? get state => data;
 
@@ -20,7 +20,7 @@ class SyncProgressViewModel extends StreamViewModel<SyncState> {
   // void onData(SyncState? data) {
   //   super.onData(data);
   //   // if (data?.status == SyncStatus.complete) {
-  //   //   appLocator<NavigationService>().replaceWithHomeScreen();
+  //   //   appLocator<AppRouter>().replace(HomeRoute());
   //   // }
   // }
 

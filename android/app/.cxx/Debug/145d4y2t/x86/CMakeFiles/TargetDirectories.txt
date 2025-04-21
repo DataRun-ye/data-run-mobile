@@ -1,0 +1,2 @@
+D:/datarun/datarunmobile/android/app/.cxx/Debug/145d4y2t/x86/CMakeFiles/edit_cache.dir
+D:/datarun/datarunmobile/android/app/.cxx/Debug/145d4y2t/x86/CMakeFiles/rebuild_cache.dir

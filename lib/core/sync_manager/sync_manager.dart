@@ -1,18 +1,18 @@
 import 'dart:async';
 
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/datasource/base_datasource.dart';
-import 'package:d_sdk/di/injection.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:d_sdk/datasource/datasource.dart';
 import 'package:datarunmobile/core/sync_manager/sync_progress_event.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@LazySingleton()
 class SyncManager {
   SyncManager()
-      : this._remoteDataSources = appLocator.getAll<BaseDataSource>();
+      : this._remoteDataSources =
+            appLocator.getAll<AbstractDatasource<dynamic>>();
 
-  final Iterable<BaseDataSource> _remoteDataSources;
+  final Iterable<AbstractDatasource<dynamic>> _remoteDataSources;
 
   /// A stream controller for progress events.
   final StreamController<SyncProgressEvent> _progressController =

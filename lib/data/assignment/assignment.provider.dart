@@ -8,6 +8,7 @@ import 'package:datarunmobile/data/form_submission/submission_list.provider.dart
 import 'package:datarunmobile/data/team/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assignment.provider.g.dart';
@@ -32,8 +33,7 @@ class AssignmentSubmissions extends _$AssignmentSubmissions {
             .byId(submission.formVersion is String
                 ? submission.formVersion
                 : submission.formVersion.id)
-            .getOne()*/
-      ;
+            .getOne();*/
     }).toList();
 
     final submissionsWithTemplate = await Future.wait<DataSubmission>(futures);
@@ -43,7 +43,7 @@ class AssignmentSubmissions extends _$AssignmentSubmissions {
 
 /// filters the list of assignment by certain
 @Riverpod(dependencies: [activityModel])
-Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
+Future<List<AssignmentModel>> filterAssignments(Ref ref,
     [EntityScope? scope]) async {
   final assignments = await ref.watch(assignmentsProvider.future);
   final query = ref.watch(filterQueryProvider);
@@ -64,7 +64,7 @@ Future<List<AssignmentModel>> filterAssignments(FilterAssignmentsRef ref,
               value is Iterable &&
               value.isNotEmpty &&
               value.contains(t.name))
-          .map((t) => t.id!)
+          .map((t) => t.id)
           .toList();
 
       if (key == 'status' &&

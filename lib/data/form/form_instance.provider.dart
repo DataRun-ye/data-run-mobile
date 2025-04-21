@@ -15,14 +15,14 @@ import 'package:datarunmobile/data_run/screens/form/element/service/device_info_
 import 'package:datarunmobile/data_run/screens/form/element/service/form_instance_service.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'form_instance.provider.g.dart';
 
 @riverpod
-Future<AndroidDeviceInfoService> userDeviceInfoService(
-    UserDeviceInfoServiceRef ref) async {
+Future<AndroidDeviceInfoService> userDeviceInfoService(Ref ref) async {
   final deviceInfoPlugin = DeviceInfoPlugin();
   final deviceInfo =
       Platform.isAndroid ? await deviceInfoPlugin.androidInfo : null;
@@ -31,7 +31,7 @@ Future<AndroidDeviceInfoService> userDeviceInfoService(
 }
 
 @riverpod
-Future<FormVersion> latestFormTemplate(LatestFormTemplateRef ref,
+Future<FormVersion> latestFormTemplate(Ref ref,
     {required String formId}) async {
   final formTemplates = await DSdk.db.managers.formVersions
       .filter((f) => f.form(formId))
@@ -48,8 +48,7 @@ Future<FormVersion> latestFormTemplate(LatestFormTemplateRef ref,
 /// look for the latest version of the form template or the form template
 /// that matches the version
 @riverpod
-Future<FormVersion> submissionVersionFormTemplate(
-    SubmissionVersionFormTemplateRef ref,
+Future<FormVersion> submissionVersionFormTemplate(Ref ref,
     {required String formId}) async {
   /// try to get form versions by the specific form version Ids
   /// It would retrieve the specific versions of formTemplate
@@ -82,7 +81,7 @@ Future<FormVersion> submissionVersionFormTemplate(
 
 @riverpod
 Future<FormFlatTemplate> formFlatTemplate(
-  FormFlatTemplateRef ref, {
+  Ref ref, {
   required FormMetadata formMetadata,
 }) async {
   if (formMetadata.submission != null) {
@@ -106,7 +105,7 @@ Future<FormFlatTemplate> formFlatTemplate(
 }
 
 @riverpod
-Future<FormInstanceService> formInstanceService(FormInstanceServiceRef ref,
+Future<FormInstanceService> formInstanceService(Ref ref,
     {required FormMetadata formMetadata}) async {
   final userDeviceService =
       await ref.watch(userDeviceInfoServiceProvider.future);
@@ -116,7 +115,7 @@ Future<FormInstanceService> formInstanceService(FormInstanceServiceRef ref,
 }
 
 @riverpod
-Future<FormInstance> formInstance(FormInstanceRef ref,
+Future<FormInstance> formInstance(Ref ref,
     {required FormMetadata formMetadata}) async {
   final enabled = await ref
       .watch(submissionEditStatusProvider(formMetadata: formMetadata).future);

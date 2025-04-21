@@ -1,82 +1,79 @@
-import 'package:datarunmobile/app_routing/app_route.dart';
-import 'package:datarunmobile/app_routing/app_route.gr.dart';
-import 'package:datarunmobile/core/sync/model/sync_interval.dart';
-import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:stacked_services/stacked_services.dart';
-
-class SyncSettingTab extends HookConsumerWidget {
-  const SyncSettingTab({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // final userSessionManager = appLocator<UserSessionService>();
-    final syncMetadataRepo = appLocator<SyncMetadataRepository>();
-    final selectedInterval = useState(syncMetadataRepo.getSyncInterval());
-    return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: [
-        Text(S.of(context).syncSettings,
-            style: Theme.of(context).textTheme.titleLarge),
-
-        Card(
-          child: ListTile(
-            leading: Icon(MdiIcons.update),
-            title: Text(S.of(context).syncInterval),
-            subtitle: DropdownButton<SyncInterval>(
-              value: selectedInterval.value,
-              items: SyncInterval.values.map((interval) {
-                return DropdownMenuItem(
-                  value: interval,
-                  child: Text(Intl.message(interval.name)),
-                );
-              }).toList(),
-              onChanged: (newInterval) async {
-                if (newInterval != null) {
-                  await syncMetadataRepo.setSyncInterval(newInterval);
-                  selectedInterval.value = newInterval;
-                }
-              },
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 10),
-        Card(
-          child: ListTile(
-            title: Text(S.of(context).lastConfigurationSyncTime),
-            subtitle: Text(syncMetadataRepo.lastSyncTime.toString()),
-            trailing: FilledButton(
-                onPressed: () async {
-                  await appLocator<AppRouter>().navigate(const SyncProgressRoute());
-                  // await appLocator<NavigationService>()
-                  //     .navigateToSyncProgressView();
-                },
-                child: Text(S.of(context).syncNow)),
-          ),
-        ),
-        // Sync Status Card
-
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.check_circle,
-                color: syncMetadataRepo.isInitialSyncDone
-                    ? Colors.green
-                    : Colors.red),
-            title: Text(S.of(context).lastSyncStatus),
-            subtitle: Text(syncMetadataRepo.isInitialSyncDone
-                ? S.of(context).done
-                : S.of(context).failed),
-          ),
-        ),
-      ],
-    );
-  }
-}
+// import 'package:datarunmobile/app/router/router.dart';
+// import 'package:datarunmobile/core/sync/model/sync_interval.dart';
+// import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
+// import 'package:datarunmobile/di/injection.dart';
+// import 'package:datarunmobile/generated/l10n.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_hooks/flutter_hooks.dart';
+// import 'package:hooks_riverpod/hooks_riverpod.dart';
+// import 'package:intl/intl.dart';
+// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+//
+// class SyncSettingTab extends HookConsumerWidget {
+//   const SyncSettingTab({super.key});
+//
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     // final userSessionManager = appLocator<UserSessionService>();
+//     final syncMetadataRepo = appLocator<SyncMetadataRepository>();
+//     final selectedInterval = useState(syncMetadataRepo.getSyncInterval());
+//     return ListView(
+//       padding: const EdgeInsets.all(16.0),
+//       children: [
+//         Text(S.of(context).syncSettings,
+//             style: Theme.of(context).textTheme.titleLarge),
+//
+//         Card(
+//           child: ListTile(
+//             leading: Icon(MdiIcons.update),
+//             title: Text(S.of(context).syncInterval),
+//             subtitle: DropdownButton<SyncInterval>(
+//               value: selectedInterval.value,
+//               items: SyncInterval.values.map((interval) {
+//                 return DropdownMenuItem(
+//                   value: interval,
+//                   child: Text(Intl.message(interval.name)),
+//                 );
+//               }).toList(),
+//               onChanged: (newInterval) async {
+//                 if (newInterval != null) {
+//                   await syncMetadataRepo.setSyncInterval(newInterval);
+//                   selectedInterval.value = newInterval;
+//                 }
+//               },
+//             ),
+//           ),
+//         ),
+//
+//         const SizedBox(height: 10),
+//         Card(
+//           child: ListTile(
+//             title: Text(S.of(context).lastConfigurationSyncTime),
+//             subtitle: Text(syncMetadataRepo.lastSyncTime.toString()),
+//             trailing: FilledButton(
+//                 onPressed: () async {
+//                   await appLocator<AppRouter>().navigate(SyncProgressRoute());
+//                   // await appLocator<NavigationService>()
+//                   //     .navigateToSyncProgressView();
+//                 },
+//                 child: Text(S.of(context).syncNow)),
+//           ),
+//         ),
+//         // Sync Status Card
+//
+//         Card(
+//           child: ListTile(
+//             leading: Icon(Icons.check_circle,
+//                 color: syncMetadataRepo.isInitialSyncDone
+//                     ? Colors.green
+//                     : Colors.red),
+//             title: Text(S.of(context).lastSyncStatus),
+//             subtitle: Text(syncMetadataRepo.isInitialSyncDone
+//                 ? S.of(context).done
+//                 : S.of(context).failed),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

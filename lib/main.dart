@@ -1,16 +1,18 @@
 import 'dart:async';
 
-import 'package:datarunmobile/app_routing/app_route.dart' show AppRouter;
+import 'package:d_sdk/di/injection.dart';
+import 'package:datarunmobile/app/router/app_router.dart' show AppRouter;
 import 'package:datarunmobile/core/main_constants.dart';
 import 'package:datarunmobile/data/preference2.provider.dart';
+import 'package:datarunmobile/di/app.bottomsheets.dart';
+import 'package:datarunmobile/di/app.dialogs.dart';
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/stacked/app.bottomsheets.dart';
-import 'package:datarunmobile/stacked/app.dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -19,15 +21,11 @@ import 'package:timeago/timeago.dart' as timeago;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // stacked
-  await configureDependencies();
+  setupSdkLocator();
   // await setupLocator();
+  await configureDependencies();
   setupDialogUi();
   setupBottomSheetUi();
-  //
-
-  // final sharedPreferences = await SharedPreferences.getInstance();
-
-  // await ConnectivityService.instance.initialize();
 
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) {
@@ -86,6 +84,8 @@ Future<void> main() async {
 class App extends ConsumerWidget {
   App({super.key});
 
+  final _appRouter = appLocator<AppRouter>();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language =
@@ -105,31 +105,27 @@ class App extends ConsumerWidget {
           String() => timeago.ArMessages(),
         });
 
-    // final AuthState ff = ref.watch(authStateNotifierProvider);
-
-    StreamNotifier;
-    return MaterialApp.router(
-      routerConfig: appLocator<AppRouter>().config(
-          // reevaluateListenable:
-          //     ReevaluateListenable.stream(DSdk.authManager.authStateStream),
-          ),
-      restorationScopeId: 'Test__',
-      title: 'Datarun',
-      debugShowCheckedModeBanner: false,
-      themeMode: themeMode,
-      theme: getTheme(colorSeed, useMaterial3),
-      darkTheme: getDarkTheme(colorSeed, useMaterial3),
-      localizationsDelegates: localizationsDelegates,
-      supportedLocales: supportedLocales,
-      locale: locale,
-      builder: (context, child) {
-        return Banner(
-          message: AppEnvironment.envLabel,
-          location: BannerLocation.topEnd,
-          color: Colors.redAccent,
-          child: child,
-        );
-      },
+    return GlobalLoaderOverlay(
+      child: MaterialApp.router(
+        routerConfig: _appRouter.config(),
+        restorationScopeId: 'Test__',
+        title: 'Datarun',
+        debugShowCheckedModeBanner: false,
+        themeMode: themeMode,
+        theme: getTheme(colorSeed, useMaterial3),
+        darkTheme: getDarkTheme(colorSeed, useMaterial3),
+        localizationsDelegates: localizationsDelegates,
+        supportedLocales: supportedLocales,
+        locale: locale,
+        builder: (context, child) {
+          return Banner(
+            message: AppEnvironment.envLabel,
+            location: BannerLocation.topEnd,
+            color: Colors.redAccent,
+            child: child,
+          );
+        },
+      ),
     );
     // return GlobalLoaderOverlay(
     //   child: MaterialApp(

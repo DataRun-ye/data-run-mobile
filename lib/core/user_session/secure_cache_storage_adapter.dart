@@ -1,9 +1,8 @@
-import 'package:d_sdk/core/cache/cache_storage.dart';
+import 'package:d_sdk/user_session/user_session.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class SecureStorageAdapter extends CacheStorage {
-  SecureStorageAdapter(
-      {required FlutterSecureStorage cacheStorage, required super.prefs})
+class SecureCacheStorageAdapter extends CacheStorageAdapter {
+  SecureCacheStorageAdapter({required FlutterSecureStorage cacheStorage})
       : _cacheStorage = cacheStorage;
   final FlutterSecureStorage _cacheStorage;
 

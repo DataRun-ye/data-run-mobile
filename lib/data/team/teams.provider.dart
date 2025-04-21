@@ -28,7 +28,7 @@ class Teams extends _$Teams {
             name: '${Intl.message('team')} ${t.code}',
             disabled: t.disabled ?? false,
             activity: t.activity,
-            formPermissions: t.formPermissions))
+            formPermissions: t.formPermissions ?? []))
         .toList()
         .lock;
   }

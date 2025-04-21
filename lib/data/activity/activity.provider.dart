@@ -6,24 +6,25 @@ import 'package:datarunmobile/data/team/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'activity.provider.g.dart';
 
 @riverpod
-ActivityModel activityModel(ActivityModelRef ref) {
+ActivityModel activityModel(Ref ref) {
   throw UnimplementedError();
 }
 
 @riverpod
-Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
+Future<List<ActivityModel>> activities(Ref ref) async {
   final IList<TeamModel> managedTeams =
       await ref.watch(teamsProvider(EntityScope.Managed).future);
 
   final IList<TeamModel> assignedTeams =
       await ref.watch(teamsProvider(EntityScope.Assigned).future);
 
-  final user = DSdk.currentAuthUser;
+  final user = DSdk.dbManager;
   //await D2Remote.userModule.user.getOne();
 
   final List<Activity> userEnabledActivities =
@@ -76,11 +77,11 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
 
     userActivities.add(
       ActivityModel(
-        user: IdentifiableModel(
-          id: user.id,
-          code: user.username,
-          name: user.username,
-        ),
+        // user: IdentifiableModel(
+        //   id: user.id,
+        //   code: user.username,
+        //   name: user.username,
+        // ),
         assignedTeam: activityAssignedTeam,
         activity: IdentifiableModel(
             id: activity.id,

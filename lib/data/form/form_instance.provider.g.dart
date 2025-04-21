@@ -7,7 +7,7 @@ part of 'form_instance.provider.dart';
 // **************************************************************************
 
 String _$userDeviceInfoServiceHash() =>
-    r'4c4514d10d6f67ae6341ded57c5fcd4eaeafcd65';
+    r'b757adc31c86b929a08d7e5d9f26110f8c5626ed';
 
 /// See also [userDeviceInfoService].
 @ProviderFor(userDeviceInfoService)
@@ -27,7 +27,7 @@ final userDeviceInfoServiceProvider =
 typedef UserDeviceInfoServiceRef
     = AutoDisposeFutureProviderRef<AndroidDeviceInfoService>;
 String _$latestFormTemplateHash() =>
-    r'c834cc802540fb4565345a842e3d32fd713fbba8';
+    r'383dd5f7d0656e5787bb6c56670e86242a8e841a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -181,7 +181,7 @@ class _LatestFormTemplateProviderElement
 }
 
 String _$submissionVersionFormTemplateHash() =>
-    r'7b56389885accc3b0e46a252b9b0de14a0e97f31';
+    r'510f8071474436c0d3932f5dbe6c9272758b3503';
 
 /// form id could be on the format of formId-version or formId
 /// look for the latest version of the form template or the form template
@@ -342,7 +342,7 @@ class _SubmissionVersionFormTemplateProviderElement
   String get formId => (origin as SubmissionVersionFormTemplateProvider).formId;
 }
 
-String _$formFlatTemplateHash() => r'1d24c3ed204787081e9c32e4cafc3bcfee6222a5';
+String _$formFlatTemplateHash() => r'4e329c76537accbf2536ac608dbf537692ed45a4';
 
 /// See also [formFlatTemplate].
 @ProviderFor(formFlatTemplate)
@@ -477,7 +477,7 @@ class _FormFlatTemplateProviderElement
 }
 
 String _$formInstanceServiceHash() =>
-    r'4909c7f6419b997f1293d09630931245dad1f794';
+    r'ba1f23f32f2cd9556f84cfd8bcd88c4f605a10d1';
 
 /// See also [formInstanceService].
 @ProviderFor(formInstanceService)
@@ -614,7 +614,7 @@ class _FormInstanceServiceProviderElement
       (origin as FormInstanceServiceProvider).formMetadata;
 }
 
-String _$formInstanceHash() => r'3f34d807dc7c841269cc42de0639c20b80f398bd';
+String _$formInstanceHash() => r'ce1fe64bbad69ae7ae16854dcf551fa64bd24fc6';
 
 /// See also [formInstance].
 @ProviderFor(formInstance)

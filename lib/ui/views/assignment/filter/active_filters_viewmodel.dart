@@ -1,4 +1,3 @@
-import 'package:datarunmobile/stacked/app.locator.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/data/assignment/model/filter_query_service.dart';
 import 'package:datarunmobile/ui/views/assignment/filter/filter_query.dart';

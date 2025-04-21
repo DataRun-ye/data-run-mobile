@@ -1,4 +1,5 @@
-import 'package:d_sdk/d_sdk.dart';
+import 'package:datarunmobile/core/network/connectivy_service.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'online_connectivity.provider.g.dart';
@@ -7,12 +8,12 @@ part 'online_connectivity.provider.g.dart';
 class IsOnline extends _$IsOnline {
   @override
   Future<bool> build() {
-    return DSdk.connectivity.checkInternetConnection();
+    return appLocator<ConnectivityService>().checkInternetConnection();
   }
 
   void check() async {
     await future;
     state = AsyncData(
-        await DSdk.connectivity.checkInternetConnection());
+        await appLocator<ConnectivityService>().checkInternetConnection());
   }
 }

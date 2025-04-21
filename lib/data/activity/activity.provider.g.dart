@@ -6,7 +6,7 @@ part of 'activity.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$activityModelHash() => r'66cbf967e19f27fef90a2ddb6ad8b56caa1de717';
+String _$activityModelHash() => r'928a4945ee10951d3a3e28af8119fd2287ea3f76';
 
 /// See also [activityModel].
 @ProviderFor(activityModel)
@@ -23,7 +23,7 @@ final activityModelProvider = AutoDisposeProvider<ActivityModel>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ActivityModelRef = AutoDisposeProviderRef<ActivityModel>;
-String _$activitiesHash() => r'b07cbda6eb3c4f61cd732a601ddd8d5bbca3e6f1';
+String _$activitiesHash() => r'451724c341bd79c0341cd2935deb8775c3cfeb4a';
 
 /// See also [activities].
 @ProviderFor(activities)

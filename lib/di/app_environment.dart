@@ -7,7 +7,7 @@ abstract class AppEnvironment {
   static const apiRequestSentTimeout =
       int.fromEnvironment('api_request_send_timeout');
   static const secureDatabase = bool.fromEnvironment('secure_database');
-  static const secureCache = bool.fromEnvironment('secure_cache');
+  // static const secureCache = bool.fromEnvironment('secure_cache');
   static const encryptionKey = String.fromEnvironment('encryption_key');
   static const apiPingUrl = '$apiBaseUrl/api/authenticate';
   static const isDev =

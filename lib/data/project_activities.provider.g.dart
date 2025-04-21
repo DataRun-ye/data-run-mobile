@@ -6,7 +6,7 @@ part of 'project_activities.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userAssignedTeamsHash() => r'af4a9768b71545b7bc726f0f6f0ab56054438454';
+String _$userAssignedTeamsHash() => r'd14dce73002dd2baf06c0533281233c21487dfde';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -159,7 +159,7 @@ class _UserAssignedTeamsProviderElement
 }
 
 String _$userAssignedActivitiesHash() =>
-    r'9002f382321e4f47ac1b3bef3f5b1830732f7a21';
+    r'c38fb8a8622e942b127bac66330b8cb34b000181';
 
 /// See also [userAssignedActivities].
 @ProviderFor(userAssignedActivities)
@@ -294,7 +294,7 @@ class _UserAssignedActivitiesProviderElement
 }
 
 String _$projectActiveActivitiesHash() =>
-    r'ee472177f30735ef1ed1255a6b4f641ce77e78e5';
+    r'a4485cf3bc4e78c1673e1cdeb4aa18c15a4efee0';
 
 /// See also [projectActiveActivities].
 @ProviderFor(projectActiveActivities)
@@ -428,7 +428,7 @@ class _ProjectActiveActivitiesProviderElement
   String get project => (origin as ProjectActiveActivitiesProvider).project;
 }
 
-String _$activityTeamHash() => r'a79250a18524592bc6c7e50da9d06df98012f668';
+String _$activityTeamHash() => r'31df9609437d206c21457574e6ad5f37fc1c2a47';
 
 /// See also [activityTeam].
 @ProviderFor(activityTeam)

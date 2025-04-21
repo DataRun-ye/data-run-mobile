@@ -1,6 +1,5 @@
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/stacked/app.locator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -22,27 +22,17 @@ class FormInstanceService {
   final AppDatabase db;
 
   Future<String?> getUserAttribute(AttributeType userAttributeType) async {
-    final currentUser = DSdk.currentAuthUser;
+    final currentUser = await DSdk.dbManager.loadAuthUserData();
     // await D2Remote.userModule.user.getOne();
 
     return switch (userAttributeType) {
-      AttributeType.username => currentUser.username,
-      AttributeType.userUid => currentUser.id,
-      AttributeType.phoneNumber => currentUser.mobile,
-      AttributeType.userInfo => currentUser.firstname,
+      AttributeType.username => currentUser!.username,
+      AttributeType.userUid => currentUser!.id,
+      AttributeType.phoneNumber => currentUser?.mobile,
+      AttributeType.userInfo => currentUser?.firstName,
       _ => null
     };
   }
-
-  //
-  // FormControl<String> orgUnitControl(
-  //     List<String> formSelectableOrgUnit, initialValue) {
-  //   return FormControl<String>(
-  //       value: initialValue ??
-  //           (formSelectableOrgUnit.length == 1
-  //               ? formSelectableOrgUnit.first
-  //               : null));
-  // }
 
   FutureOr<dynamic> attributeControl(AttributeType attributeType,
           {initialValue}) async =>

@@ -2,7 +2,7 @@ import 'package:datarunmobile/core/sync/model/sync_interval.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-@lazySingleton
+@injectable
 class SyncMetadataRepository {
   SyncMetadataRepository(this._prefs);
 

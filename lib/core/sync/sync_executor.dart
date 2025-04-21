@@ -1,19 +1,20 @@
-import 'package:d_sdk/datasource/abstract_datasource.dart';
+import 'package:d_sdk/datasource/datasource.dart';
 import 'package:datarunmobile/core/sync/sync_progress_notifier.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@injectable
 class SyncExecutor {
-  SyncExecutor(
-      {required Iterable<AbstractDatasource<dynamic>> dataSources,
-      required SyncProgressNotifier progressNotifier})
-      : _dataSources = IMap.fromIterable(dataSources,
-            keyMapper: (r) => r.apiResourceName, valueMapper: (r) => r),
-        _progressNotifier = progressNotifier;
+  SyncExecutor({required SyncProgressNotifier progressNotifier})
+      : _progressNotifier = progressNotifier,
+        _dataSources = IMap.fromIterable(
+            appLocator.getAll<AbstractDatasource<dynamic>>(fromAllScopes: true),
+            keyMapper: (dataSource) => dataSource.apiResourceName,
+            valueMapper: (dataSource) => dataSource);
 
-  final IMap<String, AbstractDatasource<dynamic>> _dataSources;
   final SyncProgressNotifier _progressNotifier;
+  final IMap<String, AbstractDatasource<dynamic>> _dataSources;
 
   Future<void> performSync() async {
     await _progressNotifier.wrapOperation(

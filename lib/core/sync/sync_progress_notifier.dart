@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-@lazySingleton
+@LazySingleton()
 class SyncProgressNotifier {
   final BehaviorSubject<SyncProgress> _progress =
       BehaviorSubject<SyncProgress>.seeded(SyncProgress.idle());

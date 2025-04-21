@@ -1,13 +1,10 @@
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/stacked/app.dialogs.dart';
-import 'package:datarunmobile/stacked/app.locator.dart';
-import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/features/dialog/application/dialog_service.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:intl/intl.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class DExceptionReporter {
   DExceptionReporter._internal();
@@ -21,9 +18,10 @@ class DExceptionReporter {
     logException(DException(error.toString(), error));
     if (showToUser) {
       // _showUserAlert(message);
-      _dialogService.showCustomDialog(
-        variant: DialogType.infoAlert,
+      _dialogService.showDialog(
+        // variant: DialogType.infoAlert,
         title: Intl.message('error'),
+        buttonTitle: S.current.ok,
         description: message,
       );
 

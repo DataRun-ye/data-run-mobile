@@ -1,21 +1,15 @@
-import 'package:d_sdk/datasource/datasource.dart';
-import 'package:d_sdk/di/injection.dart';
-import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/core/sync/sync_executor.dart';
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
-import 'package:datarunmobile/core/sync/sync_progress_notifier.dart';
 import 'package:datarunmobile/core/sync/sync_scheduler.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@injectable
 class SyncCoordinator {
   SyncCoordinator(
     this._metadataRepo,
     this._scheduler,
-    SyncProgressNotifier progressNotifier,
-  ) : this._executor = SyncExecutor(
-            dataSources: appLocator.getAll<AbstractDatasource<dynamic>>(),
-            progressNotifier: progressNotifier);
+    this._executor,
+  );
 
   final SyncMetadataRepository _metadataRepo;
   final SyncScheduler _scheduler;

@@ -4,12 +4,12 @@ import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:drift/drift.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 // const formUid = 'formDataUid';
@@ -23,7 +23,7 @@ const teamControlName = 'formData';
 const versionControlName = 'formData';
 
 class FormInstance {
-  FormInstance(FormInstanceRef ref,
+  FormInstance(Ref ref,
       {required this.form,
       required this.formFlatTemplate,
       required this.formMetadata,
@@ -54,7 +54,7 @@ class FormInstance {
   final FormFlatTemplate formFlatTemplate;
   final bool enabled;
 
-  final FormInstanceRef _ref;
+  final Ref _ref;
   final Map<String, FormElementInstance<dynamic>> _forElementMap = {};
   final Section _formSection;
   AssignmentStatus? _assignmentStatus;

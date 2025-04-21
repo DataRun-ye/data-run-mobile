@@ -1,6 +1,5 @@
 import 'package:d_sdk/core/utilities/date_helper.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart';
 import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart';

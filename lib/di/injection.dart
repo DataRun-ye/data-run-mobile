@@ -1,3 +1,4 @@
+import 'package:datarunmobile/app/router/app_router.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -12,6 +13,7 @@ final appLocator = GetIt.instance;
   asExtension: false, // default
 )
 Future<GetIt> configureDependencies() async {
+  appLocator.registerLazySingleton(() => AppRouter());
   // await setupSdkLocator();
   // await setupLocator(environment: null, environmentFilter: null);
   return init(appLocator);

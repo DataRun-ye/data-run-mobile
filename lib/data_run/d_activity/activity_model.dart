@@ -12,7 +12,7 @@ class ActivityModel with EquatableMixin {
       Iterable<String> assignedForms = const [],
       this.assignedAssignments = 0,
       this.managedAssignments = 0,
-      required this.user,
+      // required this.user,
       this.assignedTeam,
       this.activity})
       : this.managedTeams = IList(managedTeams),
@@ -35,7 +35,7 @@ class ActivityModel with EquatableMixin {
       managedTeams: managedTeams.map((e) => TeamModel.fromIdentifiable(
           id: e.id,
           name: '${Intl.message('team')} ${e.code}',
-          formPermissions: e.formPermissions,
+          formPermissions: e.formPermissions ?? [],
           activity: e.activity,
           disabled: e.disabled ?? false)),
       orgUnits: orgUnits.map((e) => IdentifiableModel(
@@ -43,17 +43,17 @@ class ActivityModel with EquatableMixin {
             code: e.code,
             name: e.name,
           )),
-      user: IdentifiableModel(
-        id: user!.id,
-        name: user.username,
-      ),
+      // user: IdentifiableModel(
+      //   id: user!.id,
+      //   name: user.username,
+      // ),
       assignedTeam: userTeam != null
           ? TeamModel.fromIdentifiable(
               id: userTeam.id,
               name: '${Intl.message('team')} ${userTeam.code}',
               activity: userTeam.activity,
               disabled: userTeam.disabled ?? false,
-              formPermissions: userTeam.formPermissions)
+              formPermissions: userTeam.formPermissions ?? [])
           : null,
       activity: activity != null
           ? IdentifiableModel(
@@ -68,7 +68,7 @@ class ActivityModel with EquatableMixin {
   final IList<TeamModel> managedTeams;
   final IList<IdentifiableModel> orgUnits;
   final IList<String> assignedForms;
-  final IdentifiableModel user;
+  // final IdentifiableModel user;
   final TeamModel? assignedTeam;
   final IdentifiableModel? activity;
 
@@ -79,7 +79,7 @@ class ActivityModel with EquatableMixin {
     Iterable<TeamModel>? managedTeams,
     Iterable<IdentifiableModel>? orgUnits,
     Iterable<String>? assignedForms,
-    IdentifiableModel? user,
+    // IdentifiableModel? user,
     TeamModel? userTeam,
     IdentifiableModel? activity,
   }) {
@@ -87,7 +87,7 @@ class ActivityModel with EquatableMixin {
       assignedForms: assignedForms ?? this.assignedForms,
       managedTeams: managedTeams ?? this.managedTeams,
       orgUnits: orgUnits ?? this.orgUnits,
-      user: user ?? this.user,
+      // user: user ?? this.user,
       assignedTeam: userTeam ?? this.assignedTeam,
       activity: activity ?? this.activity,
     );
@@ -95,5 +95,5 @@ class ActivityModel with EquatableMixin {
 
   @override
   List<Object?> get props =>
-      [managedTeams, orgUnits, user, assignedTeam, activity, assignedForms];
+      [managedTeams, orgUnits, assignedTeam, activity, assignedForms];
 }

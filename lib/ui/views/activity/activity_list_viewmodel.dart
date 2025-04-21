@@ -1,23 +1,20 @@
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/dao/activities_dao.dart';
+import 'package:d_sdk/database/database.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:stacked/stacked.dart';
 
 class ActivityListViewModel extends BaseViewModel {
-  List<ActivityModel> activities = [];
-  int assignedCount = 0;
-  String project = '';
-  bool isLoading = false;
+  List<Activity> activities = [];
 
   Future<void> load() async {
-    isLoading = true;
+    setBusy(true);
     notifyListeners();
     // TODO: Fetch and assign the list of activities
-    isLoading = false;
-    notifyListeners();
-  }
+    DSdk.dbManager;
+    appLocator<ActivitiesDao>();
 
-  void updateQuery(String query) {
-    project = query;
-    // Optionally filter assignments based on query
+    setBusy(false);
     notifyListeners();
   }
 }

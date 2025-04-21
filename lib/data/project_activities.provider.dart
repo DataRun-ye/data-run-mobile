@@ -1,12 +1,13 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:drift/drift.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_activities.provider.g.dart';
 
 @riverpod
-Future<List<Team>> userAssignedTeams(UserAssignedTeamsRef ref,
+Future<List<Team>> userAssignedTeams(Ref ref,
     {String? activity}) async {
   List<Team> teams = await (activity != null
       ? DSdk.db.managers.teams
@@ -18,7 +19,7 @@ Future<List<Team>> userAssignedTeams(UserAssignedTeamsRef ref,
 }
 
 @riverpod
-FutureOr<List<Activity>> userAssignedActivities(UserAssignedActivitiesRef ref,
+FutureOr<List<Activity>> userAssignedActivities(Ref ref,
     {String? project}) async {
   final teams = await ref
       .watch(userAssignedTeamsProvider().future);
@@ -38,7 +39,7 @@ FutureOr<List<Activity>> userAssignedActivities(UserAssignedActivitiesRef ref,
 
 @riverpod
 Future<List<Activity>> projectActiveActivities(
-    ProjectActiveActivitiesRef ref, String project) async {
+    Ref ref, String project) async {
   /// get the list of active activities
   final List<Activity> activeActivities =
       await ref.watch(userAssignedActivitiesProvider(project: project).future);
@@ -59,7 +60,7 @@ Future<List<Activity>> projectActiveActivities(
 // }
 
 @riverpod
-Future<Team?> activityTeam(ActivityTeamRef ref,
+Future<Team?> activityTeam(Ref ref,
     {required String activity}) async {
   return DSdk.db.managers.teams
       .filter((f) => f.activity.id(activity))

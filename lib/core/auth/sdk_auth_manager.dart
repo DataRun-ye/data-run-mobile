@@ -1,111 +1,88 @@
-
-import 'package:d_sdk/auth/auth_manager.dart' show AuthManager;
-import 'package:d_sdk/auth/auth_state.dart';
-import 'package:d_sdk/auth/authenticated_user_detail.dart';
-import 'package:d_sdk/auth/authentication_params.dart' show AuthenticationParams;
-import 'package:d_sdk/auth/authentication_service.dart';
-import 'package:d_sdk/core/cache/cached_user_detail.dart';
-import 'package:d_sdk/core/config/server_config.dart';
-import 'package:d_sdk/core/user_session/session_storage_manager.dart';
-import 'package:d_sdk/database/database.dart';
-import 'package:d_sdk/di/injection.dart' show rSdkLocator, setupSdkLocator;
-import 'package:d_sdk/use_cases/logout_strategies/logout_handler.dart';
+import 'package:d_sdk/auth/auth_manager.dart';
+import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/use_cases/logout_strategies/logout_strategy.dart';
+import 'package:d_sdk/user_session/user_session.dart';
+import 'package:datarunmobile/app/router/app_router.dart';
+import 'package:datarunmobile/app/router/app_router.gr.dart';
+import 'package:datarunmobile/core/auth/session_scope_initializer.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @LazySingleton(as: AuthManager)
 class SdkAuthManager implements AuthManager {
   SdkAuthManager(
-      {required UserSessionRepository userSessionRepository,
-      required AuthenticationService authenticationService})
-      : _authenticationService = authenticationService,
-        _userSessionRepository = userSessionRepository;
-  // {
-  //   _loadSessionData();
-  // }
+      {required SessionRepository sessionRepository,
+      required SessionScopeInitializer scopeInitializer,
+      required Dio dio})
+      : _sessionRepository = sessionRepository,
+        _scopeInitializer = scopeInitializer,
+        _dio = dio;
 
-  final AuthenticationService _authenticationService;
-  final UserSessionRepository _userSessionRepository;
-
-  final BehaviorSubject<AuthState> _authStateController =
-      BehaviorSubject<AuthState>.seeded(AuthState.authLoading());
+  final Dio _dio;
+  final SessionRepository _sessionRepository;
+  final SessionScopeInitializer _scopeInitializer;
 
   @override
-  Stream<AuthState> get authStateStream => _authStateController.stream;
-
-  @override
-  AuthState get currentState => _authStateController.value;
-
-  Future<void> _loadSessionData() async {
-    // _authStateController.add(AuthState.authLoading());
-    final cachedUser = await _userSessionRepository.loadCurrentCachedUserData();
-    if (cachedUser != null) {
-      await setupSdkLocator();
-      final dbManager = rSdkLocator.get<DbManager>();
-      final userData = await dbManager.loadAuthUserData();
-      if (userData != null) {
-        _authStateController.add(
-            AuthState.authenticated(AuthUserData.fromMap(userData.toJson())));
-      } else {
-        _authStateController.add(AuthState.unauthenticated());
-      }
-    } else {
-      _authStateController.add(AuthState.unauthenticated());
-    }
+  Future<bool> isAuthenticated() async {
+    final activeSession = await _sessionRepository.getActiveSession();
+    return activeSession != null && activeSession.isAccessTokenValid;
   }
 
-  @override
-  bool isAuthenticated() {
-    final currentDbName = _userSessionRepository.getCurrentDbName();
-    return currentDbName != null;
-  }
-
-  @override
-  Future<void> authenticate(
-      {required String username,
-      required String password,
-      required ServerConfig server}) async {
+  Future<bool> login(
+      {required String username, required String password}) async {
     try {
-      _authStateController.add(AuthState.authLoading());
+      // _authStateController.add(const AuthState.authLoading());
+      final response = await _dio.post('/api/authenticate', data: {
+        'username': username,
+        'password': password,
+      });
 
-      // Authenticate with server
-      final User authUserData = await _authenticationService
-          .auth(AuthenticationParams(username: username, password: password));
-      final cached = await _updateCached(authUserData, server.baseUrl);
-      _authStateController.add(
-          AuthState.authenticated(AuthUserData.fromMap(authUserData.toJson())));
-    } catch (e) {
-      _authStateController.add(AuthState.authErrorState(e.toString()));
+      final session = SessionContext(
+        username: username,
+        baseUrl: _dio.options.baseUrl,
+        accessToken: response.data['accessToken'],
+        refreshToken: response.data['refreshToken'],
+        loginTime: DateTime.now(),
+      );
+      await _sessionRepository.updateActiveSession(session);
+
+      // setupRefreshFailedErrorLogout();
+
+      // _authStateController.add(AuthState.authenticated(session));
+      return true;
+    } on DioException catch (e) {
+      // if (appLocator.currentScopeName == SessionContext.activeSessionScope) {
+      //   await appLocator.popScopesTill(SessionContext.activeSessionScope);
+      // }
+      // return false;
+      // Handle specific error codes
+      // _authStateController.add(const AuthState.unauthenticated());
+      await _scopeInitializer.popAuthScope();
+      throw AuthException(e.message, url: _dio.options.baseUrl);
     }
   }
 
   @override
-  Future<void> logout(
+  Future<bool> logout(
       {LogoutStrategy strategy = LogoutStrategy.keepLocalData}) async {
-    await _logoutCleanUp(strategy);
-    _authStateController.add(AuthState.unauthenticated());
+    appLocator<AppRouter>().replace(LoginRoute());
+    return _scopeInitializer.popAuthScope();
   }
 
-  Future<void> _logoutCleanUp(
-      [LogoutStrategy strategy = LogoutStrategy.keepLocalData]) async {
-    final handler = await rSdkLocator.getAsync<LogoutHandler>(param1: strategy);
-    return handler.handle();
-  }
+  void setupRefreshFailedErrorLogout() {
+    _dio.interceptors.add(InterceptorsWrapper(
+      onError: (error, handler) async {
+        if (error is RevokeTokenException || error is SessionExpiredException) {
+          // Centralized session expiration handling
+          await logout();
 
-  /// update cached user, and also open the database of this cached user and
-  /// save its data into it
-  Future<AuthUserCachedData> _updateCached(User user, String baseUrl) async {
-    final cachedUser =
-        AuthUserCachedData.fromJson({...user.toJson(), 'baseUrl': baseUrl});
-    await _userSessionRepository.cacheCurrentAuthUserData(cachedUser);
-    final dbManager = await rSdkLocator.getAsync<DbManager>();
-    await dbManager.saveAuthUserData(user);
-    return cachedUser;
-  }
-
-  @override
-  Future<void> dispose() async {
-    await _authStateController.close();
+          // appLocator<AppRouter>().replace(LoginRoute());
+          // navigatorKey.currentState?.pushReplacement(LoginRoute());
+          return handler.reject(error);
+        }
+        return handler.next(error);
+      },
+    ));
   }
 }

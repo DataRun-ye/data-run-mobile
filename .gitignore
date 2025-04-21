@@ -52,3 +52,7 @@ app.*.map.json
 # Secret keys
 secrets.properties
 .env
+folder_structure.md
+
+# FVM Version Cache
+.fvm/

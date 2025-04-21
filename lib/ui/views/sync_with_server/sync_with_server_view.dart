@@ -1,8 +1,11 @@
 import 'package:auto_route/annotations.dart';
+import 'package:datarunmobile/app/router/app_router.dart';
+import 'package:datarunmobile/app/router/app_router.gr.dart';
 import 'package:datarunmobile/core/sync/model/resource_progress.dart';
 import 'package:datarunmobile/core/sync/model/resource_state.dart';
 import 'package:datarunmobile/core/sync/model/sync_state.dart';
 import 'package:datarunmobile/core/sync/model/sync_status.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/ui/common/ui_helpers.dart';
 import 'package:datarunmobile/ui/views/sync_with_server/sync_with_server_viewmodel.dart';
@@ -13,7 +16,9 @@ import 'package:stacked/stacked.dart';
 
 @RoutePage()
 class SyncProgressView extends StackedView<SyncProgressViewModel> {
-  const SyncProgressView({super.key});
+  const SyncProgressView({super.key, this.onResult});
+
+  final Function(bool didFinish)? onResult;
 
   @override
   Widget builder(
@@ -23,6 +28,11 @@ class SyncProgressView extends StackedView<SyncProgressViewModel> {
         child: Column(
           children: [
             _buildGlobalProgress(viewModel.state),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+                onPressed: () => appLocator<AppRouter>().replace(HomeRoute()),
+                icon: const Icon(Icons.document_scanner),
+                label: const Text('NAVIGATE TO HOME')),
             const SizedBox(height: 16),
             _buildResourceList(viewModel.state, viewModel, context),
             if (viewModel.state?.error != null)
@@ -35,7 +45,7 @@ class SyncProgressView extends StackedView<SyncProgressViewModel> {
 
   @override
   SyncProgressViewModel viewModelBuilder(BuildContext context) =>
-      SyncProgressViewModel();
+      SyncProgressViewModel(onResult: onResult);
 
   @override
   void onViewModelReady(SyncProgressViewModel viewModel) =>
@@ -137,7 +147,7 @@ class SyncProgressView extends StackedView<SyncProgressViewModel> {
         Text('${object.toString()}'),
         ElevatedButton.icon(
             // onPressed: () =>
-            //     appLocator<NavigationService>().replaceWithHomeScreen(),
+            //     appLocator<AppRouter>().replace(HomeRoute()),
             onPressed: () => viewModel.triggerSync(),
             icon: const Icon(Icons.document_scanner),
             label: Text(S.current.ok))

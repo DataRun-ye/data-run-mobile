@@ -11,13 +11,14 @@ import 'package:datarunmobile/data_run/form/form_submission/form_submission_repo
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:drift/src/runtime/data_class.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submission_list.provider.g.dart';
 
 @riverpod
 FormSubmissionRepository formSubmissionRepository(
-    FormSubmissionRepositoryRef ref) {
+    Ref ref) {
   return FormSubmissionRepository();
 }
 
@@ -118,17 +119,17 @@ class FormSubmissions extends _$FormSubmissions {
 }
 
 @riverpod
-Future<bool> submissionEditStatus(SubmissionEditStatusRef ref,
+Future<bool> submissionEditStatus(Ref ref,
     {required FormMetadata formMetadata}) async {
   final db = DSdk.db;
   final submission = await (db.select(db.dataSubmissions)
         ..where((tbl) => tbl.id.equals(formMetadata.submission!)))
       .getSingleOrNull();
   final team = await (db.select(db.teams)
-        ..where((tbl) => tbl.id.equals(formMetadata.assignmentModel.teamId!)))
+        ..where((tbl) => tbl.id.equals(formMetadata.assignmentModel.teamId)))
       .getSingleOrNull();
   final List<FormPermission> formPermissions = team?.formPermissions
-          .where((t) => t.form == formMetadata.formId)
+          ?.where((t) => t.form == formMetadata.formId)
           .expand((t) => t.permissions)
           .toSet()
           .toList() ??
@@ -141,13 +142,13 @@ Future<bool> submissionEditStatus(SubmissionEditStatusRef ref,
 }
 
 @riverpod
-Future<IMap<String, dynamic>> formSubmissionData(FormSubmissionDataRef ref,
+Future<IMap<String, dynamic>> formSubmissionData(Ref ref,
     {required String submissionId}) async {
   final DataSubmission? formSubmission = await ref
       .watch(formSubmissionRepositoryProvider)
       .getSubmission(submissionId);
   final submissionData = await ref.watch(
-      formSubmissionsProvider(formSubmission!.form!).selectAsync(
+      formSubmissionsProvider(formSubmission!.form).selectAsync(
           (IList<DataSubmission> submissions) => submissions
               .firstWhere((item) => item.id == submissionId)
               .formData));

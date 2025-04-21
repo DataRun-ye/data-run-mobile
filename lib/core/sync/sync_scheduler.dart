@@ -1,12 +1,11 @@
-import 'package:d_sdk/core/network/connectivy_service.dart';
-import 'package:d_sdk/d_sdk.dart';
+import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@injectable
 class SyncScheduler {
-  SyncScheduler({required SyncMetadataRepository metadataRepo})
-      : _connectivity = DSdk.connectivity,
+  SyncScheduler({required SyncMetadataRepository metadataRepo, required ConnectivityService connectivity})
+      : _connectivity = connectivity,
         _metadataRepo = metadataRepo;
 
   final ConnectivityService _connectivity;

@@ -1,14 +1,14 @@
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
-import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
+import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
+import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 // const formUid = 'formDataUid';
@@ -32,8 +32,6 @@ class FormInstance {
       Map<String, FormElementInstance<dynamic>> elements = const {},
       required this.enabled})
       : _ref = ref,
-        /*  _formDataUid =
-            initialValue['_${formUid}'] ?? CodeGenerator.generateCompositeUid(),*/
         _formSection = rootSection,
         _assignmentStatus = assignmentStatus {
     var formElementMap = {

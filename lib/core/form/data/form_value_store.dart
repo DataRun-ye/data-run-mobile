@@ -3,7 +3,9 @@ import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:datarunmobile/commons/helpers/lazy.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable()
 class FormValueStore {
   FormValueStore({
     required this.recordUidFuture,

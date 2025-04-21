@@ -25,7 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const int loopThreshold = 5;
 
-class FormRepositoryImpl with EquatableMixin implements FormRepository {
+class FormRepositoryImpl implements FormRepository {
   FormRepositoryImpl(
     this.formValueStore,
     this.fieldErrorMessageProvider,
@@ -881,7 +881,4 @@ class FormRepositoryImpl with EquatableMixin implements FormRepository {
       return [];
     }
   }
-
-  @override
-  List<Object?> get props => [formValueStore.recordUid];
 }

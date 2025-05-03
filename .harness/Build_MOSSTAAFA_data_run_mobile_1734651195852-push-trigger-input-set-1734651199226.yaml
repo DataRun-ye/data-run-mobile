@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_MOSSTAAFA_data_run_mobile_1734651195852-push-trigger-input-set
+  identifier: Build_MOSSTAAFA_data_run_mobile_1734651195852pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_MOSSTAAFA_data_run_mobile_1734651195852
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>

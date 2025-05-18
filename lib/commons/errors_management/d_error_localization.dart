@@ -14,7 +14,7 @@ class ErrorMessage {
   }
 
   static String _handleDError(DError d2Error) {
-    final message = d2Error.message ?? '';
+    final message = d2Error.message ?? d2Error.cause.toString();
     return switch (d2Error.errorCode) {
       DRunErrorCode.validationError => S.current.validationError,
       DRunErrorCode.networkTimeout => S.current.networkTimeout,
@@ -40,8 +40,10 @@ class ErrorMessage {
       DRunErrorCode.badCertificate => S.current.badCertificate(message),
       DRunErrorCode.sessionExpired => S.current.sessionExpired(message),
       DRunErrorCode.noLoggedInUser => S.current.noAuthenticatedUser,
-      DRunErrorCode.noLoggedInUserOffline =>
-        S.current.noAuthenticatedUserOffline,
+      DRunErrorCode.noUserDetailsFetchedFromServer =>
+        S.current.noUserDetailsFetchedFromServer(message),
+      // DRunErrorCode.noLoggedInUserOffline =>
+      //   S.current.noAuthenticatedUserOffline,
       DRunErrorCode.noActiveDatabaseInstance =>
         S.current.noActiveDatabaseFound(message),
       DRunErrorCode.unexpected => S.current.unexpected(message),

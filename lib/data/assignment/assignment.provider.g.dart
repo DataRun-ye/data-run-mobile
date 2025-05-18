@@ -6,7 +6,37 @@ part of 'assignment.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filterAssignmentsHash() => r'523a76bb6e5079b54e4745984e6b30cc4d5d9997';
+String _$filterAssignmentsHash() => r'0971531f6be01d30e8bb20d934fd4c15d9ae23f4';
+
+/// filters the list of assignment by certain
+///
+/// Copied from [filterAssignments].
+@ProviderFor(filterAssignments)
+final filterAssignmentsProvider =
+    AutoDisposeFutureProvider<List<AssignmentModel>>.internal(
+  filterAssignments,
+  name: r'filterAssignmentsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filterAssignmentsHash,
+  dependencies: <ProviderOrFamily>[
+    activityModelProvider,
+    assignmentModelsProvider
+  ],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    activityModelProvider,
+    ...?activityModelProvider.allTransitiveDependencies,
+    assignmentModelsProvider,
+    ...?assignmentModelsProvider.allTransitiveDependencies
+  },
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FilterAssignmentsRef
+    = AutoDisposeFutureProviderRef<List<AssignmentModel>>;
+String _$assignmentSubmissionsHash() =>
+    r'8e612fea6b8f34f048c09075c2b1d6bfb4977c36';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -28,160 +58,6 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
-
-/// filters the list of assignment by certain
-///
-/// Copied from [filterAssignments].
-@ProviderFor(filterAssignments)
-const filterAssignmentsProvider = FilterAssignmentsFamily();
-
-/// filters the list of assignment by certain
-///
-/// Copied from [filterAssignments].
-class FilterAssignmentsFamily
-    extends Family<AsyncValue<List<AssignmentModel>>> {
-  /// filters the list of assignment by certain
-  ///
-  /// Copied from [filterAssignments].
-  const FilterAssignmentsFamily();
-
-  /// filters the list of assignment by certain
-  ///
-  /// Copied from [filterAssignments].
-  FilterAssignmentsProvider call([
-    EntityScope? scope,
-  ]) {
-    return FilterAssignmentsProvider(
-      scope,
-    );
-  }
-
-  @override
-  FilterAssignmentsProvider getProviderOverride(
-    covariant FilterAssignmentsProvider provider,
-  ) {
-    return call(
-      provider.scope,
-    );
-  }
-
-  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
-    activityModelProvider
-  ];
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
-      <ProviderOrFamily>{
-    activityModelProvider,
-    ...?activityModelProvider.allTransitiveDependencies
-  };
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'filterAssignmentsProvider';
-}
-
-/// filters the list of assignment by certain
-///
-/// Copied from [filterAssignments].
-class FilterAssignmentsProvider
-    extends AutoDisposeFutureProvider<List<AssignmentModel>> {
-  /// filters the list of assignment by certain
-  ///
-  /// Copied from [filterAssignments].
-  FilterAssignmentsProvider([
-    EntityScope? scope,
-  ]) : this._internal(
-          (ref) => filterAssignments(
-            ref as FilterAssignmentsRef,
-            scope,
-          ),
-          from: filterAssignmentsProvider,
-          name: r'filterAssignmentsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$filterAssignmentsHash,
-          dependencies: FilterAssignmentsFamily._dependencies,
-          allTransitiveDependencies:
-              FilterAssignmentsFamily._allTransitiveDependencies,
-          scope: scope,
-        );
-
-  FilterAssignmentsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.scope,
-  }) : super.internal();
-
-  final EntityScope? scope;
-
-  @override
-  Override overrideWith(
-    FutureOr<List<AssignmentModel>> Function(FilterAssignmentsRef provider)
-        create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: FilterAssignmentsProvider._internal(
-        (ref) => create(ref as FilterAssignmentsRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        scope: scope,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<List<AssignmentModel>> createElement() {
-    return _FilterAssignmentsProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is FilterAssignmentsProvider && other.scope == scope;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, scope.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin FilterAssignmentsRef
-    on AutoDisposeFutureProviderRef<List<AssignmentModel>> {
-  /// The parameter `scope` of this provider.
-  EntityScope? get scope;
-}
-
-class _FilterAssignmentsProviderElement
-    extends AutoDisposeFutureProviderElement<List<AssignmentModel>>
-    with FilterAssignmentsRef {
-  _FilterAssignmentsProviderElement(super.provider);
-
-  @override
-  EntityScope? get scope => (origin as FilterAssignmentsProvider).scope;
-}
-
-String _$assignmentSubmissionsHash() =>
-    r'8e612fea6b8f34f048c09075c2b1d6bfb4977c36';
 
 abstract class _$AssignmentSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<List<DataSubmission>> {

@@ -1,7 +1,6 @@
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element_widgets/field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/repeat_table_sliver.dart';
-import 'package:datarunmobile/data_run/screens/form/hooks/register_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -20,21 +19,21 @@ class SectionWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useRegisterDependencies(element);
-    final elementState = useListenable(element.elementState);
-    if (elementState.value.hidden) {
-      return const SliverToBoxAdapter(child: null);
+    final elementPropertiesSnapshot = useStream(element.propertiesChanged);
+
+    if (!elementPropertiesSnapshot.hasData) {
+      return const SliverToBoxAdapter(child: CircularProgressIndicator());
+    }
+
+    if (elementPropertiesSnapshot.data!.hidden) {
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
     return SliverStickyHeader(
         header: Container(
-          color: headerColor ?? Theme
-              .of(context)
-              .colorScheme
-              .primary,
+          color: headerColor ?? Theme.of(context).colorScheme.primary,
           padding: const EdgeInsets.all(16),
-          child:
-          Text(element.label, style: const TextStyle(color: Colors.white)),
+          child: Text(element.label, style: const TextStyle(color: Colors.white)),
         ),
         sliver: MultiSliver(
           pushPinnedChildren: true,

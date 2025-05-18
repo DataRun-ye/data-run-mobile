@@ -82,8 +82,6 @@ class HintProviderImpl implements HintProvider {
         return 'fieldHintText';
       case ValueType.ScannedCode:
         return 'fieldHintText';
-      case ValueType.Unknown:
-        return 'fieldHintText';
     }
   }
 }

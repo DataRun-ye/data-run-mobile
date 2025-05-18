@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/field_template/field_template.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/section_rendering_type.dart';
 import 'package:datarunmobile/commons/extensions/dynamic_extensions.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
@@ -9,7 +9,6 @@ import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 import 'package:datarunmobile/core/form/ui/event/ui_event_factory_impl.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 
 class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   FieldViewModelFactoryImpl({

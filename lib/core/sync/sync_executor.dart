@@ -10,18 +10,20 @@ class SyncExecutor {
       : _progressNotifier = progressNotifier,
         _dataSources = IMap.fromIterable(
             appLocator.getAll<AbstractDatasource<dynamic>>(fromAllScopes: true),
-            keyMapper: (dataSource) => dataSource.apiResourceName,
+            keyMapper: (dataSource) => dataSource.resourceName,
             valueMapper: (dataSource) => dataSource);
 
   final SyncProgressNotifier _progressNotifier;
   final IMap<String, AbstractDatasource<dynamic>> _dataSources;
+
+  int get resourcesToSync => _dataSources.values.length;
 
   Future<void> performSync() async {
     await _progressNotifier.wrapOperation(
       totalResources: _dataSources.length,
       operation: () async {
         for (final source in _dataSources.values) {
-          await _progressNotifier.trackResource(source.apiResourceName, () {
+          await _progressNotifier.trackResource(source.resourceName, () {
             return source.syncWithRemote();
           });
         }

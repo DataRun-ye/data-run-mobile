@@ -1534,6 +1534,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Forbidden: {error}.'**
   String forbidden(Object error);
+
+  /// No description provided for @noUserDetailsFetchedFromServer.
+  ///
+  /// In en, this message translates to:
+  /// **'user details not fetched from server: {error}.'**
+  String noUserDetailsFetchedFromServer(Object error);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

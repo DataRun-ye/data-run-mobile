@@ -829,4 +829,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String forbidden(Object error) {
     return 'Forbidden: $error.';
   }
+
+  @override
+  String noUserDetailsFetchedFromServer(Object error) {
+    return 'user details not fetched from server: $error.';
+  }
 }

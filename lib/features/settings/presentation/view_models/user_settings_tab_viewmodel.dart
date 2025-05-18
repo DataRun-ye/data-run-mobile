@@ -1,4 +1,7 @@
 import 'package:d_sdk/database/database.dart';
+import 'package:datarunmobile/app_routes/app_router.dart';
+import 'package:datarunmobile/app_routes/app_router.gr.dart';
+import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:stacked/stacked.dart';
 
@@ -26,5 +29,8 @@ class UserSettingsTabViewModel extends BaseViewModel {
     // setBusy(false);
   }
 
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    await appLocator<AuthManager>().clearUserSession();
+    appLocator<AppRouter>().replace(LoginRoute());
+  }
 }

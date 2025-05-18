@@ -1,7 +1,7 @@
 // import 'package:datarunmobile/data_run/usecases/sync_manager/nmc_worker/work_info.dart';
 // import 'package:dio/dio.dart';
 // import 'package:datarunmobile/commons/prefs/preference_provider.dart';
-// import 'package:datarunmobile/commons/resources/resource_manager.provider.dart' show resourceManagerProvider;
+// import 'package:datarunmobile/commons/resources/resource_manager.provider.dart';
 // import 'package:datarunmobile/main/data/service/sync_data_worker.dart';
 // import 'package:datarunmobile/main/data/service/sync_metadata_worker.dart';
 // import 'package:datarunmobile/main/data/service/sync_presenter_impl.dart';

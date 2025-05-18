@@ -1,5 +1,5 @@
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
-import 'package:datarunmobile/data/form/form_instance.provider.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
@@ -149,7 +149,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
           .entries
           .map((e) => DataColumn(
               label: Text(
-                  '${getItemLocalString(e.value.label.unlock, defaultString: e.value.name)}'),
+                  '${getItemLocalString(e.value.label, defaultString: e.value.name)}'),
               numeric: e.value.type.isNumeric))
           .toList(),
       if (editMode)

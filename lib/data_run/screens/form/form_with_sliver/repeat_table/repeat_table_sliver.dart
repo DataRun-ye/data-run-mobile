@@ -1,10 +1,9 @@
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table.widget.dart';
-import 'package:datarunmobile/data_run/screens/form/hooks/register_dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RepeatTableSliver extends HookConsumerWidget {
@@ -17,11 +16,15 @@ class RepeatTableSliver extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useRegisterDependencies(repeatInstance);
-    final elementState = useListenable(repeatInstance.elementState);
+    final elementPropertiesSnapshot =
+        useStream(repeatInstance.propertiesChanged);
 
-    if (elementState.value.hidden) {
-      return const SliverToBoxAdapter(child: null);
+    if (!elementPropertiesSnapshot.hasData) {
+      return const SliverToBoxAdapter(child: CircularProgressIndicator());
+    }
+
+    if (elementPropertiesSnapshot.data!.hidden) {
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
     return SliverStickyHeader(
@@ -29,7 +32,7 @@ class RepeatTableSliver extends HookConsumerWidget {
         color: Colors.black45,
         padding: const EdgeInsets.all(16),
         child: Row(children: [
-          Icon(MdiIcons.table),
+           Icon(MdiIcons.table),
           Expanded(
             child: Text(repeatInstance.label, softWrap: true),
           )
@@ -37,7 +40,6 @@ class RepeatTableSliver extends HookConsumerWidget {
       ),
       sliver: SliverToBoxAdapter(
         child: Scrollbar(
-          interactive: true,
           child: RepeatTable(
             key: Key(repeatInstance.elementPath!),
             repeatInstance: repeatInstance,

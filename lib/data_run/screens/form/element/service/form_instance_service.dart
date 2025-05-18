@@ -53,15 +53,15 @@ class FormInstanceService {
           initialValue ?? _deviceInfoService?.model(),
         AttributeType.form =>
           initialValue ?? formMetadata.formId.split('-').first,
-        AttributeType.team => initialValue ??
-            await (db.select(db.dataValues)
-                  ..where((tbl) =>
-                      tbl.id.equals(formMetadata.assignmentModel.teamId)))
-                .getSingleOrNull(),
-        AttributeType.activity =>
-          initialValue ?? formMetadata.assignmentModel.activityId,
+        // AttributeType.team => initialValue ??
+        //     await (db.select(db.dataValues)
+        //           ..where((tbl) =>
+        //               tbl.id.equals(formMetadata.assignmentModel.team.id)))
+        //         .getSingleOrNull(),
+        // AttributeType.activity =>
+        //   initialValue ?? formMetadata.assignmentModel.activity.id,
         AttributeType.version => initialValue ?? formMetadata.formId,
-        AttributeType.scope => formMetadata.assignmentModel.scope.name,
+        // AttributeType.scope => formMetadata.assignmentModel.scope.name,
       };
 
   Future<Map<String, Object?>> formAttributesControls(initialValue) async {
@@ -79,9 +79,6 @@ class FormInstanceService {
       //     initialValue['_${formUid}'] ?? CodeGenerator.generateCompositeUid(),
       // @Column(nullable: true, type: ColumnType.TEXT)
       // EntityScope? scope;
-      '_${AttributeType.scope.name}': await attributeControl(
-          AttributeType.scope,
-          initialValue: initialValue['_${AttributeType.scope.name}']),
 
       /// phoneNumber
       '_${AttributeType.phoneNumber.name}': await attributeControl(
@@ -104,17 +101,17 @@ class FormInstanceService {
           initialValue: initialValue['_${AttributeType.userInfo.name}']),
 
       /// team name
-      '_${AttributeType.team.name}': await attributeControl(AttributeType.team,
-          initialValue: initialValue['_${AttributeType.team.name}']),
+      // '_${AttributeType.team.name}': await attributeControl(AttributeType.team,
+      //     initialValue: initialValue['_${AttributeType.team.name}']),
 
       /// form
       '_${AttributeType.form.name}':
           initialValue['_${AttributeType.form.name}'] ?? formMetadata.formId,
 
       /// activity
-      '_${AttributeType.activity.name}': await attributeControl(
-          AttributeType.activity,
-          initialValue: initialValue['_${AttributeType.activity.name}']),
+      // '_${AttributeType.activity.name}': await attributeControl(
+      //     AttributeType.activity,
+      //     initialValue: initialValue['_${AttributeType.activity.name}']),
 
       /// device id
       '_${AttributeType.deviceId.name}': await attributeControl(

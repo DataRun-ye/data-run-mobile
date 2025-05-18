@@ -116,13 +116,14 @@ class FormInstance {
     final itemInstance = FormElementBuilder.buildRepeatItem(
       form,
       formFlatTemplate,
-      parent.template,
+      parent.template, /*parentUid: _formDataUid as String*/
     );
-    parent..add(itemInstance);
-    // ..resolveDependencies()
-    // ..evaluateDependencies();
-    // itemInstance.resolveDependencies();
-    // itemInstance.evaluateDependencies();
+    parent
+      ..add(itemInstance)
+      ..resolveDependencies()
+      ..evaluate();
+    itemInstance.resolveDependencies();
+    itemInstance.evaluate();
     parent.elementControl.markAsDirty();
     return itemInstance;
   }
@@ -130,7 +131,7 @@ class FormInstance {
   RepeatItemInstance onRemoveRepeatedItem(int index, RepeatSection parent) {
     final removedItem = parent.removeAt(index);
     parent.elementControl.removeAt(index);
-    parent.evaluateDependencies();
+    parent.evaluate();
     return removedItem;
   }
 
@@ -140,7 +141,7 @@ class FormInstance {
       final lastParentItem = parent.elements.last;
       final itemFormGroup = form.control(lastParentItem.elementPath!);
       parent.remove(lastParentItem);
-      parent.evaluateDependencies();
+      parent.evaluate();
       parentArray.remove(itemFormGroup);
       logDebug('last Item deleted');
       return lastParentItem;

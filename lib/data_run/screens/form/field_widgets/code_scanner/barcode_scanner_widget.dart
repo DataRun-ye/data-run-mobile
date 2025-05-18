@@ -10,8 +10,8 @@ import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/s
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:gs1_barcode_parser/gs1_barcode_parser.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 typedef ScanPreviewBuilder = Widget Function(Gs1ScannedItem? scannedItem);
 

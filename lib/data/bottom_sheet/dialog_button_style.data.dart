@@ -1,6 +1,7 @@
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'dialog_button_style.data.freezed.dart';
 
 @freezed

@@ -1,6 +1,5 @@
 import 'package:auto_route/annotations.dart';
-import 'package:datarunmobile/app/router/app_router.dart';
-import 'package:datarunmobile/app/router/app_router.gr.dart';
+import 'package:datarunmobile/app_routes/app_routes.dart';
 import 'package:datarunmobile/commons/custom_widgets/flutter_loading.dart';
 import 'package:datarunmobile/core/network/online_connectivity.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_page.dart';
@@ -22,9 +21,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final appAboutAsync = ref.watch(appAboutInfoProvider);
-    // final activitiesAsync = ref.watch(activitiesProvider);
-    final router = appLocator<AppRouter>();
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       builder: (context, viewModel, child) {
@@ -50,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                   children: <Widget>[
                     FlutterLoading(
                       isLoading: viewModel.busy(viewModel.user),
-                      child: UserAccountsDrawerHeader(
+                      childBuilder: () => UserAccountsDrawerHeader(
                         accountName: Text(viewModel.user?.firstName ?? '-'),
                         accountEmail: Text(viewModel.user?.username ?? '-'),
                         currentAccountPicture: CircleAvatar(
@@ -69,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                         // _navigationService.back();
                         // _navigationService.navigateToSettingsPage();
                         // router.back();
-                        router.navigate(const SettingsRoute());
+                        appLocator<AppRouter>().navigate(const SettingsRoute());
 
                         // Navigator.push(
                         //     navigatorKey.currentContext!,

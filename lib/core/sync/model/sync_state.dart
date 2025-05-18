@@ -1,4 +1,4 @@
-import 'package:datarunmobile/core/sync/model/resource_progress.dart';
+import 'package:datarunmobile/core/sync/model/resource_progress.data.dart';
 import 'package:datarunmobile/core/sync/model/sync_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

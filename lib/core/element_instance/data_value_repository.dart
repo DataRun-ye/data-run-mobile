@@ -53,7 +53,7 @@ class DataValueRepository {
         submission: submissionId,
         templatePath: path,
         dataElement: elementPath[elementPath.length - 1],
-        lastModifiedDate: DateTime.now().toUtc());
+        lastModifiedDate: Value(DateTime.now().toUtc()));
     await db.update(db.dataValues).replace(dv);
 
     // DataValue(

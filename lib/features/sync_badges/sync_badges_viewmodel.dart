@@ -3,7 +3,8 @@ import 'package:d_sdk/database/dao/dao.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:stacked/stacked.dart';
 
-class SyncBadgesViewModel extends StreamViewModel<Map<SubmissionStatus, int>> {
+class SyncBadgesViewModel
+    extends FutureViewModel<List<SubmissionSyncStatusModel>> {
   SyncBadgesViewModel({required this.aggregationLevel, required this.id});
 
   final String id;
@@ -11,6 +12,7 @@ class SyncBadgesViewModel extends StreamViewModel<Map<SubmissionStatus, int>> {
   late final DataSubmissionsDao submissionsDao = DSdk.db.dataSubmissionsDao;
 
   @override
-  Stream<Map<SubmissionStatus, int>> get stream =>
-      submissionsDao.watchStatusByLevel(id, aggregationLevel);
+  Future<List<SubmissionSyncStatusModel>> futureToRun() {
+    return submissionsDao.watchStatusByLevel(id, aggregationLevel).get();
+  }
 }

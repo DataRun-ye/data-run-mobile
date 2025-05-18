@@ -1,5 +1,6 @@
-import 'package:d_sdk/core/form/field_template/field_template.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/database/shared/shared.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -7,35 +8,36 @@ class FieldValidators {
   static String ArReg1 =
       r'^[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{0,1}[\u0621-\u064A]{0,}[ ]{0,1}$';
 
-  static List<Validator<dynamic>> getValidators(
-      ElementAttributesMixin element) {
+  static List<Validator<dynamic>> getValidators(FormElementTemplate element) {
     Set<Validator<dynamic>> validators = Set();
-
-    if (element.type == ValueType.FullName)
-      validators.add(Validators.pattern(ArReg1));
-    if (element.mandatory) validators.add(Validators.required);
-    if (element.type == ValueType.Email) validators.add(Validators.email);
-    if (element.type == ValueType.Age)
-      validators
-          .add(Validators.number(allowedDecimals: 2, allowNegatives: false));
-    if (element.type?.isInteger ?? false) validators.add(Validators.number());
-    if (element.type == ValueType.IntegerZeroOrPositive)
-      validators.addAll(
-          [Validators.number(allowNegatives: false), Validators.min(0)]);
-    if (element.type == ValueType.IntegerNegative)
-      validators.addAll([Validators.number(), Validators.max(-1)]);
-    if (element.type == ValueType.IntegerPositive)
-      validators.add(Validators.min(1));
-    if (element.type == ValueType.Percentage)
-      validators.addAll([Validators.min(0), Validators.maxLength(100)]);
+    if (element is FieldElementTemplate) {
+      if (element.type == ValueType.FullName)
+        validators.add(Validators.pattern(ArReg1));
+      if (element.mandatory) validators.add(Validators.required);
+      if (element.type == ValueType.Email) validators.add(Validators.email);
+      if (element.type == ValueType.Age)
+        validators
+            .add(Validators.number(allowedDecimals: 2, allowNegatives: false));
+      if (element.type?.isInteger ?? false) validators.add(Validators.number());
+      if (element.type == ValueType.IntegerZeroOrPositive)
+        validators.addAll(
+            [Validators.number(allowNegatives: false), Validators.min(0)]);
+      if (element.type == ValueType.IntegerNegative)
+        validators.addAll([Validators.number(), Validators.max(-1)]);
+      if (element.type == ValueType.IntegerPositive)
+        validators.add(Validators.min(1));
+      if (element.type == ValueType.Percentage)
+        validators.addAll([Validators.min(0), Validators.maxLength(100)]);
+    }
     return validators.toList();
   }
 
   static Map<String, String Function(Object error)> getValidationMessages(
-      ElementAttributesMixin element) {
+      Template element) {
     final Map<String, String Function(Object error)> messages = {};
 
-    if (element.mandatory)
+    if (element is FieldElementTemplate &&
+        (element as FieldElementTemplate).mandatory)
       messages['required'] = (error) => 'This field is mandatory.';
     if (element.type == ValueType.Email)
       messages['email'] = (error) => 'Invalid email format.';

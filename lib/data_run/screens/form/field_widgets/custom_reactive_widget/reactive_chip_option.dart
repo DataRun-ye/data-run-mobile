@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/reactive_field_option.dart';
+import 'package:flutter/widgets.dart';
 
 /// An option for filter chips.
 ///

@@ -1,9 +1,11 @@
 import 'dart:async';
-import 'dart:io' show HttpHeaders;
+import 'dart:io';
 
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/user_session/user_session.dart';
+import 'package:d_sdk/di/app_environment.dart';
+import 'package:d_sdk/user_session/session_context.dart';
+import 'package:d_sdk/user_session/session_repository.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -11,12 +13,12 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class AuthInterceptor extends QueuedInterceptor {
-  AuthInterceptor(
-      {@Named('baseUrl') required String baseUrl,
-      required SessionRepository sessionRepository})
+  AuthInterceptor({required SessionRepository sessionRepository})
       : this._sessionRepository = sessionRepository,
-        this.refreshClient = Dio()..options = BaseOptions(baseUrl: baseUrl),
-        this.retryClient = Dio()..options = BaseOptions(baseUrl: baseUrl);
+        this.refreshClient = Dio()
+          ..options = BaseOptions(baseUrl: AppEnvironment.apiBaseUrl),
+        this.retryClient = Dio()
+          ..options = BaseOptions(baseUrl: AppEnvironment.apiBaseUrl);
 
   final SessionRepository _sessionRepository;
   late final Dio refreshClient;

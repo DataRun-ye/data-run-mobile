@@ -49,13 +49,30 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
     return allErrors;
   }
 
-  @override
-  void evaluateDependencies<T>() {
+  void resolveDependencies() {
     for (final element in _elements) {
-      element.evaluateDependencies();
+      element.resolveDependencies();
     }
 
-    super.evaluateDependencies();
+    super.resolveDependencies();
+  }
+
+  @override
+  void evaluate(
+      {String? changedDependency,
+      bool updateParent = true,
+      bool emitEvent = true}) {
+    for (final element in _elements) {
+      element.evaluate(
+          changedDependency: changedDependency,
+          updateParent: updateParent,
+          emitEvent: emitEvent);
+    }
+
+    super.evaluate(
+        changedDependency: changedDependency,
+        updateParent: updateParent,
+        emitEvent: emitEvent);
   }
 
   /// Insert a new [element] at the end of the RepeatSection.
@@ -180,6 +197,8 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
         );
       }
     }
+
+    updateValueAndValidity(updateParent: updateParent);
   }
 
   @override

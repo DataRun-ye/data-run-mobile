@@ -1,6 +1,8 @@
 # Miscellaneous
 *.db
 *.sqflite
+*.enc.sqlite
+db_schemas/
 *.class
 *.log
 *.pyc

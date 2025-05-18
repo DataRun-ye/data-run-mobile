@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/field_template/field_template.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/section_rendering_type.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';

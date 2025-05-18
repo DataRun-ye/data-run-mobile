@@ -72,22 +72,22 @@ class ActivityCard extends StatelessWidget {
               ),
 
               // Start Date and End Date
-              if (activity.activity?.properties['startDate'] != null)
+              if (activity.startDate != null)
                 _infoRow(
                   context,
                   icon: Icons.calendar_today,
                   label: S.of(context).startDate,
                   value: MaterialLocalizations.of(context).formatFullDate(
-                    activity.activity!.properties['startDate'],
+                    activity.startDate!,
                   ),
                 ),
-              if (activity.activity?.properties['endDate'] != null)
+              if (activity.endDate != null)
                 _infoRow(
                   context,
                   icon: Icons.event,
                   label: S.of(context).endDate,
                   value: MaterialLocalizations.of(context).formatFullDate(
-                    activity.activity!.properties['endDate'],
+                    activity.endDate!,
                   ),
                 ),
             ],
@@ -121,6 +121,6 @@ class ActivityCard extends StatelessWidget {
   }
 }
 
-String formatDate(DateTime date, BuildContext context) {
-  return MaterialLocalizations.of(context).formatFullDate(date);
-}
+// String formatDate(DateTime date, BuildContext context) {
+//   return MaterialLocalizations.of(context).formatFullDate(date);
+// }

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:datarunmobile/app/router/router.dart';
+import 'package:datarunmobile/app_routes/app_routes.dart';
 import 'package:datarunmobile/core/models/models.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/features/dialog/presentation/platform_dialog.dart';

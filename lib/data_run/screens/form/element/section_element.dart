@@ -4,7 +4,7 @@ part of 'form_element.dart';
 /// father of either a [Section] element or a [RepeatSection] element
 sealed class SectionElement<T> extends FormElementInstance<T> {
   SectionElement(
-      {required SectionTemplate template,
+      {required SectionElementTemplate template,
       required super.form,
       FormElementState? elementState})
       : super(
@@ -13,7 +13,8 @@ sealed class SectionElement<T> extends FormElementInstance<T> {
 
   FormElementInstance<dynamic> element(String name);
 
-  SectionTemplate get template => super.template as SectionTemplate;
+  SectionElementTemplate get template =>
+      super.template as SectionElementTemplate;
 
   /// Checks if [SectionElement] contains an element by a given [name].
   ///

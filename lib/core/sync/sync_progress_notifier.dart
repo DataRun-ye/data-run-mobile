@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:datarunmobile/core/sync/model/resource_progress.dart';
+import 'package:datarunmobile/core/sync/model/resource_progress.data.dart';
 import 'package:datarunmobile/core/sync/model/resource_state.dart';
 import 'package:datarunmobile/core/sync/model/sync_progress.dart';
 import 'package:flutter/foundation.dart';
@@ -86,6 +86,11 @@ class SyncProgressNotifier {
   void _logError(Object error, StackTrace stack) {
     logError(error.toString());
     debugPrintStack(stackTrace: stack);
+  }
+
+  void reset() {
+    _resourceHistory.clear();
+    _progress.add(SyncProgress.idle());
   }
 
   @disposeMethod

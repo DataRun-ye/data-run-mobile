@@ -1,5 +1,5 @@
-// import 'package:d_sdk/core/form/field_template/field_template.dart';
-// import 'package:d_sdk/core/form/field_template/field_template.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
 // import 'package:datarunmobile/data_run/form/form_state/table_state.dart';
 // import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 //

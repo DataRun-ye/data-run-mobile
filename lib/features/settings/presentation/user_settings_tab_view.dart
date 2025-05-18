@@ -16,7 +16,7 @@ class UserSettingsTabView extends ConsumerWidget {
       builder: (context, viewModel, child) {
         return FlutterLoading(
           isLoading: viewModel.isBusy,
-          child: Consumer(
+          childBuilder: () => Consumer(
             builder: (
               BuildContext context,
               WidgetRef ref,

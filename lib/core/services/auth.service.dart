@@ -1,7 +1,7 @@
 // import 'dart:io';
 //
 // import 'package:datarunmobile/app/app.locator.dart';
-// import 'package:datarunmobile/app/app.router.dart';
+// import 'package:datarunmobile/app/app.app_routes.dart';
 // import 'package:datarunmobile/app/app_environment.dart';
 // import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 // import 'package:datarunmobile/core/network/connectivy_service.dart';

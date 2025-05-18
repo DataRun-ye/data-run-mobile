@@ -23,8 +23,8 @@ class FormAttributes with EquatableMixin {
         AttributeType.deviceModel => deviceModel,
         AttributeType.form => form,
         // AttributeType.orgUnit => orgUnit,
-        AttributeType.team => team,
-        AttributeType.activity => activity,
+        // AttributeType.team => team,
+        // AttributeType.activity => activity,
         AttributeType.version => version.toString(),
         _ => null
       };

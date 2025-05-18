@@ -1,4 +1,4 @@
-import 'package:d_sdk/user_session/user_session.dart';
+import 'package:d_sdk/user_session/cache_storage_adapter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedCacheStorageAdapter extends CacheStorageAdapter {

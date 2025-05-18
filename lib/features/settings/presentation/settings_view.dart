@@ -1,4 +1,4 @@
-import 'package:auto_route/auto_route.dart' show RoutePage;
+import 'package:auto_route/auto_route.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
 import 'package:datarunmobile/features/settings/presentation/presentation.dart';

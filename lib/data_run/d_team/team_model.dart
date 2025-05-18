@@ -10,7 +10,8 @@ class TeamModel with EquatableMixin {
       required bool disabled,
       IMap<String, dynamic>? label,
       IMap<String, dynamic>? properties,
-      Iterable<TeamFormPermission> formPermissions = const IListConst([])}) {
+      Iterable<TeamFormPermission> formPermissions = const IListConst([])
+      }) {
     return TeamModel._(
         activity: activity,
         id: id,

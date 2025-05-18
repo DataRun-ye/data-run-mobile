@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:d_sdk/di/app_environment.dart';
 import 'package:d_sdk/di/injection.dart';
-import 'package:datarunmobile/app/router/app_router.dart' show AppRouter;
+import 'package:datarunmobile/app_routes/app_routes.dart';
 import 'package:datarunmobile/core/main_constants.dart';
 import 'package:datarunmobile/data/preference2.provider.dart';
 import 'package:datarunmobile/di/app.bottomsheets.dart';
 import 'package:datarunmobile/di/app.dialogs.dart';
-import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +20,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // stacked
-  setupSdkLocator();
-  // await setupLocator();
+  await setupSdkLocator();
   await configureDependencies();
   setupDialogUi();
   setupBottomSheetUi();

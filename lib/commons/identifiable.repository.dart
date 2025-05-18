@@ -1,4 +1,4 @@
-// import 'package:d2_remote/shared/mixin/d_run_base.dart';
+// import 'package:d2_remote/shared/mixin/d_run_base.model.dart';
 // import 'package:d2_remote/shared/queries/base.repository.dart';
 // import 'package:datarunmobile/commons/query/query_model.dart';
 // import 'package:datarunmobile/core/common/paged_result.dart';

@@ -1,8 +1,10 @@
 /// This class contains all the bottom sheet UI's used in the bottom sheet
 
+import 'package:auto_route/annotations.dart';
 import 'package:datarunmobile/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class GeneralBottomSheet extends StatelessWidget {
   const GeneralBottomSheet({
     super.key,

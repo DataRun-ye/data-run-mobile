@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/field_template/field_template.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 
 /// dfs traversal for Template
 Iterable<TemplateType> getDfsTemplateIterator<TemplateType extends Template>(
@@ -8,7 +8,7 @@ Iterable<TemplateType> getDfsTemplateIterator<TemplateType extends Template>(
   }
 
   if (template is SectionTemplate) {
-    for (final item in template.fields) {
+    for (final item in template.children) {
       yield* getDfsTemplateIterator<TemplateType>(item);
     }
   }

@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:datarunmobile/utils/mass_utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:datarunmobile/utils/mass_utils/utils.dart';
 
 bool isDesktop(BuildContext context) {
   final data = MediaQueryData.fromView(View.of(context));

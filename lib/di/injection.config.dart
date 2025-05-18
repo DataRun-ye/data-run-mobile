@@ -9,11 +9,14 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:d_sdk/auth/auth_manager.dart' as _i976;
-import 'package:d_sdk/core/config/app_environment_instance.dart' as _i132;
-import 'package:d_sdk/user_session/user_session.dart' as _i1010;
-import 'package:datarunmobile/core/auth/auth.dart';
+import 'package:d_sdk/core/http/http_client.dart' as _i8;
+import 'package:d_sdk/user_session/cache_storage_adapter.dart' as _i216;
+import 'package:d_sdk/user_session/session_repository.dart' as _i993;
+import 'package:datarunmobile/core/auth/auth.dart' as _i928;
+import 'package:datarunmobile/core/auth/auth_api.dart' as _i64;
 import 'package:datarunmobile/core/auth/auth_interceptor.dart' as _i656;
+import 'package:datarunmobile/core/auth/sdk_auth_manager.dart' as _i157;
+import 'package:datarunmobile/core/http/default_http_adapter.dart' as _i832;
 import 'package:datarunmobile/core/network/connectivy_service.dart' as _i761;
 import 'package:datarunmobile/core/sync/sync_coordinator.dart' as _i432;
 import 'package:datarunmobile/core/sync/sync_executor.dart' as _i148;
@@ -21,9 +24,11 @@ import 'package:datarunmobile/core/sync/sync_metadata_repository.dart' as _i492;
 import 'package:datarunmobile/core/sync/sync_progress_notifier.dart' as _i28;
 import 'package:datarunmobile/core/sync/sync_scheduler.dart' as _i658;
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart' as _i602;
-import 'package:datarunmobile/core/user_session/default_session_repository.dart'
-    as _i202;
-import 'package:datarunmobile/di/dio_module.dart' as _i388;
+import 'package:datarunmobile/core/user_session/default_session.repository.dart'
+    as _i694;
+import 'package:datarunmobile/core/user_session/session_scope_initializer.dart'
+    as _i584;
+import 'package:datarunmobile/di/sdk_module.dart' as _i927;
 import 'package:datarunmobile/di/third_party_services.module.dart' as _i224;
 import 'package:datarunmobile/features/bottom_sheet/application/bottom_sheet_service.dart'
     as _i964;
@@ -46,16 +51,13 @@ Future<_i174.GetIt> init(
     environment,
     environmentFilter,
   );
+  final sdkModule = _$SdkModule();
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
-  final dioModule = _$DioModule();
+  gh.factory<_i216.CacheStorageAdapter>(() => sdkModule.cacheStorageAdapter);
   await gh.factoryAsync<_i460.SharedPreferences>(
     () => thirdPartyServicesModule.prefs,
     preResolve: true,
   );
-  gh.factory<_i1010.CacheStorageAdapter>(
-      () => thirdPartyServicesModule.cacheStorageAdapter);
-  gh.singleton<_i132.AppEnvironmentInstance>(
-      () => thirdPartyServicesModule.appEnvironmentInstance);
   gh.lazySingleton<_i28.SyncProgressNotifier>(
     () => _i28.SyncProgressNotifier(),
     dispose: (i) => i.dispose(),
@@ -70,54 +72,37 @@ Future<_i174.GetIt> init(
   gh.lazySingleton<_i418.DialogService>(() => _i418.DialogService());
   gh.factory<_i492.SyncMetadataRepository>(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
-  gh.factory<String>(
-    () => dioModule.baseUrl,
-    instanceName: 'baseUrl',
-  );
-  gh.factory<String>(
-    () => dioModule.apiPath,
-    instanceName: 'apiPath',
-  );
   gh.factory<_i148.SyncExecutor>(() =>
       _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
   gh.factory<bool>(
-    () => dioModule.shouldClearBeforeSave,
+    () => sdkModule.shouldClearBeforeSave,
     instanceName: 'shouldClearBeforeSave',
   );
-  gh.factory<int>(
-    () => dioModule.sendTimeOut,
-    instanceName: 'sendTimeOut',
-  );
-  gh.lazySingleton<_i1010.SessionRepository>(() =>
-      _i202.DefaultSessionRepository(
-        storageAdapter: gh<_i1010.CacheStorageAdapter>(),
+  gh.factory<_i993.SessionRepository>(() => _i694.DefaultSessionRepository(
+        storageAdapter: gh<_i216.CacheStorageAdapter>(),
         shouldClearBeforeSave: gh<bool>(instanceName: 'shouldClearBeforeSave'),
       ));
-  gh.factory<_i656.AuthInterceptor>(() => _i656.AuthInterceptor(
-        baseUrl: gh<String>(instanceName: 'baseUrl'),
-        sessionRepository: gh<_i1010.SessionRepository>(),
-      ));
-  gh.lazySingleton<_i361.Dio>(() => dioModule.dio(
-        gh<_i656.AuthInterceptor>(),
-        gh<String>(instanceName: 'baseUrl'),
-      ));
-  gh.singleton<SessionScopeInitializer>(() => SessionScopeInitializer(
-      sessionRepository: gh<_i1010.SessionRepository>()));
+  gh.factory<_i656.AuthInterceptor>(() =>
+      _i656.AuthInterceptor(sessionRepository: gh<_i993.SessionRepository>()));
+  gh.factory<_i584.SessionScopeInitializer>(() => _i584.SessionScopeInitializer(
+      sessionRepository: gh<_i993.SessionRepository>()));
+  gh.factory<_i361.Dio>(
+      () => thirdPartyServicesModule.dio(gh<_i928.AuthInterceptor>()));
   gh.lazySingleton<_i761.ConnectivityService>(
-    () => _i761.ConnectivityService(
-      environmentInstance: gh<_i132.AppEnvironmentInstance>(),
-      dio: gh<_i361.Dio>(),
-    ),
+    () => _i761.ConnectivityService(dio: gh<_i361.Dio>()),
     dispose: (i) => i.dispose(),
   );
+  gh.factory<_i8.HttpClient<dynamic>>(
+      () => _i832.DefaultHttpAdapter(gh<_i361.Dio>()));
+  gh.factory<_i64.AuthApi>(() => _i64.AuthApi(dioClient: gh<_i361.Dio>()));
   gh.factory<_i658.SyncScheduler>(() => _i658.SyncScheduler(
         metadataRepo: gh<_i492.SyncMetadataRepository>(),
         connectivity: gh<_i761.ConnectivityService>(),
       ));
-  gh.lazySingleton<_i976.AuthManager>(() => SdkAuthManager(
-        sessionRepository: gh<_i1010.SessionRepository>(),
-        scopeInitializer: gh<SessionScopeInitializer>(),
-        dio: gh<_i361.Dio>(),
+  gh.lazySingleton<_i928.AuthManager>(() => _i157.SdkAuthManager(
+        sessionRepository: gh<_i993.SessionRepository>(),
+        scopeInitializer: gh<_i584.SessionScopeInitializer>(),
+        authApi: gh<_i64.AuthApi>(),
       ));
   gh.factory<_i432.SyncCoordinator>(() => _i432.SyncCoordinator(
         gh<_i492.SyncMetadataRepository>(),
@@ -127,6 +112,6 @@ Future<_i174.GetIt> init(
   return getIt;
 }
 
-class _$ThirdPartyServicesModule extends _i224.ThirdPartyServicesModule {}
+class _$SdkModule extends _i927.SdkModule {}
 
-class _$DioModule extends _i388.DioModule {}
+class _$ThirdPartyServicesModule extends _i224.ThirdPartyServicesModule {}

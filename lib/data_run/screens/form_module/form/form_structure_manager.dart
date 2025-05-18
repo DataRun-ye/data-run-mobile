@@ -11,7 +11,7 @@ class FormStructureManager {
   }
   final Map<String, dynamic> _formValueMapBackup = {};
   final Map<String, dynamic> _formValueMap = {};
-  final FormVersion formVersion;
+  final FormTemplateVersion formVersion;
   final FormFlatTemplate formFlatTemplate;
 
   void resetForm() {

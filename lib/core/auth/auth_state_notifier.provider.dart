@@ -4,7 +4,7 @@
 // import 'package:d_sdk/auth/authentication_service.dart';
 // import 'package:d_sdk/core/cache/cache.dart';
 // import 'package:d_sdk/core/config/server_config.dart';
-// import 'package:d_sdk/core/user_session/session_storage_manager.dart';
+// import 'package:d_sdk/core/user_session/session_repository.dart';
 // import 'package:d_sdk/database/database.dart';
 // import 'package:d_sdk/use_cases/logout_strategies/logout_strategies.dart';
 // import 'package:datarunmobile/di/injection.dart';

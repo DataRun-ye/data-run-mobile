@@ -1,12 +1,9 @@
 {
   "env_label": "prod",
   "api_base_url": "https://api.nmcpye.org",
-  "api_path": "/api/custom",
   "default_locale": "ar",
   "api_request_send_timeout": 30,
-
   "in_memory": false,
   "secure_database": true,
-  "secure_cache": true,
-  "encryption_key": "e@ar2-9Fd!g64Ds-1rat3d#Str0r3&-Sdk8abl7"
+  "secure_cache": true
 }

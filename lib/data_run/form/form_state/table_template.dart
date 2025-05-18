@@ -1,4 +1,4 @@
-// import 'package:d_sdk/core/form/field_template/field_template.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
 // import 'package:d_sdk/database/shared/shared.dart';
 //
 // class TableTemplate extends FieldTemplate {

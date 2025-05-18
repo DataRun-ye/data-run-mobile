@@ -1,4 +1,22 @@
 class OverlayRequest<T> {
+  OverlayRequest({
+    this.showIconInMainButton,
+    this.showIconInSecondaryButton,
+    this.showIconInAdditionalButton,
+    this.title,
+    this.description,
+    this.hasImage,
+    this.imageUrl,
+    this.mainButtonTitle,
+    this.secondaryButtonTitle,
+    this.additionalButtonTitle,
+    this.takesInput,
+    @Deprecated('Prefer to use `data` and pass in a generic type.')
+    this.customData,
+    this.data,
+    this.variant,
+  });
+
   /// The title for the dialog
   final String? title;
 
@@ -41,24 +59,6 @@ class OverlayRequest<T> {
 
   /// Extra data to be passed to the UI
   final T? data;
-
-  OverlayRequest({
-    this.showIconInMainButton,
-    this.showIconInSecondaryButton,
-    this.showIconInAdditionalButton,
-    this.title,
-    this.description,
-    this.hasImage,
-    this.imageUrl,
-    this.mainButtonTitle,
-    this.secondaryButtonTitle,
-    this.additionalButtonTitle,
-    this.takesInput,
-    @Deprecated('Prefer to use `data` and pass in a generic type.')
-    this.customData,
-    this.data,
-    this.variant,
-  });
 }
 
 class DialogRequest<T> extends OverlayRequest<T> {

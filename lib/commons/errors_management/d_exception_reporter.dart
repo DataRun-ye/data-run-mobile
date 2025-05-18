@@ -16,6 +16,7 @@ class DExceptionReporter {
     final message = ErrorMessage.getMessage(error);
 
     logException(DException(error.toString(), error));
+
     if (showToUser) {
       // _showUserAlert(message);
       _dialogService.showDialog(
@@ -25,7 +26,7 @@ class DExceptionReporter {
         description: message,
       );
 
-      throw error;
+      // throw error;
     }
   }
 

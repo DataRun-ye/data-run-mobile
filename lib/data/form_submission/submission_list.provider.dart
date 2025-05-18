@@ -1,7 +1,5 @@
-import 'package:d_sdk/core/common/dhis_uid_generator.util.dart';
 import 'package:d_sdk/core/common/geometry.entity.dart';
 import 'package:d_sdk/core/exception/exception.dart';
-import 'package:d_sdk/core/form/form_permission.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
@@ -9,7 +7,8 @@ import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/data_run/form/form_submission/form_submission_repository.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
-import 'package:drift/src/runtime/data_class.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
+import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,8 +16,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'submission_list.provider.g.dart';
 
 @riverpod
-FormSubmissionRepository formSubmissionRepository(
-    Ref ref) {
+FormSubmissionRepository formSubmissionRepository(Ref ref) {
   return FormSubmissionRepository();
 }
 
@@ -33,14 +31,9 @@ class FormSubmissions extends _$FormSubmissions {
   AppDatabase get db => DSdk.db;
 
   Future<void> markSubmissionAsFinal(String uid) async {
-    final DataSubmission? submission = await (db.select(db.dataSubmissions)
-          ..where((tbl) => tbl.id.equals(uid)))
-        .getSingleOrNull();
-
-    await db.update(db.dataSubmissions).replace(submission!.copyWith(
-        status: const Value(SubmissionStatus.synced),
-        lastModifiedDate: DateTime.now().toUtc(),
-        finishedEntryTime: Value(DateTime.now().toUtc())));
+    await db.managers.dataSubmissions
+        .filter((f) => f.id(uid))
+        .update((o) => o.call(status: const Value(SubmissionStatus.finalized)));
 
     ref.invalidateSelf();
     await future;
@@ -48,30 +41,24 @@ class FormSubmissions extends _$FormSubmissions {
 
   /// injecting the arguments from the context
   Future<DataSubmission> createNewSubmission(
-      {required formVersion,
-      required String assignmentId,
+      {required String assignmentId,
       required String team,
-      required String form,
-      required int version,
+        required String form,
+        required String formVersion,
+        required int version,
       Map<String, dynamic> formData = const {},
       Geometry? geometry}) async {
-    final id = DhisUidGenerator.generate();
-    final DataSubmission submission = DataSubmission(
-        id: id,
-        deleted: false,
-        status: SubmissionStatus.draft,
-        progressStatus: AssignmentStatus.IN_PROGRESS,
-        assignment: assignmentId,
-        form: form,
-        team: team,
-        formVersion: formVersion,
-        version: version,
-        formData: formData,
-        lastModifiedDate: DateTime.now().toUtc(),
-        createdDate: DateTime.now().toUtc(),
-        startEntryTime: DateTime.now().toUtc());
-
-    await db.into(db.dataSubmissions).insert(submission);
+    final submission = await db.managers.dataSubmissions.createReturning(
+        (o) => o(
+            id: CodeGenerator.generateUid(),
+            form: form,
+            formVersion: formVersion,
+            versionNumber: version,
+            assignment: assignmentId,
+            status: SubmissionStatus.draft,
+            team: team,
+            formData: Value(formData)),
+        mode: InsertMode.replace);
 
     ref.invalidateSelf();
     await future;
@@ -84,9 +71,9 @@ class FormSubmissions extends _$FormSubmissions {
   }
 
   Future<void> updateSubmission(DataSubmission submission) async {
-    await db.update(db.dataSubmissions).replace(submission.copyWith(
-        status: Value(SubmissionStatus.draft),
-        lastModifiedDate: DateTime.now().toUtc()));
+    await db
+        .update(db.dataSubmissions)
+        .replace(submission.copyWith(status: SubmissionStatus.draft));
     ref.invalidateSelf();
     await future;
   }
@@ -111,7 +98,7 @@ class FormSubmissions extends _$FormSubmissions {
     //         as SyncableQuery)
     //     .upload();
 
-    await  DSdk.dataSubmissionDataSource.upload(uids);
+    await DSdk.dataSubmissionDataSource.upload(uids);
 
     ref.invalidateSelf();
     await future;
@@ -122,23 +109,20 @@ class FormSubmissions extends _$FormSubmissions {
 Future<bool> submissionEditStatus(Ref ref,
     {required FormMetadata formMetadata}) async {
   final db = DSdk.db;
-  final submission = await (db.select(db.dataSubmissions)
-        ..where((tbl) => tbl.id.equals(formMetadata.submission!)))
+  final teamsWithRefs = await db.managers.teams
+      .filter((f) => f.id(formMetadata.assignmentModel.team.id))
+      .withReferences((prefetch) => prefetch(teamFormPermissions: true))
       .getSingleOrNull();
-  final team = await (db.select(db.teams)
-        ..where((tbl) => tbl.id.equals(formMetadata.assignmentModel.teamId)))
-      .getSingleOrNull();
-  final List<FormPermission> formPermissions = team?.formPermissions
-          ?.where((t) => t.form == formMetadata.formId)
-          .expand((t) => t.permissions)
-          .toSet()
-          .toList() ??
-      [];
-  // TeamFormPermission.canApprove();
+  if (teamsWithRefs == null) {
+    return false;
+  }
 
-  return submission?.status?.isToSync() == true ||
-      formPermissions
-          .any((t) => FormPermission.approvingPermissions.contains(t));
+  final (todo, refs) = teamsWithRefs;
+
+  final formPermission = refs.teamFormPermissions.prefetchedData
+      ?.where((t) => t.form == formMetadata.formId)
+      .firstOrNull;
+  return formPermission?.permissions.canEdit ?? false;
 }
 
 @riverpod

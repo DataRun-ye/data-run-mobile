@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:datarunmobile/app_routes/app_router.dart';
 import 'package:datarunmobile/core/models/models.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/features/bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -124,7 +126,6 @@ class BottomSheetService {
     );
 
     final sheetBuilder = _sheetBuilders![variant];
-
     return Get.bottomSheet<SheetResponse<T>>(
       Material(
         type: MaterialType.transparency,

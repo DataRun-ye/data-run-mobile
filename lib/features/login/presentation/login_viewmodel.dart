@@ -1,8 +1,7 @@
-import 'package:d_sdk/auth/auth_manager.dart';
-import 'package:datarunmobile/app/router/app_router.dart';
-import 'package:datarunmobile/app/router/app_router.gr.dart';
+import 'package:datarunmobile/app_routes/app_routes.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
-import 'package:datarunmobile/core/auth/session_scope_initializer.dart';
+import 'package:datarunmobile/core/auth/auth_manager.dart';
+import 'package:datarunmobile/core/user_session/session_scope_initializer.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -30,19 +29,19 @@ class LoginViewModel extends BaseViewModel {
 
     form.markAsDisabled();
     try {
-      if (await _authManager.login(
-          username: usernameControl.value!, password: passwordControl.value!)) {
-        await appLocator<SessionScopeInitializer>().initAuthScope();
+      final userDetails = await _authManager.login(
+          username: usernameControl.value!, password: passwordControl.value!);
+      // await appLocator<SessionScopeInitializer>().initAuthScope();
 
-        await _router.replace(SyncProgressRoute());
-        // _router.replace(HomeRoute());
+      await _router.replace(SyncProgressRoute());
+      // _router.replace(HomeRoute());
 
-        // _navigationService.replaceWithHomeScreen();
-        // } else {
-        //   _router.replace(HomeRoute());
-        // }
-        // await _navigationService.replaceWithSyncProgressView()
-      }
+      // _navigationService.replaceWithHomeScreen();
+      // } else {
+      //   _router.replace(HomeRoute());
+      // }
+      // await _navigationService.replaceWithSyncProgressView()
+
       // final SessionContext? session =
       //     await _sessionRepository.getActiveSession();
       // onResult?.call(true, session);
@@ -65,6 +64,7 @@ class LoginViewModel extends BaseViewModel {
       passwordControl.markAsEnabled();
       debugPrintStack(stackTrace: s);
       DExceptionReporter.instance.report(e, showToUser: true);
+      rethrow;
     }
   }
 }

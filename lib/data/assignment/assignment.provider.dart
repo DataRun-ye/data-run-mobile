@@ -6,7 +6,6 @@ import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data/team/teams.provider.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -25,10 +24,10 @@ class AssignmentSubmissions extends _$AssignmentSubmissions {
         .where((s) => s.assignment == assignmentId)
         .map((submission) async {
       return submission;
-        // ..formVersion =
-        // await DSdk.db.managers.formVersions
-        //     .filter((f) => f.id(submission.formVersion))
-        //     .getSingleOrNull();
+      // ..formVersion =
+      // await DSdk.db.managers.formVersions
+      //     .filter((f) => f.id(submission.formVersion))
+      //     .getSingleOrNull();
       /*await D2Remote.formModule.formTemplateV
             .byId(submission.formVersion is String
                 ? submission.formVersion
@@ -42,17 +41,15 @@ class AssignmentSubmissions extends _$AssignmentSubmissions {
 }
 
 /// filters the list of assignment by certain
-@Riverpod(dependencies: [activityModel])
-Future<List<AssignmentModel>> filterAssignments(Ref ref,
-    [EntityScope? scope]) async {
-  final assignments = await ref.watch(assignmentsProvider.future);
+@Riverpod(dependencies: [activityModel, AssignmentModels])
+Future<List<AssignmentModel>> filterAssignments(Ref ref) async {
+  final assignments = await ref.watch(assignmentModelsProvider.future);
   final query = ref.watch(filterQueryProvider);
   final teamsAsync =
       await ref.watch(teamsProvider(EntityScope.Assigned).future);
   final lowerCaseQuery = query.searchQuery.toLowerCase();
   assignments.sort((a, b) => (a.startDay ?? 11).compareTo((b.startDay ?? 11)));
   final filteredAssignments = assignments
-      .where((a) => scope != null && a.scope == scope)
       .where((assignment) {
     for (var entry in query.filters.entries) {
       final key = entry.key;
@@ -73,12 +70,6 @@ Future<List<AssignmentModel>> filterAssignments(Ref ref,
           (!value.contains(assignment.status))) {
         return false;
       }
-      if (key == 'scope' &&
-          value is Iterable &&
-          value.isNotEmpty &&
-          (!value.contains(assignment.scope.name))) {
-        return false;
-      }
       // TODO add date range
       if (key == 'days' &&
           value is Iterable &&
@@ -91,7 +82,7 @@ Future<List<AssignmentModel>> filterAssignments(Ref ref,
       if (key == 'teams' &&
           value is Iterable &&
           value.isNotEmpty &&
-          (!selectedTeams.contains(assignment.teamId))) {
+          (!selectedTeams.contains(assignment.team.id))) {
         return false;
       }
     }
@@ -117,10 +108,10 @@ Future<List<AssignmentModel>> filterAssignments(Ref ref,
     // }
 
     if (query.searchQuery.isNotEmpty) {
-      final lowerCaseActivity = assignment.activity.toLowerCase();
-      final lowerCaseEntityCode = assignment.entityCode.toLowerCase();
-      final lowerCaseEntityName = assignment.entityName.toLowerCase();
-      final lowerCaseTeamName = assignment.teamName.toLowerCase();
+      final lowerCaseActivity = assignment.activity?.name?.toLowerCase() ?? '';
+      final lowerCaseEntityCode = assignment.orgUnit.code?.toLowerCase() ?? '';
+      final lowerCaseEntityName = assignment.orgUnit.name?.toLowerCase() ?? '';
+      final lowerCaseTeamName = assignment.team.name?.toLowerCase() ?? '';
 
       if (!lowerCaseActivity.contains(lowerCaseQuery) &&
           !lowerCaseEntityCode.contains(lowerCaseQuery) &&
@@ -157,7 +148,7 @@ dynamic _getAssignmentFieldValue(AssignmentModel assignment, String field) {
     case 'status':
       return assignment.status.index; // Assuming `AssignmentStatus` is an enum
     case 'teamName':
-      return assignment.teamName;
+      return assignment.team.name;
     // Add more fields as needed
     default:
       return null;

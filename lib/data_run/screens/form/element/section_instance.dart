@@ -46,13 +46,30 @@ class Section extends SectionElement<Map<String, Object?>> {
     return allErrors;
   }
 
-  @override
-  void evaluateDependencies<T>() {
+  void resolveDependencies() {
     for (final element in _elements.values) {
-      element.evaluateDependencies();
+      element.resolveDependencies();
     }
 
-    super.evaluateDependencies();
+    super.resolveDependencies();
+  }
+
+  @override
+  void evaluate(
+      {String? changedDependency,
+      bool updateParent = true,
+      bool emitEvent = true}) {
+    for (final element in _elements.values) {
+      element.evaluate(
+          changedDependency: changedDependency,
+          updateParent: updateParent,
+          emitEvent: emitEvent);
+    }
+
+    super.evaluate(
+        changedDependency: changedDependency,
+        updateParent: updateParent,
+        emitEvent: emitEvent);
   }
 
   @override

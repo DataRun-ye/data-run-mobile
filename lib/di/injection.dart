@@ -1,16 +1,18 @@
-import 'package:datarunmobile/app/router/app_router.dart';
+import 'package:d_sdk/user_session/session_repository.dart';
+import 'package:datarunmobile/app_routes/app_routes.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'injection.config.dart';
 
-// final stackedLocator = StackedLocator.instance;
 final appLocator = GetIt.instance;
 
 @InjectableInit(
-  initializerName: 'init', // default
-  preferRelativeImports: false, // default
-  asExtension: false, // default
+  initializerName: 'init',
+  preferRelativeImports: false,
+  asExtension: false
 )
 Future<GetIt> configureDependencies() async {
   appLocator.registerLazySingleton(() => AppRouter());

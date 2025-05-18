@@ -39,9 +39,9 @@ class SyncManager {
       final basePercentage = ((resourceIndex - 1) / totalResources) * 100;
 
       _progressController.add(SyncProgressEvent(
-        resourceName: remoteDataSource.apiResourceName,
+        resourceName: remoteDataSource.resourceName,
         syncProgressState: SyncProgressState.RUNNING,
-        message: 'syncing ${remoteDataSource.apiResourceName}...',
+        message: 'syncing ${remoteDataSource.resourceName}...',
         percentage: basePercentage,
         completed: false,
       ));
@@ -53,7 +53,7 @@ class SyncManager {
             final overallProgress = basePercentage +
                 (resourceProgress / 100) * (100 / totalResources);
             _progressController.add(SyncProgressEvent(
-              resourceName: remoteDataSource.apiResourceName,
+              resourceName: remoteDataSource.resourceName,
               syncProgressState: SyncProgressState.SUCCEEDED,
               message: '✔',
               percentage: overallProgress,
@@ -64,7 +64,7 @@ class SyncManager {
 
         final overallProgress = (resourceIndex / totalResources) * 100;
         _progressController.add(SyncProgressEvent(
-          resourceName: remoteDataSource.apiResourceName,
+          resourceName: remoteDataSource.resourceName,
           syncProgressState: SyncProgressState.ENQUEUED,
           message: '${onlineData.length} records downloaded',
           percentage: overallProgress,
@@ -73,13 +73,13 @@ class SyncManager {
       } catch (e) {
         final overallProgress = (resourceIndex / totalResources) * 100;
         _progressController.add(SyncProgressEvent(
-          resourceName: remoteDataSource.apiResourceName,
+          resourceName: remoteDataSource.resourceName,
           syncProgressState: SyncProgressState.FAILED,
           message: '❌ Sync error: $e',
           percentage: overallProgress,
           completed: true,
         ));
-        logError('Error syncing ${remoteDataSource.apiResourceName}: $e');
+        logError('Error syncing ${remoteDataSource.resourceName}: $e');
       }
     }
   }

@@ -276,5 +276,6 @@
   "endPointNotFound": "لم يتم العثور على نقطة المورد: {error}.",
   "serverError": "خطأ في الخادم: {error}.",
   "unauthorizedAccessToEndPoint": "وصول غير مصرح به إلى نقطة المورد: {error}.",
-  "forbidden": "ممنوع: {error}."
+  "forbidden": "ممنوع: {error}.",
+  "noUserDetailsFetchedFromServer": "لم يتمكن من مزامنة معلومات المستخدم من السيرفر: {error}."
 }

@@ -1,8 +1,6 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/commons/custom_widgets/flutter_loading.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
-import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
-import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart' show SyncBadgesViewModel;
+import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -17,23 +15,18 @@ class SyncStatusBadgesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SyncBadgesViewModel>.reactive(
-      builder: (context, model, child) => FlutterLoading(
-        isLoading: model.isBusy,
-        color: Colors.green,
-        child: Wrap(
-          spacing: 8,
-          children: model.hasError
-              ? [
-                  getErrorWidget(model.modelError, null,
-                      message: model.modelMessage)
-                ]
-              : model.data!.entries
-                  .where((e) => e.value > 0)
+      builder: (context, model, child) => model.isBusy
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Wrap(
+              spacing: 8,
+              children: model.data!
+                  .where((e) => e.count > 0)
                   .map<Widget>((e) =>
-                      _SyncStatusBadge(syncStatus: e.key, count: e.value))
+                      _SyncStatusBadge(syncStatus: e.status, count: e.count))
                   .toList(),
-        ),
-      ),
+            ),
       viewModelBuilder: () =>
           SyncBadgesViewModel(aggregationLevel: aggregationLevel, id: id),
     );

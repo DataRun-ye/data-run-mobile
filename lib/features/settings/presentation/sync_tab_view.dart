@@ -1,4 +1,4 @@
-import 'package:datarunmobile/app/router/router.dart';
+import 'package:datarunmobile/app_routes/app_routes.dart';
 import 'package:datarunmobile/core/sync/model/sync_interval.dart';
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:datarunmobile/di/injection.dart';
@@ -14,7 +14,6 @@ class SyncSettingTabView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final userSessionManager = appLocator<UserSessionService>();
     final syncMetadataRepo = appLocator<SyncMetadataRepository>();
     final selectedInterval = useState(syncMetadataRepo.getSyncInterval());
     return ListView(

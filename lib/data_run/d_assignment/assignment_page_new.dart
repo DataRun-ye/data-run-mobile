@@ -1,25 +1,23 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/data/team/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/active_filters_widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
-import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_table_view.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignments_card_view.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AssignmentPageNew extends HookConsumerWidget {
   const AssignmentPageNew({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final isCardView = filterQuery.isCardView;
     final controller = useTextEditingController();
     final update = ref.watch(filterQueryProvider).searchQuery;
     useEffect(() {

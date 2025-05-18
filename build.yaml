@@ -15,6 +15,7 @@ targets:
       riverpod_generator:
         enabled: true
         generate_for:
+          - lib/**/application/*.dart
           - lib/core/*.provider.dart
           - lib/core/**/*.provider.dart
           - lib/data/*.provider.dart
@@ -33,32 +34,32 @@ targets:
           enable_cached_builds: true
         generate_for:
           - lib/app/router/app_router.dart
-#      stacked_generator|stackedRouterGenerator:
-#        enabled: true
-#        generate_for:
-#          - lib/stacked/app.**.dart
-#      stacked_generator|stackedLocatorGenerator:
-#        enabled: true
-#        generate_for:
-#          - lib/stacked/app.**.dart
-#      stacked_generator|stackedFormGenerator:
-#        enabled: false
-#      stacked_generator:stackedLoggerGenerator:
-#        enabled: false
+      #      stacked_generator|stackedRouterGenerator:
+      #        enabled: true
+      #        generate_for:
+      #          - lib/stacked/app.**.dart
+      #      stacked_generator|stackedLocatorGenerator:
+      #        enabled: true
+      #        generate_for:
+      #          - lib/stacked/app.**.dart
+      #      stacked_generator|stackedFormGenerator:
+      #        enabled: false
+      #      stacked_generator:stackedLoggerGenerator:
+      #        enabled: false
       # Configuring this builder isn't required for most apps. In our case, we
       # want to compile the web worker in `web/worker.dart` to JS and we use the
       # build system for that.
-#      build_web_compilers:entrypoint:
-#        generate_for:
-#          - web/worker.dart
-#        options:
-#          compiler: dart2js
-#        dev_options:
-#          dart2js_args:
-#            - --no-minify
-#        release_options:
-#          dart2js_args:
-#            - -O4
+  #      build_web_compilers:entrypoint:
+  #        generate_for:
+  #          - web/worker.dart
+  #        options:
+  #          compiler: dart2js
+  #        dev_options:
+  #          dart2js_args:
+  #            - --no-minify
+  #        release_options:
+  #          dart2js_args:
+  #            - -O4
   # JS outputs by the build system are private, we use a `build_to: source` builder
   # afterwards to make them visible in `web/`.
 #  copy_js:

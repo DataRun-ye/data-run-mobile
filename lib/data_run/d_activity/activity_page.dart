@@ -10,8 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ActivityPage extends ConsumerWidget {
   const ActivityPage({super.key});
 
-  // final List<ActivityModel> activities;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activitiesAsync = ref.watch(activitiesProvider);

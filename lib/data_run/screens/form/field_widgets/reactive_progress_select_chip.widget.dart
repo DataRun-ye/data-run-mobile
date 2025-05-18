@@ -1,15 +1,15 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
-import 'package:datarunmobile/generated/l10n.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:datarunmobile/data/form/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/reactive_choice_chips.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -91,7 +91,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
           .requireValue;
 
       formInstance.updateSubmissionStatus(AssignmentStatus.getType(status));
-      ref.read(assignmentsProvider.notifier).updateAssignmentStatus(
+      ref.read(assignmentModelsProvider.notifier).updateAssignmentStatus(
           AssignmentStatus.getType(status),
           formInstance.formMetadata.assignmentModel.id);
     }

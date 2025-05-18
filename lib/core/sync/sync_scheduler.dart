@@ -4,7 +4,9 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class SyncScheduler {
-  SyncScheduler({required SyncMetadataRepository metadataRepo, required ConnectivityService connectivity})
+  SyncScheduler(
+      {required SyncMetadataRepository metadataRepo,
+      required ConnectivityService connectivity})
       : _connectivity = connectivity,
         _metadataRepo = metadataRepo;
 

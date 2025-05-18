@@ -1,5 +1,4 @@
-import 'package:datarunmobile/app/router/app_router.dart';
-import 'package:datarunmobile/app/router/app_router.gr.dart';
+import 'package:datarunmobile/app_routes/app_routes.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/network/online_connectivity.provider.dart';
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';

@@ -14,12 +14,17 @@ class SyncCoordinator {
   final SyncMetadataRepository _metadataRepo;
   final SyncScheduler _scheduler;
   final SyncExecutor _executor;
+  bool _isSyncing = false;
 
   Future<void> handleSyncLifecycle() async {
-    if (await _scheduler.shouldSync()) {
-      await _executor.performSync();
-      await _metadataRepo.updateLastSync();
-    }
+    // if (await _scheduler.shouldSync()) {
+    if (_isSyncing) return;
+    _isSyncing = true;
+    await _executor.performSync();
+    await _metadataRepo.updateLastSync();
+    await _metadataRepo.updateInitialSyncDone(true);
+    _isSyncing = false;
+    // }
   }
 
   Future<void> handleResourceSyncLifecycle(String resourceName) async {

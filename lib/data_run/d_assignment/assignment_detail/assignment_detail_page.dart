@@ -1,18 +1,17 @@
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
+import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
-import 'package:datarunmobile/data_run/d_assignment/assignment_detail/form_submissions_table.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
-import 'package:datarunmobile/data_run/d_assignment/form_submission_create.widget.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
-import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
+import 'package:datarunmobile/di/app.bottomsheets.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/features/bottom_sheet/application/bottom_sheet_service.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class AssignmentDetailPage extends ConsumerWidget {
   const AssignmentDetailPage({super.key, required this.assignment});
@@ -57,23 +56,23 @@ class AssignmentDetailPage extends ConsumerWidget {
 
               // Form Submissions Section
               const SizedBox(height: 20.0),
-              ...assignment.forms
-                  .distinct()
-                  .where((form) => activityModel.assignedForms.contains(form))
-                  .map(
-                    (form) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: _EagerInitialization(
-                        child: FormSubmissionsTable(
-                          assignment: assignment,
-                          formId: form,
-                        ),
-                        assignment: assignment,
-                        formId: form,
-                      ),
-                    ),
-                  )
-                  .toList(),
+              // ...assignment.forms
+              //     .distinct()
+              //     .where((form) => activityModel.assignedForms.contains(form))
+              //     .map(
+              //       (form) => Padding(
+              //         padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //         child: _EagerInitialization(
+              //           child: FormSubmissionsTable(
+              //             assignment: assignment,
+              //             formId: form,
+              //           ),
+              //           assignment: assignment,
+              //           formId: form,
+              //         ),
+              //       ),
+              //     )
+              //     .toList(),
             ],
           ),
         ),
@@ -85,14 +84,15 @@ class AssignmentDetailPage extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          child: Text(
-            assignment.activity,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+        if (assignment.activity?.name != null)
+          Expanded(
+            child: Text(
+              assignment.activity!.name,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
           ),
-        ),
         buildStatusBadge(assignment.status),
       ],
     );
@@ -103,20 +103,24 @@ class AssignmentDetailPage extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CopyToClipboard(
-            value: assignment.entityCode,
+            value: assignment.orgUnit.code,
             child: _buildDetailRow(context, S.of(context).entity,
-                '${assignment.entityCode} - ${assignment.entityName}')),
-        _buildDetailRow(context, S.of(context).team, '${assignment.teamCode}'),
-        _buildDetailRow(
-            context, S.of(context).scope, assignment.scope.name.toLowerCase()),
+                '${assignment.orgUnit.code} - ${assignment.orgUnit.name}')),
+        _buildDetailRow(context, S.of(context).team, '${assignment.team.code}'),
         if (assignment.dueDate != null)
-          _buildDetailRow(context, S.of(context).dueDate,
-              formatDate(assignment.dueDate!, context)),
+          _buildDetailRow(
+              context,
+              S.of(context).dueDate,
+              MaterialLocalizations.of(context)
+                  .formatFullDate(assignment.dueDate!)),
         if (assignment.rescheduledDate != null)
-          _buildDetailRow(context, S.of(context).rescheduled,
-              formatDate(assignment.rescheduledDate!, context)),
-        _buildDetailRow(
-            context, S.of(context).forms, assignment.forms.length.toString()),
+          _buildDetailRow(
+              context,
+              S.of(context).rescheduled,
+              MaterialLocalizations.of(context)
+                  .formatFullDate(assignment.rescheduledDate!)),
+        // _buildDetailRow(
+        //     context, S.of(context).forms, assignment.forms.length.toString()),
       ],
     );
   }
@@ -149,29 +153,29 @@ class AssignmentDetailPage extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
         ),
-        const SizedBox(height: 8),
-        ...assignment.allocatedResources.keys.map((key) {
-          final allocated = assignment.allocatedResources[key] ?? 0;
-          final reported = assignment.reportedResources[key.toLowerCase()] ?? 0;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  Intl.message(key.toLowerCase()),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                Text(
-                  '$reported / $allocated',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade700,
-                      ),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
+        // const SizedBox(height: 8),
+        // ...assignment.allocatedResources.keys.map((key) {
+        //   final allocated = assignment.allocatedResources[key] ?? 0;
+        //   final reported = assignment.reportedResources[key.toLowerCase()] ?? 0;
+        //   return Padding(
+        //     padding: const EdgeInsets.symmetric(vertical: 4.0),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Text(
+        //           Intl.message(key.toLowerCase()),
+        //           style: Theme.of(context).textTheme.bodyMedium,
+        //         ),
+        //         Text(
+        //           '$reported / $allocated',
+        //           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        //                 color: Colors.grey.shade700,
+        //               ),
+        //         ),
+        //       ],
+        //     ),
+        //   );
+        // }).toList(),
       ],
     );
   }
@@ -223,25 +227,40 @@ class _EagerInitialization extends ConsumerWidget {
 Future<void> showFormSelectionBottomSheet(BuildContext context,
     AssignmentModel assignment, ActivityModel activityModel) async {
   try {
-    await showModalBottomSheet(
-      // isScrollControlled: true,
-      enableDrag: true,
-      context: context,
-      builder: (BuildContext context) {
-        return ActivityInheritedWidget(
-          activityModel: activityModel,
-          child: FormSubmissionCreate(
-            assignment: assignment,
-            onNewFormCreated: (createdSubmission) async {
-              Navigator.of(context).pop();
-              goToDataEntryForm(
-                  context, assignment, createdSubmission, activityModel);
-              // ref.invalidate(assignmentsProvider);
-            },
-          ),
-        );
-      },
-    );
+    final selectedFormVersionId = await appLocator<BottomSheetService>()
+        .showCustomSheet<FormTemplate, String>(
+            variant: BottomSheetType.createSubmission,
+            description:
+                'Use this bottom sheet function to show something to the user. It\'s better than the standard alert dialog in terms of UI quality.',
+            data: assignment.id);
+
+    if (selectedFormVersionId?.data != null) {
+      // final submission = await createNewSubmission(
+      //     formVersion: selectedFormVersionId!.data!.formVersion,
+      //     assignmentId: assignmentId,
+      //     team: assignment!.team,
+      //     form: selectedFormVersionId.data!.id,
+      //     version: selectedFormVersionId.data!.versionNumber);
+    }
+    // await showModalBottomSheet(
+    //   // isScrollControlled: true,
+    //   enableDrag: true,
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return ActivityInheritedWidget(
+    //       activityModel: activityModel,
+    //       child: FormSubmissionCreate(
+    //         assignment: assignment.id,
+    //         onNewFormCreated: (createdSubmission) async {
+    //           Navigator.of(context).pop();
+    //           goToDataEntryForm(
+    //               context, assignment, createdSubmission, activityModel);
+    //           // ref.invalidate(assignmentsProvider);
+    //         },
+    //       ),
+    //     );
+    //   },
+    // );
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

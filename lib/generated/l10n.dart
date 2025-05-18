@@ -1977,6 +1977,16 @@ class S {
       args: [error],
     );
   }
+
+  /// `user details not fetched from server: {error}.`
+  String noUserDetailsFetchedFromServer(Object error) {
+    return Intl.message(
+      'user details not fetched from server: $error.',
+      name: 'noUserDetailsFetchedFromServer',
+      desc: '',
+      args: [error],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

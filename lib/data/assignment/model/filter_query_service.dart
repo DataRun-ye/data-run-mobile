@@ -1,4 +1,4 @@
-import 'package:datarunmobile/ui/views/assignment/filter/filter_query.dart';
+import 'package:datarunmobile/features/assignment/domain/models/filter_query.dart';
 
 // @lazySingleton
 class FilterQueryService {

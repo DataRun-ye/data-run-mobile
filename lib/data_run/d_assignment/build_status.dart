@@ -2,7 +2,7 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form/form_tab_screen.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
@@ -94,10 +94,7 @@ Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
                 child: FormMetadataWidget(
                   formMetadata: FormMetadata(
                     assignmentModel: assignment,
-                    formId: submission.formVersion,
-                    // formId: submission.formVersion is String
-                    //     ? submission.formVersion
-                    //     : submission.formVersion.id,
+                    formId: submission.form,
                     submission: submission.id,
                   ),
                   child: const FormSubmissionScreen(currentPageIndex: 1),

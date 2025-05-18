@@ -1,12 +1,10 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/data/assignment/assignment.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +40,10 @@ class AssignmentOverviewItem extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                if (assignment.activity != null)
                 Expanded(
                     child: Text(
-                  assignment.activity,
+                  assignment.activity!.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 )),
                 buildStatusBadge(assignment.status),
@@ -55,15 +54,8 @@ class AssignmentOverviewItem extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildDetailIcon(
-                  Icons.assignment,
-                  Intl.message(assignment.scope.name.toLowerCase()),
-                  searchQuery,
-                  context,
-                ),
-                const VerticalDivider(),
-                _buildDetailIcon(
                   Icons.group,
-                  '${S.of(context).team}: ${assignment.teamCode}',
+                  '${S.of(context).team}: ${assignment.team.code}',
                   searchQuery,
                   context,
                 ),
@@ -78,22 +70,22 @@ class AssignmentOverviewItem extends ConsumerWidget {
 
             // Entity and Team Info
             CopyToClipboard(
-              value: assignment.entityCode,
+              value: assignment.orgUnit.code,
               child: _buildDetailIcon(
                   Icons.location_on,
-                  '${assignment.entityCode} - ${assignment.entityName}',
+                  '${assignment.orgUnit.code} - ${assignment.orgUnit.name}',
                   searchQuery,
                   context),
             ),
 
-            const SizedBox(height: 8),
-            // Resources
-            if (assignment.allocatedResources.isNotEmpty ||
-                assignment.reportedResources.isNotEmpty)
-              ResourcesComparisonWidget(
-                headerStyle: Theme.of(context).textTheme.bodySmall,
-                bodyStyle: Theme.of(context).textTheme.bodySmall,
-              ),
+            // const SizedBox(height: 8),
+            // // Resources
+            // if (assignment.allocatedResources.isNotEmpty ||
+            //     assignment.reportedResources.isNotEmpty)
+            //   ResourcesComparisonWidget(
+            //     headerStyle: Theme.of(context).textTheme.bodySmall,
+            //     bodyStyle: Theme.of(context).textTheme.bodySmall,
+            //   ),
             // Actions
             const SizedBox(height: 5.0),
 
@@ -111,11 +103,11 @@ class AssignmentOverviewItem extends ConsumerWidget {
                     onPressed: () async {
                       await showFormSelectionBottomSheet(
                           context, assignment, activityModel);
-                      ref.invalidate(assignmentsProvider);
+                      ref.invalidate(assignmentModelsProvider);
                     },
                     icon: const Icon(Icons.document_scanner),
                     label: Text(
-                        '${S.of(context).openNewForm} (${assignment.forms.length})'),
+                        '${S.of(context).openNewForm} (${/*assignment.forms.length*/00})'),
                   ),
                   TextButton.icon(
                     onPressed: () => onViewDetails.call(assignment),
@@ -166,7 +158,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
             size: 16, color: isOverdue ? Colors.red : Colors.grey[600]),
         const SizedBox(width: 4),
         Text(
-          formatDate(assignment.dueDate!, context),
+          MaterialLocalizations.of(context).formatFullDate(assignment.dueDate!),
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: isOverdue ? Colors.red : Colors.grey[700],
               ),
@@ -305,80 +297,80 @@ class AssignmentOverviewItem extends ConsumerWidget {
 // Theme.of(context).textTheme.bodySmall)
 }
 
-class ResourcesComparisonWidget extends ConsumerWidget {
-  const ResourcesComparisonWidget(
-      {super.key, this.headerStyle, this.bodyStyle});
-
-  final TextStyle? headerStyle;
-  final TextStyle? bodyStyle;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final assignment = ref.watch(assignmentProvider);
-    // final reportedResourcesAsync = ref.watch(reportedResourcesProvider());
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          S.of(context).resources,
-          style: headerStyle,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: assignment.reportedResources.keys.map((key) {
-            final allocated = assignment.reportedResources[key] ?? 0;
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    Intl.message(key.toLowerCase()),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
-                    style: bodyStyle?.copyWith(
-                      color: Colors.grey.shade700,
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-        // ...assignment.reportedResources.keys.map((key) {
-        //   final allocated = assignment.reportedResources[key] ?? 0;
-        //
-        //   return Padding(
-        //     padding: const EdgeInsets.symmetric(vertical: 4.0),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       mainAxisSize: MainAxisSize.min,
-        //       children: [
-        //         Text(
-        //           Intl.message(key.toLowerCase()),
-        //           style: bodyStyle,
-        //         ),
-        //         const SizedBox(
-        //           width: 30,
-        //         ),
-        //         Text(
-        //           '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
-        //           style: bodyStyle?.copyWith(
-        //             color: Colors.grey.shade700,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   );
-        // }).toList()
-      ],
-    );
-  }
-}
+// class ResourcesComparisonWidget extends ConsumerWidget {
+//   const ResourcesComparisonWidget(
+//       {super.key, this.headerStyle, this.bodyStyle});
+//
+//   final TextStyle? headerStyle;
+//   final TextStyle? bodyStyle;
+//
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final assignment = ref.watch(assignmentProvider);
+//     // final reportedResourcesAsync = ref.watch(reportedResourcesProvider());
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text(
+//           S.of(context).resources,
+//           style: headerStyle,
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           mainAxisSize: MainAxisSize.min,
+//           children: assignment.reportedResources.keys.map((key) {
+//             final allocated = assignment.reportedResources[key] ?? 0;
+//
+//             return Padding(
+//               padding: const EdgeInsets.symmetric(vertical: 4.0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   Text(
+//                     Intl.message(key.toLowerCase()),
+//                     style: Theme.of(context).textTheme.titleMedium,
+//                   ),
+//                   const SizedBox(width: 10),
+//                   Text(
+//                     '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
+//                     style: bodyStyle?.copyWith(
+//                       color: Colors.grey.shade700,
+//                     ),
+//                   ),
+//                   const SizedBox(width: 30),
+//                 ],
+//               ),
+//             );
+//           }).toList(),
+//         ),
+//         // ...assignment.reportedResources.keys.map((key) {
+//         //   final allocated = assignment.reportedResources[key] ?? 0;
+//         //
+//         //   return Padding(
+//         //     padding: const EdgeInsets.symmetric(vertical: 4.0),
+//         //     child: Row(
+//         //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         //       mainAxisSize: MainAxisSize.min,
+//         //       children: [
+//         //         Text(
+//         //           Intl.message(key.toLowerCase()),
+//         //           style: bodyStyle,
+//         //         ),
+//         //         const SizedBox(
+//         //           width: 30,
+//         //         ),
+//         //         Text(
+//         //           '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
+//         //           style: bodyStyle?.copyWith(
+//         //             color: Colors.grey.shade700,
+//         //           ),
+//         //         ),
+//         //       ],
+//         //     ),
+//         //   );
+//         // }).toList()
+//       ],
+//     );
+//   }
+// }

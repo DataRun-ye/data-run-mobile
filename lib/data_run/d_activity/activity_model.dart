@@ -1,21 +1,22 @@
 import 'package:d_sdk/database/app_database.dart';
-import 'package:datarunmobile/core/models/d_identifiable_model.dart';
+import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:intl/intl.dart';
 
 class ActivityModel with EquatableMixin {
-  ActivityModel(
-      {Iterable<TeamModel> managedTeams = const [],
-      Iterable<IdentifiableModel> orgUnits = const [],
-      Iterable<String> assignedForms = const [],
-      this.assignedAssignments = 0,
-      this.managedAssignments = 0,
-      // required this.user,
-      this.assignedTeam,
-      this.activity})
-      : this.managedTeams = IList(managedTeams),
+  ActivityModel({
+    Iterable<TeamModel> managedTeams = const [],
+    Iterable<IdentifiableModel> orgUnits = const [],
+    Iterable<String> assignedForms = const [],
+    this.assignedAssignments = 0,
+    this.managedAssignments = 0,
+    this.assignedTeam,
+    required this.activity,
+    this.startDate,
+    this.endDate,
+  })  : this.managedTeams = IList(managedTeams),
         this.orgUnits = IList(orgUnits),
         this.assignedForms = IList(assignedForms);
 
@@ -25,7 +26,7 @@ class ActivityModel with EquatableMixin {
       Iterable<String> assignedForms = const [],
       User? user,
       Team? userTeam,
-      Activity? activity,
+      required Activity activity,
       int assignedAssignments = 0,
       int managedAssignments = 0}) {
     return ActivityModel(
@@ -35,43 +36,29 @@ class ActivityModel with EquatableMixin {
       managedTeams: managedTeams.map((e) => TeamModel.fromIdentifiable(
           id: e.id,
           name: '${Intl.message('team')} ${e.code}',
-          formPermissions: e.formPermissions ?? [],
           activity: e.activity,
           disabled: e.disabled ?? false)),
       orgUnits: orgUnits.map((e) => IdentifiableModel(
             id: e.id,
             code: e.code,
-            name: e.name,
+            name: e.name ?? '',
           )),
-      // user: IdentifiableModel(
-      //   id: user!.id,
-      //   name: user.username,
-      // ),
-      assignedTeam: userTeam != null
-          ? TeamModel.fromIdentifiable(
-              id: userTeam.id,
-              name: '${Intl.message('team')} ${userTeam.code}',
-              activity: userTeam.activity,
-              disabled: userTeam.disabled ?? false,
-              formPermissions: userTeam.formPermissions ?? [])
-          : null,
-      activity: activity != null
-          ? IdentifiableModel(
-              id: activity.id,
-              code: activity.code,
-              name: activity.name,
-              disabled: activity.disabled)
-          : null,
+      activity: IdentifiableModel(
+          id: activity.id,
+          code: activity.code,
+          name: activity.name ?? '',
+          disabled: activity.disabled),
     );
   }
 
   final IList<TeamModel> managedTeams;
   final IList<IdentifiableModel> orgUnits;
   final IList<String> assignedForms;
-  // final IdentifiableModel user;
-  final TeamModel? assignedTeam;
-  final IdentifiableModel? activity;
 
+  final TeamModel? assignedTeam;
+  final IdentifiableModel activity;
+  final DateTime? startDate;
+  final DateTime? endDate;
   final int assignedAssignments;
   final int managedAssignments;
 
@@ -79,19 +66,20 @@ class ActivityModel with EquatableMixin {
     Iterable<TeamModel>? managedTeams,
     Iterable<IdentifiableModel>? orgUnits,
     Iterable<String>? assignedForms,
-    // IdentifiableModel? user,
     TeamModel? userTeam,
     IdentifiableModel? activity,
-  }) {
-    return ActivityModel(
-      assignedForms: assignedForms ?? this.assignedForms,
-      managedTeams: managedTeams ?? this.managedTeams,
-      orgUnits: orgUnits ?? this.orgUnits,
-      // user: user ?? this.user,
-      assignedTeam: userTeam ?? this.assignedTeam,
-      activity: activity ?? this.activity,
-    );
-  }
+    DateTime? startDate,
+    DateTime? endDate,
+  }) =>
+      ActivityModel(
+        assignedForms: assignedForms ?? this.assignedForms,
+        managedTeams: managedTeams ?? this.managedTeams,
+        orgUnits: orgUnits ?? this.orgUnits,
+        assignedTeam: userTeam ?? this.assignedTeam,
+        activity: activity ?? this.activity,
+        startDate: startDate ?? this.startDate,
+        endDate: endDate ?? this.endDate,
+      );
 
   @override
   List<Object?> get props =>

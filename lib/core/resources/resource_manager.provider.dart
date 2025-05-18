@@ -1,8 +1,8 @@
 import 'package:d_sdk/core/common/standard_extensions.dart';
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
+import 'package:datarunmobile/utils/mass_utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:datarunmobile/utils/mass_utils/colors.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'resource_manager.provider.g.dart';

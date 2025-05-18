@@ -1,16 +1,15 @@
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/utilities/date_helper.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-import '../../../../d_activity/activity_model.dart';
 
 class RepeatTableDataSource extends DataTableSource {
   RepeatTableDataSource(

@@ -7,7 +7,7 @@
 // import 'package:d_sdk/core/http/http-details.util.dart';
 // import 'package:d_sdk/core/http/http_client.dart';
 // import 'package:d_sdk/core/logging/new_app_logging.dart';
-// import 'package:d_sdk/database/database.dart' show User;
+// import 'package:d_sdk/database/database.dart';
 // import 'package:injectable/injectable.dart';
 //
 // @Injectable(as: AuthenticationService)

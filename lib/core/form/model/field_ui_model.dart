@@ -36,7 +36,7 @@ abstract class FieldUiModel with EquatableMixin {
   final String path;
   final String label;
 
-  ValueType? get valueType => ValueType.Section;
+  ValueType? get valueType => null;
 
   final bool focused;
   final String? error;
@@ -136,9 +136,9 @@ abstract class FieldUiModel with EquatableMixin {
 
   FieldUiModel setKeyBoardActionDone();
 
-  bool isSection() => valueType?.isSection == true;
+  bool isSection() => valueType == null;
 
-  bool isRepeat() => valueType?.isRepeatSection == true;
+  bool get repeatable => false;
 
   bool isSectionWithFields();
 

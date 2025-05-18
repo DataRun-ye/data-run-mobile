@@ -1,5 +1,4 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/data/team/teams.provider.dart';

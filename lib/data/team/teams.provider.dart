@@ -14,8 +14,8 @@ class Teams extends _$Teams {
   Future<IList<TeamModel>> build(EntityScope scope) async {
     final db = DSdk.db;
 
-    final List<Team> teams = await (db.select(db.teams)
-          ..where((tbl) => tbl.scope.equals(scope.name)))
+    final List<Team> teams = await db.managers.teams
+        // .filter((f) => f.scope.not(scope) | f.scope.isNull())
         .get();
     // await D2Remote.teamModuleD.team
     //     .where(attribute: 'scope', value: scope.name)
@@ -28,7 +28,7 @@ class Teams extends _$Teams {
             name: '${Intl.message('team')} ${t.code}',
             disabled: t.disabled ?? false,
             activity: t.activity,
-            formPermissions: t.formPermissions ?? []))
+            formPermissions: /*t.formPermissions ??*/ []))
         .toList()
         .lock;
   }

@@ -314,5 +314,6 @@
   "endPointNotFound": "end point Not found: {error}.",
   "serverError": "Server error: {error}.",
   "unauthorizedAccessToEndPoint": "Unauthorized Access to end point: {error}.",
-  "forbidden": "Forbidden: {error}."
+  "forbidden": "Forbidden: {error}.",
+  "noUserDetailsFetchedFromServer": "user details not fetched from server: {error}."
 }

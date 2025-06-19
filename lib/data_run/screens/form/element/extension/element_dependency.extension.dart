@@ -12,14 +12,14 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
     if (!dependency.visible) {
       if (dependency.template.isNumeric) return 0;
       if (dependency.template.type!.isBoolean) return false;
-      if (dependency.template.type!.isAge) return 0;
+      if (dependency.template.type! == ValueType.Age) return 0;
       return null;
     } else if (dependency.template.isNumeric && dependency.value == null) {
       return 0;
     } else if (dependency.template.type!.isBoolean &&
         dependency.value == null) {
       return false;
-    } else if (dependency.template.type!.isAge) {
+    } else if (dependency.template.type! == ValueType.Age) {
       if (dependency.value != null) {
         return AgeValue(dateOfBirth: DateTime.parse(dependency.value))
             .years(DateTime.now());

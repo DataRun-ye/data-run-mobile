@@ -10,15 +10,20 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
 
   calculationFriendlyValue(FormElementInstance<dynamic> dependency) {
     if (!dependency.visible) {
-      return dependency.template.isNumeric
-          ? 0
-          : dependency.template.type!.isBoolean
-              ? false
-              : null;
+      if (dependency.template.isNumeric) return 0;
+      if (dependency.template.type!.isBoolean) return false;
+      if (dependency.template.type!.isAge) return 0;
+      return null;
     } else if (dependency.template.isNumeric && dependency.value == null) {
       return 0;
     } else if (dependency.template.type!.isBoolean &&
         dependency.value == null) {
+      return false;
+    } else if (dependency.template.type!.isAge) {
+      if (dependency.value != null) {
+        return AgeValue(dateOfBirth: DateTime.parse(dependency.value))
+            .years(DateTime.now());
+      }
       return false;
     } else {
       return dependency.value;

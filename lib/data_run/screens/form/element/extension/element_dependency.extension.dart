@@ -24,7 +24,7 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
         return AgeValue(dateOfBirth: DateTime.parse(dependency.value))
             .years(DateTime.now());
       }
-      return false;
+      return 0;
     } else {
       return dependency.value;
     }

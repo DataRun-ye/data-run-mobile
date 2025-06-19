@@ -137,7 +137,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "databaseQueryFailed": MessageLookupByLibrary.simpleMessage(
       "Error occurred while querying the database.",
     ),
+    "dateOfBirth": MessageLookupByLibrary.simpleMessage("DOB"),
     "day": MessageLookupByLibrary.simpleMessage("Day"),
+    "days": MessageLookupByLibrary.simpleMessage("Days"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteConfirmationMessage": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this item?",
@@ -415,6 +417,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
     "year": m11,
     "years": MessageLookupByLibrary.simpleMessage("Years"),
+    "yearsMonths": MessageLookupByLibrary.simpleMessage("Y/M"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),
   };
 }

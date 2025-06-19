@@ -1847,6 +1847,21 @@ class S {
       args: [],
     );
   }
+
+  /// `DOB`
+  String get dateOfBirth {
+    return Intl.message('DOB', name: 'dateOfBirth', desc: '', args: []);
+  }
+
+  /// `Y/M`
+  String get yearsMonths {
+    return Intl.message('Y/M', name: 'yearsMonths', desc: '', args: []);
+  }
+
+  /// `Days`
+  String get days {
+    return Intl.message('Days', name: 'days', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -97,7 +97,8 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       .byId(formMetadata.submission!)
       .canEdit();
 
-  final submission = await D2Remote.formSubmissionModule.formSubmission
+  final DataFormSubmission submission = await D2Remote
+      .formSubmissionModule.formSubmission
       .byId(formMetadata.submission!)
       .getOne();
 
@@ -125,6 +126,9 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       await formInstanceService.formAttributesControls(initialFormValue);
 
   return FormInstance(ref,
+      entryStarted: submission.startEntryTime != null
+          ? DateTime.parse(submission.startEntryTime!)
+          : DateTime.now(),
       enabled: enabled,
       initialValue: {...?initialFormValue, ...attributeMap},
       elements: elements,

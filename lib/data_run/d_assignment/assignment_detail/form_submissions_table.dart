@@ -6,6 +6,8 @@ import 'package:d2_remote/modules/datarun/form/shared/field_template/section_tem
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:datarunmobile/app/app.dialogs.dart';
+import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
@@ -24,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class FormSubmissionsTable extends HookConsumerWidget {
   const FormSubmissionsTable(
@@ -353,6 +356,15 @@ class FormSubmissionsTable extends HookConsumerWidget {
           },
         );
       },
+    );
+  }
+
+  Future<void> _showSyncDialogTest(
+      BuildContext context, List<String> entityIds, WidgetRef ref) async {
+  await  locator<DialogService>().showCustomDialog(
+      variant: DialogType.infoAlert,
+      title: Intl.message('Test version'),
+      description: 'This is a Version for testing, uploading to server is not permitted',
     );
   }
 

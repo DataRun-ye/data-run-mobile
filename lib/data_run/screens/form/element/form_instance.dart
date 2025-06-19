@@ -26,6 +26,7 @@ class FormInstance {
       {required this.form,
       required this.formFlatTemplate,
       required this.formMetadata,
+      required this.entryStarted,
       AssignmentStatus? assignmentStatus,
       Map<String, Object?> initialValue = const {},
       required Section rootSection,
@@ -48,6 +49,7 @@ class FormInstance {
   }
 
   Map<String, Object?> _initialValue = {};
+  final DateTime entryStarted;
 
   // final Object _formDataUid;
   final FormGroup form;

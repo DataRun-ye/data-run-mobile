@@ -262,5 +262,8 @@
   "fieldIsMandatory": "الحقل مطلوب",
   "validationErrorMessage": "خطأ تحقق",
   "deleteItem": "حذف العنصر",
-  "copyToClipboard": "نسخ للحافظة"
+  "copyToClipboard": "نسخ للحافظة",
+  "dateOfBirth": "تاريخ الميلاد",
+  "yearsMonths": "أشهر/سنوات",
+  "days": "أيام"
 }

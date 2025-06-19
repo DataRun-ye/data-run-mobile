@@ -3,7 +3,7 @@ description: Datarun, runs and manages you activities data workflows.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 3.1.0
+version: 3.2.0+6
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -51,6 +51,7 @@ dependencies:
   stacked_services: ^1.6.0
   data_table_2: 2.5.16
   injectable: ^2.5.0
+  flutter_form_builder: ^9.5.0
 #  drift: ^2.23.1
 #  sqlcipher_flutter_libs: ^0.6.5
 #  sqlite3: '>=1.8.0 <3.0.0'

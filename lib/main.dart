@@ -7,10 +7,10 @@ import 'package:datarunmobile/app/app.dialogs.dart';
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/main.reflectable.dart';
 import 'package:datarunmobile/core/main_constants.dart';
 import 'package:datarunmobile/data/preference.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/main.reflectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -82,14 +82,10 @@ Future<void> main() async {
   //     // options.profilesSampleRate = 1.0;
   //   },
   //   appRunner: () => runApp(ProviderScope(
-  //     overrides: [
-  //       sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-  //       authServiceProvider.overrideWithValue(authService),
-  //       userSessionManagerProvider.overrideWithValue(userSessionManager),
-  //     ],
   //     child: App(
-  //       isAuthenticated: hasExistingSession,
-  //       needsSync: needsSync,
+  //       key: ValueKey('DATARUN_MAIN_APP'),
+  //       // isAuthenticated: hasExistingSession,
+  //       // needsSync: needsSync,
   //     ),
   //   )),
   // );
@@ -127,7 +123,7 @@ class App extends ConsumerWidget {
         ref.watch(preferenceNotifierProvider(Preference.useMaterial3));
     final themeMode = ThemeMode
         .values[ref.watch(preferenceNotifierProvider(Preference.themeMode))];
-    Locale locale = Locale(language, language == 'en' ? 'en_US' : '');
+    Locale locale = Locale("en", language == 'en' ? 'en_US' : '');
     timeago.setLocaleMessages(
         language,
         switch (language) {

@@ -300,5 +300,8 @@
   "fieldIsMandatory": "Field Is Mandatory",
   "validationErrorMessage": "Validation Error Message",
   "deleteItem": "Delete Item",
-  "copyToClipboard": "Copy To Clipboard"
+  "copyToClipboard": "Copy To Clipboard",
+  "dateOfBirth": "DOB",
+  "yearsMonths": "Y/M",
+  "days": "Days"
 }

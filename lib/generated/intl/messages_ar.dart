@@ -126,7 +126,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "databaseQueryFailed": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء معالجة طلب قاعدة البيانات. يرجى المحاولة مرة أخرى.",
     ),
+    "dateOfBirth": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
     "day": MessageLookupByLibrary.simpleMessage("اليوم"),
+    "days": MessageLookupByLibrary.simpleMessage("أيام"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
     "deleteConfirmationMessage": MessageLookupByLibrary.simpleMessage(
       "هل تريد بالتأكيد حذف هذا العنصر؟",
@@ -386,6 +388,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
     "year": m11,
     "years": MessageLookupByLibrary.simpleMessage("سنوات"),
+    "yearsMonths": MessageLookupByLibrary.simpleMessage("أشهر/سنوات"),
     "yes": MessageLookupByLibrary.simpleMessage("نعم"),
   };
 }

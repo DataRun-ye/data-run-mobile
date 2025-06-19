@@ -8,6 +8,8 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i687;
+
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart'
     as _i587;
 import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart'
@@ -19,6 +21,7 @@ import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.
 import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart'
     as _i1042;
 import 'package:datarunmobile/app/di/third_party_services.module.dart' as _i427;
+import 'package:datarunmobile/core/form/data/form_value_store.dart' as _i520;
 import 'package:datarunmobile/core/services/auth.service.dart' as _i409;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
     as _i775;
@@ -95,6 +98,8 @@ Future<_i174.GetIt> init(
       () => _i443.DAuthenticationService(gh<_i775.UserSessionService>()));
   gh.factory<_i236.IdentifiableRepository<_i1042.Team>>(
       () => _i231.DTeamLocalRepository());
+  gh.factory<_i520.FormValueStore>(
+      () => _i520.FormValueStore(recordUidFuture: gh<_i687.Future<String>>()));
   gh.factory<_i359.AssignmentDetailService>(() => _i359.AssignmentDetailService(
       gh<_i236.IdentifiableRepository<_i603.Assignment>>()));
   return getIt;

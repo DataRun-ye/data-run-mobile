@@ -103,6 +103,7 @@ class FormElementControlBuilder {
         );
       case ValueType.Date:
       case ValueType.DateTime:
+      case ValueType.Age:
         return FormControl<String>(
           value: initialValue ?? fieldTemplate.defaultValue,
           validators: FieldValidators.getValidators(fieldTemplate),
@@ -116,7 +117,6 @@ class FormElementControlBuilder {
           validators: FieldValidators.getValidators(fieldTemplate),
         );
       case ValueType.Number:
-      case ValueType.Age:
       case ValueType.Percentage:
         return FormControl<double>(
           value:

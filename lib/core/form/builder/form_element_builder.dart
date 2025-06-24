@@ -147,6 +147,7 @@ class FormElementBuilder {
       case ValueType.OrganisationUnit:
       case ValueType.Team:
       case ValueType.Progress:
+      case ValueType.Age:
         return FieldInstance<String>(
             form: rootFormControl,
             elementProperties: FieldElementState<String>(
@@ -177,7 +178,6 @@ class FormElementBuilder {
       case ValueType.Number:
       case ValueType.UnitInterval:
       case ValueType.Percentage:
-      case ValueType.Age:
         return FieldInstance<double>(
           form: rootFormControl,
           elementProperties: FieldElementState<double>(

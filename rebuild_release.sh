@@ -22,3 +22,5 @@
 
 # fat apk for all platforms types ARM64, ARM, and x86_64
 flutter build apk
+
+#flutter create --platforms=windows .

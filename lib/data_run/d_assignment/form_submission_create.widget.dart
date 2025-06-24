@@ -35,7 +35,7 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
       assignmentId: widget.assignment.id,
       form: formTemplate.formTemplate!,
       team: activityModel.assignedTeam!.id!,
-      version: formTemplate.version,
+      version: formTemplate.versionNumber,
     );
     return submission;
   }

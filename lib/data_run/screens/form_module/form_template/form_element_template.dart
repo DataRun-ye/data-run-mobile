@@ -61,7 +61,7 @@ class FormFlatTemplate
 
   String get defaultLocal => formTemplate.defaultLocal;
 
-  int get version => formTemplate.version;
+  int get version => formTemplate.versionNumber;
 
   @override
   List<Object?> get props => [formTemplate.id, name, code, version];

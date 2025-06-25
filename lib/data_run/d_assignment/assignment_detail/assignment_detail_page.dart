@@ -216,8 +216,8 @@ Future<void> showFormSelectionBottomSheet(BuildContext context,
     AssignmentModel assignment, ActivityModel activityModel) async {
   try {
     await showModalBottomSheet(
-      // isScrollControlled: true,
-      enableDrag: true,
+      isScrollControlled: true,
+      // enableDrag: true,
       context: context,
       builder: (BuildContext context) {
         return ActivityInheritedWidget(

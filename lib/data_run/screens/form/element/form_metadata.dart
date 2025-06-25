@@ -8,6 +8,8 @@ class FormMetadata with EquatableMixin {
     // required this.activity,
     required this.assignmentModel,
     required this.formId,
+    required this.versionUid,
+    required this.version,
     // this.isNew = true,
     // this.version,
     this.submission,
@@ -24,24 +26,28 @@ class FormMetadata with EquatableMixin {
   // final bool isNew;
   final String formId;
 
-  // final int? version;
+// final bool isNew;
+  final String versionUid;
+  final int version;
   final String? submission;
 
   FormMetadata copyWith({
     String? formId,
+    String? versionUid,
     // String? formLabel,
     // String? activity,
     // AssignmentForm? assignmentForm,
     AssignmentModel? assignmentModel,
-    // int? version,
+    int? version,
     String? submission,
   }) {
     return FormMetadata(
       formId: formId ?? this.formId,
+      versionUid: versionUid ?? this.versionUid,
       // formLabel: formLabel ?? this.formLabel,
       // activity: activity ?? this.activity,
       assignmentModel: assignmentModel ?? this.assignmentModel,
-      // version: version ?? this.version,
+      version: version ?? this.version,
       submission: submission ?? this.submission,
     );
   }
@@ -52,7 +58,8 @@ class FormMetadata with EquatableMixin {
   @override
   List<Object?> get props => [
         submission,
-        // version,
+        versionUid,
+        version,
         assignmentModel, formId /*, formLabel, activity*/
       ];
 }

@@ -75,11 +75,11 @@ class FormSubmissions extends _$FormSubmissions {
 
   /// injecting the arguments from the context
   Future<DataFormSubmission> createNewSubmission(
-      {required String formVersion,
+      {required String versionUid,
         required String assignmentId,
         required String team,
         required String form,
-        required int version,
+        required int versionNumber,
         Map<String, dynamic> formData = const {},
         Geometry? geometry}) async {
     final id = DhisUidGenerator.generate();
@@ -87,8 +87,8 @@ class FormSubmissions extends _$FormSubmissions {
         id: id,
         status: AssignmentStatus.IN_PROGRESS,
         form: form,
-        formVersion: formVersion,
-        version: version,
+        formVersion: versionUid,
+        version: versionNumber,
         // activity: activityUid,
         team: team,
         assignment: assignmentId,

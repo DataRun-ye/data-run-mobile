@@ -19,7 +19,6 @@ import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
 import 'package:datarunmobile/core/form/ui/validation/field_error_message_provider.dart';
 import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
-import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

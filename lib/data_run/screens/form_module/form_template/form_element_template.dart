@@ -36,9 +36,10 @@ class FormFlatTemplate
     }
   }
 
-  static Future<FormFlatTemplate> fromTemplate({String? templateId}) async {
+  static Future<FormFlatTemplate> fromTemplate(
+      {required String templateId}) async {
     final FormVersion? template =
-        await D2Remote.formModule.formTemplateV.byId(templateId!).getOne();
+        await D2Remote.formModule.formTemplateV.byId(templateId).getOne();
     IMap<String, IList<FormOption>> optionLists = await getOptionSets(template);
     final fields =
         await FlatTemplateFactory(template!, optionLists).createFlatTemplate();
@@ -61,10 +62,12 @@ class FormFlatTemplate
 
   String get defaultLocal => formTemplate.defaultLocal;
 
-  int get version => formTemplate.versionNumber;
+  String get versionUid => formTemplate.versionUid!;
+
+  int get versionNumber => formTemplate.versionNumber;
 
   @override
-  List<Object?> get props => [formTemplate.id, name, code, version];
+  List<Object?> get props => [formTemplate.id, name, code, versionNumber];
 
   final Map<String, FormElementTemplate> _flatFields = {};
 

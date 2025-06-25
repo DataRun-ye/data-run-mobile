@@ -8,7 +8,9 @@ part 'template.provider.g.dart';
 FutureOr<FormVersion> formVersionAsync(FormVersionAsyncRef ref,
     {required String form, required int version}) async {
   final template =
-      await D2Remote.formModule.formTemplateV.byId('${form}_$version').getOne();
+      await D2Remote.formModule.formTemplateV
+          .where(attribute: 'formTemplate', value: form)
+          .where(attribute: 'versionNumber', value: version).getOne();
 
   return template!;
 }

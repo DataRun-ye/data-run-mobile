@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/age/age_value.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// AgeField widget displays inline Y/M/D input fields and calculates the
 /// underlying DOB
@@ -13,13 +14,14 @@ class AgeFieldWidget extends StatefulWidget {
       this.initialValue,
       this.readOnly = false,
       this.enabled = true,
+      this.displayDob = false,
       this.onChanged,
-      DateTime? referenceDate})
-      : this.referenceDate = referenceDate ?? DateTime.now();
+      required this.referenceDate});
 
   final String label;
   final AgeValue? initialValue; // from API as dob-based
   final bool readOnly;
+  final bool displayDob;
   final bool enabled;
   final DateTime referenceDate;
   final ValueChanged<AgeValue>? onChanged;
@@ -124,14 +126,17 @@ class _AgeFieldWidgetState extends State<AgeFieldWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _numberField(S.of(context).years, _yearsController, _yearsFocus,
-              (v) => _onFieldChanged(years: v)),
+          Expanded(
+              child: _numberField(S.of(context).years, _yearsController,
+                  _yearsFocus, (v) => _onFieldChanged(years: v))),
           const SizedBox(width: 8),
-          _numberField(S.of(context).months, _monthsController, _monthsFocus,
-              (v) => _onFieldChanged(months: v)),
+          Expanded(
+              child: _numberField(S.of(context).months, _monthsController,
+                  _monthsFocus, (v) => _onFieldChanged(months: v))),
           const SizedBox(width: 8),
-          _numberField(S.of(context).days, _daysController, _daysFocus,
-              (v) => _onFieldChanged(days: v)),
+          Expanded(
+              child: _numberField(S.of(context).days, _daysController,
+                  _daysFocus, (v) => _onFieldChanged(days: v))),
         ],
       ),
     );
@@ -139,38 +144,23 @@ class _AgeFieldWidgetState extends State<AgeFieldWidget> {
 
   Widget _numberField(String label, TextEditingController controller,
       FocusNode focusNode, ValueChanged<int> onChanged) {
-    return SizedBox(
-      width: 80,
-      child: TextFormField(
-        controller: controller,
-        focusNode: focusNode,
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: '0',
-          border: const OutlineInputBorder(),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-        ),
-        enabled: widget.enabled,
-        readOnly: widget.readOnly,
-        onChanged: (s) {
-          final v = int.tryParse(s);
-          if (v != null && v >= 0) onChanged(v);
-        },
+    return TextFormField(
+      controller: controller,
+      focusNode: focusNode,
+      keyboardType: TextInputType.number,
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: '0',
+        border: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       ),
+      enabled: widget.enabled,
+      readOnly: widget.readOnly,
+      onChanged: (s) {
+        final v = int.tryParse(s);
+        if (v != null && v >= 0) onChanged(v);
+      },
     );
   }
 }
-
-// Demo usage
-// void main() => runApp(MaterialApp(
-//       home: Scaffold(
-//         body: Center(
-//           child: AgeFieldWidget(
-//             onChanged: (v) => print('DOB: \${v.dateOfBirth}'),
-//           ),
-//         ),
-//       ),
-//     ));

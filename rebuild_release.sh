@@ -1,4 +1,8 @@
 # dart fix --apply --code unused_import
+# dart fix --apply --code=unused_import
+# dart fix --apply --code=always_use_package_imports
+# dart fix --apply --code=prefer_single_quotes
+# dart fix --apply --code=unnecessary_null_checks
 # flutter build appbundle --release
 
 # split per platform ARM64, ARM, x86_64
@@ -24,3 +28,4 @@
 flutter build apk
 
 #flutter create --platforms=windows .
+#flutter build windows

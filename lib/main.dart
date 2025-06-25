@@ -123,7 +123,7 @@ class App extends ConsumerWidget {
         ref.watch(preferenceNotifierProvider(Preference.useMaterial3));
     final themeMode = ThemeMode
         .values[ref.watch(preferenceNotifierProvider(Preference.themeMode))];
-    Locale locale = Locale("en", language == 'en' ? 'en_US' : '');
+    Locale locale = Locale(language, language == 'en' ? 'en_US' : '');
     timeago.setLocaleMessages(
         language,
         switch (language) {

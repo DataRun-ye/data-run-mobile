@@ -15,9 +15,6 @@ class FieldValidators {
       validators.add(Validators.pattern(ArReg1));
     if (element.mandatory) validators.add(Validators.required);
     if (element.type == ValueType.Email) validators.add(Validators.email);
-    if (element.type == ValueType.Age)
-      validators
-          .add(Validators.number(allowedDecimals: 2, allowNegatives: false));
     if (element.type?.isInteger ?? false) validators.add(Validators.number());
     if (element.type == ValueType.IntegerZeroOrPositive)
       validators.addAll(
@@ -39,10 +36,6 @@ class FieldValidators {
       messages['required'] = (error) => 'This field is mandatory.';
     if (element.type == ValueType.Email)
       messages['email'] = (error) => 'Invalid email format.';
-    if (element.type == ValueType.Age) {
-      messages['number'] = (error) => 'Age must be a valid number.';
-      messages['min'] = (error) => 'Age cannot be negative.';
-    }
     if (element.type?.isInteger ?? false) {
       messages['number'] = (error) => 'Please enter an integer.';
     }

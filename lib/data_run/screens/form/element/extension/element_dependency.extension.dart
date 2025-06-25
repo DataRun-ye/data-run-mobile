@@ -21,7 +21,7 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
       return false;
     } else if (dependency.template.type! == ValueType.Age) {
       if (dependency.value != null) {
-        return AgeValue(dateOfBirth: DateTime.parse(dependency.value))
+        return AgeValue(dateOfBirth: DateTime.parse(dependency.value).toLocal())
             .years(DateTime.now());
       }
       return 0;

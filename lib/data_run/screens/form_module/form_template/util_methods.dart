@@ -9,8 +9,8 @@ Future<FormVersion> getTemplateByVersionOrLatest(String id) async {
   /// try to get form versions by the specific form version Ids
   /// It would retrieve the specific versions of formTemplate
   final formTemplate = await D2Remote.formModule.formTemplateV
-      .byId(id)
-      .orderBy(attribute: 'version', order: SortOrder.DESC)
+      .where(attribute: 'formTemplate', value: id)
+      .orderBy(attribute: 'versionNumber', order: SortOrder.DESC)
       .getOne();
 
   if (formTemplate != null) {
@@ -20,7 +20,7 @@ Future<FormVersion> getTemplateByVersionOrLatest(String id) async {
     /// if more than one value for the same formTemplate, take latest version
     final FormVersion? formTemplate = await D2Remote.formModule.formTemplateV
         .where(attribute: 'formTemplate', value: id)
-        .orderBy(attribute: 'version', order: SortOrder.DESC)
+        .orderBy(attribute: 'versionNumber', order: SortOrder.DESC)
         .getOne();
 
     return formTemplate!;

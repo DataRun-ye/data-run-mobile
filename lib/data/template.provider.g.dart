@@ -6,7 +6,7 @@ part of 'template.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$formVersionAsyncHash() => r'6380fa983f0b3bbef3f2a269359dbf1b8f844a9c';
+String _$formVersionAsyncHash() => r'8c85121c16f695c3864b5545d27e4c8f6256fe3d';
 
 /// Copied from Dart SDK
 class _SystemHash {

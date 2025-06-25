@@ -94,7 +94,10 @@ Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
                 child: FormMetadataWidget(
                   formMetadata: FormMetadata(
                     assignmentModel: assignment,
-                    formId: '${submission.form}_${submission.version}',
+                    versionUid: submission.formVersion,
+                    // formId: '${submission.form}_${submission.version}',
+                    formId: submission.form!,
+                    version: submission.version,
                     submission: submission.id,
                   ),
                   child: const FormSubmissionScreen(currentPageIndex: 1),

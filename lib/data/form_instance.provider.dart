@@ -7,7 +7,6 @@ import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:d2_remote/shared/utilities/sort_order.util.dart';
-import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
@@ -39,7 +38,7 @@ Future<FormVersion> latestFormTemplate(LatestFormTemplateRef ref,
     {required String formId}) async {
   final formTemplates = await D2Remote.formModule.formTemplateV
       .where(attribute: 'formTemplate', value: formId)
-      .orderBy(attribute: 'version', order: SortOrder.DESC)
+      .orderBy(attribute: 'versionNumber', order: SortOrder.DESC)
       .get();
   return formTemplates.first;
 }
@@ -64,8 +63,8 @@ Future<FormFlatTemplate> formFlatTemplate(
         .formSubmissionModule.formSubmission
         .byId(formMetadata.submission!)
         .getOne();
-    final flatTemplate = await FormFlatTemplate.fromTemplate(
-        templateId: '${submission.form}_${submission.version}');
+    final flatTemplate =
+        await FormFlatTemplate.fromTemplate(templateId: submission.formVersion);
     return flatTemplate;
     // final FormVersion formVersion = await ref.watch(
     //     submissionVersionFormTemplateProvider(formId: submission.formVersion)
@@ -73,7 +72,9 @@ Future<FormFlatTemplate> formFlatTemplate(
     // return FormFlatTemplate.fromTemplate(formVersion);
   }
 
-  return await locator.getAsync<FormFlatTemplate>(param1: formMetadata.formId);
+  return await FormFlatTemplate.fromTemplate(
+      templateId: formMetadata.versionUid);
+  // return await locator.getAsync<FormFlatTemplate>(param1: formMetadata.versionUid);
   // final FormVersion formVersion = await ref.watch(
   //     submissionVersionFormTemplateProvider(formId: formMetadata.formId)
   //         .future);
@@ -127,7 +128,7 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
 
   return FormInstance(ref,
       entryStarted: submission.startEntryTime != null
-          ? DateTime.parse(submission.startEntryTime!)
+          ? DateTime.parse(submission.startEntryTime!).toLocal()
           : DateTime.now(),
       enabled: enabled,
       initialValue: {...?initialFormValue, ...attributeMap},

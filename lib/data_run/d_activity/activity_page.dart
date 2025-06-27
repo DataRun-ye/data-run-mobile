@@ -5,7 +5,7 @@ import 'package:datarunmobile/data_run/d_assignment/assignment_page_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'activity_model.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 
 class ActivityPage extends ConsumerWidget {
   const ActivityPage({super.key, required this.activities});

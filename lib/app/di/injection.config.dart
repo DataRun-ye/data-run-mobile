@@ -8,8 +8,6 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i687;
-
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart'
     as _i587;
 import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart'
@@ -21,7 +19,23 @@ import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.
 import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart'
     as _i1042;
 import 'package:datarunmobile/app/di/third_party_services.module.dart' as _i427;
+import 'package:datarunmobile/core/form/data/display_name_provider.dart'
+    as _i1030;
+import 'package:datarunmobile/core/form/data/display_name_provider_impl.dart'
+    as _i971;
 import 'package:datarunmobile/core/form/data/form_value_store.dart' as _i520;
+import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart'
+    as _i362;
+import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart'
+    as _i406;
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
+    as _i595;
+import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
+    as _i1066;
+import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart'
+    as _i1067;
+import 'package:datarunmobile/core/form/ui/field_view_model_factory_impl.dart'
+    as _i835;
 import 'package:datarunmobile/core/services/auth.service.dart' as _i409;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
     as _i775;
@@ -66,6 +80,10 @@ Future<_i174.GetIt> init(
     () => thirdPartyServicesModule.prefs,
     preResolve: true,
   );
+  gh.factory<_i362.OptionSetConfigurations>(
+      () => const _i362.OptionSetConfigurations());
+  gh.factory<_i406.OrgUnitConfiguration>(
+      () => const _i406.OrgUnitConfiguration());
   gh.lazySingleton<_i1055.NavigationService>(
       () => thirdPartyServicesModule.navigationService);
   gh.lazySingleton<_i1055.DialogService>(
@@ -92,14 +110,31 @@ Future<_i174.GetIt> init(
       () => _i684.DActivityLocalRepository());
   gh.factory<_i236.IdentifiableRepository<_i587.FormVersion>>(
       () => _i298.DFormTemplateLocalRepository());
+  gh.factoryParam<_i520.FormValueStore, String, dynamic>((
+    recordUid,
+    _,
+  ) =>
+      _i520.FormValueStore(recordUid: recordUid));
   gh.factory<_i236.IdentifiableRepository<_i731.OrgUnit>>(
       () => _i612.DOrgUnitLocalRepository());
   gh.factory<_i1049.AuthenticationService>(
       () => _i443.DAuthenticationService(gh<_i775.UserSessionService>()));
   gh.factory<_i236.IdentifiableRepository<_i1042.Team>>(
       () => _i231.DTeamLocalRepository());
-  gh.factory<_i520.FormValueStore>(
-      () => _i520.FormValueStore(recordUidFuture: gh<_i687.Future<String>>()));
+  gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
+  gh.factory<_i1030.DisplayNameProvider>(() => _i971.DisplayNameProviderImpl(
+        gh<_i362.OptionSetConfigurations>(),
+        gh<_i406.OrgUnitConfiguration>(),
+      ));
+  gh.factoryParam<_i1067.FieldViewModelFactory, bool?, dynamic>((
+    noMandatoryFields,
+    _,
+  ) =>
+      _i835.FieldViewModelFactoryImpl(
+        noMandatoryFields: noMandatoryFields,
+        hintProvider: gh<_i595.HintProvider>(),
+        displayNameProvider: gh<_i1030.DisplayNameProvider>(),
+      ));
   gh.factory<_i359.AssignmentDetailService>(() => _i359.AssignmentDetailService(
       gh<_i236.IdentifiableRepository<_i603.Assignment>>()));
   return getIt;

@@ -1,6 +1,8 @@
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class OrgUnitConfiguration {
   const OrgUnitConfiguration();
 

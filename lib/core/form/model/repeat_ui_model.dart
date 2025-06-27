@@ -14,8 +14,7 @@ import 'package:flutter/material.dart';
 class RepeatableSectionUiModel extends FieldUiModel {
   RepeatableSectionUiModel({
     required this.uid,
-    this.programStageSection,
-    required this.path,
+    this.parentSection,
     required this.label,
     this.focused = false,
     this.error,
@@ -45,8 +44,7 @@ class RepeatableSectionUiModel extends FieldUiModel {
   });
 
   final String uid;
-  final String? programStageSection;
-  final String path;
+  final String? parentSection;
   final String label;
   final String? description;
   final bool focused;
@@ -201,7 +199,7 @@ class RepeatableSectionUiModel extends FieldUiModel {
 
   RepeatableSectionUiModel copyWith({
     String? uid,
-    String? programStageSection,
+    String? parentSection,
     String? path,
     String? label,
     String? description,
@@ -232,8 +230,7 @@ class RepeatableSectionUiModel extends FieldUiModel {
   }) {
     return RepeatableSectionUiModel(
       uid: uid ?? this.uid,
-      programStageSection: programStageSection ?? this.programStageSection,
-      path: path ?? this.path,
+      parentSection: parentSection ?? this.parentSection,
       label: label ?? this.label,
       description: description ?? this.description,
       focused: focused ?? this.focused,

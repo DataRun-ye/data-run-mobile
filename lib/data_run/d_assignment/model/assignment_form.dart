@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'assignment_model.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 
 class AssignmentForm with EquatableMixin {
   AssignmentForm(

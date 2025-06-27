@@ -3,7 +3,7 @@ description: Datarun, runs and manages you activities data workflows.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 4.0.0+7
+version: 4.0.0+8
 
 environment:
   sdk: ">=3.3.0 <4.0.0"

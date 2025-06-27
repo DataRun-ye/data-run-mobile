@@ -20,7 +20,6 @@ class FieldUiModelImpl extends FieldUiModel {
     required this.uid,
     this.repeatGroup,
     this.rowUid,
-    required this.path,
     required this.label,
     this.description,
     this.value,
@@ -31,7 +30,7 @@ class FieldUiModelImpl extends FieldUiModel {
     required this.editable,
     this.warning,
     required this.mandatory,
-    this.programStageSection,
+    this.parentSection,
     this.uiEventFactory,
     this.renderingType,
     this.sectionRenderingType,
@@ -45,7 +44,6 @@ class FieldUiModelImpl extends FieldUiModel {
   }) : this.displayValue = displayValue ?? value;
 
   final String uid;
-  final String path;
   final String? repeatGroup;
   final String? rowUid;
   final String label;
@@ -59,7 +57,7 @@ class FieldUiModelImpl extends FieldUiModel {
   final bool focused;
   final bool editable;
 
-  final String? programStageSection;
+  final String? parentSection;
 
   final UiEventFactory? uiEventFactory;
 
@@ -211,7 +209,7 @@ class FieldUiModelImpl extends FieldUiModel {
     String? path,
     String? repeatGroup,
     String? rowUid,
-    String? programStageSection,
+    String? parentSection,
     String? label,
     String? description,
     String? value,
@@ -232,10 +230,9 @@ class FieldUiModelImpl extends FieldUiModel {
   }) =>
       FieldUiModelImpl(
         uid: uid ?? this.uid,
-        path: path ?? this.path,
         repeatGroup: repeatGroup ?? this.repeatGroup,
         rowUid: rowUid ?? this.rowUid,
-        programStageSection: programStageSection ?? this.programStageSection,
+        parentSection: parentSection ?? this.parentSection,
         label: label ?? this.label,
         description: description ?? this.description,
         value: value ?? this.value,

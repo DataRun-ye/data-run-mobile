@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "activity": MessageLookupByLibrary.simpleMessage("Activity"),
     "addNew": MessageLookupByLibrary.simpleMessage("Add New"),
+    "ageFieldHint": MessageLookupByLibrary.simpleMessage("Enter an Age"),
     "allSubmissions": MessageLookupByLibrary.simpleMessage("All Submissions"),
     "allocatedResources": MessageLookupByLibrary.simpleMessage(
       "Allocated Resources",
@@ -91,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "barcodeQrScan": MessageLookupByLibrary.simpleMessage("Barcode/QR Code"),
     "batch": MessageLookupByLibrary.simpleMessage("Batch"),
+    "booleanFieldHint": MessageLookupByLibrary.simpleMessage("Enter a Boolean"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
     "changePassword": MessageLookupByLibrary.simpleMessage("Change Password"),
@@ -121,6 +123,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "controllerNotReady": MessageLookupByLibrary.simpleMessage(
       "Controller not ready.",
     ),
+    "coordinatesFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Select Coordinates",
+    ),
     "copiedToClipboard": m1,
     "copyToClipboard": MessageLookupByLibrary.simpleMessage(
       "Copy To Clipboard",
@@ -130,6 +135,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "currentUsername": MessageLookupByLibrary.simpleMessage("Current username"),
     "daily": MessageLookupByLibrary.simpleMessage("Daily"),
     "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
+    "dataFieldHint": MessageLookupByLibrary.simpleMessage("Select a date"),
+    "dataTimeFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter a Data time",
+    ),
     "databaseConnectionFailed": MessageLookupByLibrary.simpleMessage(
       "Failed to connect to the database.",
     ),
@@ -163,6 +172,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dueDay": MessageLookupByLibrary.simpleMessage("dueDay"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
+    "emailFieldHint": MessageLookupByLibrary.simpleMessage("Enter An Email"),
     "empty": MessageLookupByLibrary.simpleMessage("Empty"),
     "endDate": MessageLookupByLibrary.simpleMessage("End Date"),
     "enterAValidNumber": MessageLookupByLibrary.simpleMessage(
@@ -192,6 +202,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fieldsWithErrorInfo": MessageLookupByLibrary.simpleMessage(
       "Fields with Error",
     ),
+    "fileResourceFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Select A file",
+    ),
     "filters": MessageLookupByLibrary.simpleMessage("Filters"),
     "finalData": MessageLookupByLibrary.simpleMessage("Final Data"),
     "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
@@ -205,12 +218,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "forms": MessageLookupByLibrary.simpleMessage("Forms"),
     "formsAssigned": MessageLookupByLibrary.simpleMessage("Forms"),
     "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
+    "fullNameFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter a full name",
+    ),
     "genericError": MessageLookupByLibrary.simpleMessage("Generic Error"),
     "gtin": MessageLookupByLibrary.simpleMessage("GTIN"),
     "hidePassword": MessageLookupByLibrary.simpleMessage("Hide Password"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "households": MessageLookupByLibrary.simpleMessage("Households"),
+    "imageFieldHint": MessageLookupByLibrary.simpleMessage("Select an Image"),
     "in_progress": MessageLookupByLibrary.simpleMessage("In Progress"),
+    "integerFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter an integer",
+    ),
+    "integerOrZeroFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter an integer or zero",
+    ),
     "internetIsConnected": MessageLookupByLibrary.simpleMessage(
       "internet Is Connected",
     ),
@@ -236,6 +259,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "logoutNote": MessageLookupByLibrary.simpleMessage(
       "your data will not be deleted when you login back again",
     ),
+    "longTextHint": MessageLookupByLibrary.simpleMessage("Enter a text"),
     "makeFormFinalOrSaveBody": MessageLookupByLibrary.simpleMessage(
       "Make Form Final for Send to server, or save as draft!",
     ),
@@ -254,6 +278,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "month": m5,
     "monthly": MessageLookupByLibrary.simpleMessage("Monthly"),
     "months": MessageLookupByLibrary.simpleMessage("Months"),
+    "negativeIntegerFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter a negative integer",
+    ),
     "networkConnectionFailed": MessageLookupByLibrary.simpleMessage(
       "Connection failed. Check your network.",
     ),
@@ -280,6 +307,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notNow": MessageLookupByLibrary.simpleMessage("Not Now"),
     "not_started": MessageLookupByLibrary.simpleMessage("Not Started"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "numberFieldHint": MessageLookupByLibrary.simpleMessage("Enter a number"),
     "objectAccessClosed": MessageLookupByLibrary.simpleMessage(
       "objectAccessClosed",
     ),
@@ -287,6 +315,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "objectAccessDenied",
     ),
     "ok": MessageLookupByLibrary.simpleMessage("OK"),
+    "oneLetterFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter a Letter",
+    ),
     "online": MessageLookupByLibrary.simpleMessage("online!"),
     "open": MessageLookupByLibrary.simpleMessage("Open"),
     "openNewForm": MessageLookupByLibrary.simpleMessage("New Submission"),
@@ -299,20 +330,36 @@ class MessageLookup extends MessageLookupByLibrary {
       "Select Org Unit",
     ),
     "organization": MessageLookupByLibrary.simpleMessage("Organization"),
+    "orgunitFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Select an OrgUnit",
+    ),
     "password": MessageLookupByLibrary.simpleMessage("password"),
+    "percentageFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter a Percentage",
+    ),
     "permissionDenied": MessageLookupByLibrary.simpleMessage(
       "Permission denied",
     ),
     "personInformation": MessageLookupByLibrary.simpleMessage(
       "Person Information",
     ),
+    "phoneNumberFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter a phone number",
+    ),
     "pleaseEnterAValidEmailAddress": MessageLookupByLibrary.simpleMessage(
       "enter a valid email address.",
     ),
     "population": MessageLookupByLibrary.simpleMessage("Population"),
+    "positiveIntegerFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter a positive integer",
+    ),
     "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
     "productionDate": MessageLookupByLibrary.simpleMessage("Production Date"),
+    "progressFieldHint": MessageLookupByLibrary.simpleMessage("fieldHintText"),
     "reassigned": MessageLookupByLibrary.simpleMessage("Reassigned"),
+    "referenceFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Select a reference",
+    ),
     "reported": MessageLookupByLibrary.simpleMessage("Reported"),
     "reportedResources": MessageLookupByLibrary.simpleMessage(
       "Reported Resources",
@@ -331,6 +378,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Save and Edit Next",
     ),
     "scanBarcode": MessageLookupByLibrary.simpleMessage("Scan barcode"),
+    "scanCodeFieldHint": MessageLookupByLibrary.simpleMessage("Scan Code"),
     "scanYourCode": MessageLookupByLibrary.simpleMessage("Scan your code"),
     "scanningIsUnsupportedOnThisDevice": MessageLookupByLibrary.simpleMessage(
       "Scanning is unsupported on this device",
@@ -353,6 +401,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectImageForColorExtraction": MessageLookupByLibrary.simpleMessage(
       "Select Image for Color Extraction",
     ),
+    "selectMultiFieldHint": MessageLookupByLibrary.simpleMessage(
+      "fieldHintText",
+    ),
+    "selectOneFieldHint": MessageLookupByLibrary.simpleMessage("Select One"),
     "selected": MessageLookupByLibrary.simpleMessage("selected"),
     "send": MessageLookupByLibrary.simpleMessage("Send"),
     "serial": MessageLookupByLibrary.simpleMessage("Serial"),
@@ -377,10 +429,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "syncingData": MessageLookupByLibrary.simpleMessage("Syncing Data"),
     "syncingEvents": MessageLookupByLibrary.simpleMessage("Syncing Events"),
     "team": MessageLookupByLibrary.simpleMessage("Team"),
+    "teamFieldHint": MessageLookupByLibrary.simpleMessage("Select a Team"),
     "teams": MessageLookupByLibrary.simpleMessage("teams"),
+    "textHint": MessageLookupByLibrary.simpleMessage("Enter a text"),
     "thisFieldIsRequired": MessageLookupByLibrary.simpleMessage(
       "This field is required.",
     ),
+    "timeFieldHint": MessageLookupByLibrary.simpleMessage("Select a Time"),
     "to_post": MessageLookupByLibrary.simpleMessage("Last Sync"),
     "to_update": MessageLookupByLibrary.simpleMessage("Last Sync"),
     "toggleBetweenListAndCardView": MessageLookupByLibrary.simpleMessage(
@@ -392,14 +447,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "toggleListTableView": MessageLookupByLibrary.simpleMessage(
       "Toggle List/Table View",
     ),
+    "trueOnlyFieldHint": MessageLookupByLibrary.simpleMessage("fieldHintText"),
     "undo": MessageLookupByLibrary.simpleMessage("Undo"),
+    "unitIntervalFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Enter unit Interval",
+    ),
     "unknownError": m8,
+    "unknownValueType": MessageLookupByLibrary.simpleMessage(
+      "Unknown Value Type",
+    ),
     "unsavedChangesWarning": MessageLookupByLibrary.simpleMessage(
       "Unsaved changes",
     ),
+    "urlFieldHint": MessageLookupByLibrary.simpleMessage("Enter a URL"),
     "user": MessageLookupByLibrary.simpleMessage("user"),
     "userSettings": MessageLookupByLibrary.simpleMessage("User Settings"),
     "username": MessageLookupByLibrary.simpleMessage("Username"),
+    "usernameFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Select a Username",
+    ),
     "validationError": MessageLookupByLibrary.simpleMessage(
       "Please correct the errors in the form.",
     ),
@@ -419,5 +485,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "years": MessageLookupByLibrary.simpleMessage("Years"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("Y/M"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+    "yesOrNoFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Select Yes or No",
+    ),
   };
 }

@@ -1,6 +1,10 @@
 analyzer:
   errors:
     annotate_overrides: ignore
+    prefer_const_constructors: ignore
+    unused_element: ignore
+    unused_field: ignore
+    unused_local_variable: ignore
   language:
     strict-raw-types: true  # Enforces using generic types
   exclude:

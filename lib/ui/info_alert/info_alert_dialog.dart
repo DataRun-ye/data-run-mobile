@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'info_alert_dialog_model.dart';
+import 'package:datarunmobile/ui/info_alert/info_alert_dialog_model.dart';
 
 const double _graphicSize = 60;
 
 class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
-  final DialogRequest<dynamic> request;
-  final Function(DialogResponse<dynamic>) completer;
 
   const InfoAlertDialog({
     Key? key,
     required this.request,
     required this.completer,
   }) : super(key: key);
+  final DialogRequest<dynamic> request;
+  final Function(DialogResponse<dynamic>) completer;
 
   @override
   Widget builder(

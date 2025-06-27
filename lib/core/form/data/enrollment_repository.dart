@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:datarunmobile/core/form/data/data_entry_base_repository.dart';
@@ -9,6 +10,12 @@ import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
 
 class EnrollmentRepository extends DataEntryBaseRepository {
+  EnrollmentRepository(
+      {required FieldViewModelFactory fieldFactory,
+      required this.formTemplateVersion,
+      required this.enrollmentUid})
+      : super(fieldFactory);
+
   static const String ENROLLMENT_DATA_SECTION_UID =
       'ENROLLMENT_DATA_SECTION_UID';
   static const String ENROLLMENT_DATE_UID = 'ENROLLMENT_DATE_UID';
@@ -18,6 +25,7 @@ class EnrollmentRepository extends DataEntryBaseRepository {
   static const String ENROLLMENT_COORDINATES_UID = 'ENROLLMENT_COORDINATES_UID';
 
   final String enrollmentUid;
+  final FormVersion formTemplateVersion;
 
   //
   // final EnrollmentMode enrollmentMode;
@@ -25,15 +33,6 @@ class EnrollmentRepository extends DataEntryBaseRepository {
   // Future<Enrollment?>? _enrollment;
   // Future<Program?>? _program;
   // Future<List<ProgramSection>>? _programSections;
-
-  // TODO(NMC): avoid asynchronicity using scopes
-  /// see:
-  /// https://docs-v2.riverpod.dev/docs/concepts/scopes#initialization-of-synchronous-provider-for-async-apis
-  ///
-  EnrollmentRepository(
-      {required FieldViewModelFactory fieldFactory,
-      required this.enrollmentUid})
-      : super(fieldFactory);
 
   @override
   bool isEvent() {

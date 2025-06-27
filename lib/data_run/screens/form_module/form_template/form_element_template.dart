@@ -62,7 +62,7 @@ class FormFlatTemplate
 
   String get defaultLocal => formTemplate.defaultLocal;
 
-  String get versionUid => formTemplate.versionUid!;
+  String get versionUid => formTemplate.versionUid;
 
   int get versionNumber => formTemplate.versionNumber;
 

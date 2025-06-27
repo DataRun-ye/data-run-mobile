@@ -75,7 +75,7 @@ class FormRepositoryImpl implements FormRepository {
   @override
   Future<List<FieldUiModel>> fetchFormItems() async {
     // Assume dataEntryRepository.list() returns a Future<List<FieldUiModel>>.
-    itemList = await dataEntryRepository.list() ?? [];
+    itemList = await dataEntryRepository.list();
     openedSectionUid = getInitialOpenedSection();
     backupList = List.from(itemList);
     return composeList();
@@ -173,7 +173,7 @@ class FormRepositoryImpl implements FormRepository {
       } else {
         return useCompose ||
             (disableCollapsableSections == true) ||
-            field.programStageSection == openedSectionUid;
+            field.parentSection == openedSectionUid;
       }
     }).toList();
   }
@@ -188,7 +188,7 @@ class FormRepositoryImpl implements FormRepository {
         ? true
         : null;
     for (var field in fields) {
-      if (field.programStageSection == sectionFieldUiModel.uid &&
+      if (field.parentSection == sectionFieldUiModel.uid &&
           field.valueType != null) {
         total++;
         if (field.value != null && field.value!.isNotEmpty) {
@@ -199,10 +199,10 @@ class FormRepositoryImpl implements FormRepository {
 
     int warningCount = ruleEffectsResult
             ?.warningMap()
-            ?.entries
+            .entries
             .where((entry) => fields.any((field) =>
                 field.uid == entry.key &&
-                field.programStageSection == sectionFieldUiModel.uid))
+                field.parentSection == sectionFieldUiModel.uid))
             .length ??
         0;
 
@@ -215,16 +215,16 @@ class FormRepositoryImpl implements FormRepository {
 
     int errorCount = ruleEffectsResult
             ?.errorMap()
-            ?.entries
+            .entries
             .where((entry) => fields.any((field) =>
                 field.uid == entry.key &&
-                field.programStageSection == sectionFieldUiModel.uid))
+                field.parentSection == sectionFieldUiModel.uid))
             .length ??
         0;
 
     int errorFields = fields
         .where((field) =>
-            field.programStageSection == sectionFieldUiModel.uid &&
+            field.parentSection == sectionFieldUiModel.uid &&
             field.error != null)
         .length;
 
@@ -242,7 +242,7 @@ class FormRepositoryImpl implements FormRepository {
     bool needsMandatoryWarning = hasMandatoryWarnings(fieldUiModel);
     if (needsMandatoryWarning) {
       mandatoryItemsWithoutValue[fieldUiModel.label] =
-          fieldUiModel.programStageSection ?? '';
+          fieldUiModel.parentSection ?? '';
     }
     final warning = (needsMandatoryWarning && runDataIntegrity)
         ? fieldErrorMessageProvider.mandatoryWarning()
@@ -305,7 +305,7 @@ class FormRepositoryImpl implements FormRepository {
     //   return fields
     //       .where((FieldUiModel field) =>
     //           field.isSectionWithFields() ||
-    //           field.programStageSection == _openedSectionUid)
+    //           field.parentSection == _openedSectionUid)
     //       .toIList();
   }
 
@@ -373,7 +373,7 @@ class FormRepositoryImpl implements FormRepository {
     mandatoryItemsWithoutValue.clear();
     final List<Future<FieldUiModel>> items = list.map((item) async {
       if (hasMandatoryWarnings(item)) {
-        mandatoryItemsWithoutValue[item.label] = item.programStageSection ?? '';
+        mandatoryItemsWithoutValue[item.label] = item.parentSection ?? '';
       }
       RowAction? action =
           fieldsWithError.firstOrNullWhere((a) => a.uid == item.uid);
@@ -523,7 +523,7 @@ class FormRepositoryImpl implements FormRepository {
         fieldName: field?.label ?? '',
         issueType: IssueType.Warning,
         message: warningField.errorMessage,
-        fieldPath: field?.path ?? '',
+        parent: field?.parentSection ?? '',
       );
     }).toList();
 
@@ -788,7 +788,7 @@ class FormRepositoryImpl implements FormRepository {
               fieldName: item.label,
               issueType: IssueType.Error,
               message: message,
-              fieldPath: item.path,
+              parent: item.parentSection,
             );
           }
           return null;
@@ -806,7 +806,7 @@ class FormRepositoryImpl implements FormRepository {
         fieldName: item?.label ?? '',
         issueType: IssueType.Error,
         message: errorField.errorMessage,
-        fieldPath: item?.path ?? '',
+        parent: item?.parentSection ?? '',
       );
     }).toList();
 
@@ -851,7 +851,7 @@ class FormRepositoryImpl implements FormRepository {
 
     ruleEffectsResult
         ?.fieldsWithOptionEffects()
-        ?.forEach((fieldWithOptionEffect) {
+        .forEach((fieldWithOptionEffect) {
       final item =
           itemList.firstOrNullWhere((f) => f.uid == fieldWithOptionEffect);
       if (item != null) {

@@ -2,7 +2,9 @@ import 'package:d2_remote/core/utilities/list_extensions.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/metadatarun/option_set/entities/option_set.entity.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class OptionSetConfigurations {
   const OptionSetConfigurations();
 

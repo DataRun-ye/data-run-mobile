@@ -1,7 +1,5 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
-import 'package:datarunmobile/commons/extensions/dynamic_extensions.dart';
+import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model_impl.dart';
@@ -10,21 +8,22 @@ import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 import 'package:datarunmobile/core/form/ui/event/ui_event_factory_impl.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: FieldViewModelFactory)
 class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   FieldViewModelFactoryImpl({
-    required this.noMandatoryFields,
+    @factoryParam bool? noMandatoryFields,
     // required this.uiStyleProvider,
 
-    /// Replaced by WidgetProvider
     // required this.layoutProvider,
     required this.hintProvider,
     required this.displayNameProvider,
     // required this.uiEventTypesProvider,
     // required this.keyboardActionProvider,
     /*this.legendValueProvider*/
-  });
+  }) : this.noMandatoryFields = noMandatoryFields ?? false;
 
   final bool noMandatoryFields;
 
@@ -36,52 +35,41 @@ class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   final DisplayNameProvider displayNameProvider;
 
   // final UiEventTypesProvider uiEventTypesProvider;
-  // final KeyboardActionProvider keyboardActionProvider;
 
   final String _currentSection = '';
 
   @override
-  Future<FieldUiModel> create({
-    required String uid,
-    required String label,
-    // required ValueType valueType,
-    required Template template,
-    required bool mandatory,
-    String? optionSet,
-    String? value,
-    String? programStageSection,
-    required bool allowFutureDates,
-    required bool editable,
-    SectionRenderingType? renderingType,
-    String? description,
-    // ValueTypeDeviceRendering? fieldRendering,
-    String? fieldMask,
-    OptionSetConfiguration? optionSetConfiguration,
-    // FeatureType? featureType,
-  }) async {
+  Future<FieldUiModel> create(
+      {required String uid,
+      required String label,
+      required ValueType valueType,
+      // required Template template,
+      required bool mandatory,
+      String? optionSet,
+      String? value,
+      String? parentSection,
+      required bool allowFutureDates,
+      required bool editable,
+      SectionRenderingType? renderingType,
+      String? description,
+      // ValueTypeDeviceRendering? fieldRendering,
+      // required ObjectStyle objectStyle = ObjectStyle.builder().build(),
+      String? fieldMask,
+      OptionSetConfiguration? optionSetConfiguration}) async {
     bool isMandatory = mandatory;
-    isNull(template, 'template must be supplied');
-
     if (noMandatoryFields) isMandatory = false;
 
-    // TODO(NMC): avoid asynchronicity using scopes
-    /// see:
-    /// https://docs-v2.riverpod.dev/docs/concepts/scopes#initialization-of-synchronous-provider-for-async-apis
-    ///
     final String? displayName = await displayNameProvider.provideDisplayValue(
-        template.type, value, optionSet);
+        valueType, value, optionSet);
 
     return FieldUiModelImpl(
       uid: uid,
-      path: template.path!,
-      label: getItemLocalString(template.label.unlock,
-          defaultString: template.name),
-      valueType: template.type!,
+      label: label,
+      valueType: valueType,
 
       /// NMC added
       sectionRenderingType: renderingType,
 
-      /// NMC added
       value: value,
       focused: false,
       error: null,
@@ -97,15 +85,15 @@ class FieldViewModelFactoryImpl implements FieldViewModelFactory {
           uid: uid,
           label: label,
           description: description,
-          valueType: template.type!,
+          valueType: valueType,
           allowFutureDates: allowFutureDates,
           optionSet: optionSet),
       displayValue: displayName,
       // renderingType: uiEventTypesProvider.provideUiRenderType(featureType,
       //     fieldRendering?.type.toValueTypeRenderingType, renderingType),
       optionSetConfiguration: optionSetConfiguration,
-      // keyboardActionType:
-      //     keyboardActionProvider.provideKeyboardAction(valueType),
+      keyboardActionType:
+          KeyboardActionProvider.provideKeyboardAction(valueType),
       // fieldMask: fieldMask,
     );
   }
@@ -114,7 +102,6 @@ class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   FieldUiModel createSingleSection(String singleSectionName) {
     return SectionUiModelImpl(
         uid: SINGLE_SECTION_UID,
-        path: SINGLE_SECTION_UID,
         label: SINGLE_SECTION_UID,
         focused: false,
         error: null,
@@ -134,20 +121,19 @@ class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   }
 
   @override
-  SectionUiModelImpl createSection(
-      String sectionUid,
-      SectionTemplate template,
-      String? sectionName,
-      String? description,
-      bool isOpen,
-      int totalFields,
-      int completedFields,
-      String? rendering) {
+  SectionUiModelImpl createSection({
+    required String sectionUid,
+    required String label,
+    String? parentSection,
+    String? description,
+    bool isOpen = false,
+    required int totalFields,
+    required int completedFields,
+    String? rendering,
+  }) {
     return SectionUiModelImpl(
         uid: sectionUid,
-        path: template.path!,
-        label: getItemLocalString(template.label.unlock,
-            defaultString: template.name),
+        label: label,
         focused: false,
         error: null,
         editable: false,
@@ -180,7 +166,6 @@ class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   FieldUiModel createClosingSection() {
     return SectionUiModelImpl(
         uid: CLOSING_SECTION_UID,
-        path: CLOSING_SECTION_UID,
         label: CLOSING_SECTION_UID,
         focused: false,
         editable: false,
@@ -235,4 +220,12 @@ class FieldViewModelFactoryImpl implements FieldViewModelFactory {
 //         : null,
 //   );
 // }
+}
+
+class KeyboardActionProvider {
+  static TextInputAction provideKeyboardAction(ValueType valueType) =>
+      switch (valueType) {
+        ValueType.LongText => TextInputAction.newline,
+        _ => TextInputAction.next
+      };
 }

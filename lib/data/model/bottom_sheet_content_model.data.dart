@@ -30,7 +30,7 @@ class FieldWithIssue with _$FieldWithIssue {
     String? repeatGroupUid,
     String? rowUid,
     String? parent,
-    required String fieldPath, // path to the leaf field with an error
+    String? fieldPath, // path to the leaf field with an error
     required String fieldUid, // path to the leaf field with an error
     required String fieldName, // name of the leaf field
     @Default(IssueType.Error) IssueType issueType,

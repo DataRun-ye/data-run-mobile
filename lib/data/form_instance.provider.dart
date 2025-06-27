@@ -19,7 +19,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data_run/screens/form_module/form_template/util_methods.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/util_methods.dart';
 
 part 'form_instance.provider.g.dart';
 

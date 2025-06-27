@@ -2,7 +2,7 @@ import 'package:datarunmobile/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'login_viewmodel.dart';
+import 'package:datarunmobile/ui/views/login_view/login_viewmodel.dart';
 
 class LoginView extends StackedView<LoginViewModel> {
   const LoginView({Key? key}) : super(key: key);

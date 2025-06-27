@@ -39,7 +39,7 @@ final submissionFormFlatTemplateProvider =
 
 typedef SubmissionFormFlatTemplateRef
     = AutoDisposeProviderRef<FormFlatTemplate>;
-String _$formNotifierHash() => r'cccfef5efde0463976657912490817fcb65cd16f';
+String _$formNotifierHash() => r'd6fb1b41b27a8109b9ed0e48f954d94d9d7e39fa';
 
 /// See also [FormNotifier].
 @ProviderFor(FormNotifier)

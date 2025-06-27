@@ -105,7 +105,7 @@ class ConfigureFormCompletionDialog {
             .where((field) => field.elementControl.hasErrors && field.visible);
     final fieldsIssues = fieldsWithErrors.map((element) => FieldWithIssue(
         parent: element.parentSection?.label,
-        fieldPath: element.elementPath!,
+        fieldPath: element.elementPath,
         fieldUid: element.name!,
         fieldName: element.label,
         message: _getErrorMessage(element)));

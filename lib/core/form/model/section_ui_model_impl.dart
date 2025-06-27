@@ -17,13 +17,12 @@ const String CLOSING_SECTION_UID = 'closing_section';
 class SectionUiModelImpl extends FieldUiModel {
   SectionUiModelImpl(
       {required this.uid,
-      required this.path,
       required this.label,
       required this.focused,
       this.error,
       required this.editable,
       this.warning,
-      this.programStageSection,
+      this.parentSection,
       // this.style,
       // this.hint,
       this.description,
@@ -53,7 +52,6 @@ class SectionUiModelImpl extends FieldUiModel {
       this.listViewUiEventsCallback});
 
   final String uid;
-  final String path;
   final String label;
 
   ValueType? get valueType => ValueType.Section;
@@ -63,7 +61,7 @@ class SectionUiModelImpl extends FieldUiModel {
   final bool editable;
   final String? warning;
 
-  final String? programStageSection;
+  final String? parentSection;
 
   // final String? hint;
   final String? description;
@@ -217,13 +215,12 @@ class SectionUiModelImpl extends FieldUiModel {
 
   SectionUiModelImpl copyWith({
     String? uid,
-    String? path,
     String? label,
     bool? focused,
     String? error,
     bool? editable,
     String? warning,
-    String? programStageSection,
+    String? parentSection,
     UiEventFactory? uiEventFactory,
     UiRenderType? renderingType,
     TextInputAction? keyboardActionType,
@@ -244,13 +241,12 @@ class SectionUiModelImpl extends FieldUiModel {
   }) {
     return SectionUiModelImpl(
       uid: uid ?? this.uid,
-      path: path ?? this.path,
       label: label ?? this.label,
       focused: focused ?? this.focused,
       error: error ?? this.error,
       editable: editable ?? this.editable,
       warning: warning ?? this.warning,
-      programStageSection: programStageSection ?? this.programStageSection,
+      parentSection: parentSection ?? this.parentSection,
       // style: style ?? this.style,
       // hint: hint ?? this.hint,
       description: description ?? this.description,

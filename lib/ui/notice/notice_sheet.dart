@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'notice_sheet_model.dart';
+import 'package:datarunmobile/ui/notice/notice_sheet_model.dart';
 
 class NoticeSheet extends StackedView<NoticeSheetModel> {
   const NoticeSheet({

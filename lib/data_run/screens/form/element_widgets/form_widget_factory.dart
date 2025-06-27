@@ -17,7 +17,7 @@ import 'package:datarunmobile/data_run/screens/form/field_widgets/reference_sear
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table.widget.dart';
 import 'package:flutter/material.dart';
 
-import '../field_widgets/reactive_progress_select_chip.widget.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/reactive_progress_select_chip.widget.dart';
 
 /// Factory that instantiate form input fields based on a dynamic element tree
 class PopupFormElementWidgetFactory {

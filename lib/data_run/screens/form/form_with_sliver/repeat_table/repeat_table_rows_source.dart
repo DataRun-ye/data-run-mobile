@@ -11,7 +11,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../../../../d_activity/activity_model.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 
 class RepeatTableDataSource extends DataTableSource {
   RepeatTableDataSource(

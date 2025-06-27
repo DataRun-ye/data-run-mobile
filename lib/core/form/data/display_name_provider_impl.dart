@@ -5,8 +5,10 @@ import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart';
 import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
+@Injectable(as: DisplayNameProvider)
 class DisplayNameProviderImpl implements DisplayNameProvider {
   const DisplayNameProviderImpl(
       this.optionSetConfiguration, this.orgUnitConfiguration);

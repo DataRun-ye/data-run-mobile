@@ -183,9 +183,9 @@ void main() {
   final reverseDependencyMap = buildReverseDependencyMap(dependencies2);
 
   final stronglyConnected = stronglyConnectedComponents(reverseDependencyMap);
-  print('stronglyConnected Components:');
+  // print('stronglyConnected Components:');
   stronglyConnected.forEach((value) {
-    print('$value');
+    // print('$value');
   });
 
   // final orderedIterator = dependencyOrderedIterator(reverseDependencyMap);
@@ -198,10 +198,10 @@ void main() {
   // print('\n1- Propagating Changes to the effected elements:');
   // propagateChange(changedElement, reverseDependencyMap);
 
-  print('\n2- Propagating Changes to the effected elements: :');
-  for (var element in propagateChange2(changedElement, reverseDependencyMap)) {
-    print('Evaluate: $element');
-  }
+  // print('\n2- Propagating Changes to the effected elements: :');
+  // for (var element in propagateChange2(changedElement, reverseDependencyMap)) {
+  //   print('Evaluate: $element');
+  // }
 }
 
 // temporarily for test

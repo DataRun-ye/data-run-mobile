@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 
-import 'activity_model.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({required this.activity, required this.onTap, super.key});

@@ -24,8 +24,6 @@ abstract class FieldUiModel with EquatableMixin {
 
   String? get rowUid => null;
 
-  String get path;
-
   // Template? get template;
 
   String? get value => null;
@@ -38,7 +36,7 @@ abstract class FieldUiModel with EquatableMixin {
 
   bool get mandatory => false;
 
-  String? get programStageSection;
+  String? get parentSection;
 
   String? get error;
 
@@ -133,10 +131,9 @@ abstract class FieldUiModel with EquatableMixin {
   @override
   List<Object?> get props => [
         uid,
-        path,
         repeatGroup,
         rowUid,
-        programStageSection,
+        parentSection,
         description,
         // value,
         valueType,

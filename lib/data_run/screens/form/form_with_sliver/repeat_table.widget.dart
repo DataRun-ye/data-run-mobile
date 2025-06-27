@@ -14,7 +14,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-import '../../../d_activity/activity_model.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 
 class RepeatTable extends StatefulHookConsumerWidget {
   const RepeatTable({

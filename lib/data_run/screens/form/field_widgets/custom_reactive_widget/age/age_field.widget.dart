@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/age/age_value.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 /// AgeField widget displays inline Y/M/D input fields and calculates the
 /// underlying DOB

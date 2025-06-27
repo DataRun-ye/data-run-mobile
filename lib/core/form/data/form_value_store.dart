@@ -1,14 +1,13 @@
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:datarunmobile/commons/helpers/lazy.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
 class FormValueStore {
   FormValueStore({
-    required this.recordUidFuture,
+    @factoryParam required this.recordUid,
     // required this.entryMode,
     // required this.enrollmentRepository,
     // this.crashReportController,
@@ -16,8 +15,8 @@ class FormValueStore {
     // required this.resourceManager,
   });
 
-  Future<String> recordUidFuture;
-  late /*final*/ String recordUid;
+  // Future<String> recordUidFuture;
+  final String recordUid;
 
   // EntryMode entryMode;
 
@@ -26,9 +25,6 @@ class FormValueStore {
   // CrashReportController crashReportController;
   // NetworkUtils networkUtils;
   // ResourceManager resourceManager;
-
-  Lazy<String> get _loadRecordUid =>
-      Lazy(() async => recordUid = await recordUidFuture);
 
   Future<StoreResult> save(String uid, String? value, String? extraData) async {
     return saveDataElement(uid, value);

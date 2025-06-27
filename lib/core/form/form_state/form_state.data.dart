@@ -7,13 +7,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'form_state.data.freezed.dart';
 
 @freezed
-class FormState with _$FormState {
+abstract class FormState with _$FormState {
   const factory FormState({
     required List<FieldUiModel> fields,
     required double completionPercentage,
     required bool isLoading,
     required bool calculationLoop,
-    required DataIntegrityCheckResult? integrityResult,
     required List<ConfigurationError> configErrors,
     required Option<String> focusedFieldId,
   }) = _FormState;
@@ -23,7 +22,6 @@ class FormState with _$FormState {
         completionPercentage: 0.0,
         isLoading: true,
         calculationLoop: false,
-        integrityResult: null,
         configErrors: [],
         focusedFieldId: None(),
       );

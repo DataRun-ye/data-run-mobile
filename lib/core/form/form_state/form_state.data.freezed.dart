@@ -20,8 +20,6 @@ mixin _$FormState {
   double get completionPercentage => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get calculationLoop => throw _privateConstructorUsedError;
-  DataIntegrityCheckResult? get integrityResult =>
-      throw _privateConstructorUsedError;
   List<ConfigurationError> get configErrors =>
       throw _privateConstructorUsedError;
   Option<String> get focusedFieldId => throw _privateConstructorUsedError;
@@ -43,7 +41,6 @@ abstract class $FormStateCopyWith<$Res> {
       double completionPercentage,
       bool isLoading,
       bool calculationLoop,
-      DataIntegrityCheckResult? integrityResult,
       List<ConfigurationError> configErrors,
       Option<String> focusedFieldId});
 }
@@ -67,7 +64,6 @@ class _$FormStateCopyWithImpl<$Res, $Val extends FormState>
     Object? completionPercentage = null,
     Object? isLoading = null,
     Object? calculationLoop = null,
-    Object? integrityResult = freezed,
     Object? configErrors = null,
     Object? focusedFieldId = null,
   }) {
@@ -88,10 +84,6 @@ class _$FormStateCopyWithImpl<$Res, $Val extends FormState>
           ? _value.calculationLoop
           : calculationLoop // ignore: cast_nullable_to_non_nullable
               as bool,
-      integrityResult: freezed == integrityResult
-          ? _value.integrityResult
-          : integrityResult // ignore: cast_nullable_to_non_nullable
-              as DataIntegrityCheckResult?,
       configErrors: null == configErrors
           ? _value.configErrors
           : configErrors // ignore: cast_nullable_to_non_nullable
@@ -117,7 +109,6 @@ abstract class _$$FormStateImplCopyWith<$Res>
       double completionPercentage,
       bool isLoading,
       bool calculationLoop,
-      DataIntegrityCheckResult? integrityResult,
       List<ConfigurationError> configErrors,
       Option<String> focusedFieldId});
 }
@@ -139,7 +130,6 @@ class __$$FormStateImplCopyWithImpl<$Res>
     Object? completionPercentage = null,
     Object? isLoading = null,
     Object? calculationLoop = null,
-    Object? integrityResult = freezed,
     Object? configErrors = null,
     Object? focusedFieldId = null,
   }) {
@@ -160,10 +150,6 @@ class __$$FormStateImplCopyWithImpl<$Res>
           ? _value.calculationLoop
           : calculationLoop // ignore: cast_nullable_to_non_nullable
               as bool,
-      integrityResult: freezed == integrityResult
-          ? _value.integrityResult
-          : integrityResult // ignore: cast_nullable_to_non_nullable
-              as DataIntegrityCheckResult?,
       configErrors: null == configErrors
           ? _value._configErrors
           : configErrors // ignore: cast_nullable_to_non_nullable
@@ -184,7 +170,6 @@ class _$FormStateImpl implements _FormState {
       required this.completionPercentage,
       required this.isLoading,
       required this.calculationLoop,
-      required this.integrityResult,
       required final List<ConfigurationError> configErrors,
       required this.focusedFieldId})
       : _fields = fields,
@@ -204,8 +189,6 @@ class _$FormStateImpl implements _FormState {
   final bool isLoading;
   @override
   final bool calculationLoop;
-  @override
-  final DataIntegrityCheckResult? integrityResult;
   final List<ConfigurationError> _configErrors;
   @override
   List<ConfigurationError> get configErrors {
@@ -219,7 +202,7 @@ class _$FormStateImpl implements _FormState {
 
   @override
   String toString() {
-    return 'FormState(fields: $fields, completionPercentage: $completionPercentage, isLoading: $isLoading, calculationLoop: $calculationLoop, integrityResult: $integrityResult, configErrors: $configErrors, focusedFieldId: $focusedFieldId)';
+    return 'FormState(fields: $fields, completionPercentage: $completionPercentage, isLoading: $isLoading, calculationLoop: $calculationLoop, configErrors: $configErrors, focusedFieldId: $focusedFieldId)';
   }
 
   @override
@@ -234,8 +217,6 @@ class _$FormStateImpl implements _FormState {
                 other.isLoading == isLoading) &&
             (identical(other.calculationLoop, calculationLoop) ||
                 other.calculationLoop == calculationLoop) &&
-            (identical(other.integrityResult, integrityResult) ||
-                other.integrityResult == integrityResult) &&
             const DeepCollectionEquality()
                 .equals(other._configErrors, _configErrors) &&
             (identical(other.focusedFieldId, focusedFieldId) ||
@@ -249,7 +230,6 @@ class _$FormStateImpl implements _FormState {
       completionPercentage,
       isLoading,
       calculationLoop,
-      integrityResult,
       const DeepCollectionEquality().hash(_configErrors),
       focusedFieldId);
 
@@ -268,7 +248,6 @@ abstract class _FormState implements FormState {
       required final double completionPercentage,
       required final bool isLoading,
       required final bool calculationLoop,
-      required final DataIntegrityCheckResult? integrityResult,
       required final List<ConfigurationError> configErrors,
       required final Option<String> focusedFieldId}) = _$FormStateImpl;
 
@@ -280,8 +259,6 @@ abstract class _FormState implements FormState {
   bool get isLoading;
   @override
   bool get calculationLoop;
-  @override
-  DataIntegrityCheckResult? get integrityResult;
   @override
   List<ConfigurationError> get configErrors;
   @override

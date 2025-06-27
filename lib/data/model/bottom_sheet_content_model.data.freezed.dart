@@ -642,7 +642,7 @@ mixin _$FieldWithIssue {
   String? get repeatGroupUid => throw _privateConstructorUsedError;
   String? get rowUid => throw _privateConstructorUsedError;
   String? get parent => throw _privateConstructorUsedError;
-  String get fieldPath =>
+  String? get fieldPath =>
       throw _privateConstructorUsedError; // path to the leaf field with an error
   String get fieldUid =>
       throw _privateConstructorUsedError; // path to the leaf field with an error
@@ -668,7 +668,7 @@ abstract class $FieldWithIssueCopyWith<$Res> {
       {String? repeatGroupUid,
       String? rowUid,
       String? parent,
-      String fieldPath,
+      String? fieldPath,
       String fieldUid,
       String fieldName,
       IssueType issueType,
@@ -693,7 +693,7 @@ class _$FieldWithIssueCopyWithImpl<$Res, $Val extends FieldWithIssue>
     Object? repeatGroupUid = freezed,
     Object? rowUid = freezed,
     Object? parent = freezed,
-    Object? fieldPath = null,
+    Object? fieldPath = freezed,
     Object? fieldUid = null,
     Object? fieldName = null,
     Object? issueType = null,
@@ -712,10 +712,10 @@ class _$FieldWithIssueCopyWithImpl<$Res, $Val extends FieldWithIssue>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as String?,
-      fieldPath: null == fieldPath
+      fieldPath: freezed == fieldPath
           ? _value.fieldPath
           : fieldPath // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fieldUid: null == fieldUid
           ? _value.fieldUid
           : fieldUid // ignore: cast_nullable_to_non_nullable
@@ -748,7 +748,7 @@ abstract class _$$FieldWithIssueImplCopyWith<$Res>
       {String? repeatGroupUid,
       String? rowUid,
       String? parent,
-      String fieldPath,
+      String? fieldPath,
       String fieldUid,
       String fieldName,
       IssueType issueType,
@@ -771,7 +771,7 @@ class __$$FieldWithIssueImplCopyWithImpl<$Res>
     Object? repeatGroupUid = freezed,
     Object? rowUid = freezed,
     Object? parent = freezed,
-    Object? fieldPath = null,
+    Object? fieldPath = freezed,
     Object? fieldUid = null,
     Object? fieldName = null,
     Object? issueType = null,
@@ -790,10 +790,10 @@ class __$$FieldWithIssueImplCopyWithImpl<$Res>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as String?,
-      fieldPath: null == fieldPath
+      fieldPath: freezed == fieldPath
           ? _value.fieldPath
           : fieldPath // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fieldUid: null == fieldUid
           ? _value.fieldUid
           : fieldUid // ignore: cast_nullable_to_non_nullable
@@ -821,7 +821,7 @@ class _$FieldWithIssueImpl implements _FieldWithIssue {
       {this.repeatGroupUid,
       this.rowUid,
       this.parent,
-      required this.fieldPath,
+      this.fieldPath,
       required this.fieldUid,
       required this.fieldName,
       this.issueType = IssueType.Error,
@@ -834,7 +834,7 @@ class _$FieldWithIssueImpl implements _FieldWithIssue {
   @override
   final String? parent;
   @override
-  final String fieldPath;
+  final String? fieldPath;
 // path to the leaf field with an error
   @override
   final String fieldUid;
@@ -893,7 +893,7 @@ abstract class _FieldWithIssue implements FieldWithIssue {
       {final String? repeatGroupUid,
       final String? rowUid,
       final String? parent,
-      required final String fieldPath,
+      final String? fieldPath,
       required final String fieldUid,
       required final String fieldName,
       final IssueType issueType,
@@ -906,7 +906,7 @@ abstract class _FieldWithIssue implements FieldWithIssue {
   @override
   String? get parent;
   @override
-  String get fieldPath; // path to the leaf field with an error
+  String? get fieldPath; // path to the leaf field with an error
   @override
   String get fieldUid; // path to the leaf field with an error
   @override

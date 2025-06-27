@@ -24,6 +24,7 @@ class AssignmentPageNew extends HookConsumerWidget {
     final update = ref.watch(filterQueryProvider).searchQuery;
     useEffect(() {
       controller.text = update;
+      return null;
     }, [update]);
 
     final focusNode = useFocusNode();

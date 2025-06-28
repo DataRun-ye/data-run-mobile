@@ -151,7 +151,7 @@ class AuthService {
 
   Future<void> throwIfFirstTimeAndNoActiveNetwork() async {
     final networkAvailable =
-        await ConnectivityService.instance.isNetworkAvailable();
+        await ConnectivityService.instance.checkInternetConnection();
     if (_sessionManager.isFirstSession && !networkAvailable) {
       logDebug('First time login user needs an active network');
       throw DError(

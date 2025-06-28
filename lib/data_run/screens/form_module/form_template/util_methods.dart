@@ -36,12 +36,16 @@ Future<Map<String, List<Option>>> getOptionSets(FormVersion? template) async {
 
   final List<OptionSet> formOptionSets = [];
   if (optionSets.isNotEmpty) {
-    formOptionSets.addAll(
-        await D2Remote.optionSetModule.optionSet.byIds(optionSets).get());
-    optionLists = Map.fromIterable(formOptionSets,
-        key: (optionSet) => optionSet.id!,
-        value: (optionSet) => (optionSet.options ?? [])
-          ..sort((p1, p2) => p1.sortOrder.compareTo(p2.sortOrder)));
+    formOptionSets.addAll(await D2Remote.optionSetModule.optionSet
+        .byIds(optionSets)
+        .withOptions()
+        .get());
+    optionLists = IMap.fromIterable(formOptionSets,
+            keyMapper: (optionSet) => optionSet.id!,
+            valueMapper: (optionSet) => (optionSet.options ?? [])
+              ..sort(
+                  (p1, p2) => p1.sortOrder.compareTo(p2.sortOrder)))
+        .unlockView;
   }
   return optionLists;
 }

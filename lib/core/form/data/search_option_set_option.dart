@@ -35,7 +35,7 @@ class SearchOptionSetOption {
     }
 
     return query
-        .orderBy(attribute: 'sortOrder', order: SortOrder.ASC)
+        .orderBy(attribute: 'sortOrder', sortOrder: SortOrder.ASC)
         .get(); //.blockingGet()
   }
 }

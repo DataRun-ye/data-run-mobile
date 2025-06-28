@@ -4,6 +4,8 @@
 // StackedBottomsheetGenerator
 // **************************************************************************
 
+// ignore_for_file: always_use_package_imports
+
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';

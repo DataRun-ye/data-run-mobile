@@ -1,8 +1,8 @@
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
+import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
+import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 
 class FormElementState with EquatableMixin {
   const FormElementState({
@@ -11,6 +11,7 @@ class FormElementState with EquatableMixin {
     this.mandatory = false,
     this.errors = const {},
   });
+
   final bool hidden;
   final bool readOnly;
   final bool mandatory;
@@ -56,8 +57,9 @@ class FieldElementState<T> extends FormElementState {
     this.visibleOptions = const [],
     this.value,
   });
+
   final T? value;
-  final List<FormOption> visibleOptions;
+  final List<Option> visibleOptions;
 
   @override
   FieldElementState<T> copyWith(
@@ -66,7 +68,7 @@ class FieldElementState<T> extends FormElementState {
       bool? mandatory,
       Map<String, dynamic>? errors,
       T? value,
-      List<FormOption>? visibleOptions}) {
+      List<Option>? visibleOptions}) {
     return FieldElementState<T>(
       hidden: hidden ?? this.hidden,
       mandatory: mandatory ?? this.mandatory,
@@ -88,7 +90,7 @@ class FieldElementState<T> extends FormElementState {
   }
 
   FieldElementState<T> resetValueFromVisibleOptions(
-      {required List<FormOption> visibleOptions}) {
+      {required List<Option> visibleOptions}) {
     if (!const DeepCollectionEquality.unordered()
         .equals(this.visibleOptions, visibleOptions)) {
       if (T is List<String>) {

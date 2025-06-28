@@ -25,7 +25,7 @@ final userDeviceInfoServiceProvider =
 typedef UserDeviceInfoServiceRef
     = AutoDisposeFutureProviderRef<AndroidDeviceInfoService>;
 String _$latestFormTemplateHash() =>
-    r'13ecc67b36df8f231e0b4b300564473a5fd60816';
+    r'9ebf78bf025acd7db8a2fcce3d63f136c67df6cf';
 
 /// Copied from Dart SDK
 class _SystemHash {

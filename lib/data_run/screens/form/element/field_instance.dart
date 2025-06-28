@@ -75,7 +75,7 @@ class FieldInstance<T> extends FormElementInstance<T>
     elementControl.reset(value: template.defaultValue);
   }
 
-  List<FormOption> get visibleOption => elementState.visibleOptions;
+  List<Option> get visibleOption => elementState.visibleOptions;
 
   @override
   void evaluate(

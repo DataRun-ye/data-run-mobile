@@ -4,18 +4,17 @@ import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart
 import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
+import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FlatTemplateFactory {
   FlatTemplateFactory(
-      this._formVersion, IMap<String, IList<FormOption>> optionLists)
+      this._formVersion, Map<String, List<Option>> optionLists)
       : this._optionLists = optionLists;
 
   final FormVersion _formVersion;
-  IMap<String, IList<FormOption>> _optionLists;
+  Map<String, List<Option>> _optionLists;
 
   FutureOr<List<FormElementTemplate>> createFlatTemplate() async {
     List<FormElementTemplate> result = [];

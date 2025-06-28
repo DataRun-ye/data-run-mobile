@@ -39,7 +39,7 @@ class QDropDownMultiSelectWithSearchField extends HookConsumerWidget {
       compareFn: (item, selectedItem) => item == selectedItem,
       items: (String filter, LoadProps? loadProps) {
         return element.visibleOption
-            .map((option) => getItemLocalString(option.label.unlockView))
+            .map((option) => getItemLocalString(option.label))
             .toSet()
             .toList();
       },

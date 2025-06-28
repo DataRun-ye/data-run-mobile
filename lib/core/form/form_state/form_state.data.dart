@@ -1,4 +1,3 @@
-import 'package:datarunmobile/core/form/data/data_integrity_check_result.data.dart';
 import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_utils_provider_result.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:fpdart/fpdart.dart';

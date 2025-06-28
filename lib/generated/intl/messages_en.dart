@@ -369,7 +369,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resources": MessageLookupByLibrary.simpleMessage("Resources"),
     "restoreItem": MessageLookupByLibrary.simpleMessage("Restore Item"),
-    "reviewFormData": MessageLookupByLibrary.simpleMessage("Review Form"),
+    "reviewFormData": MessageLookupByLibrary.simpleMessage("Back to Form"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
     "saveAndAddAnother": MessageLookupByLibrary.simpleMessage("Add Another"),
     "saveAndCheck": MessageLookupByLibrary.simpleMessage("Save and Check"),

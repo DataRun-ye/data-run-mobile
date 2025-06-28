@@ -346,7 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset": MessageLookupByLibrary.simpleMessage("تفريغ"),
     "resources": MessageLookupByLibrary.simpleMessage("الموارد"),
     "restoreItem": MessageLookupByLibrary.simpleMessage("استعادة العنصر"),
-    "reviewFormData": MessageLookupByLibrary.simpleMessage("مراجعة الأخطاء"),
+    "reviewFormData": MessageLookupByLibrary.simpleMessage("الرجوع للتصحيح"),
     "save": MessageLookupByLibrary.simpleMessage("حفظ"),
     "saveAndAddAnother": MessageLookupByLibrary.simpleMessage("إضافة"),
     "saveAndCheck": MessageLookupByLibrary.simpleMessage("حفظ وتحقق"),

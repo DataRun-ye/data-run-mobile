@@ -181,8 +181,7 @@ class RepeatTableDataSource extends DataTableSource {
           cellContent = Text(getItemLocalString(
               field.visibleOption
                   .firstOrNullWhere((option) => option.name == field.value)
-                  ?.label
-                  .unlockView,
+                  ?.label,
               defaultString: '-'));
         }
         break;

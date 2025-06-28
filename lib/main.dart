@@ -14,7 +14,7 @@ import 'package:datarunmobile/main.reflectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+// import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:stacked_services/stacked_services.dart';
@@ -33,10 +33,6 @@ Future<void> main() async {
   setupBottomSheetUi();
   //
 
-  // final sharedPreferences = await SharedPreferences.getInstance();
-
-  // await ConnectivityService.instance.initialize();
-
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) {
       return stack.vmTrace;
@@ -47,62 +43,40 @@ Future<void> main() async {
     return stack;
   };
 
-  // final userSessionManager = UserSessionManager(sharedPreferences);
-  //
-  // final authService = AuthService(userSessionManager);
-
-  // does the user have active session in preference (local check)
-  // final bool hasExistingSession = userSessionManager.isAuthenticated;
-  // final bool needsSync = userSessionManager.needsSync();
-  // final bool hasExistingSession = locator<UserSessionManager>().isAuthenticated;
-  // final bool needsSync = locator<UserSessionManager>().needsSync();
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
 
-  // is has active session initialize, otherwise it will be initialized
-  // by user login in.
-  // if (hasExistingSession) {
-  //   await D2Remote.initialize(
-  //       databaseFactory:
-  //           Platform.isWindows || Platform.isLinux ? databaseFactory : null);
-  // }
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://c39a75530f4b8694183508a689bbafb7@o4504831846645760.ingest.us.sentry.io/4507587127214080';
+  //     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  //     // We recommend adjusting this value in production.
+  //     // options.tracesSampleRate = 1.0;
+  //     // The sampling rate for profiling is relative to tracesSampleRate
+  //     // Setting to 1.0 will profile 100% of sampled transactions:
+  //     // options.profilesSampleRate = 1.0;
+  //   },
+  //   appRunner: () => runApp(
+  //     const ProviderScope(
+  //       child: App(
+  //         key: ValueKey('DATARUN_MAIN_APP'),
+  //       ),
+  //     ),
+  //   ),
+  // );
 
-  await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://c39a75530f4b8694183508a689bbafb7@o4504831846645760.ingest.us.sentry.io/4507587127214080';
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production.
-      // options.tracesSampleRate = 1.0;
-      // The sampling rate for profiling is relative to tracesSampleRate
-      // Setting to 1.0 will profile 100% of sampled transactions:
-      // options.profilesSampleRate = 1.0;
-    },
-    appRunner: () => runApp(
-      const ProviderScope(
-        child: App(
-          key: ValueKey('DATARUN_MAIN_APP'),
-        ),
-      ),
-    ),
-  );
-
-  // runApp(const ProviderScope(
-  //   child: App(key: ValueKey('DATARUN_MAIN_APP')),
-  // ));
+  runApp(const ProviderScope(
+    child: App(key: ValueKey('DATARUN_MAIN_APP')),
+  ));
 }
 
 class App extends ConsumerWidget {
   const App({
     super.key,
-    // required this.isAuthenticated,
-    // required this.needsSync,
   });
-
-  // final bool isAuthenticated;
-  // final bool needsSync;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -140,17 +114,10 @@ class App extends ConsumerWidget {
       navigatorObservers: [
         StackedService.routeObserver,
       ],
-
-      // home: AuthSyncWrapper(
-      //   isAuthenticated: isAuthenticated,
-      //   needsSync: needsSync,
-      // ),
     );
   }
 
   ThemeData getTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        // fontFamily: GoogleFonts.rubik().fontFamily,
-        // textTheme: Typography.blackHelsinki.copyWith(),
         fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.light),
@@ -159,7 +126,6 @@ class App extends ConsumerWidget {
       );
 
   ThemeData getDarkTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        // colorSchemeSeed: colorSeed.color,
         fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.dark),
@@ -173,7 +139,6 @@ class App extends ConsumerWidget {
   ];
 
   final localizationsDelegates = const <LocalizationsDelegate<dynamic>>[
-    // L.delegate,
     S.delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,

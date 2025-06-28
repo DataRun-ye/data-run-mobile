@@ -6,6 +6,7 @@ import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule.dart';
 import 'package:d2_remote/modules/datarun/form/shared/template_extensions/template_path_walking_service.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
 import 'package:datarunmobile/core/form/utils/path_walking_service.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/flat_template_factory.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template_iterator.dart';
@@ -23,7 +24,7 @@ class FormFlatTemplate
   FormFlatTemplate._({
     required this.formTemplate,
     Iterable<FormElementTemplate> fields = const [],
-    required IMap<String, IList<FormOption>> optionLists,
+    required Map<String, List<Option>> optionLists,
   })  : this.optionLists = optionLists,
         rootElementTemplate = SectionElementTemplate(
             repeatable: false, namePath: null, children: fields.toList()) {
@@ -40,7 +41,7 @@ class FormFlatTemplate
       {required String templateId}) async {
     final FormVersion? template =
         await D2Remote.formModule.formTemplateV.byId(templateId).getOne();
-    IMap<String, IList<FormOption>> optionLists = await getOptionSets(template);
+    Map<String, List<Option>> optionLists = await getOptionSets(template);
     final fields =
         await FlatTemplateFactory(template!, optionLists).createFlatTemplate();
     return FormFlatTemplate._(
@@ -54,7 +55,7 @@ class FormFlatTemplate
   final SectionElementTemplate rootElementTemplate;
 
   /// {listName: List<option>}
-  final IMap<String, IList<FormOption>> optionLists;
+  final Map<String, List<Option>> optionLists;
 
   String? get name => formTemplate.name;
 
@@ -165,7 +166,7 @@ class FieldElementTemplate extends FormElementTemplate {
     this.defaultValue,
     this.attributeType,
     this.scannedCodeProperties,
-    Iterable<FormOption> options = const [],
+    Iterable<Option> options = const [],
     Iterable<String> filterDependencies = const [],
     Iterable<String> calculationDependencies = const [],
   }) {
@@ -184,7 +185,7 @@ class FieldElementTemplate extends FormElementTemplate {
   final String? calculation;
   final bool gs1Enabled;
   final ScannedCodeProperties? scannedCodeProperties;
-  final List<FormOption> _options = [];
+  final List<Option> _options = [];
 
   /// <name, path>
   final List<String> _filterDependencies = [];

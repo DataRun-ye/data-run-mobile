@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
+import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
@@ -20,7 +20,7 @@ class QDropDownWithSearchField extends HookConsumerWidget {
   }
 
   getAutoComplete(
-      List<FormOption> options, BuildContext context, WidgetRef ref) {
+      List<Option> options, BuildContext context, WidgetRef ref) {
     final formInstance = ref
         .watch(
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
@@ -42,7 +42,7 @@ class QDropDownWithSearchField extends HookConsumerWidget {
         showSelectedItems: true,
       ),
       items: (filter, prop) => options
-          .map((option) => getItemLocalString(option.label.unlockView))
+          .map((option) => getItemLocalString(option.label))
           .toSet()
           .toList(),
     );
@@ -52,13 +52,13 @@ class QDropDownWithSearchField extends HookConsumerWidget {
 class NameToLabelValueAccessor
     extends DropDownSearchValueAccessor<String, String> {
   NameToLabelValueAccessor(this.options);
-  final List<FormOption> options;
+  final List<Option> options;
 
   @override
   String? modelToViewValue(List<String> items, String? modelValue) {
     return options
         .where((option) => option.name == modelValue)
-        .map((option) => getItemLocalString(option.label.unlockView,
+        .map((option) => getItemLocalString(option.label,
             defaultString: option.name))
         .firstOrNull;
   }
@@ -67,7 +67,7 @@ class NameToLabelValueAccessor
   String? viewToModelValue(List<String> items, String? viewValue) {
     return options
         .where((option) =>
-            getItemLocalString(option.label.unlockView,
+            getItemLocalString(option.label,
                 defaultString: option.name) ==
             viewValue)
         .map((option) => option.name)

@@ -32,20 +32,10 @@ extension StringNullExtension on String? {
     return date;
   }
 
-// double toDouble() => double.parse(this!);
-//
-// int toInt({int? radix}) => int.parse(this!, radix: radix);
-//
-//   String? format(List args, {String needleRegex = '%s'}) {
-//     final RegExp exp = RegExp(needleRegex);
-//
-//     int i = -1;
-//     return this?.replaceAllMapped(exp, (Match match) {
-//       i = i + 1;
-//       return '${args[i]}';
-//     });
-//   }
-// }
+  double toDouble() => double.parse(this!);
+
+  int toInt({int? radix}) => int.parse(this!, radix: radix);
+}
 //
 // extension StringExtension on String {
 //   String format(List args, {String needleRegex = '%s'}) {
@@ -63,4 +53,3 @@ extension StringNullExtension on String? {
 //       return '${args[i]}';
 //     });
 //   }
-}

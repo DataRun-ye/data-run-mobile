@@ -346,7 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset": MessageLookupByLibrary.simpleMessage("تفريغ"),
     "resources": MessageLookupByLibrary.simpleMessage("الموارد"),
     "restoreItem": MessageLookupByLibrary.simpleMessage("استعادة العنصر"),
-    "reviewFormData": MessageLookupByLibrary.simpleMessage("الرجوع للتصحيح"),
+    "reviewFormData": MessageLookupByLibrary.simpleMessage("مراجعة الأخطاء"),
     "save": MessageLookupByLibrary.simpleMessage("حفظ"),
     "saveAndAddAnother": MessageLookupByLibrary.simpleMessage("إضافة"),
     "saveAndCheck": MessageLookupByLibrary.simpleMessage("حفظ وتحقق"),
@@ -431,6 +431,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "unsavedChangesWarning": MessageLookupByLibrary.simpleMessage(
       "تغييرات غير محفوظة",
+    ),
+    "unsupportedValueType": MessageLookupByLibrary.simpleMessage(
+      "Unsupported value type",
     ),
     "urlFieldHint": MessageLookupByLibrary.simpleMessage("Enter a URL"),
     "user": MessageLookupByLibrary.simpleMessage("مستخدم"),

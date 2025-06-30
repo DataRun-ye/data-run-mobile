@@ -1,9 +1,9 @@
+import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/action.dart';
 import 'package:d2_remote/modules/datarun/form/shared/rule/rule_action.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 
 extension RuleHandler on Template {
   Iterable<RuleAction> ruleActions() {
@@ -19,26 +19,26 @@ extension ApplyAction on RuleAction {
     }
 
     switch (action) {
-      case ActionType.Visibility:
-        if (element.hidden) {
-          logDebug('${element.name}, applying action: ${ActionType.Show}');
-          element.markAsVisible(
-              updateParent: updateParent, emitEvent: emitEvent);
-        } else {
-          logDebug('${element.name}, applying action: ${ActionType.Hide}');
-          element.markAsHidden(
-              updateParent: updateParent, emitEvent: emitEvent);
-        }
-        break;
-      case ActionType.Show:
-        logDebug('${element.name}, applying action: ${ActionType.Show}');
+      // case RuleActionType.Visibility:
+      //   if (element.hidden) {
+      //     logDebug('${element.name}, applying action: ${RuleActionType.Show}');
+      //     element.markAsVisible(
+      //         updateParent: updateParent, emitEvent: emitEvent);
+      //   } else {
+      //     logDebug('${element.name}, applying action: ${RuleActionType.Hide}');
+      //     element.markAsHidden(
+      //         updateParent: updateParent, emitEvent: emitEvent);
+      //   }
+      //   break;
+      case RuleActionType.Show:
+        logDebug('${element.name}, applying action: ${RuleActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
         break;
-      case ActionType.Hide:
-        logDebug('${element.name}, applying action: ${ActionType.Hide}');
+      case RuleActionType.Hide:
+        logDebug('${element.name}, applying action: ${RuleActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
         break;
-      case ActionType.Error:
+      case RuleActionType.Error:
         if (element.visible) {
           final currentElementErrors = {...element.errors};
           currentElementErrors[getItemLocalString(message.unlockView)] =
@@ -46,24 +46,33 @@ extension ApplyAction on RuleAction {
           element.setErrors(currentElementErrors);
         }
         break;
-      case ActionType.Mandatory:
+      case RuleActionType.Mandatory:
         if (element.visible) {
           element.markAsMandatory(
               updateParent: updateParent, emitEvent: emitEvent);
         }
         break;
-      case ActionType.Assign:
+      case RuleActionType.Assign:
         if (element.visible) {
           element.updateValue(assignedValue,
               updateParent: updateParent, emitEvent: emitEvent);
         }
         break;
-      case ActionType.Filter:
-      case ActionType.StopRepeat:
-      case ActionType.Warning:
-      case ActionType.Count:
-      case ActionType.Unknown:
+      case RuleActionType.Filter:
+      case RuleActionType.StopRepeat:
+      case RuleActionType.Warning:
+      case RuleActionType.Count:
+      case RuleActionType.Unknown:
         // TODO NOT Implemented
+        break;
+      case RuleActionType.HideSection:
+      case RuleActionType.ErrorOnComplete:
+      case RuleActionType.WarningOnComplete:
+      case RuleActionType.DisplayText:
+      case RuleActionType.DisplayKeyValuePair:
+      case RuleActionType.HideOption:
+      case RuleActionType.HideOptionGroup:
+      case RuleActionType.ShowOptionGroup:
         break;
     }
   }
@@ -76,41 +85,52 @@ extension ApplyAction on RuleAction {
     }
 
     switch (action) {
-      case ActionType.Visibility:
-        if (element.hidden) {
-          element.markAsVisible(
-              updateParent: updateParent, emitEvent: emitEvent);
-        } else {
-          logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
-          element.markAsHidden(
-              updateParent: updateParent, emitEvent: emitEvent);
-        }
-        break;
-      case ActionType.Show:
-        logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
+      // case RuleActionType.Visibility:
+      //   if (element.hidden) {
+      //     element.markAsVisible(
+      //         updateParent: updateParent, emitEvent: emitEvent);
+      //   } else {
+      //     logDebug('${element.name}, resetting action to: ${RuleActionType.Hide}');
+      //     element.markAsHidden(
+      //         updateParent: updateParent, emitEvent: emitEvent);
+      //   }
+      //   break;
+      case RuleActionType.Show:
+        logDebug(
+            '${element.name}, resetting action to: ${RuleActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
         break;
-      case ActionType.Hide:
-        logDebug('${element.name}, resetting action to: ${ActionType.Show}');
+      case RuleActionType.Hide:
+        logDebug(
+            '${element.name}, resetting action to: ${RuleActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
         break;
-      case ActionType.Error:
+      case RuleActionType.Error:
         element.removeError(getItemLocalString(message.unlockView),
             updateParent: updateParent, emitEvent: emitEvent);
         break;
-      case ActionType.Mandatory:
+      case RuleActionType.Mandatory:
         element.markAsUnMandatory(
             updateParent: updateParent, emitEvent: emitEvent);
         break;
-      case ActionType.Assign:
+      case RuleActionType.Assign:
       // element.reset(value: element.template.defaultValue);
       // break;
-      case ActionType.Filter:
-      case ActionType.StopRepeat:
-      case ActionType.Warning:
-      case ActionType.Count:
-      case ActionType.Unknown:
+      case RuleActionType.Filter:
+      case RuleActionType.StopRepeat:
+      case RuleActionType.Warning:
+      case RuleActionType.Count:
+      case RuleActionType.Unknown:
         // TODO NOT Implemented
+        break;
+      case RuleActionType.HideSection:
+      case RuleActionType.ErrorOnComplete:
+      case RuleActionType.WarningOnComplete:
+      case RuleActionType.DisplayText:
+      case RuleActionType.DisplayKeyValuePair:
+      case RuleActionType.HideOption:
+      case RuleActionType.HideOptionGroup:
+      case RuleActionType.ShowOptionGroup:
         break;
     }
   }

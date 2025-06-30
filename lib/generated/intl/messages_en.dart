@@ -155,9 +155,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "deleteItem": MessageLookupByLibrary.simpleMessage("Delete Item"),
     "deleteRestore": MessageLookupByLibrary.simpleMessage("Delete / Restore"),
-    "developer": MessageLookupByLibrary.simpleMessage("NMCP Yemen"),
+    "developer": MessageLookupByLibrary.simpleMessage("Hamza"),
     "developerInfoText": MessageLookupByLibrary.simpleMessage(
-      "info@nmcpye.org",
+      "For:\n NMCP Yemen\n info@nmcpye.org",
     ),
     "developerInformation": MessageLookupByLibrary.simpleMessage(
       "Developer Information",
@@ -369,7 +369,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resources": MessageLookupByLibrary.simpleMessage("Resources"),
     "restoreItem": MessageLookupByLibrary.simpleMessage("Restore Item"),
-    "reviewFormData": MessageLookupByLibrary.simpleMessage("Back to Form"),
+    "reviewFormData": MessageLookupByLibrary.simpleMessage("Review Form"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
     "saveAndAddAnother": MessageLookupByLibrary.simpleMessage("Add Another"),
     "saveAndCheck": MessageLookupByLibrary.simpleMessage("Save and Check"),
@@ -422,7 +422,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "syncNow": MessageLookupByLibrary.simpleMessage("Sync Now"),
     "syncSettings": MessageLookupByLibrary.simpleMessage("Sync Settings"),
     "syncSubmissions": m7,
-    "synced": MessageLookupByLibrary.simpleMessage("Last Sync"),
+    "synced": MessageLookupByLibrary.simpleMessage("Sync"),
     "syncingConfiguration": MessageLookupByLibrary.simpleMessage(
       "Syncing Configuration",
     ),
@@ -458,6 +458,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "unsavedChangesWarning": MessageLookupByLibrary.simpleMessage(
       "Unsaved changes",
+    ),
+    "unsupportedValueType": MessageLookupByLibrary.simpleMessage(
+      "Unsupported value type",
     ),
     "urlFieldHint": MessageLookupByLibrary.simpleMessage("Enter a URL"),
     "user": MessageLookupByLibrary.simpleMessage("user"),

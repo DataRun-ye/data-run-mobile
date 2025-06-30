@@ -298,5 +298,6 @@
   "coordinatesFieldHint": "Select Coordinates",
   "imageFieldHint": "Select an Image",
   "progressFieldHint": "fieldHintText",
-  "unknownValueType": "Unknown Value Type"
+  "unknownValueType": "Unknown Value Type",
+  "unsupportedValueType": "Unsupported value type"
 }

@@ -22,7 +22,8 @@ extension UserFriendlyEventDataValueExtension on DataValue {
     if (await CheckWhatValueExtension.check(
         dataElement!.type, dataElement.optionSet, value)) {
       String? v;
-      if (dataElement.optionSet != null) {
+      if (dataElement.optionSet != null &&
+          dataElement.type != ValueType.SelectMulti) {
         v = await CheckWhatValueExtension.checkOptionSetValue(
             dataElement.optionSet!, '');
       }
@@ -51,8 +52,7 @@ extension WithValueTypeCheckExtension on String? {
       case ValueType.UnitInterval:
         return (int.tryParse(this!) ?? toDouble()).toString();
       default:
-      // break;
+        return this;
     }
-    return this;
   }
 }

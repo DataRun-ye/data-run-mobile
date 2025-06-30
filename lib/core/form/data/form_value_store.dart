@@ -2,6 +2,7 @@ import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
+import 'package:datarunmobile/core/form/model/value_store_result.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
@@ -261,38 +262,40 @@ class FormValueStore {
 //   }
 // }
 //
-// Future<StoreResult> deleteOptionValueIfSelectedInGroup(
-//     String field, String optionGroupUid, bool isInGroup) async {
-//   final List<OptionGroupOption>? optionGroupOptions = (await D2Remote
-//           .optionModule.optionGroup
-//           .byId(optionGroupUid)
-//           .withOptions()
-//           .getOne())
-//       ?.options;
-//
-//   final List<String> optionsInGroup = await Future.wait(
-//       optionGroupOptions?.map((OptionGroupOption option) async {
-//             // final String code = (await D2Remote.optionModule.option.getOne())!.code!;
-//             return (await D2Remote.optionModule.option
-//                     .byId(option.option)
-//                     .getOne())!
-//                 .code!;
-//             // optionsInGroup.add(code);
-//           }) ??
-//           []);
-//
-//   switch (entryMode) {
-//     case EntryMode.DE:
-//       return deleteDataElementValueIfNotInGroup(
-//           field, optionsInGroup, isInGroup);
-//     case EntryMode.ATTR:
-//       return deleteAttributeValueIfNotInGroup(
-//           field, optionsInGroup, isInGroup);
-//     case EntryMode.DV:
-//       throw ArgumentError(
-//           "DataValues can't be saved using these arguments. Use the other one.");
-//   }
-// }
+  Future<StoreResult> deleteOptionValueIfSelectedInGroup(
+      String field, String optionGroupUid, bool isInGroup) async {
+    return StoreResult(
+        uid: field, valueStoreResult: ValueStoreResult.VALUE_UNCHANGED);
+    // final List<OptionGroupOption>? optionGroupOptions = (await D2Remote
+    //         .optionModule.optionGroup
+    //         .byId(optionGroupUid)
+    //         .withOptions()
+    //         .getOne())
+    //     ?.options;
+    //
+    // final List<String> optionsInGroup = await Future.wait(
+    //     optionGroupOptions?.map((OptionGroupOption option) async {
+    //           // final String code = (await D2Remote.optionModule.option.getOne())!.code!;
+    //           return (await D2Remote.optionModule.option
+    //                   .byId(option.option)
+    //                   .getOne())!
+    //               .code!;
+    //           // optionsInGroup.add(code);
+    //         }) ??
+    //         []);
+
+    // switch (entryMode) {
+    //   case EntryMode.DE:
+    //     return deleteDataElementValueIfNotInGroup(
+    //         field, optionsInGroup, isInGroup);
+    //   case EntryMode.ATTR:
+    //     return deleteAttributeValueIfNotInGroup(
+    //         field, optionsInGroup, isInGroup);
+    //   case EntryMode.DV:
+    //     throw ArgumentError(
+    //         "DataValues can't be saved using these arguments. Use the other one.");
+    // }
+  }
 //
 // Future<StoreResult> deleteAttributeValueIfNotInGroup(
 //     String field, List<String> optionCodesToShow, bool isInGroup) async {

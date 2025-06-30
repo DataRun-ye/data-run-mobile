@@ -29,6 +29,14 @@ sealed class RuleAction with EquatableMixin {
   final String type;
   final IMap<String, String> values;
 
+  String? get content => values['content'];
+
+  String? get field => values['field'];
+
+  String? get section => values['section'];
+
+  String? get attributeType => values['attributeType'];
+
   @override
   List<Object?> get props => [data, type, values];
 

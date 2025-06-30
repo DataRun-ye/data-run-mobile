@@ -14,7 +14,7 @@ import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_utils_provi
 import 'package:datarunmobile/core/form/evaluation_engine/rules/rules_utils_provider.dart';
 import 'package:datarunmobile/core/form/model/action_type.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
-import 'package:datarunmobile/core/form/model/row_action.dart';
+import 'package:datarunmobile/core/form/model/form_command.dart';
 import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
 import 'package:datarunmobile/core/form/ui/validation/field_error_message_provider.dart';
@@ -50,23 +50,47 @@ class FormRepositoryImpl implements FormRepository {
   final bool useCompose;
   final SharedPreferences sharedPreferences;
 
+  /// The current calculated completion percentage of the form.
   double completionPercentage = 0.0;
-  List<RowAction> itemsWithError = [];
+
+  /// A list of form commands that have resulted in an error.
+  List<FormCommand> itemsWithError = [];
+
+  /// A map of labels of mandatory fields that currently have no value, to their parent section UID.
   Map<String, String> mandatoryItemsWithoutValue = {};
+
+  /// The UID of the currently expanded section in the form.
   String? openedSectionUid;
+
+  /// The primary list of all form field UI models.
   List<FieldUiModel> itemList = [];
+
+  /// The UID of the currently focused form field.
   String? focusedItemId;
+
+  /// A list of active rule effects to be applied to the form.
   List<RuleEffect> ruleEffects = [];
+
+  /// The result of the last rule effects application.
   rule_utils.RuleUtilsProviderResult? ruleEffectsResult;
+
+  /// A flag indicating if a data integrity check is currently in progress.
   bool runDataIntegrity = false;
+
+  /// A counter for the number of recursive calls during rule effect application, used to prevent infinite loops.
   int calculationLoop = 0;
+
+  /// A backup of the itemList before certain modifications, used for comparison.
   List<FieldUiModel> backupList = [];
+
+  /// A list of fields that have had their options affected by rule effects.
   List<FieldUiModel> fieldsWithOptionEffects = [];
 
+  /// Indicates if form sections can be collapsed.
   final bool? disableCollapsableSections;
 
-  // Helper: returns a new list with the element at [index] replaced by [elem].
-  List<T> updated<T>(List<T> list, int index, T elem) {
+  /// Helper: returns a new list with the element at [index] replaced by [elem].
+  List<T> _updated<T>(List<T> list, int index, T elem) {
     final newList = List<T>.from(list);
     newList[index] = elem;
     return newList;
@@ -76,12 +100,13 @@ class FormRepositoryImpl implements FormRepository {
   Future<List<FieldUiModel>> fetchFormItems() async {
     // Assume dataEntryRepository.list() returns a Future<List<FieldUiModel>>.
     itemList = await dataEntryRepository.list();
-    openedSectionUid = getInitialOpenedSection();
+    openedSectionUid = _getInitialOpenedSection();
     backupList = List.from(itemList);
     return composeList();
   }
 
-  String? getInitialOpenedSection() {
+  /// Determines which section should be opened by default when the form loads.
+  String? _getInitialOpenedSection() {
     if (disableCollapsableSections == true) {
       return null;
     }
@@ -93,15 +118,45 @@ class FormRepositoryImpl implements FormRepository {
   Future<List<FieldUiModel>> composeList(
       {bool skipProgramRules = false}) async {
     calculationLoop = 0;
-    var list = applyRuleEffects(itemList, skipProgramRules: skipProgramRules);
-    list = await mergeListWithErrorFields(list, itemsWithError);
+    var list =
+        await _applyRuleEffects(itemList, skipProgramRules: skipProgramRules);
+    list = await _mergeListWithErrorFields(list, itemsWithError);
     _calculateCompletionPercentage(list);
-    list = await setOpenedSection(list);
+    list = await _setOpenedSection(list);
     list = _setFocusedItem(list);
-    list = setLastItem(list);
+    list = _setLastItem(list);
     return list;
   }
 
+  @override
+  Future<void> updateValueOnList(
+      String uid, String? value, ValueType? valueType) async {
+    final updatedEnrollmentDataList =
+        dataEntryRepository.getSpecificDataEntryItems(uid);
+    if (updatedEnrollmentDataList.isNotEmpty) {
+      _updateEnrollmentDate(updatedEnrollmentDataList);
+    }
+    final index = itemList.indexWhere((item) => item.uid == uid);
+    if (index != -1) {
+      final item = itemList[index];
+      final updatedItem = item.setValue(value).setDisplayValue(
+            await displayNameProvider.provideDisplayValue(
+                valueType, value, item.optionSet),
+          );
+      itemList = _updated(itemList, index, updatedItem);
+    }
+  }
+
+  @override
+  void removeAllValues() {
+    itemList = itemList
+        .map(
+            (fieldUiModel) => fieldUiModel.setValue(null).setDisplayValue(null))
+        .toList();
+  }
+
+  // Event and State Management:------------------
+  /// Marks the current data entry event as complete.
   @override
   Future<void> completeEvent() async {
     await formValueStore.completeEvent();
@@ -116,17 +171,58 @@ class FormRepositoryImpl implements FormRepository {
     return formValueStore.activateEvent();
   }
 
+  @override
+  void setFocusedItem(FormCommand action) {
+    switch (action.type) {
+      case CommandType.ON_NEXT:
+        focusedItemId = _getNextItem(action.uid);
+        break;
+      case CommandType.ON_FINISH:
+        focusedItemId = null;
+        break;
+      default:
+        focusedItemId = action.uid;
+    }
+  }
+
+  @override
+  void clearFocusItem() {
+    focusedItemId = null;
+  }
+
+  @override
+  FieldUiModel? currentFocusedItem() {
+    return itemList.firstOrNullWhere((item) => item.uid == focusedItemId);
+  }
+
+  @override
+  void updateSectionOpened(FormCommand action) {
+    if (disableCollapsableSections != true) {
+      openedSectionUid = action.uid;
+    }
+  }
+
+  @override
+  void setFieldRequestingCoordinates(String uid, bool requestInProcess) {
+    final index = itemList.indexWhere((item) => item.uid == uid);
+    if (index != -1) {
+      final item = itemList[index];
+      final updatedItem = item.setIsLoadingData(requestInProcess);
+      itemList = _updated(itemList, index, updatedItem);
+    }
+  }
+
   // @override
   // Stream<PagingData<Period>> fetchPeriods() {
   //   return dataEntryRepository.fetchPeriods();
   // }
 
-  bool usesKeyboard(ValueType? valueType) {
+  bool _usesKeyboard(ValueType? valueType) {
     if (valueType == null) return false;
     return valueType.isText || valueType.isNumeric || valueType.isInteger;
   }
 
-  FieldUiModel getLastSectionItem(List<FieldUiModel> list) {
+  FieldUiModel _getLastSectionItem(List<FieldUiModel> list) {
     if (list.every((item) => item is SectionUiModelImpl)) {
       return list.last;
     } else {
@@ -134,14 +230,14 @@ class FormRepositoryImpl implements FormRepository {
     }
   }
 
-  List<FieldUiModel> setLastItem(List<FieldUiModel> list) {
+  List<FieldUiModel> _setLastItem(List<FieldUiModel> list) {
     if (list.isEmpty) return list;
     if (list.every((item) => item is SectionUiModelImpl)) {
-      final lastItem = getLastSectionItem(list);
-      if (usesKeyboard(lastItem.valueType) &&
+      final lastItem = _getLastSectionItem(list);
+      if (_usesKeyboard(lastItem.valueType) &&
           lastItem.valueType != ValueType.LongText) {
         final index = list.indexOf(lastItem);
-        return updated(list, index, lastItem.setKeyBoardActionDone());
+        return _updated(list, index, lastItem.setKeyBoardActionDone());
       }
     }
     return list;
@@ -152,18 +248,18 @@ class FormRepositoryImpl implements FormRepository {
       final index = list.indexWhere((item) => item.uid == focusedItemId);
       if (index != -1) {
         final updatedItem = list[index].setFocus();
-        return updated(list, index, updatedItem);
+        return _updated(list, index, updatedItem);
       }
     }
     return list;
   }
 
-  Future<List<FieldUiModel>> setOpenedSection(List<FieldUiModel> list) async {
+  Future<List<FieldUiModel>> _setOpenedSection(List<FieldUiModel> list) async {
     final updatedList = await Future.wait(list.map((field) async {
       if (field.isSection()) {
-        return updateSection(field, list);
+        return _updateSection(field, list);
       } else {
-        return await updateField(field);
+        return await _updateField(field);
       }
     }).toList());
 
@@ -178,7 +274,7 @@ class FormRepositoryImpl implements FormRepository {
     }).toList();
   }
 
-  FieldUiModel updateSection(
+  FieldUiModel _updateSection(
       FieldUiModel sectionFieldUiModel, List<FieldUiModel> fields) {
     int total = 0;
     int values = 0;
@@ -238,8 +334,8 @@ class FormRepositoryImpl implements FormRepository {
     );
   }
 
-  Future<FieldUiModel> updateField(FieldUiModel fieldUiModel) {
-    bool needsMandatoryWarning = hasMandatoryWarnings(fieldUiModel);
+  Future<FieldUiModel> _updateField(FieldUiModel fieldUiModel) {
+    bool needsMandatoryWarning = _hasMandatoryWarnings(fieldUiModel);
     if (needsMandatoryWarning) {
       mandatoryItemsWithoutValue[fieldUiModel.label] =
           fieldUiModel.parentSection ?? '';
@@ -256,12 +352,12 @@ class FormRepositoryImpl implements FormRepository {
     );
   }
 
-  bool hasMandatoryWarnings(FieldUiModel fieldUiModel) {
+  bool _hasMandatoryWarnings(FieldUiModel fieldUiModel) {
     return fieldUiModel.mandatory &&
         (fieldUiModel.value == null || fieldUiModel.value!.isEmpty);
   }
 
-  String? getNextItem(String currentItemUid) {
+  String? _getNextItem(String currentItemUid) {
     final pos = itemList.indexWhere((item) => item.uid == currentItemUid);
     if (pos != -1 && pos < itemList.length - 1) {
       return itemList[pos + 1].uid;
@@ -309,26 +405,7 @@ class FormRepositoryImpl implements FormRepository {
     //       .toIList();
   }
 
-  @override
-  Future<void> updateValueOnList(
-      String uid, String? value, ValueType? valueType) async {
-    final updatedEnrollmentDataList =
-        dataEntryRepository.getSpecificDataEntryItems(uid);
-    if (updatedEnrollmentDataList.isNotEmpty) {
-      updateEnrollmentDate(updatedEnrollmentDataList);
-    }
-    final index = itemList.indexWhere((item) => item.uid == uid);
-    if (index != -1) {
-      final item = itemList[index];
-      final updatedItem = item.setValue(value).setDisplayValue(
-            await displayNameProvider.provideDisplayValue(
-                valueType, value, item.optionSet),
-          );
-      itemList = updated(itemList, index, updatedItem);
-    }
-  }
-
-  void updateEnrollmentDate(List<FieldUiModel> fieldUiModelList) {
+  void _updateEnrollmentDate(List<FieldUiModel> fieldUiModelList) {
     // for (var element in fieldUiModelList) {
     //   final index = itemList.indexWhere(
     //       (item) => item.uid == EnrollmentRepository.ENROLLMENT_DATE_UID);
@@ -338,24 +415,6 @@ class FormRepositoryImpl implements FormRepository {
     //     itemList = updated(itemList, index, updatedItem);
     //   }
     // }
-  }
-
-  @override
-  void removeAllValues() {
-    itemList = itemList
-        .map(
-            (fieldUiModel) => fieldUiModel.setValue(null).setDisplayValue(null))
-        .toList();
-  }
-
-  @override
-  void setFieldRequestingCoordinates(String uid, bool requestInProcess) {
-    final index = itemList.indexWhere((item) => item.uid == uid);
-    if (index != -1) {
-      final item = itemList[index];
-      final updatedItem = item.setIsLoadingData(requestInProcess);
-      itemList = updated(itemList, index, updatedItem);
-    }
   }
 
   // @override
@@ -368,14 +427,14 @@ class FormRepositoryImpl implements FormRepository {
   //   }
   // }
 
-  Future<List<FieldUiModel>> mergeListWithErrorFields(
-      List<FieldUiModel> list, List<RowAction> fieldsWithError) async {
+  Future<List<FieldUiModel>> _mergeListWithErrorFields(
+      List<FieldUiModel> list, List<FormCommand> fieldsWithError) async {
     mandatoryItemsWithoutValue.clear();
     final List<Future<FieldUiModel>> items = list.map((item) async {
-      if (hasMandatoryWarnings(item)) {
+      if (_hasMandatoryWarnings(item)) {
         mandatoryItemsWithoutValue[item.label] = item.parentSection ?? '';
       }
-      RowAction? action =
+      FormCommand? action =
           fieldsWithError.firstOrNullWhere((a) => a.uid == item.uid);
       if (action != null) {
         final error = action.error != null
@@ -393,8 +452,10 @@ class FormRepositoryImpl implements FormRepository {
     return Future.wait(items);
   }
 
+  /// Adds or removes an error from the itemsWithError list
+  /// based on the form command.
   @override
-  void updateErrorList(RowAction action) {
+  void updateErrorList(FormCommand action) {
     if (action.error != null) {
       if (!itemsWithError.any((a) => a.uid == action.uid)) {
         itemsWithError.add(action);
@@ -429,20 +490,6 @@ class FormRepositoryImpl implements FormRepository {
   // }
 
   @override
-  void setFocusedItem(RowAction action) {
-    switch (action.actionType) {
-      case ActionType.ON_NEXT:
-        focusedItemId = getNextItem(action.uid);
-        break;
-      case ActionType.ON_FINISH:
-        focusedItemId = null;
-        break;
-      default:
-        focusedItemId = action.uid;
-    }
-  }
-
-  @override
   Future<void> fetchOptions(String uid, String optionSetUid) async {
     // // Assume dataEntryRepository.options() returns an object with searchEmitter and optionFlow.
     // final optionsResult = dataEntryRepository.options(
@@ -465,23 +512,6 @@ class FormRepositoryImpl implements FormRepository {
     //   itemList = updated(
     //       itemList, index, item.copyWith(optionSetConfiguration: newConf));
     // }
-  }
-
-  @override
-  void clearFocusItem() {
-    focusedItemId = null;
-  }
-
-  @override
-  FieldUiModel? currentFocusedItem() {
-    return itemList.firstOrNullWhere((item) => item.uid == focusedItemId);
-  }
-
-  @override
-  void updateSectionOpened(RowAction action) {
-    if (disableCollapsableSections != true) {
-      openedSectionUid = action.uid;
-    }
   }
 
   @override
@@ -510,35 +540,36 @@ class FormRepositoryImpl implements FormRepository {
   Future<DataIntegrityCheckResult> runDataIntegrityCheck(
       bool backPressed) async {
     runDataIntegrity = true;
-    final itemsWithErrors = getFieldsWithError();
+    final itemsWithErrors = _getFieldsWithError();
     final isEvent = dataEntryRepository.isEvent();
     final itemsWithWarning =
         (ruleEffectsResult?.fieldsWithWarnings ?? []).map((warningField) {
-      final field = itemList
-          .firstOrNullWhere((item) => item.uid == warningField.fieldUid);
+      final field =
+          itemList.firstOrNullWhere((item) => item.uid == warningField.uid);
       return FieldWithIssue(
-        fieldUid: warningField.fieldUid,
+        fieldUid: warningField.uid,
         // fieldPath: warningField.fieldUid,
         // parent: warningField.fieldUid,
         fieldName: field?.label ?? '',
         issueType: IssueType.Warning,
-        message: warningField.errorMessage,
+        message: warningField.message,
         parent: field?.parentSection ?? '',
       );
     }).toList();
 
     if (isEvent) {
-      return getEventResult(itemsWithErrors, itemsWithWarning, backPressed);
+      return _getEventResult(itemsWithErrors, itemsWithWarning, backPressed);
     } else {
-      return getEnrollmentResult(
+      return _getEnrollmentResult(
           itemsWithErrors, itemsWithWarning, backPressed);
     }
   }
 
-  DataIntegrityCheckResult getEnrollmentResult(
+  /// Determines the data integrity result for event forms.
+  Future<DataIntegrityCheckResult> _getEnrollmentResult(
       List<FieldWithIssue> itemsWithErrors,
       List<FieldWithIssue> itemsWithWarning,
-      bool allowDiscard) {
+      bool allowDiscard) async {
     if (itemsWithErrors.isNotEmpty ||
         (ruleEffectsResult?.canComplete == false)) {
       return FieldsWithErrorResult(
@@ -567,7 +598,7 @@ class FormRepositoryImpl implements FormRepository {
         onCompleteMessage: ruleEffectsResult?.messageOnComplete,
         eventResultDetails: const EventResultDetails(),
       );
-    } else if (backupOfChangedItems().isNotEmpty && allowDiscard) {
+    } else if ((await backupOfChangedItems()).isNotEmpty && allowDiscard) {
       return const DataIntegrityCheckResult.notSavedResult();
     } else {
       return SuccessfulResult(
@@ -578,7 +609,8 @@ class FormRepositoryImpl implements FormRepository {
     }
   }
 
-  Future<DataIntegrityCheckResult> getEventResult(
+  /// Determines the data integrity result for event forms.
+  Future<DataIntegrityCheckResult> _getEventResult(
       List<FieldWithIssue> itemsWithErrors,
       List<FieldWithIssue> itemsWithWarning,
       bool backPressed) async {
@@ -587,20 +619,20 @@ class FormRepositoryImpl implements FormRepository {
     if (itemsWithErrors.isEmpty &&
         itemsWithWarning.isEmpty &&
         mandatoryItemsWithoutValue.isEmpty) {
-      return getSuccessfulResult();
+      return _getSuccessfulResult();
     } else if (itemsWithErrors.isNotEmpty) {
-      return getFieldWithErrorResult(eventStatus, itemsWithErrors,
+      return _getFieldWithErrorResult(eventStatus, itemsWithErrors,
           itemsWithWarning, validationStrategy, backPressed);
     } else if (mandatoryItemsWithoutValue.isNotEmpty) {
-      return getMissingMandatoryResult(eventStatus, itemsWithErrors,
+      return _getMissingMandatoryResult(eventStatus, itemsWithErrors,
           itemsWithWarning, validationStrategy, backPressed);
     } else {
-      return getFieldWithWarningResult(
+      return _getFieldWithWarningResult(
           eventStatus, itemsWithWarning, validationStrategy);
     }
   }
 
-  Future<FieldsWithWarningResult> getFieldWithWarningResult(
+  Future<FieldsWithWarningResult> _getFieldWithWarningResult(
       bool? eventStatusIsFinal,
       List<FieldWithIssue> itemsWithWarning,
       ValidationStrategy? validationStrategy) async {
@@ -640,7 +672,7 @@ class FormRepositoryImpl implements FormRepository {
     }
   }
 
-  Future<DataIntegrityCheckResult> getMissingMandatoryResult(
+  Future<DataIntegrityCheckResult> _getMissingMandatoryResult(
       bool? eventStatusIsFinal,
       List<FieldWithIssue> itemsWithErrors,
       List<FieldWithIssue> itemsWithWarning,
@@ -690,7 +722,7 @@ class FormRepositoryImpl implements FormRepository {
     }
   }
 
-  Future<FieldsWithErrorResult> getFieldWithErrorResult(
+  Future<FieldsWithErrorResult> _getFieldWithErrorResult(
       bool? eventStatusIsFinal,
       List<FieldWithIssue> itemsWithErrors,
       List<FieldWithIssue> itemsWithWarning,
@@ -742,7 +774,7 @@ class FormRepositoryImpl implements FormRepository {
     }
   }
 
-  Future<SuccessfulResult> getSuccessfulResult() async {
+  Future<SuccessfulResult> _getSuccessfulResult() async {
     return SuccessfulResult(
       canComplete: ruleEffectsResult?.canComplete ?? true,
       onCompleteMessage: ruleEffectsResult?.messageOnComplete,
@@ -766,13 +798,14 @@ class FormRepositoryImpl implements FormRepository {
   }
 
   @override
-  List<FieldUiModel> backupOfChangedItems() {
-    final updatedList = applyRuleEffects(itemList);
+  Future<List<FieldUiModel>> backupOfChangedItems() async {
+    final updatedList = await _applyRuleEffects(itemList);
     // Assuming that FieldUiModel implements proper equality:
     return backupList.where((item) => !updatedList.contains(item)).toList();
   }
 
-  List<FieldWithIssue> getFieldsWithError() {
+  /// Compiles a list of all fields currently marked with an error.
+  List<FieldWithIssue> _getFieldsWithError() {
     final list1 = itemsWithError
         .map((errorItem) {
           final item = itemList.firstOrNullWhere(
@@ -800,12 +833,12 @@ class FormRepositoryImpl implements FormRepository {
         (ruleEffectsResult?.fieldsWithErrors ?? <rule_utils.FieldWithError>[])
             .map<FieldWithIssue>((errorField) {
       final item =
-          itemList.firstOrNullWhere((item) => item.uid == errorField.fieldUid);
+          itemList.firstOrNullWhere((item) => item.uid == errorField.uid);
       return FieldWithIssue(
-        fieldUid: errorField.fieldUid,
+        fieldUid: errorField.uid,
         fieldName: item?.label ?? '',
         issueType: IssueType.Error,
-        message: errorField.errorMessage,
+        message: errorField.message,
         parent: item?.parentSection ?? '',
       );
     }).toList();
@@ -816,25 +849,29 @@ class FormRepositoryImpl implements FormRepository {
   // ---------------------------
   // Rule Effects application (recursive)
   // ---------------------------
-  List<FieldUiModel> applyRuleEffects(List<FieldUiModel> list,
-      {bool skipProgramRules = false}) {
+  /// Applies program rule effects to the list of form fields.
+  /// Recursive Processing: recursive logic to handle cascading
+  /// effects of rules.
+  /// Error Prevention: The loopThreshold is a safeguard against infinite loops in rule calculations.
+  Future<List<FieldUiModel>> _applyRuleEffects(List<FieldUiModel> list,
+      {bool skipProgramRules = false}) async {
     if (!skipProgramRules) {
       ruleEffects = _ruleEffects();
     }
     // Build a map of uid -> FieldUiModel.
     final fieldMap = {for (var field in list) field.uid: field};
 
-    ruleEffectsResult = rulesUtilsProvider.applyRuleEffectsForEvent(
+    ruleEffectsResult = await rulesUtilsProvider.applyRuleEffects(
       applyForEvent: dataEntryRepository.isEvent(),
       fieldViewModels: fieldMap,
-      ruleEffects: ruleEffects,
+      calcResult: ruleEffects,
       valueStore: formValueStore,
     );
 
     if (ruleEffectsResult?.fieldsToUpdate.isNotEmpty ?? false) {
       for (var fieldWithNewValue in ruleEffectsResult!.fieldsToUpdate) {
-        final field = itemList
-            .firstOrNullWhere((f) => f.uid == fieldWithNewValue.fieldUid);
+        final field =
+            itemList.firstOrNullWhere((f) => f.uid == fieldWithNewValue.uid);
         if (field != null) {
           updateValueOnList(
               field.uid, fieldWithNewValue.newValue, field.valueType);
@@ -847,6 +884,7 @@ class FormRepositoryImpl implements FormRepository {
         fetchOptions(field.uid, field.optionSet!);
       }
     }
+
     fieldsWithOptionEffects.clear();
 
     ruleEffectsResult
@@ -865,7 +903,7 @@ class FormRepositoryImpl implements FormRepository {
     if ((ruleEffectsResult?.fieldsToUpdate.isNotEmpty ?? false) &&
         calculationLoop < loopThreshold) {
       calculationLoop++;
-      return applyRuleEffects(fieldMap.values.toList(),
+      return _applyRuleEffects(fieldMap.values.toList(),
           skipProgramRules: skipProgramRules);
     } else {
       return fieldMap.values.toList();

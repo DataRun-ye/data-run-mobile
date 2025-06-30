@@ -190,8 +190,8 @@
   "about": "About",
   "appInformation": "App Information",
   "developerInformation": "Developer Information",
-  "developer": "NMCP Yemen",
-  "developerInfoText": "info@nmcpye.org",
+  "developer": "Hamza",
+  "developerInfoText": "For:\n NMCP Yemen\n info@nmcpye.org",
   "preferences": "Preferences",
   "accountInformation": "Account Information",
   "mobile": "Mobile",
@@ -286,7 +286,7 @@
   "lastSync": "Last sync time",
   "to_post": "Last Sync",
   "to_update": "Last Sync",
-  "synced": "Last Sync",
+  "synced": "Sync",
   "toggleBetweenListAndCardView": "Toggle between List and Card view",
   "filters": "Filters",
   "reset": "Reset",
@@ -336,5 +336,6 @@
   "coordinatesFieldHint": "Select Coordinates",
   "imageFieldHint": "Select an Image",
   "progressFieldHint": "fieldHintText",
-  "unknownValueType": "Unknown Value Type"
+  "unknownValueType": "Unknown Value Type",
+  "unsupportedValueType": "Unsupported value type"
 }

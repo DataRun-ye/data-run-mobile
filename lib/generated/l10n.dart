@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:datarunmobile/generated/intl/messages_all.dart';
+import 'intl/messages_all.dart';
 
 // **************************************************************************
 // Generator: Flutter Intl IDE plugin
@@ -1109,15 +1109,15 @@ class S {
     );
   }
 
-  /// `NMCP Yemen`
+  /// `Hamza`
   String get developer {
-    return Intl.message('NMCP Yemen', name: 'developer', desc: '', args: []);
+    return Intl.message('Hamza', name: 'developer', desc: '', args: []);
   }
 
-  /// `info@nmcpye.org`
+  /// `For:\n NMCP Yemen\n info@nmcpye.org`
   String get developerInfoText {
     return Intl.message(
-      'info@nmcpye.org',
+      'For:\n NMCP Yemen\n info@nmcpye.org',
       name: 'developerInfoText',
       desc: '',
       args: [],
@@ -1733,9 +1733,9 @@ class S {
     return Intl.message('Last Sync', name: 'to_update', desc: '', args: []);
   }
 
-  /// `Last Sync`
+  /// `Sync`
   String get synced {
-    return Intl.message('Last Sync', name: 'synced', desc: '', args: []);
+    return Intl.message('Sync', name: 'synced', desc: '', args: []);
   }
 
   /// `Toggle between List and Card view`
@@ -2183,6 +2183,16 @@ class S {
     return Intl.message(
       'Unknown Value Type',
       name: 'unknownValueType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsupported value type`
+  String get unsupportedValueType {
+    return Intl.message(
+      'Unsupported value type',
+      name: 'unsupportedValueType',
       desc: '',
       args: [],
     );

@@ -1,6 +1,8 @@
 import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_action.dart';
 import 'package:equatable/equatable.dart';
 
+///  An object representing an action to be taken based on
+///  a rule (e.g., set a value, hide a field, show an error).
 /// example:
 ///
 /// ```dart

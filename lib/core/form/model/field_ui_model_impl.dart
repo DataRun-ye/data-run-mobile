@@ -11,6 +11,7 @@ import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart
 import 'package:datarunmobile/core/form/model/ui_event_type.dart';
 import 'package:datarunmobile/core/form/ui/event/list_view_ui_events.data.dart';
 import 'package:datarunmobile/core/form/ui/event/ui_event_factory.dart';
+import 'package:datarunmobile/core/form/ui/intent/dropdown_option.dart';
 import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +41,8 @@ class FieldUiModelImpl extends FieldUiModel {
     this.isLoadingData = false,
     this.intentCallback,
     this.listViewUiEventsCallback,
+    this.options = const [],
+    this.optionsList = const [],
     String? displayValue,
   }) : this.displayValue = displayValue ?? value;
 
@@ -56,6 +59,9 @@ class FieldUiModelImpl extends FieldUiModel {
   final String? warning;
   final bool focused;
   final bool editable;
+
+  final List<String> options;
+  final List<DropdownOption> optionsList;
 
   final String? parentSection;
 
@@ -227,6 +233,8 @@ class FieldUiModelImpl extends FieldUiModel {
     TextInputAction? keyboardActionType,
     IntentCallback? intentCallback,
     ListViewUiEventsCallback? listViewUiEventsCallback,
+    List<String>? options,
+    List<DropdownOption>? optionsList,
   }) =>
       FieldUiModelImpl(
         uid: uid ?? this.uid,
@@ -254,12 +262,15 @@ class FieldUiModelImpl extends FieldUiModel {
         intentCallback: intentCallback ?? this.intentCallback,
         listViewUiEventsCallback:
             listViewUiEventsCallback ?? this.listViewUiEventsCallback,
+        options: options ?? this.options,
+        optionsList: optionsList ?? this.optionsList,
       );
 
   @override
   List<Object?> get props => [
         ...super.props,
         value,
+        options,
         mandatory,
         displayValue,
         optionSet,

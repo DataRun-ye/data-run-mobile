@@ -14,40 +14,40 @@ extension RuleHandler on FormElementTemplate {
 extension ApplyAction on RuleAction {
   void apply(FormElementModel<dynamic> element) {
     switch (action) {
-      case ActionType.Visibility:
-        if (element.hidden) {
-          logDebug('${element.name}, applying action: ${ActionType.Show}');
-          element.markAsVisible();
-        } else {
-          logDebug('${element.name}, applying action: ${ActionType.Hide}');
-          element.markAsHidden();
-        }
-        break;
-      case ActionType.Show:
-        logDebug('${element.name}, applying action: ${ActionType.Show}');
+      // case RuleActionType.Visibility:
+      //   if (element.hidden) {
+      //     logDebug('${element.name}, applying action: ${RuleActionType.Show}');
+      //     element.markAsVisible();
+      //   } else {
+      //     logDebug('${element.name}, applying action: ${RuleActionType.Hide}');
+      //     element.markAsHidden();
+      //   }
+      //   break;
+      case RuleActionType.Show:
+        logDebug('${element.name}, applying action: ${RuleActionType.Show}');
         element.markAsVisible();
         break;
-      case ActionType.Hide:
-        logDebug('${element.name}, applying action: ${ActionType.Hide}');
+      case RuleActionType.Hide:
+        logDebug('${element.name}, applying action: ${RuleActionType.Hide}');
         element.markAsHidden();
         break;
-      case ActionType.Error:
+      case RuleActionType.Error:
         final currentElementErrors = {...element.errors};
         currentElementErrors[getItemLocalString(message.unlockView)] =
             getItemLocalString(message.unlockView);
         element.setErrors(currentElementErrors);
         break;
-      case ActionType.Mandatory:
+      case RuleActionType.Mandatory:
         // element.markAsMandatory();
         break;
-      case ActionType.Assign:
+      case RuleActionType.Assign:
         element.updateValue(assignedValue);
         break;
-      case ActionType.Filter:
-      case ActionType.StopRepeat:
-      case ActionType.Warning:
-      case ActionType.Count:
-      case ActionType.Unknown:
+      case RuleActionType.Filter:
+      case RuleActionType.StopRepeat:
+      case RuleActionType.Warning:
+      case RuleActionType.Count:
+      case RuleActionType.Unknown:
         // TODO NOT Implemented
         break;
     }
@@ -55,36 +55,36 @@ extension ApplyAction on RuleAction {
 
   void reset(FormElementModel<dynamic> element) {
     switch (action) {
-      case ActionType.Visibility:
-        if (element.hidden) {
-          element.markAsVisible();
-        } else {
-          logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
-          element.markAsHidden();
-        }
-        break;
-      case ActionType.Show:
-        logDebug('${element.name}, resetting action to: ${ActionType.Hide}');
+      // case RuleActionType.Visibility:
+      //   if (element.hidden) {
+      //     element.markAsVisible();
+      //   } else {
+      //     logDebug('${element.name}, resetting action to: ${RuleActionType.Hide}');
+      //     element.markAsHidden();
+      //   }
+      //   break;
+      case RuleActionType.Show:
+        logDebug('${element.name}, resetting action to: ${RuleActionType.Hide}');
         element.markAsHidden();
         break;
-      case ActionType.Hide:
-        logDebug('${element.name}, resetting action to: ${ActionType.Show}');
+      case RuleActionType.Hide:
+        logDebug('${element.name}, resetting action to: ${RuleActionType.Show}');
         element.markAsVisible();
         break;
-      case ActionType.Error:
+      case RuleActionType.Error:
         element.removeError(getItemLocalString(message.unlockView));
         break;
-      case ActionType.Mandatory:
+      case RuleActionType.Mandatory:
         // element.markAsMandatory();
         break;
-      case ActionType.Assign:
+      case RuleActionType.Assign:
         // element.reset(value: element.template.defaultValue);
         break;
-      case ActionType.Filter:
-      case ActionType.StopRepeat:
-      case ActionType.Warning:
-      case ActionType.Count:
-      case ActionType.Unknown:
+      case RuleActionType.Filter:
+      case RuleActionType.StopRepeat:
+      case RuleActionType.Warning:
+      case RuleActionType.Count:
+      case RuleActionType.Unknown:
         // TODO NOT Implemented
         break;
     }

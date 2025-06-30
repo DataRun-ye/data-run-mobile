@@ -5,7 +5,7 @@ class StoreResult with EquatableMixin {
   StoreResult(
       {required this.uid,
       required this.valueStoreResult,
-      required this.valueStoreResultMessage});
+      this.valueStoreResultMessage});
 
   final String uid;
   final ValueStoreResult? valueStoreResult;

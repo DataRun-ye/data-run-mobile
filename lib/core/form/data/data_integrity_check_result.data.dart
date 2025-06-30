@@ -3,6 +3,7 @@ import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
+/// An object summarizing the validation status of the form.
 sealed class DataIntegrityCheckResult with EquatableMixin {
   const factory DataIntegrityCheckResult.notSavedResult() = NotSavedResult._;
 

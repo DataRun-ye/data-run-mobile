@@ -28,7 +28,7 @@ class RuleUtilsProviderResult {
   Map<String, String> errorMap() {
     final map = <String, String>{};
     for (final item in fieldsWithErrors) {
-      map[item.fieldUid] = item.errorMessage;
+      map[item.uid] = item.message;
     }
     return map;
   }
@@ -36,7 +36,7 @@ class RuleUtilsProviderResult {
   Map<String, String> warningMap() {
     final map = <String, String>{};
     for (final item in fieldsWithWarnings) {
-      map[item.fieldUid] = item.errorMessage;
+      map[item.uid] = item.message;
     }
     return map;
   }
@@ -59,33 +59,33 @@ class RuleUtilsProviderResult {
 
 class FieldWithNewValue {
   const FieldWithNewValue({
-    required this.fieldUid,
+    required this.uid,
     this.newValue,
   });
 
-  final String fieldUid;
+  final String uid;
   final String? newValue;
 }
 
 class FieldWithError {
   const FieldWithError({
-    required this.fieldUid,
-    required this.errorMessage,
+    required this.uid,
+    required this.message,
   });
 
-  final String fieldUid;
-  final String errorMessage;
+  final String uid;
+  final String message;
 }
 
 class RulesUtilsProviderConfigurationError {
   const RulesUtilsProviderConfigurationError({
-    this.programRuleUid,
+    this.ruleUid,
     this.actionType = ActionType.none,
     required this.error,
     required this.extraData,
   });
 
-  final String? programRuleUid;
+  final String? ruleUid;
   final ActionType actionType;
   final ConfigurationError error;
   final List<String> extraData;

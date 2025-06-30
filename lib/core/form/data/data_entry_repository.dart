@@ -6,6 +6,7 @@ import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 
+/// Provides access to the raw form structure and data.
 abstract class DataEntryRepository {
   bool? get disableCollapsableSections => null;
 

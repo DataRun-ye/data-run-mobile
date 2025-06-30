@@ -19,15 +19,24 @@ import 'package:d2_remote/modules/metadatarun/org_unit/entities/org_unit.entity.
 import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart'
     as _i1042;
 import 'package:datarunmobile/app/di/third_party_services.module.dart' as _i427;
+import 'package:datarunmobile/core/element_instance/data_value_repository.dart'
+    as _i730;
 import 'package:datarunmobile/core/form/data/display_name_provider.dart'
     as _i1030;
 import 'package:datarunmobile/core/form/data/display_name_provider_impl.dart'
     as _i971;
+import 'package:datarunmobile/core/form/data/form_repository.dart' as _i16;
 import 'package:datarunmobile/core/form/data/form_value_store.dart' as _i520;
+import 'package:datarunmobile/core/form/data/map_field_value_to_user.dart'
+    as _i624;
 import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart'
     as _i362;
 import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart'
     as _i406;
+import 'package:datarunmobile/core/form/data/search_option_set_option.dart'
+    as _i653;
+import 'package:datarunmobile/core/form/data/form_command_handler.dart'
+    as _i830;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
     as _i595;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
@@ -36,6 +45,8 @@ import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart'
     as _i1067;
 import 'package:datarunmobile/core/form/ui/field_view_model_factory_impl.dart'
     as _i835;
+import 'package:datarunmobile/core/resources/resource_manager.provider.dart'
+    as _i683;
 import 'package:datarunmobile/core/services/auth.service.dart' as _i409;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
     as _i775;
@@ -80,10 +91,14 @@ Future<_i174.GetIt> init(
     () => thirdPartyServicesModule.prefs,
     preResolve: true,
   );
+  gh.factory<_i730.DataValueRepository>(() => _i730.DataValueRepository());
   gh.factory<_i362.OptionSetConfigurations>(
       () => const _i362.OptionSetConfigurations());
   gh.factory<_i406.OrgUnitConfiguration>(
       () => const _i406.OrgUnitConfiguration());
+  gh.factory<_i653.SearchOptionSetOption>(
+      () => const _i653.SearchOptionSetOption());
+  gh.factory<_i683.ResourceManager>(() => const _i683.ResourceManager());
   gh.lazySingleton<_i1055.NavigationService>(
       () => thirdPartyServicesModule.navigationService);
   gh.lazySingleton<_i1055.DialogService>(
@@ -121,6 +136,10 @@ Future<_i174.GetIt> init(
       () => _i443.DAuthenticationService(gh<_i775.UserSessionService>()));
   gh.factory<_i236.IdentifiableRepository<_i1042.Team>>(
       () => _i231.DTeamLocalRepository());
+  gh.factory<_i624.MapFieldValueToUser>(() => _i624.MapFieldValueToUser(
+        resources: gh<_i683.ResourceManager>(),
+        repository: gh<_i730.DataValueRepository>(),
+      ));
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
   gh.factory<_i1030.DisplayNameProvider>(() => _i971.DisplayNameProviderImpl(
         gh<_i362.OptionSetConfigurations>(),
@@ -135,6 +154,8 @@ Future<_i174.GetIt> init(
         hintProvider: gh<_i595.HintProvider>(),
         displayNameProvider: gh<_i1030.DisplayNameProvider>(),
       ));
+  gh.factory<_i830.FormCommandHandler>(
+      () => _i830.FormCommandHandler(repository: gh<_i16.FormRepository>()));
   gh.factory<_i359.AssignmentDetailService>(() => _i359.AssignmentDetailService(
       gh<_i236.IdentifiableRepository<_i603.Assignment>>()));
   return getIt;

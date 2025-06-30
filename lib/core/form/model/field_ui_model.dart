@@ -6,6 +6,7 @@ import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
 import 'package:datarunmobile/core/form/model/ui_event_type.dart';
 import 'package:datarunmobile/core/form/ui/event/list_view_ui_events.data.dart';
 import 'package:datarunmobile/core/form/ui/event/ui_event_factory.dart';
+import 'package:datarunmobile/core/form/ui/intent/dropdown_option.dart';
 import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,9 @@ abstract class FieldUiModel with EquatableMixin {
 
   String? get rowUid => null;
 
+  List<String> get options => [];
+
+  List<DropdownOption> get optionsList => [];
   // Template? get template;
 
   String? get value => null;
@@ -48,7 +52,7 @@ abstract class FieldUiModel with EquatableMixin {
 
   String get label;
 
-  // String? get displayValue;
+  String? get displayValue => null;
 
   // String? get hint;
 

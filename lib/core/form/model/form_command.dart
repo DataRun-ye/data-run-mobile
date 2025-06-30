@@ -8,8 +8,8 @@ import 'package:equatable/equatable.dart';
 /// - the details of an action performed on a specific form field.
 /// - Serves as an intermediate representation between the user intent
 /// and the actual data processing.
-class RowAction with EquatableMixin {
-  RowAction(
+class FormCommand with EquatableMixin {
+  FormCommand(
       {required this.uid,
       this.value,
       this.requiresExactMatch = false,
@@ -17,7 +17,7 @@ class RowAction with EquatableMixin {
       this.optionName,
       this.extraData,
       this.error,
-      required this.actionType,
+      required this.type,
       this.valueType});
 
   final String uid;
@@ -27,7 +27,7 @@ class RowAction with EquatableMixin {
   final String? optionName;
   final String? extraData;
   final DException? error;
-  final ActionType actionType;
+  final CommandType type;
   final ValueType? valueType;
 
   @override
@@ -39,10 +39,34 @@ class RowAction with EquatableMixin {
         optionName,
         extraData,
         error,
-        actionType,
+        type,
         valueType
       ];
 
   @override
   bool? get stringify => true;
+
+  FormCommand copyWith({
+    String? uid,
+    String? value,
+    bool? requiresExactMatch,
+    String? optionCode,
+    String? optionName,
+    String? extraData,
+    DException? error,
+    CommandType? actionType,
+    ValueType? valueType,
+  }) {
+    return FormCommand(
+      uid: uid ?? this.uid,
+      value: value ?? this.value,
+      requiresExactMatch: requiresExactMatch ?? this.requiresExactMatch,
+      optionCode: optionCode ?? this.optionCode,
+      optionName: optionName ?? this.optionName,
+      extraData: extraData ?? this.extraData,
+      error: error ?? this.error,
+      type: actionType ?? this.type,
+      valueType: valueType ?? this.valueType,
+    );
+  }
 }

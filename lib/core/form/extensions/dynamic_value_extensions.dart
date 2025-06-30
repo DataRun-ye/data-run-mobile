@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 extension CheckWhatValueExtension on DataValue {
   static Future<bool> check(
       ValueType? valueType, String? optionSetUid, String value) async {
-    if (optionSetUid != null) {
+    if (optionSetUid != null && valueType != ValueType.SelectMulti) {
       final Option? optionByCode = await D2Remote.optionSetModule.option
           .byOptionSet(optionSetUid)
           .where(attribute: 'code', value: value)

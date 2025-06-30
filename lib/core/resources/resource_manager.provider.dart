@@ -1,21 +1,13 @@
 import 'package:d2_remote/modules/datarun/common/standard_extensions.dart';
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:datarunmobile/utils/mass_utils/colors.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
-part 'resource_manager.provider.g.dart';
-
-@riverpod
-ResourceManager resourceManager(ResourceManagerRef ref) {
-  return ResourceManager(ref);
-}
-
+@injectable
 class ResourceManager {
-  const ResourceManager(this.ref);
-
-  final ResourceManagerRef ref;
+  const ResourceManager();
 
   String getString(String stringResource) {
     return Intl.message(
@@ -24,6 +16,10 @@ class ResourceManager {
       desc: '',
       args: <Object>[],
     );
+  }
+
+  String getTeamLabel(String? teamCode) {
+    return '${getString('team')} $teamCode';
   }
 
   Icon getObjectStyleDrawableResource(

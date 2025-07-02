@@ -1,6 +1,7 @@
 import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress.dart';
 import 'package:d2_remote/modules/datarun_shared/sync/sync_metadata.dart';
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,6 +51,13 @@ class SyncService extends _$SyncService {
       ProgressCallback? onFailure}) async {
     SyncMetadata syncMetadata = SyncMetadata();
     try {
+      final isOnline = await ConnectivityService.instance
+          .checkInternetConnection();
+      if (!isOnline) {
+        onFailure?.call('No Internet Connection');
+        return;
+      }
+
       await syncMetadata.download(
         callback: onProgressUpdate,
       );

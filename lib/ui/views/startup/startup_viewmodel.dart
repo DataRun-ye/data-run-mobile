@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:d2_remote/d2_remote.dart';
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
+import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:datarunmobile/core/services/user_session_manager.service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stacked/stacked.dart';
@@ -22,9 +23,11 @@ class StartupViewModel extends BaseViewModel {
     if (authenticated) {
       await D2Remote.initialize(
           databaseFactory:
-              Platform.isWindows || Platform.isLinux ? databaseFactory : null);
+          Platform.isWindows || Platform.isLinux ? databaseFactory : null);
 
-      if (needSync) {
+      final isOnline = await ConnectivityService.instance
+          .checkInternetConnection();
+      if (needSync && isOnline) {
         _navigationService.replaceWithSyncScreen();
       } else {
         _navigationService.replaceWithHomeScreen();

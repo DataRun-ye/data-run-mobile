@@ -3,7 +3,7 @@
 // import 'package:datarunmobile/data_run/screens/login_screen/login_page.dart';
 // import 'package:datarunmobile/ui/info_alert/info_alert_dialog.dart';
 // import 'package:datarunmobile/ui/notice/notice_sheet.dart';
-// import 'package:datarunmobile/ui/views/sync_with_server/sync_with_server_view.dart';
+// import 'package:datarunmobile/ui/views/sync_with_server/sync_with_server.view.dart';
 // import 'package:stacked/stacked_annotations.dart';
 // // @stacked-import
 //

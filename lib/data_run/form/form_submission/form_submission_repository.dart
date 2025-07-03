@@ -13,7 +13,7 @@ class FormSubmissionRepository {
     // final query = _query.byFormTemplate(form);
     final List<DataSubmission> submissions =
         await (db.select(db.dataSubmissions)
-              ..where((tbl) => tbl.form.equals(form)))
+              ..where((tbl) => tbl.dataTemplate.equals(form)))
             .get();
 
     return submissions.lock;

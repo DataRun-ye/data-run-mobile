@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
-class AppScaffold extends StatelessWidget {
-  const AppScaffold({
+class AppSliverScaffold extends StatelessWidget {
+  const AppSliverScaffold({
     Key? key,
     required this.title,
     required this.slivers,

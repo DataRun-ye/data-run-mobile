@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
+import 'package:datarunmobile/home/assignment/presentation/sync_status_icon.dart';
 import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,11 +20,12 @@ class SyncStatusBadgesView extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : Wrap(
-              spacing: 8,
+              spacing: 16,
+              runSpacing: 8,
               children: model.data!
                   .where((e) => e.count > 0)
                   .map<Widget>((e) =>
-                      _SyncStatusBadge(syncStatus: e.status, count: e.count))
+                      _SyncStatusBadge(syncStatus: e.syncState, count: e.count))
                   .toList(),
             ),
       viewModelBuilder: () =>
@@ -36,7 +37,7 @@ class SyncStatusBadgesView extends StatelessWidget {
 class _SyncStatusBadge extends StatelessWidget {
   const _SyncStatusBadge({required this.syncStatus, required this.count});
 
-  final SubmissionStatus syncStatus;
+  final InstanceSyncStatus syncStatus;
   final int count;
 
   @override

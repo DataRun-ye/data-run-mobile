@@ -9,30 +9,30 @@ class QSyncIconButton extends StatelessWidget {
     this.onErrorPressed,
   });
 
-  final SubmissionStatus? state;
+  final InstanceSyncStatus? state;
   final VoidCallback? onUnsyncedPressed;
   final VoidCallback? onErrorPressed;
 
   @override
   Widget build(BuildContext context) {
     switch (state) {
-      case SubmissionStatus.synced:
+      case InstanceSyncStatus.synced:
         return const IconButton(
           icon: Icon(Icons.check, color: Colors.white60),
           onPressed: null,
         );
-      case SubmissionStatus.draft:
+      case InstanceSyncStatus.draft:
         return const IconButton(
           icon: Icon(Icons.check, color: Colors.white60),
           onPressed: null,
         );
-      case SubmissionStatus.finalized:
+      case InstanceSyncStatus.finalized:
         return IconButton(
           enableFeedback: true,
           icon: const Icon(Icons.sync, color: Colors.black45, size: 35),
           onPressed: onUnsyncedPressed,
         );
-      case SubmissionStatus.syncFailed:
+      case InstanceSyncStatus.syncFailed:
         return IconButton(
           icon: const Icon(Icons.error, color: Colors.red),
           onPressed: onErrorPressed,

@@ -1,8 +1,6 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:equatable/equatable.dart';
 
-// part 'repeat_group_intent.dart';
-
 sealed class FormIntent with EquatableMixin {
   const factory FormIntent.onFinish({String? extraData}) = OnFinish;
 

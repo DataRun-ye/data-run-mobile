@@ -1,5 +1,4 @@
-//GENERATED BARREL FILE 
-export './widgets/widgets.dart';
+//GENERATED BARREL FILE
 export 'home_view.dart';
-export 'home_viewmodel.dart';
+export '../../../home/home_viewmodel.dart';
 

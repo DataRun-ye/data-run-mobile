@@ -2,10 +2,10 @@ import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class OptionSetConfigurations {
-  const OptionSetConfigurations();
-
   Future<FormOption?> optionInDataSetByCode(
       String optionSetUid, String optionCode) async {
     final DataOptionSet? optionSet = await DSdk.db.managers.dataOptionSets

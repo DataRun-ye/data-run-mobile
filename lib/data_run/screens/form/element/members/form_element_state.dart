@@ -1,5 +1,5 @@
+import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

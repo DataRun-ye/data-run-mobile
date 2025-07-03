@@ -1,12 +1,14 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/data/assignment/assignment.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_overview_item.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/filter_query.provider.dart';
+import 'package:datarunmobile/home/assignment/presentation/assignment_detail_screen.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/home/activity/presentation/widgets/activity_inherited_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -113,7 +115,7 @@ class AssignmentListCardViewItem extends ConsumerWidget {
                     },
                     icon: const Icon(Icons.document_scanner),
                     label: Text(
-                        '${S.of(context).openNewForm} (${/*assignment.forms.length*/0})'),
+                        '${S.of(context).openNewForm} (${/*assignment.forms.length*/ 0})'),
                   ),
                   TextButton.icon(
                     onPressed: () => onViewDetails.call(assignment),
@@ -132,6 +134,7 @@ class AssignmentListCardViewItem extends ConsumerWidget {
   Color? getCardColor(AssignmentStatus status, ThemeData theme) {
     switch (status) {
       case AssignmentStatus.NOT_STARTED:
+      case AssignmentStatus.PLANNED:
       case AssignmentStatus.RESCHEDULED:
         return theme.cardColor.withOpacity(0.5);
       case AssignmentStatus.DONE:
@@ -196,7 +199,8 @@ class AssignmentListCardViewItem extends ConsumerWidget {
       children: [
         Icon(icon, size: 20, color: Colors.grey[600]),
         const SizedBox(width: 4),
-        buildHighlightedText(value, searchQuery, context, style: style),
+        QueryHighlightedText(
+            text: value, searchQuery: searchQuery, style: style)
       ],
     );
   }

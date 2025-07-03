@@ -1987,6 +1987,321 @@ class S {
       args: [error],
     );
   }
+
+  /// `Enter a text`
+  String get textHint {
+    return Intl.message('Enter a text', name: 'textHint', desc: '', args: []);
+  }
+
+  /// `Enter a text`
+  String get longTextHint {
+    return Intl.message(
+      'Enter a text',
+      name: 'longTextHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a Letter`
+  String get oneLetterFieldHint {
+    return Intl.message(
+      'Enter a Letter',
+      name: 'oneLetterFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a number`
+  String get numberFieldHint {
+    return Intl.message(
+      'Enter a number',
+      name: 'numberFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter unit Interval`
+  String get unitIntervalFieldHint {
+    return Intl.message(
+      'Enter unit Interval',
+      name: 'unitIntervalFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a Percentage`
+  String get percentageFieldHint {
+    return Intl.message(
+      'Enter a Percentage',
+      name: 'percentageFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter an integer`
+  String get integerFieldHint {
+    return Intl.message(
+      'Enter an integer',
+      name: 'integerFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a positive integer`
+  String get positiveIntegerFieldHint {
+    return Intl.message(
+      'Enter a positive integer',
+      name: 'positiveIntegerFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a negative integer`
+  String get negativeIntegerFieldHint {
+    return Intl.message(
+      'Enter a negative integer',
+      name: 'negativeIntegerFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter an integer or zero`
+  String get integerOrZeroFieldHint {
+    return Intl.message(
+      'Enter an integer or zero',
+      name: 'integerOrZeroFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a phone number`
+  String get phoneNumberFieldHint {
+    return Intl.message(
+      'Enter a phone number',
+      name: 'phoneNumberFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter An Email`
+  String get emailFieldHint {
+    return Intl.message(
+      'Enter An Email',
+      name: 'emailFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a URL`
+  String get urlFieldHint {
+    return Intl.message(
+      'Enter a URL',
+      name: 'urlFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select A file`
+  String get fileResourceFieldHint {
+    return Intl.message(
+      'Select A file',
+      name: 'fileResourceFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a Username`
+  String get usernameFieldHint {
+    return Intl.message(
+      'Select a Username',
+      name: 'usernameFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter an Age`
+  String get ageFieldHint {
+    return Intl.message(
+      'Enter an Age',
+      name: 'ageFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a Boolean`
+  String get booleanFieldHint {
+    return Intl.message(
+      'Enter a Boolean',
+      name: 'booleanFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `fieldHintText`
+  String get trueOnlyFieldHint {
+    return Intl.message(
+      'fieldHintText',
+      name: 'trueOnlyFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select an OrgUnit`
+  String get orgunitFieldHint {
+    return Intl.message(
+      'Select an OrgUnit',
+      name: 'orgunitFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a date`
+  String get dataFieldHint {
+    return Intl.message(
+      'Select a date',
+      name: 'dataFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a Data time`
+  String get dataTimeFieldHint {
+    return Intl.message(
+      'Enter a Data time',
+      name: 'dataTimeFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a reference`
+  String get referenceFieldHint {
+    return Intl.message(
+      'Select a reference',
+      name: 'referenceFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a Time`
+  String get timeFieldHint {
+    return Intl.message(
+      'Select a Time',
+      name: 'timeFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a Team`
+  String get teamFieldHint {
+    return Intl.message(
+      'Select a Team',
+      name: 'teamFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a full name`
+  String get fullNameFieldHint {
+    return Intl.message(
+      'Enter a full name',
+      name: 'fullNameFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `fieldHintText`
+  String get selectMultiFieldHint {
+    return Intl.message(
+      'fieldHintText',
+      name: 'selectMultiFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select One`
+  String get selectOneFieldHint {
+    return Intl.message(
+      'Select One',
+      name: 'selectOneFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Yes or No`
+  String get yesOrNoFieldHint {
+    return Intl.message(
+      'Select Yes or No',
+      name: 'yesOrNoFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scan Code`
+  String get scanCodeFieldHint {
+    return Intl.message(
+      'Scan Code',
+      name: 'scanCodeFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Coordinates`
+  String get coordinatesFieldHint {
+    return Intl.message(
+      'Select Coordinates',
+      name: 'coordinatesFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select an Image`
+  String get imageFieldHint {
+    return Intl.message(
+      'Select an Image',
+      name: 'imageFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `fieldHintText`
+  String get progressFieldHint {
+    return Intl.message(
+      'fieldHintText',
+      name: 'progressFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

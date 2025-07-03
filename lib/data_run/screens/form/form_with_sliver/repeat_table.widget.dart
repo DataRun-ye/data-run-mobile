@@ -1,6 +1,6 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/edit_panel.dart';
@@ -9,12 +9,11 @@ import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metad
 import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/home/activity/presentation/widgets/activity_inherited_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-
-import '../../../d_activity/activity_model.dart';
 
 class RepeatTable extends StatefulHookConsumerWidget {
   const RepeatTable({

@@ -24,7 +24,7 @@ class AssignmentListViewModel extends BaseViewModel {
     final db = appLocator<DbManager>().db;
 
     return db.assignmentsDao
-        .watchAssignmentCardsForActivity(
+        .selectAssignments(
             activityId: activity,
             ouSearchFilter: _searchTerm,
             page: page,

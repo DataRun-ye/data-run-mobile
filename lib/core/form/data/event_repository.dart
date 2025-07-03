@@ -2,13 +2,14 @@ import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:datarunmobile/core/form/data/data_entry_base_repository.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
-import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: EventRepository)
 class EventRepository extends DataEntryBaseRepository {
-  EventRepository({
-    required FieldViewModelFactory fieldFactory,
-    required this.eventUid,
-  }) : super(fieldFactory);
+  EventRepository(
+    super.fieldFactory, {
+   @factoryParam this.eventUid,
+  });
 
   final String? eventUid;
 

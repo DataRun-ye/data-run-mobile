@@ -2,7 +2,6 @@
   "env_label": "local",
   "api_base_url": "http://localhost:8080",
   "default_locale": "en",
-  "api_request_send_timeout": 8,
   "in_memory": false,
   "secure_database": false,
   "secure_cache": false

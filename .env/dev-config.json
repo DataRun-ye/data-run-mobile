@@ -2,7 +2,6 @@
   "env_label": "dev",
   "api_base_url": "https://play.nmcpye.org",
   "default_locale": "en",
-  "api_request_send_timeout": 5,
   "in_memory": false,
   "secure_database": true,
   "secure_cache": true

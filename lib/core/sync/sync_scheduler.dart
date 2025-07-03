@@ -6,15 +6,15 @@ import 'package:injectable/injectable.dart';
 class SyncScheduler {
   SyncScheduler(
       {required SyncMetadataRepository metadataRepo,
-      required ConnectivityService connectivity})
+      required NetworkUtil connectivity})
       : _connectivity = connectivity,
         _metadataRepo = metadataRepo;
 
-  final ConnectivityService _connectivity;
+  final NetworkUtil _connectivity;
   final SyncMetadataRepository _metadataRepo;
 
   Future<bool> shouldSync() async {
-    if (!await _connectivity.checkInternetConnection()) return false;
+    if (!await _connectivity.isOnline()) return false;
     final syncDone = _metadataRepo.isInitialSyncDone;
     if (!syncDone) return true;
     final lastSync = _metadataRepo.getLastSyncTimeMillis() ?? 0;

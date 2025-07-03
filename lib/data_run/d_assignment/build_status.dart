@@ -1,11 +1,5 @@
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
-import 'package:datarunmobile/data_run/screens/form/form_tab_screen.widget.dart';
-import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -16,6 +10,7 @@ Widget buildStatusBadge(AssignmentStatus status) {
 
   switch (status) {
     case AssignmentStatus.NOT_STARTED:
+    case AssignmentStatus.PLANNED:
       statusIcon = MdiIcons.progressClock; // More expressive icon
       badgeColor = Colors.grey;
       break;
@@ -43,9 +38,6 @@ Widget buildStatusBadge(AssignmentStatus status) {
       statusIcon = MdiIcons.clipboardAccount; // More expressive icon
       badgeColor = Colors.deepPurpleAccent;
       break;
-    default:
-      statusIcon = MdiIcons.helpCircleOutline; // More expressive icon
-      badgeColor = Colors.black;
   }
 
   // return Badge(
@@ -76,7 +68,7 @@ Color? statusColor(AssignmentStatus? status) {
     case AssignmentStatus.MERGED:
     case AssignmentStatus.REASSIGNED:
       return Colors.orangeAccent.withOpacity(0.5);
-    case AssignmentStatus.NOT_STARTED:
+    case AssignmentStatus.PLANNED:
     case AssignmentStatus.RESCHEDULED:
       return Colors.grey.withOpacity(0.3);
     default:
@@ -86,18 +78,22 @@ Color? statusColor(AssignmentStatus? status) {
 
 Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
     DataSubmission submission, ActivityModel activityModel) async {
-  await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ActivityInheritedWidget(
-                activityModel: activityModel,
-                child: FormMetadataWidget(
-                  formMetadata: FormMetadata(
-                    assignmentModel: assignment,
-                    formId: submission.form,
-                    submission: submission.id,
-                  ),
-                  child: const FormSubmissionScreen(currentPageIndex: 1),
-                ),
-              )));
+  // await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => ActivityInheritedWidget(
+  //               activityModel: activityModel,
+  //               child: FormMetadataWidget(
+  //                 formMetadata: FormMetadata(
+  //                   assignmentModel: assignment,
+  //                   formId: submission.dataTemplate,
+  //                   submission: submission.id,
+  //                 ),
+  //                 child: SubmissionEditScreen(
+  //                   currentPageIndex: 1,
+  //                   formId: submission.dataTemplate,
+  //                   assignmentId: submission.assignment,
+  //                 ),
+  //               ),
+  //             )));
 }

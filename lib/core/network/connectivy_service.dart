@@ -7,10 +7,10 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()
-class ConnectivityService {
-  ConnectivityService({required Dio dio})
-      : _dio = dio;
+class NetworkUtil {
+  NetworkUtil({required Dio dio, required this.cancelToken}) : _dio = dio;
   final Dio _dio;
+  final CancelToken cancelToken;
 
   final StreamController<bool> _connectivityStatusController =
       StreamController<bool>.broadcast();
@@ -18,7 +18,7 @@ class ConnectivityService {
   Stream<bool> get connectivityStatusStream =>
       _connectivityStatusController.stream;
 
-  Future<bool> isNetworkAvailable() async {
+  Future<bool> noAvailableNetwork() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.none)) {
       return false;
@@ -26,16 +26,21 @@ class ConnectivityService {
 
     final result = connectivityResult.contains(ConnectivityResult.wifi) ||
         connectivityResult.contains(ConnectivityResult.mobile);
-    return result;
+    return !result;
   }
 
-  Future<bool> checkInternetConnection() async {
+  Future<bool> isOffline() async {
+    return !(await isOnline());
+  }
+
+  Future<bool> isOnline() async {
     try {
-      logDebug(
-          'checkInternetConnection: ping ${AppEnvironment.apiPingUrl} ...',
+      if(await noAvailableNetwork()) return false;
+      logDebug('checkInternetConnection: ping ${AppEnvironment.apiPingUrl} ...',
           data: {'runtimeType': this.runtimeType});
       final response = await _dio.get(AppEnvironment.apiPingUrl,
-          options: Options(extra: {'skipAuth': true}));
+          options: Options(extra: {'skipAuth': true}),
+          cancelToken: cancelToken);
       if (response.statusCode == 200) {
         logDebug('Device is online!', data: {'runtimeType': this.runtimeType});
         return true;

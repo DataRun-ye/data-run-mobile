@@ -1,315 +1,487 @@
+import 'dart:io';
+
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/helpers/lazy.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
+import 'package:datarunmobile/core/form/model/value_store_result.dart';
+import 'package:datarunmobile/core/resources/resource_manager.provider.dart';
 
 class FormValueStore {
-  FormValueStore({
-    required this.recordUidFuture,
-    // required this.entryMode,
-    // required this.enrollmentRepository,
-    // this.crashReportController,
-    // required this.networkUtils,
-    // required this.resourceManager,
-  });
+  FormValueStore(
+    this._db,
+    this._recordUid,
+    // this._entryMode,
+    // this._enrollmentRepository,
+    // this._eventRepository,
+    // this._crashReportController,
+    // this._networkUtils,
+    // this._resourceManager,
+    /*{
+        FileController? fileController,
+        UniqueAttributeController? uniqueAttributeController,
+      }*/
+  ) /*: _fileController = fileController ?? FileController(),
+        _uniqueAttributeController = uniqueAttributeController ??
+            UniqueAttributeController(_d2, _crashReportController)*/
+  ;
 
-  Future<String> recordUidFuture;
-  late /*final*/ String recordUid;
+  final AppDatabase _db;
 
-  // EntryMode entryMode;
+  /// a submission uid for elements not in repeat
+  /// or a repeat uid for elements inside the repeat
+  final String _recordUid;
 
-  // EnrollmentObjectRepository? enrollmentRepository;
-
-  // CrashReportController crashReportController;
-  // NetworkUtils networkUtils;
-  // ResourceManager resourceManager;
-
-  Lazy<String> get _loadRecordUid =>
-      Lazy(() async => recordUid = await recordUidFuture);
+  // final EntryMode _entryMode;
+  // final EnrollmentObjectRepository? _enrollmentRepository;
+  // final EventObjectRepository? _eventRepository;
+  // final CrashReportController _crashReportController;
+  // final NetworkUtils _networkUtils;
+  // final ResourceManager _resourceManager;
+  // final FileController _fileController;
+  // final UniqueAttributeController _uniqueAttributeController;
 
   Future<StoreResult> save(String uid, String? value, String? extraData) async {
-    return saveDataElement(uid, value);
+    return await _checkStoreEventDetail(uid, value, extraData);
+    // switch (_entryMode) {
+    //   case EntryMode.DE:
+    //     return await _checkStoreEventDetail(uid, value, extraData);
+    //   case EntryMode.ATTR:
+    //     return await _checkStoreEnrollmentDetail(uid, value, extraData);
+    //   case EntryMode.DV:
+    //     throw ArgumentError(
+    //         _resourceManager.getString('data_values_save_error'));
+    // }
   }
 
-  Future<StoreResult> saveDataElement(String uid, String? value) async {
-    throw UnimplementedError();
+  Future<StoreResult> _checkStoreEventDetail(
+      String uid, String? value, String? extraData) async {
+    // if (uid == EVENT_REPORT_DATE_UID) {
+    //   if (value != null) {
+    //     final date = DateTime.tryParse(value);
+    //     if (date != null) _eventRepository?.setEventDate(date);
+    //     return StoreResult(
+    //         uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
+    //   } else {
+    //     return StoreResult(
+    //         uid: uid, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+    //   }
+    // }
+
+    // if (uid == EVENT_ORG_UNIT_UID) {
+    //   if (value?.isNotEmpty == true) {
+    //     _eventRepository?.setOrganisationUnitUid(value!);
+    //     return StoreResult(
+    //         uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
+    //   } else {
+    //     return StoreResult(
+    //         uid: uid, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+    //   }
+    // }
+
+    // if (uid == EVENT_COORDINATE_UID) {
+    //   return await _storeEventCoordinateAttribute(value, extraData);
+    // }
+    //
+    // if (uid.contains(EVENT_CATEGORY_COMBO_UID)) {
+    //   return await _storeEventCategoryComboAttribute(uid, value);
+    // }
+
+    return await _saveDataElement(uid, value);
   }
 
-  Future<bool> eventStateIsFinal() async {
-    final DataSubmission? submission = await DSdk.db.managers.dataSubmissions
-        .filter((f) => f.id.equals(recordUid))
-        .getSingleOrNull();
-    return submission?.status == SubmissionStatus.finalized;
+  Future<EventStatus?> eventState() async {
+    final event = await _db.eventModule.events.byUid(_recordUid).get();
+    return event?.status;
   }
 
-  Future<StoreResult> saveWithTypeCheck(String uid, String? value) async {
-    throw UnimplementedError();
-  }
-
-  Future<StoreResult> deleteOptionValueIfSelected(
-      String field, String optionUid) async {
-    return deleteDataElementValue(field, optionUid);
-  }
-
-  Future<StoreResult> deleteDataElementValue(
-      String field, String optionUid) async {
-    throw UnimplementedError();
-  }
-
-  Future<StoreResult> deleteDataElementValueIfNotInGroup(
-      String field, List<String> optionCodesToShow, bool isInGroup) async {
-    throw UnimplementedError();
-  }
+  String recordUid() => _recordUid;
 
   Future<void> completeEvent() async {
     try {
-      // d2.eventModule().events().uid(recordUid).setStatus(EventStatus.COMPLETED);
-    } catch (d2Error) {
-      logError('', data: {'error': d2Error});
+      await _db.eventModule.events
+          .byUid(_recordUid)
+          .setStatus(EventStatus.completed);
+    } catch (e, stack) {
+      _crashReportController.trackError(e, stack.toString());
     }
   }
 
   Future<void> activateEvent() async {
     try {
-      // d2.eventModule().events().uid(recordUid).setStatus(EventStatus.ACTIVE);
-    } catch (d2Error) {
-      logError('', data: {'error': d2Error});
+      await _db.eventModule.events
+          .byUid(_recordUid)
+          .setStatus(EventStatus.active);
+    } catch (e, stack) {
+      _crashReportController.trackError(e, stack.toString());
     }
   }
 
-// Future<StoreResult> checkStoreEnrollmentDetail(
-//     String uid, String? value, String? extraData) async {
-//   if (uid == EnrollmentDetail.ENROLLMENT_DATE_UID.name) {
-//     await enrollmentRepository?.setEnrollmentDate(value.toDate());
+  Future<StoreResult> _saveDataElement(String uid, String? value) async {
+    final repository =
+        _db.trackedEntityModule.trackedEntityDataValues.value(_recordUid, uid);
+    final dataElement =
+        await _db.dataElementModule.dataElements.byUid(uid).get();
+    final valueType = dataElement?.valueType;
+    final newValue =
+        UniqueAttributeController.withValueTypeCheck(value, valueType) ?? '';
+
+    final currentValue = await repository.exists()
+        ? (await repository.get())?.value.withValueTypeCheck(valueType) ?? ''
+        : '';
+
+    if (currentValue != newValue) {
+      if (value?.isNotEmpty == true) {
+        final changed = await repository.setCheck(_db, uid, newValue);
+        return StoreResult(
+            uid: uid,
+            valueStoreResult: changed
+                ? ValueStoreResult.valueChanged
+                : ValueStoreResult.valueHasNotChanged);
+      } else {
+        await repository.deleteIfExists();
+        return StoreResult(
+            uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
+      }
+    }
+
+    return StoreResult(
+        uid: uid, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+  }
+
+  Future<StoreResult> saveWithTypeCheck(String uid, String? value) async {
+    final existsDE =
+        await _db.dataElementModule.dataElements.byUid(uid).exists();
+    if (existsDE) return _saveDataElement(uid, value);
+
+    final existsAttr = await _db.trackedEntityModule.trackedEntityAttributes
+        .byUid(uid)
+        .exists();
+    if (existsAttr) return _saveAttribute(uid, value);
+
+    return StoreResult(
+        uid: uid, valueStoreResult: ValueStoreResult.uidIsNotDEOrAttr);
+  }
+
+  Future<StoreResult> deleteOptionValueIfSelected(
+      String field, String optionUid) async {
+    switch (_entryMode) {
+      case EntryMode.DE:
+        return _deleteDataElementValue(field, optionUid);
+      case EntryMode.ATTR:
+        return _deleteAttributeValue(field, optionUid);
+      case EntryMode.DV:
+        throw ArgumentError(
+            _resourceManager.getString('data_values_save_error'));
+    }
+  }
+
+  Future<StoreResult> _deleteDataElementValue(
+      String field, String optionUid) async {
+    final option = await _db.optionModule.options.byUid(optionUid).get();
+    final possible = [option?.name, option?.code].whereType<String>();
+    final repository = _db.trackedEntityModule.trackedEntityDataValues
+        .value(_recordUid, field);
+
+    if (await repository.exists()) {
+      final current = (await repository.get())?.value;
+      if (current != null && possible.contains(current)) {
+        return await _saveDataElement(field, null);
+      }
+    }
+    return StoreResult(
+        uid: field, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+  }
+
+  Future<StoreResult> deleteOptionValueIfSelectedInGroup(
+      String field, String groupUid, bool isInGroup) async {
+    final group =
+        await _db.optionModule.optionGroups.withOptions().byUid(groupUid).get();
+    final codes = group?.options
+            .map((o) => _db.optionModule.options
+                .byUid(o.uid)
+                .get()
+                .then((opt) => opt?.code))
+            .toList() ??
+        [];
+
+    final optionCodes = (await Future.wait(codes)).whereType<String>();
+
+    if (_entryMode == EntryMode.DE) {
+      if (!isInGroup) {
+        return _deleteDataElementValueIfNotInGroup(
+            field, optionCodes.toList(), isInGroup);
+      }
+      return StoreResult(
+          uid: field, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+    }
+
+    if (_entryMode == EntryMode.ATTR) {
+      if (!isInGroup) {
+        return _deleteAttributeValueIfNotInGroup(
+            field, optionCodes.toList(), isInGroup);
+      }
+      return StoreResult(
+          uid: field, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+    }
+
+    throw ArgumentError(
+        'DataValues can\'t be saved using these arguments. Use the other one.');
+  }
+
+  // Helpers for deleteIfNotInGroup
+  Future<StoreResult> _deleteDataElementValueIfNotInGroup(
+      String field, List<String> codes, bool _) async {
+    final repository = _db.trackedEntityModule.trackedEntityDataValues
+        .value(_recordUid, field);
+    if (await repository.exists()) {
+      final current = (await repository.get())?.value;
+      if (current != null && codes.contains(current)) {
+        return await _saveDataElement(field, null);
+      }
+    }
+    return StoreResult(
+        uid: field, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+  }
+
+// Future<StoreResult> _storeEventCoordinateAttribute(
+//     String? value, String? extraData) async {
+//   final stageUid = await _eventRepository?.programStage();
+//   final featureType = await _db.programModule.programStages
+//       .byUid(stageUid)
+//       .get()
+//       .then((ps) => ps?.featureType);
 //
+//   if (featureType == null) {
 //     return StoreResult(
-//         uid: EnrollmentDetail.ENROLLMENT_DATE_UID.name,
-//         valueStoreResult: ValueStoreResult.VALUE_CHANGED);
+//         uid: EVENT_COORDINATE_UID,
+//         valueStoreResult: ValueStoreResult.valueHasNotChanged);
 //   }
-//   if (uid == EnrollmentDetail.INCIDENT_DATE_UID.name) {
-//     await enrollmentRepository?.setIncidentDate(value.toDate());
 //
-//     return StoreResult(
-//         uid: EnrollmentDetail.INCIDENT_DATE_UID.name,
-//         valueStoreResult: ValueStoreResult.VALUE_CHANGED);
+//   switch (featureType) {
+//     case FeatureType.point:
+//     case FeatureType.polygon:
+//     case FeatureType.multiPolygon:
+//       if (value != null && extraData != null) {
+//         final geometry = Geometry(
+//           coordinates: value,
+//           type: FeatureType.values
+//               .firstWhere((e) => e.toString().split('.').last == extraData),
+//         );
+//         await _eventRepository?.setGeometry(geometry);
+//         return StoreResult(
+//             uid: EVENT_COORDINATE_UID,
+//             valueStoreResult: ValueStoreResult.valueChanged);
+//       }
+//       return StoreResult(
+//           uid: EVENT_COORDINATE_UID,
+//           valueStoreResult: ValueStoreResult.valueHasNotChanged);
+//     default:
+//       return StoreResult(
+//           uid: EVENT_COORDINATE_UID,
+//           valueStoreResult: ValueStoreResult.valueHasNotChanged);
 //   }
-//   if (uid == EnrollmentDetail.ORG_UNIT_UID.name) {
-//     return const StoreResult(
-//         uid: '', valueStoreResult: ValueStoreResult.VALUE_CHANGED);
-//   }
-//   if (uid == EnrollmentDetail.TEI_COORDINATES_UID.name) {
-//     Geometry? geometry;
-//     // if(value != null) {
-//     //   if(extraData != null){
-//     //     geometry = Geometry.builder()
-//     //         .coordinates(value)
-//     //         .type(FeatureType.valueOf(it))
-//     //         .build();
-//     //   }
-//     await saveTeiGeometry(geometry);
-//     return const StoreResult(
-//         uid: '', valueStoreResult: ValueStoreResult.VALUE_CHANGED);
-//   }
-//   if (uid == EnrollmentDetail.ENROLLMENT_COORDINATES_UID.name) {
-//     Geometry? geometry;
-//     // if(value != null) {
-//     //   if(extraData != null){
-//     //     geometry = Geometry.builder()
-//     //         .coordinates(value)
-//     //         .type(FeatureType.valueOf(it))
-//     //         .build();
-//     //   }
+// }
+
+// Future<StoreResult> storeFile(String uid, String? filePath) async {
+//   final valueType = await () async {
+//     switch (_entryMode) {
+//       case EntryMode.DE:
+//         return _db.dataElementModule.dataElements
+//             .byUid(uid)
+//             .get()
+//             .then((e) => e?.valueType);
+//       case EntryMode.ATTR:
+//         return _db.trackedEntityModule.trackedEntityAttributes
+//             .byUid(uid)
+//             .get()
+//             .then((a) => a?.valueType);
+//       case EntryMode.DV:
+//         throw ArgumentError(
+//             _resourceManager.getString('data_values_save_error'));
+//     }
+//   }();
+//
+//   if (filePath != null) {
 //     try {
-//       await saveEnrollmentGeometry(geometry);
-//       return const StoreResult(
-//           uid: '', valueStoreResult: ValueStoreResult.VALUE_CHANGED);
-//     } on D2Error catch (d2Error) {
-//       String errorMessage = '${d2Error.errorDescription}: $geometry';
-//       // crashReportController.trackError(d2Error, errorMessage);
-//       return const StoreResult(
-//           uid: '', valueStoreResult: ValueStoreResult.ERROR_UPDATING_VALUE);
+//       final fileResourceUid =
+//           await _saveFileResource(filePath, valueType == ValueType.Image);
+//       return StoreResult(
+//           uid: fileResourceUid, valueStoreResult: ValueStoreResult.fileSaved);
+//     } catch (e) {
+//       return StoreResult(
+//         uid: uid,
+//         valueStoreResult: ValueStoreResult.errorUpdatingValue,
+//         message: e.toString(),
+//       );
 //     }
 //   }
 //
-//   return saveAttribute(uid, value);
+//   return StoreResult(
+//       uid: uid, valueStoreResult: ValueStoreResult.errorUpdatingValue);
 // }
 
-// Future<void> saveTeiGeometry(Geometry? geometry) async {
-//   // TODO(NMC): Implement
-//   // var teiRepository = d2.trackedEntityModule().trackedEntityInstances()
-//   //     .uid(enrollmentRepository?.blockingGet()?.trackedEntityInstance())
-//   // teiRepository.setGeometry(geometry);
-// }
-
-// Future<void> saveEnrollmentGeometry(Geometry? geometry) async {
-//   await enrollmentRepository?.setGeometry(geometry);
-// }
-
-// Future<StoreResult> saveAttribute(String uid, String? value) async {
-//   String? teiUid;
-//
-//   switch (entryMode) {
-//     case EntryMode.DE:
-//       await _loadRecordUid();
-//       final Event event =
-//           (await D2Remote.trackerModule.event.byId(recordUid).getOne())!;
-//       final Enrollment enrollment = (await D2Remote.trackerModule.enrollment
-//           .byId(event.enrollment.id)
-//           .getOne())!;
-//
-//       teiUid = enrollment.trackedEntityInstance.id;
-//       break;
-//     case EntryMode.ATTR:
-//       await _loadRecordUid();
-//       teiUid = recordUid;
-//       break;
-//     case EntryMode.DV:
-//       break;
+// Future<StoreResult> _checkStoreEnrollmentDetail(
+//     String uid, String? value, String? extraData) async {
+//   if (uid == EnrollmentDetail.enrollmentDate.name) {
+//     await _enrollmentRepository
+//         ?.setEnrollmentDate(value != null ? DateTime.tryParse(value) : null);
+//     return StoreResult(
+//         uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
 //   }
+//
+//   if (uid == EnrollmentDetail.incidentDate.name) {
+//     await _enrollmentRepository
+//         ?.setIncidentDate(value != null ? DateTime.tryParse(value) : null);
+//     return StoreResult(
+//         uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
+//   }
+//
+//   if (uid == EnrollmentDetail.orgUnitUid.name) {
+//     try {
+//       await _enrollmentRepository?.setOrganisationUnitUid(value);
+//       return StoreResult(
+//           uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
+//     } catch (e) {
+//       return StoreResult(
+//           uid: uid, valueStoreResult: ValueStoreResult.errorUpdatingValue);
+//     }
+//   }
+//
+//   if (uid == EnrollmentDetail.teiCoordinates.name) {
+//     final geometry = value != null && extraData != null
+//         ? Geometry(
+//             coordinates: value,
+//             type: FeatureType.values
+//                 .firstWhere((e) => e.toString().split('.').last == extraData),
+//           )
+//         : null;
+//     _saveTeiGeometry(geometry);
+//     return StoreResult(
+//         uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
+//   }
+//
+//   if (uid == EnrollmentDetail.enrollmentCoordinates.name) {
+//     final geometry = value != null && extraData != null
+//         ? Geometry(
+//             coordinates: value,
+//             type: FeatureType.values
+//                 .firstWhere((e) => e.toString().split('.').last == extraData),
+//           )
+//         : null;
+//     try {
+//       _saveEnrollmentGeometry(geometry);
+//       return StoreResult(
+//           uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
+//     } catch (e, stack) {
+//       _crashReportController.trackError(e, stack.toString());
+//       return StoreResult(
+//           uid: uid, valueStoreResult: ValueStoreResult.errorUpdatingValue);
+//     }
+//   }
+//
+//   return await _saveAttribute(uid, value);
+// }
+
+// void _saveTeiGeometry(Geometry? geometry) {
+//   final teiUid =
+//       _enrollmentRepository?.get().then((e) => e?.trackedEntityInstance);
+//   teiUid.then((uid) {
+//     if (uid != null) {
+//       _db.trackedEntityModule.trackedEntityInstances
+//           .byUid(uid)
+//           .setGeometry(geometry);
+//     }
+//   });
+// }
+
+// void _saveEnrollmentGeometry(Geometry? geometry) {
+//   _enrollmentRepository?.setGeometry(geometry);
+// }
+
+// Future<StoreResult> _saveAttribute(String uid, String? value) async {
+//   final teiUid = await () async {
+//     if (_entryMode == EntryMode.DE) {
+//       final event = await _db.eventModule.events.byUid(_recordUid).get();
+//       return event?.enrollmentChain()?.trackedEntityInstance;
+//     }
+//     if (_entryMode == EntryMode.ATTR) return _recordUid;
+//     return null;
+//   }();
 //
 //   if (teiUid == null) {
 //     return StoreResult(
-//         uid: uid, valueStoreResult: ValueStoreResult.VALUE_HAS_NOT_CHANGED);
+//         uid: uid, valueStoreResult: ValueStoreResult.valueHasNotChanged);
 //   }
 //
-//   if (!(await checkUniqueFilter(uid, value, teiUid))) {
+//   if (!await _uniqueAttributeController.checkUniqueFilter(
+//       uid, value, teiUid)) {
 //     return StoreResult(
-//         uid: uid, valueStoreResult: ValueStoreResult.VALUE_NOT_UNIQUE);
+//         uid: uid, valueStoreResult: ValueStoreResult.valueNotUnique);
 //   }
 //
-//   final TrackedEntityAttributeValueQuery valueRepository = D2Remote
-//       .trackerModule.trackedEntityAttributeValue
-//       .byAttribute(uid)
-//       .byTrackedEntityInstance(teiUid);
+//   final repository =
+//       _db.trackedEntityModule.trackedEntityAttributeValues.value(uid, teiUid);
+//   final attribute =
+//       await _db.trackedEntityModule.trackedEntityAttributes.byUid(uid).get();
+//   final valueType = attribute?.valueType;
+//   final newValue =
+//       UniqueAttributeController.withValueTypeCheck(value, valueType) ?? '';
 //
-//   final tea =
-//       await D2Remote.programModule.trackedEntityAttribute.byId(uid).getOne();
-//   final ValueType? valueType = tea?.valueType.toValueType;
-//
-//   String newValue = value.withValueTypeCheck(valueType) ?? '';
-//
-//   if (valueType == ValueType.IMAGE && value != null) {
-//     newValue = await saveFileResource(value);
-//   }
-//
-//   String? currentValue;
-//   if (await valueRepository.blockingExists()) {
-//     currentValue =
-//         (await valueRepository.getOne())?.value.withValueTypeCheck(valueType);
-//   } else {
-//     currentValue = '';
-//   }
+//   final currentValue = await repository.exists()
+//       ? (await repository.get())?.value.withValueTypeCheck(valueType) ?? ''
+//       : '';
 //
 //   if (currentValue != newValue) {
-//     if (!value.isNullOrEmpty) {
-//       await valueRepository.blockingSetCheck(uid, newValue,
-//           (String attrUid, String value) {
-//         // crashReportController.addBreadCrumb(
-//         //     'blockingSetCheck Crash',
-//         //     'Attribute: $attrUid, value: $value'
-//         // );
+//     if (value?.isNotEmpty == true) {
+//       await repository.setCheck(_db, uid, newValue, onError: (attrUid, val) {
+//         _crashReportController.addBreadCrumb(
+//             'setCheck Crash', 'Attribute: $attrUid, value: $val');
 //       });
 //     } else {
-//       await valueRepository.blockingDeleteIfExist();
+//       await repository.deleteIfExists();
 //     }
 //     return StoreResult(
-//         uid: uid, valueStoreResult: ValueStoreResult.VALUE_CHANGED);
-//   } else {
-//     return StoreResult(
-//         uid: uid, valueStoreResult: ValueStoreResult.VALUE_HAS_NOT_CHANGED);
+//         uid: uid, valueStoreResult: ValueStoreResult.valueChanged);
 //   }
-// }
-
-// Future<bool> checkUniqueFilter(
-//     String uid, String? value, String teiUid) async {
-//   // NMC: TODO
-//   // if (!networkUtils.isOnline()) {
-//   //   return isTrackedEntityAttributeValueUnique(uid, value, teiUid);
-//   // } else {
-//   //   var programUid = enrollmentRepository?.blockingGet()?.program();
-//   //   return isUniqueTEIAttributeOnline(uid, value, teiUid, programUid);
-//   // }
-//   return true;
-// }
-
-////////////////////////////////////////////////////////////
-/////////////////////////////////////////
-//   Future<String> saveFileResource(String path) async {
 //
-//     // var file = FileResizerHelper.resizeFile(
-//     //     File(path), FileResizerHelper.Dimension.MEDIUM);
-//     // return d2.fileResourceModule().fileResources().blockingAdd(file)
-//     return '';
-//   }
+//   return StoreResult(
+//       uid: uid, valueStoreResult: ValueStoreResult.valueHasNotChanged);
+// }
 
-// Future<StoreResult> deleteAttributeValue(
+// Future<String> _saveFileResource(String path, bool resize) async {
+//   final file = resize ? await _fileController.resize(path) : File(path);
+//   return await _db.fileResourceModule.fileResources.add(file);
+// }
+// Future<StoreResult> _deleteAttributeValue(
 //     String field, String optionUid) async {
-//   final Option option =
-//       (await D2Remote.optionModule.option.byId(optionUid).getOne())!;
-//   final List<String> possibleValues = [option.name!, option.code!];
-//   await _loadRecordUid();
-//   final TrackedEntityAttributeValueQuery valueRepository = D2Remote
-//       .trackerModule.trackedEntityAttributeValue
-//       .byAttribute(field)
-//       .byTrackedEntityInstance(recordUid);
-//   if ((await valueRepository.blockingExists()) &&
-//       possibleValues.contains((await valueRepository.getOne())?.value)) {
-//     return saveAttribute(field, null);
-//   } else {
-//     return StoreResult(
-//         uid: field, valueStoreResult: ValueStoreResult.VALUE_HAS_NOT_CHANGED);
+//   final option = await _db.optionModule.options.byUid(optionUid).get();
+//   final possible = [option?.name, option?.code].whereType<String>();
+//   final repository = _db.trackedEntityModule.trackedEntityAttributeValues
+//       .value(field, _recordUid);
+//
+//   if (await repository.exists()) {
+//     final current = (await repository.get())?.value;
+//     if (current != null && possible.contains(current)) {
+//       return await _saveAttribute(field, null);
+//     }
 //   }
+//   return StoreResult(
+//       uid: field, valueStoreResult: ValueStoreResult.valueHasNotChanged);
 // }
-//
-// Future<StoreResult> deleteOptionValueIfSelectedInGroup(
-//     String field, String optionGroupUid, bool isInGroup) async {
-//   final List<OptionGroupOption>? optionGroupOptions = (await D2Remote
-//           .optionModule.optionGroup
-//           .byId(optionGroupUid)
-//           .withOptions()
-//           .getOne())
-//       ?.options;
-//
-//   final List<String> optionsInGroup = await Future.wait(
-//       optionGroupOptions?.map((OptionGroupOption option) async {
-//             // final String code = (await D2Remote.optionModule.option.getOne())!.code!;
-//             return (await D2Remote.optionModule.option
-//                     .byId(option.option)
-//                     .getOne())!
-//                 .code!;
-//             // optionsInGroup.add(code);
-//           }) ??
-//           []);
-//
-//   switch (entryMode) {
-//     case EntryMode.DE:
-//       return deleteDataElementValueIfNotInGroup(
-//           field, optionsInGroup, isInGroup);
-//     case EntryMode.ATTR:
-//       return deleteAttributeValueIfNotInGroup(
-//           field, optionsInGroup, isInGroup);
-//     case EntryMode.DV:
-//       throw ArgumentError(
-//           "DataValues can't be saved using these arguments. Use the other one.");
+// Future<StoreResult> _deleteAttributeValueIfNotInGroup(
+//     String field, List<String> codes, bool _) async {
+//   final repository = _db.trackedEntityModule.trackedEntityAttributeValues
+//       .value(field, _recordUid);
+//   if (await repository.exists()) {
+//     final current = (await repository.get())?.value;
+//     if (current != null && codes.contains(current)) {
+//       return await _saveAttribute(field, null);
+//     }
 //   }
-// }
-//
-// Future<StoreResult> deleteAttributeValueIfNotInGroup(
-//     String field, List<String> optionCodesToShow, bool isInGroup) async {
-//   await _loadRecordUid();
-//   final TrackedEntityAttributeValueQuery valueRepository = D2Remote
-//       .trackerModule.trackedEntityAttributeValue
-//       .byAttribute(field)
-//       .byTrackedEntityInstance(recordUid);
-//   if ((await valueRepository.blockingExists()) &&
-//       optionCodesToShow.contains((await valueRepository.getOne())?.value) ==
-//           isInGroup) {
-//     return saveAttribute(field, null);
-//   } else {
-//     return StoreResult(
-//         uid: field, valueStoreResult: ValueStoreResult.VALUE_HAS_NOT_CHANGED);
-//   }
+//   return StoreResult(
+//       uid: field, valueStoreResult: ValueStoreResult.valueHasNotChanged);
 // }
 }

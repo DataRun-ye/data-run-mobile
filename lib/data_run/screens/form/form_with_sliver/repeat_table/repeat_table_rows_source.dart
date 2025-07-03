@@ -1,9 +1,8 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -146,14 +145,14 @@ class RepeatTableDataSource extends DataTableSource {
           children: [
             Icon(MdiIcons.accountGroup),
             const SizedBox(width: 4),
-            Text(activityModel
+            Text(
+                /*activityModel
                     .call()
                     .managedTeams
                     .where((t) => t.id == field.value)
                     .firstOrNull
-                    ?.name ??
-                field.value ??
-                ''),
+                    ?.name ??*/
+                field.value ?? ''),
           ],
         );
         break;

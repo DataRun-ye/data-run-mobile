@@ -2,10 +2,8 @@ import 'package:d_sdk/core/common/geometry.entity.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
-import 'package:datarunmobile/di/app.bottomsheets.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/features/bottom_sheet/application/bottom_sheet_service.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 import 'package:drift/drift.dart';
 import 'package:stacked/stacked.dart';
 
@@ -69,12 +67,13 @@ class CreateSubmissionSheetModel extends BaseViewModel {
     final submission = await _db.managers.dataSubmissions.createReturning(
         (o) => o(
             id: CodeGenerator.generateUid(),
-            form: form,
-            formVersion: formVersion,
-            versionNumber: version,
-            assignment: assignmentId,
-            status: SubmissionStatus.draft,
-            team: team,
+            dataTemplate: form,
+            dataTemplateVer: formVersion,
+            assignmentType: assignmentId,
+            assignment: Value(assignmentId),
+            syncState: InstanceSyncStatus.draft,
+            team: Value(team),
+            isToUpdate: false,
             formData: Value(formData)),
         mode: InsertMode.replace);
     return submission;

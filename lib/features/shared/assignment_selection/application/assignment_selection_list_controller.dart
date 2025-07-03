@@ -49,9 +49,7 @@ class AssignmentSelectionListController
       {String? activity, int page = 0, int pageSize = 20, bool reset = false}) {
     final db = appLocator<DbManager>().db;
 
-    return db.assignmentsDao
-        .watchAssignmentCardsForActivity(activityId: activity)
-        .get();
+    return db.assignmentsDao.selectAssignments(activityId: activity).get();
   }
 
   Future<void> _loadMore() async {

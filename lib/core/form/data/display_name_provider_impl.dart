@@ -4,14 +4,18 @@ import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart';
 import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart';
+import 'package:datarunmobile/core/form/data/metadata/team_configuration.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
+@Injectable(as: DisplayNameProvider)
 class DisplayNameProviderImpl implements DisplayNameProvider {
-  const DisplayNameProviderImpl(
-      this.optionSetConfiguration, this.orgUnitConfiguration);
+  const DisplayNameProviderImpl(this.optionSetConfiguration,
+      this.orgUnitConfiguration, this.teamConfiguration);
 
   final OptionSetConfigurations optionSetConfiguration;
   final OrgUnitConfiguration orgUnitConfiguration;
+  final TeamConfiguration teamConfiguration;
 
   @override
   Future<String?> provideDisplayValue(
@@ -54,6 +58,9 @@ class DisplayNameProviderImpl implements DisplayNameProvider {
         return orgUnitConfiguration
             .orgUnitByUid(value)
             .then((orgUnit) => orgUnit?.displayName ?? value);
+      case ValueType.Team:
+        return teamConfiguration.managedTeamByUid(value).then((team) =>
+            team != null ? '${Intl.message('team')} ${team.code}' : value);
       case ValueType.Date:
         return DateHelper.fromDbUtcToUiLocalFormat(value);
       case ValueType.DateTime:

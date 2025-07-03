@@ -23,7 +23,7 @@ final activityModelProvider = AutoDisposeProvider<ActivityModel>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ActivityModelRef = AutoDisposeProviderRef<ActivityModel>;
-String _$activitiesHash() => r'ed9cb121c7a8c22a0285015b58fd39e75f1bd557';
+String _$activitiesHash() => r'8e8ba8a7cb3a2b37d8967d896160df18d38725aa';
 
 /// See also [activities].
 @ProviderFor(activities)

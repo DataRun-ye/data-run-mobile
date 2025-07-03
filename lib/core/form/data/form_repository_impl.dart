@@ -268,43 +268,43 @@ class FormRepositoryImpl implements FormRepository {
   }
 
   void _calculateCompletionPercentage(List<FieldUiModel> list) {
-    //   const List<ValueType> unsupportedValueTypes = [
-    //     ValueType.FileResource,
-    //     ValueType.TrackerAssociate,
-    //     ValueType.Username
-    //   ];
-    //
-    //   final Iterable<FieldUiModel> fields = list.where((FieldUiModel it) =>
-    //       it.valueType != null && !unsupportedValueTypes.contains(it.valueType));
-    //
-    //   final int totalFields = fields.length;
-    //   final int fieldsWithValue =
-    //       fields.where((FieldUiModel it) => it.value != null).length;
-    //   if (totalFields == 0) {
-    //     _completionPercentage = 0;
-    //   } else {
-    //     _completionPercentage =
-    //         fieldsWithValue.toDouble() / totalFields.toDouble();
-    //   }
-    // }
-    //
-    // Future<IList<FieldUiModel>> _setOpenedSection(
-    //     IList<FieldUiModel> list) async {
-    //   final List<FieldUiModel> fields = [];
-    //   for (final FieldUiModel field in list) {
-    //     if (field is SectionUiModelImpl) {
-    //       fields.add(_updateSection(field, list));
-    //     } else {
-    //       final FieldUiModel item = await _updateField(field);
-    //       fields.add(item);
-    //     }
-    //   }
-    //
-    //   return fields
-    //       .where((FieldUiModel field) =>
-    //           field.isSectionWithFields() ||
-    //           field.programStageSection == _openedSectionUid)
-    //       .toIList();
+      const List<ValueType> unsupportedValueTypes = [
+        ValueType.FileResource,
+        ValueType.TrackerAssociate,
+        ValueType.Username
+      ];
+
+      final Iterable<FieldUiModel> fields = list.where((FieldUiModel it) =>
+          it.valueType != null && !unsupportedValueTypes.contains(it.valueType));
+
+      final int totalFields = fields.length;
+      final int fieldsWithValue =
+          fields.where((FieldUiModel it) => it.value != null).length;
+      if (totalFields == 0) {
+        _completionPercentage = 0;
+      } else {
+        _completionPercentage =
+            fieldsWithValue.toDouble() / totalFields.toDouble();
+      }
+    }
+
+    Future<IList<FieldUiModel>> _setOpenedSection(
+        IList<FieldUiModel> list) async {
+      final List<FieldUiModel> fields = [];
+      for (final FieldUiModel field in list) {
+        if (field is SectionUiModelImpl) {
+          fields.add(_updateSection(field, list));
+        } else {
+          final FieldUiModel item = await _updateField(field);
+          fields.add(item);
+        }
+      }
+
+      return fields
+          .where((FieldUiModel field) =>
+              field.isSectionWithFields() ||
+              field.programStageSection == _openedSectionUid)
+          .toIList();
   }
 
   @override

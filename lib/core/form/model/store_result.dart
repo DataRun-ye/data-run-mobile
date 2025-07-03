@@ -5,11 +5,11 @@ class StoreResult with EquatableMixin {
   StoreResult(
       {required this.uid,
       required this.valueStoreResult,
-      required this.valueStoreResultMessage});
+      this.message});
 
   final String uid;
   final ValueStoreResult? valueStoreResult;
-  final String? valueStoreResultMessage;
+  final String? message;
 
   bool get contextDataChanged =>
       [
@@ -18,22 +18,22 @@ class StoreResult with EquatableMixin {
         'EVENT_COORDINATE_UID',
         'EVENT_CATEGORY_COMBO_UID'
       ].contains(uid) &&
-      valueStoreResult == ValueStoreResult.VALUE_CHANGED;
+      valueStoreResult == ValueStoreResult.valueChanged;
 
   StoreResult copyWith({
     String? uid,
     ValueStoreResult? valueStoreResult,
-    String? valueStoreResultMessage,
+    String? message,
   }) {
     return StoreResult(
       uid: uid ?? this.uid,
       valueStoreResult: valueStoreResult ?? this.valueStoreResult,
-      valueStoreResultMessage:
-          valueStoreResultMessage ?? this.valueStoreResultMessage,
+      message:
+          message ?? this.message,
     );
   }
 
   @override
   List<Object?> get props =>
-      [uid, valueStoreResultMessage, valueStoreResultMessage];
+      [uid, valueStoreResult, message];
 }

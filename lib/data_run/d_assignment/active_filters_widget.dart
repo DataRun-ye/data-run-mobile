@@ -1,10 +1,11 @@
-import 'package:datarunmobile/data/assignment/assignment.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/filter_query.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ActiveFiltersWidget extends ConsumerWidget {
   const ActiveFiltersWidget({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Map<String, dynamic> activeFilters = ref.watch(filterQueryProvider

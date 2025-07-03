@@ -1,0 +1,207 @@
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
+import 'package:datarunmobile/data/assignment/assignment.dart';
+import 'package:datarunmobile/data_run/d_assignment/assignment_overview_item.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/filter_query.provider.dart';
+import 'package:datarunmobile/home/assignment/presentation/assignment_detail_screen.dart';
+import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
+import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
+import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/home/activity/presentation/widgets/activity_inherited_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class AssignmentTypeListCardViewItem extends ConsumerWidget {
+  const AssignmentTypeListCardViewItem({
+    super.key,
+    required this.onViewDetails,
+  });
+
+  final Function(AssignmentModel assignment) onViewDetails;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchQuery =
+        ref.watch(filterQueryProvider.select((value) => value.searchQuery));
+    final activityModel = ActivityInheritedWidget.of(context);
+    final assignment = ref.watch(assignmentProvider);
+
+    return Card(
+      color: getCardColor(assignment.status, Theme.of(context)),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header Row: Name, Status Badge, Due Info
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (assignment.activity != null)
+                  Expanded(
+                      child: Text(
+                    assignment.activity!.name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  )),
+                buildStatusBadge(assignment.status),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // _buildDetailIcon(
+                //   Icons.assignment,
+                //   Intl.message(assignment.scope.name.toLowerCase()),
+                //   searchQuery,
+                //   context,
+                // ),
+                // const VerticalDivider(),
+                _buildDetailIcon(
+                  Icons.group,
+                  '${S.of(context).team}: ${assignment.team.code}',
+                  searchQuery,
+                  context,
+                ),
+                if (assignment.dueDate != null &&
+                    assignment.startDate != null) ...[
+                  const VerticalDivider(),
+                  _buildDueInfo(context, assignment),
+                ]
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            // Entity and Team Info
+            CopyToClipboard(
+              value: assignment.orgUnit.code,
+              child: _buildDetailIcon(
+                  Icons.location_on,
+                  '${assignment.orgUnit.code} - ${assignment.orgUnit.name}',
+                  searchQuery,
+                  context),
+            ),
+
+            const SizedBox(height: 8),
+            // Resources
+            // if (assignment.allocatedResources.isNotEmpty ||
+            //     assignment.reportedResources.isNotEmpty)
+            //   ResourcesComparisonWidget(
+            //     headerStyle: Theme.of(context).textTheme.bodySmall,
+            //     bodyStyle: Theme.of(context).textTheme.bodySmall,
+            //   ),
+            // // Actions
+            // const SizedBox(height: 5.0),
+
+            // const Divider(height: 16),
+            SyncStatusBadgesView(
+                id: assignment.id,
+                aggregationLevel: StatusAggregationLevel.assignment),
+            const Divider(height: 5.0),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      await showFormSelectionBottomSheet(
+                          context, assignment, activityModel);
+                      ref.invalidate(assignmentModelsProvider);
+                    },
+                    icon: const Icon(Icons.document_scanner),
+                    label: Text(
+                        '${S.of(context).openNewForm} (${/*assignment.forms.length*/ 0})'),
+                  ),
+                  TextButton.icon(
+                    onPressed: () => onViewDetails.call(assignment),
+                    icon: const Icon(Icons.info_outline),
+                    label: Text(S.of(context).viewDetails),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color? getCardColor(AssignmentStatus status, ThemeData theme) {
+    switch (status) {
+      case AssignmentStatus.NOT_STARTED:
+      case AssignmentStatus.PLANNED:
+      case AssignmentStatus.RESCHEDULED:
+        return theme.cardColor.withOpacity(0.5);
+      case AssignmentStatus.DONE:
+        return theme.cardColor;
+      case AssignmentStatus.IN_PROGRESS:
+        return Colors.greenAccent.withOpacity(0.2);
+
+      case AssignmentStatus.MERGED:
+      case AssignmentStatus.REASSIGNED:
+      case AssignmentStatus.CANCELLED:
+        return Colors.orangeAccent.withOpacity(0.2);
+    }
+  }
+
+  // Widget _buildCountChip(BuildContext context,
+  //     {required Widget icon, required String label}) {
+  //   return Chip(
+  //     avatar: icon,
+  //     //Icon(icon, size: 18, color: Theme.of(context).primaryColor),
+  //     label: Text(label, style: Theme.of(context).textTheme.bodySmall),
+  //     backgroundColor: Theme.of(context).chipTheme.backgroundColor,
+  //   );
+  // }
+
+  Widget _buildDueInfo(BuildContext context, AssignmentModel assignment) {
+    final isOverdue = assignment.dueDate!.isBefore(DateTime.now());
+    return Row(
+      children: [
+        Icon(Icons.calendar_today,
+            size: 16, color: isOverdue ? Colors.red : Colors.grey[600]),
+        const SizedBox(width: 4),
+        Text(
+          MaterialLocalizations.of(context).formatFullDate(assignment.dueDate!),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: isOverdue ? Colors.red : Colors.grey[700],
+              ),
+        ),
+        if (assignment.startDay != null) ...[
+          const VerticalDivider(width: 5),
+          Text(
+            '|',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: isOverdue ? Colors.red : Colors.grey[700],
+                ),
+          ),
+          const VerticalDivider(width: 5),
+          Text(
+            '${S.of(context).day} ${assignment.startDay}',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: isOverdue ? Colors.red : Colors.grey[700],
+                ),
+          ),
+        ]
+      ],
+    );
+  }
+
+  Widget _buildDetailIcon(
+      IconData icon, String value, String searchQuery, BuildContext context,
+      {TextStyle? style}) {
+    return Row(
+      children: [
+        Icon(icon, size: 20, color: Colors.grey[600]),
+        const SizedBox(width: 4),
+        QueryHighlightedText(
+            text: value, searchQuery: searchQuery, style: style)
+      ],
+    );
+  }
+}

@@ -1,4 +1,4 @@
-// import 'package:datarunmobile/modular/activity_module/assignment/assignment_detail/assignment_detail_modelview.dart';
+// import 'package:datarunmobile/modular/assignment_module/assignment/assignment_detail/assignment_detail_modelview.dart';
 // import 'package:flutter/material.dart';
 // import 'package:stacked/stacked.dart';
 //

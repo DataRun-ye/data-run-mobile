@@ -2,6 +2,7 @@
 // import 'package:d_sdk/core/form/element_template/element_template.dart';
 // import 'package:d_sdk/core/form/element_template/element_template.dart';
 // import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:datarunmobile/core/element_instance/field_state/field_state.dart';
 // import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 // import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 // import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -50,7 +51,7 @@
 //     );
 //   }
 //
-//   factory FormState.fromTemplate(FormFlatTemplate template) {
+//   factory FormState.fromTemplate(Template template) {
 //     final fields = <String, FieldState>{};
 //     template.fields.forEach((field) {
 //       fields[field.path!] = FieldState.fromTemplate(field);

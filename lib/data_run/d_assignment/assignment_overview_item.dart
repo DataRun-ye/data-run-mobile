@@ -1,18 +1,17 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/data/assignment/assignment.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/filter_query.provider.dart';
 import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/home/activity/presentation/widgets/activity_inherited_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 
-class AssignmentOverviewItem extends ConsumerWidget {
-  const AssignmentOverviewItem({
+class AssignmentCardTile extends ConsumerWidget {
+  const AssignmentCardTile({
     super.key,
     required this.onViewDetails,
   });
@@ -41,11 +40,11 @@ class AssignmentOverviewItem extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (assignment.activity != null)
-                Expanded(
-                    child: Text(
-                  assignment.activity!.name,
-                  style: Theme.of(context).textTheme.titleMedium,
-                )),
+                  Expanded(
+                      child: Text(
+                    assignment.activity!.name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  )),
                 buildStatusBadge(assignment.status),
               ],
             ),
@@ -107,7 +106,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
                     },
                     icon: const Icon(Icons.document_scanner),
                     label: Text(
-                        '${S.of(context).openNewForm} (${/*assignment.forms.length*/00})'),
+                        '${S.of(context).openNewForm} (${/*assignment.forms.length*/ 00})'),
                   ),
                   TextButton.icon(
                     onPressed: () => onViewDetails.call(assignment),
@@ -125,6 +124,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
 
   Color? getCardColor(AssignmentStatus status, ThemeData theme) {
     switch (status) {
+      case AssignmentStatus.PLANNED:
       case AssignmentStatus.NOT_STARTED:
       case AssignmentStatus.RESCHEDULED:
         return theme.cardColor.withOpacity(0.5);
@@ -190,113 +190,38 @@ class AssignmentOverviewItem extends ConsumerWidget {
       children: [
         Icon(icon, size: 20, color: Colors.grey[600]),
         const SizedBox(width: 4),
-        buildHighlightedText(value, searchQuery, context, style: style),
+        QueryHighlightedText(
+            text: value, searchQuery: searchQuery, style: style)
       ],
     );
   }
-
-// Widget _buildHighlightedText(
-//     String text, String searchQuery, BuildContext context,
-//     {TextStyle? style}) {
-//   if (searchQuery.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
-//   if (matches.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final List<TextSpan> spans = [];
-//   int start = 0;
-//
-//   for (final match in matches) {
-//     if (match.start > start) {
-//       spans.add(TextSpan(text: text.substring(start, match.start)));
-//     }
-//     spans.add(TextSpan(
-//       text: text.substring(match.start, match.end),
-//       style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
-//           .merge(style),
-//     ));
-//     start = match.end;
-//   }
-//
-//   if (start < text.length) {
-//     spans.add(TextSpan(text: text.substring(start)));
-//   }
-//
-//   return RichText(
-//     text:
-//         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
-//   );
-// }
-
-// Widget _buildHighlightedText(
-//     String text, String searchQuery, BuildContext context,
-//     {TextStyle? style}) {
-//   if (searchQuery.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
-//   if (matches.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final List<TextSpan> spans = [];
-//   int start = 0;
-//
-//   for (final match in matches) {
-//     if (match.start > start) {
-//       spans.add(TextSpan(text: text.substring(start, match.start)));
-//     }
-//     spans.add(TextSpan(
-//       text: text.substring(match.start, match.end),
-//       style: TextStyle(backgroundColor: Colors.yellow).merge(style),
-//     ));
-//     start = match.end;
-//   }
-//
-//   if (start < text.length) {
-//     spans.add(TextSpan(text: text.substring(start)));
-//   }
-//
-//   return RichText(
-//     text:
-//         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
-//   );
-// }
-
-// Widget _buildResourcesComparison(BuildContext context) {
-//   // Enhanced resource comparison layout
-//   return Column(
-//     crossAxisAlignment: CrossAxisAlignment.start,
-//     children: assignment.allocatedResources.keys.map((key) {
-//       final allocated = assignment.allocatedResources[key] ?? 0;
-//       final reported = assignment.reportedResources[key.toLowerCase()] ?? 0;
-//       return Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(Intl.message(key.toLowerCase()),
-//               style: Theme.of(context).textTheme.bodySmall),
-//           Text(
-//             '$reported / $allocated',
-//             style: Theme.of(context).textTheme.bodySmall,
-//           ),
-//         ],
-//       );
-//     }).toList(),
-//   );
-// }
-
-// Theme.of(context).textTheme.headlineSmall?.copyWith(
-//                 fontWeight: FontWeight.bold,
-//               )
-//
-// Theme.of(context).textTheme.bodySmall)
 }
 
+Future<void> showFormSelectionBottomSheet(BuildContext context,
+    AssignmentModel assignment, ActivityModel activityModel) async {
+  try {
+    await showModalBottomSheet(
+      // isScrollControlled: true,
+      enableDrag: true,
+      context: context,
+      builder: (BuildContext context) {
+        return ActivityInheritedWidget(
+          activityModel: activityModel,
+          child: Text('FormList'),
+        );
+      },
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+            '${S.of(context).errorOpeningForm}: ${e.toString().substring(0, 50)}'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+    return;
+  }
+}
 // class ResourcesComparisonWidget extends ConsumerWidget {
 //   const ResourcesComparisonWidget(
 //       {super.key, this.headerStyle, this.bodyStyle});

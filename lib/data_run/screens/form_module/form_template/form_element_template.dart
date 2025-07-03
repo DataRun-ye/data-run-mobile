@@ -3,11 +3,8 @@ import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/rule/rule.dart';
 import 'package:d_sdk/core/form/tree/tree.dart';
 import 'package:d_sdk/core/form/value_type_rendering_type.dart';
-import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/flat_template_factory.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template_iterator.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/util_methods.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +12,7 @@ import 'package:flutter/foundation.dart';
 @immutable
 class FormFlatTemplate
     with TemplatePathWalkingService<FormElementTemplate>, EquatableMixin {
-  FormFlatTemplate._({
+  FormFlatTemplate({
     required this.id,
     required this.name,
     required this.formVersion,
@@ -40,27 +37,27 @@ class FormFlatTemplate
     }
   }
 
-  static Future<FormFlatTemplate> fromTemplate(
-      {required String templateId}) async {
-    final FormTemplateVersion templateVersion =
-        await getTemplateByVersionOrLatest(templateId);
-    IMap<String, IList<FormOption>> optionLists =
-        await getOptionSets(templateVersion);
-    final formTemplate = await getFormTemplate(templateVersion.template);
-    final fields = await FlatTemplateFactory(templateVersion, optionLists)
-        .createFlatTemplate();
-
-    return FormFlatTemplate._(
-      id: formTemplate.id,
-      name: formTemplate.name,
-      formVersion: templateVersion.id,
-      label: formTemplate.label,
-      description: formTemplate.description,
-      versionNumber: templateVersion.versionNumber,
-      optionLists: optionLists,
-      fields: fields,
-    );
-  }
+  // static Future<FormFlatTemplate> fromTemplate(
+  //     {required String templateId}) async {
+  //   final FormTemplateVersion templateVersion =
+  //       await getTemplateByVersionOrLatest(templateId);
+  //   IMap<String, IList<FormOption>> optionLists =
+  //       await getOptionSets(templateVersion);
+  //   final formTemplate = await getFormTemplate(templateVersion.template);
+  //   final fields = await FlatTemplateFactory(templateVersion, optionLists)
+  //       .createFlatTemplate();
+  //
+  //   return FormFlatTemplate(
+  //     id: formTemplate.id,
+  //     name: formTemplate.name,
+  //     formVersion: templateVersion.id,
+  //     label: formTemplate.label,
+  //     description: formTemplate.description,
+  //     versionNumber: templateVersion.versionNumber,
+  //     optionLists: optionLists,
+  //     fields: fields,
+  //   );
+  // }
 
   final SectionElementTemplate rootElementTemplate;
 

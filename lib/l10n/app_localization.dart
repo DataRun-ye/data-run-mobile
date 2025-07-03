@@ -1540,6 +1540,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'user details not fetched from server: {error}.'**
   String noUserDetailsFetchedFromServer(Object error);
+
+  /// No description provided for @textHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a text'**
+  String get textHint;
+
+  /// No description provided for @longTextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a text'**
+  String get longTextHint;
+
+  /// No description provided for @oneLetterFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Letter'**
+  String get oneLetterFieldHint;
+
+  /// No description provided for @numberFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number'**
+  String get numberFieldHint;
+
+  /// No description provided for @unitIntervalFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter unit Interval'**
+  String get unitIntervalFieldHint;
+
+  /// No description provided for @percentageFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Percentage'**
+  String get percentageFieldHint;
+
+  /// No description provided for @integerFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an integer'**
+  String get integerFieldHint;
+
+  /// No description provided for @positiveIntegerFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a positive integer'**
+  String get positiveIntegerFieldHint;
+
+  /// No description provided for @negativeIntegerFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a negative integer'**
+  String get negativeIntegerFieldHint;
+
+  /// No description provided for @integerOrZeroFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an integer or zero'**
+  String get integerOrZeroFieldHint;
+
+  /// No description provided for @phoneNumberFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a phone number'**
+  String get phoneNumberFieldHint;
+
+  /// No description provided for @emailFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter An Email'**
+  String get emailFieldHint;
+
+  /// No description provided for @urlFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a URL'**
+  String get urlFieldHint;
+
+  /// No description provided for @fileResourceFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select A file'**
+  String get fileResourceFieldHint;
+
+  /// No description provided for @usernameFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Username'**
+  String get usernameFieldHint;
+
+  /// No description provided for @ageFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an Age'**
+  String get ageFieldHint;
+
+  /// No description provided for @booleanFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Boolean'**
+  String get booleanFieldHint;
+
+  /// No description provided for @trueOnlyFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'fieldHintText'**
+  String get trueOnlyFieldHint;
+
+  /// No description provided for @orgunitFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an OrgUnit'**
+  String get orgunitFieldHint;
+
+  /// No description provided for @dataFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a date'**
+  String get dataFieldHint;
+
+  /// No description provided for @dataTimeFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Data time'**
+  String get dataTimeFieldHint;
+
+  /// No description provided for @referenceFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a reference'**
+  String get referenceFieldHint;
+
+  /// No description provided for @timeFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Time'**
+  String get timeFieldHint;
+
+  /// No description provided for @teamFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Team'**
+  String get teamFieldHint;
+
+  /// No description provided for @fullNameFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a full name'**
+  String get fullNameFieldHint;
+
+  /// No description provided for @selectMultiFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'fieldHintText'**
+  String get selectMultiFieldHint;
+
+  /// No description provided for @selectOneFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select One'**
+  String get selectOneFieldHint;
+
+  /// No description provided for @yesOrNoFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Yes or No'**
+  String get yesOrNoFieldHint;
+
+  /// No description provided for @scanCodeFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Code'**
+  String get scanCodeFieldHint;
+
+  /// No description provided for @coordinatesFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Coordinates'**
+  String get coordinatesFieldHint;
+
+  /// No description provided for @imageFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an Image'**
+  String get imageFieldHint;
+
+  /// No description provided for @progressFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'fieldHintText'**
+  String get progressFieldHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

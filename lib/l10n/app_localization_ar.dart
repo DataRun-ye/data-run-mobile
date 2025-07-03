@@ -834,4 +834,100 @@ class AppLocalizationsAr extends AppLocalizations {
   String noUserDetailsFetchedFromServer(Object error) {
     return 'لم يتمكن من مزامنة معلومات المستخدم من السيرفر: $error.';
   }
+
+  @override
+  String get textHint => 'Enter a text';
+
+  @override
+  String get longTextHint => 'Enter a text';
+
+  @override
+  String get oneLetterFieldHint => 'Enter a Letter';
+
+  @override
+  String get numberFieldHint => 'Enter a number';
+
+  @override
+  String get unitIntervalFieldHint => 'Enter unit Interval';
+
+  @override
+  String get percentageFieldHint => 'Enter a Percentage';
+
+  @override
+  String get integerFieldHint => 'Enter an integer';
+
+  @override
+  String get positiveIntegerFieldHint => 'Enter a positive integer';
+
+  @override
+  String get negativeIntegerFieldHint => 'Enter a negative integer';
+
+  @override
+  String get integerOrZeroFieldHint => 'Enter an integer or zero';
+
+  @override
+  String get phoneNumberFieldHint => 'Enter a phone number';
+
+  @override
+  String get emailFieldHint => 'Enter An Email';
+
+  @override
+  String get urlFieldHint => 'Enter a URL';
+
+  @override
+  String get fileResourceFieldHint => 'Select A file';
+
+  @override
+  String get usernameFieldHint => 'Select a Username';
+
+  @override
+  String get ageFieldHint => 'Enter an Age';
+
+  @override
+  String get booleanFieldHint => 'Enter a Boolean';
+
+  @override
+  String get trueOnlyFieldHint => 'fieldHintText';
+
+  @override
+  String get orgunitFieldHint => 'Select an OrgUnit';
+
+  @override
+  String get dataFieldHint => 'Select a date';
+
+  @override
+  String get dataTimeFieldHint => 'Enter a Data time';
+
+  @override
+  String get referenceFieldHint => 'Select a reference';
+
+  @override
+  String get timeFieldHint => 'Select a Time';
+
+  @override
+  String get teamFieldHint => 'Select a Team';
+
+  @override
+  String get fullNameFieldHint => 'Enter a full name';
+
+  @override
+  String get selectMultiFieldHint => 'fieldHintText';
+
+  @override
+  String get selectOneFieldHint => 'Select One';
+
+  @override
+  String get yesOrNoFieldHint => 'Select Yes or No';
+
+  @override
+  String get scanCodeFieldHint => 'Scan Code';
+
+  @override
+  String get coordinatesFieldHint => 'Select Coordinates';
+
+  @override
+  String get imageFieldHint => 'Select an Image';
+
+  @override
+  String get progressFieldHint => 'fieldHintText';
 }

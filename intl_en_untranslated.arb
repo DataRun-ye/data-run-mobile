@@ -1,1 +1,7 @@
-{}
+{
+  "ar": [
+    "numberFieldHint",
+    "unitIntervalFieldHint",
+    "integerFieldHint"
+  ]
+}

@@ -11,11 +11,11 @@
 //     as _i2;
 // import 'package:datarunmobile/data_run/screens/login_screen/login_page.dart'
 //     as _i3;
-// import 'package:datarunmobile/modular/activity_module/activity/activity_list_view.dart'
+// import 'package:datarunmobile/modular/assignment_module/activity/activity_list_view.dart'
 //     as _i6;
 // import 'package:datarunmobile/ui/views/activity/activity_detail_view.dart'
 //     as _i7;
-// import 'package:datarunmobile/ui/views/sync_with_server/sync_with_server_view.dart'
+// import 'package:datarunmobile/ui/views/sync_with_server/sync_with_server.view.dart'
 //     as _i8;
 // import 'package:flutter/material.dart' as _i9;
 // import 'package:flutter/material.dart';

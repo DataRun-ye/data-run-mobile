@@ -1,10 +1,10 @@
 import 'package:d_sdk/core/common/geometry.entity.dart';
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/data_run/form/form_submission/form_submission_repository.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
@@ -31,9 +31,8 @@ class FormSubmissions extends _$FormSubmissions {
   AppDatabase get db => DSdk.db;
 
   Future<void> markSubmissionAsFinal(String uid) async {
-    await db.managers.dataSubmissions
-        .filter((f) => f.id(uid))
-        .update((o) => o.call(status: const Value(SubmissionStatus.finalized)));
+    await db.managers.dataSubmissions.filter((f) => f.id(uid)).update(
+        (o) => o.call(syncState: const Value(InstanceSyncStatus.finalized)));
 
     ref.invalidateSelf();
     await future;
@@ -43,20 +42,21 @@ class FormSubmissions extends _$FormSubmissions {
   Future<DataSubmission> createNewSubmission(
       {required String assignmentId,
       required String team,
-        required String form,
-        required String formVersion,
-        required int version,
+      required String form,
+      required String formVersion,
+      required int version,
       Map<String, dynamic> formData = const {},
       Geometry? geometry}) async {
     final submission = await db.managers.dataSubmissions.createReturning(
         (o) => o(
             id: CodeGenerator.generateUid(),
-            form: form,
-            formVersion: formVersion,
-            versionNumber: version,
-            assignment: assignmentId,
-            status: SubmissionStatus.draft,
-            team: team,
+            dataTemplate: form,
+            dataTemplateVer: formVersion,
+            assignmentType: assignmentId,
+            assignment: Value(assignmentId),
+            syncState: InstanceSyncStatus.draft,
+            team: Value(team),
+            isToUpdate: false,
             formData: Value(formData)),
         mode: InsertMode.replace);
 
@@ -73,7 +73,7 @@ class FormSubmissions extends _$FormSubmissions {
   Future<void> updateSubmission(DataSubmission submission) async {
     await db
         .update(db.dataSubmissions)
-        .replace(submission.copyWith(status: SubmissionStatus.draft));
+        .replace(submission.copyWith(syncState: InstanceSyncStatus.draft));
     ref.invalidateSelf();
     await future;
   }
@@ -132,7 +132,7 @@ Future<IMap<String, dynamic>> formSubmissionData(Ref ref,
       .watch(formSubmissionRepositoryProvider)
       .getSubmission(submissionId);
   final submissionData = await ref.watch(
-      formSubmissionsProvider(formSubmission!.form).selectAsync(
+      formSubmissionsProvider(formSubmission!.dataTemplate).selectAsync(
           (IList<DataSubmission> submissions) => submissions
               .firstWhere((item) => item.id == submissionId)
               .formData));

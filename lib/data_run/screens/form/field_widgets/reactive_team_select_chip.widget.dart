@@ -1,5 +1,4 @@
 import 'package:datarunmobile/data/form_instance.provider.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/d_team/team_model.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
@@ -22,7 +21,7 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
 
-    final teams = ActivityInheritedWidget.of(context).managedTeams.unlock;
+    final teams = <TeamModel>[];//ActivityInheritedWidget.of(context).managedTeams.unlock;
 
     return ReactiveChoiceChips<String>(
         formControl: formInstance.form.control(element.elementPath!)

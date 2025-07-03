@@ -24,7 +24,7 @@ class _InternetAwareAppBarState extends State<InternetAwareAppBar> {
   void initState() {
     super.initState();
 
-    appLocator<ConnectivityService>()
+    appLocator<NetworkUtil>()
         .connectivityStatusStream
         .listen((isOnline) {
       setState(() {

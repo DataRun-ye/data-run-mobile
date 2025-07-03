@@ -1,6 +1,9 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: HintProvider)
 class HintProviderImpl implements HintProvider {
   const HintProviderImpl();
 
@@ -8,60 +11,61 @@ class HintProviderImpl implements HintProvider {
   String provideDateHint(ValueType valueType) {
     switch (valueType) {
       case ValueType.Text:
-        return 'fieldHintText';
+        return S.current.textHint;
       case ValueType.LongText:
-        return 'fieldHintText';
+        return S.current.longTextHint;
       case ValueType.Letter:
-        return 'fieldHintText';
+        return S.current.oneLetterFieldHint;
       case ValueType.Number:
-        return 'fieldHintText';
+        return S.current.numberFieldHint;
       case ValueType.UnitInterval:
-        return 'fieldHintText';
+        return S.current.unitIntervalFieldHint;
       case ValueType.Percentage:
-        return 'fieldHintText';
+        return S.current.percentageFieldHint;
       case ValueType.Integer:
-        return 'fieldHintText';
+        return S.current.integerFieldHint;
       case ValueType.IntegerPositive:
-        return 'fieldHintText';
+        return S.current.positiveIntegerFieldHint;
       case ValueType.IntegerNegative:
-        return 'fieldHintText';
+        return S.current.negativeIntegerFieldHint;
       case ValueType.IntegerZeroOrPositive:
-        return 'fieldHintText';
+        return S.current.integerOrZeroFieldHint;
       case ValueType.PhoneNumber:
-        return 'fieldHintText';
+        return S.current.phoneNumberFieldHint;
       case ValueType.Email:
-        return 'fieldHintText';
+        return S.current.emailFieldHint;
       case ValueType.URL:
-        return 'fieldHintText';
+        return S.current.urlFieldHint;
       case ValueType.FileResource:
-        return 'fieldHintText';
+        return S.current.fileResourceFieldHint;
       case ValueType.Coordinate:
-        return 'fieldHintText';
+        return S.current.coordinatesFieldHint;
       case ValueType.Username:
-        return 'fieldHintText';
+        return S.current.usernameFieldHint;
       case ValueType.TrackerAssociate:
         return 'fieldHintText';
       case ValueType.Age:
-        return 'fieldHintText';
+        return S.current.ageFieldHint;
       case ValueType.Image:
-        return 'fieldHintText';
+        return S.current.imageFieldHint;
       case ValueType.Boolean:
-        return 'fieldHintText';
+        return S.current.booleanFieldHint;
       case ValueType.TrueOnly:
-        return 'fieldHintText';
+        return S.current.trueOnlyFieldHint;
       case ValueType.Time:
-        return 'fieldHintText';
+        return S.current.timeFieldHint;
       case ValueType.OrganisationUnit:
-        return 'fieldHintText';
+        return S.current.orgunitFieldHint;
       case ValueType.DateTime:
+        return S.current.dataTimeFieldHint;
       case ValueType.Date:
-        return 'fieldHintText';
+        return S.current.dataFieldHint;
       case ValueType.Reference:
-        return 'fieldHintText';
+        return S.current.referenceFieldHint;
       case ValueType.GeoJson:
         return 'fieldHintText';
       case ValueType.Progress:
-        return 'fieldHintText';
+        return S.current.progressFieldHint;
       case ValueType.Section:
         return 'fieldHintText';
       case ValueType.RepeatableSection:
@@ -69,19 +73,19 @@ class HintProviderImpl implements HintProvider {
       case ValueType.Attribute:
         return 'fieldHintText';
       case ValueType.Team:
-        return 'fieldHintText';
+        return S.current.teamFieldHint;
       case ValueType.FullName:
-        return 'fieldHintText';
+        return S.current.fullNameFieldHint;
       case ValueType.SelectMulti:
-        return 'fieldHintText';
+        return S.current.selectMultiFieldHint;
       case ValueType.SelectOne:
-        return 'fieldHintText';
+        return S.current.selectOneFieldHint;
       case ValueType.YesNo:
-        return 'fieldHintText';
+        return S.current.yesOrNoFieldHint;
       case ValueType.Calculated:
         return 'fieldHintText';
       case ValueType.ScannedCode:
-        return 'fieldHintText';
+        return S.current.scanCodeFieldHint;
     }
   }
 }

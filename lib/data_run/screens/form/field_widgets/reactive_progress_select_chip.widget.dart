@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
+import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.provider.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';

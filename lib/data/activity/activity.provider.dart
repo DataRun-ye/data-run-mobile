@@ -1,10 +1,6 @@
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data/team/teams.provider.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
-import 'package:datarunmobile/data_run/d_team/team_model.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/shared/activity_model.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,63 +13,10 @@ ActivityModel activityModel(Ref ref) {
 
 @riverpod
 Future<List<ActivityModel>> activities(Ref ref) async {
-  final IList<TeamModel> managedTeams =
-      await ref.watch(teamsProvider(EntityScope.Managed).future);
+  final db = appLocator<DbManager>().db;
+  final userActivities = appLocator<User>().activityUIDs;
+  final activities =
+      await db.activitiesDao.selectActivities(ids: userActivities).get();
 
-  final IList<TeamModel> assignedTeams =
-      await ref.watch(teamsProvider(EntityScope.Assigned).future);
-
-  final List<Activity> userEnabledActivities =
-      await DSdk.db.managers.activities.filter((f) => f.disabled(false)).get();
-
-  final List<ActivityModel> userActivities = [];
-
-  for (final activity in userEnabledActivities) {
-    final activityAssignedTeam =
-        assignedTeams.where((t) => t.activity == activity.id).firstOrNull;
-    final List<TeamModel> activityManagedTeams =
-        managedTeams.where((t) => t.activity == activity.id).toList();
-    final List<Assignment> assignedAssignment = await DSdk
-        .db.managers.assignments
-        .filter((f) => f.team.id(activityAssignedTeam?.id))
-        .get();
-
-    final List<Assignment> managedAssignments = await DSdk
-        .db.managers.assignments
-        .filter((f) => f.team.id.isIn(managedTeams.map((t) => t.id)))
-        .get();
-
-    final assignedOrgUnits = await DSdk.db.managers.orgUnits
-        .filter((f) => f.id.isIn(assignedAssignment.map((a) => a.orgUnit)))
-        .get();
-
-    final managedOrgUnits = await DSdk.db.managers.orgUnits
-        .filter((f) => f.id.isIn(managedAssignments.map((a) => a.orgUnit)))
-        .get();
-
-    userActivities.add(
-      ActivityModel(
-        assignedTeam: activityAssignedTeam,
-        activity: IdentifiableModel(
-          id: activity.id,
-          code: activity.code,
-          name: activity.name ?? '',
-        ),
-        startDate: activity.startDate,
-        endDate: activity.endDate,
-        managedAssignments: managedAssignments.length,
-        assignedAssignments: assignedAssignment.length,
-        assignedForms:
-            activityAssignedTeam?.formPermissions.map((f) => f.form) ??
-                <String>[],
-        managedTeams: activityManagedTeams,
-        orgUnits: [
-          ...managedOrgUnits,
-          ...assignedOrgUnits
-        ].map((o) => IdentifiableModel(id: o.id, name: o.name ?? '', code: o.code)),
-      ),
-    );
-  }
-
-  return userActivities;
+  return activities;
 }

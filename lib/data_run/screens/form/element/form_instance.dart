@@ -1,13 +1,13 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/data/form_submission/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/home/form_template/domain/service/form_element_builder.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -89,7 +89,7 @@ class FormInstance {
     });
 
     formSubmission = formSubmission.copyWith(
-        progressStatus: Value(_assignmentStatus),
+        assignmentStatus: Value(_assignmentStatus),
         formData: Value(formSubmission.formData
           ?..removeWhere((k, v) => !metadata.contains(k))
           ..['_status'] = _assignmentStatus?.name

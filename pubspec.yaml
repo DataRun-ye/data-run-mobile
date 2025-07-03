@@ -66,6 +66,12 @@ dependencies:
   get: ^4.7.2
   shimmer: ^3.0.0
   infinite_scroll_pagination: ^5.0.0
+  animated_splash_screen: ^1.3.0
+  async: ^2.13.0
+  flutter_slidable: ^4.0.0
+  recursive_tree_flutter: ^1.0.4
+  go_router: ^15.1.2
+  built_collection: ^5.1.1
 #  dropdown_search: ^6.0.1
 #  latlong2: ^0.8.2
 #  pluto_grid: ^8.0.0

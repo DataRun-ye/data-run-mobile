@@ -8,18 +8,22 @@ import 'package:shared_preferences/shared_preferences.dart'
 
 @module
 abstract class ThirdPartyServicesModule {
-  @injectable
-  Dio dio(AuthInterceptor authInterceptor) {
-    final dioWithAuth = Dio(
-      BaseOptions(
-        baseUrl: AppEnvironment.apiBaseUrl,
-        sendTimeout:
-            const Duration(seconds: AppEnvironment.apiRequestSentTimeout),
-      ),
-    );
+  @singleton
+  CancelToken cancelToken() => CancelToken();
 
-    dioWithAuth.interceptors.add(authInterceptor);
-    return dioWithAuth;
+  @injectable
+  Dio dio(AuthInterceptor authInterceptor, CancelToken cancelToken) {
+    final Map<String, String> _headers = {};
+    _headers['content-type'] = 'application/json; charset=utf-8';
+
+    final dio = Dio()
+      ..options.baseUrl = AppEnvironment.apiBaseUrl
+      ..options.headers = _headers
+      ..options.connectTimeout = const Duration(seconds: 5)
+      ..options.receiveTimeout = const Duration(seconds: 20)
+      ..interceptors.add(authInterceptor);
+
+    return dio;
   }
 
   @preResolve

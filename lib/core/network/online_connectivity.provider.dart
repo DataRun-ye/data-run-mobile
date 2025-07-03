@@ -8,12 +8,12 @@ part 'online_connectivity.provider.g.dart';
 class IsOnline extends _$IsOnline {
   @override
   Future<bool> build() {
-    return appLocator<ConnectivityService>().checkInternetConnection();
+    return appLocator<NetworkUtil>().isOnline();
   }
 
   void check() async {
     await future;
     state = AsyncData(
-        await appLocator<ConnectivityService>().checkInternetConnection());
+        await appLocator<NetworkUtil>().isOnline());
   }
 }

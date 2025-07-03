@@ -2,22 +2,26 @@ import 'package:datarunmobile/core/form/data/form_repository.dart';
 import 'package:datarunmobile/core/form/form_state/form_state.data.dart';
 import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'form_notifier.provider.g.dart';
 
 @riverpod
-FormRepository formRepository(FormRepositoryRef ref) {
+FormRepository formRepository(Ref ref) {
   throw UnimplementedError();
 }
 
-@riverpod
-FormFlatTemplate submissionFormFlatTemplate(SubmissionFormFlatTemplateRef ref) {
-  throw UnimplementedError();
-}
-
-@Riverpod(dependencies: [submissionFormFlatTemplate])
+// @riverpod
+// FormFlatTemplate submissionFormFlatTemplate(Ref ref) {
+//   throw UnimplementedError();
+// }
+//
+@Riverpod(dependencies: [formRepository])
 class FormNotifier extends _$FormNotifier {
+  FormRepository get _formRepository => ref.read(formRepositoryProvider);
+
   @override
   Future<FormState> build() async {
     // final FormVersion formTemplate =
@@ -38,22 +42,22 @@ class FormNotifier extends _$FormNotifier {
         OnSave() => throw UnimplementedError(), //_handleSave(intent)
         OnFocus() => throw UnimplementedError(), //_handleFocus(intent),
         OnTextChange() =>
-        throw UnimplementedError(), //_handleTextChange(intent),
+          throw UnimplementedError(), //_handleTextChange(intent),
         OnFinish() => throw UnimplementedError(), //_handleFinish(),
-      // ... other intents
-      // TODO: Handle this case.
+        // ... other intents
+        // TODO: Handle this case.
         OnNext() => throw UnimplementedError(),
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         ClearValue() => throw UnimplementedError(),
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         OnClear() => throw UnimplementedError(),
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         OnQrCodeScanned() => throw UnimplementedError(),
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         OnSaveDate() => throw UnimplementedError(),
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         OnSection() => throw UnimplementedError(),
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         FetchOptions() => throw UnimplementedError(),
       };
 

@@ -31,8 +31,8 @@ class CopyToClipboard extends StatelessWidget {
 
     void onTap() => _onTap(context);
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Wrap(
+      // mainAxisSize: MainAxisSize.min,
       children: [
         widget,
         IconButton(

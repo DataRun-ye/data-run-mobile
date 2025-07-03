@@ -2,8 +2,8 @@ import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/auth/auth.provider.dart';
 import 'package:datarunmobile/core/services/auth.service.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/data/preference.provider.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -15,6 +15,9 @@ class UserSettingsTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userInfoAsync = ref.watch(userInfoProvider);
     final authService = locator<AuthService>();
+
+    final language = ref.watch(preferenceNotifierProvider(Preference.language));
+
     return AsyncValueWidget(
       value: userInfoAsync,
       valueBuilder: (user) => ListView(
@@ -87,17 +90,15 @@ class UserSettingsTab extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 10),
+
           Card(
             child: ListTile(
               leading: const Icon(
                 Icons.language,
               ),
               title: Text(S.of(context).language),
-              subtitle: Text(
-                  ref.watch(preferenceNotifierProvider(Preference.language))),
-              trailing: DropdownButton<String>(
-                value:
-                    ref.watch(preferenceNotifierProvider(Preference.language)),
+              subtitle: DropdownButton<String>(
+                value: language,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
                     {
@@ -116,6 +117,7 @@ class UserSettingsTab extends ConsumerWidget {
                   );
                 }).toList(),
               ),
+              // trailing:
             ),
           ),
 

@@ -118,7 +118,7 @@ class App extends ConsumerWidget {
   }
 
   ThemeData getTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        fontFamily: 'Rubik',
+        // fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.light),
         useMaterial3: useMaterial3,
@@ -126,7 +126,7 @@ class App extends ConsumerWidget {
       );
 
   ThemeData getDarkTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        fontFamily: 'Rubik',
+        // fontFamily: 'Rubik',
         colorScheme: ColorScheme.fromSeed(
             seedColor: colorSeed.color, brightness: Brightness.dark),
         useMaterial3: useMaterial3,

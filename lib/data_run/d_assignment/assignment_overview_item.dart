@@ -1,5 +1,7 @@
+import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
+import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:datarunmobile/core/common/state.dart';
 import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
@@ -28,6 +30,9 @@ class AssignmentOverviewItem extends ConsumerWidget {
         ref.watch(filterQueryProvider.select((value) => value.searchQuery));
     final activityModel = ActivityInheritedWidget.of(context);
     final assignment = ref.watch(assignmentProvider);
+    final List<Pair<TeamFormPermission, bool>> userForms = assignment.userForms;
+    final List<Pair<TeamFormPermission, bool>> availableLocally =
+        assignment.availableForms;
 
     return Card(
       color: getCardColor(assignment.status, Theme.of(context)),
@@ -47,8 +52,8 @@ class AssignmentOverviewItem extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildDetailIcon(
                   Icons.assignment,
@@ -60,6 +65,15 @@ class AssignmentOverviewItem extends ConsumerWidget {
                 _buildDetailIcon(
                   Icons.group,
                   '${S.of(context).team}: ${assignment.teamCode}',
+                  searchQuery,
+                  context,
+                ),
+                const VerticalDivider(),
+                _buildDetailIcon(
+                  Icons.document_scanner,
+                  availableLocally.length == userForms.length
+                      ? '(${S.of(context).form(availableLocally.length)})'
+                      : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
                   searchQuery,
                   context,
                 ),
@@ -113,14 +127,15 @@ class AssignmentOverviewItem extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () async {
-                      await showFormSelectionBottomSheet(
-                          context, assignment, activityModel);
-                      ref.invalidate(assignmentsProvider);
-                    },
+                    onPressed: assignment.availableForms.length > 0
+                        ? () async {
+                            await showFormSelectionBottomSheet(
+                                context, assignment, activityModel);
+                            ref.invalidate(assignmentsProvider);
+                          }
+                        : null,
                     icon: const Icon(Icons.document_scanner),
-                    label: Text(
-                        '${S.of(context).openNewForm} (${assignment.forms.length})'),
+                    label: Text(S.of(context).openNewForm),
                   ),
                   TextButton.icon(
                     onPressed: () => onViewDetails.call(assignment),

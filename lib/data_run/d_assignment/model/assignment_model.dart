@@ -1,6 +1,8 @@
 import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
@@ -23,11 +25,12 @@ class AssignmentModel with EquatableMixin {
     this.rescheduledDate,
     this.allocatedResources = const {},
     this.reportedResources = const {},
-    required this.forms,
+    required this.userForms,
   });
 
   final String id;
   final String activityId;
+
   // final String activity;
   final String entityId;
   final String entityCode;
@@ -41,9 +44,12 @@ class AssignmentModel with EquatableMixin {
   final String? startDate;
   final DateTime? dueDate;
   final DateTime? rescheduledDate;
-  final List<String> forms;
+  final List<Pair<TeamFormPermission, bool>> userForms;
   final Map<String, dynamic> allocatedResources; // E.g., ITNs, Population
   final Map<String, dynamic> reportedResources; // E.g., ITNs, Population
+
+  List<Pair<TeamFormPermission, bool>> get availableForms =>
+      userForms.where((form) => form.second).toList();
 
   AssignmentModel copyWith({
     String? id,
@@ -61,7 +67,7 @@ class AssignmentModel with EquatableMixin {
     String? startDate,
     DateTime? dueDate,
     DateTime? rescheduledDate,
-    List<String>? forms,
+    List<Pair<TeamFormPermission, bool>>? userForms,
     Map<String, int>? allocatedResources,
     Map<String, int>? reportedResources,
   }) {
@@ -81,7 +87,7 @@ class AssignmentModel with EquatableMixin {
       startDate: startDate ?? this.startDate,
       dueDate: dueDate ?? this.dueDate,
       rescheduledDate: rescheduledDate ?? this.rescheduledDate,
-      forms: forms ?? this.forms,
+      userForms: userForms ?? this.userForms,
       allocatedResources: allocatedResources ?? this.allocatedResources,
       reportedResources: reportedResources ?? this.reportedResources,
     );
@@ -120,7 +126,8 @@ class AssignmentModel with EquatableMixin {
         startDate,
         dueDate,
         rescheduledDate,
-        forms,
+        userForms,
+        availableForms,
         allocatedResources,
         reportedResources
       ];

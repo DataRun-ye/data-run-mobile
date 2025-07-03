@@ -36,7 +36,7 @@ Future<AndroidDeviceInfoService> userDeviceInfoService(
 @riverpod
 Future<FormVersion> latestFormTemplate(LatestFormTemplateRef ref,
     {required String formId}) async {
-  final formTemplates = await D2Remote.formModule.formTemplateV
+  final List<FormVersion> formTemplates = await D2Remote.formModule.formTemplateV
       .where(attribute: 'formTemplate', value: formId)
       .orderBy(attribute: 'versionNumber', sortOrder: SortOrder.DESC)
       .get();

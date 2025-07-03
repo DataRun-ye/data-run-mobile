@@ -28,28 +28,32 @@ class SectionWidget extends HookConsumerWidget {
     if (elementPropertiesSnapshot.data!.hidden) {
       return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
+    final cs = Theme.of(context).colorScheme;
 
     return SliverStickyHeader(
         header: Container(
           color: headerColor ?? Theme.of(context).colorScheme.primary,
+          // color: cs.primaryContainer,
           padding: const EdgeInsets.all(16),
-          child: Text(element.label, style: const TextStyle(color: Colors.white)),
+          child: Text(element.label, style: TextStyle(color: headerColor != null ? cs.onPrimaryContainer : cs.onPrimary)),
         ),
         sliver: MultiSliver(
           pushPinnedChildren: true,
-          children: buildSliverList(element.elements.values),
+          children: buildSliverList(element.elements.values, context),
         ));
   }
 
   List<Widget> buildSliverList(
-    Iterable<FormElementInstance<dynamic>> elements,
+    Iterable<FormElementInstance<dynamic>> elements, BuildContext context
   ) {
+    final cs = Theme.of(context).colorScheme;
+
     return elements.map((element) {
       if (element is Section) {
         return SectionWidget(
           key: Key(element.elementPath!),
           element: element,
-          headerColor: Colors.orange.shade600,
+          headerColor: cs.primaryContainer,
         );
       } else if (element is RepeatSection) {
         return RepeatTableSliver(

@@ -206,7 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Select A file",
     ),
     "filters": MessageLookupByLibrary.simpleMessage("Filters"),
-    "finalData": MessageLookupByLibrary.simpleMessage("Final Data"),
+    "finalData": MessageLookupByLibrary.simpleMessage("Finalize the Data"),
     "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
     "form": m3,
     "formContainsSomeErrors": MessageLookupByLibrary.simpleMessage(
@@ -268,9 +268,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Managed Assignments",
     ),
     "managedTeams": MessageLookupByLibrary.simpleMessage("Managed Teams"),
-    "markAsFinalData": MessageLookupByLibrary.simpleMessage(
-      "Make the form Final before exiting.",
-    ),
+    "markAsFinalData": MessageLookupByLibrary.simpleMessage("Make form Final?"),
     "maximumAllowedLengthIsError": m4,
     "merged": MessageLookupByLibrary.simpleMessage("Merged"),
     "middleName": MessageLookupByLibrary.simpleMessage("Middle Name"),

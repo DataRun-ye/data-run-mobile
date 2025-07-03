@@ -6,7 +6,25 @@ part of 'teams.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$teamsHash() => r'c66d3b5b09c7d1fa2507ec52abfa64e1956aed36';
+String _$userAvailableFormsHash() =>
+    r'050031c97f12a76d48497bd8c8f07368199c496a';
+
+/// See also [userAvailableForms].
+@ProviderFor(userAvailableForms)
+final userAvailableFormsProvider =
+    AutoDisposeFutureProvider<List<Pair<TeamFormPermission, bool>>>.internal(
+  userAvailableForms,
+  name: r'userAvailableFormsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$userAvailableFormsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef UserAvailableFormsRef
+    = AutoDisposeFutureProviderRef<List<Pair<TeamFormPermission, bool>>>;
+String _$teamsHash() => r'fe511fb8d3dc01e3388cb6102e1bc7ca67a9cd61';
 
 /// Copied from Dart SDK
 class _SystemHash {

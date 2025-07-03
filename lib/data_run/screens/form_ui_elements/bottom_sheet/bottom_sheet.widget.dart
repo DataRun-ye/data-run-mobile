@@ -15,25 +15,26 @@ class QBottomSheetDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          // Icon and Title
-          Icon(completionDialogModel.bottomSheetContentModel.icon, size: 30),
-          const SizedBox(height: 10),
+          Icon(completionDialogModel.bottomSheetContentModel.icon, size: 30, color: cs.error,),
+          const SizedBox(height: 8),
           Text(
             completionDialogModel.bottomSheetContentModel.title,
-            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
-          const Divider(),
-          const SizedBox(height: 10),
-          Text(
-            completionDialogModel.bottomSheetContentModel.subtitle,
-            style: const TextStyle(fontSize: 12.0),
-          ),
-          const SizedBox(height: 10),
+          // const Divider(),
+          const SizedBox(height: 30),
+          // Text(
+          //   completionDialogModel.bottomSheetContentModel.subtitle,
+          //   style: Theme.of(context).textTheme.titleMedium,
+          // ),
+          // const SizedBox(height: 10),
           // Scrollable Error Body with max height
           Flexible(
             child: SingleChildScrollView(
@@ -60,8 +61,8 @@ class QBottomSheetDialog extends StatelessWidget {
                           initiallyExpanded: true,
                           title: Text(
                             sectionName,
-                            style: const TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                color: cs.error, fontWeight: FontWeight.bold),
                           ),
                           children: fieldErrors.map((fieldEntry) {
                             return GestureDetector(
@@ -69,10 +70,20 @@ class QBottomSheetDialog extends StatelessWidget {
                                   ?.call(fieldEntry.fieldPath),
                               child: ListTile(
                                 dense: true,
-                                leading:
-                                    const Icon(Icons.error, color: Colors.red),
-                                title: Text(
-                                    '${fieldEntry.fieldName}: ${fieldEntry.message}'),
+                                leading: Icon(Icons.error, color: cs.error),
+                                title: Wrap(
+                                  children: [
+                                    Text('${fieldEntry.fieldName}: ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge),
+                                    Text('${fieldEntry.message}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(color: cs.error)),
+                                  ],
+                                ),
                               ),
                             );
                           }).toList(),

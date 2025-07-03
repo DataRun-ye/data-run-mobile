@@ -23,7 +23,7 @@ class QReactiveAgeField extends ConsumerWidget {
         formControl: formInstance.form.control(element.elementPath!)
             as FormControl<String>,
         validationMessages: validationMessages(),
-        displayDob: true,
+        // displayDob: true,
         referenceDate: formInstance.entryStarted,
         enabled: element.elementControl.enabled,
         label: element.label,

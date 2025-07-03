@@ -389,10 +389,10 @@ class S {
     return Intl.message('OK', name: 'ok', desc: 'ok button label', args: []);
   }
 
-  /// `Final Data`
+  /// `Finalize the Data`
   String get finalData {
     return Intl.message(
-      'Final Data',
+      'Finalize the Data',
       name: 'finalData',
       desc: 'Yes finalData button label',
       args: [],
@@ -439,10 +439,10 @@ class S {
     );
   }
 
-  /// `Make the form Final before exiting.`
+  /// `Make form Final?`
   String get markAsFinalData {
     return Intl.message(
-      'Make the form Final before exiting.',
+      'Make form Final?',
       name: 'markAsFinalData',
       desc: 'confirmation mark as final data dialog body\'s message',
       args: [],

@@ -1,8 +1,10 @@
 import 'package:d2_remote/d2_remote.dart';
 import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
 import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
 import 'package:d2_remote/modules/metadatarun/activity/entities/d_activity.entity.dart';
 import 'package:d2_remote/modules/metadatarun/assignment/entities/d_assignment.entity.dart';
+import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:datarunmobile/core/models/d_identifiable_model.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
@@ -24,6 +26,10 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
 
   final IList<TeamModel> assignedTeams =
       await ref.watch(teamsProvider(EntityScope.Assigned).future);
+
+  // <form, downloaded>
+  final List<Pair<TeamFormPermission, bool>> userForms =
+  await ref.watch(userAvailableFormsProvider.future);
 
   final User? user = await D2Remote.userModule.user.getOne();
 
@@ -70,9 +76,7 @@ Future<List<ActivityModel>> activities(ActivitiesRef ref) async {
             })),
         managedAssignments: managedAssignments.length,
         assignedAssignments: assignedAssignment.length,
-        assignedForms:
-            activityAssignedTeam?.formPermissions.map((f) => f.form) ??
-                <String>[],
+        assignedForms: userForms,
         managedTeams: activityManagedTeams,
         orgUnits: [
           ...managedOrgUnits,

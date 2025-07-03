@@ -62,7 +62,7 @@
   "@ok": {
     "description": "ok button label"
   },
-  "finalData": "Final Data",
+  "finalData": "Finalize the Data",
   "@finalData": {
     "description": "Yes finalData button label"
   },
@@ -82,7 +82,7 @@
   "@errorOpeningNewForm": {
     "description": "Error message when opening new form"
   },
-  "markAsFinalData": "Make the form Final before exiting.",
+  "markAsFinalData": "Make form Final?",
   "@markAsFinalData": {
     "description": "confirmation mark as final data dialog body's message"
   },

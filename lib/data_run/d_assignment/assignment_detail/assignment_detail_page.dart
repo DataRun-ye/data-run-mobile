@@ -6,16 +6,16 @@ import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/form_submissions_table.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/form_submission_create.widget.dart';
+import 'package:datarunmobile/data_run/d_assignment/form_submission_create.widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class AssignmentDetailPage extends ConsumerWidget {
-  const AssignmentDetailPage({super.key, required this.assignment});
+  AssignmentDetailPage({super.key, required this.assignment});
 
   final AssignmentModel assignment;
 
@@ -57,19 +57,19 @@ class AssignmentDetailPage extends ConsumerWidget {
 
               // Form Submissions Section
               const SizedBox(height: 20.0),
-              ...assignment.forms
-                  .distinct()
-                  .where((form) => activityModel.assignedForms.contains(form))
+              ...assignment.availableForms
+                  // .distinct()
+                  // .where((form) => activityModel.assignedForms.contains(form))
                   .map(
                     (form) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: _EagerInitialization(
                         child: FormSubmissionsTable(
                           assignment: assignment,
-                          formId: form,
+                          formId: form.first.form,
                         ),
                         assignment: assignment,
-                        formId: form,
+                        formId: form.first.form,
                       ),
                     ),
                   )
@@ -96,8 +96,14 @@ class AssignmentDetailPage extends ConsumerWidget {
       children: [
         CopyToClipboard(
             value: assignment.entityCode,
-            child: _buildDetailRow(context, S.of(context).entity,
-                '${assignment.entityCode} - ${assignment.entityName}')),
+            child: Wrap(
+              children: [
+                _buildDetailRow(context, S.of(context).entity,
+                    '${assignment.entityCode} -'),
+                _buildDetailRow(context, S.of(context).entity,
+                    ' ${assignment.entityName}'),
+              ],
+            )),
         _buildDetailRow(context, S.of(context).team, '${assignment.teamCode}'),
         _buildDetailRow(
             context, S.of(context).scope, assignment.scope.name.toLowerCase()),
@@ -107,8 +113,8 @@ class AssignmentDetailPage extends ConsumerWidget {
         if (assignment.rescheduledDate != null)
           _buildDetailRow(context, S.of(context).rescheduled,
               formatDate(assignment.rescheduledDate!, context)),
-        _buildDetailRow(
-            context, S.of(context).forms, assignment.forms.length.toString()),
+        _buildDetailRow(context, S.of(context).forms,
+            '${assignment.availableForms.length} / ${assignment.userForms.length}'),
       ],
     );
   }
@@ -171,9 +177,12 @@ class AssignmentDetailPage extends ConsumerWidget {
   Widget _buildActions(
       BuildContext context, WidgetRef ref, ActivityModel activityModel) {
     return ElevatedButton.icon(
-      onPressed: () async {
-        await showFormSelectionBottomSheet(context, assignment, activityModel);
-      },
+      onPressed: assignment.availableForms.length > 0
+          ? () async {
+              await showFormSelectionBottomSheet(
+                  context, assignment, activityModel);
+            }
+          : null,
       icon: const Icon(Icons.document_scanner),
       label: Text(
         S.of(context).openNewForm,
@@ -216,9 +225,13 @@ Future<void> showFormSelectionBottomSheet(BuildContext context,
     AssignmentModel assignment, ActivityModel activityModel) async {
   try {
     await showModalBottomSheet(
+      // barrierColor: Colors.black26,
       isScrollControlled: true,
-      // enableDrag: true,
+      enableDrag: true,
       context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
       builder: (BuildContext context) {
         return ActivityInheritedWidget(
           activityModel: activityModel,

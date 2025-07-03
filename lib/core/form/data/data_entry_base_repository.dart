@@ -3,7 +3,6 @@ import 'package:d2_remote/modules/datarun/form/shared/field_template/section_tem
 import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
 import 'package:d2_remote/modules/datarun/form/shared/validation_strategy.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
-import 'package:datarunmobile/core/form/model/section_ui_model_impl.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
 import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 

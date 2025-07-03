@@ -1,3 +1,37 @@
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+
+main() {
+  ///      Pattern                           Result
+  ///      ----------------                  -------
+  initializeDateFormatting('ar').then((_) {
+   final now = DateTime.now();
+   final locale = 'ar_jr';
+   final localeEn = 'en';
+   final parsed = DateTime.parse('2025-07-02');
+   print('parsed:                     $parsed');
+   print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
+   print('parsed.yMMd():  ${DateFormat('yMMMd', locale).format(parsed)}');
+   print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
+  });
+ final yMd = DateFormat.yMd(); //-> 7/10/1996
+ final yMMMMd = DateFormat.yMMMMd();
+ final now = DateTime.now();
+ // print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
+ // print('DateFormat.yMd().add_jm():  ${DateFormat.yMd().add_jm().format(now)}');
+ // print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
+ // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+ // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+ // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+ // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+
+  DateFormat('yMd'); //-> 7/10/1996
+  DateFormat.y().add_Md(); //-> July 10, 1996
+  DateFormat.jm(); //-> 5:08 PM
+  DateFormat.yMd().add_jm(); //-> 7/10/1996 5:08 PM
+  DateFormat.Hm(); //-> 17:08 // force 24 hour time
+}
+
 // import 'package:datarunmobile/tree_examples/lib/material/bottom_sheets.dart';
 // import 'package:datarunmobile/tree_examples/lib/material/modals.dart';
 // import 'package:datarunmobile/tree_examples/lib/user_model.dart';

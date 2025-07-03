@@ -25,6 +25,8 @@ import 'package:datarunmobile/core/form/data/display_name_provider.dart'
     as _i1030;
 import 'package:datarunmobile/core/form/data/display_name_provider_impl.dart'
     as _i971;
+import 'package:datarunmobile/core/form/data/form_command_handler.dart'
+    as _i372;
 import 'package:datarunmobile/core/form/data/form_repository.dart' as _i16;
 import 'package:datarunmobile/core/form/data/form_value_store.dart' as _i520;
 import 'package:datarunmobile/core/form/data/map_field_value_to_user.dart'
@@ -35,8 +37,6 @@ import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dar
     as _i406;
 import 'package:datarunmobile/core/form/data/search_option_set_option.dart'
     as _i653;
-import 'package:datarunmobile/core/form/data/form_command_handler.dart'
-    as _i830;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
     as _i595;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
@@ -154,8 +154,8 @@ Future<_i174.GetIt> init(
         hintProvider: gh<_i595.HintProvider>(),
         displayNameProvider: gh<_i1030.DisplayNameProvider>(),
       ));
-  gh.factory<_i830.FormCommandHandler>(
-      () => _i830.FormCommandHandler(repository: gh<_i16.FormRepository>()));
+  gh.factory<_i372.FormCommandHandler>(
+      () => _i372.FormCommandHandler(repository: gh<_i16.FormRepository>()));
   gh.factory<_i359.AssignmentDetailService>(() => _i359.AssignmentDetailService(
       gh<_i236.IdentifiableRepository<_i603.Assignment>>()));
   return getIt;

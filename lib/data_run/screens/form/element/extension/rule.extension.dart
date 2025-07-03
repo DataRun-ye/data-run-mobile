@@ -59,13 +59,10 @@ extension ApplyAction on RuleAction {
         }
         break;
       case RuleActionType.Filter:
-      case RuleActionType.StopRepeat:
       case RuleActionType.Warning:
-      case RuleActionType.Count:
       case RuleActionType.Unknown:
         // TODO NOT Implemented
         break;
-      case RuleActionType.HideSection:
       case RuleActionType.ErrorOnComplete:
       case RuleActionType.WarningOnComplete:
       case RuleActionType.DisplayText:
@@ -117,13 +114,10 @@ extension ApplyAction on RuleAction {
       // element.reset(value: element.template.defaultValue);
       // break;
       case RuleActionType.Filter:
-      case RuleActionType.StopRepeat:
       case RuleActionType.Warning:
-      case RuleActionType.Count:
       case RuleActionType.Unknown:
         // TODO NOT Implemented
         break;
-      case RuleActionType.HideSection:
       case RuleActionType.ErrorOnComplete:
       case RuleActionType.WarningOnComplete:
       case RuleActionType.DisplayText:

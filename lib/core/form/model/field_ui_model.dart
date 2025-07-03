@@ -10,11 +10,51 @@ import 'package:datarunmobile/core/form/ui/intent/dropdown_option.dart';
 import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
+import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d2_remote/modules/datarun/form/shared/value_type_rendering_type.dart';
+import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';
+import 'package:datarunmobile/core/form/model/ui_event_type.dart';
+import 'package:datarunmobile/core/form/ui/event/list_view_ui_events.data.dart';
+import 'package:datarunmobile/core/form/ui/event/ui_event_factory.dart';
+import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
+import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
+import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
+import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d2_remote/modules/datarun/form/shared/value_type_rendering_type.dart';
+import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';
+import 'package:datarunmobile/core/form/model/ui_event_type.dart';
+import 'package:datarunmobile/core/form/ui/event/list_view_ui_events.data.dart';
+import 'package:datarunmobile/core/form/ui/event/ui_event_factory.dart';
+import 'package:datarunmobile/core/form/ui/intent/dropdown_option.dart';
+import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
+import 'package:flutter/material.dart';
+import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
+import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d2_remote/modules/datarun/form/shared/value_type_rendering_type.dart';
+import 'package:datarunmobile/core/form/model/Ui_render_type.dart';
+import 'package:datarunmobile/core/form/model/field_ui_model.dart';
+import 'package:datarunmobile/core/form/model/ui_event_type.dart';
+import 'package:datarunmobile/core/form/ui/event/list_view_ui_events.data.dart';
+import 'package:datarunmobile/core/form/ui/event/ui_event_factory.dart';
+import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
+import 'package:flutter/material.dart';
+
+part 'field_ui_model_impl.dart';
+part 'section_ui_model_impl.dart';
+part 'repeat_ui_model.dart';
 
 typedef IntentCallback = void Function(FormIntent intent);
 typedef ListViewUiEventsCallback = void Function(ListViewUiEvents uiEvent);
 
-abstract class FieldUiModel with EquatableMixin {
+sealed class FieldUiModel with EquatableMixin {
   IntentCallback? get intentCallback;
 
   ListViewUiEventsCallback? get listViewUiEventsCallback;

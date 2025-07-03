@@ -67,16 +67,16 @@ class RulesUtilsProviderImpl implements RulesUtilsProvider {
         case RuleActionType.Error:
           _showError(effect.ruleAction, fieldViewModels, effect.data ?? '');
           break;
-        case RuleActionType.Hide: // HideField
-          _hideField(effect.ruleAction, fieldViewModels);
+        case RuleActionType.Hide:
+          _hideElement(effect.ruleAction, fieldViewModels);
           break;
         case RuleActionType.DisplayText:
         case RuleActionType.DisplayKeyValuePair:
           // no-op
           break;
-        case RuleActionType.HideSection:
-          _hideSection(fieldViewModels, effect.ruleAction);
-          break;
+        // case RuleActionType.HideSection:
+        //   _hideSection(fieldViewModels, effect.ruleAction);
+        //   break;
         case RuleActionType.Assign:
           await _assign(effect.ruleAction, effect, fieldViewModels);
           break;
@@ -197,6 +197,19 @@ class RulesUtilsProviderImpl implements RulesUtilsProvider {
   void _hideFieldOrSection(
       RuleAction action, Map<String, FieldUiModel> fields) {}
 
+  void _hideElement(RuleAction action, Map<String, FieldUiModel> fields) {
+    final uid = action.field ?? '';
+    final model = fields[uid];
+    if (model != null) {
+      return switch (model) {
+        FieldUiModelImpl() => _hideField(action, fields),
+        SectionUiModelImpl() => _hideSection(action, fields),
+        RepeatableSectionUiModel() => _hideRepeat(action, fields),
+      };
+    }
+  }
+
+  /// Hide Field/or Section
   void _hideField(RuleAction action, Map<String, FieldUiModel> fields) {
     final uid = action.field ?? '';
     final model = fields[uid];
@@ -207,7 +220,12 @@ class RulesUtilsProviderImpl implements RulesUtilsProvider {
     }
   }
 
-  void _hideSection(Map<String, FieldUiModel> fields, RuleAction action) {
+  void _hideSection(RuleAction action, Map<String, FieldUiModel> fields) {
+    final section = action.section;
+    fields.removeWhere((key, f) => f.parentSection == section && !f.mandatory);
+  }
+
+  void _hideRepeat(RuleAction action, Map<String, FieldUiModel> fields) {
     final section = action.section;
     fields.removeWhere((key, f) => f.parentSection == section && !f.mandatory);
   }

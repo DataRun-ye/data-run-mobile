@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:datarunmobile/core/form/data/form_repository.dart';
 import 'package:datarunmobile/core/form/model/action_type.dart';
 import 'package:datarunmobile/core/form/model/form_command.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
 import 'package:datarunmobile/core/form/model/value_store_result.dart';
-import 'package:datarunmobile/core/form/ui/intent/command.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -14,23 +12,24 @@ class FormCommandHandler {
   FormCommandHandler({required this.repository});
 
   final FormRepository repository;
+  late FormCommand previousActionItem;
 
   FutureOr<StoreResult> handleCommand(FormCommand action) async {
     return switch (action.type) {
       CommandType.ON_SAVE => _handleSaveCmd(action),
       CommandType.ON_FOCUS ||
       CommandType.ON_NEXT =>
-        _handleFocusOrNextCmd(action),
+          _handleFocusOrNextCmd(action),
       CommandType.ON_TEXT_CHANGE => _handleTextChangeCmd(action),
       CommandType.ON_SECTION_CHANGE => _handleSectionChangeCmd(action),
       CommandType.ON_FINISH => _handleFinishCmd(action),
       CommandType.ON_REQUEST_COORDINATES =>
-        _handleRequestCoordinatesCmd(action),
+          _handleRequestCoordinatesCmd(action),
       CommandType.ON_CANCEL_REQUEST_COORDINATES =>
-        _handleCancelRequestCoordinatesCmd(action),
+          _handleCancelRequestCoordinatesCmd(action),
 
-      // ActionType.ON_ADD_IMAGE_FINISHED => _handleOnAddImageFinishedAction(action),
-      // ActionType.ON_STORE_FILE => _handleOnStoreFileAction(action),
+    // ActionType.ON_ADD_IMAGE_FINISHED => _handleOnAddImageFinishedAction(action),
+    // ActionType.ON_STORE_FILE => _handleOnStoreFileAction(action),
       CommandType.ON_FETCH_OPTIONS => _handleFetchOptionsCmd(action),
     };
   }
@@ -44,46 +43,48 @@ class FormCommandHandler {
   }
 
   Future<StoreResult> _handleSaveCmd(FormCommand action) async {
-    if (action.valueType == ValueType.Coordinate) {
-      repository.setFieldRequestingCoordinates(action.uid, false);
-    }
-
-    repository.updateErrorList(action);
-    if (action.error != null) {
-      return StoreResult(
-        uid: action.uid,
-        valueStoreResult: ValueStoreResult.VALUE_UNCHANGED,
-      );
-    }
-
-    final saveResult =
-        await repository.save(action.uid, action.value, action.extraData);
-    if (saveResult?.valueStoreResult != ValueStoreResult.ERROR_UPDATING_VALUE) {
-      if (action.isEventDetailsRow) {
-        await repository.fetchFormItems();
-      } else {
-        repository.updateValueOnList(
-            action.uid, action.value, action.valueType);
-      }
-    } else {
-      repository.updateErrorList(
-        action.copyWith(
-          error: Throwable(saveResult.valueStoreResultMessage),
-        ),
-      );
-    }
-    return saveResult ??
-        StoreResult(
-          uid: action.uid,
-          valueStoreResult: ValueStoreResult.VALUE_CHANGED,
-        );
+    throw UnimplementedError();
+    // if (action.valueType == ValueType.Coordinate) {
+    //   repository.setFieldRequestingCoordinates(action.uid, false);
+    // }
+    //
+    // repository.updateErrorList(action);
+    // if (action.error != null) {
+    //   return StoreResult(
+    //     uid: action.uid,
+    //     valueStoreResult: ValueStoreResult.VALUE_UNCHANGED,
+    //   );
+    // }
+    //
+    // final saveResult =
+    //     await repository.save(action.uid, action.value, action.extraData);
+    // if (saveResult?.valueStoreResult != ValueStoreResult.ERROR_UPDATING_VALUE) {
+    //   if (action.isEventDetailsRow) {
+    //     await repository.fetchFormItems();
+    //   } else {
+    //     repository.updateValueOnList(
+    //         action.uid, action.value, action.valueType);
+    //   }
+    // } else {
+    //   repository.updateErrorList(
+    //     action.copyWith(
+    //       error: DException(saveResult?.valueStoreResultMessage ?? ''),
+    //     ),
+    //   );
+    // }
+    // return saveResult ??
+    //     StoreResult(
+    //       uid: action.uid,
+    //       valueStoreResult: ValueStoreResult.VALUE_CHANGED,
+    //     );
   }
 
   Future<StoreResult> _handleFocusOrNextCmd(FormCommand action) async {
-    final storeResult = await saveLastFocusedItem(action);
-    repository.setFocusedItem(action);
-    previousActionItem = action;
-    return storeResult;
+    // final storeResult = await saveLastFocusedItem(action);
+    // repository.setFocusedItem(action);
+    // previousActionItem = action;
+    // return storeResult;
+    throw UnimplementedError();
   }
 
   Future<StoreResult> _handleTextChangeCmd(FormCommand action) async {
@@ -111,8 +112,7 @@ class FormCommandHandler {
     );
   }
 
-  FutureOr<StoreResult> _handleRequestCoordinatesCmd(
-      FormCommand action) async {
+  FutureOr<StoreResult> _handleRequestCoordinatesCmd(FormCommand action) async {
     repository.setFieldRequestingCoordinates(action.uid, true);
     return StoreResult(
       uid: action.uid,
@@ -129,13 +129,13 @@ class FormCommandHandler {
     );
   }
 
-  // Future<StoreResult> _handleOnAddImageFinishedAction(FormCommand action) async {
-  //   await repository.setFieldAddingImage(action.uid, false);
-  //   return StoreResult(
-  //     uid: action.uid,
-  //     valueStoreResult: ValueStoreResult.VALUE_HAS_NOT_CHANGED,
-  //   );
-  // }
+// Future<StoreResult> _handleOnAddImageFinishedAction(FormCommand action) async {
+//   await repository.setFieldAddingImage(action.uid, false);
+//   return StoreResult(
+//     uid: action.uid,
+//     valueStoreResult: ValueStoreResult.VALUE_HAS_NOT_CHANGED,
+//   );
+// }
 
 // Future<StoreResult> _handleOnStoreFileAction(FormCommand action) async {
 //   final saveResult = await repository.storeFile(action.uid, action.value);

@@ -6,7 +6,6 @@ import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/form_submissions_table.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/form_submission_create.widget.dart';
-import 'package:datarunmobile/data_run/d_assignment/form_submission_create.widget.dart';
 import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';

@@ -9,10 +9,10 @@ main() {
    final locale = 'ar_jr';
    final localeEn = 'en';
    final parsed = DateTime.parse('2025-07-02');
-   print('parsed:                     $parsed');
-   print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
-   print('parsed.yMMd():  ${DateFormat('yMMMd', locale).format(parsed)}');
-   print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
+   // print('parsed:                     $parsed');
+   // print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
+   // print('parsed.yMMd():  ${DateFormat('yMMMd', locale).format(parsed)}');
+   // print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
   });
  final yMd = DateFormat.yMd(); //-> 7/10/1996
  final yMMMMd = DateFormat.yMMMMd();

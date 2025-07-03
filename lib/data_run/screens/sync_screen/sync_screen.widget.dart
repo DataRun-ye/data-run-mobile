@@ -1,7 +1,6 @@
 import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress.dart';
 import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
-import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:datarunmobile/core/sync_manager/nmc_worker/sync_progress.provider.dart';
 import 'package:datarunmobile/core/sync_manager/nmc_worker/work_info.dart';
 import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';

@@ -1,5 +1,6 @@
 analyzer:
   errors:
+    always_use_package_imports: ignore
     annotate_overrides: ignore
     prefer_const_constructors: ignore
     unused_element: ignore

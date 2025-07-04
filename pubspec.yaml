@@ -50,7 +50,6 @@ dependencies:
   stacked_services: ^1.6.0
   data_table_2: 2.5.16
   injectable: ^2.5.0
-  flex_color_scheme: ^8.0.2
 #  drift: ^2.23.1
 #  sqlcipher_flutter_libs: ^0.6.5
 #  sqlite3: '>=1.8.0 <3.0.0'

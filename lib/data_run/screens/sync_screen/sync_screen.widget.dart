@@ -5,7 +5,6 @@ import 'package:datarunmobile/core/sync_manager/nmc_worker/sync_progress.provide
 import 'package:datarunmobile/core/sync_manager/nmc_worker/work_info.dart';
 import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/utils/mass_utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';

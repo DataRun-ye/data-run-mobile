@@ -93,16 +93,12 @@ class AssignmentDetailPage extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CopyToClipboard(
-            value: assignment.entityCode,
-            child: Wrap(
-              children: [
-                _buildDetailRow(context, S.of(context).entity,
-                    '${assignment.entityCode} -'),
-                _buildDetailRow(context, S.of(context).entity,
-                    ' ${assignment.entityName}'),
-              ],
-            )),
+        CopyToClipboard(value: assignment.entityCode, children: [
+          _buildDetailRow(
+              context, S.of(context).entity, '${assignment.entityCode} -'),
+          _buildDetailRow(
+              context, S.of(context).entity, ' ${assignment.entityName}'),
+        ]),
         _buildDetailRow(context, S.of(context).team, '${assignment.teamCode}'),
         _buildDetailRow(
             context, S.of(context).scope, assignment.scope.name.toLowerCase()),
@@ -222,11 +218,11 @@ class _EagerInitialization extends ConsumerWidget {
 
 Future<void> showFormSelectionBottomSheet(BuildContext context,
     AssignmentModel assignment, ActivityModel activityModel) async {
+  final cs = Theme.of(context).colorScheme;
   try {
     await showModalBottomSheet(
       // barrierColor: Colors.black26,
-      isScrollControlled: true,
-      enableDrag: true,
+      // isScrollControlled: true,
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

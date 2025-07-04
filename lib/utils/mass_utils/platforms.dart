@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:datarunmobile/utils/mass_utils/utils.dart';
 
 bool isDesktop(BuildContext context) {
   final data = MediaQueryData.fromView(View.of(context));
@@ -81,14 +80,6 @@ String getLegacyAppURL(BuildContext context) => isAndroid()
     ? 'https://play.google.com/store/apps/details?id=com.invoiceninja.invoiceninja'
     : 'https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1220337560&mt=8';
 
-String getPdfRequirements(BuildContext context) {
-  if (isMobile(context)) {
-    final String version = isAndroid() ? 'Android 5.0+' : 'iOS 11.0+';
-    return L('pdfMinRequirements').replaceFirst(':version', version);
-  } else {
-    return '';
-  }
-}
 
 String getPlatformLetter() {
   if (kIsWeb) {

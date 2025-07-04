@@ -93,10 +93,9 @@ class AssignmentTableView extends HookConsumerWidget {
                   },
                 ),
                 cells: <DataCell>[
-                  DataCell(buildHighlightedText(
+                  DataCell(BuildHighlightedText(
                       '${assignment.startDay != null ? S.of(context).day : ''} ${assignment.startDay ?? ''}',
-                      searchQuery,
-                      context)),
+                      searchQuery)),
                   DataCell(ProviderScope(
                     overrides: [
                       assignmentProvider.overrideWithValue(assignment)
@@ -115,10 +114,10 @@ class AssignmentTableView extends HookConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        buildHighlightedText(
-                            '${assignment.entityCode}', searchQuery, context),
-                        buildHighlightedText(
-                            '${assignment.entityName}', searchQuery, context)
+                        BuildHighlightedText(
+                            '${assignment.entityCode}', searchQuery),
+                        BuildHighlightedText(
+                            '${assignment.entityName}', searchQuery)
                       ])),
                   ...resourceHeaders.map((header) {
                     return DataCell(Text(

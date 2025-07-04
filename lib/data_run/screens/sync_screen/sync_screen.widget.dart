@@ -5,7 +5,7 @@ import 'package:datarunmobile/core/sync_manager/nmc_worker/sync_progress.provide
 import 'package:datarunmobile/core/sync_manager/nmc_worker/work_info.dart';
 import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/utils/mass_utils/utils.dart';
+import 'package:datarunmobile/utils/mass_utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -24,10 +24,11 @@ class _SyncScreenState extends ConsumerState<SyncScreen> {
   @override
   Widget build(BuildContext context) {
     final syncProgressInfo = ref.watch(syncProgressProvider);
+    final cs = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: ColoredBox(
-          color: convertHexStringToColor('#2C98F0')!,
+          color: cs.surface,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -104,6 +105,8 @@ class SyncProgressCircularIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
     return CircularPercentIndicator(
       radius: 40.0,
       lineWidth: 3.0,
@@ -118,10 +121,10 @@ class SyncProgressCircularIndicator extends StatelessWidget {
             )
           : Text(
               '${syncProgressInfo.progress}%',
-              style: const TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14.0,
-                  color: Color(0xffb3cbf4)),
+                  color: cs.onSurfaceVariant),
             ),
       footer: Padding(
         padding: const EdgeInsets.all(16),
@@ -134,7 +137,7 @@ class SyncProgressCircularIndicator extends StatelessWidget {
       ),
       circularStrokeCap: CircularStrokeCap.round,
       backgroundColor: Colors.transparent,
-      progressColor: Colors.blue[100],
+      progressColor: Colors.amber,
     );
   }
 }

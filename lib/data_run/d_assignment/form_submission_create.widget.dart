@@ -60,65 +60,67 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
         widget.assignment.userForms;
     final List<Pair<TeamFormPermission, bool>> availableLocally =
         widget.assignment.availableForms;
-
-    return Padding(
-      // padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.document_scanner, size: 30),
-              const SizedBox(width: 8.0),
-              Expanded(
-                child: Text(
-                  S.of(context).selectForm,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ).copyWith(color:cs.primary),
+    return FractionallySizedBox(
+      heightFactor: 0.7,
+      child: Padding(
+        // padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.document_scanner, size: 30),
+                const SizedBox(width: 8.0),
+                Expanded(
+                  child: Text(
+                    S.of(context).selectForm,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ).copyWith(color:cs.primary),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8.0),
-              Text(
-                availableLocally.length == userForms.length
-                    ? '(${S.of(context).form(availableLocally.length)})'
-                    : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: cs.onSurfaceVariant,
-                    ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20.0),
-          // Divider(color: Colors.grey.shade400, thickness: 1.0),
-          // const SizedBox(height: 10.0),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.separated(
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                separatorBuilder: (_, __) => const Divider(
-                  height: 1,
-                  thickness: 1,
-                  indent: 16,
-                  endIndent: 16,
+                const SizedBox(width: 8.0),
+                Text(
+                  availableLocally.length == userForms.length
+                      ? '(${S.of(context).form(availableLocally.length)})'
+                      : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: cs.onSurfaceVariant,
+                      ),
                 ),
-                itemCount: availableLocally.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _FormListItem(
-                    index: index,
-                    permission: availableLocally[index].first,
-                    onTap: (FormVersion formTemplate) =>
-                        createAndPopupWithResult(context, formTemplate),
-                  );
-                },
+              ],
+            ),
+            const SizedBox(height: 20.0),
+            // Divider(color: Colors.grey.shade400, thickness: 1.0),
+            // const SizedBox(height: 10.0),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.separated(
+                  // physics: BouncingScrollPhysics(),
+                  // shrinkWrap: true,
+                  separatorBuilder: (_, __) => const Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+                  itemCount: availableLocally.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _FormListItem(
+                      index: index,
+                      permission: availableLocally[index].first,
+                      onTap: (FormVersion formTemplate) =>
+                          createAndPopupWithResult(context, formTemplate),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

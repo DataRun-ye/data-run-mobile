@@ -6,12 +6,12 @@ class CopyToClipboard extends StatelessWidget {
   const CopyToClipboard({
     super.key,
     required this.value,
-    this.child,
+    this.children = const [],
     this.onLongPress,
     this.prefix,
   });
 
-  final Widget? child;
+  final List<Widget> children;
   final String? value;
   final Function()? onLongPress;
   final String? prefix;
@@ -22,19 +22,21 @@ class CopyToClipboard extends StatelessWidget {
       return const SizedBox();
     }
 
-    final Widget widget = child ??
-        Text(
-          prefix != null ? '$prefix: $value' : value!,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        );
+    if (children.isEmpty) {
+      children.add(Text(
+        prefix != null ? '$prefix: $value' : value!,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ));
+    }
 
     void onTap() => _onTap(context);
 
-    return Wrap(
-      // mainAxisSize: MainAxisSize.min,
+    return OverflowBar(
+      spacing: 8,
+      overflowSpacing: 4,
       children: [
-        widget,
+        ...children,
         IconButton(
           onPressed: onTap,
           icon: const Icon(Icons.copy),

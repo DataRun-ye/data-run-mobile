@@ -11,10 +11,11 @@ import 'package:datarunmobile/core/main_constants.dart';
 import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/main.reflectable.dart';
+import 'package:datarunmobile/ui/common/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:stacked_services/stacked_services.dart';
@@ -48,29 +49,29 @@ Future<void> main() async {
     databaseFactory = databaseFactoryFfi;
   }
 
-  // await SentryFlutter.init(
-  //   (options) {
-  //     options.dsn =
-  //         'https://c39a75530f4b8694183508a689bbafb7@o4504831846645760.ingest.us.sentry.io/4507587127214080';
-  //     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-  //     // We recommend adjusting this value in production.
-  //     // options.tracesSampleRate = 1.0;
-  //     // The sampling rate for profiling is relative to tracesSampleRate
-  //     // Setting to 1.0 will profile 100% of sampled transactions:
-  //     // options.profilesSampleRate = 1.0;
-  //   },
-  //   appRunner: () => runApp(
-  //     const ProviderScope(
-  //       child: App(
-  //         key: ValueKey('DATARUN_MAIN_APP'),
-  //       ),
-  //     ),
-  //   ),
-  // );
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://c39a75530f4b8694183508a689bbafb7@o4504831846645760.ingest.us.sentry.io/4507587127214080';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      // options.tracesSampleRate = 1.0;
+      // The sampling rate for profiling is relative to tracesSampleRate
+      // Setting to 1.0 will profile 100% of sampled transactions:
+      // options.profilesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(
+      const ProviderScope(
+        child: App(
+          key: ValueKey('DATARUN_MAIN_APP'),
+        ),
+      ),
+    ),
+  );
 
-  runApp(const ProviderScope(
-    child: App(key: ValueKey('DATARUN_MAIN_APP')),
-  ));
+  // runApp(const ProviderScope(
+  //   child: App(key: ValueKey('DATARUN_MAIN_APP')),
+  // ));
 }
 
 class App extends ConsumerWidget {
@@ -117,13 +118,30 @@ class App extends ConsumerWidget {
     );
   }
 
-  ThemeData getTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
-        // fontFamily: 'Rubik',
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: colorSeed.color, brightness: Brightness.light),
-        useMaterial3: useMaterial3,
-        brightness: Brightness.light,
-      );
+  ThemeData getTheme(ColorSeed colorSeed, bool useMaterial3) {
+    return ThemeData(
+      // fontFamily: 'Rubik',
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: colorSeed.color,
+          brightness: Brightness.light,
+          primary: SurfaceColors.Primary,
+          onPrimary: AppColors.onPrimary,
+          primaryContainer: AppColors.primaryContainer,
+          onPrimaryContainer: AppColors.onPrimaryContainer,
+          secondary: AppColors.secondary,
+          onSecondary: AppColors.onSecondary,
+          secondaryContainer: AppColors.secondaryContainer,
+          onSecondaryContainer: AppColors.onSecondaryContainer,
+          error: AppColors.error,
+          errorContainer: AppColors.errorContainer,
+          onErrorContainer: AppColors.onErrorContainer,
+          onError: AppColors.onError,
+          surface: AppColors.surface,
+          onSurface: AppColors.onSurface),
+      useMaterial3: useMaterial3,
+      // brightness: Brightness.light,
+    );
+  }
 
   ThemeData getDarkTheme(ColorSeed colorSeed, bool useMaterial3) => ThemeData(
         // fontFamily: 'Rubik',

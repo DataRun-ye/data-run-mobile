@@ -90,3 +90,162 @@ class SurfaceColors {
   static const CustomBrown = DColors.CustomBrown;
   static const CustomGray = DColors.CustomGray;
 }
+
+/// A comprehensive reference of Material 3 color roles, ideal for quick lookup.
+class AppColors {
+  // static const Color dataRunPrimary     = Color(0xFF00796B);
+  // static const Color onDataRunPrimary   = Colors.white;
+  // static const Color dataRunAccent      = Color(0xFFFFA000);
+  // static const Color dataRunSurface     = Color(0xFFF5F5F5);
+  // static const Color onDataRunSurface   = Color(0xFF212121);
+  // 👉 Accent Groups: used for key UI elements like buttons, FABs, etc.
+
+  /// The main brand-color for prominent components (FABs, buttons, app bars).
+  static const Color primary = Color(0xFF1976D2); // Blue700
+
+  /// Foreground content (text/icons) to ensure contrast on `primary`.
+  static const Color onPrimary = Color(0xFFFFFFFF); // White
+
+  /// Lighter/darker variant for cards, chips, or sections.
+  static const Color primaryContainer = Color(0xFFBBDEFB); // Blue100
+
+  /// Foreground content for `primaryContainer`.
+  static const Color onPrimaryContainer = Color(0xFF0D47A1); // Blue900
+
+  /// Fixed version of brand color (stays same in light/dark themes).
+  static const Color primaryFixed = Color(0xFF2196F3); // Blue500
+
+  /// Dimmed fixed variant — stronger, more emphasized.
+  static const Color primaryFixedDim = Color(0xFF64B5F6); // Blue300
+
+  /// Foreground color for `primaryFixed`.
+  static const Color onPrimaryFixed = Color(0xFFFFFFFF); // White
+
+  /// Lower-emphasis foreground for fixed variant.
+  static const Color onPrimaryFixedVariant = Color(0xFFBBDEFB); // Blue100
+
+  // 👉 Secondary accent group: less prominent UI accents.
+
+  /// Secondary accent for UI, e.g., filter chips.
+  static const Color secondary = Color(0xFF388E3C); // Green700
+
+  /// Foreground for `secondary`.
+  static const Color onSecondary = Color(0xFFFFFFFF); // White
+
+  /// Background variant for `secondary`–used in surfaces.
+  static const Color secondaryContainer = Color(0xFFC8E6C9); // Green100
+
+  /// Foreground for `secondaryContainer`.
+  static const Color onSecondaryContainer = Color(0xFF1B5E20); // Green900
+
+  /// Fixed secondary color across themes.
+  static const Color secondaryFixed = Color(0xFF4CAF50); // Green500
+
+  /// Dimmed fixed secondary variant.
+  static const Color secondaryFixedDim = Color(0xFF81C784); // Green300
+
+  /// Foreground for `secondaryFixed`.
+  static const Color onSecondaryFixed = Color(0xFFFFFFFF); // White
+
+  /// Lower-emphasis foreground for fixed secondary variant.
+  static const Color onSecondaryFixedVariant = Color(0xFFC8E6C9); // Green100
+
+  // 👉 Tertiary accent group: contrasting or balancing accents at dev’s discretion.
+
+  /// Tertiary accent to highlight or balance UI segments.
+  static const Color tertiary = Color(0xFF512DA8); // Deep Purple700
+
+  /// Foreground for `tertiary`.
+  static const Color onTertiary = Color(0xFFFFFFFF); // White
+
+  /// Background variant for `tertiary`.
+  static const Color tertiaryContainer = Color(0xFFD1C4E9); // Purple100
+
+  /// Foreground for `tertiaryContainer`.
+  static const Color onTertiaryContainer = Color(0xFF311B92); // Purple900
+
+  /// Fixed tertiary color across themes.
+  static const Color tertiaryFixed = Color(0xFF673AB7); // Deep Purple500
+
+  /// Dimmed fixed tertiary variant.
+  static const Color tertiaryFixedDim = Color(0xFF9575CD); // Deep Purple300
+
+  /// Foreground for `tertiaryFixed`.
+  static const Color onTertiaryFixed = Color(0xFFFFFFFF); // White
+
+  /// Lower-emphasis foreground for fixed tertiary variant.
+  static const Color onTertiaryFixedVariant = Color(0xFFD1C4E9); // Purple100
+
+  // 👉 Error & Outline: for error states and UI boundaries.
+
+  /// Standard error color, e.g., form validation errors.
+  static const error = DColors.Red600;
+  static const warning = DColors.Orange800;
+  static const warningContainer = DColors.Orange50;
+  /// Foreground for `error`.
+  static const Color onError = Color(0xFFFFFFFF); // White
+
+  /// Background container for error messages.
+  static const errorContainer = DColors.Red100;
+
+  /// Foreground for `errorContainer`.
+  static const Color onErrorContainer = Color(0xFFB71C1C); // Red900
+
+  /// Color for outlines, borders, dividers.
+  static const Color outline = Color(0xFF9E9E9E); // Grey500
+
+  /// A variant for outlines with different emphasis.
+  static const Color outlineVariant = Color(0xFF616161); // Grey700
+
+  // 👉 Surface layers: manage backgrounds, elevation, and visual hierarchy.
+
+  /// Default “canvas” background, like Scaffold/Dialogs.
+  static const Color surface = Color(0xFFFAFAFA); // Grey50
+
+  /// Content color for `surface`.
+  static const Color onSurface = Color(0xFF000000); // Black
+
+  /// Darkest surface tone (for elevated or overlay surfaces).
+  static const Color surfaceDim = Color(0xFF212121); // Grey900
+
+  /// Lightest surface tone (brightest background).
+  static const Color surfaceBright = Color(0xFFFFFFFF); // White
+
+  /// Lowest-emphasis surface container.
+  static const Color surfaceContainerLowest = Color(0xFFF5F5F5); // Grey100
+
+  /// Low-emphasis surface container.
+  static const Color surfaceContainerLow = Color(0xFFEEEEEE); // Grey200
+
+  /// Mid-level surface container.
+  static const Color surfaceContainer = Color(0xFFE0E0E0); // Grey300
+
+  /// High-emphasis surface container (elevated look).
+  static const Color surfaceContainerHigh = Color(0xFFBDBDBD); // Grey400
+
+  /// Highest-emphasis, most elevated surface container.
+  static const Color surfaceContainerHighest = Color(0xFF9E9E9E); // Grey500
+
+  /// Foreground for variant surfaces.
+  static const Color onSurfaceVariant = Color(0xFF616161); // Grey700
+
+  // 👉 Inverse & Depth: for overlays, modal dialogs, shadows.
+
+  /// Inverted surface background – e.g. snackbars over surfaces.
+  static const Color inverseSurface = Color(0xFF424242); // Grey800
+
+  /// Content for `inverseSurface`.
+  static const Color onInverseSurface = Color(0xFFFFFFFF); // White
+
+  /// Brand color variant for use on inverse surfaces.
+  static const Color inversePrimary = Color(0xFF90CAF9); // Blue200
+
+  /// Color of shadow cast by elevated elements.
+  static const Color shadow = Color(0x40000000); // Black 25% opacity
+
+  /// Scrim overlay color for modal backgrounds.
+  static const Color scrim = Color(0x66000000); // Black 40% opacity
+
+  /// Tint applied to surfaces when elevated or layered.
+  static const Color surfaceTint = Color(0xFF1976D2); // Blue700
+}

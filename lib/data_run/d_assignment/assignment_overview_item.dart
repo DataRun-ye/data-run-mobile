@@ -4,8 +4,8 @@ import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/commons/helpers/collections.dart';
 import 'package:datarunmobile/core/common/state.dart';
 import 'package:datarunmobile/data/data.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
@@ -36,7 +36,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
 
     return Card(
       color: getCardColor(assignment.status, Theme.of(context)),
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      margin: const EdgeInsets.all(16.0),
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -44,110 +44,71 @@ class AssignmentOverviewItem extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Row: Name, Status Badge, Due Info
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildStatusBadge(assignment.status),
-              ],
-            ),
+            _CardHeaderRow(),
             const SizedBox(height: 8),
-            Wrap(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildDetailIcon(
-                  Icons.assignment,
-                  Intl.message(assignment.scope.name.toLowerCase()),
-                  searchQuery,
-                  context,
-                ),
-                const VerticalDivider(),
-                _buildDetailIcon(
-                  Icons.group,
-                  '${S.of(context).team}: ${assignment.teamCode}',
-                  searchQuery,
-                  context,
-                ),
-                const VerticalDivider(),
-                _buildDetailIcon(
-                  Icons.document_scanner,
-                  availableLocally.length == userForms.length
-                      ? '(${S.of(context).form(availableLocally.length)})'
-                      : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
-                  searchQuery,
-                  context,
-                ),
-                if (assignment.dueDate != null &&
-                    assignment.startDate != null) ...[
-                  const VerticalDivider(),
-                  _buildDueInfo(context, assignment),
-                ]
-              ],
-            ),
+            _buildEntityInfo(assignment, searchQuery, context),
             const SizedBox(height: 8),
-
-            // Entity and Team Info
-            CopyToClipboard(
-              value: assignment.entityCode,
-              child: _buildDetailIcon(
-                  Icons.location_on,
-                  '${assignment.entityCode} - ${assignment.entityName}',
-                  searchQuery,
-                  context),
-            ),
-
-            const SizedBox(height: 8),
-            // Resources
-            if (assignment.allocatedResources.isNotEmpty ||
-                assignment.reportedResources.isNotEmpty)
-              ResourcesComparisonWidget(
-                headerStyle: Theme.of(context).textTheme.bodySmall,
-                bodyStyle: Theme.of(context).textTheme.bodySmall,
-              ),
-            // Actions
-            const SizedBox(height: 5.0),
-
-            // const Divider(height: 16),
-            const Row(
-              // mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(width: 2),
-                CountChip(syncStatus: SyncStatus.SYNCED),
-                SizedBox(width: 2),
-                CountChip(syncStatus: SyncStatus.TO_POST),
-                SizedBox(width: 2),
-                CountChip(syncStatus: SyncStatus.TO_UPDATE),
-              ],
-            ),
+            _buildCountChips(),
             const Divider(height: 5.0),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: assignment.availableForms.length > 0
-                        ? () async {
-                            await showFormSelectionBottomSheet(
-                                context, assignment, activityModel);
-                            ref.invalidate(assignmentsProvider);
-                          }
-                        : null,
-                    icon: const Icon(Icons.document_scanner),
-                    label: Text(S.of(context).openNewForm),
-                  ),
-                  TextButton.icon(
-                    onPressed: () => onViewDetails.call(assignment),
-                    icon: const Icon(Icons.info_outline),
-                    label: Text(S.of(context).viewDetails),
-                  ),
-                ],
-              ),
-            ),
+            _buildActionButtons(context, assignment, activityModel, ref),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildEntityInfo(
+      AssignmentModel assignment, String searchQuery, BuildContext context) {
+    return CopyToClipboard(
+      value: assignment.entityCode,
+      children: [
+        const Icon(Icons.location_on),
+        const SizedBox(width: 4),
+        BuildHighlightedText(assignment.entityCode, searchQuery,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+        const SizedBox(width: 8),
+        BuildHighlightedText(assignment.entityName, searchQuery)
+      ],
+    );
+  }
+
+  Widget _buildCountChips() {
+    return Wrap(
+      alignment: WrapAlignment.end,
+      children: const [
+        CountChip(syncStatus: SyncStatus.SYNCED),
+        SizedBox(width: 2),
+        CountChip(syncStatus: SyncStatus.TO_POST),
+        SizedBox(width: 2),
+        CountChip(syncStatus: SyncStatus.TO_UPDATE),
+      ],
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context, AssignmentModel assignment,
+      ActivityModel activityModel, WidgetRef ref) {
+    return OverflowBar(
+      spacing: 8,
+      overflowSpacing: 8,
+      overflowAlignment: OverflowBarAlignment.start,
+      children: [
+        ElevatedButton.icon(
+          onPressed: assignment.availableForms.isNotEmpty
+              ? () async {
+                  await showFormSelectionBottomSheet(
+                      context, assignment, activityModel);
+                  ref.invalidate(assignmentsProvider);
+                }
+              : null,
+          icon: const Icon(Icons.document_scanner),
+          label: Text(S.of(context).openNewForm),
+        ),
+        TextButton.icon(
+          onPressed: () => onViewDetails.call(assignment),
+          icon: const Icon(Icons.info_outline),
+          label: Text(S.of(context).viewDetails),
+        ),
+      ],
     );
   }
 
@@ -167,162 +128,6 @@ class AssignmentOverviewItem extends ConsumerWidget {
         return Colors.orangeAccent.withOpacity(0.2);
     }
   }
-
-  // Widget _buildCountChip(BuildContext context,
-  //     {required Widget icon, required String label}) {
-  //   return Chip(
-  //     avatar: icon,
-  //     //Icon(icon, size: 18, color: Theme.of(context).primaryColor),
-  //     label: Text(label, style: Theme.of(context).textTheme.bodySmall),
-  //     backgroundColor: Theme.of(context).chipTheme.backgroundColor,
-  //   );
-  // }
-
-  Widget _buildDueInfo(BuildContext context, AssignmentModel assignment) {
-    final isOverdue = assignment.dueDate!.isBefore(DateTime.now());
-    return Row(
-      children: [
-        Icon(Icons.calendar_today,
-            size: 16, color: isOverdue ? Colors.red : Colors.grey[600]),
-        const SizedBox(width: 4),
-        Text(
-          formatDate(assignment.dueDate!, context),
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: isOverdue ? Colors.red : Colors.grey[700],
-              ),
-        ),
-        if (assignment.startDay != null) ...[
-          const VerticalDivider(width: 5),
-          Text(
-            '|',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: isOverdue ? Colors.red : Colors.grey[700],
-                ),
-          ),
-          const VerticalDivider(width: 5),
-          Text(
-            '${S.of(context).day} ${assignment.startDay}',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: isOverdue ? Colors.red : Colors.grey[700],
-                ),
-          ),
-        ]
-      ],
-    );
-  }
-
-  Widget _buildDetailIcon(
-      IconData icon, String value, String searchQuery, BuildContext context,
-      {TextStyle? style}) {
-    return Row(
-      children: [
-        Icon(icon, size: 20, color: Colors.grey[600]),
-        const SizedBox(width: 4),
-        buildHighlightedText(value, searchQuery, context, style: style),
-      ],
-    );
-  }
-
-// Widget _buildHighlightedText(
-//     String text, String searchQuery, BuildContext context,
-//     {TextStyle? style}) {
-//   if (searchQuery.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
-//   if (matches.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final List<TextSpan> spans = [];
-//   int start = 0;
-//
-//   for (final match in matches) {
-//     if (match.start > start) {
-//       spans.add(TextSpan(text: text.substring(start, match.start)));
-//     }
-//     spans.add(TextSpan(
-//       text: text.substring(match.start, match.end),
-//       style: TextStyle(backgroundColor: Theme.of(context).primaryColorLight)
-//           .merge(style),
-//     ));
-//     start = match.end;
-//   }
-//
-//   if (start < text.length) {
-//     spans.add(TextSpan(text: text.substring(start)));
-//   }
-//
-//   return RichText(
-//     text:
-//         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
-//   );
-// }
-
-// Widget _buildHighlightedText(
-//     String text, String searchQuery, BuildContext context,
-//     {TextStyle? style}) {
-//   if (searchQuery.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final matches = RegExp(searchQuery, caseSensitive: false).allMatches(text);
-//   if (matches.isEmpty) {
-//     return Text(text, softWrap: true);
-//   }
-//
-//   final List<TextSpan> spans = [];
-//   int start = 0;
-//
-//   for (final match in matches) {
-//     if (match.start > start) {
-//       spans.add(TextSpan(text: text.substring(start, match.start)));
-//     }
-//     spans.add(TextSpan(
-//       text: text.substring(match.start, match.end),
-//       style: TextStyle(backgroundColor: Colors.yellow).merge(style),
-//     ));
-//     start = match.end;
-//   }
-//
-//   if (start < text.length) {
-//     spans.add(TextSpan(text: text.substring(start)));
-//   }
-//
-//   return RichText(
-//     text:
-//         TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
-//   );
-// }
-
-// Widget _buildResourcesComparison(BuildContext context) {
-//   // Enhanced resource comparison layout
-//   return Column(
-//     crossAxisAlignment: CrossAxisAlignment.start,
-//     children: assignment.allocatedResources.keys.map((key) {
-//       final allocated = assignment.allocatedResources[key] ?? 0;
-//       final reported = assignment.reportedResources[key.toLowerCase()] ?? 0;
-//       return Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(Intl.message(key.toLowerCase()),
-//               style: Theme.of(context).textTheme.bodySmall),
-//           Text(
-//             '$reported / $allocated',
-//             style: Theme.of(context).textTheme.bodySmall,
-//           ),
-//         ],
-//       );
-//     }).toList(),
-//   );
-// }
-
-// Theme.of(context).textTheme.headlineSmall?.copyWith(
-//                 fontWeight: FontWeight.bold,
-//               )
-//
-// Theme.of(context).textTheme.bodySmall)
 }
 
 class ResourcesComparisonWidget extends ConsumerWidget {
@@ -372,32 +177,79 @@ class ResourcesComparisonWidget extends ConsumerWidget {
             );
           }).toList(),
         ),
-        // ...assignment.reportedResources.keys.map((key) {
-        //   final allocated = assignment.reportedResources[key] ?? 0;
-        //
-        //   return Padding(
-        //     padding: const EdgeInsets.symmetric(vertical: 4.0),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       mainAxisSize: MainAxisSize.min,
-        //       children: [
-        //         Text(
-        //           Intl.message(key.toLowerCase()),
-        //           style: bodyStyle,
-        //         ),
-        //         const SizedBox(
-        //           width: 30,
-        //         ),
-        //         Text(
-        //           '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
-        //           style: bodyStyle?.copyWith(
-        //             color: Colors.grey.shade700,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   );
-        // }).toList()
+      ],
+    );
+  }
+}
+
+class _CardHeaderRow extends ConsumerWidget {
+  const _CardHeaderRow({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchQuery =
+        ref.watch(filterQueryProvider.select((value) => value.searchQuery));
+    final activityModel = ActivityInheritedWidget.of(context);
+    final assignment = ref.watch(assignmentProvider);
+    final List<Pair<TeamFormPermission, bool>> userForms = assignment.userForms;
+    final List<Pair<TeamFormPermission, bool>> availableLocally =
+        assignment.availableForms;
+
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: OverflowBar(
+            spacing: 32,
+            overflowSpacing: 4,
+            children: [
+              DetailRowWithIcon(
+                  Icons.assignment,
+                  Intl.message(assignment.scope.name.toLowerCase()),
+                  searchQuery),
+              DetailRowWithIcon(Icons.group,
+                  '${S.of(context).team}: ${assignment.teamCode}', searchQuery),
+              DetailRowWithIcon(
+                Icons.document_scanner,
+                availableLocally.length == userForms.length
+                    ? '(${S.of(context).form(availableLocally.length)})'
+                    : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
+                searchQuery,
+              ),
+            ],
+          ),
+        ),
+        buildStatusBadge(assignment.status),
+      ],
+    );
+  }
+}
+
+class DetailRowWithIcon extends StatelessWidget {
+  const DetailRowWithIcon(
+    this.icon,
+    this.text,
+    this.searchQuery, {
+    super.key,
+    this.style,
+  });
+
+  final IconData? icon;
+  final String text;
+
+  final String searchQuery;
+
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    return OverflowBar(
+      spacing: 2,
+      overflowSpacing: 2,
+      children: [
+        Icon(icon, size: 20, color: Colors.grey[600]),
+        const SizedBox(width: 4),
+        BuildHighlightedText(text, searchQuery, style: style)
       ],
     );
   }

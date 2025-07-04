@@ -36,7 +36,7 @@ extension StringNullExtension on String? {
 
   int toInt({int? radix}) => int.parse(this!, radix: radix);
 }
-
+//
 // extension StringExtension on String {
 //   String format(List args, {String needleRegex = '%s'}) {
 //     final RegExp exp = RegExp(needleRegex);

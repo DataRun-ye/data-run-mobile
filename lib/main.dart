@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 // import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
@@ -175,18 +176,23 @@ class App extends ConsumerWidget {
       cardTheme: CardTheme(
           color: cs.surfaceContainerLow, surfaceTintColor: cs.surfaceTint),
 
-
-      inputDecorationTheme:  InputDecorationTheme(
+      inputDecorationTheme: InputDecorationTheme(
         filled: true,
         // alignLabelWithHint: true,
         fillColor: isDark ? cs.surfaceContainerHighest : cs.surface,
-        errorStyle: TextStyle(color: SurfaceColors.Error),
+        errorStyle: TextStyle(color: SurfaceColors.Error, backgroundColor: SurfaceColors.ErrorContainerHighest),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: SurfaceColors.Error, width: 2),
+        ),
         hintStyle: TextStyle(color: cs.onSurfaceVariant),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: cs.outline, width: 0.5),
+          borderSide: BorderSide(color: cs.outlineVariant, width: 0.5),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: cs.primary, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: DColors.Orange900),
+          borderSide: BorderSide(color: cs.primary, width: 1),
         ),
         prefixIconColor: cs.onSurfaceVariant,
         floatingLabelStyle: TextStyle(color: cs.primary),

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
@@ -111,8 +110,6 @@ sealed class FormElementInstance<T> {
       [parentSection?.elementPath, pathItem].whereType<String>().join('.');
 
   T? get value => reduceValue();
-
-  Object? rawValue() => value;
 
   Object? getError(String errorCode, [String? path]) {
     final control = path != null ? findElement(path) : this;

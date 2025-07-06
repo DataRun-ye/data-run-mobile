@@ -25,10 +25,8 @@ class ReactiveYesNoChoiceChips extends ConsumerWidget {
       formControl:
           formInstance.form.control(element.elementPath!) as FormControl<bool>,
       validationMessages: validationMessages(),
-      selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
-      options: _getOptions(context, wide: false),
+      options: _getOptions(context, wide: true),
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(16),
         labelText: element.label,
       ),
     );

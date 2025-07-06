@@ -1,7 +1,5 @@
 import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:datarunmobile/app/app.locator.dart';
-import 'package:datarunmobile/core/resources/resource_manager.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 

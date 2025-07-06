@@ -155,12 +155,11 @@ class FormElementBuilder {
       case ValueType.Date:
       case ValueType.Time:
       case ValueType.DateTime:
-        return FieldInstance<DateTime>(
+        return FieldInstance<String>(
             form: rootFormControl,
-            elementProperties: FieldElementState<DateTime>(
+            elementProperties: FieldElementState<String>(
                 readOnly: templateElement.readOnly,
-                value: DateTime.tryParse(initialFormValue ?? '')?.toLocal() ??
-                    DateTime.tryParse(templateElement.defaultValue ?? ''),
+                value: initialFormValue ?? templateElement.defaultValue,
                 mandatory: templateElement.mandatory),
             template: templateElement);
 

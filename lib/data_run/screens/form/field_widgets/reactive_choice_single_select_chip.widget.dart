@@ -26,12 +26,9 @@ class QReactiveChoiceSingleSelectChips extends ConsumerWidget {
         formControl: formInstance.form.control(element.elementPath!)
             as FormControl<String>,
         validationMessages: validationMessages(),
-        // selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
         options: _getChipOptions(element.visibleOption, wide: true),
         decoration: InputDecoration(
           enabled: element.elementControl.enabled,
-          // border: const OutlineInputBorder(gapPadding: 20),
-          // contentPadding: const EdgeInsets.all(16),
           labelText: element.label,
         ));
   }

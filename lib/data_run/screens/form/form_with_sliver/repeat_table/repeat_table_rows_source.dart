@@ -7,7 +7,6 @@ import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:datarunmobile/data_run/screens/form/field_widgets/q_reactive_date_time_field.widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -164,10 +163,11 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.Date:
       case ValueType.DateTime:
       case ValueType.Time:
-        final viewFormat = DateHelper.getEffectiveUiFormat(field.type);
-        final value = field.value is DateTime
-            ? DateHelper.formatForUi(field.value)
-            : field.value;
+        final viewFormat =
+            DateFormat(DateHelper.getEffectiveUiFormat(field.type));
+        final pickedValue = DateTime.tryParse(field.value ?? '');
+        final value =
+            pickedValue != null ? viewFormat.format(pickedValue) : null;
         cellContent = Text(value ?? '-');
         break;
       case ValueType.SelectMulti:
@@ -206,13 +206,13 @@ class RepeatTableDataSource extends DataTableSource {
     return cellContent;
   }
 
-  String? modelToViewValue(String? modelValue, DateFormat format) {
-    if (modelValue == null) return null;
-    final dt = DateTime.tryParse(modelValue);
-    if (dt == null) return modelValue;
-
-    return format.format(dt);
-  }
+  // String? modelToViewValue(String? modelValue, DateFormat format) {
+  //   if (modelValue == null) return null;
+  //   final dt = DateTime.tryParse(modelValue);
+  //   if (dt == null) return modelValue;
+  //
+  //   return format.format(dt);
+  // }
 
   @override
   int get rowCount => elements.length;

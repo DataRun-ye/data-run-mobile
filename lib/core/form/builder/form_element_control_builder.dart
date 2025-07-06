@@ -105,9 +105,8 @@ class FormElementControlBuilder {
       case ValueType.Date:
       case ValueType.DateTime:
       case ValueType.Time:
-        return FormControl<DateTime>(
-          value: DateTime.tryParse(initialValue ??'')?.toLocal() ??
-              DateTime.tryParse(fieldTemplate.defaultValue ?? ''),
+        return FormControl<String>(
+          value: initialValue ?? fieldTemplate.defaultValue,
           validators: FieldValidators.getValidators(fieldTemplate),
         );
       case ValueType.Integer:

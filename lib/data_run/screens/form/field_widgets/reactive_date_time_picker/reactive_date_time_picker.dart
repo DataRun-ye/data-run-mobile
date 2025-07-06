@@ -11,9 +11,9 @@ enum ReactiveDatePickerFieldType {
 }
 
 typedef GetInitialDate = DateTime Function(
-    DateTime? fieldValue, DateTime lastDate);
+    String? fieldValue, DateTime lastDate);
 
-typedef GetInitialTime = TimeOfDay Function(DateTime? fieldValue);
+typedef GetInitialTime = TimeOfDay Function(String? fieldValue);
 
 /// A builder that builds a widget responsible to decide when to show
 /// the picker dialog.
@@ -38,7 +38,7 @@ typedef GetInitialTime = TimeOfDay Function(DateTime? fieldValue);
 /// )
 /// ```
 class ReactiveDateTimePicker
-    extends ReactiveFocusableFormField<DateTime, String> {
+    extends ReactiveFocusableFormField<String, String> {
   /// Creates a [ReactiveDatePickerField] that wraps the function [showDatePicker].
   ///
   /// Can optionally provide a [formControl] to bind this widget to a control.
@@ -58,7 +58,7 @@ class ReactiveDateTimePicker
     super.key,
     super.formControlName,
     super.formControl,
-    ControlValueAccessor<DateTime, String>? valueAccessor,
+    ControlValueAccessor<String, String>? valueAccessor,
     super.validationMessages,
     super.showErrors,
 
@@ -76,7 +76,7 @@ class ReactiveDateTimePicker
     String? confirmText,
     String? helpText,
     GetInitialDate? getInitialDate,
-    GetInitialTime? getInitialTime,
+    // GetInitialTime? getInitialTime,
     DateFormat? dateFormat,
 
     // date picker params
@@ -112,9 +112,9 @@ class ReactiveDateTimePicker
     EntryModeChangeCallback? onEntryModeChanged,
     Offset? timePickerAnchorPoint,
     Orientation? timePickerOrientation,
-    Future<DateTime?> Function(
+    Future<String?> Function(
       BuildContext context,
-      DateTime? value,
+      String? value,
     )? onTap,
     Widget Function(BuildContext context, String error)? errorBuilder,
 
@@ -169,9 +169,9 @@ class ReactiveDateTimePicker
                       TimeOfDay? time;
                       field.control.focus();
                       field.control.updateValueAndValidity();
-
-                      final initialDate = (getInitialDate ?? _getInitialDate)(
-                        field.control.value,
+                      final fValue = field.control.value;
+                      final initialDate = _getInitialDate(
+                        fValue,
                         effectiveLastDate,
                       );
 
@@ -180,7 +180,7 @@ class ReactiveDateTimePicker
                           effectiveValueAccessor.modelToViewValue(
                             await onTap(
                               field.context,
-                              initialDate,
+                              initialDate.toIso8601String(),
                             ),
                           ),
                         );
@@ -227,8 +227,7 @@ class ReactiveDateTimePicker
                                 date != null)) {
                           time = await showTimePicker(
                             context: field.context,
-                            initialTime: (getInitialTime ??
-                                _getInitialTime)(field.control.value),
+                            initialTime: _getInitialTime(field.control.value),
                             builder: builder,
                             useRootNavigator: useRootNavigator,
                             initialEntryMode: timePickerEntryMode,
@@ -261,13 +260,17 @@ class ReactiveDateTimePicker
                           final dateTime = _combine(date, time);
 
                           final value = field.control.value;
+                          final dateTimeValue =
+                              value != null ? DateTime.tryParse(value) : null;
+
                           // ... and new value is not the same as was before...
-                          if (value == null || dateTime.compareTo(value) != 0) {
+                          if (dateTimeValue == null ||
+                              dateTime.compareTo(dateTimeValue) != 0) {
                             // ... this means that cancel was not pressed at any moment
                             // so we can update the field
                             field.didChange(
                               effectiveValueAccessor.modelToViewValue(
-                                _combine(date, time),
+                                _combine(date, time).toIso8601String(),
                               ),
                             );
                           }
@@ -332,19 +335,19 @@ class ReactiveDateTimePicker
           },
         );
 
-  static DateTimeValueAccessor _effectiveValueAccessor(
+  static _DateTimeValueAccessor _effectiveValueAccessor(
       ReactiveDatePickerFieldType fieldType, DateFormat? dateFormat) {
     switch (fieldType) {
       case ReactiveDatePickerFieldType.date:
-        return DateTimeValueAccessor(
+        return _DateTimeValueAccessor(
           dateTimeFormat: dateFormat ?? DateFormat(DateHelper.UI_DATE_FORMAT),
         );
       case ReactiveDatePickerFieldType.time:
-        return DateTimeValueAccessor(
+        return _DateTimeValueAccessor(
           dateTimeFormat: dateFormat ?? DateFormat(DateHelper.TIME_FORMAT),
         );
       case ReactiveDatePickerFieldType.dateTime:
-        return DateTimeValueAccessor(
+        return _DateTimeValueAccessor(
           dateTimeFormat:
               dateFormat ?? DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION),
         );
@@ -361,9 +364,12 @@ class ReactiveDateTimePicker
     );
   }
 
-  static DateTime _getInitialDate(DateTime? fieldValue, DateTime lastDate) {
-    if (fieldValue != null) {
-      return fieldValue;
+  static DateTime _getInitialDate(String? fieldValue, DateTime lastDate) {
+    DateTime? pickedDate =
+        fieldValue != null ? DateTime.tryParse(fieldValue) : null;
+
+    if (pickedDate != null) {
+      return pickedDate;
     }
 
     final now = DateTime.now();
@@ -371,7 +377,8 @@ class ReactiveDateTimePicker
   }
 
   static TimeOfDay _getInitialTime(dynamic fieldValue) {
-    if (fieldValue != null && fieldValue is DateTime) {
+    final initValue = fieldValue != null ? DateTime.tryParse(fieldValue) : null;
+    if (initValue != null) {
       return TimeOfDay(hour: fieldValue.hour, minute: fieldValue.minute);
     }
 
@@ -407,5 +414,28 @@ class _HoverBuilderState extends State<HoverBuilder> {
     setState(() {
       _isHovered = enabled;
     });
+  }
+}
+
+/// Converts between ISO String in the model and formatted text in the UI.
+class _DateTimeValueAccessor extends ControlValueAccessor<String, String> {
+  _DateTimeValueAccessor({DateFormat? dateTimeFormat})
+      : dateTimeFormat = dateTimeFormat ??
+            DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION);
+
+  final DateFormat dateTimeFormat;
+
+  @override
+  String? modelToViewValue(String? modelValue) {
+    if (modelValue == null) return null;
+    final dt = DateTime.tryParse(modelValue);
+    if (dt == null) return modelValue;
+    return dateTimeFormat.format(dt);
+  }
+
+  @override
+  String? viewToModelValue(String? viewValue) {
+    // we never read back from UI text, only from picker
+    return viewValue;
   }
 }

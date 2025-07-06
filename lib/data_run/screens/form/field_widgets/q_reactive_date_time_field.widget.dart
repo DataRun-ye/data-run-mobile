@@ -17,7 +17,7 @@ import 'reactive_date_time_picker/reactive_date_time_picker.dart';
 class QReactiveDateTimeFormField extends ConsumerWidget {
   const QReactiveDateTimeFormField({super.key, required this.element});
 
-  final FieldInstance<DateTime> element;
+  final FieldInstance<String> element;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +28,7 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
     final displayFormat = DateHelper.getEffectiveUiFormat(element.type);
     final viewFormat = DateFormat(DateHelper.getEffectiveUiFormat(element.type));
     final control = formInstance.form.control(element.elementPath!)
-        as FormControl<DateTime>;
+        as FormControl<String>;
     return ReactiveDateTimePicker(
       formControl: control,
       dateFormat: viewFormat,
@@ -37,15 +37,8 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
       decoration: InputDecoration(
         labelText: element.label,
         enabled: control.enabled,
-        border: OutlineInputBorder(),
-        // helperText: '',
-        // filled: true,
-        // fillColor: Colors.green,
         suffixIcon: Icon(elementIcon),
       ),
-      // onTap: (context, value) async {
-      //   return await showDateTimePickerD(context);
-      // },
     );
   }
 

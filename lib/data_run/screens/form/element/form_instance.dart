@@ -84,7 +84,7 @@ class FormInstance {
 
   Future<DataFormSubmission> _saveSubmission(
       DataFormSubmission formSubmission) async {
-    final formValue = formSection.rawValue() as Map<String, Object?>;
+    final formValue = formSection.value;
     formValue.forEach((key, value) {
       _initialValue.update(
         key,

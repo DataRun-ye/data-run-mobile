@@ -181,9 +181,9 @@ class AssignmentDetailPage extends ConsumerWidget {
       icon: const Icon(Icons.document_scanner),
       label: Text(
         S.of(context).openNewForm,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+        // style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        //       fontWeight: FontWeight.bold,
+        //     ),
       ),
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -221,8 +221,7 @@ Future<void> showFormSelectionBottomSheet(BuildContext context,
   final cs = Theme.of(context).colorScheme;
   try {
     await showModalBottomSheet(
-      // barrierColor: Colors.black26,
-      // isScrollControlled: true,
+      isScrollControlled: true,
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

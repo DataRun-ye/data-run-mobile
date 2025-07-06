@@ -2,15 +2,15 @@ import 'package:datarunmobile/app/app.locator.dart';
 import 'package:datarunmobile/app/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/auth/auth.provider.dart';
-import 'package:datarunmobile/core/auth/internet_aware_screen.dart';
 import 'package:datarunmobile/core/network/online_connectivity.provider.dart';
 import 'package:datarunmobile/core/services/user_session_manager.service.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_page.dart';
 import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/data/preference.provider.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_page.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/utils/color_scheme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -35,17 +35,17 @@ class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final userInfoAsync = ref.watch(userInfoProvider);
     final appAboutAsync = ref.watch(appAboutInfoProvider);
+    final cs = Theme.of(context).colorScheme;
     return AsyncValueWidget(
       value: userInfoAsync,
       valueBuilder: (userInfo) {
         final activitiesAsync = ref.watch(activitiesProvider);
-
         return AsyncValueWidget(
           value: activitiesAsync,
           valueBuilder: (List<ActivityModel> activities) {
             return Scaffold(
-              appBar: InternetAwareAppBar(
-                title: S.of(context).home,
+              appBar: AppBar(
+                title: Text(S.of(context).home),
               ),
               onDrawerChanged: (isOpen) {
                 final hasValue = ref.read(isOnlineProvider).hasValue;
@@ -58,6 +58,9 @@ class _HomeScreenWidgetState extends ConsumerState<HomeScreen> {
                   padding: EdgeInsets.zero,
                   children: <Widget>[
                     UserAccountsDrawerHeader(
+                      decoration: BoxDecoration(
+                        color: cs.isDark ? cs.onSecondary : cs.primary,
+                      ),
                       accountName: Text(userInfo?.firstName ?? '-'),
                       accountEmail: Text(userInfo?.username ?? '-'),
                       currentAccountPicture: CircleAvatar(

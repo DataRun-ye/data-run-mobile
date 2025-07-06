@@ -22,6 +22,17 @@ class Section extends SectionElement<Map<String, Object?>> {
   @override
   Map<String, Object?> get value => Map.unmodifiable(reduceValue()!);
 
+  @override
+  Map<String, Object?>? rawValue() {
+    final map = <String, Object?>{};
+    _elements.forEach((key, element) {
+      if (element.visible || hidden) {
+        map[key] = element.rawValue();
+      }
+    });
+
+    return map;
+  }
   /// Appends all [elements] to the group.
   void addAll(Map<String, FormElementInstance<dynamic>> elements) {
     _elements.addAll(elements);

@@ -131,6 +131,14 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
         .toList();
   }
 
+  @override
+  List<Map<String, Object?>?>? rawValue() {
+    return _elements
+        .where((element) => element.visible || hidden)
+        .map((element) => element.rawValue())
+        .toList();
+  }
+
   void insert(
     int index,
     RepeatItemInstance element, {

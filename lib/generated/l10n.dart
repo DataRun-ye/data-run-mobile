@@ -419,10 +419,10 @@ class S {
     );
   }
 
-  /// `New Submission`
+  /// `New`
   String get openNewForm {
     return Intl.message(
-      'New Submission',
+      'New',
       name: 'openNewForm',
       desc: 'initial entity dialog info submit button label',
       args: [],
@@ -1434,14 +1434,9 @@ class S {
     return Intl.message('Forms', name: 'formsAssigned', desc: '', args: []);
   }
 
-  /// `View Details`
+  /// `Details`
   String get viewDetails {
-    return Intl.message(
-      'View Details',
-      name: 'viewDetails',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Details', name: 'viewDetails', desc: '', args: []);
   }
 
   /// `Resources`

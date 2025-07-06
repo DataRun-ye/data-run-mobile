@@ -29,65 +29,15 @@ enum Preference<T> {
   /// ```
   colorSeed('colorSeed', 2),
 
-  // /// Available values and preference string value is the name string
-  // /// of the enum value
-  // /// ```dart
-  // /// enum ColorImageProvider {
-  // ///   leaves,
-  // ///   peonies,
-  // ///   bubbles,
-  // ///   seaweed,
-  // ///   seagrapes,
-  // ///   petals;
-  // /// }
-  // /// ```
-  // colorImageProvider('colorImageProvider', null),
-
-  // /// light => const ColorScheme.light()
-  // ///
-  // /// dark => const ColorScheme.dark()
-  // imageColorScheme('imageColorScheme', 'light'),
-
   /// colorSeed => ColorSelectionMethod.colorSeed
   ///
   /// image => ColorSelectionMethod.image
   colorSelectionMethod('colorSelectionMethod', 'colorSeed');
-  // credentialsSet(SECURE_CREDENTIALS, false),
-  // serverUrl(SECURE_SERVER_URL, ''),
-  // username(SECURE_USER_NAME, '');
-
-  // override fun saveUserCredentials(serverUrl: String, userName: String, pass: String) {
-  // setValue(SECURE_CREDENTIALS, true)
-  // setValue(SECURE_SERVER_URL, serverUrl)
-  // setValue(SECURE_USER_NAME, userName)
-  // }
-  //
-  // override fun areCredentialsSet(): Boolean {
-  // return getBoolean(SECURE_CREDENTIALS, false)
-  // }
-  //
-  // override fun areSameCredentials(serverUrl: String, userName: String, pass: String): Boolean {
-  // return getString(SECURE_SERVER_URL, "") == serverUrl &&
-  // getString(SECURE_USER_NAME, "") == userName
-  // }
-  //
-  // override fun saveJiraCredentials(jiraAuth: String): String {
-  // return String.format("Basic %s", jiraAuth)
-  // }
-  //
-  // override fun clear() {
-  // sharedPreferences.edit().clear().apply()
-  // }
-
   const Preference(this.key, this.defaultValue);
 
   final String key;
   final T defaultValue;
 }
-
-// @riverpod
-// SharedPreferences sharedPreferences(SharedPreferencesRef ref) =>
-//     throw UnimplementedError();
 
 /// read
 ///

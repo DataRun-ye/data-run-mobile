@@ -68,6 +68,7 @@ class FormElementControlBuilder {
       case ValueType.Text:
       case ValueType.OrganisationUnit:
       case ValueType.Team:
+      case ValueType.Age:
       case ValueType.Progress:
         return FormControl<String>(
           value: initialValue ?? fieldTemplate.defaultValue,
@@ -103,9 +104,10 @@ class FormElementControlBuilder {
         );
       case ValueType.Date:
       case ValueType.DateTime:
-      case ValueType.Age:
-        return FormControl<String>(
-          value: initialValue ?? fieldTemplate.defaultValue,
+      case ValueType.Time:
+        return FormControl<DateTime>(
+          value: DateTime.tryParse(initialValue ??'')?.toLocal() ??
+              DateTime.tryParse(fieldTemplate.defaultValue ?? ''),
           validators: FieldValidators.getValidators(fieldTemplate),
         );
       case ValueType.Integer:

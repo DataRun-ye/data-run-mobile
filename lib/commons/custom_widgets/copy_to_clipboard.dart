@@ -33,8 +33,8 @@ class CopyToClipboard extends StatelessWidget {
     void onTap() => _onTap(context);
 
     return OverflowBar(
-      spacing: 8,
-      overflowSpacing: 4,
+      spacing: 2,
+      overflowSpacing: 1,
       children: [
         ...children,
         IconButton(

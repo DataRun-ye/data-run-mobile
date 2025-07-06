@@ -26,7 +26,7 @@ class QReactiveChoiceSingleSelectChips extends ConsumerWidget {
         formControl: formInstance.form.control(element.elementPath!)
             as FormControl<String>,
         validationMessages: validationMessages(),
-        selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
+        // selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
         options: _getChipOptions(element.visibleOption, wide: true),
         decoration: InputDecoration(
           enabled: element.elementControl.enabled,

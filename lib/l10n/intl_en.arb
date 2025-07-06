@@ -74,7 +74,7 @@
   "@open": {
     "description": "open button label"
   },
-  "openNewForm": "New Submission",
+  "openNewForm": "New",
   "@openNewForm": {
     "description": "initial entity dialog info submit button label"
   },
@@ -234,7 +234,7 @@
   "dueDay": "dueDay",
   "scope": "Scope",
   "formsAssigned": "Forms",
-  "viewDetails": "View Details",
+  "viewDetails": "Details",
   "resources": "Resources",
   "team": "Team",
   "not_started": "Not Started",

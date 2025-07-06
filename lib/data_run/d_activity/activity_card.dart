@@ -1,8 +1,7 @@
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:datarunmobile/generated/l10n.dart';
-
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({required this.activity, required this.onTap, super.key});
@@ -12,6 +11,7 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       elevation: 4,
@@ -29,7 +29,7 @@ class ActivityCard extends StatelessWidget {
               // Activity Name
               Text(
                 activity.activity?.name ?? '',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       // color: Theme.of(context).primaryColor,
                     ),
@@ -40,7 +40,7 @@ class ActivityCard extends StatelessWidget {
               if (activity.assignedTeam?.name != null)
                 Row(
                   children: [
-                    const Icon(Icons.group, color: Colors.grey),
+                     Icon(Icons.group, color: cs.secondary),
                     const SizedBox(width: 8.0),
                     Text(
                       '${S.of(context).assignedTeam}: ${activity.assignedTeam!.name}',
@@ -110,7 +110,7 @@ class ActivityCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.grey),
+          Icon(icon, size: 20, color: Theme.of(context).colorScheme.secondary),
           const SizedBox(width: 8.0),
           Expanded(
             child: Text(

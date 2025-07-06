@@ -2,11 +2,13 @@ import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element_widgets/field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/element_widgets/popup_section.widget.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/d_reactive_date_time_field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_age_field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_barcode_reader_field.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_date_picker.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_drop_down_multi_select_field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_drop_down_with_search_field.widget.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/q_reactive_date_time_field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_switch_field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/q_text_type_field.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/reactive_choice_single_select_chip.widget.dart';
@@ -61,7 +63,7 @@ class FieldFactory {
       case ValueType.Date:
       case ValueType.Time:
       case ValueType.DateTime:
-        return QDatePickerField(element: element as FieldInstance<String>);
+        return QReactiveDateTimeFormField(element: element as FieldInstance<DateTime>);
       case ValueType.Boolean:
       case ValueType.YesNo:
         return ReactiveYesNoChoiceChips(

@@ -63,22 +63,26 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
     return FractionallySizedBox(
       heightFactor: 0.7,
       child: Padding(
-        // padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        // padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                const Icon(Icons.document_scanner, size: 30),
+                Icon(Icons.document_scanner, size: 30),
                 const SizedBox(width: 8.0),
                 Expanded(
                   child: Text(
                     S.of(context).selectForm,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(
                           fontWeight: FontWeight.bold,
-                        ).copyWith(color:cs.primary),
+                        )
+                        .copyWith(color: cs.onSurfaceVariant),
                   ),
                 ),
                 const SizedBox(width: 8.0),
@@ -102,7 +106,7 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
                   // physics: BouncingScrollPhysics(),
                   // shrinkWrap: true,
                   separatorBuilder: (_, __) => const Divider(
-                    height: 1,
+                    height: 4,
                     thickness: 1,
                     indent: 16,
                     endIndent: 16,
@@ -144,7 +148,7 @@ class _FormListItem extends ConsumerWidget {
       valueBuilder: (formTemplate) {
         final cs = Theme.of(context).colorScheme;
         return ListTile(
-          tileColor: cs.onInverseSurface,
+          tileColor: cs.surfaceContainerHigh,
           iconColor: cs.primary,
           textColor: cs.onSurfaceVariant,
           titleTextStyle: Theme.of(context).textTheme.titleMedium,
@@ -166,7 +170,7 @@ class _FormListItem extends ConsumerWidget {
           contentPadding:
               const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: BorderRadius.circular(12.0),
           ),
           hoverColor: cs.onSurface.withOpacity(0.1),
         );

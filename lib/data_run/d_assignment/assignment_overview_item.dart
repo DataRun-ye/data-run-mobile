@@ -35,7 +35,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
         assignment.availableForms;
 
     return Card(
-      color: getCardColor(assignment.status, Theme.of(context)),
+      // color: getCardColor(assignment.status, Theme.of(context)),
       margin: const EdgeInsets.all(16.0),
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -93,16 +93,26 @@ class AssignmentOverviewItem extends ConsumerWidget {
       overflowAlignment: OverflowBarAlignment.start,
       children: [
         ElevatedButton.icon(
-          onPressed: assignment.availableForms.isNotEmpty
-              ? () async {
-                  await showFormSelectionBottomSheet(
-                      context, assignment, activityModel);
-                  ref.invalidate(assignmentsProvider);
-                }
-              : null,
-          icon: const Icon(Icons.document_scanner),
-          label: Text(S.of(context).openNewForm),
-        ),
+            // style: Theme.of(context).buttonTheme,
+            onPressed: assignment.availableForms.isNotEmpty
+                ? () async {
+                    await showFormSelectionBottomSheet(
+                        context, assignment, activityModel);
+                    ref.invalidate(assignmentsProvider);
+                  }
+                : null,
+            icon: const Icon(Icons.document_scanner),
+            label: Text(S.of(context).openNewForm),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              shadowColor: Theme.of(context).colorScheme.shadow,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            )),
         TextButton.icon(
           onPressed: () => onViewDetails.call(assignment),
           icon: const Icon(Icons.info_outline),
@@ -200,15 +210,11 @@ class _CardHeaderRow extends ConsumerWidget {
         Expanded(
           flex: 2,
           child: OverflowBar(
-            spacing: 32,
-            overflowSpacing: 4,
+            spacing: 8,
+            overflowSpacing: 2,
             children: [
-              DetailRowWithIcon(
-                  Icons.assignment,
-                  Intl.message(assignment.scope.name.toLowerCase()),
-                  searchQuery),
-              DetailRowWithIcon(Icons.group,
-                  '${S.of(context).team}: ${assignment.teamCode}', searchQuery),
+              // DetailRowWithIcon(Icons.group,
+              //     '${S.of(context).team}: ${assignment.teamCode}', searchQuery),
               DetailRowWithIcon(
                 Icons.document_scanner,
                 availableLocally.length == userForms.length

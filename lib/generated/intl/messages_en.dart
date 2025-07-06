@@ -318,7 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "online": MessageLookupByLibrary.simpleMessage("online!"),
     "open": MessageLookupByLibrary.simpleMessage("Open"),
-    "openNewForm": MessageLookupByLibrary.simpleMessage("New Submission"),
+    "openNewForm": MessageLookupByLibrary.simpleMessage("New"),
     "openSettings": MessageLookupByLibrary.simpleMessage("Open settings"),
     "orgUnitDialogTitle": MessageLookupByLibrary.simpleMessage(
       "Search for and Select OrgUnit",
@@ -479,7 +479,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "Expand to View Available Forms",
     ),
-    "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
+    "viewDetails": MessageLookupByLibrary.simpleMessage("Details"),
     "viewList": MessageLookupByLibrary.simpleMessage("View List"),
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
     "year": m11,

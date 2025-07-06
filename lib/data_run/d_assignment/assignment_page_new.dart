@@ -28,6 +28,29 @@ class AssignmentPageNew extends HookConsumerWidget {
     }, [update]);
 
     final focusNode = useFocusNode();
+    final InputDecoration effectiveDecoration =
+    InputDecoration(
+      hintText: S.of(context).search,
+      prefixIcon: const Icon(Icons.search),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      constraints: const BoxConstraints(maxWidth: 200, maxHeight: 40),
+      suffixIcon: ref
+          .watch(filterQueryProvider
+          .select((value) => value.searchQuery))
+          .isNotEmpty
+          ? IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            ref
+                .read(filterQueryProvider.notifier)
+                .updateSearchQuery('');
+            focusNode.unfocus();
+          })
+          : null,
+    )
+        .applyDefaults(Theme.of(context).inputDecorationTheme);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,27 +61,7 @@ class AssignmentPageNew extends HookConsumerWidget {
               focusNode: focusNode,
               controller: controller,
               // initialValue: ref.watch(filterQueryProvider).searchQuery,
-              decoration: InputDecoration(
-                hintText: S.of(context).search,
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                constraints: const BoxConstraints(maxWidth: 200, maxHeight: 40),
-                suffixIcon: ref
-                        .watch(filterQueryProvider
-                            .select((value) => value.searchQuery))
-                        .isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          ref
-                              .read(filterQueryProvider.notifier)
-                              .updateSearchQuery('');
-                          focusNode.unfocus();
-                        })
-                    : null,
-              ),
+              decoration: effectiveDecoration,
               onChanged: (searchQuery) {
                 ref.read(filterQueryProvider.notifier).updateSearchQuery(
                       searchQuery,

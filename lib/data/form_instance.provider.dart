@@ -15,11 +15,10 @@ import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/device_info_service.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/form_instance_service.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data_run/screens/form_module/form_template/util_methods.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import 'package:datarunmobile/data_run/screens/form_module/form_template/util_methods.dart';
 
 part 'form_instance.provider.g.dart';
 
@@ -36,7 +35,8 @@ Future<AndroidDeviceInfoService> userDeviceInfoService(
 @riverpod
 Future<FormVersion> latestFormTemplate(LatestFormTemplateRef ref,
     {required String formId}) async {
-  final List<FormVersion> formTemplates = await D2Remote.formModule.formTemplateV
+  final List<FormVersion> formTemplates = await D2Remote
+      .formModule.formTemplateV
       .where(attribute: 'formTemplate', value: formId)
       .orderBy(attribute: 'versionNumber', sortOrder: SortOrder.DESC)
       .get();

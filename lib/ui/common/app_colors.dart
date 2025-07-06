@@ -93,11 +93,6 @@ class SurfaceColors {
 
 /// A comprehensive reference of Material 3 color roles, ideal for quick lookup.
 class AppColors {
-  // static const Color dataRunPrimary     = Color(0xFF00796B);
-  // static const Color onDataRunPrimary   = Colors.white;
-  // static const Color dataRunAccent      = Color(0xFFFFA000);
-  // static const Color dataRunSurface     = Color(0xFFF5F5F5);
-  // static const Color onDataRunSurface   = Color(0xFF212121);
   // 👉 Accent Groups: used for key UI elements like buttons, FABs, etc.
 
   /// The main brand-color for prominent components (FABs, buttons, app bars).
@@ -108,10 +103,8 @@ class AppColors {
 
   /// Lighter/darker variant for cards, chips, or sections.
   static const Color primaryContainer = Color(0xFFBBDEFB); // Blue100
-
   /// Foreground content for `primaryContainer`.
-  static const Color onPrimaryContainer = Color(0xFF0D47A1); // Blue900
-
+  static const Color onPrimaryContainer = Color(0xFF0D496B); // Blue900
   /// Fixed version of brand color (stays same in light/dark themes).
   static const Color primaryFixed = Color(0xFF2196F3); // Blue500
 
@@ -182,6 +175,7 @@ class AppColors {
   static const error = DColors.Red600;
   static const warning = DColors.Orange800;
   static const warningContainer = DColors.Orange50;
+
   /// Foreground for `error`.
   static const Color onError = Color(0xFFFFFFFF); // White
 

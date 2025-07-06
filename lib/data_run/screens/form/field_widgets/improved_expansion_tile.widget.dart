@@ -29,8 +29,6 @@ class ImprovedExpansionTile extends StatelessWidget {
     final isDarkMode = theme.brightness == Brightness.dark;
 
     return Card(
-      shadowColor: Theme.of(context).colorScheme.shadow,
-      surfaceTintColor: Theme.of(context).colorScheme.primary,
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       // shape: RoundedRectangleBorder(

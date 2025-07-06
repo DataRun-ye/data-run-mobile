@@ -452,7 +452,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "افتح لاستعرض الاستمارات المتاحة",
     ),
-    "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
+    "viewDetails": MessageLookupByLibrary.simpleMessage("تفاصيل"),
     "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
     "year": m11,

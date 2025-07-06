@@ -44,6 +44,13 @@ class FieldInstance<T> extends FormElementInstance<T>
   T? reduceValue() => elementState.value;
 
   @override
+  Object? rawValue() => T is DateTime
+      ? elementState.value != null
+          ? DateHelper.formatUtc(elementState.value! as DateTime) as String?
+          : null
+      : elementState.value;
+
+  @override
   FormControl<T> get elementControl =>
       form.control(elementPath!) as FormControl<T>;
 

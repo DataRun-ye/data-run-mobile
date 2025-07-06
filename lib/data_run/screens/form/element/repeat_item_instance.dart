@@ -54,6 +54,20 @@ class RepeatItemInstance extends Section {
     return map;
   }
 
+  @override
+  Map<String, Object?>? rawValue() {
+    final map = <String, Object?>{};
+    // map['parentUid'] = parentUid;
+    // map['repeatUid'] = _uid ?? CodeGenerator.generateUid();
+    _elements.forEach((key, element) {
+      if (element.visible || hidden) {
+        map[key] = element.rawValue();
+      }
+    });
+
+    return map;
+  }
+
   String pathBuilder(String pathItem) {
     if (parentSection == null) {
       throw StateError('RepeatItemInstance\'s Parent should not be null');

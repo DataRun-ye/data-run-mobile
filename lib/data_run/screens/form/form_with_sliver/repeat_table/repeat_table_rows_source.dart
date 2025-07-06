@@ -2,16 +2,17 @@ import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
 import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
 import 'package:d2_remote/shared/enumeration/assignment_status.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
+import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:datarunmobile/data_run/screens/form/field_widgets/q_reactive_date_time_field.widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 
 class RepeatTableDataSource extends DataTableSource {
   RepeatTableDataSource(
@@ -129,7 +130,7 @@ class RepeatTableDataSource extends DataTableSource {
           children: [
             const Icon(MdiIcons.barcode),
             const SizedBox(width: 4),
-            Text(modelToViewValue(field.value) ?? '-'),
+            Text(field.value?.toString().substring(0, 10) ?? '-'),
           ],
         );
         break;
@@ -163,7 +164,11 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.Date:
       case ValueType.DateTime:
       case ValueType.Time:
-        cellContent = Text(modelToViewValue(field.value) ?? '-');
+        final viewFormat = DateHelper.getEffectiveUiFormat(field.type);
+        final value = field.value is DateTime
+            ? DateHelper.formatForUi(field.value)
+            : field.value;
+        cellContent = Text(value ?? '-');
         break;
       case ValueType.SelectMulti:
         cellContent = Text(field.visibleOption
@@ -201,10 +206,12 @@ class RepeatTableDataSource extends DataTableSource {
     return cellContent;
   }
 
-  String? modelToViewValue(String? modelValue) {
-    return modelValue == null
-        ? null
-        : DateHelper.fromDbUtcToUiLocalFormat(modelValue);
+  String? modelToViewValue(String? modelValue, DateFormat format) {
+    if (modelValue == null) return null;
+    final dt = DateTime.tryParse(modelValue);
+    if (dt == null) return modelValue;
+
+    return format.format(dt);
   }
 
   @override

@@ -141,9 +141,6 @@ class FormElementBuilder {
       case ValueType.LongText:
       case ValueType.Letter:
       case ValueType.FullName:
-      case ValueType.Date:
-      case ValueType.Time:
-      case ValueType.DateTime:
       case ValueType.OrganisationUnit:
       case ValueType.Team:
       case ValueType.Progress:
@@ -152,16 +149,30 @@ class FormElementBuilder {
             form: rootFormControl,
             elementProperties: FieldElementState<String>(
                 readOnly: templateElement.readOnly,
-                value: initialFormValue,
+                value: initialFormValue ?? templateElement.defaultValue,
                 mandatory: templateElement.mandatory),
             template: templateElement);
+      case ValueType.Date:
+      case ValueType.Time:
+      case ValueType.DateTime:
+        return FieldInstance<DateTime>(
+            form: rootFormControl,
+            elementProperties: FieldElementState<DateTime>(
+                readOnly: templateElement.readOnly,
+                value: DateTime.tryParse(initialFormValue ?? '')?.toLocal() ??
+                    DateTime.tryParse(templateElement.defaultValue ?? ''),
+                mandatory: templateElement.mandatory),
+            template: templateElement);
+
       case ValueType.Calculated:
         return CalculatedFieldInstance<dynamic>(
             form: rootFormControl,
             calculatedExpression: CalculatedExpression(
                 expression: templateElement.calculationExpression!),
             elementProperties: FieldElementState<dynamic>(
-                readOnly: true, value: initialFormValue, mandatory: false),
+                readOnly: true,
+                value: initialFormValue ?? templateElement.defaultValue,
+                mandatory: false),
             template: templateElement);
       case ValueType.Integer:
       case ValueType.IntegerPositive:
@@ -171,7 +182,7 @@ class FormElementBuilder {
             form: rootFormControl,
             elementProperties: FieldElementState<int>(
                 readOnly: templateElement.readOnly,
-                value: initialFormValue,
+                value: initialFormValue ?? templateElement.defaultValue,
                 mandatory: templateElement.mandatory),
             template: templateElement);
 
@@ -182,7 +193,7 @@ class FormElementBuilder {
           form: rootFormControl,
           elementProperties: FieldElementState<double>(
               readOnly: templateElement.readOnly,
-              value: initialFormValue,
+              value: initialFormValue ?? templateElement.defaultValue,
               mandatory: templateElement.mandatory),
           template: templateElement,
         );
@@ -193,7 +204,7 @@ class FormElementBuilder {
           form: rootFormControl,
           elementProperties: FieldElementState<bool>(
               readOnly: templateElement.readOnly,
-              value: initialFormValue,
+              value: initialFormValue ?? templateElement.defaultValue,
               mandatory: templateElement.mandatory),
           template: templateElement,
         );
@@ -210,7 +221,7 @@ class FormElementBuilder {
               : null,
           elementProperties: FieldElementState<String>(
               readOnly: templateElement.readOnly,
-              value: initialFormValue,
+              value: initialFormValue ?? templateElement.defaultValue,
               mandatory: templateElement.mandatory,
               visibleOptions: formFlatTemplate
                       .optionLists[templateElement.optionSet!]

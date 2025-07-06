@@ -1,4 +1,0 @@
-[submodule "data-run-sdk"]
-	path = data-run-sdk
-	url = https://github.com/Hamza-ye/data-run-sdk.git
-	branch = develop

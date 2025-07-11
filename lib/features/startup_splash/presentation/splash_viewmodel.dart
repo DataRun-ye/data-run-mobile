@@ -2,8 +2,8 @@ import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dar
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/sync/sync_scheduler.dart';
 import 'package:datarunmobile/core/user_session/session_scope_initializer.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

@@ -1,9 +1,9 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
-import 'package:datarunmobile/home/form_template/application/form_list_filter.dart';
-import 'package:datarunmobile/home/form_template/application/form_provider.dart';
-import 'package:datarunmobile/home/form_template/domain/model/form_list_item_model.dart';
+import 'package:datarunmobile/features/form/application/form_list_filter.dart';
+import 'package:datarunmobile/features/form/application/form_provider.dart';
+import 'package:datarunmobile/features/form/application/form_list_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

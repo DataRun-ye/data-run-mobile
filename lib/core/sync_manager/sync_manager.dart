@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/datasource/datasource.dart';
 import 'package:datarunmobile/core/sync_manager/sync_progress_event.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()

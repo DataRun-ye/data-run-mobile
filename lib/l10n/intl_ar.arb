@@ -338,5 +338,6 @@
   "dataElements": "عناصر البيانات",
   "orgUnits": "وحدات تنظيمة",
   "downloaded": "حفظ",
-  "currentOperations": "العملية الحالية:"
+  "currentOperations": "العملية الحالية:",
+  "appTitle": "Datarun"
 }

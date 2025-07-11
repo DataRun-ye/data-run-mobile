@@ -5,7 +5,7 @@ import 'package:d_sdk/database/dbManager.dart';
 import 'package:d_sdk/di/init_active_session_scope.dart';
 import 'package:d_sdk/user_session/session_context.dart';
 import 'package:d_sdk/user_session/session_repository.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 

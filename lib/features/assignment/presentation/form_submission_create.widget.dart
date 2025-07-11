@@ -7,7 +7,7 @@ import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/home/form_template/domain/model/form_template_model.dart';
+import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

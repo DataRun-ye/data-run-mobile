@@ -1,9 +1,9 @@
 import 'package:datarunmobile/features/home/presentation/drawer/app_drawer_sync_item.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/app_drawer_version_item.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/app_drawer_viewmodel.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';

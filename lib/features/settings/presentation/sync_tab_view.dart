@@ -1,7 +1,7 @@
 import 'package:datarunmobile/core/sync/model/sync_interval.dart';
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:datarunmobile/features/settings/presentation/sync_summary_card.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

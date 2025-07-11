@@ -3,9 +3,9 @@ import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/home/form_template/application/form_list_filter.dart';
-import 'package:datarunmobile/home/form_template/domain/model/form_template_model.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/features/form/application/form_list_filter.dart';
+import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 

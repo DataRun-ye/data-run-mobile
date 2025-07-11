@@ -1,6 +1,6 @@
 // Flutter imports:
+import 'package:datarunmobile/commons/helpers/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:datarunmobile/utils/mass_utils/colors.dart';
 
 class ListDivider extends StatelessWidget {
   const ListDivider({super.key});

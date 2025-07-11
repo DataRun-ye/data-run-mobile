@@ -33,7 +33,7 @@ class LoginViewHeader extends StatelessWidget {
       child: Column(
         children: [
           Image.asset(
-            'assets/launcher_icon/logo_white.png',
+            'assets/launcher_icon/header_logo_white.png',
             height: 100,
             width: 100,
             // fit: BoxFit.contain,

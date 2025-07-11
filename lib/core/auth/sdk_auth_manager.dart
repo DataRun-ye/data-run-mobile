@@ -7,7 +7,7 @@ import 'package:d_sdk/user_session/session_repository.dart';
 import 'package:datarunmobile/core/auth/auth_api.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/user_session/session_scope_initializer.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthManager)

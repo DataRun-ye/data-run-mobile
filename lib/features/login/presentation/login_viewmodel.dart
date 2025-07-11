@@ -1,7 +1,7 @@
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:flutter/foundation.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:stacked/stacked.dart';

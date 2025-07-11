@@ -1,9 +1,8 @@
 import 'package:d_sdk/di/injection.dart';
-import 'package:datarunmobile/di/injection.config.dart';
-import 'package:datarunmobile/modular/account/user_model.dart';
-import 'package:datarunmobile/stacked/app.bottomsheets.dart';
-import 'package:datarunmobile/stacked/app.dialogs.dart';
-import 'package:datarunmobile/stacked/app.locator.dart';
+import 'package:datarunmobile/app/di/injection.config.dart';
+import 'package:datarunmobile/app/stacked/app.bottomsheets.dart';
+import 'package:datarunmobile/app/stacked/app.dialogs.dart';
+import 'package:datarunmobile/app/stacked/app.locator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -28,12 +27,4 @@ Future<GetIt> configureDependencies() async {
   // sdk
   setupSdkLocator();
   return getIt;
-}
-
-void registerUser(UserModel user) {
-  appLocator.registerSingleton<UserModel>(user);
-}
-
-void unregisterLogin() {
-  appLocator.unregister<UserModel>();
 }

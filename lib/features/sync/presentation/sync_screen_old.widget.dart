@@ -1,6 +1,6 @@
 import 'package:d_sdk/core/sync/d2_progress.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/sync_manager/nmc_worker/sync_progress.provider.dart';
 import 'package:datarunmobile/core/sync_manager/nmc_worker/work_info.dart';
 import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';

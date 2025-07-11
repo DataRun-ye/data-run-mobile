@@ -16,13 +16,14 @@ import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart'
     as _i3;
 import 'package:datarunmobile/features/home/presentation/settings_view.dart'
     as _i7;
+import 'package:datarunmobile/features/login/presentation/login_view.dart'
+    as _i5;
+import 'package:datarunmobile/features/startup/presentation/startup_view.dart'
+    as _i6;
 import 'package:datarunmobile/features/sync/presentation/sync_screen_old.widget.dart'
     as _i4;
 import 'package:datarunmobile/features/sync/presentation/sync_with_server_view.dart'
     as _i10;
-import 'package:datarunmobile/features/login/presentation/login_view.dart'
-    as _i5;
-import 'package:datarunmobile/features/startup/presentation/startup_view.dart' as _i6;
 import 'package:flutter/material.dart' as _i11;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
@@ -112,8 +113,12 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i3.HomeWrapperPage: (data) {
+      final args = data.getArgs<HomeWrapperPageArguments>(
+        orElse: () => const HomeWrapperPageArguments(),
+      );
       return _i11.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i3.HomeWrapperPage(),
+        builder: (context) =>
+            _i3.HomeWrapperPage(key: args.key, langKey: args.langKey),
         settings: data,
       );
     },
@@ -203,6 +208,33 @@ class HomeScreenArguments {
   }
 }
 
+class HomeWrapperPageArguments {
+  const HomeWrapperPageArguments({
+    this.key,
+    this.langKey = 'ar',
+  });
+
+  final _i11.Key? key;
+
+  final String langKey;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "langKey": "$langKey"}';
+  }
+
+  @override
+  bool operator ==(covariant HomeWrapperPageArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.langKey == langKey;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ langKey.hashCode;
+  }
+}
+
 class LoginViewArguments {
   const LoginViewArguments({
     this.key,
@@ -278,14 +310,17 @@ extension NavigatorStateExtension on _i13.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToHomeWrapperPage([
+  Future<dynamic> navigateToHomeWrapperPage({
+    _i11.Key? key,
+    String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.homeWrapperPage,
+        arguments: HomeWrapperPageArguments(key: key, langKey: langKey),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -416,14 +451,17 @@ extension NavigatorStateExtension on _i13.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithHomeWrapperPage([
+  Future<dynamic> replaceWithHomeWrapperPage({
+    _i11.Key? key,
+    String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.homeWrapperPage,
+        arguments: HomeWrapperPageArguments(key: key, langKey: langKey),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

@@ -1,7 +1,7 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:stacked/stacked.dart';
 
 class AppDrawerViewModel extends BaseViewModel {

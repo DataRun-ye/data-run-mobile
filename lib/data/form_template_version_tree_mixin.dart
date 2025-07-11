@@ -1,8 +1,8 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/tree/tree_element.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/home/form_template/domain/model/form_template_model.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:datarunmobile/data/form_template_service.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

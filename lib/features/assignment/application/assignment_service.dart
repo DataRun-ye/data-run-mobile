@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:datarunmobile/home/assignment/domain/model/assignment_access.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_access.dart';
 
 abstract class AssignmentService {
   Future<AssignmentModel> fetchById(String id);

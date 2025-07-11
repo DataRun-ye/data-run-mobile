@@ -1,8 +1,8 @@
 import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/submission_card_summary.dart';
 import 'package:d_sdk/database/shared/submissions_filter.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/home/form_submissions/domain/service/form_instance_service.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

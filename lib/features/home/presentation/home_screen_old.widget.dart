@@ -7,17 +7,16 @@ import 'package:datarunmobile/data/activity/activity.provider.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
 import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_page_old.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
-import 'package:datarunmobile/utils/color_scheme_extension.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
+import 'package:datarunmobile/app/theme/color_scheme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-@Deprecated('replaced with HomeWrapperPage')
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key, this.refresh = false});
 

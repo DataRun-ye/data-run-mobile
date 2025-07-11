@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/app_database.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:stacked/stacked.dart';
 
 class SettingsViewmodel extends BaseViewModel {

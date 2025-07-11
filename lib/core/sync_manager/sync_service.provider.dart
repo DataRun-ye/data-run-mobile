@@ -1,7 +1,7 @@
 import 'package:d_sdk/core/sync/d2_progress.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';

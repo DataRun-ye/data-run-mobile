@@ -36,7 +36,7 @@ targets:
         enabled: true
         generate_for:
           - lib/**/application/*.dart
-          - lib/di/*.dart
+          - lib/app/di/*.dart
           - lib/core/*.dart
           - lib/core/**/*.dart
           - lib/data/*.dart
@@ -44,7 +44,7 @@ targets:
       stacked_generator:
         enabled: true
         generate_for:
-          - lib/stacked/app.**.dart
+          - lib/app/stacked/app.**.dart
 #      stacked_generator:stackedLoggerGenerator:
 #        enabled: false
       # Configuring this builder isn't required for most apps. In our case, we

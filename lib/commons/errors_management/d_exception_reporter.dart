@@ -1,6 +1,6 @@
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:intl/intl.dart';

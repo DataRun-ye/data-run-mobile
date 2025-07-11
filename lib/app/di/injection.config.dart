@@ -11,6 +11,8 @@
 import 'package:d_sdk/core/http/http_client.dart' as _i8;
 import 'package:d_sdk/user_session/cache_storage_adapter.dart' as _i216;
 import 'package:d_sdk/user_session/session_repository.dart' as _i993;
+import 'package:datarunmobile/app/di/sdk_module.dart' as _i567;
+import 'package:datarunmobile/app/di/third_party_services.module.dart' as _i427;
 import 'package:datarunmobile/core/auth/auth_api.dart' as _i64;
 import 'package:datarunmobile/core/auth/auth_interceptor.dart' as _i656;
 import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
@@ -33,8 +35,10 @@ import 'package:datarunmobile/core/user_session/session_scope_initializer.dart'
     as _i584;
 import 'package:datarunmobile/data/form_template_service.dart' as _i991;
 import 'package:datarunmobile/data/option_set_service.dart' as _i158;
-import 'package:datarunmobile/di/sdk_module.dart' as _i927;
-import 'package:datarunmobile/di/third_party_services.module.dart' as _i224;
+import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
+    as _i1027;
+import 'package:datarunmobile/features/form_submission/application/form_instance_service_impl.dart'
+    as _i756;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
@@ -54,14 +58,18 @@ Future<_i174.GetIt> init(
   );
   final sdkModule = _$SdkModule();
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
-  gh.factory<_i54.TeamConfiguration>(() => _i54.TeamConfiguration());
   gh.factory<_i216.CacheStorageAdapter>(() => sdkModule.cacheStorageAdapter);
   await gh.factoryAsync<_i460.SharedPreferences>(
     () => thirdPartyServicesModule.prefs,
     preResolve: true,
   );
+  gh.factory<_i54.TeamConfiguration>(() => _i54.TeamConfiguration());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
+  gh.factory<_i1027.AssignmentServiceImpl>(
+      () => _i1027.AssignmentServiceImpl());
   gh.singleton<_i361.CancelToken>(() => thirdPartyServicesModule.cancelToken());
+  gh.lazySingleton<_i558.FlutterSecureStorage>(
+      () => thirdPartyServicesModule.flutterSecureStorage);
   gh.lazySingleton<_i28.SyncProgressNotifier>(
     () => _i28.SyncProgressNotifier(),
     dispose: (i) => i.dispose(),
@@ -70,8 +78,6 @@ Future<_i174.GetIt> init(
     () => _i602.SyncManager(),
     dispose: (i) => i.dispose(),
   );
-  gh.lazySingleton<_i558.FlutterSecureStorage>(
-      () => thirdPartyServicesModule.flutterSecureStorage);
   gh.factory<_i775.UserSessionService>(
       () => _i775.UserSessionService(gh<_i460.SharedPreferences>()));
   gh.factory<_i492.SyncMetadataRepository>(
@@ -84,6 +90,11 @@ Future<_i174.GetIt> init(
   );
   gh.factory<_i991.FormTemplateService>(() => _i991.FormTemplateService(
       optionSetService: gh<_i158.OptionSetService>()));
+  gh.factoryParam<_i756.FormInstanceServiceImpl, String, dynamic>((
+    formId,
+    _,
+  ) =>
+      _i756.FormInstanceServiceImpl(formId: formId));
   gh.factory<_i993.SessionRepository>(() => _i694.DefaultSessionRepository(
         storageAdapter: gh<_i216.CacheStorageAdapter>(),
         shouldClearBeforeSave: gh<bool>(instanceName: 'shouldClearBeforeSave'),
@@ -120,6 +131,6 @@ Future<_i174.GetIt> init(
   return getIt;
 }
 
-class _$SdkModule extends _i927.SdkModule {}
+class _$SdkModule extends _i567.SdkModule {}
 
-class _$ThirdPartyServicesModule extends _i224.ThirdPartyServicesModule {}
+class _$ThirdPartyServicesModule extends _i427.ThirdPartyServicesModule {}

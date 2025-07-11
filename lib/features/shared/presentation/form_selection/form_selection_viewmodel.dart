@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/database.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:drift/drift.dart';
 import 'package:stacked/stacked.dart';
 

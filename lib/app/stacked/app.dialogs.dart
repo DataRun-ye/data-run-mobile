@@ -4,10 +4,10 @@
 // StackedDialogGenerator
 // **************************************************************************
 
-import 'package:datarunmobile/features/common_ui_element/info_alert/info_alert_dialog.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';
+import '../../features/common_ui_element/info_alert/info_alert_dialog.dart';
 
 enum DialogType {
   infoAlert,

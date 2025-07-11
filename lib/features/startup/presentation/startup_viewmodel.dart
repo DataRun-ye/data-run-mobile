@@ -1,7 +1,7 @@
 import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:datarunmobile/core/services/user_session_manager.service.dart';
-import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/stacked/app.router.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

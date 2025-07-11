@@ -1,6 +1,6 @@
 import 'package:d_sdk/datasource/datasource.dart';
 import 'package:datarunmobile/core/sync/sync_progress_notifier.dart';
-import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:injectable/injectable.dart';
 

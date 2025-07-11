@@ -4,7 +4,7 @@ import 'package:datarunmobile/core/sync/model/sync_state.dart';
 import 'package:datarunmobile/core/sync/model/sync_status.dart';
 import 'package:datarunmobile/features/sync/presentation/sync_with_server_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/ui/common/ui_helpers.dart';
+import 'package:datarunmobile/features/common_ui_element/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';

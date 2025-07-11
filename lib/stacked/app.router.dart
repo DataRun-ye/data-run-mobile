@@ -6,23 +6,23 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:d_sdk/user_session/session_context.dart' as _i12;
-import 'package:datarunmobile/data_run/d_activity/activity_page_old.dart'
+import 'package:datarunmobile/features/activity/presentation/activity_page_old.dart'
     as _i8;
-import 'package:datarunmobile/data_run/d_assignment/assignment_page_new.dart'
+import 'package:datarunmobile/features/assignment/presentation/assignment_page_new.dart'
     as _i9;
-import 'package:datarunmobile/data_run/screens/home_screen/home_screen_old.widget.dart'
+import 'package:datarunmobile/features/home/presentation/home_screen_old.widget.dart'
     as _i2;
-import 'package:datarunmobile/data_run/screens/home_screen/home_wrapper_page.dart'
+import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart'
     as _i3;
-import 'package:datarunmobile/data_run/screens/home_screen/settings/settings_view.dart'
+import 'package:datarunmobile/features/home/presentation/settings_view.dart'
     as _i7;
-import 'package:datarunmobile/data_run/screens/sync_screen/sync_screen.widget.dart'
+import 'package:datarunmobile/features/sync/presentation/sync_screen_old.widget.dart'
     as _i4;
 import 'package:datarunmobile/features/sync/presentation/sync_with_server_view.dart'
     as _i10;
-import 'package:datarunmobile/ui/views/login/presentation/login_view.dart'
+import 'package:datarunmobile/features/login/presentation/login_view.dart'
     as _i5;
-import 'package:datarunmobile/ui/views/startup/startup_view.dart' as _i6;
+import 'package:datarunmobile/features/startup/presentation/startup_view.dart' as _i6;
 import 'package:flutter/material.dart' as _i11;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;

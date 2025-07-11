@@ -4,7 +4,6 @@ import 'package:datarunmobile/core/sync/sync_coordinator.dart';
 import 'package:datarunmobile/core/sync/sync_progress_notifier.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/stacked/app.router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';

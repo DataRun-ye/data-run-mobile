@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
+import 'package:datarunmobile/features/form_ui_elements/presentation/get_error_widget.dart';
 
 /// Generic AsyncValueWidget to work with values of type T
 class AsyncValueWidget<T> extends StatelessWidget {

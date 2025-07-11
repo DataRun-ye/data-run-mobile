@@ -3,7 +3,7 @@ import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
-import 'package:datarunmobile/data_run/form/form_submission/submission_list_util.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

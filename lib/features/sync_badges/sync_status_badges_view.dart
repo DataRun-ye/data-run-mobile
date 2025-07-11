@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data_run/d_assignment/assignment_detail/sync_status_icon.dart';
+import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
 import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

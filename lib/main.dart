@@ -5,7 +5,7 @@ import 'package:datarunmobile/data/preference.provider.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/stacked/app.router.dart';
-import 'package:datarunmobile/ui/common/app_colors.dart';
+import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

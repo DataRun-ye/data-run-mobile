@@ -4,10 +4,10 @@
 // StackedBottomsheetGenerator
 // **************************************************************************
 
+import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';
-import '../ui/notice/notice_sheet.dart';
 
 enum BottomSheetType {
   notice,

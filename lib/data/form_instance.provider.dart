@@ -7,11 +7,11 @@ import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
-import 'package:datarunmobile/data_run/screens/form/element/service/device_info_service.dart';
-import 'package:datarunmobile/data_run/screens/form/element/service/form_instance_service.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
+import 'package:datarunmobile/features/form_submission/application/device_info_service.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -44,7 +44,6 @@ Future<FormTemplateRepository> latestFormTemplate(Ref ref,
   //     .orderBy(attribute: 'version', order: SortOrder.DESC)
   //     .get();
   return FormTemplateRepository.create(versionUid: formTemplates.versionUid);
-  ;
 }
 
 // /// form id could be on the format of formId-version or formId

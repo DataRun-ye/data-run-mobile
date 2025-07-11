@@ -1,15 +1,16 @@
 import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:datarunmobile/commons/constants.dart';
-import 'package:http/http.dart' as http;
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/di/app_environment.dart';
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
-class ConnectivityService {
-  ConnectivityService._internal();
-
-  static final ConnectivityService _instance = ConnectivityService._internal();
-
-  static ConnectivityService get instance => _instance;
+@LazySingleton()
+class NetworkUtil {
+  NetworkUtil({required Dio dio}) : _dio = dio;
+  final Dio _dio;
+  CancelToken? _currentPingToken;
 
   final StreamController<bool> _connectivityStatusController =
       StreamController<bool>.broadcast();
@@ -17,31 +18,7 @@ class ConnectivityService {
   Stream<bool> get connectivityStatusStream =>
       _connectivityStatusController.stream;
 
-  // bool _isOnline = false;
-
-  // List<ConnectivityResult> _lastConnectivityCheckResult = [];
-
-  // bool get isOnline =>
-  //     _lastConnectivityCheckResult != ConnectivityResult.none && _isOnline;
-
-  // Future<void> initialize() {
-  //   // logDebug('initializing: ', data: {'runtimeType': this.runtimeType});
-  //   StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
-  //       .onConnectivityChanged
-  //       .listen((List<ConnectivityResult> result) {
-  //     // Received changes in available connectivity types!
-  //   });
-  //
-  //   Connectivity().onConnectivityChanged.listen((result) {
-  //     if (result != _lastConnectivityCheckResult) {
-  //       // _checkInternetConnection();
-  //       _lastConnectivityCheckResult = result;
-  //     }
-  //   });
-  //   return checkInternetConnection();
-  // }
-
-  Future<bool> isNetworkAvailable() async {
+  Future<bool> noAvailableNetwork() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.none)) {
       return false;
@@ -49,38 +26,53 @@ class ConnectivityService {
 
     final result = connectivityResult.contains(ConnectivityResult.wifi) ||
         connectivityResult.contains(ConnectivityResult.mobile);
-    return result;
+    return !result;
   }
 
-  Future<bool> checkInternetConnection() async {
+  Future<bool> isOffline() async {
+    return !(await isOnline());
+  }
+
+  Future<bool> isOnline() async {
+    _currentPingToken = CancelToken();
     try {
-      logDebug('checkInternetConnection: ping $kApiPingUrl ...',
+      if (await noAvailableNetwork()) return false;
+      logDebug('checkInternetConnection: ping ${AppEnvironment.apiPingUrl} ...',
           data: {'runtimeType': this.runtimeType});
-      final response =
-          await http.get(Uri.parse(kApiPingUrl)).timeout(const Duration(seconds: 20));
+      final response = await _dio.get(
+        AppEnvironment.apiPingUrl,
+        cancelToken: _currentPingToken,
+        options: Options(
+            extra: {'skipAuth': true},
+            sendTimeout: Duration(seconds: 6),
+            receiveTimeout: Duration(seconds: 6)),
+        // cancelToken: cancelToken
+      );
       if (response.statusCode == 200) {
         logDebug('Device is online!', data: {'runtimeType': this.runtimeType});
         return true;
-        // _isOnline = true;
-        // _connectivityStatusController.add(true);
       } else {
         logDebug('Device is offline!', data: {'runtimeType': this.runtimeType});
         return false;
-        // _isOnline = false;
-        // _connectivityStatusController.add(false);
       }
-    } catch (_) {
-      logDebug('Error checking internet Access, setting the status to offline!',
-          data: {'runtimeType': this.runtimeType});
+    } on DioException catch (e) {
+      logDebug(
+          ' Error checking internet Access, setting the status to offline!',
+          source: this,
+          data: {'error': e.error, 'message': e.message});
       return false;
-      // _isOnline = false;
-      // _connectivityStatusController.add(false);
+    } finally {
+      _currentPingToken = null;
     }
-
-    // return _isOnline;
   }
 
+  void cancelPing() {
+    _currentPingToken?.cancel();
+  }
+
+  @disposeMethod
   void dispose() {
+    _currentPingToken?.cancel();
     _connectivityStatusController.close();
   }
 }

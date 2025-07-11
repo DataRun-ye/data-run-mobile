@@ -1,26 +1,24 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_value.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/metadatarun/metadatarun.dart';
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/commons/extensions/string_extension.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:drift/drift.dart';
 import 'package:intl/intl.dart';
 
 extension CheckWhatValueExtension on DataValue {
   static Future<bool> check(
       ValueType? valueType, String? optionSetUid, String value) async {
     if (optionSetUid != null && valueType != ValueType.SelectMulti) {
-      final Option? optionByCode = await D2Remote.optionSetModule.option
-          .byOptionSet(optionSetUid)
-          .where(attribute: 'code', value: value)
-          .getOne();
+      final DataOption? optionByCode = await DSdk.db.managers.dataOptions
+          .filter((f) => f.optionSet.id(optionSetUid) & f.code(value))
+          .getSingleOrNull();
 
-      final Option? optionByName = await D2Remote.optionSetModule.option
-          .byOptionSet(optionSetUid)
-          .where(attribute: 'name', value: value)
-          .getOne();
+      final DataOption? optionByName = await DSdk.db.managers.dataOptions
+          .filter((f) => f.optionSet.id(optionSetUid) & f.name(value))
+          .getSingleOrNull();
+
       return optionByCode != null || optionByName != null;
     }
 
@@ -34,22 +32,22 @@ extension CheckWhatValueExtension on DataValue {
         }
       } else {
         switch (valueType) {
-        // case ValueType.FileResource:
-        // case ValueType.Image:
-        //   final FileResource? fileResource = await D2Remote
-        //       .fileResourceModule.fileResource
-        //       .byId(value)
-        //       .getOne();
-        //   return fileResource != null;
+          // case ValueType.FileResource:
+          // case ValueType.Image:
+          //   final FileResource? fileResource = await D2Remote
+          //       .fileResourceModule.fileResource
+          //       .byId(value)
+          //       .getOne();
+          //   return fileResource != null;
           case ValueType.OrganisationUnit:
-            final OrgUnit? orgUnit = await D2Remote
-                .organisationUnitModuleD.orgUnit
-                .byId(value)
-                .getOne();
+            final OrgUnit? orgUnit = await DSdk.db.managers.orgUnits
+                .filter((f) => f.id(value))
+                .getSingleOrNull();
             return orgUnit != null;
           case ValueType.Team:
-            final Team? team =
-            await D2Remote.teamModuleD.team.byId(value).getOne();
+            final Team? team = await DSdk.db.managers.teams
+                .filter((f) => f.id(value))
+                .getSingleOrNull();
             return team != null;
           default:
             break;
@@ -59,17 +57,17 @@ extension CheckWhatValueExtension on DataValue {
     }
     return false;
   }
+
   static Future<String?> checkOptionSetValue(
       String optionSetUid, String value) async {
-    Option? option = await D2Remote.optionSetModule.option
-        .byOptionSet(optionSetUid)
-        .where(attribute: 'code', value: value)
-        .getOne();
+    DataOption? option = await DSdk.db.managers.dataOptions
+        .filter((f) => f.optionSet.id(optionSetUid) & f.code(value))
+        .getSingleOrNull();
+
     if (option == null) {
-      option = await D2Remote.optionSetModule.option
-          .byOptionSet(optionSetUid)
-          .where(attribute: 'name', value: value)
-          .getOne();
+      option = await DSdk.db.managers.dataOptions
+          .filter((f) => f.optionSet.id(optionSetUid) & f.name(value))
+          .getSingleOrNull();
     }
 
     return option != null
@@ -81,24 +79,26 @@ extension CheckWhatValueExtension on DataValue {
       ValueType? valueType, String value) async {
     switch (valueType) {
       case ValueType.OrganisationUnit:
-        return (await D2Remote.organisationUnitModuleD.orgUnit
-            .byId(value)
-            .getOne())
-            .displayName;
+        return (await DSdk.db.managers.orgUnits
+                .filter((f) => f.id(value))
+                .getSingleOrNull())
+            ?.displayName;
       case ValueType.Team:
-        final Team? team = await D2Remote.teamModuleD.team.byId(value).getOne();
+        final Team? team = await DSdk.db.managers.teams
+            .filter((f) => f.id(value))
+            .getSingleOrNull();
 
         return team != null ? '${Intl.message('team')} ${team.code}' : null;
 
-    // case ValueType.Image:
-    // case ValueType.FileResource:
-    //   final FileResource? fileResource =
-    //       await D2Remote.fileResourceModule.fileResource.byId(value).getOne();
-    //   if (fileResource != null) {
-    //     return fileResource.localFilePath;
-    //   } else {
-    //     return '';
-    //   }
+      // case ValueType.Image:
+      // case ValueType.FileResource:
+      //   final FileResource? fileResource =
+      //       await D2Remote.fileResourceModule.fileResource.byId(value).getOne();
+      //   if (fileResource != null) {
+      //     return fileResource.localFilePath;
+      //   } else {
+      //     return '';
+      //   }
       case ValueType.Date:
         try {
           return DateHelper.fromDbUtcToUiLocalFormat(value);

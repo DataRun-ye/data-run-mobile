@@ -6,7 +6,7 @@ part of 'app_about_info.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appAboutInfoHash() => r'a0c1e0c24cf1cb61267f643f53946a9a03e4210c';
+String _$appAboutInfoHash() => r'6aac77fa4f3592eadf8f4bcd72b56a937a332240';
 
 /// See also [appAboutInfo].
 @ProviderFor(appAboutInfo)
@@ -19,6 +19,8 @@ final appAboutInfoProvider = AutoDisposeFutureProvider<AppAbout>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef AppAboutInfoRef = AutoDisposeFutureProviderRef<AppAbout>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -9,7 +9,6 @@ import 'package:datarunmobile/ui/info_alert/info_alert_dialog_model.dart';
 const double _graphicSize = 60;
 
 class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
-
   const InfoAlertDialog({
     Key? key,
     required this.request,

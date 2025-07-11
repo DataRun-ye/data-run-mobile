@@ -1,7 +1,7 @@
 import 'package:datarunmobile/core/element_instance/element_state.dart';
 import 'package:datarunmobile/core/element_instance/element_state_factory.dart';
 import 'package:datarunmobile/core/element_instance/sction_instance/section_state.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormState extends SectionState {
@@ -14,13 +14,13 @@ class FormState extends SectionState {
     required super.templatePath,
   });
 
-  factory FormState.fromTemplate(FormFlatTemplate template,
+  factory FormState.fromTemplate(FormTemplateRepository template,
       [Map<String, dynamic>? value]) {
     return FormState(
-        id: template.name!,
+        id: template.rootSection.id,
         versionNumber: 0,
-        fields: IMap.fromIterable(template.rootElementTemplate.children,
-            keyMapper: (t) => t.id!,
+        fields: IMap.fromIterable(template.rootSection.children,
+            keyMapper: (t) => t.id,
             valueMapper: (t) => fromTemplate(t, value: value?[t.path])),
         templatePath: null);
   }

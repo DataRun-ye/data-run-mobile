@@ -1,5 +1,3 @@
-
-
 /// Metadata for the age field, storing only a reference date and
 /// readonly flag
 class AgeFieldElement {

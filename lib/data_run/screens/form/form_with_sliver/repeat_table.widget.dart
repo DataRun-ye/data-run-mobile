@@ -1,20 +1,18 @@
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/database/shared/activity_model.dart';
+import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/edit_panel.dart';
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/repeat_table/repeat_table_rows_source.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 
 class RepeatTable extends StatefulHookConsumerWidget {
   const RepeatTable({
@@ -98,9 +96,9 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
 
-    final List<FormElementTemplate> tableColumns = useMemoized(() {
+    final List<FieldTemplate> tableColumns = useMemoized(() {
       return formInstance.formFlatTemplate
-          .getChildrenOfType<FieldElementTemplate>(_repeatInstance.elementPath!)
+          .getChildrenOfType<FieldTemplate>(_repeatInstance.elementPath!)
         ..sort((a, b) => a.order.compareTo(b.order));
     }, [_repeatInstance.elementPath]);
 
@@ -152,7 +150,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   }
 
   List<DataColumn> _buildColumns(
-      List<FormElementTemplate> tableColumns, BuildContext context,
+      List<FieldTemplate> tableColumns, BuildContext context,
       {bool editMode = true}) {
     return [
       const DataColumn(label: Text('#')),
@@ -161,7 +159,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
           .entries
           .map((e) => DataColumn(
               label: Text(
-                  '${getItemLocalString(e.value.label, defaultString: e.value.name)}'),
+                  '${getItemLocalString(e.value.label.unlock, defaultString: e.value.name)}'),
               numeric: e.value.type.isNumeric))
           .toList(),
       if (editMode)

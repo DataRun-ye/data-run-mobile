@@ -4,7 +4,7 @@
 //
 // class TodosScreenViewModel extends ReactiveViewModel {
 //   final _firstTodoFocusNode = FocusNode();
-//   final _todosService = locator<TodosService>();
+//   final _todosService = appLocator<TodosService>();
 //   late final toggleStatus = _todosService.toggleStatus;
 //   late final removeTodo = _todosService.removeTodo;
 //   late final updateTodoContent = _todosService.updateTodoContent;

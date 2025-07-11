@@ -6,7 +6,7 @@ part of 'activity.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$activityModelHash() => r'66cbf967e19f27fef90a2ddb6ad8b56caa1de717';
+String _$activityModelHash() => r'928a4945ee10951d3a3e28af8119fd2287ea3f76';
 
 /// See also [activityModel].
 @ProviderFor(activityModel)
@@ -20,8 +20,10 @@ final activityModelProvider = AutoDisposeProvider<ActivityModel>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef ActivityModelRef = AutoDisposeProviderRef<ActivityModel>;
-String _$activitiesHash() => r'57cecd87d14a9cde29171f5a91daa6d79db188e2';
+String _$activitiesHash() => r'2dc8cbbd1889c0138086c153c41bfa82e71a5e09';
 
 /// See also [activities].
 @ProviderFor(activities)
@@ -35,6 +37,8 @@ final activitiesProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef ActivitiesRef = AutoDisposeFutureProviderRef<List<ActivityModel>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

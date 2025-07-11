@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element_widgets/form_widget_factory.dart';
 

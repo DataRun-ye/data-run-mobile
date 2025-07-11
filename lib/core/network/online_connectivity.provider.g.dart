@@ -6,7 +6,7 @@ part of 'online_connectivity.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$isOnlineHash() => r'853bce2cb5e018eaf9a8107c91c64bcd2ae6f6f4';
+String _$isOnlineHash() => r'b5979ccd1dab1f117a66be0775ab685d4ad47632';
 
 /// See also [IsOnline].
 @ProviderFor(IsOnline)
@@ -22,4 +22,4 @@ final isOnlineProvider =
 
 typedef _$IsOnline = AutoDisposeAsyncNotifier<bool>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

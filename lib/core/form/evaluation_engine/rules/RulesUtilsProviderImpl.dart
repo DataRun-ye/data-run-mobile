@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/rule_action.dart';
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
+import 'package:d_sdk/core/form/rule/rule_action.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/commons/extensions/value_type_formatter.dart';
 import 'package:datarunmobile/core/form/data/form_value_store.dart';
 import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_action.dart';
@@ -11,6 +11,7 @@ import 'package:datarunmobile/core/form/evaluation_engine/rules/rule_utils_provi
 import 'package:datarunmobile/core/form/evaluation_engine/rules/rules_utils_provider.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/value_store_result.dart';
+import 'package:drift/drift.dart';
 
 class RulesUtilsProviderImpl implements RulesUtilsProvider {
   bool applyForEvent = false;
@@ -237,10 +238,10 @@ class RulesUtilsProviderImpl implements RulesUtilsProvider {
     if (field != null) {
       late final String? value;
       if (field.optionSet != null && field.displayValue != null) {
-        final Option? valueOption = await D2Remote.optionSetModule.option
-            .byOptionSet(field.optionSet!)
-            .where(attribute: 'name', value: field.value)
-            .getOne();
+        final DataOption? valueOption = await DSdk.db.managers.dataOptions
+            .filter(
+                (f) => f.optionSet.id(field.optionSet) & f.code(field.value))
+            .getSingleOrNull();
         if (valueOption == null) {
           configurationErrors.add(
             RulesUtilsProviderConfigurationError(
@@ -263,11 +264,10 @@ class RulesUtilsProviderImpl implements RulesUtilsProvider {
       late final String? valueToShow;
 
       if (field.optionSet != null && ruleEffect.data?.isNotEmpty == true) {
-        final Option? effectOption = await D2Remote.optionSetModule.option
-            .byOptionSet(field.optionSet!)
-            // ignore: unnecessary_null_checks
-            .where(attribute: 'name', value: ruleEffect.data!)
-            .getOne();
+        final DataOption? effectOption = await DSdk.db.managers.dataOptions
+            .filter((f) =>
+                f.optionSet.id(field.optionSet) & f.code(ruleEffect.data))
+            .getSingleOrNull();
 
         if (effectOption == null) {
           configurationErrors.add(

@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:flutter/widgets.dart';
 
 typedef FormElementRendererFunction<TFormElement extends Template> = Widget

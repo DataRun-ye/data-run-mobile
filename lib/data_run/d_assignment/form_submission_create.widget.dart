@@ -1,14 +1,13 @@
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/commons/helpers/collections.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/home/form_template/domain/model/form_template_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,32 +16,32 @@ class FormSubmissionCreate extends ConsumerStatefulWidget {
       {super.key, required this.assignment, required this.onNewFormCreated});
 
   final AssignmentModel assignment;
-  final Function(DataFormSubmission submissionId) onNewFormCreated;
+  final Function(DataInstance submissionId) onNewFormCreated;
 
   @override
   FormSubmissionCreateState createState() => FormSubmissionCreateState();
 }
 
 class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
-  Future<DataFormSubmission> _createEntity(
-      BuildContext context, FormVersion formTemplate) async {
+  Future<DataInstance> _createEntity(
+      BuildContext context, FormTemplateModel formTemplate) async {
     final activityModel = ActivityInheritedWidget.of(context);
     final submissionInitialRepository =
-        ref.read(formSubmissionsProvider(formTemplate.formTemplate).notifier);
+        ref.read(formSubmissionsProvider(formTemplate.id).notifier);
 
     final submission = await submissionInitialRepository.createNewSubmission(
-      versionUid: formTemplate.id!,
       assignmentId: widget.assignment.id,
-      form: formTemplate.formTemplate!,
-      team: activityModel.assignedTeam!.id!,
-      versionNumber: formTemplate.versionNumber,
+      form: formTemplate.id,
+      formVersion: formTemplate.formVersion,
+      team: widget.assignment.team.id,
+      // versionNumber: formTemplate.versionNumber,
     );
     return submission;
   }
 
   Future<void> createAndPopupWithResult(
-      BuildContext context, FormVersion formTemplate) async {
-    DataFormSubmission? createdSubmission;
+      BuildContext context, FormTemplateModel formTemplate) async {
+    DataInstance? createdSubmission;
     try {
       createdSubmission = await _createEntity(context, formTemplate);
       widget.onNewFormCreated.call(createdSubmission);
@@ -56,9 +55,9 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final List<Pair<TeamFormPermission, bool>> userForms =
+    final List<Pair<AssignmentForm, bool>> userForms =
         widget.assignment.userForms;
-    final List<Pair<TeamFormPermission, bool>> availableLocally =
+    final List<Pair<AssignmentForm, bool>> availableLocally =
         widget.assignment.availableForms;
     return FractionallySizedBox(
       heightFactor: 0.7,
@@ -116,7 +115,7 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
                     return _FormListItem(
                       index: index,
                       permission: availableLocally[index].first,
-                      onTap: (FormVersion formTemplate) =>
+                      onTap: (FormTemplateModel formTemplate) =>
                           createAndPopupWithResult(context, formTemplate),
                     );
                   },
@@ -135,8 +134,8 @@ class _FormListItem extends ConsumerWidget {
       {required this.index, required this.permission, required this.onTap});
 
   final int index;
-  final TeamFormPermission permission;
-  final void Function(FormVersion) onTap;
+  final AssignmentForm permission;
+  final void Function(FormTemplateModel) onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -156,23 +155,23 @@ class _FormListItem extends ConsumerWidget {
           // isThreeLine: formTemplate.description != null,
           leading: const Icon(Icons.description),
           title: Text(
-            '${index + 1}. ${getItemLocalString(formTemplate.label, defaultString: formTemplate.name)}',
+            '${index + 1}. ${getItemLocalString(formTemplate.template.label, defaultString: formTemplate.template.name)}',
             softWrap: true,
           ),
-          subtitle: formTemplate.description != null
+          subtitle: formTemplate.template.description != null
               ? Text(
-                  formTemplate.description!,
+                  formTemplate.template.description!,
                   softWrap: true,
                 )
               : null,
-          onTap: () => onTap(formTemplate),
+          onTap: () => onTap(formTemplate.template),
           trailing: const Icon(Icons.chevron_right),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          hoverColor: cs.onSurface.withOpacity(0.1),
+          hoverColor: cs.onSurface.withValues(alpha: 0.1),
         );
       },
     );

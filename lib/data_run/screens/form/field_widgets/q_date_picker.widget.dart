@@ -1,5 +1,5 @@
-// import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-// import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
+// import 'package:d_sdk/core/logging/new_app_logging.dart';
+// import 'package:d_sdk/core/utilities/date_helper.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';

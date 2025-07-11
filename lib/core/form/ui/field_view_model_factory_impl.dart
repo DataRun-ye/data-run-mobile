@@ -1,5 +1,5 @@
-import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/form/section_rendering_type.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/model/option_set_configuration.data.dart';
@@ -9,7 +9,7 @@ import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: FieldViewModelFactory)
+// @Injectable(as: FieldViewModelFactory)
 class FieldViewModelFactoryImpl implements FieldViewModelFactory {
   FieldViewModelFactoryImpl({
     @factoryParam bool? noMandatoryFields,

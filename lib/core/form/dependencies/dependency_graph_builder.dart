@@ -1,11 +1,11 @@
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
+import 'package:d_sdk/core/form/rule/rule_parse_extension.dart';
 import 'package:datarunmobile/core/form/dependencies/dependency_matrix.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 
 class DependencyGraphBuilder {
-  DependencyMatrix buildGraph(FormVersion fromTemplate) {
+  DependencyMatrix buildGraph(FormTemplateRepository fromTemplate) {
     DependencyMatrix graph = DependencyMatrix();
-    fromTemplate.treeFields.forEach((field) {
+    fromTemplate.rootsFlatLookupMap().values.forEach((field) {
       graph.addRelationship(field.name!, [
         ...field.dependencies,
         ...field.calculationDependencies,

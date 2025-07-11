@@ -80,7 +80,6 @@ String getLegacyAppURL(BuildContext context) => isAndroid()
     ? 'https://play.google.com/store/apps/details?id=com.invoiceninja.invoiceninja'
     : 'https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1220337560&mt=8';
 
-
 String getPlatformLetter() {
   if (kIsWeb) {
     return 'C';

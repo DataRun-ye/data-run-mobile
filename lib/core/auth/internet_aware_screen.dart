@@ -1,4 +1,5 @@
 import 'package:datarunmobile/core/network/connectivy_service.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -22,7 +23,7 @@ class _InternetAwareAppBarState extends State<InternetAwareAppBar> {
   @override
   void initState() {
     super.initState();
-    ConnectivityService.instance.connectivityStatusStream.listen((isOnline) {
+    appLocator<NetworkUtil>().connectivityStatusStream.listen((isOnline) {
       setState(() {
         _isOnline = isOnline;
       });

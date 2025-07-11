@@ -21,8 +21,9 @@ mixin _$FormState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get calculationLoop => throw _privateConstructorUsedError;
   List<ConfigurationError> get configErrors =>
-      throw _privateConstructorUsedError;
-  Option<String> get focusedFieldId => throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // fpdart
+// required Option<String> focusedFieldId,
+  String? get focusedFieldId => throw _privateConstructorUsedError;
 
   /// Create a copy of FormState
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +43,7 @@ abstract class $FormStateCopyWith<$Res> {
       bool isLoading,
       bool calculationLoop,
       List<ConfigurationError> configErrors,
-      Option<String> focusedFieldId});
+      String? focusedFieldId});
 }
 
 /// @nodoc
@@ -65,7 +66,7 @@ class _$FormStateCopyWithImpl<$Res, $Val extends FormState>
     Object? isLoading = null,
     Object? calculationLoop = null,
     Object? configErrors = null,
-    Object? focusedFieldId = null,
+    Object? focusedFieldId = freezed,
   }) {
     return _then(_value.copyWith(
       fields: null == fields
@@ -88,10 +89,10 @@ class _$FormStateCopyWithImpl<$Res, $Val extends FormState>
           ? _value.configErrors
           : configErrors // ignore: cast_nullable_to_non_nullable
               as List<ConfigurationError>,
-      focusedFieldId: null == focusedFieldId
+      focusedFieldId: freezed == focusedFieldId
           ? _value.focusedFieldId
           : focusedFieldId // ignore: cast_nullable_to_non_nullable
-              as Option<String>,
+              as String?,
     ) as $Val);
   }
 }
@@ -110,7 +111,7 @@ abstract class _$$FormStateImplCopyWith<$Res>
       bool isLoading,
       bool calculationLoop,
       List<ConfigurationError> configErrors,
-      Option<String> focusedFieldId});
+      String? focusedFieldId});
 }
 
 /// @nodoc
@@ -131,7 +132,7 @@ class __$$FormStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? calculationLoop = null,
     Object? configErrors = null,
-    Object? focusedFieldId = null,
+    Object? focusedFieldId = freezed,
   }) {
     return _then(_$FormStateImpl(
       fields: null == fields
@@ -154,10 +155,10 @@ class __$$FormStateImplCopyWithImpl<$Res>
           ? _value._configErrors
           : configErrors // ignore: cast_nullable_to_non_nullable
               as List<ConfigurationError>,
-      focusedFieldId: null == focusedFieldId
+      focusedFieldId: freezed == focusedFieldId
           ? _value.focusedFieldId
           : focusedFieldId // ignore: cast_nullable_to_non_nullable
-              as Option<String>,
+              as String?,
     ));
   }
 }
@@ -197,8 +198,10 @@ class _$FormStateImpl implements _FormState {
     return EqualUnmodifiableListView(_configErrors);
   }
 
+// fpdart
+// required Option<String> focusedFieldId,
   @override
-  final Option<String> focusedFieldId;
+  final String? focusedFieldId;
 
   @override
   String toString() {
@@ -249,7 +252,7 @@ abstract class _FormState implements FormState {
       required final bool isLoading,
       required final bool calculationLoop,
       required final List<ConfigurationError> configErrors,
-      required final Option<String> focusedFieldId}) = _$FormStateImpl;
+      required final String? focusedFieldId}) = _$FormStateImpl;
 
   @override
   List<FieldUiModel> get fields;
@@ -260,9 +263,10 @@ abstract class _FormState implements FormState {
   @override
   bool get calculationLoop;
   @override
-  List<ConfigurationError> get configErrors;
+  List<ConfigurationError> get configErrors; // fpdart
+// required Option<String> focusedFieldId,
   @override
-  Option<String> get focusedFieldId;
+  String? get focusedFieldId;
 
   /// Create a copy of FormState
   /// with the given fields replaced by the non-null parameter values.

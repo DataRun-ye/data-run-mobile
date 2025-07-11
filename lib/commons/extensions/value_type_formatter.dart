@@ -1,5 +1,5 @@
-import 'package:d2_remote/modules/datarun/common/standard_extensions.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/common/standard_extensions.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 
 extension ValueTypeFormatter on String? {
   String? formatData(ValueType? valueType) {

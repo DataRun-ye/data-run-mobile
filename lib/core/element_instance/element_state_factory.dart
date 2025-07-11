@@ -1,15 +1,16 @@
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:datarunmobile/core/element_instance/element_state.dart';
 import 'package:datarunmobile/core/element_instance/field_state/field_state.dart';
 import 'package:datarunmobile/core/element_instance/repeat_instance/repeat_state.dart';
 import 'package:datarunmobile/core/element_instance/sction_instance/section_state.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
-ElementStat fromTemplate(FormElementTemplate template, {dynamic value}) {
+ElementStat fromTemplate(Template template, {dynamic value}) {
   return switch (template) {
-    SectionElementTemplate sectionTemplate => sectionTemplate.repeatable
+    SectionTemplate sectionTemplate => sectionTemplate.repeatable
         ? SectionState.fromTemplate(sectionTemplate, value: value)
         : RepeatState.fromTemplate(sectionTemplate, value: value),
-    FormElementTemplate fieldTemplate => FieldState.fromTemplate(fieldTemplate),
+    FieldTemplate fieldTemplate => FieldState.fromTemplate(fieldTemplate),
+    _ => throw UnimplementedError(),
   };
 }
 

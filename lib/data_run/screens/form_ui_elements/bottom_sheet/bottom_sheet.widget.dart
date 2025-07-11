@@ -22,7 +22,11 @@ class QBottomSheetDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Icon(completionDialogModel.bottomSheetContentModel.icon, size: 30, color: cs.error,),
+          Icon(
+            completionDialogModel.bottomSheetContentModel.icon,
+            size: 30,
+            color: cs.error,
+          ),
           const SizedBox(height: 8),
           Text(
             completionDialogModel.bottomSheetContentModel.title,

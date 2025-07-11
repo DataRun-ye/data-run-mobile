@@ -1,4 +1,4 @@
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:intl/intl.dart';
 
 extension DateFormatExtension on DateFormat {

@@ -1,40 +1,22 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:d2_remote/modules/datarun_shared/utilities/authenticated_user.dart';
-import 'package:datarunmobile/app/app.bottomsheets.dart';
-import 'package:datarunmobile/app/app.dialogs.dart';
-import 'package:datarunmobile/app/app.locator.dart';
-import 'package:datarunmobile/app/app.router.dart';
-import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/main_constants.dart';
 import 'package:datarunmobile/data/preference.provider.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:datarunmobile/main.reflectable.dart';
+import 'package:datarunmobile/stacked/app.router.dart';
 import 'package:datarunmobile/ui/common/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-AuthenticationResult? authenticationResult;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeReflectable();
-
-  // stacked
   await configureDependencies();
-  await setupLocator();
-  setupDialogUi();
-  setupBottomSheetUi();
-  //
 
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) {
@@ -46,34 +28,29 @@ Future<void> main() async {
     return stack;
   };
 
-  if (Platform.isWindows || Platform.isLinux) {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
-  }
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://c39a75530f4b8694183508a689bbafb7@o4504831846645760.ingest.us.sentry.io/4507587127214080';
+  //     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  //     // We recommend adjusting this value in production.
+  //     // options.tracesSampleRate = 1.0;
+  //     // The sampling rate for profiling is relative to tracesSampleRate
+  //     // Setting to 1.0 will profile 100% of sampled transactions:
+  //     // options.profilesSampleRate = 1.0;
+  //   },
+  //   appRunner: () => runApp(
+  //     const ProviderScope(
+  //       child: App(
+  //         key: ValueKey('DATARUN_MAIN_APP'),
+  //       ),
+  //     ),
+  //   ),
+  // );
 
-  await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://c39a75530f4b8694183508a689bbafb7@o4504831846645760.ingest.us.sentry.io/4507587127214080';
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production.
-      // options.tracesSampleRate = 1.0;
-      // The sampling rate for profiling is relative to tracesSampleRate
-      // Setting to 1.0 will profile 100% of sampled transactions:
-      // options.profilesSampleRate = 1.0;
-    },
-    appRunner: () => runApp(
-      const ProviderScope(
-        child: App(
-          key: ValueKey('DATARUN_MAIN_APP'),
-        ),
-      ),
-    ),
-  );
-
-  // runApp(const ProviderScope(
-  //   child: App(key: ValueKey('DATARUN_MAIN_APP')),
-  // ));
+  runApp(const ProviderScope(
+    child: App(key: ValueKey('DATARUN_MAIN_APP')),
+  ));
 }
 
 class App extends ConsumerWidget {
@@ -83,20 +60,21 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final language = ref.watch(preferenceNotifierProvider(Preference.language));
-    final colorSeed = ColorSeed
-        .values[ref.watch(preferenceNotifierProvider(Preference.colorSeed))];
+    final language =
+        ref.watch(preferenceNotifierProvider(Preference.language)) as String;
+    final seed = ref.watch(preferenceNotifierProvider(Preference.colorSeed));
+    final mode = ref.watch(preferenceNotifierProvider(Preference.themeMode));
+    final colorSeed = ColorSeed.values[seed];
     final useMaterial3 =
         ref.watch(preferenceNotifierProvider(Preference.useMaterial3));
-    final themeMode = ThemeMode
-        .values[ref.watch(preferenceNotifierProvider(Preference.themeMode))];
+    final themeMode = ThemeMode.values[mode];
     Locale locale = Locale(language, language == 'en' ? 'en_US' : '');
     timeago.setLocaleMessages(
         language,
         switch (language) {
           'ar' => timeago.ArMessages(),
           'en' => timeago.EnMessages(),
-          String() => timeago.ArMessages(),
+          _ => timeago.ArMessages(),
         });
 
     final cs = ColorScheme.fromSeed(
@@ -160,8 +138,8 @@ class App extends ConsumerWidget {
         ),
       ),
       tabBarTheme: base.tabBarTheme.copyWith(
-        labelColor: barFg.withOpacity(0.8),
-        unselectedLabelColor: barFg.withOpacity(0.5),
+        labelColor: barFg.withValues(alpha: 0.8),
+        unselectedLabelColor: barFg.withValues(alpha: 0.5),
       ),
       appBarTheme: base.appBarTheme.copyWith(
         backgroundColor: barBg,
@@ -173,14 +151,16 @@ class App extends ConsumerWidget {
         systemOverlayStyle:
             isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
           color: cs.surfaceContainerLow, surfaceTintColor: cs.surfaceTint),
 
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         // alignLabelWithHint: true,
         fillColor: isDark ? cs.surfaceContainerHighest : cs.surface,
-        errorStyle: TextStyle(color: SurfaceColors.Error, backgroundColor: SurfaceColors.ErrorContainerHighest),
+        errorStyle: TextStyle(
+            color: SurfaceColors.Error,
+            backgroundColor: SurfaceColors.ErrorContainerHighest),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: SurfaceColors.Error, width: 2),
         ),
@@ -278,7 +258,7 @@ class App extends ConsumerWidget {
       //   labelStyle: base.textTheme.bodyMedium!.copyWith(
       //     color: isDark ? cs.onSurface : cs.onPrimary,
       //   ),
-      //   disabledColor: cs.onSurface.withOpacity(0.12),
+      //   disabledColor: cs.onSurfacewithValues(alpha:0.12),
       //   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       //   shape: RoundedRectangleBorder(
       //     borderRadius: BorderRadius.circular(8),
@@ -286,12 +266,13 @@ class App extends ConsumerWidget {
       //   ),
       //   labelPadding: const EdgeInsets.symmetric(horizontal: 8),
       // ),
-      // focusColor: cs.primary.withOpacity(0.12),
-      // hoverColor: cs.primary.withOpacity(0.06),
-      // splashColor: cs.primary.withOpacity(0.08),
-      // highlightColor: cs.primary.withOpacity(0.1),
+      // focusColor: cs.primarywithValues(alpha:0.12),
+      // hoverColor: cs.primarywithValues(alpha:0.06),
+      // splashColor: cs.primarywithValues(alpha:0.08),
+      // highlightColor: cs.primary.withValues(alpha:0.1),
       dataTableTheme: DataTableThemeData(
-        headingRowColor: WidgetStateProperty.all(cs.primary.withOpacity(0.08)),
+        headingRowColor:
+            WidgetStateProperty.all(cs.primary.withValues(alpha: 0.08)),
         headingTextStyle: base.textTheme.titleSmall!.copyWith(
           color: cs.onSurface,
           fontWeight: FontWeight.w600,
@@ -316,15 +297,15 @@ class App extends ConsumerWidget {
       ),
       // 2️⃣ FilterChip (for “multi‑select” filters)
       // filterChipTheme: FilterChipThemeData(
-      //   selectedColor: cs.primary.withOpacity(0.16),
+      //   selectedColor: cs.primary.withValues(alpha:0.16),
       //   checkmarkColor: cs.primary,
       //   backgroundColor: cs.surfaceVariant,
-      //   disabledColor: cs.onSurface.withOpacity(0.12),
+      //   disabledColor: cs.onSurface.withValues(alpha:0.12),
       //   labelStyle: base.textTheme.bodyMedium!,
       //   secondaryLabelStyle:
       //       base.textTheme.bodyMedium!.copyWith(color: cs.onPrimary),
       //   side: BorderSide(color: cs.outline),
-      //   selectedShadowColor: cs.primary.withOpacity(0.24),
+      //   selectedShadowColor: cs.primary.withValues(alpha:0.24),
       //   elevation: 0,
       //   pressElevation: 2,
       //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

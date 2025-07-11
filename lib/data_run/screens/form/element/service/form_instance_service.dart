@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/auth/user/entities/d_user.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/attribute_type.dart';
+import 'package:d_sdk/core/form/attribute_type.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/device_info_service.dart';
 import 'package:uuid/uuid.dart';
@@ -20,12 +20,12 @@ class FormInstanceService {
   final String _uuid;
 
   Future<String?> getUserAttribute(AttributeType userAttributeType) async {
-    User? currentUser = await D2Remote.userModule.user.getOne();
+    User? currentUser = await DSdk.db.managers.users.getSingleOrNull();
 
     return switch (userAttributeType) {
       AttributeType.username => currentUser?.username,
       AttributeType.userUid => currentUser?.id,
-      AttributeType.phoneNumber => currentUser?.phoneNumber,
+      AttributeType.phoneNumber => currentUser?.mobile,
       AttributeType.userInfo => currentUser?.firstName,
       _ => null
     };
@@ -60,37 +60,14 @@ class FormInstanceService {
           initialValue ?? _deviceInfoService?.model(),
         AttributeType.form =>
           initialValue ?? formMetadata.formId.split('_').first,
-        AttributeType.team => initialValue ??
-            (await D2Remote.teamModuleD.team
-                    .where(attribute: 'disabled', value: false)
-                    .byActivity(formMetadata.assignmentModel.teamId)
-                    .getOne())
-                ?.uid,
+        AttributeType.team => formMetadata.assignmentModel.team.id,
         AttributeType.activity =>
-          initialValue ?? formMetadata.assignmentModel.activityId,
+          initialValue ?? formMetadata.assignmentModel.activity?.id,
         AttributeType.version => initialValue ?? formMetadata.formId,
-        AttributeType.scope => formMetadata.assignmentModel.scope.name,
       };
 
   Future<Map<String, Object?>> formAttributesControls(initialValue) async {
     final Map<String, Object?> controls = {
-      // /// uuid
-      // '_${AttributeType.uuid.name}': FormControl<String>(
-      //     value: initialValue['_${AttributeType.uuid.name}'] ?? _uuid),
-
-      // /// submission uid
-      // '_dataUid': FormControl<String>(
-      //     value: initialValue['_dataUid'] ?? formMetadata.submission),
-
-      // /// submission uid
-      // '_${formUid}':
-      //     initialValue['_${formUid}'] ?? CodeGenerator.generateCompositeUid(),
-      // @Column(nullable: true, type: ColumnType.TEXT)
-      // EntityScope? scope;
-      '_${AttributeType.scope.name}': await attributeControl(
-          AttributeType.scope,
-          initialValue: initialValue['_${AttributeType.scope.name}']),
-
       /// phoneNumber
       '_${AttributeType.phoneNumber.name}': await attributeControl(
           AttributeType.phoneNumber,
@@ -117,7 +94,7 @@ class FormInstanceService {
 
       /// form
       '_${AttributeType.form.name}':
-      initialValue['_${AttributeType.form.name}'] ?? formMetadata.formId,
+          initialValue['_${AttributeType.form.name}'] ?? formMetadata.formId,
 
       /// activity
       '_${AttributeType.activity.name}': await attributeControl(

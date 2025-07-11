@@ -1,7 +1,7 @@
-// import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
+// import 'package:d_sdk/database/app_database.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
 // import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 // import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 // import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -175,7 +175,7 @@
 //     ]
 //   };
 //
-//   final formTemplate = FormVersion.fromJson(templateJson);
+//   final formTemplate = FormTemplateVersion.fromJson(templateJson);
 //
 //   /// flat cache of the formTemplate that contains all fields in a flat structure
 //   /// and provide path based queries utils and methods to traverse the tree using

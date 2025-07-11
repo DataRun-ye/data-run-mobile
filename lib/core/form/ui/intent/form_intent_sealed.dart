@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:equatable/equatable.dart';
 
 // part 'repeat_group_intent.dart';

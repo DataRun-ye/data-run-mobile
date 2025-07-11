@@ -1,34 +1,30 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/calculated_expression.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/choice_filter.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/rule/calculated_Expression.dart';
+import 'package:d_sdk/core/form/rule/choice_filter.dart';
+import 'package:d_sdk/core/form/rule/rule_parse_extension.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/members/form_element_state.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FormElementBuilder {
   static Map<String, FormElementInstance<dynamic>> buildFormElements(
-      FormGroup form, FormFlatTemplate formFlatTemplate,
+      FormGroup form, FormTemplateRepository formTemplateVersion,
       {dynamic initialFormValue}) {
     final Map<String, FormElementInstance<dynamic>> elements = {};
 
-    for (var template in formFlatTemplate.formTemplate.treeFields) {
-      // template.fields.sort((a, b) => (a.order).compareTo(b.order));
-
+    for (var template in formTemplateVersion.rootSection.children) {
       elements[template.name!] = buildFormElement(
-          form, formFlatTemplate, template,
+          form, formTemplateVersion, template,
           initialFormValue: initialFormValue?[template.name]);
     }
 
     return elements;
   }
 
-  static FormElementInstance<dynamic> buildFormElement(
-      FormGroup form, FormFlatTemplate formFlatTemplate, Template template,
+  static FormElementInstance<dynamic> buildFormElement(FormGroup form,
+      FormTemplateRepository formFlatTemplate, Template template,
       {dynamic initialFormValue}) {
     if (template is SectionTemplate) {
       if (template.repeatable) {
@@ -45,7 +41,7 @@ class FormElementBuilder {
   }
 
   static Section buildSectionInstance(FormGroup rootFormControl,
-      FormFlatTemplate formFlatTemplate, SectionTemplate template,
+      FormTemplateRepository formFlatTemplate, SectionTemplate template,
       {dynamic initialFormValue}) {
     final Map<String, FormElementInstance<dynamic>> elements = {};
 
@@ -62,7 +58,7 @@ class FormElementBuilder {
   }
 
   static RepeatItemInstance buildRepeatItem(FormGroup rootFormControl,
-      FormFlatTemplate formFlatTemplate, SectionTemplate template,
+      FormTemplateRepository formFlatTemplate, SectionTemplate template,
       {Map<String, Object?>? initialFormValue /*, required String parentUid*/
       }) {
     final Map<String, FormElementInstance<dynamic>> elements = {};
@@ -79,49 +75,17 @@ class FormElementBuilder {
     }
     repeatedSection.addAll(elements);
     return repeatedSection;
-
-    // final Map<String, FormElementInstance<dynamic>> elements = {};
-    //
-    // template.fields.sort((a, b) => (a.order).compareTo(b.order));
-    // for (var childTemplate in template.fields) {
-    //   elements[childTemplate.name] = buildFormElement(
-    //       rootFormControl, childTemplate,
-    //       initialFormValue: initialFormValue?[childTemplate.name]);
-    // }
-    //
-    // final repeatedSection = RepeatItemInstance(
-    //     template: template, form: rootFormControl, elements: elements);
-    // return repeatedSection;
   }
 
-  // static RepeatInstance buildScannedCode(FormGroup rootFormControl,
-  //     FormFlatTemplate formFlatTemplate, ScannedCodeTemplate template,
-  //     {List<dynamic>? initialFormValue}) {
-  //   final List<RepeatItemInstance> elements = initialFormValue
-  //       ?.map((value) => buildRepeatItem(
-  //       rootFormControl, formFlatTemplate, template,
-  //       initialFormValue: value,
-  //       parentUid: value['parentUid'] as String))
-  //       .toList() ??
-  //       [];
-  //
-  //   final repeatedSection =
-  //   RepeatInstance(template: template, form: rootFormControl);
-  //
-  //   repeatedSection.addAll(elements);
-  //   return repeatedSection;
-  // }
-
   static RepeatSection buildRepeatInstance(FormGroup rootFormControl,
-      FormFlatTemplate formFlatTemplate, SectionTemplate template,
+      FormTemplateRepository formFlatTemplate, SectionTemplate template,
       {List<dynamic>? initialFormValue}) {
     final List<RepeatItemInstance> elements = initialFormValue
             ?.map((value) => buildRepeatItem(
                   rootFormControl,
                   formFlatTemplate,
                   template,
-                  initialFormValue:
-                      value, /*parentUid: value['parentUid'] as String*/
+                  initialFormValue: value,
                 ))
             .toList() ??
         [];
@@ -134,7 +98,7 @@ class FormElementBuilder {
   }
 
   static FieldInstance<dynamic> buildFieldInstance(FormGroup rootFormControl,
-      FormFlatTemplate formFlatTemplate, FieldTemplate templateElement,
+      FormTemplateRepository formFlatTemplate, FieldTemplate templateElement,
       {dynamic initialFormValue}) {
     switch (templateElement.type) {
       case ValueType.Text:
@@ -214,7 +178,7 @@ class FormElementBuilder {
               ? ChoiceFilter(
                   expression: templateElement.evalChoiceFilterExpression,
                   options: formFlatTemplate
-                          .optionLists[templateElement.optionSet!]
+                          .optionMap[templateElement.optionSet!]
                           ?.toList() ??
                       [])
               : null,
@@ -223,7 +187,7 @@ class FormElementBuilder {
               value: initialFormValue ?? templateElement.defaultValue,
               mandatory: templateElement.mandatory,
               visibleOptions: formFlatTemplate
-                      .optionLists[templateElement.optionSet!]
+                      .optionMap[templateElement.optionSet!]
                       ?.toList() ??
                   []),
           template: templateElement,
@@ -235,7 +199,7 @@ class FormElementBuilder {
                 ? ChoiceFilter(
                     expression: templateElement.evalChoiceFilterExpression,
                     options: formFlatTemplate
-                            .optionLists[templateElement.optionSet!]
+                            .optionMap[templateElement.optionSet!]
                             ?.toList() ??
                         [])
                 : null,
@@ -248,7 +212,7 @@ class FormElementBuilder {
                     : <String>[],
                 mandatory: templateElement.mandatory,
                 visibleOptions: formFlatTemplate
-                        .optionLists[templateElement.optionSet!]
+                        .optionMap[templateElement.optionSet!]
                         ?.toList() ??
                     []),
             template: templateElement);

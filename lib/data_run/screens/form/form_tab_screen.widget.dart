@@ -1,5 +1,5 @@
 import 'package:datarunmobile/data_run/screens/form/form_with_sliver/form_entry_view_silver.widget.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -30,7 +30,7 @@ class FormSubmissionScreen extends StatefulHookConsumerWidget {
 class FormSubmissionScreenState extends ConsumerState<FormSubmissionScreen> {
   @override
   Widget build(BuildContext context) {
-    final formMetadata = FormMetadataWidget.of(context);
+    final FormMetadata formMetadata = FormMetadataWidget.of(context);
 
     final AsyncValue<bool> submissionEditStatus =
         ref.watch(submissionEditStatusProvider(formMetadata: formMetadata));
@@ -110,9 +110,9 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
             title: Text(getItemLocalString(
-                FormFlatTemplateInheritWidget.of(context).label,
+                FormFlatTemplateInheritWidget.of(context).template.label,
                 defaultString:
-                    FormFlatTemplateInheritWidget.of(context).name))),
+                    FormFlatTemplateInheritWidget.of(context).template.name))),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) => currentPageIndex.value = index,
           indicatorColor: Colors.amber,

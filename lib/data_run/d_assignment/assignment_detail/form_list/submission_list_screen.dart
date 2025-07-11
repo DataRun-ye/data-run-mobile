@@ -2,13 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Submission {
-  final String formName;
-  final String version;
-  final String orgUnit;
-  final String progress;
-  final DateTime submittedAt;
-  final SyncStatus syncStatus;
-
   Submission({
     required this.formName,
     required this.version,
@@ -17,6 +10,12 @@ class Submission {
     required this.submittedAt,
     required this.syncStatus,
   });
+  final String formName;
+  final String version;
+  final String orgUnit;
+  final String progress;
+  final DateTime submittedAt;
+  final SyncStatus syncStatus;
 }
 
 enum SyncStatus { submitted, finalReady, draft }
@@ -67,9 +66,8 @@ class SubmissionListScreen2 extends StatelessWidget {
 }
 
 class SubmissionCard extends StatelessWidget {
-  final Submission submission;
-
   const SubmissionCard({super.key, required this.submission});
+  final Submission submission;
 
   Color get syncColor {
     switch (submission.syncStatus) {
@@ -106,7 +104,8 @@ class SubmissionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = DateFormat('dd MMM yyyy • HH:mm').format(submission.submittedAt);
+    final date =
+        DateFormat('dd MMM yyyy • HH:mm').format(submission.submittedAt);
 
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -123,7 +122,8 @@ class SubmissionCard extends StatelessWidget {
               children: [
                 Text(
                   submission.formName,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 Text(
                   submission.version,

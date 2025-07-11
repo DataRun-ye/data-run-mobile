@@ -1,4 +1,4 @@
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/generated/l10n.dart';

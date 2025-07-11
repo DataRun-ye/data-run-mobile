@@ -1,10 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_about_info.provider.g.dart';
 
 @riverpod
-Future<AppAbout> appAboutInfo(AppAboutInfoRef ref) async {
+Future<AppAbout> appAboutInfo(Ref ref) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return AppAbout(
       appName: packageInfo.appName,

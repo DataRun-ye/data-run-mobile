@@ -1,4 +1,5 @@
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
+import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:equatable/equatable.dart';
 
 class FormMetadata with EquatableMixin {
@@ -9,7 +10,7 @@ class FormMetadata with EquatableMixin {
     required this.assignmentModel,
     required this.formId,
     required this.versionUid,
-    required this.version,
+    // required this.version,
     // this.isNew = true,
     // this.version,
     this.submission,
@@ -21,6 +22,13 @@ class FormMetadata with EquatableMixin {
   // final String formLabel;
   // final AssignmentForm assignmentForm;
 
+  bool get canEdit =>
+      assignmentModel.userForms
+          .firstOrNullWhere((uf) => uf.first.form == formId)
+          ?.first
+          .canEditSubmissions ==
+      true;
+
   final AssignmentModel assignmentModel;
 
   // final bool isNew;
@@ -28,7 +36,8 @@ class FormMetadata with EquatableMixin {
 
 // final bool isNew;
   final String versionUid;
-  final int version;
+
+  // final int version;
   final String? submission;
 
   FormMetadata copyWith({
@@ -38,7 +47,7 @@ class FormMetadata with EquatableMixin {
     // String? activity,
     // AssignmentForm? assignmentForm,
     AssignmentModel? assignmentModel,
-    int? version,
+    // int? version,
     String? submission,
   }) {
     return FormMetadata(
@@ -47,7 +56,7 @@ class FormMetadata with EquatableMixin {
       // formLabel: formLabel ?? this.formLabel,
       // activity: activity ?? this.activity,
       assignmentModel: assignmentModel ?? this.assignmentModel,
-      version: version ?? this.version,
+      // version: version ?? this.version,
       submission: submission ?? this.submission,
     );
   }
@@ -59,7 +68,8 @@ class FormMetadata with EquatableMixin {
   List<Object?> get props => [
         submission,
         versionUid,
-        version,
-        assignmentModel, formId /*, formLabel, activity*/
+        // version,
+        assignmentModel,
+        formId /*, formLabel, activity*/
       ];
 }

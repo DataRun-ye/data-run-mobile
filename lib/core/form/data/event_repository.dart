@@ -1,10 +1,8 @@
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:datarunmobile/commons/helpers/collections.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/core/form/data/data_entry_base_repository.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
-
 
 class EventRepository extends DataEntryBaseRepository {
   EventRepository({
@@ -14,7 +12,7 @@ class EventRepository extends DataEntryBaseRepository {
   }) : super(fieldFactory);
 
   final String? eventUid;
-  final FormVersion formTemplateVersion;
+  final FormTemplateVersion formTemplateVersion;
 
   //
   // Future<Event?>? _event;
@@ -77,7 +75,7 @@ class EventRepository extends DataEntryBaseRepository {
   }
 
   @override
-  Pair<String, List<FormOption>> options(
+  Pair<String, List<DataOption>> options(
       {required String optionSetUid,
       List<String> optionsToHide = const [],
       List<String> optionGroupsToHide = const [],

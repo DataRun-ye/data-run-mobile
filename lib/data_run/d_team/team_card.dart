@@ -1,4 +1,4 @@
-// import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
+// import 'package:d_sdk/modules/metadatarun/teams/entities/d_team.entity.dart';
 // import 'package:flutter/material.dart';
 
 // class TeamCard extends StatelessWidget {

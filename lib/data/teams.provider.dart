@@ -1,35 +1,36 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/form/entities/form_template.entity.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
-import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
-import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
-import 'package:datarunmobile/commons/helpers/collections.dart';
-import 'package:datarunmobile/data_run/d_team/team_model.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/shared/collections.dart';
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'teams.provider.g.dart';
 
 @riverpod
-Future<List<Pair<TeamFormPermission, bool>>> userAvailableForms(
-    UserAvailableFormsRef ref) async {
-  final List<Team> assignedTeams = await D2Remote.teamModuleD.team
-      .where(attribute: 'scope', value: 'Assigned')
-      .where(attribute: 'disabled', value: false)
-      .get();
+Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(Ref ref,
+    {String? assignment}) async {
+  List<AssignmentForm> assignmentForms = [];
+  if (assignment.isNotNullOrEmpty) {
+    assignmentForms.addAll(await DSdk.db.managers.assignmentForms
+        .filter((f) => f.assignment.id(assignment))
+        .get());
+  } else {
+    assignmentForms.addAll(await DSdk.db.managers.assignmentForms.get());
+  }
 
-  final assignedForms = assignedTeams.expand((t) => t.formPermissions).toList();
-
-  final List<FormTemplate> availableFormTemplates = await D2Remote
-      .formModule.formTemplate
-      .byIds(assignedForms.map((f) => f.form).toList())
+  final List<FormTemplate> availableFormTemplates = await DSdk
+      .db.managers.formTemplates
+      .filter((f) => f.assignments((f) =>
+          f.assignment.id.isIn(assignmentForms.map((a) => a.assignment))))
       .get();
 
   final List<String> availableForms =
-      availableFormTemplates.map((f) => f.id!).toList();
+      availableFormTemplates.map((f) => f.id).toList();
 
-  final availableAssignedForms = assignedTeams
-      .expand((t) => t.formPermissions)
+  final availableAssignedForms = assignmentForms
       .map((fp) => Pair(fp, availableForms.contains(fp.form)))
       .toList();
 
@@ -37,24 +38,38 @@ Future<List<Pair<TeamFormPermission, bool>>> userAvailableForms(
 }
 
 @riverpod
-class Teams extends _$Teams {
-  @override
-  Future<IList<TeamModel>> build(EntityScope scope) async {
-    final List<Team> teams = await D2Remote.teamModuleD.team
-        .where(attribute: 'scope', value: scope.name)
-        .get();
+Future<List<IdentifiableModel>> teams(Ref ref, {String? activity}) async {
+  var query = DSdk.db.managers.teams;
 
-    final List<Pair<TeamFormPermission, bool>> availableForms =
-        await ref.watch(userAvailableFormsProvider.future);
-
-    return teams
-        .where((t) => !t.disabled)
-        .map((t) => TeamModel.fromIdentifiable(
-            identifiableEntity: t,
-            activity: t.activity,
-            formPermissions:
-                availableForms.where((fp) => fp.first.team == t.id)))
-        .toList()
-        .lock;
+  if (activity.isNotNullOrEmpty) {
+    query.filter((f) => f.activity.id(activity));
   }
+
+  return query
+      .map((t) => IdentifiableModel(
+          id: t.id,
+          name: '${Intl.message('team')} ${t.code}',
+          code: t.code,
+          properties: {'activity': t.activity}))
+      .get();
+}
+
+@riverpod
+Future<List<IdentifiableModel>> managedTeams(Ref ref,
+    {String? team, String? activity}) async {
+  var query = DSdk.db.managers.managedTeams;
+
+  if (team.isNotNullOrEmpty) {
+    query.filter((f) => f.managedBy.id(team));
+  }
+  if (activity.isNotNullOrEmpty) {
+    query.filter((f) => f.activity.id(activity));
+  }
+  return query
+      .map((t) => IdentifiableModel(
+          id: t.id,
+          name: '${Intl.message('team')} ${t.code}',
+          code: t.code,
+          properties: {'activity': t.activity}))
+      .get();
 }

@@ -1,6 +1,6 @@
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:datarunmobile/core/element_instance/element_state.dart';
 import 'package:datarunmobile/core/element_instance/element_vistor/element_vistor.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 
 class FieldState extends ElementStat {
   FieldState._({
@@ -12,10 +12,9 @@ class FieldState extends ElementStat {
     required this.templatePath,
   });
 
-  factory FieldState.fromTemplate(FormElementTemplate template,
-      [dynamic value]) {
+  factory FieldState.fromTemplate(Template template, [dynamic value]) {
     return FieldState._(
-      id: template.id!,
+      id: template.id,
       isEnabled: template.readOnly,
       value: value,
       templatePath: template.path!,

@@ -7,7 +7,7 @@ part of 'submission_count.provider.dart';
 // **************************************************************************
 
 String _$submissionsSyncStateCountHash() =>
-    r'3bcc7fad786f51d91d17f692c28f0d83f01ea9be';
+    r'099cdabf0a7fa4dd025be0fe68202dcdadea87b6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -35,40 +35,19 @@ class _SystemHash {
 const submissionsSyncStateCountProvider = SubmissionsSyncStateCountFamily();
 
 /// See also [submissionsSyncStateCount].
-class SubmissionsSyncStateCountFamily extends Family {
+class SubmissionsSyncStateCountFamily extends Family<AsyncValue<int>> {
   /// See also [submissionsSyncStateCount].
   const SubmissionsSyncStateCountFamily();
 
-  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
-    assignmentProvider
-  ];
-
-  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
-      <ProviderOrFamily>{
-    assignmentProvider,
-    ...?assignmentProvider.allTransitiveDependencies
-  };
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'submissionsSyncStateCountProvider';
-
   /// See also [submissionsSyncStateCount].
   SubmissionsSyncStateCountProvider call(
-    SyncStatus syncStatus,
+    InstanceSyncStatus syncStatus,
   ) {
     return SubmissionsSyncStateCountProvider(
       syncStatus,
     );
   }
 
-  @visibleForOverriding
   @override
   SubmissionsSyncStateCountProvider getProviderOverride(
     covariant SubmissionsSyncStateCountProvider provider,
@@ -78,34 +57,32 @@ class SubmissionsSyncStateCountFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<int> Function(SubmissionsSyncStateCountRef ref) create) {
-    return _$SubmissionsSyncStateCountFamilyOverride(this, create);
-  }
-}
-
-class _$SubmissionsSyncStateCountFamilyOverride implements FamilyOverride {
-  _$SubmissionsSyncStateCountFamilyOverride(this.overriddenFamily, this.create);
-
-  final FutureOr<int> Function(SubmissionsSyncStateCountRef ref) create;
+  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
+    assignmentProvider
+  ];
 
   @override
-  final SubmissionsSyncStateCountFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
+      <ProviderOrFamily>{
+    assignmentProvider,
+    ...?assignmentProvider.allTransitiveDependencies
+  };
 
   @override
-  SubmissionsSyncStateCountProvider getProviderOverride(
-    covariant SubmissionsSyncStateCountProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'submissionsSyncStateCountProvider';
 }
 
 /// See also [submissionsSyncStateCount].
 class SubmissionsSyncStateCountProvider extends AutoDisposeFutureProvider<int> {
   /// See also [submissionsSyncStateCount].
   SubmissionsSyncStateCountProvider(
-    SyncStatus syncStatus,
+    InstanceSyncStatus syncStatus,
   ) : this._internal(
           (ref) => submissionsSyncStateCount(
             ref as SubmissionsSyncStateCountRef,
@@ -124,7 +101,7 @@ class SubmissionsSyncStateCountProvider extends AutoDisposeFutureProvider<int> {
         );
 
   SubmissionsSyncStateCountProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -133,11 +110,11 @@ class SubmissionsSyncStateCountProvider extends AutoDisposeFutureProvider<int> {
     required this.syncStatus,
   }) : super.internal();
 
-  final SyncStatus syncStatus;
+  final InstanceSyncStatus syncStatus;
 
   @override
   Override overrideWith(
-    FutureOr<int> Function(SubmissionsSyncStateCountRef ref) create,
+    FutureOr<int> Function(SubmissionsSyncStateCountRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -154,27 +131,8 @@ class SubmissionsSyncStateCountProvider extends AutoDisposeFutureProvider<int> {
   }
 
   @override
-  (SyncStatus,) get argument {
-    return (syncStatus,);
-  }
-
-  @override
   AutoDisposeFutureProviderElement<int> createElement() {
     return _SubmissionsSyncStateCountProviderElement(this);
-  }
-
-  SubmissionsSyncStateCountProvider _copyWith(
-    FutureOr<int> Function(SubmissionsSyncStateCountRef ref) create,
-  ) {
-    return SubmissionsSyncStateCountProvider._internal(
-      (ref) => create(ref as SubmissionsSyncStateCountRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      syncStatus: syncStatus,
-    );
   }
 
   @override
@@ -192,9 +150,11 @@ class SubmissionsSyncStateCountProvider extends AutoDisposeFutureProvider<int> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin SubmissionsSyncStateCountRef on AutoDisposeFutureProviderRef<int> {
   /// The parameter `syncStatus` of this provider.
-  SyncStatus get syncStatus;
+  InstanceSyncStatus get syncStatus;
 }
 
 class _SubmissionsSyncStateCountProviderElement
@@ -203,8 +163,8 @@ class _SubmissionsSyncStateCountProviderElement
   _SubmissionsSyncStateCountProviderElement(super.provider);
 
   @override
-  SyncStatus get syncStatus =>
+  InstanceSyncStatus get syncStatus =>
       (origin as SubmissionsSyncStateCountProvider).syncStatus;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

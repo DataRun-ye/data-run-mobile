@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 
 class FormMeta {
-
 //<editor-fold desc="Data Methods">
   const FormMeta({
     required this.meta,

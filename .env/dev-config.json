@@ -1,0 +1,6 @@
+{
+  "env_label": "dev",
+  "api_base_url": "https://play.nmcpye.org",
+  "default_locale": "en",
+  "secure_cache": true
+}

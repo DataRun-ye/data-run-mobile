@@ -1,17 +1,13 @@
-import 'dart:io';
-
-import 'package:d2_remote/d2_remote.dart';
-import 'package:datarunmobile/app/app.locator.dart';
-import 'package:datarunmobile/app/app.router.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:datarunmobile/core/services/user_session_manager.service.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/stacked/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class StartupViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
-  final _userSessionManager = locator<UserSessionService>();
+  final _navigationService = appLocator<NavigationService>();
+  final _userSessionManager = appLocator<UserSessionService>();
 
   // Place anything here that needs to happen before we get into the application
   Future<void> runStartupLogic() async {
@@ -21,19 +17,18 @@ class StartupViewModel extends BaseViewModel {
     final needSync = _userSessionManager.needsSync();
 
     if (authenticated) {
-      await D2Remote.initialize(
-          databaseFactory:
-          Platform.isWindows || Platform.isLinux ? databaseFactory : null);
+      // await D2Remote.initialize(
+      //     databaseFactory:
+      //     Platform.isWindows || Platform.isLinux ? databaseFactory : null);
 
-      final isOnline = await ConnectivityService.instance
-          .checkInternetConnection();
+      final isOnline = await appLocator<NetworkUtil>().isOnline();
       if (needSync && isOnline) {
-        _navigationService.replaceWithSyncScreen();
+        _navigationService.replaceWithSyncProgressView();
       } else {
-        _navigationService.replaceWithHomeScreen();
+        _navigationService.replaceWithHomeWrapperPage();
       }
     } else {
-      _navigationService.replaceWithLoginPage();
+      _navigationService.replaceWithLoginView();
     }
     // final bool hasExistingSession = userSessionManager.isAuthenticated;
     // final bool needsSync = userSessionManager.needsSync();

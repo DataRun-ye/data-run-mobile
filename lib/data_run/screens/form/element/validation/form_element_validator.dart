@@ -1,5 +1,5 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -7,15 +7,14 @@ class FieldValidators {
   static String ArReg1 =
       r'^[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{1}[\u0621-\u064A]{2,}[ ]{0,1}[\u0621-\u064A]{0,}[ ]{0,1}$';
 
-  static List<Validator<dynamic>> getValidators(
-      ElementAttributesMixin element) {
+  static List<Validator<dynamic>> getValidators(FieldTemplate element) {
     Set<Validator<dynamic>> validators = Set();
 
     if (element.type == ValueType.FullName)
       validators.add(Validators.pattern(ArReg1));
     if (element.mandatory) validators.add(Validators.required);
     if (element.type == ValueType.Email) validators.add(Validators.email);
-    if (element.type?.isInteger ?? false) validators.add(Validators.number());
+    if (element.type.isInteger) validators.add(Validators.number());
     if (element.type == ValueType.IntegerZeroOrPositive)
       validators.addAll(
           [Validators.number(allowNegatives: false), Validators.min(0)]);
@@ -29,13 +28,13 @@ class FieldValidators {
   }
 
   static Map<String, String Function(Object error)> getValidationMessages(
-      ElementAttributesMixin element) {
+      FieldTemplate element) {
     final Map<String, String Function(Object error)> messages = {};
     if (element.mandatory)
       messages['required'] = (error) => 'This field is mandatory.';
     if (element.type == ValueType.Email)
       messages['email'] = (error) => 'Invalid email format.';
-    if (element.type?.isInteger ?? false) {
+    if (element.type.isInteger) {
       messages['number'] = (error) => 'Please enter an integer.';
     }
     if (element.type == ValueType.IntegerZeroOrPositive) {

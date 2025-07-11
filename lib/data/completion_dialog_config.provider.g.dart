@@ -7,7 +7,7 @@ part of 'completion_dialog_config.provider.dart';
 // **************************************************************************
 
 String _$formCompletionBottomSheetHash() =>
-    r'95f80c3b92417c94a45fd1127666b2f9de585eb7';
+    r'086a9d1505167f48610458ffd61fa83efb2ec9c5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -35,23 +35,9 @@ class _SystemHash {
 const formCompletionBottomSheetProvider = FormCompletionBottomSheetFamily();
 
 /// See also [formCompletionBottomSheet].
-class FormCompletionBottomSheetFamily extends Family {
+class FormCompletionBottomSheetFamily extends Family<FormCompletionDialog> {
   /// See also [formCompletionBottomSheet].
   const FormCompletionBottomSheetFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formCompletionBottomSheetProvider';
 
   /// See also [formCompletionBottomSheet].
   FormCompletionBottomSheetProvider call({
@@ -62,7 +48,6 @@ class FormCompletionBottomSheetFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   FormCompletionBottomSheetProvider getProviderOverride(
     covariant FormCompletionBottomSheetProvider provider,
@@ -72,27 +57,19 @@ class FormCompletionBottomSheetFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FormCompletionDialog Function(FormCompletionBottomSheetRef ref) create) {
-    return _$FormCompletionBottomSheetFamilyOverride(this, create);
-  }
-}
-
-class _$FormCompletionBottomSheetFamilyOverride implements FamilyOverride {
-  _$FormCompletionBottomSheetFamilyOverride(this.overriddenFamily, this.create);
-
-  final FormCompletionDialog Function(FormCompletionBottomSheetRef ref) create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final FormCompletionBottomSheetFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  FormCompletionBottomSheetProvider getProviderOverride(
-    covariant FormCompletionBottomSheetProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'formCompletionBottomSheetProvider';
 }
 
 /// See also [formCompletionBottomSheet].
@@ -119,7 +96,7 @@ class FormCompletionBottomSheetProvider
         );
 
   FormCompletionBottomSheetProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -132,7 +109,7 @@ class FormCompletionBottomSheetProvider
 
   @override
   Override overrideWith(
-    FormCompletionDialog Function(FormCompletionBottomSheetRef ref) create,
+    FormCompletionDialog Function(FormCompletionBottomSheetRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -149,29 +126,8 @@ class FormCompletionBottomSheetProvider
   }
 
   @override
-  ({
-    FormMetadata formMetadata,
-  }) get argument {
-    return (formMetadata: formMetadata,);
-  }
-
-  @override
   AutoDisposeProviderElement<FormCompletionDialog> createElement() {
     return _FormCompletionBottomSheetProviderElement(this);
-  }
-
-  FormCompletionBottomSheetProvider _copyWith(
-    FormCompletionDialog Function(FormCompletionBottomSheetRef ref) create,
-  ) {
-    return FormCompletionBottomSheetProvider._internal(
-      (ref) => create(ref as FormCompletionBottomSheetRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      formMetadata: formMetadata,
-    );
   }
 
   @override
@@ -189,6 +145,8 @@ class FormCompletionBottomSheetProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin FormCompletionBottomSheetRef
     on AutoDisposeProviderRef<FormCompletionDialog> {
   /// The parameter `formMetadata` of this provider.
@@ -205,4 +163,4 @@ class _FormCompletionBottomSheetProviderElement
       (origin as FormCompletionBottomSheetProvider).formMetadata;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

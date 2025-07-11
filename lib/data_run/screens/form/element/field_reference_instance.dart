@@ -64,7 +64,7 @@
 //     elementControl.reset(value: template.defaultValue);
 //   }
 //
-//   List<FormOption> get visibleOption => elementState.visibleOptions;
+//   List<DataOption> get visibleOption => elementState.visibleOptions;
 //
 //   // FieldElementState<dynamic> calculateState() {
 //   //   FieldElementState<T> newCommonState =

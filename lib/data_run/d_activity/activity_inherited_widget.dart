@@ -1,4 +1,4 @@
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:flutter/material.dart';
 
 class ActivityInheritedWidget extends InheritedWidget {

@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/validation_strategy.dart';
+import 'package:d_sdk/database/shared/validation_strategy.dart';
 import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

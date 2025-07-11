@@ -1,8 +1,8 @@
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/activity_model.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form/form_tab_screen.widget.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
@@ -69,23 +69,23 @@ Widget buildStatusBadge(AssignmentStatus status) {
 Color? statusColor(AssignmentStatus? status) {
   switch (status) {
     case AssignmentStatus.IN_PROGRESS:
-      return Colors.greenAccent.withOpacity(0.5);
+      return Colors.greenAccent.withValues(alpha: 0.5);
     case AssignmentStatus.DONE:
       return null;
     case AssignmentStatus.CANCELLED:
     case AssignmentStatus.MERGED:
     case AssignmentStatus.REASSIGNED:
-      return Colors.orangeAccent.withOpacity(0.5);
+      return Colors.orangeAccent.withValues(alpha: 0.5);
     case AssignmentStatus.NOT_STARTED:
     case AssignmentStatus.RESCHEDULED:
-      return Colors.grey.withOpacity(0.3);
+      return Colors.grey.withValues(alpha: 0.3);
     default:
-      return Colors.grey.withOpacity(0.3);
+      return Colors.grey.withValues(alpha: 0.3);
   }
 }
 
 Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
-    DataFormSubmission submission, ActivityModel activityModel) async {
+    DataInstance submission, ActivityModel activityModel) async {
   await Navigator.push(
       context,
       MaterialPageRoute(
@@ -94,10 +94,10 @@ Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
                 child: FormMetadataWidget(
                   formMetadata: FormMetadata(
                     assignmentModel: assignment,
-                    versionUid: submission.formVersion,
+                    versionUid: submission.templateVersion,
                     // formId: '${submission.form}_${submission.version}',
-                    formId: submission.form!,
-                    version: submission.version,
+                    formId: submission.formTemplate,
+                    // version: submission.templateVersion,
                     submission: submission.id,
                   ),
                   child: const FormSubmissionScreen(currentPageIndex: 1),

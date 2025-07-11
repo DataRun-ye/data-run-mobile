@@ -1,4 +1,4 @@
-// import 'package:d2_remote/modules/metadatarun/teams/entities/d_team.entity.dart';
+// import 'package:d_sdk/modules/metadatarun/teams/entities/d_team.entity.dart';
 // import 'package:datarunmobile/data_run/d_team/expanded_team_state.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';

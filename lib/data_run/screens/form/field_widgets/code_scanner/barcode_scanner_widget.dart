@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:d2_remote/core/datarun/exception/d_exception.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/scanned_code_properties.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/database/shared/scanned_code_properties.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/scanned_items_table.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/scanner_button_widgets.dart';
@@ -10,8 +10,8 @@ import 'package:datarunmobile/data_run/screens/form/field_widgets/code_scanner/s
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:gs1_barcode_parser/gs1_barcode_parser.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 typedef ScanPreviewBuilder = Widget Function(Gs1ScannedItem? scannedItem);
 
@@ -43,6 +43,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget>
   String? _rawCode;
 
   bool showError = false;
+
   // final parser = GS1BarcodeParser.defaultParser();
   Timer? _errorTimer;
 
@@ -209,7 +210,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget>
             right: 0,
             child: Container(
               height: 100,
-              color: Colors.black.withOpacity(0.4),
+              color: Colors.black.withValues(alpha: 0.4),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -304,7 +305,7 @@ class ScannerOverlay extends CustomPainter {
     final cutoutPath = Path()..addRect(scanWindow);
 
     final backgroundPaint = Paint()
-      ..color = Colors.black.withOpacity(0.5)
+      ..color = Colors.black.withValues(alpha: 0.5)
       ..style = PaintingStyle.fill
       ..blendMode = BlendMode.dstOut;
 
@@ -381,7 +382,7 @@ class BarcodeOverlay extends CustomPainter {
     final cutoutPath = Path()..addPolygon(adjustedOffset, true);
 
     final backgroundPaint = Paint()
-      ..color = Colors.red.withOpacity(0.3)
+      ..color = Colors.red.withValues(alpha: 0.3)
       ..style = PaintingStyle.fill
       ..blendMode = BlendMode.dstOut;
 

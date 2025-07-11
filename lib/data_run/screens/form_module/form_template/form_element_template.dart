@@ -1,231 +1,255 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/attribute_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/scanned_code_properties.dart';
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/rule/rule.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/template_path_walking_service.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
-import 'package:datarunmobile/core/form/utils/path_walking_service.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/flat_template_factory.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template_iterator.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/util_methods.dart';
-import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/cupertino.dart';
-
-@immutable
-class FormFlatTemplate
-    with
-        TemplatePathWalkingService<FormElementTemplate>,
-        PathDependencyWalkingService<FormElementTemplate>,
-        EquatableMixin {
-  FormFlatTemplate._({
-    required this.formTemplate,
-    Iterable<FormElementTemplate> fields = const [],
-    required Map<String, List<Option>> optionLists,
-  })  : this.optionLists = optionLists,
-        rootElementTemplate = SectionElementTemplate(
-            repeatable: false, namePath: null, children: fields.toList()) {
-    final itFields = getFormElementTemplateIterator(rootElementTemplate)
-        .where((field) => (field.path ?? '').isNotEmpty)
-        .toList()
-      ..sort((a, b) => (a.order).compareTo(b.order));
-    for (final field in itFields) {
-      _flatFields[field.path!] = field;
-    }
-  }
-
-  static Future<FormFlatTemplate> fromTemplate(
-      {required String templateId}) async {
-    final FormVersion? template =
-        await D2Remote.formModule.formTemplateV.byId(templateId).getOne();
-    Map<String, List<Option>> optionLists = await getOptionSets(template);
-    final fields =
-        await FlatTemplateFactory(template!, optionLists).createFlatTemplate();
-    return FormFlatTemplate._(
-      formTemplate: template,
-      optionLists: optionLists,
-      fields: fields,
-    );
-  }
-
-  final FormVersion formTemplate;
-  final SectionElementTemplate rootElementTemplate;
-
-  /// {listName: List<option>}
-  final Map<String, List<Option>> optionLists;
-
-  String? get name => formTemplate.name;
-
-  String? get code => formTemplate.code;
-
-  String get defaultLocal => formTemplate.defaultLocal;
-
-  String get versionUid => formTemplate.versionUid;
-
-  int get versionNumber => formTemplate.versionNumber;
-
-  @override
-  List<Object?> get props => [formTemplate.id, name, code, versionNumber];
-
-  final Map<String, FormElementTemplate> _flatFields = {};
-
-  Map<String, FormElementTemplate> get flatFields =>
-      Map.unmodifiable(_flatFields);
-
-  Map<String, String> get label => Map.unmodifiable(formTemplate.label);
-
-  List<String> get orgUnits => <String>[];
-
-  IList<FormElementTemplate> get flatFieldsList =>
-      _flatFields.values.toList().lock;
-}
-
-sealed class FormElementTemplate with TreeElement, EquatableMixin {
-  FormElementTemplate({
-    this.id,
-    this.name,
-    this.path,
-    required this.parent,
-    required this.namePath,
-    this.readOnly = false,
-    this.order = 0,
-    this.fieldValueRenderingType,
-    Iterable<Rule> rules = const [],
-    Map<String, dynamic> label = const {},
-    Map<String, dynamic> properties = const {},
-    Iterable<String> ruleDependencies = const [],
-  }) {
-    _label.addAll(label);
-    _rules.addAll(rules);
-    _ruleDependencies.addAll(ruleDependencies);
-    _properties.addAll(properties);
-  }
-
-  final String? id;
-  final String? name;
-  final String? parent;
-  final bool readOnly;
-  final String? path;
-  final String? namePath;
-  final int order;
-  final String? fieldValueRenderingType;
-  final Map<String, dynamic> _label = {};
-  final List<Rule> _rules = [];
-  final List<String> _ruleDependencies = [];
-  final Map<String, dynamic> _properties = {};
-  final IList<FormElementTemplate> children = IList();
-
-  ValueType get type;
-
-  Map<String, String> get label => Map.unmodifiable(_label);
-
-  List<Rule> get rules => List.unmodifiable(_rules);
-
-  List<String> get ruleDependencies => List.unmodifiable(_ruleDependencies);
-
-  Map<String, dynamic> get properties => Map.unmodifiable(_properties);
-
-  @override
-  List<Object?> get props => [
-        id,
-        type,
-        name,
-        path,
-        order,
-        _rules.length,
-        _label.length,
-        fieldValueRenderingType
-      ];
-}
-
+// import 'package:d_sdk/core/form/attribute_type.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/rule/rule.dart';
+// import 'package:d_sdk/core/form/tree/tree.dart';
+// import 'package:d_sdk/core/form/value_type_rendering_type.dart';
+// import 'package:d_sdk/d_sdk.dart';
+// import 'package:d_sdk/database/app_database.dart';
+// import 'package:d_sdk/database/shared/shared.dart';
+// import 'package:datarunmobile/data_run/screens/form_module/form_template/flat_template_factory.dart';
+// import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template_iterator.dart';
+// import 'package:datarunmobile/data_run/screens/form_module/form_template/util_methods.dart';
+// import 'package:equatable/equatable.dart';
+// import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+// import 'package:flutter/foundation.dart';
+//
 // @immutable
-class FieldElementTemplate extends FormElementTemplate {
-  FieldElementTemplate({
-    super.id,
-    required this.type,
-    super.readOnly,
-    super.name,
-    super.path,
-    super.parent,
-    required super.namePath,
-    super.order,
-    super.fieldValueRenderingType,
-    super.rules,
-    super.ruleDependencies,
-    super.properties,
-    super.label,
-    this.mainField = false,
-    this.mandatory = false,
-    this.calculation,
-    this.listName,
-    this.gs1Enabled = false,
-    this.choiceFilter,
-    this.defaultValue,
-    this.attributeType,
-    this.scannedCodeProperties,
-    Iterable<Option> options = const [],
-    Iterable<String> filterDependencies = const [],
-    Iterable<String> calculationDependencies = const [],
-  }) {
-    _options.addAll(options);
-    _filterDependencies.addAll(filterDependencies);
-    _calculationDependencies.addAll(calculationDependencies);
-  }
-
-  final ValueType type;
-  final String? listName;
-  final bool mainField;
-  final bool mandatory;
-  final String? choiceFilter;
-  final dynamic defaultValue;
-  final AttributeType? attributeType;
-  final String? calculation;
-  final bool gs1Enabled;
-  final ScannedCodeProperties? scannedCodeProperties;
-  final List<Option> _options = [];
-
-  /// <name, path>
-  final List<String> _filterDependencies = [];
-  final List<String> _calculationDependencies = [];
-
-  List<FormOption> get options => List.unmodifiable(_options);
-
-  Iterable<Map<String, dynamic>> get optionContext =>
-      options.map((option) => option.toContext());
-
-  List<String> get filterDependencies => List.unmodifiable(_filterDependencies);
-}
-
-/// represent a Section or RepeatableSection, the ValueType tell which on it is
-class SectionElementTemplate extends FormElementTemplate {
-  SectionElementTemplate(
-      {super.id,
-      super.name,
-      super.readOnly,
-      super.parent,
-      required super.namePath,
-      super.path,
-      super.order,
-      super.fieldValueRenderingType,
-      super.ruleDependencies,
-      super.rules,
-      super.label,
-      super.properties,
-      this.repeatCount = 1,
-      required this.repeatable,
-      Iterable<FormElementTemplate>? children,
-      this.itemTitle})
-      : this.children = IList.orNull(children) ?? IList();
-
-  final String? itemTitle;
-  final int repeatCount;
-  final bool repeatable;
-
-  final IList<FormElementTemplate> children;
-
-  @override
-  ValueType get type => ValueType.Section;
-}
+// class FormFlatTemplate
+//     with TemplatePathWalkingService<FormElementTemplate>, EquatableMixin {
+//   FormFlatTemplate({
+//     required this.id,
+//     required this.name,
+//     required this.formVersion,
+//     required this.versionNumber,
+//     this.description,
+//     Map<String, dynamic>? label,
+//     Iterable<FormElementTemplate> fields = const [],
+//     required IMap<String, IList<DataOption>> optionLists,
+//   })  : this.optionLists = optionLists,
+//         this.label = label ?? {'ar': name},
+//         rootElementTemplate = SectionElementTemplate(
+//             repeatable: false,
+//             namePath: null,
+//             children: fields.toList(),
+//             id: '') {
+//     final itFields = getFormElementTemplateIterator(rootElementTemplate)
+//         .where((field) => (field.path ?? '').isNotEmpty)
+//         .toList()
+//       ..sort((a, b) => (a.order).compareTo(b.order));
+//     for (final field in itFields) {
+//       _flatFields[field.path!] = field;
+//     }
+//   }
+//
+//   static Future<FormFlatTemplate> fromTemplate(
+//       {required String versionId}) async {
+//     final templateVersion = await DSdk.db.managers.formTemplateVersions
+//         .filter((f) => f.id(versionId))
+//         .getSingle();
+//
+//     final IMap<String, IList<DataOption>> optionLists =
+//         await getOptionSets(templateVersion);
+//     final formTemplate = await getFormTemplate(templateVersion.template);
+//     final fields = await FlatTemplateFactory(templateVersion, optionLists)
+//         .createFlatTemplate();
+//
+//     return FormFlatTemplate(
+//       id: formTemplate.id,
+//       name: formTemplate.name,
+//       formVersion: templateVersion.id,
+//       label: formTemplate.label,
+//       description: formTemplate.description,
+//       versionNumber: templateVersion.versionNumber,
+//       optionLists: optionLists,
+//       fields: fields,
+//     );
+//   }
+//
+//   final SectionElementTemplate rootElementTemplate;
+//
+//   /// {listName: List<option>}
+//   final IMap<String, IList<DataOption>> optionLists;
+//
+//   final String id;
+//
+//   final String name;
+//
+//   final String? description;
+//
+//   final String formVersion;
+//
+//   final int versionNumber;
+//
+//   final Map<String, dynamic> label;
+//
+//   @override
+//   List<Object?> get props => [id, name, formVersion];
+//
+//   final Map<String, FormElementTemplate> _flatFields = {};
+//
+//   Map<String, FormElementTemplate> get flatFields =>
+//       Map.unmodifiable(_flatFields);
+//
+//   IList<FormElementTemplate> get flatFieldsList =>
+//       _flatFields.values.toList().lock;
+// }
+//
+// sealed class FormElementTemplate with TreeElement, EquatableMixin {
+//   FormElementTemplate({
+//     required this.id,
+//     this.name,
+//     this.path,
+//     required this.parent,
+//     required this.namePath,
+//     this.readOnly = false,
+//     this.order = 0,
+//     this.valueTypeRendering = ValueTypeRenderingType.DEFAULT,
+//     Iterable<Rule> rules = const [],
+//     Map<String, dynamic> label = const {},
+//     Map<String, dynamic> properties = const {},
+//     Iterable<String> ruleDependencies = const [],
+//   }) {
+//     _label.addAll(label);
+//     _rules.addAll(rules);
+//     _ruleDependencies.addAll(ruleDependencies);
+//     _properties.addAll(properties);
+//   }
+//
+//   final String id;
+//   final String? name;
+//   final String? parent;
+//   final bool readOnly;
+//   final String? path;
+//   final String? namePath;
+//   final int order;
+//
+//   bool get mainField;
+//
+//   final ValueTypeRenderingType valueTypeRendering;
+//   final Map<String, dynamic> _label = {};
+//   final List<Rule> _rules = [];
+//   final List<String> _ruleDependencies = [];
+//   final Map<String, dynamic> _properties = {};
+//
+//   final List<FormElementTemplate> children = [];
+//
+//   ValueType get type;
+//
+//   Map<String, String> get label => Map.unmodifiable(_label);
+//
+//   List<Rule> get rules => List.unmodifiable(_rules);
+//
+//   List<String> get ruleDependencies => List.unmodifiable(_ruleDependencies);
+//
+//   Map<String, dynamic> get properties => Map.unmodifiable(_properties);
+//
+//   @override
+//   String get displayName => getItemLocalString(label, defaultString: name);
+//
+//   @override
+//   List<Object?> get props => [
+//         id,
+//         type,
+//         name,
+//         path,
+//         order,
+//         _rules.length,
+//         _label.length,
+//         valueTypeRendering
+//       ];
+// }
+//
+// // @immutable
+// class FieldElementTemplate extends FormElementTemplate {
+//   FieldElementTemplate({
+//     required super.id,
+//     required this.type,
+//     super.readOnly,
+//     super.name,
+//     super.path,
+//     super.parent,
+//     required super.namePath,
+//     super.order,
+//     super.valueTypeRendering,
+//     super.rules,
+//     super.ruleDependencies,
+//     super.properties,
+//     super.label,
+//     this.optionSet,
+//     this.mainField = false,
+//     this.mandatory = false,
+//     this.calculation,
+//     this.listName,
+//     this.gs1Enabled = false,
+//     this.choiceFilter,
+//     this.defaultValue,
+//     this.attributeType,
+//     this.scannedCodeProperties,
+//     Iterable<DataOption> options = const [],
+//     Iterable<String> filterDependencies = const [],
+//     Iterable<String> calculationDependencies = const [],
+//   }) {
+//     _options.addAll(options);
+//     _filterDependencies.addAll(filterDependencies);
+//     _calculationDependencies.addAll(calculationDependencies);
+//   }
+//
+//   final ValueType type;
+//   final String? listName;
+//   final bool mainField;
+//   final bool mandatory;
+//   final String? choiceFilter;
+//   final dynamic defaultValue;
+//   final AttributeType? attributeType;
+//   final String? calculation;
+//   final String? optionSet;
+//
+//   final bool gs1Enabled;
+//   final ScannedCodeProperties? scannedCodeProperties;
+//   final List<DataOption> _options = [];
+//
+//   /// <name, path>
+//   final List<String> _filterDependencies = [];
+//   final List<String> _calculationDependencies = [];
+//
+//   List<DataOption> get options => List.unmodifiable(_options);
+//
+//   // Iterable<Map<String, dynamic>> get optionContext =>
+//   //     options.map((option) => option.toContext());
+//
+//   List<String> get filterDependencies => List.unmodifiable(_filterDependencies);
+// }
+//
+// /// represent a Section or RepeatableSection, the ValueType tell which on it is
+// class SectionElementTemplate extends FormElementTemplate {
+//   SectionElementTemplate(
+//       {required super.id,
+//       super.name,
+//       super.readOnly,
+//       super.parent,
+//       required super.namePath,
+//       super.path,
+//       super.order,
+//       super.valueTypeRendering,
+//       super.ruleDependencies,
+//       super.rules,
+//       super.label,
+//       super.properties,
+//       this.repeatCount = 1,
+//       required this.repeatable,
+//       Iterable<FormElementTemplate>? children,
+//       this.itemTitle})
+//       : this.children = children?.toList() ?? [];
+//
+//   final String? itemTitle;
+//   final int repeatCount;
+//   final bool repeatable;
+//
+//   final List<FormElementTemplate> children;
+//
+//   @override
+//   ValueType get type => ValueType.Section;
+//
+//   @override
+//   bool get mainField => false;
+// }

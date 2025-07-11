@@ -1,6 +1,6 @@
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:datarunmobile/core/element_instance/element_state_factory.dart';
 import 'package:datarunmobile/core/element_instance/sction_instance/section_state.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 enum CellStatus { valid, invalid }
@@ -14,14 +14,14 @@ class RowState extends SectionState {
     required super.templatePath,
   });
 
-  factory RowState.fromTemplate(SectionElementTemplate template,
+  factory RowState.fromTemplate(SectionTemplate template,
       {required String rowId,
       required int repeatIndex,
       Map<String, dynamic>? initialValue}) {
     // final uuid = CodeGenerator.generateUid();
     // final rowId = '${template.path}_${uuid}';
     final cells = IMap.fromIterable(template.children,
-        keyMapper: (t) => t.id!,
+        keyMapper: (t) => t.id,
         valueMapper: (t) => fromTemplate(template, value: initialValue));
 
     return RowState(

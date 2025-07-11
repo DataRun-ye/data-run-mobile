@@ -1,4 +1,3 @@
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
@@ -32,7 +31,8 @@ class QTextTypeField<T> extends HookConsumerWidget {
         maxLength: element.maxLength,
         maxLines: element.maxLines,
         keyboardType: element.inputType,
-        textAlign: element.template.isNumeric ? TextAlign.end : TextAlign.start,
+        textAlign:
+            element.template.type.isNumeric ? TextAlign.end : TextAlign.start,
         validationMessages: validationMessages(),
         decoration: InputDecoration(
           errorMaxLines: 2,

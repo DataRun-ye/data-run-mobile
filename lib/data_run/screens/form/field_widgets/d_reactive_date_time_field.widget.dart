@@ -1,5 +1,5 @@
-// import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+// import 'package:d_sdk/core/utilities/date_helper.dart';
+// import 'package:d_sdk/database/shared/value_type.dart';
 // import 'package:datarunmobile/data/form_instance.provider.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/exceptions/form_element_exception.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';

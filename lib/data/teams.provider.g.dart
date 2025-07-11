@@ -7,24 +7,7 @@ part of 'teams.provider.dart';
 // **************************************************************************
 
 String _$userAvailableFormsHash() =>
-    r'050031c97f12a76d48497bd8c8f07368199c496a';
-
-/// See also [userAvailableForms].
-@ProviderFor(userAvailableForms)
-final userAvailableFormsProvider =
-    AutoDisposeFutureProvider<List<Pair<TeamFormPermission, bool>>>.internal(
-  userAvailableForms,
-  name: r'userAvailableFormsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$userAvailableFormsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef UserAvailableFormsRef
-    = AutoDisposeFutureProviderRef<List<Pair<TeamFormPermission, bool>>>;
-String _$teamsHash() => r'fe511fb8d3dc01e3388cb6102e1bc7ca67a9cd61';
+    r'a89f1f59c00f0fe775f65a932b0099d05fea950b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -47,30 +30,177 @@ class _SystemHash {
   }
 }
 
-abstract class _$Teams
-    extends BuildlessAutoDisposeAsyncNotifier<IList<TeamModel>> {
-  late final EntityScope scope;
+/// See also [userAvailableForms].
+@ProviderFor(userAvailableForms)
+const userAvailableFormsProvider = UserAvailableFormsFamily();
 
-  FutureOr<IList<TeamModel>> build(
-    EntityScope scope,
-  );
-}
+/// See also [userAvailableForms].
+class UserAvailableFormsFamily
+    extends Family<AsyncValue<List<Pair<AssignmentForm, bool>>>> {
+  /// See also [userAvailableForms].
+  const UserAvailableFormsFamily();
 
-/// See also [Teams].
-@ProviderFor(Teams)
-const teamsProvider = TeamsFamily();
+  /// See also [userAvailableForms].
+  UserAvailableFormsProvider call({
+    String? assignment,
+  }) {
+    return UserAvailableFormsProvider(
+      assignment: assignment,
+    );
+  }
 
-/// See also [Teams].
-class TeamsFamily extends Family {
-  /// See also [Teams].
-  const TeamsFamily();
+  @override
+  UserAvailableFormsProvider getProviderOverride(
+    covariant UserAvailableFormsProvider provider,
+  ) {
+    return call(
+      assignment: provider.assignment,
+    );
+  }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
 
   static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'userAvailableFormsProvider';
+}
+
+/// See also [userAvailableForms].
+class UserAvailableFormsProvider
+    extends AutoDisposeFutureProvider<List<Pair<AssignmentForm, bool>>> {
+  /// See also [userAvailableForms].
+  UserAvailableFormsProvider({
+    String? assignment,
+  }) : this._internal(
+          (ref) => userAvailableForms(
+            ref as UserAvailableFormsRef,
+            assignment: assignment,
+          ),
+          from: userAvailableFormsProvider,
+          name: r'userAvailableFormsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$userAvailableFormsHash,
+          dependencies: UserAvailableFormsFamily._dependencies,
+          allTransitiveDependencies:
+              UserAvailableFormsFamily._allTransitiveDependencies,
+          assignment: assignment,
+        );
+
+  UserAvailableFormsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.assignment,
+  }) : super.internal();
+
+  final String? assignment;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Pair<AssignmentForm, bool>>> Function(
+            UserAvailableFormsRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: UserAvailableFormsProvider._internal(
+        (ref) => create(ref as UserAvailableFormsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        assignment: assignment,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<Pair<AssignmentForm, bool>>>
+      createElement() {
+    return _UserAvailableFormsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UserAvailableFormsProvider &&
+        other.assignment == assignment;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, assignment.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin UserAvailableFormsRef
+    on AutoDisposeFutureProviderRef<List<Pair<AssignmentForm, bool>>> {
+  /// The parameter `assignment` of this provider.
+  String? get assignment;
+}
+
+class _UserAvailableFormsProviderElement
+    extends AutoDisposeFutureProviderElement<List<Pair<AssignmentForm, bool>>>
+    with UserAvailableFormsRef {
+  _UserAvailableFormsProviderElement(super.provider);
+
+  @override
+  String? get assignment => (origin as UserAvailableFormsProvider).assignment;
+}
+
+String _$teamsHash() => r'3256b5e57acf12e2c4c182e1ab1e0678685d881f';
+
+/// See also [teams].
+@ProviderFor(teams)
+const teamsProvider = TeamsFamily();
+
+/// See also [teams].
+class TeamsFamily extends Family<AsyncValue<List<IdentifiableModel>>> {
+  /// See also [teams].
+  const TeamsFamily();
+
+  /// See also [teams].
+  TeamsProvider call({
+    String? activity,
+  }) {
+    return TeamsProvider(
+      activity: activity,
+    );
+  }
+
+  @override
+  TeamsProvider getProviderOverride(
+    covariant TeamsProvider provider,
+  ) {
+    return call(
+      activity: provider.activity,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
   Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
   Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
@@ -78,56 +208,18 @@ class TeamsFamily extends Family {
 
   @override
   String? get name => r'teamsProvider';
-
-  /// See also [Teams].
-  TeamsProvider call(
-    EntityScope scope,
-  ) {
-    return TeamsProvider(
-      scope,
-    );
-  }
-
-  @visibleForOverriding
-  @override
-  TeamsProvider getProviderOverride(
-    covariant TeamsProvider provider,
-  ) {
-    return call(
-      provider.scope,
-    );
-  }
-
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(Teams Function() create) {
-    return _$TeamsFamilyOverride(this, create);
-  }
 }
 
-class _$TeamsFamilyOverride implements FamilyOverride {
-  _$TeamsFamilyOverride(this.overriddenFamily, this.create);
-
-  final Teams Function() create;
-
-  @override
-  final TeamsFamily overriddenFamily;
-
-  @override
-  TeamsProvider getProviderOverride(
-    covariant TeamsProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
-}
-
-/// See also [Teams].
-class TeamsProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<Teams, IList<TeamModel>> {
-  /// See also [Teams].
-  TeamsProvider(
-    EntityScope scope,
-  ) : this._internal(
-          () => Teams()..scope = scope,
+/// See also [teams].
+class TeamsProvider extends AutoDisposeFutureProvider<List<IdentifiableModel>> {
+  /// See also [teams].
+  TeamsProvider({
+    String? activity,
+  }) : this._internal(
+          (ref) => teams(
+            ref as TeamsRef,
+            activity: activity,
+          ),
           from: teamsProvider,
           name: r'teamsProvider',
           debugGetCreateSourceHash:
@@ -136,97 +228,221 @@ class TeamsProvider
                   : _$teamsHash,
           dependencies: TeamsFamily._dependencies,
           allTransitiveDependencies: TeamsFamily._allTransitiveDependencies,
-          scope: scope,
+          activity: activity,
         );
 
   TeamsProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.scope,
+    required this.activity,
   }) : super.internal();
 
-  final EntityScope scope;
+  final String? activity;
 
   @override
-  FutureOr<IList<TeamModel>> runNotifierBuild(
-    covariant Teams notifier,
+  Override overrideWith(
+    FutureOr<List<IdentifiableModel>> Function(TeamsRef provider) create,
   ) {
-    return notifier.build(
-      scope,
-    );
-  }
-
-  @override
-  Override overrideWith(Teams Function() create) {
     return ProviderOverride(
       origin: this,
       override: TeamsProvider._internal(
-        () => create()..scope = scope,
+        (ref) => create(ref as TeamsRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        scope: scope,
+        activity: activity,
       ),
     );
   }
 
   @override
-  (EntityScope,) get argument {
-    return (scope,);
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<Teams, IList<TeamModel>>
-      createElement() {
+  AutoDisposeFutureProviderElement<List<IdentifiableModel>> createElement() {
     return _TeamsProviderElement(this);
-  }
-
-  TeamsProvider _copyWith(
-    Teams Function() create,
-  ) {
-    return TeamsProvider._internal(
-      () => create()..scope = scope,
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      scope: scope,
-    );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TeamsProvider && other.scope == scope;
+    return other is TeamsProvider && other.activity == activity;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, scope.hashCode);
+    hash = _SystemHash.combine(hash, activity.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin TeamsRef on AutoDisposeAsyncNotifierProviderRef<IList<TeamModel>> {
-  /// The parameter `scope` of this provider.
-  EntityScope get scope;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin TeamsRef on AutoDisposeFutureProviderRef<List<IdentifiableModel>> {
+  /// The parameter `activity` of this provider.
+  String? get activity;
 }
 
 class _TeamsProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<Teams, IList<TeamModel>>
+    extends AutoDisposeFutureProviderElement<List<IdentifiableModel>>
     with TeamsRef {
   _TeamsProviderElement(super.provider);
 
   @override
-  EntityScope get scope => (origin as TeamsProvider).scope;
+  String? get activity => (origin as TeamsProvider).activity;
+}
+
+String _$managedTeamsHash() => r'e7c649c9ed73df9ec8ca1e5a93012aa757b81e32';
+
+/// See also [managedTeams].
+@ProviderFor(managedTeams)
+const managedTeamsProvider = ManagedTeamsFamily();
+
+/// See also [managedTeams].
+class ManagedTeamsFamily extends Family<AsyncValue<List<IdentifiableModel>>> {
+  /// See also [managedTeams].
+  const ManagedTeamsFamily();
+
+  /// See also [managedTeams].
+  ManagedTeamsProvider call({
+    String? team,
+    String? activity,
+  }) {
+    return ManagedTeamsProvider(
+      team: team,
+      activity: activity,
+    );
+  }
+
+  @override
+  ManagedTeamsProvider getProviderOverride(
+    covariant ManagedTeamsProvider provider,
+  ) {
+    return call(
+      team: provider.team,
+      activity: provider.activity,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'managedTeamsProvider';
+}
+
+/// See also [managedTeams].
+class ManagedTeamsProvider
+    extends AutoDisposeFutureProvider<List<IdentifiableModel>> {
+  /// See also [managedTeams].
+  ManagedTeamsProvider({
+    String? team,
+    String? activity,
+  }) : this._internal(
+          (ref) => managedTeams(
+            ref as ManagedTeamsRef,
+            team: team,
+            activity: activity,
+          ),
+          from: managedTeamsProvider,
+          name: r'managedTeamsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$managedTeamsHash,
+          dependencies: ManagedTeamsFamily._dependencies,
+          allTransitiveDependencies:
+              ManagedTeamsFamily._allTransitiveDependencies,
+          team: team,
+          activity: activity,
+        );
+
+  ManagedTeamsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.team,
+    required this.activity,
+  }) : super.internal();
+
+  final String? team;
+  final String? activity;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<IdentifiableModel>> Function(ManagedTeamsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ManagedTeamsProvider._internal(
+        (ref) => create(ref as ManagedTeamsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        team: team,
+        activity: activity,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<IdentifiableModel>> createElement() {
+    return _ManagedTeamsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ManagedTeamsProvider &&
+        other.team == team &&
+        other.activity == activity;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, team.hashCode);
+    hash = _SystemHash.combine(hash, activity.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ManagedTeamsRef on AutoDisposeFutureProviderRef<List<IdentifiableModel>> {
+  /// The parameter `team` of this provider.
+  String? get team;
+
+  /// The parameter `activity` of this provider.
+  String? get activity;
+}
+
+class _ManagedTeamsProviderElement
+    extends AutoDisposeFutureProviderElement<List<IdentifiableModel>>
+    with ManagedTeamsRef {
+  _ManagedTeamsProviderElement(super.provider);
+
+  @override
+  String? get team => (origin as ManagedTeamsProvider).team;
+  @override
+  String? get activity => (origin as ManagedTeamsProvider).activity;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

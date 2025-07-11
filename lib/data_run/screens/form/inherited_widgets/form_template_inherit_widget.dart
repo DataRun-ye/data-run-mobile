@@ -1,4 +1,4 @@
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:flutter/material.dart';
 
 class FormFlatTemplateInheritWidget extends InheritedWidget {
@@ -8,9 +8,9 @@ class FormFlatTemplateInheritWidget extends InheritedWidget {
     required super.child,
   });
 
-  final FormFlatTemplate formContainerTemplate;
+  final FormTemplateRepository formContainerTemplate;
 
-  static FormFlatTemplate of(BuildContext context) {
+  static FormTemplateRepository of(BuildContext context) {
     final FormFlatTemplateInheritWidget? inheritedWidget = context
         .dependOnInheritedWidgetOfExactType<FormFlatTemplateInheritWidget>();
     if (inheritedWidget == null) {

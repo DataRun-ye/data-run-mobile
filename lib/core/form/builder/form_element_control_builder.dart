@@ -1,17 +1,15 @@
-import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FormElementControlBuilder {
   static Map<String, AbstractControl<dynamic>> formDataControls(
-      FormFlatTemplate formFlatTemplate, initialValue) {
+      FormTemplateRepository formFlatTemplate, initialValue) {
     final Map<String, AbstractControl<dynamic>> controls = {};
 
-    for (var element in formFlatTemplate.formTemplate.treeFields) {
+    for (var element in formFlatTemplate.rootSection.children) {
       controls[element.name!] = createElementControl(formFlatTemplate, element,
           initialValue: initialValue?[element.name]);
     }
@@ -20,7 +18,7 @@ class FormElementControlBuilder {
   }
 
   static AbstractControl<dynamic> createElementControl(
-      FormFlatTemplate formFlatTemplate, Template fieldTemplate,
+      FormTemplateRepository formFlatTemplate, Template fieldTemplate,
       {initialValue}) {
     if (fieldTemplate is SectionTemplate) {
       if (fieldTemplate.repeatable) {
@@ -37,7 +35,7 @@ class FormElementControlBuilder {
   }
 
   static FormGroup createSectionFormGroup<T>(
-      FormFlatTemplate formFlatTemplate, SectionTemplate fieldTemplate,
+      FormTemplateRepository formFlatTemplate, SectionTemplate fieldTemplate,
       {dynamic initialValue}) {
     final Map<String, AbstractControl<dynamic>> controls = {};
 
@@ -50,7 +48,7 @@ class FormElementControlBuilder {
   }
 
   static FormArray<Map<String, Object?>> createRepeatFormArray(
-      FormFlatTemplate formFlatTemplate, SectionTemplate fieldTemplate,
+      FormTemplateRepository formFlatTemplate, SectionTemplate fieldTemplate,
       {dynamic initialValue}) {
     final formArray = FormArray<Map<String, Object?>>((initialValue ?? [])
         .map<FormGroup>((e) => createSectionFormGroup(
@@ -62,7 +60,7 @@ class FormElementControlBuilder {
   }
 
   static AbstractControl<dynamic> createFieldFormControl(
-      formFlatTemplate, FieldTemplate fieldTemplate,
+      FormTemplateRepository formFlatTemplate, FieldTemplate fieldTemplate,
       {initialValue}) {
     switch (fieldTemplate.type) {
       case ValueType.Text:

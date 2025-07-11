@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -7,19 +7,19 @@ part 'option_set_configuration.data.freezed.dart';
 @freezed
 class OptionSetConfiguration with _$OptionSetConfiguration {
   const factory OptionSetConfiguration.defaultOptionSet(
-      {required List<FormOption> options,
+      {required List<DataOption> options,
       @Default(<String>[]) List<String> optionsToHide,
       @Default(<String>[]) List<String> optionsToShow}) = DefaultOptionSet;
 
   const factory OptionSetConfiguration.bigOptionSet(
-      {@Default(<FormOption>[]) List<FormOption> options,
+      {@Default(<DataOption>[]) List<DataOption> options,
       @Default(<String>[]) List<String> optionsToHide,
       @Default(<String>[]) List<String> optionsToShow}) = BigOptionSet;
 
   const OptionSetConfiguration._();
 
   static OptionSetConfiguration config(
-      int optionCount, List<FormOption> Function() optionRequestCallback) {
+      int optionCount, List<DataOption> Function() optionRequestCallback) {
     return optionCount > 15
         ? const BigOptionSet()
         : OptionSetConfiguration.defaultOptionSet(

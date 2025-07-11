@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// Widget buildHighlightedText(
-//     String text, String searchQuery, BuildContext context,
-//     {TextStyle? style}) {}
-
 class BuildHighlightedText extends ConsumerWidget {
   const BuildHighlightedText(
     this.text,

@@ -1,17 +1,16 @@
+import 'package:d_sdk/database/shared/activity_model.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_card.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/form_submissions_table.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
 import 'package:datarunmobile/data_run/d_assignment/form_submission_create.widget.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/screens/form_ui_elements/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class AssignmentDetailPage extends ConsumerWidget {
   AssignmentDetailPage({super.key, required this.assignment});
@@ -57,8 +56,6 @@ class AssignmentDetailPage extends ConsumerWidget {
               // Form Submissions Section
               const SizedBox(height: 20.0),
               ...assignment.availableForms
-                  // .distinct()
-                  // .where((form) => activityModel.assignedForms.contains(form))
                   .map(
                     (form) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -93,15 +90,13 @@ class AssignmentDetailPage extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CopyToClipboard(value: assignment.entityCode, children: [
+        CopyToClipboard(value: assignment.orgUnit.code, children: [
           _buildDetailRow(
-              context, S.of(context).entity, '${assignment.entityCode} -'),
+              context, S.of(context).entity, '${assignment.orgUnit.code} -'),
           _buildDetailRow(
-              context, S.of(context).entity, ' ${assignment.entityName}'),
+              context, S.of(context).entity, ' ${assignment.orgUnit.name}'),
         ]),
-        _buildDetailRow(context, S.of(context).team, '${assignment.teamCode}'),
-        _buildDetailRow(
-            context, S.of(context).scope, assignment.scope.name.toLowerCase()),
+        _buildDetailRow(context, S.of(context).team, '${assignment.team.name}'),
         if (assignment.dueDate != null)
           _buildDetailRow(context, S.of(context).dueDate,
               formatDate(assignment.dueDate!, context)),
@@ -143,28 +138,28 @@ class AssignmentDetailPage extends ConsumerWidget {
               ),
         ),
         const SizedBox(height: 8),
-        ...assignment.allocatedResources.keys.map((key) {
-          final allocated = assignment.allocatedResources[key] ?? 0;
-          final reported = assignment.reportedResources[key.toLowerCase()] ?? 0;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  Intl.message(key.toLowerCase()),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                Text(
-                  '$reported / $allocated',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade700,
-                      ),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
+        // ...assignment.allocatedResources.keys.map((key) {
+        //   final allocated = assignment.allocatedResources[key] ?? 0;
+        //   final reported = assignment.reportedResources[key.toLowerCase()] ?? 0;
+        //   return Padding(
+        //     padding: const EdgeInsets.symmetric(vertical: 4.0),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Text(
+        //           Intl.message(key.toLowerCase()),
+        //           style: Theme.of(context).textTheme.bodyMedium,
+        //         ),
+        //         Text(
+        //           '$reported / $allocated',
+        //           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        //                 color: Colors.grey.shade700,
+        //               ),
+        //         ),
+        //       ],
+        //     ),
+        //   );
+        // }).toList(),
       ],
     );
   }

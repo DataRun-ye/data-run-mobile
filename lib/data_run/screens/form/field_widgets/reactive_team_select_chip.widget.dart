@@ -1,13 +1,13 @@
-import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_team/team_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/reactive_choice_chips.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class QReactiveTeamSelectChip extends ConsumerWidget {
@@ -22,7 +22,7 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
 
-    final teams = ActivityInheritedWidget.of(context).managedTeams.unlock;
+    final teams = ActivityInheritedWidget.of(context).managedTeams;
 
     return ReactiveChoiceChips<String>(
         formControl: formInstance.form.control(element.elementPath!)
@@ -36,14 +36,15 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
         ));
   }
 
-  List<ReactiveChipOption<String>> _getChipOptions(List<TeamModel> teams) {
+  List<ReactiveChipOption<String>> _getChipOptions(
+      List<IdentifiableModel> teams) {
     return teams
-        .map((TeamModel team) => ReactiveChipOption<String>(
-              value: team.id!,
+        .map((IdentifiableModel team) => ReactiveChipOption<String>(
+              value: team.id,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   // mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[const Icon(Icons.group), Text(team.name!)]),
+                  children: <Widget>[const Icon(Icons.group), Text(team.name)]),
             ))
         .toList();
   }

@@ -16,35 +16,35 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$OptionSetConfiguration {
-  List<FormOption> get options => throw _privateConstructorUsedError;
+  List<DataOption> get options => throw _privateConstructorUsedError;
   List<String> get optionsToHide => throw _privateConstructorUsedError;
   List<String> get optionsToShow => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FormOption> options,
+    required TResult Function(List<DataOption> options,
             List<String> optionsToHide, List<String> optionsToShow)
         defaultOptionSet,
-    required TResult Function(List<FormOption> options,
+    required TResult Function(List<DataOption> options,
             List<String> optionsToHide, List<String> optionsToShow)
         bigOptionSet,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FormOption> options, List<String> optionsToHide,
+    TResult? Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         defaultOptionSet,
-    TResult? Function(List<FormOption> options, List<String> optionsToHide,
+    TResult? Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         bigOptionSet,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FormOption> options, List<String> optionsToHide,
+    TResult Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         defaultOptionSet,
-    TResult Function(List<FormOption> options, List<String> optionsToHide,
+    TResult Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         bigOptionSet,
     required TResult orElse(),
@@ -84,7 +84,7 @@ abstract class $OptionSetConfigurationCopyWith<$Res> {
       _$OptionSetConfigurationCopyWithImpl<$Res, OptionSetConfiguration>;
   @useResult
   $Res call(
-      {List<FormOption> options,
+      {List<DataOption> options,
       List<String> optionsToHide,
       List<String> optionsToShow});
 }
@@ -113,7 +113,7 @@ class _$OptionSetConfigurationCopyWithImpl<$Res,
       options: null == options
           ? _value.options
           : options // ignore: cast_nullable_to_non_nullable
-              as List<FormOption>,
+              as List<DataOption>,
       optionsToHide: null == optionsToHide
           ? _value.optionsToHide
           : optionsToHide // ignore: cast_nullable_to_non_nullable
@@ -135,7 +135,7 @@ abstract class _$$DefaultOptionSetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<FormOption> options,
+      {List<DataOption> options,
       List<String> optionsToHide,
       List<String> optionsToShow});
 }
@@ -161,7 +161,7 @@ class __$$DefaultOptionSetImplCopyWithImpl<$Res>
       options: null == options
           ? _value._options
           : options // ignore: cast_nullable_to_non_nullable
-              as List<FormOption>,
+              as List<DataOption>,
       optionsToHide: null == optionsToHide
           ? _value._optionsToHide
           : optionsToHide // ignore: cast_nullable_to_non_nullable
@@ -179,7 +179,7 @@ class __$$DefaultOptionSetImplCopyWithImpl<$Res>
 class _$DefaultOptionSetImpl extends DefaultOptionSet
     with DiagnosticableTreeMixin {
   const _$DefaultOptionSetImpl(
-      {required final List<FormOption> options,
+      {required final List<DataOption> options,
       final List<String> optionsToHide = const <String>[],
       final List<String> optionsToShow = const <String>[]})
       : _options = options,
@@ -187,9 +187,9 @@ class _$DefaultOptionSetImpl extends DefaultOptionSet
         _optionsToShow = optionsToShow,
         super._();
 
-  final List<FormOption> _options;
+  final List<DataOption> _options;
   @override
-  List<FormOption> get options {
+  List<DataOption> get options {
     if (_options is EqualUnmodifiableListView) return _options;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_options);
@@ -260,10 +260,10 @@ class _$DefaultOptionSetImpl extends DefaultOptionSet
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FormOption> options,
+    required TResult Function(List<DataOption> options,
             List<String> optionsToHide, List<String> optionsToShow)
         defaultOptionSet,
-    required TResult Function(List<FormOption> options,
+    required TResult Function(List<DataOption> options,
             List<String> optionsToHide, List<String> optionsToShow)
         bigOptionSet,
   }) {
@@ -273,10 +273,10 @@ class _$DefaultOptionSetImpl extends DefaultOptionSet
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FormOption> options, List<String> optionsToHide,
+    TResult? Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         defaultOptionSet,
-    TResult? Function(List<FormOption> options, List<String> optionsToHide,
+    TResult? Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         bigOptionSet,
   }) {
@@ -286,10 +286,10 @@ class _$DefaultOptionSetImpl extends DefaultOptionSet
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FormOption> options, List<String> optionsToHide,
+    TResult Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         defaultOptionSet,
-    TResult Function(List<FormOption> options, List<String> optionsToHide,
+    TResult Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         bigOptionSet,
     required TResult orElse(),
@@ -334,13 +334,13 @@ class _$DefaultOptionSetImpl extends DefaultOptionSet
 
 abstract class DefaultOptionSet extends OptionSetConfiguration {
   const factory DefaultOptionSet(
-      {required final List<FormOption> options,
+      {required final List<DataOption> options,
       final List<String> optionsToHide,
       final List<String> optionsToShow}) = _$DefaultOptionSetImpl;
   const DefaultOptionSet._() : super._();
 
   @override
-  List<FormOption> get options;
+  List<DataOption> get options;
   @override
   List<String> get optionsToHide;
   @override
@@ -363,7 +363,7 @@ abstract class _$$BigOptionSetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<FormOption> options,
+      {List<DataOption> options,
       List<String> optionsToHide,
       List<String> optionsToShow});
 }
@@ -389,7 +389,7 @@ class __$$BigOptionSetImplCopyWithImpl<$Res>
       options: null == options
           ? _value._options
           : options // ignore: cast_nullable_to_non_nullable
-              as List<FormOption>,
+              as List<DataOption>,
       optionsToHide: null == optionsToHide
           ? _value._optionsToHide
           : optionsToHide // ignore: cast_nullable_to_non_nullable
@@ -406,7 +406,7 @@ class __$$BigOptionSetImplCopyWithImpl<$Res>
 
 class _$BigOptionSetImpl extends BigOptionSet with DiagnosticableTreeMixin {
   const _$BigOptionSetImpl(
-      {final List<FormOption> options = const <FormOption>[],
+      {final List<DataOption> options = const <DataOption>[],
       final List<String> optionsToHide = const <String>[],
       final List<String> optionsToShow = const <String>[]})
       : _options = options,
@@ -414,10 +414,10 @@ class _$BigOptionSetImpl extends BigOptionSet with DiagnosticableTreeMixin {
         _optionsToShow = optionsToShow,
         super._();
 
-  final List<FormOption> _options;
+  final List<DataOption> _options;
   @override
   @JsonKey()
-  List<FormOption> get options {
+  List<DataOption> get options {
     if (_options is EqualUnmodifiableListView) return _options;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_options);
@@ -486,10 +486,10 @@ class _$BigOptionSetImpl extends BigOptionSet with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FormOption> options,
+    required TResult Function(List<DataOption> options,
             List<String> optionsToHide, List<String> optionsToShow)
         defaultOptionSet,
-    required TResult Function(List<FormOption> options,
+    required TResult Function(List<DataOption> options,
             List<String> optionsToHide, List<String> optionsToShow)
         bigOptionSet,
   }) {
@@ -499,10 +499,10 @@ class _$BigOptionSetImpl extends BigOptionSet with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FormOption> options, List<String> optionsToHide,
+    TResult? Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         defaultOptionSet,
-    TResult? Function(List<FormOption> options, List<String> optionsToHide,
+    TResult? Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         bigOptionSet,
   }) {
@@ -512,10 +512,10 @@ class _$BigOptionSetImpl extends BigOptionSet with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FormOption> options, List<String> optionsToHide,
+    TResult Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         defaultOptionSet,
-    TResult Function(List<FormOption> options, List<String> optionsToHide,
+    TResult Function(List<DataOption> options, List<String> optionsToHide,
             List<String> optionsToShow)?
         bigOptionSet,
     required TResult orElse(),
@@ -560,13 +560,13 @@ class _$BigOptionSetImpl extends BigOptionSet with DiagnosticableTreeMixin {
 
 abstract class BigOptionSet extends OptionSetConfiguration {
   const factory BigOptionSet(
-      {final List<FormOption> options,
+      {final List<DataOption> options,
       final List<String> optionsToHide,
       final List<String> optionsToShow}) = _$BigOptionSetImpl;
   const BigOptionSet._() : super._();
 
   @override
-  List<FormOption> get options;
+  List<DataOption> get options;
   @override
   List<String> get optionsToHide;
   @override

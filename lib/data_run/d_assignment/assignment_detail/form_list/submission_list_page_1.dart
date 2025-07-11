@@ -5,26 +5,17 @@ import 'package:flutter/material.dart';
 enum SyncStatus { submitted, finalReady, draft }
 
 class DataElementValue {
-  final String label;
-  final String value;
-  final bool shown;
-
   DataElementValue({
     required this.label,
     required this.value,
     this.shown = false,
   });
+  final String label;
+  final String value;
+  final bool shown;
 }
 
 class Submission {
-  final String formName;
-  final String version;
-  final String orgUnit;
-  final String progress;
-  final DateTime submittedAt;
-  final SyncStatus syncStatus;
-  final List<DataElementValue> dataValues;
-
   Submission({
     required this.formName,
     required this.version,
@@ -34,6 +25,13 @@ class Submission {
     required this.syncStatus,
     required this.dataValues,
   });
+  final String formName;
+  final String version;
+  final String orgUnit;
+  final String progress;
+  final DateTime submittedAt;
+  final SyncStatus syncStatus;
+  final List<DataElementValue> dataValues;
 }
 
 // UI
@@ -45,32 +43,32 @@ class SubmissionListPage1 extends StatelessWidget {
   Widget build(BuildContext context) {
     final submissions = [
       Submission(
-        formName: "Household Survey",
-        version: "v1.2",
-        orgUnit: "Central District",
-        progress: "Completed",
+        formName: 'Household Survey',
+        version: 'v1.2',
+        orgUnit: 'Central District',
+        progress: 'Completed',
         submittedAt: DateTime(2025, 5, 19, 10, 30),
         syncStatus: SyncStatus.submitted,
         dataValues: [
-          DataElementValue(label: "Name", value: "John Doe", shown: true),
-          DataElementValue(label: "Age", value: "32", shown: true),
+          DataElementValue(label: 'Name', value: 'John Doe', shown: true),
+          DataElementValue(label: 'Age', value: '32', shown: true),
           DataElementValue(
-              label: "Visit Date", value: "18 May 2025", shown: true),
-          DataElementValue(label: "Household Size", value: "5", shown: false),
+              label: 'Visit Date', value: '18 May 2025', shown: true),
+          DataElementValue(label: 'Household Size', value: '5', shown: false),
         ],
       ),
       Submission(
-        formName: "Malaria Check",
-        version: "v3.0",
-        orgUnit: "East Zone",
-        progress: "In Progress",
+        formName: 'Malaria Check',
+        version: 'v3.0',
+        orgUnit: 'East Zone',
+        progress: 'In Progress',
         submittedAt: DateTime(2025, 5, 20, 14, 10),
         syncStatus: SyncStatus.draft,
         dataValues: [
-          DataElementValue(label: "Patient", value: "Alice K.", shown: true),
-          DataElementValue(label: "Temperature", value: "38.5°C", shown: true),
+          DataElementValue(label: 'Patient', value: 'Alice K.', shown: true),
+          DataElementValue(label: 'Temperature', value: '38.5°C', shown: true),
           DataElementValue(
-              label: "Test Result", value: "Pending", shown: false),
+              label: 'Test Result', value: 'Pending', shown: false),
         ],
       ),
     ];
@@ -87,9 +85,8 @@ class SubmissionListPage1 extends StatelessWidget {
 }
 
 class SubmissionCard extends StatelessWidget {
-  final Submission submission;
-
   const SubmissionCard({super.key, required this.submission});
+  final Submission submission;
 
   IconData getSyncIcon(SyncStatus status) {
     switch (status) {
@@ -116,11 +113,11 @@ class SubmissionCard extends StatelessWidget {
   String getSyncLabel(SyncStatus status) {
     switch (status) {
       case SyncStatus.submitted:
-        return "Submitted";
+        return 'Submitted';
       case SyncStatus.finalReady:
-        return "Final";
+        return 'Final';
       case SyncStatus.draft:
-        return "Draft";
+        return 'Draft';
     }
   }
 
@@ -142,7 +139,7 @@ class SubmissionCard extends StatelessWidget {
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             Text(
-              "Version: ${submission.version}",
+              'Version: ${submission.version}',
               style: TextStyle(color: Colors.grey[600], fontSize: 13),
             ),
             const SizedBox(height: 8),
@@ -177,7 +174,7 @@ class SubmissionCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "${field.label}: ",
+                      '${field.label}: ',
                       style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Text(field.value),

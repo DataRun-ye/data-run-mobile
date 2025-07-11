@@ -1,16 +1,16 @@
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
-import 'package:datarunmobile/app/app.locator.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/core/form/data/search_option_set_option.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:stacked/stacked.dart';
 
 class OptionSetDialogViewModel extends BaseViewModel {
   OptionSetDialogViewModel({required this.field})
-      : _searchOptionSetOption = locator<SearchOptionSetOption>();
+      : _searchOptionSetOption = appLocator<SearchOptionSetOption>();
 
   final SearchOptionSetOption _searchOptionSetOption;
   final FieldUiModel field;
-  List<Option> options = [];
+  List<DataOption> options = [];
   String searchValue = '';
 
   Future<void> init() async {
@@ -27,7 +27,8 @@ class OptionSetDialogViewModel extends BaseViewModel {
     setBusy(false);
   }
 
-  Future<List<Option>> _loadOptions([String textToSearch = '']) {
-    return _searchOptionSetOption(field.optionSet, textToSearch);
+  Future<List<DataOption>> _loadOptions([String textToSearch = '']) {
+    return _searchOptionSetOption(
+        optionSetUid: field.optionSet, textToSearch: textToSearch);
   }
 }

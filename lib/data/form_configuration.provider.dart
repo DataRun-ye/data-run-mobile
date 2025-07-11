@@ -1,9 +1,9 @@
 // import 'dart:async';
 //
-// import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-// import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+// import 'package:d_sdk/database/app_database.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/database/app_database.dart';
+// import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 // import 'package:datarunmobile/data/template.provider.dart';
 // import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 // import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,7 +13,7 @@
 // @riverpod
 // Future<FormConfiguration> formConfiguration(FormConfigurationRef ref,
 //     {required String form, required int version}) async {
-//   final FormVersion? formTemplateVersion = await ref
+//   final FormTemplateVersion? formTemplateVersion = await ref
 //       .watch(formVersionAsyncProvider(form: form, version: version).future);
 //
 //   Iterable<String> orgUnits = [];
@@ -37,7 +37,7 @@
 // class FormConfiguration {
 //   FormConfiguration(
 //       {required List<Template> fields,
-//       required List<FormOption> options,
+//       required List<DataOption> options,
 //       required this.label,
 //       required List<String> orgUnits})
 //       : this.allFields = IMap.fromIterable<String, Template, Template>(fields,
@@ -50,10 +50,10 @@
 //             valueMapper: (Template field) => field)*/
 //         ,
 //         this.optionLists =
-//             IMap.fromIterable<String, IList<FormOption>, FormOption>(
+//             IMap.fromIterable<String, IList<DataOption>, DataOption>(
 //                 (options)..sort((p1, p2) => p1.order.compareTo(p2.order)),
-//                 keyMapper: (FormOption option) => option.listName,
-//                 valueMapper: (FormOption option) => options
+//                 keyMapper: (DataOption option) => option.listName,
+//                 valueMapper: (DataOption option) => options
 //                     .where((o) => o.listName == option.listName)
 //                     .toIList()),
 //         this.orgUnitTreeUids = IList(orgUnits);
@@ -64,11 +64,11 @@
 //   final IMap<String, Template> allFields;
 //
 //   /// {listName: List<option>}
-//   final IMap<String, IList<FormOption>> optionLists;
+//   final IMap<String, IList<DataOption>> optionLists;
 //
 //   final IList<String> orgUnitTreeUids;
 //
-//   FormOption? getOption(String listName, value) =>
+//   DataOption? getOption(String listName, value) =>
 //       optionLists.get(listName)?.where((t) => t.name == value).firstOrNull;
 //
 //   // dynamic getUserFriendlyValue(String fieldName, dynamic value) =>

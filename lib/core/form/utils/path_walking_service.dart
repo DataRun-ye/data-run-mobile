@@ -1,6 +1,7 @@
-import 'package:d2_remote/core/utilities/list_extensions.dart';
-import 'package:d2_remote/modules/datarun/form/shared/template_extensions/template_path_walking_service.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:d_sdk/core/form/element_template/section_template.entity.dart';
+import 'package:d_sdk/core/form/tree/template_path_walking_service.dart';
+import 'package:d_sdk/core/form/tree/tree_element.dart';
+import 'package:d_sdk/core/utilities/list_extensions.dart';
 
 mixin PathDependencyWalkingService<T extends TreeElement>
     on TemplatePathWalkingService<T> {
@@ -19,8 +20,8 @@ mixin PathDependencyWalkingService<T extends TreeElement>
     }
 
     // If not found, check the global scope
-    final rootElements =
-        flatFieldsList.where((element) => element.path!.split('.').length == 1);
+    final rootElements = flatFields.values
+        .where((element) => element.path!.split('.').length == 1);
 
     for (final rootElement in rootElements) {
       final scopedElement = getScopedElement(rootElement, name);
@@ -37,8 +38,8 @@ mixin PathDependencyWalkingService<T extends TreeElement>
       return rootElement;
     }
 
-    if (rootElement is SectionElementTemplate) {
-      for (final child in getDescendants(rootElement.path!)) {
+    if (rootElement is SectionTemplate) {
+      for (final child in getDescendants(rootElement.path)) {
         final element = getScopedElement(child, name);
         if (element != null) {
           return element;
@@ -77,7 +78,7 @@ mixin PathDependencyWalkingService<T extends TreeElement>
     final parentPath = pathSegments.length > 1
         ? pathSegments.sublist(0, pathSegments.length - 1).join('.')
         : ''; // Root level has no parent path
-    final siblingElement = flatFieldsList.firstOrNullWhere((element) =>
+    final siblingElement = flatFields.values.firstOrNullWhere((element) =>
         element.name == name &&
         element.path!.startsWith(parentPath) &&
         element.path != currentPath && // Not the same element
@@ -89,7 +90,7 @@ mixin PathDependencyWalkingService<T extends TreeElement>
     }
 
     // Check global scope (elements at the root level)
-    return flatFieldsList.firstOrNullWhere((element) =>
+    return flatFields.values.firstOrNullWhere((element) =>
         element.name == name && element.path!.split('.').length == 1);
   }
 }

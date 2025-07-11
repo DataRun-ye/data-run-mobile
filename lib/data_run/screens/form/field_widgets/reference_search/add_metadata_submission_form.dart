@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/entities/metadata_submission_update.dart';
+import 'package:datarunmobile/data/metadata_submission_update.dart';
 import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -88,7 +88,6 @@ class _AddMetadataSubmissionFormState
                         resourceType: null,
                         metadataSubmission: null,
                         resourceId: widget.resourceId,
-                        dirty: true,
                         submissionId: widget.submissionId,
                       ),
                     );

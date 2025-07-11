@@ -1,4 +1,4 @@
-// import 'package:d2_remote/core/datarun/utilities/date_utils.dart' as sdk;
+// import 'package:d_sdk/core/datarun/utilities/date_utils.dart' as sdk;
 // import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 //

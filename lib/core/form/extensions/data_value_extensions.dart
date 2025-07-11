@@ -1,7 +1,6 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_value.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/metadatarun/data_element/entities/data_element.entity.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/commons/extensions/string_extension.dart';
 import 'package:datarunmobile/core/form/extensions/dynamic_value_extensions.dart';
 
@@ -14,13 +13,12 @@ extension UserFriendlyEventDataValueExtension on DataValue {
       return this.value;
     }
 
-    final DataElement? dataElement = await D2Remote
-        .dataElementModule.dataElement
-        .byId(this.dataElement)
-        .getOne();
+    final DataElement? dataElement = await DSdk.db.managers.dataElements
+        .filter((f) => f.id(this.dataElement))
+        .getSingleOrNull();
 
     if (await CheckWhatValueExtension.check(
-        dataElement!.type, dataElement.optionSet, value)) {
+        dataElement!.type, dataElement.optionSet, value!)) {
       String? v;
       if (dataElement.optionSet != null &&
           dataElement.type != ValueType.SelectMulti) {
@@ -29,7 +27,7 @@ extension UserFriendlyEventDataValueExtension on DataValue {
       }
       return v ??
           await CheckWhatValueExtension.checkValueTypeValue(
-              dataElement.type, value);
+              dataElement.type, value!);
     }
     return null;
   }

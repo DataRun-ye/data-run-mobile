@@ -1,5 +1,5 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/exceptions/form_element_exception.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
@@ -26,9 +26,10 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
     final displayFormat = DateHelper.getEffectiveUiFormat(element.type);
-    final viewFormat = DateFormat(DateHelper.getEffectiveUiFormat(element.type));
-    final control = formInstance.form.control(element.elementPath!)
-        as FormControl<String>;
+    final viewFormat =
+        DateFormat(DateHelper.getEffectiveUiFormat(element.type));
+    final control =
+        formInstance.form.control(element.elementPath!) as FormControl<String>;
     return ReactiveDateTimePicker(
       formControl: control,
       dateFormat: viewFormat,
@@ -145,27 +146,6 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
         ValueType.DateTime => Icons.event,
         _ => Icons.event,
       };
-}
-
-/// Converts between ISO String in the model and formatted text in the UI.
-class _DateTimeValueAccessor extends ControlValueAccessor<String, String> {
-  _DateTimeValueAccessor({this.displayFormat});
-
-  final String? displayFormat;
-
-  @override
-  String? modelToViewValue(String? modelValue) {
-    if (modelValue == null) return null;
-    final dt = DateTime.tryParse(modelValue);
-    if (dt == null) return modelValue;
-    return DateFormat(displayFormat ?? 'yMMMd – HH:mm').format(dt);
-  }
-
-  @override
-  String? viewToModelValue(String? viewValue) {
-    // we never read back from UI text, only from picker
-    return viewValue;
-  }
 }
 
 /// Which type of picker to display.

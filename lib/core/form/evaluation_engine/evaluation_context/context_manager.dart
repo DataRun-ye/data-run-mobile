@@ -30,7 +30,6 @@ class ContextManager {
 }
 
 class CachedComputation<R extends Object> {
-
   CachedComputation(this.computation);
   final R Function() computation;
 

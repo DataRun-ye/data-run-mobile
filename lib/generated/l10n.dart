@@ -28,10 +28,9 @@ class S {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name =
-        (locale.countryCode?.isEmpty ?? false)
-            ? locale.languageCode
-            : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -95,10 +94,10 @@ class S {
     );
   }
 
-  /// `Credentials do not match authenticated user. Cannot login offline.`
+  /// `First time login user needs an active network.`
   String get noAuthenticatedUser {
     return Intl.message(
-      'Credentials do not match authenticated user. Cannot login offline.',
+      'First time login user needs an active network.',
       name: 'noAuthenticatedUser',
       desc: '',
       args: [],
@@ -176,10 +175,10 @@ class S {
   }
 
   /// `Error: {error}.`
-  String unknownError(Object error) {
+  String unexpected(Object error) {
     return Intl.message(
       'Error: $error.',
-      name: 'unknownError',
+      name: 'unexpected',
       desc: '',
       args: [error],
     );
@@ -1109,15 +1108,20 @@ class S {
     );
   }
 
-  /// `Hamza`
+  /// `Hamza For NMCP Yemen`
   String get developer {
-    return Intl.message('Hamza', name: 'developer', desc: '', args: []);
+    return Intl.message(
+      'Hamza For NMCP Yemen',
+      name: 'developer',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `For:\n NMCP Yemen\n info@nmcpye.org`
+  /// `info@nmcpye.org`
   String get developerInfoText {
     return Intl.message(
-      'For:\n NMCP Yemen\n info@nmcpye.org',
+      'info@nmcpye.org',
       name: 'developerInfoText',
       desc: '',
       args: [],
@@ -1843,6 +1847,36 @@ class S {
     );
   }
 
+  /// `Loading ...`
+  String get loading {
+    return Intl.message('Loading ...', name: 'loading', desc: '', args: []);
+  }
+
+  /// `Load More`
+  String get loadMore {
+    return Intl.message('Load More', name: 'loadMore', desc: '', args: []);
+  }
+
+  /// `No more items.`
+  String get noMoreItems {
+    return Intl.message(
+      'No more items.',
+      name: 'noMoreItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assignment List`
+  String get assignmentList {
+    return Intl.message(
+      'Assignment List',
+      name: 'assignmentList',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `DOB`
   String get dateOfBirth {
     return Intl.message('DOB', name: 'dateOfBirth', desc: '', args: []);
@@ -2188,6 +2222,301 @@ class S {
     return Intl.message(
       'Unsupported value type',
       name: 'unsupportedValueType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No active database found: {error}.`
+  String noActiveDatabaseFound(Object error) {
+    return Intl.message(
+      'No active database found: $error.',
+      name: 'noActiveDatabaseFound',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Session expired: {error}.`
+  String sessionExpired(Object error) {
+    return Intl.message(
+      'Session expired: $error.',
+      name: 'sessionExpired',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Bad certificate: {error}.`
+  String badCertificate(Object error) {
+    return Intl.message(
+      'Bad certificate: $error.',
+      name: 'badCertificate',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Invalid data: {error}.`
+  String invalidData(Object error) {
+    return Intl.message(
+      'Invalid data: $error.',
+      name: 'invalidData',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Bad http request: {error}.`
+  String badHttpRequest(Object error) {
+    return Intl.message(
+      'Bad http request: $error.',
+      name: 'badHttpRequest',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Bad request to end point: {error}.`
+  String badRequestToEndPoint(Object error) {
+    return Intl.message(
+      'Bad request to end point: $error.',
+      name: 'badRequestToEndPoint',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `end point Not found: {error}.`
+  String endPointNotFound(Object error) {
+    return Intl.message(
+      'end point Not found: $error.',
+      name: 'endPointNotFound',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Server error: {error}.`
+  String serverError(Object error) {
+    return Intl.message(
+      'Server error: $error.',
+      name: 'serverError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Unauthorized Access to end point: {error}.`
+  String unauthorizedAccessToEndPoint(Object error) {
+    return Intl.message(
+      'Unauthorized Access to end point: $error.',
+      name: 'unauthorizedAccessToEndPoint',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Forbidden: {error}.`
+  String forbidden(Object error) {
+    return Intl.message(
+      'Forbidden: $error.',
+      name: 'forbidden',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `user details not fetched from server: {error}.`
+  String noUserDetailsFetchedFromServer(Object error) {
+    return Intl.message(
+      'user details not fetched from server: $error.',
+      name: 'noUserDetailsFetchedFromServer',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `No activities yet`
+  String get noActivitiesYet {
+    return Intl.message(
+      'No activities yet',
+      name: 'noActivitiesYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Material Version`
+  String get materialVersion {
+    return Intl.message(
+      'Material Version',
+      name: 'materialVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sync Summary Load Error`
+  String get syncSummaryLoadError {
+    return Intl.message(
+      'Sync Summary Load Error',
+      name: 'syncSummaryLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Syncs Yet`
+  String get noSyncsYet {
+    return Intl.message('No Syncs Yet', name: 'noSyncsYet', desc: '', args: []);
+  }
+
+  /// `Perform First Sync`
+  String get performFirstSync {
+    return Intl.message(
+      'Perform First Sync',
+      name: 'performFirstSync',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Success Count`
+  String get successCount {
+    return Intl.message(
+      'Success Count',
+      name: 'successCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failure Count`
+  String get failureCount {
+    return Intl.message(
+      'Failure Count',
+      name: 'failureCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close {
+    return Intl.message('Close', name: 'close', desc: '', args: []);
+  }
+
+  /// `Copy All`
+  String get copyAll {
+    return Intl.message('Copy All', name: 'copyAll', desc: '', args: []);
+  }
+
+  /// `Error Summary`
+  String get errorSummary {
+    return Intl.message(
+      'Error Summary',
+      name: 'errorSummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sync Errors`
+  String get syncErrors {
+    return Intl.message('Sync Errors', name: 'syncErrors', desc: '', args: []);
+  }
+
+  /// `View Errors`
+  String get viewErrors {
+    return Intl.message('View Errors', name: 'viewErrors', desc: '', args: []);
+  }
+
+  /// `Sync Summary Title`
+  String get syncSummaryTitle {
+    return Intl.message(
+      'Sync Summary Title',
+      name: 'syncSummaryTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Projects`
+  String get projects {
+    return Intl.message('Projects', name: 'projects', desc: '', args: []);
+  }
+
+  /// `Activities`
+  String get activities {
+    return Intl.message('Activities', name: 'activities', desc: '', args: []);
+  }
+
+  /// `Form Templates`
+  String get formTemplates {
+    return Intl.message(
+      'Form Templates',
+      name: 'formTemplates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data Submissions`
+  String get dataSubmissions {
+    return Intl.message(
+      'Data Submissions',
+      name: 'dataSubmissions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assignments`
+  String get assignments {
+    return Intl.message('Assignments', name: 'assignments', desc: '', args: []);
+  }
+
+  /// `Option Sets`
+  String get optionSets {
+    return Intl.message('Option Sets', name: 'optionSets', desc: '', args: []);
+  }
+
+  /// `Options`
+  String get options {
+    return Intl.message('Options', name: 'options', desc: '', args: []);
+  }
+
+  /// `Data Elements`
+  String get dataElements {
+    return Intl.message(
+      'Data Elements',
+      name: 'dataElements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Organisation Units`
+  String get orgUnits {
+    return Intl.message(
+      'Organisation Units',
+      name: 'orgUnits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Downloaded`
+  String get downloaded {
+    return Intl.message('Downloaded', name: 'downloaded', desc: '', args: []);
+  }
+
+  /// `Current Operations:`
+  String get currentOperations {
+    return Intl.message(
+      'Current Operations:',
+      name: 'currentOperations',
       desc: '',
       args: [],
     );

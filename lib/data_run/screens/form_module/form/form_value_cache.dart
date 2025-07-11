@@ -1,4 +1,4 @@
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 
 class FormValueCache {
   FormValueCache({
@@ -8,7 +8,7 @@ class FormValueCache {
     _formValueMap.addAll(formElementMap);
   }
   final Map<String, dynamic> _formValueMap = {};
-  final FormFlatTemplate formFlatTemplate;
+  final FormTemplateRepository formFlatTemplate;
 
   /// Store metadata for parent and nested repeat sections
   final Map<String, Map<String, dynamic>> metadata = {};

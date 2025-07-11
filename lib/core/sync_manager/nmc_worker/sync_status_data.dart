@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress_status.dart';
+import 'package:d_sdk/core/sync/d2_progress_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 

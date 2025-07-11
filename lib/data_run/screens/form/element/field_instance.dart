@@ -1,7 +1,6 @@
 part of 'form_element.dart';
 
-class FieldInstance<T> extends FormElementInstance<T>
-    with ElementAttributesMixin {
+class FieldInstance<T> extends FormElementInstance<T> {
   FieldInstance({
     required FieldElementState<T> elementProperties,
     required super.form,
@@ -27,17 +26,17 @@ class FieldInstance<T> extends FormElementInstance<T>
 
   List<String> get filterDependencies => [...template.filterDependencies];
 
-  List<String> get filterExpressionDependencies => [
-        ...?choiceFilter?.options
-            .expand((o) => o.filterExpressionDependencies)
-            .toSet()
-      ];
+  // List<String> get filterExpressionDependencies => [
+  //       ...?choiceFilter?.options
+  //           .expand((o) => o.filterExpressionDependencies)
+  //           .toSet()
+  //     ];
 
   List<String> get dependencies => [
         ...template.dependencies,
-        if (filterExpressionDependencies.isNotEmpty)
-          ...filterExpressionDependencies,
-        if (filterExpressionDependencies.isEmpty) ...filterDependencies
+        // if (filterExpressionDependencies.isNotEmpty)
+        //   ...filterExpressionDependencies,
+        // if (filterExpressionDependencies.isEmpty) ...filterDependencies
       ];
 
   @override
@@ -75,7 +74,7 @@ class FieldInstance<T> extends FormElementInstance<T>
     elementControl.reset(value: template.defaultValue);
   }
 
-  List<Option> get visibleOption => elementState.visibleOptions;
+  List<DataOption> get visibleOption => elementState.visibleOptions;
 
   @override
   void evaluate(
@@ -83,36 +82,35 @@ class FieldInstance<T> extends FormElementInstance<T>
       bool updateParent = true,
       bool emitEvent = true}) {
     super.evaluate(updateParent: updateParent, emitEvent: emitEvent);
-    if (filterExpressionDependencies.isNotEmpty) {
-      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
-      logDebug(
-          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.resetValueFromVisibleOptions(
-          visibleOptions: visibleOptionsUpdate);
-      logDebug(
-          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
-    } else if (choiceFilter?.expression != null) {
-      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
-      logDebug(
-          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.resetValueFromVisibleOptions(
-          visibleOptions: visibleOptionsUpdate);
-      logDebug(
-          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
-    }
+    // if (filterExpressionDependencies.isNotEmpty) {
+    //   final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
+    //   logDebug(
+    //       'all field options: ${choiceFilter!.options.map((o) => o.name)}');
+    //   logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
+    //   final oldState = elementState.copyWith(); // clone
+    //   final newState = elementState.resetValueFromVisibleOptions(
+    //       visibleOptions: visibleOptionsUpdate);
+    //   logDebug(
+    //       '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
+    //   updateStatus(newState /* notify: oldState.value != newState.value*/);
+    //   elementControl.updateValue(newState.value);
+    // } else if (choiceFilter?.expression != null) {
+    //   final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
+    //   logDebug(
+    //       'all field options: ${choiceFilter!.options.map((o) => o.name)}');
+    //   logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
+    //   final oldState = elementState.copyWith(); // clone
+    //   final newState = elementState.resetValueFromVisibleOptions(
+    //       visibleOptions: visibleOptionsUpdate);
+    //   logDebug(
+    //       '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
+    //   updateStatus(newState /* notify: oldState.value != newState.value*/);
+    //   elementControl.updateValue(newState.value);
+    // }
   }
 }
 
-class CalculatedFieldInstance<T> extends FieldInstance<T>
-    with ElementAttributesMixin {
+class CalculatedFieldInstance<T> extends FieldInstance<T> {
   CalculatedFieldInstance({
     required super.elementProperties,
     required super.form,

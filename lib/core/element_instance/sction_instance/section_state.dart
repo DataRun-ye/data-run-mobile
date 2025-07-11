@@ -1,7 +1,7 @@
+import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:datarunmobile/core/element_instance/element_state.dart';
 import 'package:datarunmobile/core/element_instance/element_state_factory.dart';
 import 'package:datarunmobile/core/element_instance/element_vistor/element_vistor.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class SectionState extends ElementStat {
@@ -12,10 +12,10 @@ class SectionState extends ElementStat {
     required this.templatePath,
   });
 
-  factory SectionState.fromTemplate(SectionElementTemplate template,
+  factory SectionState.fromTemplate(SectionTemplate template,
       {Map<String, dynamic>? value}) {
     final fields = IMap.fromIterable(template.children,
-        keyMapper: (t) => t.id!,
+        keyMapper: (t) => t.id,
         valueMapper: (t) => fromTemplate(template, value: value?[t.id]));
 
     // final allFields = template.treeFields

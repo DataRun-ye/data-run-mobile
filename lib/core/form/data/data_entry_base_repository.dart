@@ -1,12 +1,10 @@
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/section_rendering_type.dart';
-import 'package:d2_remote/modules/datarun/form/shared/validation_strategy.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/section_rendering_type.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:datarunmobile/core/form/data/data_entry_repository.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
-
-import 'package:datarunmobile/core/form/data/data_entry_repository.dart';
 
 /// Encapsulate interacting with a FormTemplate's submission data,
 /// and their templates, transforming, binding ...
@@ -19,7 +17,7 @@ abstract class DataEntryBaseRepository implements DataEntryRepository {
   // D2Remote d2;
   final FieldViewModelFactory fieldFactory;
 
-  FormVersion get formTemplateVersion;
+  FormTemplateVersion get formTemplateVersion;
 
   @override
   FieldUiModel updateSection(

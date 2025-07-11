@@ -7,7 +7,7 @@ part of 'form_instance.provider.dart';
 // **************************************************************************
 
 String _$userDeviceInfoServiceHash() =>
-    r'4c4514d10d6f67ae6341ded57c5fcd4eaeafcd65';
+    r'b757adc31c86b929a08d7e5d9f26110f8c5626ed';
 
 /// See also [userDeviceInfoService].
 @ProviderFor(userDeviceInfoService)
@@ -22,10 +22,12 @@ final userDeviceInfoServiceProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef UserDeviceInfoServiceRef
     = AutoDisposeFutureProviderRef<AndroidDeviceInfoService>;
 String _$latestFormTemplateHash() =>
-    r'b97638f1e7fba567d29672c7d30008d1d1ce4aec';
+    r'6413a5b6aafe221540861b326c69bae470044265';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -53,23 +55,10 @@ class _SystemHash {
 const latestFormTemplateProvider = LatestFormTemplateFamily();
 
 /// See also [latestFormTemplate].
-class LatestFormTemplateFamily extends Family {
+class LatestFormTemplateFamily
+    extends Family<AsyncValue<FormTemplateRepository>> {
   /// See also [latestFormTemplate].
   const LatestFormTemplateFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'latestFormTemplateProvider';
 
   /// See also [latestFormTemplate].
   LatestFormTemplateProvider call({
@@ -80,7 +69,6 @@ class LatestFormTemplateFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   LatestFormTemplateProvider getProviderOverride(
     covariant LatestFormTemplateProvider provider,
@@ -90,32 +78,24 @@ class LatestFormTemplateFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<FormVersion> Function(LatestFormTemplateRef ref) create) {
-    return _$LatestFormTemplateFamilyOverride(this, create);
-  }
-}
-
-class _$LatestFormTemplateFamilyOverride implements FamilyOverride {
-  _$LatestFormTemplateFamilyOverride(this.overriddenFamily, this.create);
-
-  final FutureOr<FormVersion> Function(LatestFormTemplateRef ref) create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final LatestFormTemplateFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  LatestFormTemplateProvider getProviderOverride(
-    covariant LatestFormTemplateProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'latestFormTemplateProvider';
 }
 
 /// See also [latestFormTemplate].
 class LatestFormTemplateProvider
-    extends AutoDisposeFutureProvider<FormVersion> {
+    extends AutoDisposeFutureProvider<FormTemplateRepository> {
   /// See also [latestFormTemplate].
   LatestFormTemplateProvider({
     required String formId,
@@ -137,7 +117,7 @@ class LatestFormTemplateProvider
         );
 
   LatestFormTemplateProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -150,7 +130,8 @@ class LatestFormTemplateProvider
 
   @override
   Override overrideWith(
-    FutureOr<FormVersion> Function(LatestFormTemplateRef ref) create,
+    FutureOr<FormTemplateRepository> Function(LatestFormTemplateRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -167,29 +148,8 @@ class LatestFormTemplateProvider
   }
 
   @override
-  ({
-    String formId,
-  }) get argument {
-    return (formId: formId,);
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<FormVersion> createElement() {
+  AutoDisposeFutureProviderElement<FormTemplateRepository> createElement() {
     return _LatestFormTemplateProviderElement(this);
-  }
-
-  LatestFormTemplateProvider _copyWith(
-    FutureOr<FormVersion> Function(LatestFormTemplateRef ref) create,
-  ) {
-    return LatestFormTemplateProvider._internal(
-      (ref) => create(ref as LatestFormTemplateRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      formId: formId,
-    );
   }
 
   @override
@@ -206,13 +166,16 @@ class LatestFormTemplateProvider
   }
 }
 
-mixin LatestFormTemplateRef on AutoDisposeFutureProviderRef<FormVersion> {
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin LatestFormTemplateRef
+    on AutoDisposeFutureProviderRef<FormTemplateRepository> {
   /// The parameter `formId` of this provider.
   String get formId;
 }
 
 class _LatestFormTemplateProviderElement
-    extends AutoDisposeFutureProviderElement<FormVersion>
+    extends AutoDisposeFutureProviderElement<FormTemplateRepository>
     with LatestFormTemplateRef {
   _LatestFormTemplateProviderElement(super.provider);
 
@@ -220,235 +183,17 @@ class _LatestFormTemplateProviderElement
   String get formId => (origin as LatestFormTemplateProvider).formId;
 }
 
-String _$submissionVersionFormTemplateHash() =>
-    r'981836f944173420cb750f1d1f2d4723d0b4ed2f';
-
-/// form id could be on the format of formId-version or formId
-/// look for the latest version of the form template or the form template
-/// that matches the version
-///
-/// Copied from [submissionVersionFormTemplate].
-@ProviderFor(submissionVersionFormTemplate)
-const submissionVersionFormTemplateProvider =
-    SubmissionVersionFormTemplateFamily();
-
-/// form id could be on the format of formId-version or formId
-/// look for the latest version of the form template or the form template
-/// that matches the version
-///
-/// Copied from [submissionVersionFormTemplate].
-class SubmissionVersionFormTemplateFamily extends Family {
-  /// form id could be on the format of formId-version or formId
-  /// look for the latest version of the form template or the form template
-  /// that matches the version
-  ///
-  /// Copied from [submissionVersionFormTemplate].
-  const SubmissionVersionFormTemplateFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'submissionVersionFormTemplateProvider';
-
-  /// form id could be on the format of formId-version or formId
-  /// look for the latest version of the form template or the form template
-  /// that matches the version
-  ///
-  /// Copied from [submissionVersionFormTemplate].
-  SubmissionVersionFormTemplateProvider call({
-    required String formId,
-  }) {
-    return SubmissionVersionFormTemplateProvider(
-      formId: formId,
-    );
-  }
-
-  @visibleForOverriding
-  @override
-  SubmissionVersionFormTemplateProvider getProviderOverride(
-    covariant SubmissionVersionFormTemplateProvider provider,
-  ) {
-    return call(
-      formId: provider.formId,
-    );
-  }
-
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<FormVersion> Function(SubmissionVersionFormTemplateRef ref)
-          create) {
-    return _$SubmissionVersionFormTemplateFamilyOverride(this, create);
-  }
-}
-
-class _$SubmissionVersionFormTemplateFamilyOverride implements FamilyOverride {
-  _$SubmissionVersionFormTemplateFamilyOverride(
-      this.overriddenFamily, this.create);
-
-  final FutureOr<FormVersion> Function(SubmissionVersionFormTemplateRef ref)
-      create;
-
-  @override
-  final SubmissionVersionFormTemplateFamily overriddenFamily;
-
-  @override
-  SubmissionVersionFormTemplateProvider getProviderOverride(
-    covariant SubmissionVersionFormTemplateProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
-}
-
-/// form id could be on the format of formId-version or formId
-/// look for the latest version of the form template or the form template
-/// that matches the version
-///
-/// Copied from [submissionVersionFormTemplate].
-class SubmissionVersionFormTemplateProvider
-    extends AutoDisposeFutureProvider<FormVersion> {
-  /// form id could be on the format of formId-version or formId
-  /// look for the latest version of the form template or the form template
-  /// that matches the version
-  ///
-  /// Copied from [submissionVersionFormTemplate].
-  SubmissionVersionFormTemplateProvider({
-    required String formId,
-  }) : this._internal(
-          (ref) => submissionVersionFormTemplate(
-            ref as SubmissionVersionFormTemplateRef,
-            formId: formId,
-          ),
-          from: submissionVersionFormTemplateProvider,
-          name: r'submissionVersionFormTemplateProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$submissionVersionFormTemplateHash,
-          dependencies: SubmissionVersionFormTemplateFamily._dependencies,
-          allTransitiveDependencies:
-              SubmissionVersionFormTemplateFamily._allTransitiveDependencies,
-          formId: formId,
-        );
-
-  SubmissionVersionFormTemplateProvider._internal(
-    super.create, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.formId,
-  }) : super.internal();
-
-  final String formId;
-
-  @override
-  Override overrideWith(
-    FutureOr<FormVersion> Function(SubmissionVersionFormTemplateRef ref) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: SubmissionVersionFormTemplateProvider._internal(
-        (ref) => create(ref as SubmissionVersionFormTemplateRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        formId: formId,
-      ),
-    );
-  }
-
-  @override
-  ({
-    String formId,
-  }) get argument {
-    return (formId: formId,);
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<FormVersion> createElement() {
-    return _SubmissionVersionFormTemplateProviderElement(this);
-  }
-
-  SubmissionVersionFormTemplateProvider _copyWith(
-    FutureOr<FormVersion> Function(SubmissionVersionFormTemplateRef ref) create,
-  ) {
-    return SubmissionVersionFormTemplateProvider._internal(
-      (ref) => create(ref as SubmissionVersionFormTemplateRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      formId: formId,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is SubmissionVersionFormTemplateProvider &&
-        other.formId == formId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, formId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-mixin SubmissionVersionFormTemplateRef
-    on AutoDisposeFutureProviderRef<FormVersion> {
-  /// The parameter `formId` of this provider.
-  String get formId;
-}
-
-class _SubmissionVersionFormTemplateProviderElement
-    extends AutoDisposeFutureProviderElement<FormVersion>
-    with SubmissionVersionFormTemplateRef {
-  _SubmissionVersionFormTemplateProviderElement(super.provider);
-
-  @override
-  String get formId => (origin as SubmissionVersionFormTemplateProvider).formId;
-}
-
-String _$formFlatTemplateHash() => r'ed57df4652f26e2bbc97eb800fbc59fb110cff53';
+String _$formFlatTemplateHash() => r'c42f62aff67ed37f2bfe38e28ea11a1789826286';
 
 /// See also [formFlatTemplate].
 @ProviderFor(formFlatTemplate)
 const formFlatTemplateProvider = FormFlatTemplateFamily();
 
 /// See also [formFlatTemplate].
-class FormFlatTemplateFamily extends Family {
+class FormFlatTemplateFamily
+    extends Family<AsyncValue<FormTemplateRepository>> {
   /// See also [formFlatTemplate].
   const FormFlatTemplateFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formFlatTemplateProvider';
 
   /// See also [formFlatTemplate].
   FormFlatTemplateProvider call({
@@ -459,7 +204,6 @@ class FormFlatTemplateFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   FormFlatTemplateProvider getProviderOverride(
     covariant FormFlatTemplateProvider provider,
@@ -469,32 +213,24 @@ class FormFlatTemplateFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<FormFlatTemplate> Function(FormFlatTemplateRef ref) create) {
-    return _$FormFlatTemplateFamilyOverride(this, create);
-  }
-}
-
-class _$FormFlatTemplateFamilyOverride implements FamilyOverride {
-  _$FormFlatTemplateFamilyOverride(this.overriddenFamily, this.create);
-
-  final FutureOr<FormFlatTemplate> Function(FormFlatTemplateRef ref) create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final FormFlatTemplateFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  FormFlatTemplateProvider getProviderOverride(
-    covariant FormFlatTemplateProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'formFlatTemplateProvider';
 }
 
 /// See also [formFlatTemplate].
 class FormFlatTemplateProvider
-    extends AutoDisposeFutureProvider<FormFlatTemplate> {
+    extends AutoDisposeFutureProvider<FormTemplateRepository> {
   /// See also [formFlatTemplate].
   FormFlatTemplateProvider({
     required FormMetadata formMetadata,
@@ -516,7 +252,7 @@ class FormFlatTemplateProvider
         );
 
   FormFlatTemplateProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -529,7 +265,8 @@ class FormFlatTemplateProvider
 
   @override
   Override overrideWith(
-    FutureOr<FormFlatTemplate> Function(FormFlatTemplateRef ref) create,
+    FutureOr<FormTemplateRepository> Function(FormFlatTemplateRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -546,29 +283,8 @@ class FormFlatTemplateProvider
   }
 
   @override
-  ({
-    FormMetadata formMetadata,
-  }) get argument {
-    return (formMetadata: formMetadata,);
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<FormFlatTemplate> createElement() {
+  AutoDisposeFutureProviderElement<FormTemplateRepository> createElement() {
     return _FormFlatTemplateProviderElement(this);
-  }
-
-  FormFlatTemplateProvider _copyWith(
-    FutureOr<FormFlatTemplate> Function(FormFlatTemplateRef ref) create,
-  ) {
-    return FormFlatTemplateProvider._internal(
-      (ref) => create(ref as FormFlatTemplateRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      formMetadata: formMetadata,
-    );
   }
 
   @override
@@ -586,13 +302,16 @@ class FormFlatTemplateProvider
   }
 }
 
-mixin FormFlatTemplateRef on AutoDisposeFutureProviderRef<FormFlatTemplate> {
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FormFlatTemplateRef
+    on AutoDisposeFutureProviderRef<FormTemplateRepository> {
   /// The parameter `formMetadata` of this provider.
   FormMetadata get formMetadata;
 }
 
 class _FormFlatTemplateProviderElement
-    extends AutoDisposeFutureProviderElement<FormFlatTemplate>
+    extends AutoDisposeFutureProviderElement<FormTemplateRepository>
     with FormFlatTemplateRef {
   _FormFlatTemplateProviderElement(super.provider);
 
@@ -602,30 +321,17 @@ class _FormFlatTemplateProviderElement
 }
 
 String _$formInstanceServiceHash() =>
-    r'4909c7f6419b997f1293d09630931245dad1f794';
+    r'ba1f23f32f2cd9556f84cfd8bcd88c4f605a10d1';
 
 /// See also [formInstanceService].
 @ProviderFor(formInstanceService)
 const formInstanceServiceProvider = FormInstanceServiceFamily();
 
 /// See also [formInstanceService].
-class FormInstanceServiceFamily extends Family {
+class FormInstanceServiceFamily
+    extends Family<AsyncValue<FormInstanceService>> {
   /// See also [formInstanceService].
   const FormInstanceServiceFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formInstanceServiceProvider';
 
   /// See also [formInstanceService].
   FormInstanceServiceProvider call({
@@ -636,7 +342,6 @@ class FormInstanceServiceFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   FormInstanceServiceProvider getProviderOverride(
     covariant FormInstanceServiceProvider provider,
@@ -646,29 +351,19 @@ class FormInstanceServiceFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<FormInstanceService> Function(FormInstanceServiceRef ref)
-          create) {
-    return _$FormInstanceServiceFamilyOverride(this, create);
-  }
-}
-
-class _$FormInstanceServiceFamilyOverride implements FamilyOverride {
-  _$FormInstanceServiceFamilyOverride(this.overriddenFamily, this.create);
-
-  final FutureOr<FormInstanceService> Function(FormInstanceServiceRef ref)
-      create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final FormInstanceServiceFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  FormInstanceServiceProvider getProviderOverride(
-    covariant FormInstanceServiceProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'formInstanceServiceProvider';
 }
 
 /// See also [formInstanceService].
@@ -695,7 +390,7 @@ class FormInstanceServiceProvider
         );
 
   FormInstanceServiceProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -708,7 +403,8 @@ class FormInstanceServiceProvider
 
   @override
   Override overrideWith(
-    FutureOr<FormInstanceService> Function(FormInstanceServiceRef ref) create,
+    FutureOr<FormInstanceService> Function(FormInstanceServiceRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -725,29 +421,8 @@ class FormInstanceServiceProvider
   }
 
   @override
-  ({
-    FormMetadata formMetadata,
-  }) get argument {
-    return (formMetadata: formMetadata,);
-  }
-
-  @override
   AutoDisposeFutureProviderElement<FormInstanceService> createElement() {
     return _FormInstanceServiceProviderElement(this);
-  }
-
-  FormInstanceServiceProvider _copyWith(
-    FutureOr<FormInstanceService> Function(FormInstanceServiceRef ref) create,
-  ) {
-    return FormInstanceServiceProvider._internal(
-      (ref) => create(ref as FormInstanceServiceRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      formMetadata: formMetadata,
-    );
   }
 
   @override
@@ -765,6 +440,8 @@ class FormInstanceServiceProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin FormInstanceServiceRef
     on AutoDisposeFutureProviderRef<FormInstanceService> {
   /// The parameter `formMetadata` of this provider.
@@ -781,30 +458,16 @@ class _FormInstanceServiceProviderElement
       (origin as FormInstanceServiceProvider).formMetadata;
 }
 
-String _$formInstanceHash() => r'c2d225963eb79d1e2679b2d075b8c2a06fa9bb2b';
+String _$formInstanceHash() => r'238ed7eae7728f73ce327ca1683cdec54accc591';
 
 /// See also [formInstance].
 @ProviderFor(formInstance)
 const formInstanceProvider = FormInstanceFamily();
 
 /// See also [formInstance].
-class FormInstanceFamily extends Family {
+class FormInstanceFamily extends Family<AsyncValue<FormInstance>> {
   /// See also [formInstance].
   const FormInstanceFamily();
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formInstanceProvider';
 
   /// See also [formInstance].
   FormInstanceProvider call({
@@ -815,7 +478,6 @@ class FormInstanceFamily extends Family {
     );
   }
 
-  @visibleForOverriding
   @override
   FormInstanceProvider getProviderOverride(
     covariant FormInstanceProvider provider,
@@ -825,27 +487,19 @@ class FormInstanceFamily extends Family {
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(
-      FutureOr<FormInstance> Function(FormInstanceRef ref) create) {
-    return _$FormInstanceFamilyOverride(this, create);
-  }
-}
-
-class _$FormInstanceFamilyOverride implements FamilyOverride {
-  _$FormInstanceFamilyOverride(this.overriddenFamily, this.create);
-
-  final FutureOr<FormInstance> Function(FormInstanceRef ref) create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final FormInstanceFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  FormInstanceProvider getProviderOverride(
-    covariant FormInstanceProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'formInstanceProvider';
 }
 
 /// See also [formInstance].
@@ -871,7 +525,7 @@ class FormInstanceProvider extends AutoDisposeFutureProvider<FormInstance> {
         );
 
   FormInstanceProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -884,7 +538,7 @@ class FormInstanceProvider extends AutoDisposeFutureProvider<FormInstance> {
 
   @override
   Override overrideWith(
-    FutureOr<FormInstance> Function(FormInstanceRef ref) create,
+    FutureOr<FormInstance> Function(FormInstanceRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -901,29 +555,8 @@ class FormInstanceProvider extends AutoDisposeFutureProvider<FormInstance> {
   }
 
   @override
-  ({
-    FormMetadata formMetadata,
-  }) get argument {
-    return (formMetadata: formMetadata,);
-  }
-
-  @override
   AutoDisposeFutureProviderElement<FormInstance> createElement() {
     return _FormInstanceProviderElement(this);
-  }
-
-  FormInstanceProvider _copyWith(
-    FutureOr<FormInstance> Function(FormInstanceRef ref) create,
-  ) {
-    return FormInstanceProvider._internal(
-      (ref) => create(ref as FormInstanceRef),
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      formMetadata: formMetadata,
-    );
   }
 
   @override
@@ -940,6 +573,8 @@ class FormInstanceProvider extends AutoDisposeFutureProvider<FormInstance> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin FormInstanceRef on AutoDisposeFutureProviderRef<FormInstance> {
   /// The parameter `formMetadata` of this provider.
   FormMetadata get formMetadata;
@@ -955,4 +590,4 @@ class _FormInstanceProviderElement
       (origin as FormInstanceProvider).formMetadata;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

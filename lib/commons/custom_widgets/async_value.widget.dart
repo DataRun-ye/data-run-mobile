@@ -20,7 +20,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
         getErrorWidget(error, stackTrace),
       AsyncValue(valueOrNull: final valueOrNull?) =>
         valueBuilder.call(valueOrNull),
-      _ => const CircularProgressIndicator(),
+      _ => Center(child: const CircularProgressIndicator()),
     };
   }
 }

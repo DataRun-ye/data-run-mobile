@@ -1,6 +1,6 @@
-import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress.dart';
-import 'package:datarunmobile/app/app.locator.dart';
-import 'package:datarunmobile/app/app.router.dart';
+import 'package:d_sdk/core/sync/d2_progress.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/stacked/app.router.dart';
 import 'package:datarunmobile/core/sync_manager/nmc_worker/sync_progress.provider.dart';
 import 'package:datarunmobile/core/sync_manager/nmc_worker/work_info.dart';
 import 'package:datarunmobile/core/sync_manager/sync_service.provider.dart';
@@ -85,8 +85,8 @@ class _SyncScreenState extends ConsumerState<SyncScreen> {
   }
 
   void goToMain() async {
-    final _navigationService = locator<NavigationService>();
-    await _navigationService.replaceWithHomeScreen();
+    final _navigationService = appLocator<NavigationService>();
+    _navigationService.replaceWithHomeWrapperPage();
     // Navigator.of(navigatorKey.currentContext!).pushAndRemoveUntil(
     //     MaterialPageRoute<void>(
     //         builder: (BuildContext context) => HomeScreen(refresh: true)),

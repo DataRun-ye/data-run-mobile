@@ -1,10 +1,10 @@
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/field_template.entity.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/field_template/template.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/rule/choice_filter.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/rule/rule_parse_extension.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
-// import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/rule/choice_filter.dart';
+// import 'package:d_sdk/modules/datarun/form/shared/rule/rule_parse_extension.dart';
+// import 'package:d_sdk/modules/datarun/form/shared/template_extensions/form_traverse_extension.dart';
+// import 'package:d_sdk/database/shared/value_type.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 // import 'package:datarunmobile/data_run/screens/form/element/members/form_element_state.dart';
 // import 'package:datarunmobile/data_run/screens/form_module/form/code_generator.dart';

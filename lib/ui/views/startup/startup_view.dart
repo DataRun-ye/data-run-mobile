@@ -7,23 +7,25 @@ import 'package:stacked/stacked.dart';
 class StartupView extends StackedView<StartupViewModel> {
   const StartupView({Key? key}) : super(key: key);
 
-  // final bool isAuthenticated;
-  // final bool needsSync;
-
   @override
   Widget builder(
     BuildContext context,
     StartupViewModel viewModel,
     Widget? child,
   ) {
-    return const Scaffold(
+    final cs = Theme.of(context).colorScheme;
+    return Scaffold(
+      backgroundColor: cs.primary,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'DATARUN',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
+              style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w900,
+                  color: cs.inversePrimary),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
@@ -7,7 +7,7 @@ import 'package:datarunmobile/data_run/screens/form/element/validation/form_elem
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/data_run/screens/form/field_widgets/custom_reactive_widget/reactive_choice_chips.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class QReactiveChoiceSingleSelectChips extends ConsumerWidget {
@@ -33,11 +33,11 @@ class QReactiveChoiceSingleSelectChips extends ConsumerWidget {
         ));
   }
 
-  List<ReactiveChipOption<String>> _getChipOptions(List<Option> options,
+  List<ReactiveChipOption<String>> _getChipOptions(List<DataOption> options,
       {bool? wide}) {
     return options
-        .map((Option option) => ReactiveChipOption<String>(
-              value: option.name!,
+        .map((DataOption option) => ReactiveChipOption<String>(
+              value: option.name,
               child: wide ?? false
                   ? Container(
                       padding: const EdgeInsets.all(0.4),

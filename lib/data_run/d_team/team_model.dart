@@ -1,48 +1,19 @@
-import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
-import 'package:d2_remote/shared/entities/identifiable.entity.dart';
-import 'package:datarunmobile/commons/helpers/collections.dart';
-import 'package:datarunmobile/core/models/d_identifiable_model.dart';
-import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:intl/intl.dart';
-
-class TeamModel with EquatableMixin {
-  factory TeamModel.fromIdentifiable(
-      {required IdentifiableEntity identifiableEntity,
-      String? activity,
-      Iterable<Pair<TeamFormPermission, bool>> formPermissions = const IListConst([])}) {
-    return TeamModel._(
-        activity: activity,
-        team: IdentifiableModel.fromIdentifiable(
-            identifiableEntity: identifiableEntity),
-        formPermissions: formPermissions);
-  }
-
-  TeamModel._(
-      {required IdentifiableModel team,
-      Iterable<Pair<TeamFormPermission, bool>>? formPermissions,
-      this.activity})
-      : this._team = team,
-        this.formPermissions = IList.orNull(formPermissions) ?? IList();
-
-  final IdentifiableModel _team;
-
-  String? get name => '${Intl.message('team')} ${_team.code}';
-
-  String? get id => _team.id;
-
-  bool get disabled => _team.disabled;
-
-  IMap<String, dynamic> get label => _team.label;
-
-  IMap<String, dynamic> get properties => _team.properties;
-
-  final String? activity;
-  final IList<Pair<TeamFormPermission, bool>> formPermissions;
-
-  @override
-  List<Object?> get props => [_team, formPermissions];
-}
+// class TeamModel extends IdentifiableModel with EquatableMixin {
+//   TeamModel._(
+//       {
+//
+//       Iterable<Pair<TeamFormPermission, bool>>? formPermissions,
+//       this.activity})
+//       : this._team = team,
+//         this.formPermissions = IList.orNull(formPermissions) ?? IList();
+//
+//   final IdentifiableModel _team;
+//
+//   String? get name => '${Intl.message('team')} ${_team.code}';
+//
+//   @override
+//   List<Object?> get props => [_team, formPermissions];
+// }
 
 class TeamSummary {
   TeamSummary({

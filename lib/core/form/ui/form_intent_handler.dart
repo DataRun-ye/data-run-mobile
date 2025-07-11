@@ -1,4 +1,3 @@
-import 'package:datarunmobile/data/form_notifier.provider.dart';
 import 'package:datarunmobile/core/form/ui/intent/form_intent_sealed.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,11 +7,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 /// intentHandler.dispatch(OnSave(...));
 /// ```
 class FormIntentHandler {
-
   FormIntentHandler(this.ref);
   final Ref ref;
 
   void dispatch(FormIntent intent) {
-    ref.read(formNotifierProvider.notifier).handleIntent(intent);
+    // ref.read(formNotifierProvider.notifier).handleIntent(intent);
   }
 }

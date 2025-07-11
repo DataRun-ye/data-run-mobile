@@ -1,13 +1,12 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/metadatarun/data_element/entities/data_element.entity.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/commons/extensions/string_extension.dart';
 import 'package:datarunmobile/core/element_instance/data_value_repository.dart';
 import 'package:datarunmobile/core/form/ui/intent/field_model.dart';
 import 'package:datarunmobile/core/resources/resource_manager.provider.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
+// @injectable
 class MapFieldValueToUser {
   MapFieldValueToUser({required this.resources, required this.repository});
 

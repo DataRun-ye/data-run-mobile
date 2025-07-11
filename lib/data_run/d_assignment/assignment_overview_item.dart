@@ -1,20 +1,16 @@
-import 'package:d2_remote/modules/datarun_shared/utilities/team_form_permission.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/collections.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
-import 'package:datarunmobile/commons/helpers/collections.dart';
-import 'package:datarunmobile/core/common/state.dart';
 import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/data_run/d_activity/activity_inherited_widget.dart';
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_detail/assignment_detail_page.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_highlighted_text.dart';
 import 'package:datarunmobile/data_run/d_assignment/build_status.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data_run/d_form_submission/submission_count_chips/submission_count_chips.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class AssignmentOverviewItem extends ConsumerWidget {
   const AssignmentOverviewItem({
@@ -30,12 +26,11 @@ class AssignmentOverviewItem extends ConsumerWidget {
         ref.watch(filterQueryProvider.select((value) => value.searchQuery));
     final activityModel = ActivityInheritedWidget.of(context);
     final assignment = ref.watch(assignmentProvider);
-    final List<Pair<TeamFormPermission, bool>> userForms = assignment.userForms;
-    final List<Pair<TeamFormPermission, bool>> availableLocally =
+    final List<Pair<AssignmentForm, bool>> userForms = assignment.userForms;
+    final List<Pair<AssignmentForm, bool>> availableLocally =
         assignment.availableForms;
 
     return Card(
-      // color: getCardColor(assignment.status, Theme.of(context)),
       margin: const EdgeInsets.all(16.0),
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -60,14 +55,14 @@ class AssignmentOverviewItem extends ConsumerWidget {
   Widget _buildEntityInfo(
       AssignmentModel assignment, String searchQuery, BuildContext context) {
     return CopyToClipboard(
-      value: assignment.entityCode,
+      value: assignment.orgUnit.code,
       children: [
         const Icon(Icons.location_on),
         const SizedBox(width: 4),
-        BuildHighlightedText(assignment.entityCode, searchQuery,
+        BuildHighlightedText(assignment.orgUnit.code!, searchQuery,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
         const SizedBox(width: 8),
-        BuildHighlightedText(assignment.entityName, searchQuery)
+        BuildHighlightedText(assignment.orgUnit.code!, searchQuery)
       ],
     );
   }
@@ -76,11 +71,11 @@ class AssignmentOverviewItem extends ConsumerWidget {
     return Wrap(
       alignment: WrapAlignment.end,
       children: const [
-        CountChip(syncStatus: SyncStatus.SYNCED),
+        CountChip(syncStatus: InstanceSyncStatus.synced),
         SizedBox(width: 2),
-        CountChip(syncStatus: SyncStatus.TO_POST),
+        CountChip(syncStatus: InstanceSyncStatus.finalized),
         SizedBox(width: 2),
-        CountChip(syncStatus: SyncStatus.TO_UPDATE),
+        CountChip(syncStatus: InstanceSyncStatus.draft)
       ],
     );
   }
@@ -125,75 +120,24 @@ class AssignmentOverviewItem extends ConsumerWidget {
   Color? getCardColor(AssignmentStatus status, ThemeData theme) {
     switch (status) {
       case AssignmentStatus.NOT_STARTED:
+      case AssignmentStatus.PLANNED:
       case AssignmentStatus.RESCHEDULED:
-        return theme.cardColor.withOpacity(0.5);
+        return theme.cardColor.withValues(alpha: 0.5);
       case AssignmentStatus.DONE:
         return theme.cardColor;
       case AssignmentStatus.IN_PROGRESS:
-        return Colors.greenAccent.withOpacity(0.2);
+        return Colors.greenAccent.withValues(alpha: 0.2);
 
       case AssignmentStatus.MERGED:
       case AssignmentStatus.REASSIGNED:
       case AssignmentStatus.CANCELLED:
-        return Colors.orangeAccent.withOpacity(0.2);
+        return Colors.orangeAccent.withValues(alpha: 0.2);
     }
   }
 }
 
-class ResourcesComparisonWidget extends ConsumerWidget {
-  const ResourcesComparisonWidget(
-      {super.key, this.headerStyle, this.bodyStyle});
-
-  final TextStyle? headerStyle;
-  final TextStyle? bodyStyle;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final assignment = ref.watch(assignmentProvider);
-    // final reportedResourcesAsync = ref.watch(reportedResourcesProvider());
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          S.of(context).resources,
-          style: headerStyle,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: assignment.reportedResources.keys.map((key) {
-            final allocated = assignment.reportedResources[key] ?? 0;
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    Intl.message(key.toLowerCase()),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    '${assignment.allocatedResources[key.toLowerCase()] ?? 0} / $allocated',
-                    style: bodyStyle?.copyWith(
-                      color: Colors.grey.shade700,
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-}
-
 class _CardHeaderRow extends ConsumerWidget {
-  const _CardHeaderRow({super.key});
+  const _CardHeaderRow();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -201,8 +145,8 @@ class _CardHeaderRow extends ConsumerWidget {
         ref.watch(filterQueryProvider.select((value) => value.searchQuery));
     final activityModel = ActivityInheritedWidget.of(context);
     final assignment = ref.watch(assignmentProvider);
-    final List<Pair<TeamFormPermission, bool>> userForms = assignment.userForms;
-    final List<Pair<TeamFormPermission, bool>> availableLocally =
+    final List<Pair<AssignmentForm, bool>> userForms = assignment.userForms;
+    final List<Pair<AssignmentForm, bool>> availableLocally =
         assignment.availableForms;
 
     return Row(

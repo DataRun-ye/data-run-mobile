@@ -58,13 +58,13 @@ class EditPanel extends StatelessWidget {
                 label: Text(S.of(context).addNew),
                 onPressed: () =>
                     onSave(formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
-                icon: const Icon(MdiIcons.contentSavePlus),
+                icon: Icon(MdiIcons.contentSavePlus),
               ),
               ReactiveValidButton(
                 onPressed: () =>
                     onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
                 label: Text(S.of(context).saveAndClose),
-                icon: const Icon(MdiIcons.contentSaveCheck),
+                icon: Icon(MdiIcons.contentSaveCheck),
               ),
             ],
           ),

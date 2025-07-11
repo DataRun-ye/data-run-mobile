@@ -5,9 +5,8 @@ import 'package:datarunmobile/core/form/model/action_type.dart';
 import 'package:datarunmobile/core/form/model/form_command.dart';
 import 'package:datarunmobile/core/form/model/store_result.dart';
 import 'package:datarunmobile/core/form/model/value_store_result.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
+// @injectable
 class FormCommandHandler {
   FormCommandHandler({required this.repository});
 
@@ -19,17 +18,17 @@ class FormCommandHandler {
       CommandType.ON_SAVE => _handleSaveCmd(action),
       CommandType.ON_FOCUS ||
       CommandType.ON_NEXT =>
-          _handleFocusOrNextCmd(action),
+        _handleFocusOrNextCmd(action),
       CommandType.ON_TEXT_CHANGE => _handleTextChangeCmd(action),
       CommandType.ON_SECTION_CHANGE => _handleSectionChangeCmd(action),
       CommandType.ON_FINISH => _handleFinishCmd(action),
       CommandType.ON_REQUEST_COORDINATES =>
-          _handleRequestCoordinatesCmd(action),
+        _handleRequestCoordinatesCmd(action),
       CommandType.ON_CANCEL_REQUEST_COORDINATES =>
-          _handleCancelRequestCoordinatesCmd(action),
+        _handleCancelRequestCoordinatesCmd(action),
 
-    // ActionType.ON_ADD_IMAGE_FINISHED => _handleOnAddImageFinishedAction(action),
-    // ActionType.ON_STORE_FILE => _handleOnStoreFileAction(action),
+      // ActionType.ON_ADD_IMAGE_FINISHED => _handleOnAddImageFinishedAction(action),
+      // ActionType.ON_STORE_FILE => _handleOnStoreFileAction(action),
       CommandType.ON_FETCH_OPTIONS => _handleFetchOptionsCmd(action),
     };
   }

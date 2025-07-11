@@ -5,25 +5,25 @@ main() {
   ///      Pattern                           Result
   ///      ----------------                  -------
   initializeDateFormatting('ar').then((_) {
-   final now = DateTime.now();
-   final locale = 'ar_jr';
-   final localeEn = 'en';
-   final parsed = DateTime.parse('2025-07-02');
-   // print('parsed:                     $parsed');
-   // print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
-   // print('parsed.yMMd():  ${DateFormat('yMMMd', locale).format(parsed)}');
-   // print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
+    final now = DateTime.now();
+    final locale = 'ar_jr';
+    final localeEn = 'en';
+    final parsed = DateTime.parse('2025-07-02');
+    // print('parsed:                     $parsed');
+    // print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
+    // print('parsed.yMMd():  ${DateFormat('yMMMd', locale).format(parsed)}');
+    // print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
   });
- final yMd = DateFormat.yMd(); //-> 7/10/1996
- final yMMMMd = DateFormat.yMMMMd();
- final now = DateTime.now();
- // print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
- // print('DateFormat.yMd().add_jm():  ${DateFormat.yMd().add_jm().format(now)}');
- // print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
- // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
- // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
- // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
- // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+  final yMd = DateFormat.yMd(); //-> 7/10/1996
+  final yMMMMd = DateFormat.yMMMMd();
+  final now = DateTime.now();
+  // print('DateFormat.y().add_Md():    ${DateFormat.y('ar').add_Md().format(now)}');
+  // print('DateFormat.yMd().add_jm():  ${DateFormat.yMd().add_jm().format(now)}');
+  // print('DateFormat.d().add_yM():    ${DateFormat.d().add_yM().format(now)}');
+  // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+  // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+  // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
+  // print('DateFormat.y().add_Md():    ${DateFormat.y().add_Md().format(now)}');
 
   DateFormat('yMd'); //-> 7/10/1996
   DateFormat.y().add_Md(); //-> July 10, 1996

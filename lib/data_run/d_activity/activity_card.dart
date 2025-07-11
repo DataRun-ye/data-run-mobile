@@ -1,4 +1,4 @@
-import 'package:datarunmobile/data_run/d_activity/activity_model.dart';
+import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +28,7 @@ class ActivityCard extends StatelessWidget {
             children: [
               // Activity Name
               Text(
-                activity.activity?.name ?? '',
+                activity.displayLabel,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       // color: Theme.of(context).primaryColor,
@@ -40,7 +40,7 @@ class ActivityCard extends StatelessWidget {
               if (activity.assignedTeam?.name != null)
                 Row(
                   children: [
-                     Icon(Icons.group, color: cs.secondary),
+                    Icon(Icons.group, color: cs.secondary),
                     const SizedBox(width: 8.0),
                     Text(
                       '${S.of(context).assignedTeam}: ${activity.assignedTeam!.name}',
@@ -73,23 +73,23 @@ class ActivityCard extends StatelessWidget {
               ),
 
               // Start Date and End Date
-              if (activity.activity?.properties['startDate'] != null)
+              if (activity.properties['startDate'] != null)
                 _infoRow(
                   context,
                   icon: Icons.calendar_today,
                   label: S.of(context).startDate,
                   value: formatDateString(
-                    activity.activity!.properties['startDate'],
+                    activity.properties['startDate'],
                     context,
                   ),
                 ),
-              if (activity.activity?.properties['endDate'] != null)
+              if (activity.properties['endDate'] != null)
                 _infoRow(
                   context,
                   icon: Icons.event,
                   label: S.of(context).endDate,
                   value: formatDateString(
-                    activity.activity!.properties['endDate'],
+                    activity.properties['endDate'],
                     context,
                   ),
                 ),

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/validation_strategy.dart';
-import 'package:datarunmobile/commons/helpers/collections.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 
 /// Provides access to the raw form structure and data.
@@ -34,7 +34,7 @@ abstract class DataEntryRepository {
 
   List<FieldUiModel> getSpecificDataEntryItems(String uid);
 
-  Pair<String, List<FormOption>> options({
+  Pair<String, List<DataOption>> options({
     required String optionSetUid,
     List<String> optionsToHide,
     List<String> optionGroupsToHide,

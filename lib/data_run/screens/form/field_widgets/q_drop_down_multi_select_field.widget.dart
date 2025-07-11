@@ -1,11 +1,11 @@
-import 'package:d2_remote/modules/datarun/form/shared/form_option.entity.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/validation/form_element_validator.dart';
 import 'package:datarunmobile/data_run/screens/form/inherited_widgets/form_metadata_inherit_widget.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -53,14 +53,14 @@ class NameToLabelValueAccessor
   NameToLabelValueAccessor({this.items = const [], this.options = const []});
 
   final List<String> items;
-  final List<FormOption> options;
+  final List<DataOption> options;
 
   @override
   List<String>? modelToViewValue(List<String> items, List<String>? modelValue) {
     return options
         .where((option) => (modelValue?.contains(option.name) ?? false))
-        .map((option) => getItemLocalString(option.label.unlockView,
-            defaultString: option.name))
+        .map((option) =>
+            getItemLocalString(option.label, defaultString: option.name))
         .toList();
   }
 
@@ -68,8 +68,8 @@ class NameToLabelValueAccessor
   List<String>? viewToModelValue(List<String> items, List<String>? modelValue) {
     return options
         .where((option) =>
-            modelValue?.contains(getItemLocalString(option.label.unlockView,
-                defaultString: option.name)) ==
+            modelValue?.contains(
+                getItemLocalString(option.label, defaultString: option.name)) ==
             true)
         .map((option) => option.name)
         .toList();

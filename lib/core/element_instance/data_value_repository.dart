@@ -1,19 +1,21 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_value.entity.dart';
-import 'package:d2_remote/modules/metadatarun/metadatarun.dart';
-import 'package:d2_remote/shared/utilities/merge_mode.util.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
-import 'package:injectable/injectable.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:drift/drift.dart';
 
-@injectable
+// @injectable
 class DataValueRepository {
+  static AppDatabase get db => DSdk.db;
+
   static Future<DataValue?> get(
-      {required String submissionId,
-      required String path,
-      String? parent}) async {
-    return D2Remote.formSubmissionModule.dataValue.byId(_makeCompositeKey(
-        submission: submissionId, parent: parent, path: path));
+      {required String submissionId, required String dataElementId}) async {
+    await db.select(db.dataValues)
+      ..where((row) => row.dataInstance.equals(submissionId));
+    return (db.select(db.dataValues)
+          ..where((tbl) =>
+              tbl.dataInstance.equals(submissionId) &
+              tbl.dataElement.equals(dataElementId)))
+        .getSingleOrNull();
   }
 
   static Future<DataValue> create(
@@ -22,43 +24,46 @@ class DataValueRepository {
       dynamic value,
       String? parent}) async {
     final elementPath = path.split('.');
-    D2Remote.formSubmissionModule.dataValue.setData(DataValue(
+    final dv = DataValue(
         id: _makeCompositeKey(
             submission: submissionId, parent: parent, path: path),
-        parent: parent,
         value: value,
-        submission: submissionId,
-        templatePath: path,
+        dataInstance: submissionId,
         dataElement: elementPath[elementPath.length - 1],
-        dirty: true));
+        lastModifiedDate: DateTime.now().toUtc(),
+        createdDate: DateTime.now().toUtc());
 
-    await D2Remote.formSubmissionModule.dataValue.save();
+    await db.into(db.dataValues).insert(dv);
 
-    return D2Remote.formSubmissionModule.dataValue.data;
+    return dv;
   }
 
-  static Future<DataValue> save(
+  static Future<DataValue> update(
       {required String submissionId,
-      required String path,
+      required String dataElementId,
       dynamic value,
       String? parent}) async {
-    final elementPath = path.split('.');
-    D2Remote.formSubmissionModule.dataValue.setData(DataValue(
-        id: _makeCompositeKey(
-            submission: submissionId, parent: parent, path: path),
-        parent: parent,
-        value: value,
-        submission: submissionId,
-        templatePath: path,
-        dataElement: elementPath[elementPath.length - 1],
-        lastModifiedDate: DateHelper.nowUtc(),
-        dirty: true));
+    final dv =
+        await get(submissionId: submissionId, dataElementId: dataElementId);
+    dv!.copyWith(
+        value: Value(value),
+        dataInstance: submissionId,
+        dataElement: dataElementId,
+        lastModifiedDate: Value(DateTime.now().toUtc()));
+    await db.update(db.dataValues).replace(dv);
 
-    await D2Remote.formSubmissionModule.dataValue
-      ..mergeMode = MergeMode.Merge
-      ..save();
+    // DataValue(
+    //     id: _makeCompositeKey(
+    //         submission: submissionId, parent: parent, path: path),
+    //     parent: parent,
+    //     value: value,
+    //     submission: submissionId,
+    //     templatePath: path,
+    //     dataElement: elementPath[elementPath.length - 1],
+    //     lastModifiedDate: DateHelper.nowUtc(),
+    //     dirty: true);
 
-    return D2Remote.formSubmissionModule.dataValue.data;
+    return dv;
   }
 
   static String _makeCompositeKey(
@@ -68,20 +73,24 @@ class DataValueRepository {
   }
 
   Future<String?> getOrgUnitById(String orgUnitUid) async {
-    final OrgUnit? orgUnit = await D2Remote.organisationUnitModuleD.orgUnit
-        .byId(orgUnitUid)
-        .getOne();
+    final OrgUnit? orgUnit = await db.managers.orgUnits
+        .filter((f) => f.id(orgUnitUid))
+        .getSingleOrNull();
     return orgUnit != null
         ? getItemLocalString(orgUnit.label, defaultString: orgUnit.name)
         : null;
   }
 
-  Future<DataElement?> getDataElement(String dataElementUid) {
-    return D2Remote.dataElementModule.dataElement.byId(dataElementUid).getOne();
+  Future<DataElement?> getDataElement(String dataElementUid) async {
+    final DataElement? orgUnit = await db.managers.dataElements
+        .filter((f) => f.id(dataElementUid))
+        .getSingleOrNull();
+    return orgUnit;
   }
 
   Future<String?> getTeamById(String teamUid) async {
-    final Team? team = await D2Remote.teamModuleD.team.byId(teamUid).getOne();
+    final Team? team =
+        await db.managers.teams.filter((f) => f.id(teamUid)).getSingleOrNull();
     return team?.code;
   }
 }

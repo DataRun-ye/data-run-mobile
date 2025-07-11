@@ -7,7 +7,7 @@ part of 'preference.provider.dart';
 // **************************************************************************
 
 String _$preferenceNotifierHash() =>
-    r'8f87422a937780bdb675a4bb2d44313777a30365';
+    r'2781871ad0ffed37357f7074b32c68d061050d02';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,11 +30,12 @@ class _SystemHash {
   }
 }
 
-abstract class _$PreferenceNotifier<T> extends BuildlessAutoDisposeNotifier<T> {
-  late final Preference<T> pref;
+abstract class _$PreferenceNotifier
+    extends BuildlessAutoDisposeNotifier<dynamic> {
+  late final Preference pref;
 
-  T build(
-    Preference<T> pref,
+  dynamic build(
+    Preference pref,
   );
 }
 
@@ -59,7 +60,7 @@ const preferenceNotifierProvider = PreferenceNotifierFamily();
 /// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 ///
 /// Copied from [PreferenceNotifier].
-class PreferenceNotifierFamily extends Family {
+class PreferenceNotifierFamily extends Family<dynamic> {
   /// read
   ///
   /// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
@@ -71,20 +72,6 @@ class PreferenceNotifierFamily extends Family {
   /// Copied from [PreferenceNotifier].
   const PreferenceNotifierFamily();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'preferenceNotifierProvider';
-
   /// read
   ///
   /// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
@@ -94,44 +81,36 @@ class PreferenceNotifierFamily extends Family {
   /// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
   ///
   /// Copied from [PreferenceNotifier].
-  PreferenceNotifierProvider<T> call<T>(
-    Preference<T> pref,
+  PreferenceNotifierProvider call(
+    Preference pref,
   ) {
-    return PreferenceNotifierProvider<T>(
+    return PreferenceNotifierProvider(
       pref,
     );
   }
 
-  @visibleForOverriding
   @override
-  PreferenceNotifierProvider<Object?> getProviderOverride(
-    covariant PreferenceNotifierProvider<Object?> provider,
+  PreferenceNotifierProvider getProviderOverride(
+    covariant PreferenceNotifierProvider provider,
   ) {
     return call(
       provider.pref,
     );
   }
 
-  /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(PreferenceNotifier Function() create) {
-    return _$PreferenceNotifierFamilyOverride(this, create);
-  }
-}
-
-class _$PreferenceNotifierFamilyOverride implements FamilyOverride {
-  _$PreferenceNotifierFamilyOverride(this.overriddenFamily, this.create);
-
-  final PreferenceNotifier Function() create;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  final PreferenceNotifierFamily overriddenFamily;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  PreferenceNotifierProvider getProviderOverride(
-    covariant PreferenceNotifierProvider provider,
-  ) {
-    return provider._copyWith(create);
-  }
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'preferenceNotifierProvider';
 }
 
 /// read
@@ -143,8 +122,8 @@ class _$PreferenceNotifierFamilyOverride implements FamilyOverride {
 /// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 ///
 /// Copied from [PreferenceNotifier].
-class PreferenceNotifierProvider<T>
-    extends AutoDisposeNotifierProviderImpl<PreferenceNotifier<T>, T> {
+class PreferenceNotifierProvider
+    extends AutoDisposeNotifierProviderImpl<PreferenceNotifier, dynamic> {
   /// read
   ///
   /// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
@@ -155,9 +134,9 @@ class PreferenceNotifierProvider<T>
   ///
   /// Copied from [PreferenceNotifier].
   PreferenceNotifierProvider(
-    Preference<T> pref,
+    Preference pref,
   ) : this._internal(
-          () => PreferenceNotifier<T>()..pref = pref,
+          () => PreferenceNotifier()..pref = pref,
           from: preferenceNotifierProvider,
           name: r'preferenceNotifierProvider',
           debugGetCreateSourceHash:
@@ -171,7 +150,7 @@ class PreferenceNotifierProvider<T>
         );
 
   PreferenceNotifierProvider._internal(
-    super.create, {
+    super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -180,11 +159,11 @@ class PreferenceNotifierProvider<T>
     required this.pref,
   }) : super.internal();
 
-  final Preference<T> pref;
+  final Preference pref;
 
   @override
-  T runNotifierBuild(
-    covariant PreferenceNotifier<T> notifier,
+  dynamic runNotifierBuild(
+    covariant PreferenceNotifier notifier,
   ) {
     return notifier.build(
       pref,
@@ -192,10 +171,10 @@ class PreferenceNotifierProvider<T>
   }
 
   @override
-  Override overrideWith(PreferenceNotifier<T> Function() create) {
+  Override overrideWith(PreferenceNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: PreferenceNotifierProvider<T>._internal(
+      override: PreferenceNotifierProvider._internal(
         () => create()..pref = pref,
         from: from,
         name: null,
@@ -208,58 +187,39 @@ class PreferenceNotifierProvider<T>
   }
 
   @override
-  (Preference<T>,) get argument {
-    return (pref,);
-  }
-
-  @override
-  AutoDisposeNotifierProviderElement<PreferenceNotifier<T>, T> createElement() {
+  AutoDisposeNotifierProviderElement<PreferenceNotifier, dynamic>
+      createElement() {
     return _PreferenceNotifierProviderElement(this);
-  }
-
-  PreferenceNotifierProvider _copyWith(
-    PreferenceNotifier Function() create,
-  ) {
-    return PreferenceNotifierProvider._internal(
-      () => create()..pref = pref,
-      name: name,
-      dependencies: dependencies,
-      allTransitiveDependencies: allTransitiveDependencies,
-      debugGetCreateSourceHash: debugGetCreateSourceHash,
-      from: from,
-      pref: pref,
-    );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is PreferenceNotifierProvider &&
-        other.runtimeType == runtimeType &&
-        other.pref == pref;
+    return other is PreferenceNotifierProvider && other.pref == pref;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, pref.hashCode);
-    hash = _SystemHash.combine(hash, T.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin PreferenceNotifierRef<T> on AutoDisposeNotifierProviderRef<T> {
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin PreferenceNotifierRef on AutoDisposeNotifierProviderRef<dynamic> {
   /// The parameter `pref` of this provider.
-  Preference<T> get pref;
+  Preference get pref;
 }
 
-class _PreferenceNotifierProviderElement<T>
-    extends AutoDisposeNotifierProviderElement<PreferenceNotifier<T>, T>
-    with PreferenceNotifierRef<T> {
+class _PreferenceNotifierProviderElement
+    extends AutoDisposeNotifierProviderElement<PreferenceNotifier, dynamic>
+    with PreferenceNotifierRef {
   _PreferenceNotifierProviderElement(super.provider);
 
   @override
-  Preference<T> get pref => (origin as PreferenceNotifierProvider<T>).pref;
+  Preference get pref => (origin as PreferenceNotifierProvider).pref;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

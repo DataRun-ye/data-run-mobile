@@ -1,13 +1,13 @@
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
 
 Map<String, dynamic> sumActualResources(
-    List<DataFormSubmission> submissions, List<String> resourceKeys) {
+    List<DataInstance> submissions, List<String> resourceKeys) {
   try {
     Map<String, dynamic> totalResources = {};
 
     for (var submission in submissions) {
       var actualResources =
-          extractAndSumValues(submission.formData, resourceKeys);
+          extractAndSumValues(submission.formData ?? {}, resourceKeys);
       actualResources.forEach((key, value) {
         totalResources[key] = (totalResources[key] ?? 0) + value;
       });

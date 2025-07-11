@@ -1,30 +1,26 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/modules/datarun/form/entities/form_version.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/field_template/section_template.entity.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/shared/utilities/sort_order.util.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_instance.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/device_info_service.dart';
 import 'package:datarunmobile/data_run/screens/form/element/service/form_instance_service.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/util_methods.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'form_instance.provider.g.dart';
 
 @riverpod
-Future<AndroidDeviceInfoService> userDeviceInfoService(
-    UserDeviceInfoServiceRef ref) async {
+Future<AndroidDeviceInfoService> userDeviceInfoService(Ref ref) async {
   final deviceInfoPlugin = DeviceInfoPlugin();
   final deviceInfo =
       Platform.isAndroid ? await deviceInfoPlugin.androidInfo : null;
@@ -33,56 +29,54 @@ Future<AndroidDeviceInfoService> userDeviceInfoService(
 }
 
 @riverpod
-Future<FormVersion> latestFormTemplate(LatestFormTemplateRef ref,
+Future<FormTemplateRepository> latestFormTemplate(Ref ref,
     {required String formId}) async {
-  final List<FormVersion> formTemplates = await D2Remote
-      .formModule.formTemplateV
-      .where(attribute: 'formTemplate', value: formId)
-      .orderBy(attribute: 'versionNumber', sortOrder: SortOrder.DESC)
-      .get();
-  return formTemplates.first;
+  final formTemplates = await DSdk.db.managers.formTemplates
+      .filter((f) => f.id(formId))
+      .getSingle();
+  // final formTemplateVersions = await DSdk.db.managers.formTemplateVersions
+  //     .filter((f) => f.template.id(formId))
+  //     .orderBy((o) => o.versionNumber.desc())
+  //     .get();
+
+  // await D2Remote.formModule.formTemplateV
+  //     .where(attribute: 'formTemplate', value: formId)
+  //     .orderBy(attribute: 'version', order: SortOrder.DESC)
+  //     .get();
+  return FormTemplateRepository.create(versionUid: formTemplates.versionUid);
+  ;
 }
 
-/// form id could be on the format of formId-version or formId
-/// look for the latest version of the form template or the form template
-/// that matches the version
-@riverpod
-Future<FormVersion> submissionVersionFormTemplate(
-    SubmissionVersionFormTemplateRef ref,
-    {required String formId}) async {
-  return getTemplateByVersionOrLatest(formId);
-}
+// /// form id could be on the format of formId-version or formId
+// /// look for the latest version of the form template or the form template
+// /// that matches the version
+// @riverpod
+// Future<FormTemplateVersion> submissionVersionFormTemplate(Ref ref,
+//     {required String formId}) async {
+//   return getTemplateByVersionOrLatest(formId);
+// }
 
 @riverpod
-Future<FormFlatTemplate> formFlatTemplate(
-  FormFlatTemplateRef ref, {
+Future<FormTemplateRepository> formFlatTemplate(
+  Ref ref, {
   required FormMetadata formMetadata,
 }) async {
   if (formMetadata.submission != null) {
-    final DataFormSubmission submission = await D2Remote
-        .formSubmissionModule.formSubmission
-        .byId(formMetadata.submission!)
-        .getOne();
-    final flatTemplate =
-        await FormFlatTemplate.fromTemplate(templateId: submission.formVersion);
+    final DataInstance submission = await DSdk.db.managers.dataInstances
+        .filter((s) => s.id(formMetadata.submission))
+        .getSingle();
+
+    final flatTemplate = await FormTemplateRepository.create(
+        versionUid: submission.templateVersion);
     return flatTemplate;
-    // final FormVersion formVersion = await ref.watch(
-    //     submissionVersionFormTemplateProvider(formId: submission.formVersion)
-    //         .future);
-    // return FormFlatTemplate.fromTemplate(formVersion);
   }
 
-  return await FormFlatTemplate.fromTemplate(
-      templateId: formMetadata.versionUid);
-  // return await locator.getAsync<FormFlatTemplate>(param1: formMetadata.versionUid);
-  // final FormVersion formVersion = await ref.watch(
-  //     submissionVersionFormTemplateProvider(formId: formMetadata.formId)
-  //         .future);
-  // return FormFlatTemplate.fromTemplate(formVersion);
+  return await FormTemplateRepository.create(
+      versionUid: formMetadata.versionUid);
 }
 
 @riverpod
-Future<FormInstanceService> formInstanceService(FormInstanceServiceRef ref,
+Future<FormInstanceService> formInstanceService(Ref ref,
     {required FormMetadata formMetadata}) async {
   final userDeviceService =
       await ref.watch(userDeviceInfoServiceProvider.future);
@@ -92,16 +86,11 @@ Future<FormInstanceService> formInstanceService(FormInstanceServiceRef ref,
 }
 
 @riverpod
-Future<FormInstance> formInstance(FormInstanceRef ref,
+Future<FormInstance> formInstance(Ref ref,
     {required FormMetadata formMetadata}) async {
-  final enabled = await D2Remote.formSubmissionModule.formSubmission
-      .byId(formMetadata.submission!)
-      .canEdit();
-
-  final DataFormSubmission submission = await D2Remote
-      .formSubmissionModule.formSubmission
-      .byId(formMetadata.submission!)
-      .getOne();
+  final DataInstance submission = await DSdk.db.managers.dataInstances
+      .filter((s) => s.id(formMetadata.submission))
+      .getSingle();
 
   final Map<String, dynamic>? initialFormValue = submission.formData;
 
@@ -118,23 +107,19 @@ Future<FormInstance> formInstance(FormInstanceRef ref,
       initialFormValue: initialFormValue);
 
   final _formSection = Section(
-      template: SectionTemplate(type: ValueType.Unknown, path: ''),
-      elements: elements,
-      form: form)
+      template: formFlatTemplate.rootSection, elements: elements, form: form)
     ..resolveDependencies()
     ..evaluate();
   final attributeMap =
       await formInstanceService.formAttributesControls(initialFormValue);
 
   return FormInstance(ref,
-      entryStarted: submission.startEntryTime != null
-          ? DateTime.parse(submission.startEntryTime!).toLocal()
-          : DateTime.now(),
-      enabled: enabled,
+      entryStarted: submission.startEntryTime.toLocal(),
+      enabled: submission.syncState != InstanceSyncStatus.synced,
       initialValue: {...?initialFormValue, ...attributeMap},
       elements: elements,
       formMetadata: formMetadata,
-      assignmentStatus: submission.status,
+      // assignmentStatus: submission.status,
       form: form,
       rootSection: _formSection,
       formFlatTemplate: formFlatTemplate);

@@ -35,7 +35,11 @@ class SectionWidget extends HookConsumerWidget {
           color: headerColor ?? Theme.of(context).colorScheme.primary,
           // color: cs.primaryContainer,
           padding: const EdgeInsets.all(16),
-          child: Text(element.label, style: TextStyle(color: headerColor != null ? cs.onPrimaryContainer : cs.onPrimary)),
+          child: Text(element.label,
+              style: TextStyle(
+                  color: headerColor != null
+                      ? cs.onPrimaryContainer
+                      : cs.onPrimary)),
         ),
         sliver: MultiSliver(
           pushPinnedChildren: true,
@@ -44,8 +48,7 @@ class SectionWidget extends HookConsumerWidget {
   }
 
   List<Widget> buildSliverList(
-    Iterable<FormElementInstance<dynamic>> elements, BuildContext context
-  ) {
+      Iterable<FormElementInstance<dynamic>> elements, BuildContext context) {
     final cs = Theme.of(context).colorScheme;
 
     return elements.map((element) {

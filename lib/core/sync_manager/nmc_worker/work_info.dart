@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress.dart';
+import 'package:d_sdk/core/sync/d2_progress.dart';
 import 'package:equatable/equatable.dart';
 
 class WorkInfo with EquatableMixin {

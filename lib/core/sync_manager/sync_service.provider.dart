@@ -1,7 +1,7 @@
-import 'package:d2_remote/modules/datarun_shared/sync/call/d2_progress.dart';
-import 'package:d2_remote/modules/datarun_shared/sync/sync_metadata.dart';
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
+import 'package:d_sdk/core/sync/d2_progress.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,18 +49,17 @@ class SyncService extends _$SyncService {
       {OnProgressUpdate? onProgressUpdate,
       ProgressCallback? onFinish,
       ProgressCallback? onFailure}) async {
-    SyncMetadata syncMetadata = SyncMetadata();
+    // SyncMetadata syncMetadata = SyncMetadata();
     try {
-      final isOnline = await ConnectivityService.instance
-          .checkInternetConnection();
+      final isOnline = await appLocator<NetworkUtil>().isOnline();
       if (!isOnline) {
         onFailure?.call('No Internet Connection');
         return;
       }
 
-      await syncMetadata.download(
-        callback: onProgressUpdate,
-      );
+      // await syncMetadata.download(
+      //   callback: onProgressUpdate,
+      // );
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(LAST_SYNC_TIME, DateTime.now().millisecondsSinceEpoch);
       await prefs.setBool(SYNC_DONE, true);

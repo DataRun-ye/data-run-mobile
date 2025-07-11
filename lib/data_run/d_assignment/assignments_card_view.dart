@@ -1,8 +1,7 @@
-import 'package:d2_remote/modules/datarun_shared/utilities/entity_scope.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
 import 'package:datarunmobile/data_run/d_assignment/assignment_overview_item.dart';
-import 'package:datarunmobile/data_run/d_assignment/model/assignment_model.dart';
 import 'package:datarunmobile/data/activity/assignment.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +15,7 @@ class AssignmentsCardView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final assignmentsAsync = ref.watch(filterAssignmentsProvider(scope));
+    final assignmentsAsync = ref.watch(filterAssignmentsProvider);
 
     return AsyncValueWidget(
       value: assignmentsAsync,

@@ -87,9 +87,9 @@ class FieldUiModelImpl extends FieldUiModel {
     intentCallback?.call(FormIntent.onSave(uid, result, valueType));
   }
 
-  void onSaveOption(FormOption option) {
+  void onSaveOption(DataOption option) {
     String? nextValue;
-    if (option.label.any((k, v) => v == displayValue)) {
+    if (option.label?.lock.any((k, v) => v == displayValue) == true) {
       nextValue = null;
     } else {
       nextValue = option.name;

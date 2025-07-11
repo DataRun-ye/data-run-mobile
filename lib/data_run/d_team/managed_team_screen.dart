@@ -41,7 +41,8 @@ class ManageTeamsScreen extends ConsumerWidget {
             onSelected: (value) =>
                 ref.read(sortProvider.notifier).state = value,
             itemBuilder: (context) => [
-              const PopupMenuItem(value: 'Alphabetical', child: Text('Alphabetical')),
+              const PopupMenuItem(
+                  value: 'Alphabetical', child: Text('Alphabetical')),
               const PopupMenuItem(
                   value: 'Overdue Count', child: Text('Overdue Count')),
             ],

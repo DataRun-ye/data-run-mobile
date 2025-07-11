@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -59,7 +59,7 @@ class FieldElementState<T> extends FormElementState {
   });
 
   final T? value;
-  final List<Option> visibleOptions;
+  final List<DataOption> visibleOptions;
 
   @override
   FieldElementState<T> copyWith(
@@ -68,7 +68,7 @@ class FieldElementState<T> extends FormElementState {
       bool? mandatory,
       Map<String, dynamic>? errors,
       T? value,
-      List<Option>? visibleOptions}) {
+      List<DataOption>? visibleOptions}) {
     return FieldElementState<T>(
       hidden: hidden ?? this.hidden,
       mandatory: mandatory ?? this.mandatory,
@@ -90,7 +90,7 @@ class FieldElementState<T> extends FormElementState {
   }
 
   FieldElementState<T> resetValueFromVisibleOptions(
-      {required List<Option> visibleOptions}) {
+      {required List<DataOption> visibleOptions}) {
     if (!const DeepCollectionEquality.unordered()
         .equals(this.visibleOptions, visibleOptions)) {
       if (T is List<String>) {

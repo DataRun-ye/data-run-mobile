@@ -7,9 +7,9 @@ import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 
 abstract class RulesUtilsProvider {
   Future<RuleUtilsProviderResult> applyRuleEffects({
-    required  bool applyForEvent,
-    required  Map<String, FieldUiModel> fieldViewModels,
-    required  List<RuleEffect> calcResult,
+    required bool applyForEvent,
+    required Map<String, FieldUiModel> fieldViewModels,
+    required List<RuleEffect> calcResult,
     FormValueStore? valueStore,
   });
 

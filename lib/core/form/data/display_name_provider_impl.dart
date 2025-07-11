@@ -1,14 +1,13 @@
-import 'package:d2_remote/core/datarun/utilities/date_helper.dart';
-import 'package:d2_remote/modules/datarun/form/shared/value_type.dart';
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart';
 import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart';
-import 'package:datarunmobile/core/utils/get_item_local_string.dart';
-import 'package:injectable/injectable.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:intl/intl.dart';
 
-@Injectable(as: DisplayNameProvider)
+// @Injectable(as: DisplayNameProvider)
 class DisplayNameProviderImpl implements DisplayNameProvider {
   const DisplayNameProviderImpl(
       this.optionSetConfiguration, this.orgUnitConfiguration);
@@ -32,7 +31,7 @@ class DisplayNameProviderImpl implements DisplayNameProvider {
 
   Future<String?> _getOptionDisplaySetValue(
       String value, String optionSet) async {
-    final Option? optionByName =
+    final DataOption? optionByName =
         await optionSetConfiguration.optionInDataSetByName(optionSet, value);
 
     if (optionByName != null) {
@@ -40,7 +39,7 @@ class DisplayNameProviderImpl implements DisplayNameProvider {
           defaultString: optionByName.name);
     }
 
-    final Option? optionByCode =
+    final DataOption? optionByCode =
         await optionSetConfiguration.optionInDataSetByCode(optionSet, value);
     if (optionByCode != null) {
       return getItemLocalString(optionByCode.label,

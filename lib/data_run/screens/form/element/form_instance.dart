@@ -1,14 +1,14 @@
-import 'package:d2_remote/core/datarun/logging/new_app_logging.dart';
-import 'package:d2_remote/modules/datarun/data_value/entities/data_form_submission.entity.dart';
-import 'package:d2_remote/shared/enumeration/assignment_status.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_element.dart';
 import 'package:datarunmobile/data_run/screens/form/element/form_metadata.dart';
-import 'package:datarunmobile/data_run/screens/form_module/form_template/form_element_template.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 // const formUid = 'formDataUid';
@@ -22,19 +22,18 @@ const teamControlName = 'formData';
 const versionControlName = 'formData';
 
 class FormInstance {
-  FormInstance(FormInstanceRef ref,
+  FormInstance(Ref ref,
       {required this.form,
       required this.formFlatTemplate,
       required this.formMetadata,
       required this.entryStarted,
-      AssignmentStatus? assignmentStatus,
+      // AssignmentStatus? assignmentStatus,
       Map<String, Object?> initialValue = const {},
       required Section rootSection,
       Map<String, FormElementInstance<dynamic>> elements = const {},
       required this.enabled})
       : _ref = ref,
-        _formSection = rootSection,
-        _assignmentStatus = assignmentStatus {
+        _formSection = rootSection {
     var formElementMap = {
       for (var x
           in getFormElementIterator<FormElementInstance<dynamic>>(rootSection)
@@ -53,10 +52,10 @@ class FormInstance {
 
   // final Object _formDataUid;
   final FormGroup form;
-  final FormFlatTemplate formFlatTemplate;
+  final FormTemplateRepository formFlatTemplate;
   final bool enabled;
 
-  final FormInstanceRef _ref;
+  final Ref _ref;
   final Map<String, FormElementInstance<dynamic>> _forElementMap = {};
   final Section _formSection;
   AssignmentStatus? _assignmentStatus;
@@ -75,15 +74,14 @@ class FormInstance {
 
   String? get submissionUid => formMetadata.submission;
 
-  Future<DataFormSubmission> saveFormData() async {
+  Future<DataInstance> saveFormData() async {
     final formSubmission =
         await formSubmissionList.getSubmission(submissionUid!);
 
     return _saveSubmission(formSubmission!);
   }
 
-  Future<DataFormSubmission> _saveSubmission(
-      DataFormSubmission formSubmission) async {
+  Future<DataInstance> _saveSubmission(DataInstance formSubmission) async {
     final formValue = formSection.value;
     formValue.forEach((key, value) {
       _initialValue.update(
@@ -93,10 +91,9 @@ class FormInstance {
       );
     });
 
-    formSubmission.status = _assignmentStatus;
-    formSubmission.formData
+    // formSubmission.status = _assignmentStatus;
+    formSubmission.formData ?? {}
       ..removeWhere((k, v) => !metadata.contains(k))
-      ..['_status'] = _assignmentStatus?.name
       ..addAll(formValue);
 
     final updatedSubmission =

@@ -1,4 +1,4 @@
-import 'package:d2_remote/core/datarun/exception/exception.dart';
+import 'package:d_sdk/core/exception/exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'field_mask_failure.data.freezed.dart';

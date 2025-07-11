@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "org.datarun" "\0"
-            VALUE "FileDescription", "data_run_mobile" "\0"
+            VALUE "FileDescription", "datarunmobile" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "data_run_mobile" "\0"
+            VALUE "InternalName", "datarunmobile" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 org.datarun. All rights reserved." "\0"
-            VALUE "OriginalFilename", "data_run_mobile.exe" "\0"
-            VALUE "ProductName", "data_run_mobile" "\0"
+            VALUE "OriginalFilename", "datarunmobile.exe" "\0"
+            VALUE "ProductName", "datarunmobile" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

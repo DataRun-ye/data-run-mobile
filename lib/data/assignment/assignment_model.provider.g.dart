@@ -6,12 +6,12 @@ part of 'assignment_model.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$assignmentFormsHash() => r'679feabe8ff667434b4e94b3b2b27e932bfe9c69';
+String _$assignmentFormsHash() => r'0db9b00b9fa016279fed2fd45346e9283e0b7552';
 
 /// See also [assignmentForms].
 @ProviderFor(assignmentForms)
 final assignmentFormsProvider =
-    AutoDisposeFutureProvider<List<FormVersion>>.internal(
+    AutoDisposeFutureProvider<List<FormTemplateVersion>>.internal(
   assignmentForms,
   name: r'assignmentFormsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,8 +21,11 @@ final assignmentFormsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef AssignmentFormsRef = AutoDisposeFutureProviderRef<List<FormVersion>>;
-String _$assignmentHash() => r'3680f33d2aee3ba8b00eef4c55c38b17a38400d2';
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AssignmentFormsRef
+    = AutoDisposeFutureProviderRef<List<FormTemplateVersion>>;
+String _$assignmentHash() => r'02f87ffeee92adc173256978cece63f9257656aa';
 
 /// See also [assignment].
 @ProviderFor(assignment)
@@ -35,8 +38,10 @@ final assignmentProvider = AutoDisposeProvider<AssignmentModel>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef AssignmentRef = AutoDisposeProviderRef<AssignmentModel>;
-String _$assignmentsHash() => r'566e016521e76e38c927ebb19d5738d65f0d19ec';
+String _$assignmentsHash() => r'85a05c15c00de443970f1e2a428b800387b86b1a';
 
 /// a notifier that retrieves all assignments with their data populated
 ///
@@ -57,4 +62,4 @@ final assignmentsProvider = AutoDisposeAsyncNotifierProvider<Assignments,
 
 typedef _$Assignments = AutoDisposeAsyncNotifier<List<AssignmentModel>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

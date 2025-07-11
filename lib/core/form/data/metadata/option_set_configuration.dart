@@ -1,22 +1,20 @@
-import 'package:d2_remote/d2_remote.dart';
-import 'package:d2_remote/modules/metadatarun/option_set/entities/option.entity.dart';
-import 'package:injectable/injectable.dart';
+import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:drift/drift.dart';
 
-@injectable
+// @injectable
 class OptionSetConfigurations {
   const OptionSetConfigurations();
 
-  Future<Option?> optionInDataSetByCode(
+  Future<DataOption?> optionInDataSetByCode(
           String optionSetUid, String optionCode) =>
-      D2Remote.optionSetModule.option
-          .byOptionSet(optionSetUid)
-          .where(attribute: 'code', value: optionCode)
-          .getOne();
+      DSdk.db.managers.dataOptions
+          .filter((f) => f.code(optionCode) & f.optionSet.id(optionSetUid))
+          .getSingleOrNull();
 
-  Future<Option?> optionInDataSetByName(
+  Future<DataOption?> optionInDataSetByName(
           String optionSetUid, String optionName) =>
-      D2Remote.optionSetModule.option
-          .byOptionSet(optionSetUid)
-          .where(attribute: 'name', value: optionName)
-          .getOne();
+      DSdk.db.managers.dataOptions
+          .filter((f) => f.name(optionName) & f.optionSet.id(optionSetUid))
+          .getSingleOrNull();
 }

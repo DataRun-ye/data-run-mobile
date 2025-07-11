@@ -1,4 +1,4 @@
-import 'package:d2_remote/modules/datarun/form/entities/metadata_submission_update.dart';
+import 'package:datarunmobile/data/metadata_submission_update.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/metadata_submission_update.provider.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,7 @@ class QReferenceDropDownSearchFieldState
 
     final listValuesAsync = ref.watch(systemMetadataSubmissionsProvider(
         query: '',
-        orgUnit: formInstance.formMetadata.assignmentModel.entityId,
+        orgUnit: formInstance.formMetadata.assignmentModel.orgUnit.id,
         submissionId: formInstance.submissionUid!));
 
     return AsyncValueWidget(
@@ -228,26 +228,27 @@ Widget referenceModelPopupItem(BuildContext context,
   );
 }
 
-class NameToLabelValueAccessor
-    extends DropDownSearchValueAccessor<String, String> {
-  NameToLabelValueAccessor(this.metadataUpdates);
-
-  final List<MetadataSubmissionUpdate> metadataUpdates;
-
-  @override
-  String? modelToViewValue(List<String> items, String? modelValue) {
-    return metadataUpdates
-        .where((item) => item.id == modelValue)
-        .firstOrNull
-        ?.name;
-  }
-
-  @override
-  String? viewToModelValue(List<String> items, String? viewValue) {
-    // return viewValue?.id;
-    return metadataUpdates
-        .where((item) => item.householdName == viewValue)
-        .map((t) => t.id)
-        .firstOrNull;
-  }
-}
+//
+// class NameToLabelValueAccessor
+//     extends DropDownSearchValueAccessor<String, String> {
+//   NameToLabelValueAccessor(this.metadataUpdates);
+//
+//   final List<MetadataSubmissionUpdate> metadataUpdates;
+//
+//   @override
+//   String? modelToViewValue(List<String> items, String? modelValue) {
+//     return metadataUpdates
+//         .where((item) => item.id == modelValue)
+//         .firstOrNull
+//         ?.name;
+//   }
+//
+//   @override
+//   String? viewToModelValue(List<String> items, String? viewValue) {
+//     // return viewValue?.id;
+//     return metadataUpdates
+//         .where((item) => item.householdName == viewValue)
+//         .map((t) => t.id)
+//         .firstOrNull;
+//   }
+// }

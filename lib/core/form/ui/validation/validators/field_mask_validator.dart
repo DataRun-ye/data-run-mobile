@@ -1,5 +1,5 @@
-// import 'package:d2_remote/core/common/value_type/validators/value_type_validator.dart';
-// import 'package:d2_remote/core/mp/helpers/result.dart';
+// import 'package:d_sdk/core/common/value_type/validators/value_type_validator.dart';
+// import 'package:d_sdk/core/mp/helpers/result.dart';
 // import 'package:datarunmobile/core/form/ui/validation/failures/field_mask_failure.data.dart';
 // import 'package:datarunmobile/sdk/core/mp/helpers/result.dart';
 // import 'package:mass_pro/form/ui/validation/failures/field_mask_failure.data.dart';

@@ -7,19 +7,19 @@ class FormTemplateModel extends IdentifiableModel {
     required super.id,
     required super.name,
     super.label,
-    required this.formVersion,
+    required this.versionUid,
     required this.versionNumber,
     this.description,
     required this.fields,
     required this.sections,
   });
 
-  final String formVersion;
+  final String versionUid;
   final int versionNumber;
   final String? description;
   final BuiltList<Template> fields;
   final BuiltList<Template> sections;
 
   @override
-  List<Object?> get props => super.props + [formVersion, versionNumber];
+  List<Object?> get props => super.props + [versionUid, versionNumber];
 }

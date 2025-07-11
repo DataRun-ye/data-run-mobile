@@ -1,9 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/shared/collections.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
-import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form/application/form_list_filter.dart';
 import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:drift/drift.dart';
@@ -14,6 +15,36 @@ class FormTemplateService {
   FormTemplateService({required this.optionSetService});
 
   final OptionSetService optionSetService;
+
+  Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
+      String assignment) async {
+    List<AssignmentForm> assignmentForms =
+        await fetchAssignmentForms(assignment);
+    final List<String> userForms = assignmentForms.map((a) => a.form).toList();
+
+    final List<FormTemplate> availableFormTemplates = await DSdk
+        .db.managers.formTemplates
+        .filter((f) => f.id.isIn(userForms))
+        .get();
+
+    final List<String> availableForms =
+        availableFormTemplates.map((f) => f.id).toList();
+
+    final availableAssignedForms = assignmentForms
+        .map((fp) => Pair(fp, availableForms.contains(fp.form)))
+        .toList();
+
+    return availableAssignedForms;
+  }
+
+  Future<List<AssignmentForm>> fetchAssignmentForms(String assignmentId) async {
+    final db = appLocator<DbManager>().db;
+    final userForms = appLocator<User>().userFormsUIDs;
+
+    return db.managers.assignmentForms
+        .filter((f) => f.assignment.id(assignmentId))
+        .get();
+  }
 
   Future<List<FormTemplate>> fetchByAssignment(assignmentId) async {
     final db = appLocator<DbManager>().db;
@@ -52,7 +83,7 @@ class FormTemplateService {
       return FormTemplateModel(
         id: t.id,
         name: t.name,
-        formVersion: v.id,
+        versionUid: v.id,
         label: t.label,
         description: t.description,
         versionNumber: v.versionNumber,
@@ -89,7 +120,7 @@ class FormTemplateService {
       return FormTemplateModel(
         id: formTemplate.id,
         name: formTemplate.name,
-        formVersion: templateVersion.id,
+        versionUid: templateVersion.id,
         label: formTemplate.label,
         description: formTemplate.description,
         versionNumber: templateVersion.versionNumber,

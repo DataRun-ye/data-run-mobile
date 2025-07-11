@@ -6,7 +6,8 @@ part of 'form_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$formListItemsHash() => r'7b5711cc23c104c5f8e1437a8feafc3d7ee3ac3f';
+String _$assignmentFormSelectionItemsHash() =>
+    r'5f83ae3c18545ad307d8fc046a63210c50dbc5d3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -28,6 +29,145 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+/// See also [assignmentFormSelectionItems].
+@ProviderFor(assignmentFormSelectionItems)
+const assignmentFormSelectionItemsProvider =
+    AssignmentFormSelectionItemsFamily();
+
+/// See also [assignmentFormSelectionItems].
+class AssignmentFormSelectionItemsFamily
+    extends Family<AsyncValue<List<FormListItemModel>>> {
+  /// See also [assignmentFormSelectionItems].
+  const AssignmentFormSelectionItemsFamily();
+
+  /// See also [assignmentFormSelectionItems].
+  AssignmentFormSelectionItemsProvider call(
+    String assignment,
+  ) {
+    return AssignmentFormSelectionItemsProvider(
+      assignment,
+    );
+  }
+
+  @override
+  AssignmentFormSelectionItemsProvider getProviderOverride(
+    covariant AssignmentFormSelectionItemsProvider provider,
+  ) {
+    return call(
+      provider.assignment,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'assignmentFormSelectionItemsProvider';
+}
+
+/// See also [assignmentFormSelectionItems].
+class AssignmentFormSelectionItemsProvider
+    extends AutoDisposeFutureProvider<List<FormListItemModel>> {
+  /// See also [assignmentFormSelectionItems].
+  AssignmentFormSelectionItemsProvider(
+    String assignment,
+  ) : this._internal(
+          (ref) => assignmentFormSelectionItems(
+            ref as AssignmentFormSelectionItemsRef,
+            assignment,
+          ),
+          from: assignmentFormSelectionItemsProvider,
+          name: r'assignmentFormSelectionItemsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$assignmentFormSelectionItemsHash,
+          dependencies: AssignmentFormSelectionItemsFamily._dependencies,
+          allTransitiveDependencies:
+              AssignmentFormSelectionItemsFamily._allTransitiveDependencies,
+          assignment: assignment,
+        );
+
+  AssignmentFormSelectionItemsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.assignment,
+  }) : super.internal();
+
+  final String assignment;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<FormListItemModel>> Function(
+            AssignmentFormSelectionItemsRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: AssignmentFormSelectionItemsProvider._internal(
+        (ref) => create(ref as AssignmentFormSelectionItemsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        assignment: assignment,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<FormListItemModel>> createElement() {
+    return _AssignmentFormSelectionItemsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AssignmentFormSelectionItemsProvider &&
+        other.assignment == assignment;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, assignment.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin AssignmentFormSelectionItemsRef
+    on AutoDisposeFutureProviderRef<List<FormListItemModel>> {
+  /// The parameter `assignment` of this provider.
+  String get assignment;
+}
+
+class _AssignmentFormSelectionItemsProviderElement
+    extends AutoDisposeFutureProviderElement<List<FormListItemModel>>
+    with AssignmentFormSelectionItemsRef {
+  _AssignmentFormSelectionItemsProviderElement(super.provider);
+
+  @override
+  String get assignment =>
+      (origin as AssignmentFormSelectionItemsProvider).assignment;
+}
+
+String _$formListItemsHash() => r'9c2b01e2ad6a115c8d981f373a5e5aad1f0e4b50';
 
 /// See also [formListItems].
 @ProviderFor(formListItems)

@@ -7,7 +7,7 @@ part of 'teams.provider.dart';
 // **************************************************************************
 
 String _$userAvailableFormsHash() =>
-    r'a89f1f59c00f0fe775f65a932b0099d05fea950b';
+    r'b9a1b19e5b8f61108ca86077d6a528b9ed53a6ae';
 
 /// Copied from Dart SDK
 class _SystemHash {

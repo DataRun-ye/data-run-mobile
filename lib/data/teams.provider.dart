@@ -21,10 +21,10 @@ Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(Ref ref,
     assignmentForms.addAll(await DSdk.db.managers.assignmentForms.get());
   }
 
+  final userForm = assignmentForms.map((a) => a.form);
   final List<FormTemplate> availableFormTemplates = await DSdk
       .db.managers.formTemplates
-      .filter((f) => f.assignments((f) =>
-          f.assignment.id.isIn(assignmentForms.map((a) => a.assignment))))
+      .filter((f) => f.id.isIn(userForm))
       .get();
 
   final List<String> availableForms =

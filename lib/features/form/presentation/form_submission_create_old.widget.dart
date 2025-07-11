@@ -32,7 +32,7 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
     final submission = await submissionInitialRepository.createNewSubmission(
       assignmentId: widget.assignment.id,
       form: formTemplate.id,
-      formVersion: formTemplate.formVersion,
+      formVersion: formTemplate.versionUid,
       team: widget.assignment.team.id,
       // versionNumber: formTemplate.versionNumber,
     );

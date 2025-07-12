@@ -7,7 +7,7 @@ import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class SplashViewModel extends BaseViewModel {
+class StartupViewModel extends BaseViewModel {
   final AuthManager _authManager = appLocator<AuthManager>();
   final SessionScopeInitializer _scopeInitializer =
       appLocator<SessionScopeInitializer>();
@@ -15,27 +15,24 @@ class SplashViewModel extends BaseViewModel {
   final NavigationService _navigationService = appLocator<NavigationService>();
 
   Future<dynamic> runStartupLogic() async {
+    // await Future.delayed(const Duration(seconds: 3));
     try {
-      if (!(await _authManager.isAuthenticated())) {
-        // _authManager.logout();
+      await _authManager.checkAuthStatus();
+      if (!_authManager.isAuthenticated()) {
         _navigationService.replaceWithLoginView();
-        // _router.replace(LoginRoute());
       } else {
-        await _scopeInitializer.initAuthScope();
-        await _scopeInitializer.registerUserDetailInDbScope();
+        // await _scopeInitializer.initAuthScope();
+        // await _scopeInitializer.registerUserDetailInDbScope();
 
         if (await _syncScheduler.shouldSync()) {
           _navigationService.replaceWithSyncProgressView();
-          // _router.replace(SyncProgressRoute());
         } else {
           _navigationService.replaceWithHomeWrapperPage();
-          // _router.replace(HomeRoute());
         }
       }
     } catch (e) {
-      await _authManager.clearUserSession();
+      // await _authManager.clearUserSession();
       _navigationService.replaceWithLoginView();
-      // _router.replace(LoginRoute());
       DExceptionReporter.instance.report(e, showToUser: true);
       rethrow;
     }

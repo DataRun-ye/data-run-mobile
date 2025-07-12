@@ -1,5 +1,5 @@
 import 'package:datarunmobile/core/main_constants.dart';
-import 'package:datarunmobile/data/preference.provider.dart';
+import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/settings/presentation/settings_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';

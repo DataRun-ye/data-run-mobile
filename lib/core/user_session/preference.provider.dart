@@ -7,7 +7,7 @@ part 'preference.provider.g.dart';
 
 enum Preference {
   shouldShowWalkthrough('should_show_walkthrough', true),
-  language('language', AppEnvironment.defaultLocale),
+  language('language', 'NA'),
   // appearance
   useMaterial3('useMaterial3', true),
   themeMode('themeMode', 1),
@@ -17,7 +17,7 @@ enum Preference {
   const Preference(this.key, this.defaultValue);
 
   final String key;
-  final Object defaultValue;
+  final Object? defaultValue;
 }
 
 /// read

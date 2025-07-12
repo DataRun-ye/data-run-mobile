@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
 
-class StartupView extends StackedView<StartupViewModel> {
-  const StartupView({Key? key}) : super(key: key);
+class SplashView extends StackedView<StartupViewModel> {
+  const SplashView({Key? key}) : super(key: key);
 
   @override
   Widget builder(

@@ -1,3 +1,5 @@
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
@@ -28,10 +30,10 @@ class QReactiveAgeField extends ConsumerWidget {
         enabled: element.elementControl.enabled,
         label: element.label,
         decoration: InputDecoration(
-          enabled: element.elementControl.enabled,
-          // border: const OutlineInputBorder(gapPadding: 20),
-          // contentPadding: const EdgeInsets.all(16),
-          labelText: element.label,
-        ));
+            enabled: element.elementControl.enabled,
+            // border: const OutlineInputBorder(gapPadding: 20),
+            // contentPadding: const EdgeInsets.all(16),
+            labelText: element.label,
+            hintText: appLocator<HintProvider>().provideHint(element.type)));
   }
 }

@@ -100,14 +100,14 @@ class FormTemplateService {
     /// try to get form versions by the specific form version Ids
     /// It would retrieve the specific versions of formTemplate
     try {
-      final query = DSdk.db.managers.formTemplateVersions
+      var query = DSdk.db.managers.formTemplateVersions
           // .filter((f) => f.template.formAssignments((fs) => fs.assignment.id("")))
           .withReferences((prefetch) => prefetch(template: true));
 
       if (versionId != null) {
-        query.filter((f) => f.id(versionId));
+        query = query.filter((f) => f.id(versionId));
       } else {
-        query.filter((f) => f.template.id(templateId))
+        query =  query.filter((f) => f.template.id(templateId))
           ..orderBy((o) => o.versionNumber.desc()).limit(1);
       }
 

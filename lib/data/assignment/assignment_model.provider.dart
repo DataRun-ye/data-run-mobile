@@ -37,13 +37,13 @@ class Assignments extends _$Assignments {
     final List<Pair<AssignmentForm, bool>> userForms =
         await ref.watch(userAvailableFormsProvider().future);
 
-    final assignmentModels = assignments
-        .map((assignment) => assignment.copyWith(
-              userForms: userForms
-                  .where((uf) => uf.first.assignment == assignment.id)
-                  .toList(),
-            ))
-        .toList();
+    final assignmentModels = assignments.map((assignment) {
+      final assignmentForms = userForms
+          .where((uf) => uf.first.assignment == assignment.id)
+          .toList();
+      return assignment.copyWith(
+        userForms: assignmentForms);
+    }).toList();
     // final futures =
     //     assignments.map<Future<AssignmentModel>>((assignment) async {
     //   return AssignmentModel(

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:datarunmobile/features/custom/exception_indicators/generic_error_indicator.dart';
-import 'package:datarunmobile/features/custom/exception_indicators/no_connection_indicator.dart';
+import 'package:datarunmobile/features/shared/exception_indicators/generic_error_indicator.dart';
+import 'package:datarunmobile/features/shared/exception_indicators/no_connection_indicator.dart';
 import 'package:flutter/material.dart';
 
 /// Based on the received error, displays either a [NoConnectionIndicator] or

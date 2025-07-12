@@ -1,4 +1,6 @@
-import 'package:datarunmobile/data/preference.provider.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/auth/auth_manager.dart';
+import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/settings/presentation/settings_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,8 @@ class UserSettingsTabView extends StackedHookView<SettingsViewmodel> {
   Widget builder(BuildContext context, SettingsViewmodel model) {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final currentAuthUser = model.user;
+        final currentAuthUser = appLocator<AuthManager>().currentUser;
+        // final currentAuthUser = model.user;
         return ListView(
           padding: const EdgeInsets.all(16.0),
           children: [
@@ -92,7 +95,7 @@ class UserSettingsTabView extends StackedHookView<SettingsViewmodel> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 onTap: () async {
-                  await model.logout();
+                  model.logout();
                 },
               ),
             ),

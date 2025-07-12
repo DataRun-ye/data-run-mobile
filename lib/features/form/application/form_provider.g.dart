@@ -586,7 +586,7 @@ class _OptionSetProviderElement
 }
 
 String _$submissionVersionFormTemplateHash() =>
-    r'68e37546c4ee510171ff5bf0efd6d14dde0e990a';
+    r'ead488e4e5ccb7f0cf69a308dff5ce350b3038ac';
 
 /// form id could be on the format of formId-version or formId
 /// look for the latest version of the form template or the form template

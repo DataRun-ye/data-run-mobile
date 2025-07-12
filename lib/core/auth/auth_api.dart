@@ -1,5 +1,6 @@
 import 'package:d_sdk/auth/auth_response.dart';
 import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/converters/custom_serializer.dart';
 import 'package:d_sdk/di/app_environment.dart';
@@ -25,7 +26,8 @@ class AuthApi {
           ));
 
       return AuthResponse.fromJson(response.data);
-    } catch (e) {
+    } catch (e, s) {
+      logError('Error during login', source: e, stackTrace: s);
       throw AuthException('Error during login',
           cause: e, errorCode: DRunErrorCode.noUserDetailsFetchedFromServer);
     }
@@ -55,7 +57,8 @@ class AuthApi {
         // 'authorities': authorities,
         // 'authorities': authorities,
       }, serializer: CustomSerializer());
-    } catch (e) {
+    } catch (e, s) {
+      logError('Error while fetching user details', source: e, stackTrace: s);
       throw AuthException('Error while fetching user details', cause: e);
     }
   }

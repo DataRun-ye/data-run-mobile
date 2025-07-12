@@ -26,7 +26,7 @@ class AppDrawerViewModel extends BaseViewModel {
   @override
   void dispose() {
     super.dispose();
-    logDebug('dispose()', source: this);
+    logDebug(' -> dispose()', source: this);
 
     networkUtil.cancelPing();
   }

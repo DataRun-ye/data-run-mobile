@@ -239,9 +239,9 @@ class S {
     );
   }
 
-  /// `Login`
+  /// `Datarun Login`
   String get login {
-    return Intl.message('Login', name: 'login', desc: '', args: []);
+    return Intl.message('Datarun Login', name: 'login', desc: '', args: []);
   }
 
   /// `Configuration Ready`
@@ -2520,6 +2520,41 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Show less`
+  String get showLess {
+    return Intl.message('Show less', name: 'showLess', desc: '', args: []);
+  }
+
+  /// `Show more`
+  String get showMore {
+    return Intl.message('Show more', name: 'showMore', desc: '', args: []);
+  }
+
+  /// `Sync Progress Dashboard`
+  String get syncProgressDashboard {
+    return Intl.message(
+      'Sync Progress Dashboard',
+      name: 'syncProgressDashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checking session...`
+  String get checkingSession {
+    return Intl.message(
+      'Checking session...',
+      name: 'checkingSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DATARUN`
+  String get datarun {
+    return Intl.message('DATARUN', name: 'datarun', desc: '', args: []);
   }
 }
 

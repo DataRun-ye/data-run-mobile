@@ -2,11 +2,14 @@ import 'dart:convert';
 
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class SyncSummaryCard extends HookConsumerWidget {
   const SyncSummaryCard({this.entityFilter, Key? key}) : super(key: key);
@@ -17,6 +20,12 @@ class SyncSummaryCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(syncSummariesProvider);
+    final syncMetadataRepo = appLocator<SyncMetadataRepository>();
+    final lastSyncTime = syncMetadataRepo.lastSyncTime;
+    String lastSynced = lastSyncTime != null
+        ? timeago.format(lastSyncTime.toLocal(),
+            locale: Intl.getCurrentLocale())
+        : S.of(context).noSyncYet;
 
     return async.when(
       loading: () => Card(
@@ -58,10 +67,11 @@ class SyncSummaryCard extends HookConsumerWidget {
                   : Icons.check_circle_outline,
               color: s.failureCount > 0 ? Colors.red : Colors.green,
             ),
-            title: Text(
-              '${S.of(context).lastSync}: ${DateFormat.yMMMd().add_jm().format(s.lastSync)}',
-            ),
+            // title: Text(
+            //   '${S.of(context).lastSync}: ${lastSynced}',
+            // ),
             subtitle: Text(
+              '${S.of(context).lastSync}: ${lastSynced}\n'
               '${S.of(context).successCount}: ${s.successCount}\n'
               '${S.of(context).failureCount}: ${s.failureCount}',
             ),

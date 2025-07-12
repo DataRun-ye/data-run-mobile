@@ -28,7 +28,7 @@ export 'form_submissions_status.provider.dart';
 export 'metadata_submission_update.provider.dart';
 export 'ou_picker_data_source.provider.dart';
 export 'password_visibility.provider.dart';
-export 'preference.provider.dart';
+export '../core/user_session/preference.provider.dart';
 export 'project_activities.provider.dart';
 export 'submission_count.provider.dart';
 export 'submission_list.provider.dart';

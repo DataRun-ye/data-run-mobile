@@ -1,3 +1,4 @@
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/datasource/datasource.dart';
 import 'package:datarunmobile/core/sync/sync_progress_notifier.dart';
 import 'package:datarunmobile/app/di/injection.dart';
@@ -24,8 +25,10 @@ class SyncExecutor {
       operation: () async {
         for (final source in _dataSources.values) {
           await _progressNotifier.trackResource(source.resourceName, () {
+          logDebug('fetching: ${source.resourceName}...');
             return source.syncWithRemote();
           });
+          logDebug('✔ fetched: ${source.resourceName}');
         }
       },
     );

@@ -5,11 +5,11 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:d_sdk/user_session/session_context.dart' as _i12;
+import 'package:d_sdk/user_session/session_context.dart' as _i13;
 import 'package:datarunmobile/features/activity/presentation/activity_page_old.dart'
     as _i8;
 import 'package:datarunmobile/features/assignment/presentation/assignment_page_new.dart'
-    as _i9;
+    as _i10;
 import 'package:datarunmobile/features/home/presentation/home_screen_old.widget.dart'
     as _i2;
 import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart'
@@ -18,16 +18,18 @@ import 'package:datarunmobile/features/home/presentation/settings_view.dart'
     as _i7;
 import 'package:datarunmobile/features/login/presentation/login_view.dart'
     as _i5;
-import 'package:datarunmobile/features/startup/presentation/startup_view.dart'
+import 'package:datarunmobile/features/startup/presentation/splash_view.dart'
     as _i6;
+import 'package:datarunmobile/features/sync/presentation/sync_resources_view.dart'
+    as _i9;
 import 'package:datarunmobile/features/sync/presentation/sync_screen_old.widget.dart'
     as _i4;
 import 'package:datarunmobile/features/sync/presentation/sync_with_server_view.dart'
-    as _i10;
-import 'package:flutter/material.dart' as _i11;
+    as _i11;
+import 'package:flutter/material.dart' as _i12;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i13;
+import 'package:stacked_services/stacked_services.dart' as _i14;
 
 class Routes {
   static const homeScreen = '/home-screen';
@@ -38,11 +40,13 @@ class Routes {
 
   static const loginView = '/login-view';
 
-  static const startupView = '/startup-view';
+  static const splashView = '/splash-view';
 
   static const settingsView = '/settings-view';
 
   static const activityPage = '/activity-page';
+
+  static const syncResourcesView = '/sync-resources-view';
 
   static const assignmentPage = '/assignment-page';
 
@@ -53,9 +57,10 @@ class Routes {
     homeWrapperPage,
     syncScreen,
     loginView,
-    startupView,
+    splashView,
     settingsView,
     activityPage,
+    syncResourcesView,
     assignmentPage,
     syncProgressView,
   };
@@ -80,8 +85,8 @@ class StackedRouter extends _i1.RouterBase {
       page: _i5.LoginView,
     ),
     _i1.RouteDef(
-      Routes.startupView,
-      page: _i6.StartupView,
+      Routes.splashView,
+      page: _i6.SplashView,
     ),
     _i1.RouteDef(
       Routes.settingsView,
@@ -92,12 +97,16 @@ class StackedRouter extends _i1.RouterBase {
       page: _i8.ActivityPage,
     ),
     _i1.RouteDef(
+      Routes.syncResourcesView,
+      page: _i9.SyncResourcesView,
+    ),
+    _i1.RouteDef(
       Routes.assignmentPage,
-      page: _i9.AssignmentPage,
+      page: _i10.AssignmentPage,
     ),
     _i1.RouteDef(
       Routes.syncProgressView,
-      page: _i10.SyncProgressView,
+      page: _i11.SyncProgressView,
     ),
   ];
 
@@ -106,7 +115,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<HomeScreenArguments>(
         orElse: () => const HomeScreenArguments(),
       );
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i2.HomeScreen(key: args.key, refresh: args.refresh),
         settings: data,
@@ -116,14 +125,14 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<HomeWrapperPageArguments>(
         orElse: () => const HomeWrapperPageArguments(),
       );
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i3.HomeWrapperPage(key: args.key, langKey: args.langKey),
         settings: data,
       );
     },
     _i4.SyncScreen: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.SyncScreen(),
         settings: data,
       );
@@ -132,43 +141,49 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<LoginViewArguments>(
         orElse: () => const LoginViewArguments(),
       );
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i5.LoginView(key: args.key, onResult: args.onResult),
         settings: data,
       );
     },
-    _i6.StartupView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i6.StartupView(),
+    _i6.SplashView: (data) {
+      return _i12.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i6.SplashView(),
         settings: data,
       );
     },
     _i7.SettingsView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => _i7.SettingsView(),
         settings: data,
       );
     },
     _i8.ActivityPage: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.ActivityPage(),
         settings: data,
       );
     },
-    _i9.AssignmentPage: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i9.AssignmentPage(),
+    _i9.SyncResourcesView: (data) {
+      return _i12.MaterialPageRoute<dynamic>(
+        builder: (context) => _i9.SyncResourcesView(),
         settings: data,
       );
     },
-    _i10.SyncProgressView: (data) {
+    _i10.AssignmentPage: (data) {
+      return _i12.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i10.AssignmentPage(),
+        settings: data,
+      );
+    },
+    _i11.SyncProgressView: (data) {
       final args = data.getArgs<SyncProgressViewArguments>(
         orElse: () => const SyncProgressViewArguments(),
       );
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i10.SyncProgressView(key: args.key, onResult: args.onResult),
+            _i11.SyncProgressView(key: args.key, onResult: args.onResult),
         settings: data,
       );
     },
@@ -187,7 +202,7 @@ class HomeScreenArguments {
     this.refresh = false,
   });
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final bool refresh;
 
@@ -214,7 +229,7 @@ class HomeWrapperPageArguments {
     this.langKey = 'ar',
   });
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final String langKey;
 
@@ -241,11 +256,11 @@ class LoginViewArguments {
     this.onResult,
   });
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final dynamic Function(
     bool,
-    _i12.SessionContext?,
+    _i13.SessionContext?,
   )? onResult;
 
   @override
@@ -271,7 +286,7 @@ class SyncProgressViewArguments {
     this.onResult,
   });
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final dynamic Function(bool)? onResult;
 
@@ -292,9 +307,9 @@ class SyncProgressViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i13.NavigationService {
+extension NavigatorStateExtension on _i14.NavigationService {
   Future<dynamic> navigateToHomeScreen({
-    _i11.Key? key,
+    _i12.Key? key,
     bool refresh = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -311,7 +326,7 @@ extension NavigatorStateExtension on _i13.NavigationService {
   }
 
   Future<dynamic> navigateToHomeWrapperPage({
-    _i11.Key? key,
+    _i12.Key? key,
     String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
@@ -342,10 +357,10 @@ extension NavigatorStateExtension on _i13.NavigationService {
   }
 
   Future<dynamic> navigateToLoginView({
-    _i11.Key? key,
+    _i12.Key? key,
     dynamic Function(
       bool,
-      _i12.SessionContext?,
+      _i13.SessionContext?,
     )? onResult,
     int? routerId,
     bool preventDuplicates = true,
@@ -361,14 +376,14 @@ extension NavigatorStateExtension on _i13.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToStartupView([
+  Future<dynamic> navigateToSplashView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.startupView,
+    return navigateTo<dynamic>(Routes.splashView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -403,6 +418,20 @@ extension NavigatorStateExtension on _i13.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToSyncResourcesView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.syncResourcesView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> navigateToAssignmentPage([
     int? routerId,
     bool preventDuplicates = true,
@@ -418,7 +447,7 @@ extension NavigatorStateExtension on _i13.NavigationService {
   }
 
   Future<dynamic> navigateToSyncProgressView({
-    _i11.Key? key,
+    _i12.Key? key,
     dynamic Function(bool)? onResult,
     int? routerId,
     bool preventDuplicates = true,
@@ -435,7 +464,7 @@ extension NavigatorStateExtension on _i13.NavigationService {
   }
 
   Future<dynamic> replaceWithHomeScreen({
-    _i11.Key? key,
+    _i12.Key? key,
     bool refresh = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -452,7 +481,7 @@ extension NavigatorStateExtension on _i13.NavigationService {
   }
 
   Future<dynamic> replaceWithHomeWrapperPage({
-    _i11.Key? key,
+    _i12.Key? key,
     String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
@@ -483,10 +512,10 @@ extension NavigatorStateExtension on _i13.NavigationService {
   }
 
   Future<dynamic> replaceWithLoginView({
-    _i11.Key? key,
+    _i12.Key? key,
     dynamic Function(
       bool,
-      _i12.SessionContext?,
+      _i13.SessionContext?,
     )? onResult,
     int? routerId,
     bool preventDuplicates = true,
@@ -502,14 +531,14 @@ extension NavigatorStateExtension on _i13.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithStartupView([
+  Future<dynamic> replaceWithSplashView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.startupView,
+    return replaceWith<dynamic>(Routes.splashView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -544,6 +573,20 @@ extension NavigatorStateExtension on _i13.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> replaceWithSyncResourcesView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.syncResourcesView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithAssignmentPage([
     int? routerId,
     bool preventDuplicates = true,
@@ -559,7 +602,7 @@ extension NavigatorStateExtension on _i13.NavigationService {
   }
 
   Future<dynamic> replaceWithSyncProgressView({
-    _i11.Key? key,
+    _i12.Key? key,
     dynamic Function(bool)? onResult,
     int? routerId,
     bool preventDuplicates = true,

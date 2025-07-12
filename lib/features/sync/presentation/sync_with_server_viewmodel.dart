@@ -1,9 +1,10 @@
+import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/sync/model/sync_state.dart';
 import 'package:datarunmobile/core/sync/sync_coordinator.dart';
 import 'package:datarunmobile/core/sync/sync_progress_notifier.dart';
-import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,7 +14,7 @@ class SyncProgressViewModel extends StreamViewModel<SyncState> {
 
   final SyncCoordinator _coordinator = appLocator<SyncCoordinator>();
   final SyncProgressNotifier _progressNotifier =
-      appLocator<SyncProgressNotifier>();
+  appLocator<SyncProgressNotifier>();
   final NavigationService _navigationService = appLocator<NavigationService>();
   final Function(bool finished)? onResult;
 
@@ -22,10 +23,11 @@ class SyncProgressViewModel extends StreamViewModel<SyncState> {
   // @override
   // void onData(SyncState? data) {
   //   super.onData(data);
-  //   // if (data?.status == SyncStatus.complete) {
-  //   //   appLocator<AppRouter>().replace(HomeRoute());
-  //   // }
+  //   if (data?.status == SyncStatus.SYNCED) {
+  //     navigateToHomeScreen();
+  //   }
   // }
+
   Future<void> navigateToHomeScreen() async {
     _navigationService.replaceWithHomeWrapperPage();
     final langKey = appLocator<User>().langKey ?? 'ar';
@@ -34,23 +36,23 @@ class SyncProgressViewModel extends StreamViewModel<SyncState> {
 
   @override
   Stream<SyncState> get stream => Rx.combineLatest2(
-        _progressNotifier.progress,
-        _progressNotifier.resourceUpdates,
+    _progressNotifier.progress,
+    _progressNotifier.resourceUpdates,
         (progress, resource) => SyncState(
-          status: progress.status,
-          percentage: progress.percentage,
-          totalResources: progress.totalResources,
-          currentResource: resource,
-          resourceHistory: _progressNotifier.resourceHistory,
-          error: progress.error,
-        ),
-      );
+      status: progress.status,
+      percentage: progress.percentage,
+      totalResources: progress.totalResources,
+      currentResource: resource,
+      resourceHistory: _progressNotifier.resourceHistory,
+      error: progress.error,
+    ),
+  );
 
   Future<void> triggerSync() async {
     try {
       _progressNotifier.reset();
+      DSdk.db.syncSummariesDao.clearAll();
       await _coordinator.handleSyncLifecycle();
-
     } catch (e) {
       // state = state.copyWith(
       //   status: SyncStatus.failed,

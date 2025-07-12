@@ -3,11 +3,12 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
-import 'package:datarunmobile/generated/l10n.dart';
+import 'package:datarunmobile/features/custom/expandable_text.dart';
+import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/features/form/application/form_template_model.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -103,18 +104,19 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.separated(
                   // physics: BouncingScrollPhysics(),
-                  // shrinkWrap: true,
+                  shrinkWrap: true,
                   separatorBuilder: (_, __) => const Divider(
                     height: 4,
-                    thickness: 1,
+                    thickness: 0.5,
                     indent: 16,
                     endIndent: 16,
                   ),
                   itemCount: availableLocally.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final form = availableLocally[index].first;
                     return _FormListItem(
                       index: index,
-                      permission: availableLocally[index].first,
+                      permission: form,
                       onTap: (FormTemplateModel formTemplate) =>
                           createAndPopupWithResult(context, formTemplate),
                     );
@@ -139,37 +141,37 @@ class _FormListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formTemplateAsync =
-        ref.watch(latestFormTemplateProvider(formId: permission.form));
+    final formTemplateAsync = ref
+        .watch(submissionVersionFormTemplateProvider(formId: permission.form));
 
     return AsyncValueWidget(
       value: formTemplateAsync,
       valueBuilder: (formTemplate) {
         final cs = Theme.of(context).colorScheme;
         return ListTile(
-          tileColor: cs.surfaceContainerHigh,
+          // style: ListTileStyle.drawer,
+          tileColor: cs.surfaceContainerHigh.withValues(alpha: .7),
           iconColor: cs.primary,
           textColor: cs.onSurfaceVariant,
           titleTextStyle: Theme.of(context).textTheme.titleMedium,
           subtitleTextStyle: Theme.of(context).textTheme.bodySmall,
-          // isThreeLine: formTemplate.description != null,
+          isThreeLine: formTemplate.description != null,
           leading: const Icon(Icons.description),
           title: Text(
-            '${index + 1}. ${getItemLocalString(formTemplate.template.label, defaultString: formTemplate.template.name)}',
-            softWrap: true,
+            '${index + 1}. ${getItemLocalString(formTemplate.label, defaultString: formTemplate.name)}',
+            // softWrap: true,
           ),
-          subtitle: formTemplate.template.description != null
-              ? Text(
-                  formTemplate.template.description!,
-                  softWrap: true,
+          subtitle: formTemplate.description != null
+              ? ExpandableText(
+                  text: formTemplate.description!,
                 )
               : null,
-          onTap: () => onTap(formTemplate.template),
+          onTap: () => onTap(formTemplate),
           trailing: const Icon(Icons.chevron_right),
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+              const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           hoverColor: cs.onSurface.withValues(alpha: 0.1),
         );

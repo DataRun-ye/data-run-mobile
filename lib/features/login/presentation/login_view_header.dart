@@ -9,16 +9,17 @@ class LoginViewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Container(
-      padding: const EdgeInsets.only(top: 40, bottom: 20),
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                Theme.of(context).dialogBackgroundColor,
-                Theme.of(context).dialogBackgroundColor
+                cs.onPrimaryContainer,
+                cs.onPrimaryContainer,
               ]),
           boxShadow: const [
             BoxShadow(
@@ -28,26 +29,26 @@ class LoginViewHeader extends StatelessWidget {
                 color: Colors.black)
           ],
           borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40))),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30))),
       child: Column(
         children: [
           Image.asset(
             'assets/launcher_icon/header_logo_white.png',
-            height: 100,
-            width: 100,
+            height: 80,
+            width: 80,
             // fit: BoxFit.contain,
           ),
-          verticalSpaceSmall,
+          // verticalSpaceSmall,
           // if (AppEnvironment.isDev) const Text(AppEnvironment.apiBaseUrl),
           // Spacer between logo and text
           Text(
             S.of(context).nmcpYemen,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
               color:
-                  Theme.of(context).primaryColorDark, // Match with logo color
+                  cs.primary.withValues(alpha: 0.9), // Match with logo color
             ),
           ),
           const SizedBox(height: 16),

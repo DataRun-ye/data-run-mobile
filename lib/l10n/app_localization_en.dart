@@ -80,7 +80,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get syncingConfiguration => 'Syncing Configuration';
 
   @override
-  String get login => 'Login';
+  String get login => 'Datarun Login';
 
   @override
   String get configurationReady => 'Configuration Ready';
@@ -1028,4 +1028,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get currentOperations => 'Current Operations:';
+
+  @override
+  String get showLess => 'Show less';
+
+  @override
+  String get showMore => 'Show more';
+
+  @override
+  String get syncProgressDashboard => 'Sync Progress Dashboard';
+
+  @override
+  String get checkingSession => 'Checking session...';
+
+  @override
+  String get datarun => 'DATARUN';
 }

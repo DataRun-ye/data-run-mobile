@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:d_sdk/core/exception/database_exceptions.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/app_database.dart';
@@ -19,8 +21,7 @@ class SessionScopeInitializer {
   Future<dynamic> initAuthScope() async {
     WidgetsFlutterBinding.ensureInitialized();
     appLocator.enableRegisteringMultipleInstancesOfOneType();
-    return initActiveSessionScope(appLocator,
-        dispose: () => _sessionRepository.clearActiveSession());
+    return initActiveSessionScope(appLocator);
   }
 
   /// registration of user detail should be done in db scope

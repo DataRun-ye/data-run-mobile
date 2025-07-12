@@ -215,7 +215,7 @@ abstract class AppLocalizations {
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
+  /// **'Datarun Login'**
   String get login;
 
   /// No description provided for @configurationReady.
@@ -1909,6 +1909,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Current Operations:'**
   String get currentOperations;
+
+  /// No description provided for @showLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show less'**
+  String get showLess;
+
+  /// No description provided for @showMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get showMore;
+
+  /// No description provided for @syncProgressDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Progress Dashboard'**
+  String get syncProgressDashboard;
+
+  /// No description provided for @checkingSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking session...'**
+  String get checkingSession;
+
+  /// No description provided for @datarun.
+  ///
+  /// In en, this message translates to:
+  /// **'DATARUN'**
+  String get datarun;
 }
 
 class _AppLocalizationsDelegate

@@ -22,7 +22,7 @@ class SyncProgressView extends StackedView<SyncProgressViewModel> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildGlobalProgress(viewModel.state),
+            // _buildGlobalProgress(viewModel.state),
             const SizedBox(height: 16),
             ElevatedButton.icon(
                 onPressed: () => viewModel.navigateToHomeScreen(),
@@ -55,8 +55,8 @@ class SyncProgressView extends StackedView<SyncProgressViewModel> {
         child: LinearProgressIndicator(
           value: state?.percentage ?? 0 / 100,
           // Defaults to 0.5.
-          valueColor: AlwaysStoppedAnimation(
-              _getStatusColor(state?.status ?? SyncStatus.idle)),
+          // valueColor: AlwaysStoppedAnimation(
+          //     _getStatusColor(state?.status ?? SyncStatus.idle)),
           // Defaults to the current Theme's accentColor.
           backgroundColor: Colors.grey[200],
           // Defaults to the current Theme's backgroundColor.

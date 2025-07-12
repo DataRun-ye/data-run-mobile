@@ -218,6 +218,7 @@ Future<void> showFormSelectionBottomSheet(BuildContext context,
   try {
     await showModalBottomSheet(
       isScrollControlled: true,
+      // enableDrag: false,
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

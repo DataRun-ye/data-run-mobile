@@ -131,6 +131,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkFieldsLater": MessageLookupByLibrary.simpleMessage(
       "Check Fields later",
     ),
+    "checkingSession": MessageLookupByLibrary.simpleMessage(
+      "Checking session...",
+    ),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
     "clearAll": MessageLookupByLibrary.simpleMessage("Clear All"),
     "clearFilters": MessageLookupByLibrary.simpleMessage("Clear Filters"),
@@ -181,6 +184,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "databaseQueryFailed": MessageLookupByLibrary.simpleMessage(
       "Error occurred while querying the database.",
     ),
+    "datarun": MessageLookupByLibrary.simpleMessage("DATARUN"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("DOB"),
     "day": MessageLookupByLibrary.simpleMessage("Day"),
     "days": MessageLookupByLibrary.simpleMessage("Days"),
@@ -297,7 +301,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "level": MessageLookupByLibrary.simpleMessage("Level"),
     "loadMore": MessageLookupByLibrary.simpleMessage("Load More"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
-    "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "login": MessageLookupByLibrary.simpleMessage("Datarun Login"),
     "loginUsername": MessageLookupByLibrary.simpleMessage("Login Username"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "logoutNote": MessageLookupByLibrary.simpleMessage(
@@ -469,6 +473,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "serverUrl": MessageLookupByLibrary.simpleMessage("Server URL"),
     "sessionExpired": m15,
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+    "showLess": MessageLookupByLibrary.simpleMessage("Show less"),
+    "showMore": MessageLookupByLibrary.simpleMessage("Show more"),
     "showPassword": MessageLookupByLibrary.simpleMessage("Show Password"),
     "startDate": MessageLookupByLibrary.simpleMessage("Start Date"),
     "startingSync": MessageLookupByLibrary.simpleMessage("Starting sync..."),
@@ -481,6 +487,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "syncFormData": MessageLookupByLibrary.simpleMessage("Sync Form Data"),
     "syncInterval": MessageLookupByLibrary.simpleMessage("Sync Interval"),
     "syncNow": MessageLookupByLibrary.simpleMessage("Sync Now"),
+    "syncProgressDashboard": MessageLookupByLibrary.simpleMessage(
+      "Sync Progress Dashboard",
+    ),
     "syncSettings": MessageLookupByLibrary.simpleMessage("Sync Settings"),
     "syncSubmissions": m17,
     "syncSummaryLoadError": MessageLookupByLibrary.simpleMessage(

@@ -19,6 +19,10 @@ import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
 import 'package:datarunmobile/core/auth/sdk_auth_manager.dart' as _i157;
 import 'package:datarunmobile/core/form/data/metadata/team_configuration.dart'
     as _i54;
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
+    as _i595;
+import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
+    as _i1066;
 import 'package:datarunmobile/core/http/default_http_adapter.dart' as _i832;
 import 'package:datarunmobile/core/network/connectivy_service.dart' as _i761;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
@@ -46,7 +50,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 // initializes the registration of main-scope dependencies inside of GetIt
-Future<_i174.GetIt> init(
+Future<_i174.GetIt> setupGlobalDependencies(
   _i174.GetIt getIt, {
   String? environment,
   _i526.EnvironmentFilter? environmentFilter,
@@ -88,6 +92,7 @@ Future<_i174.GetIt> init(
     () => sdkModule.shouldClearBeforeSave,
     instanceName: 'shouldClearBeforeSave',
   );
+  gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
   gh.factory<_i991.FormTemplateService>(() => _i991.FormTemplateService(
       optionSetService: gh<_i158.OptionSetService>()));
   gh.factoryParam<_i756.FormInstanceServiceImpl, String, dynamic>((

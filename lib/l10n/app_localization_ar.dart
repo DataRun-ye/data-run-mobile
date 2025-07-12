@@ -83,7 +83,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get syncingConfiguration => 'إعدادات المزامنة';
 
   @override
-  String get login => 'تسجيل الدخول';
+  String get login => 'تسجيل دخول النظام';
 
   @override
   String get configurationReady => 'اكتملت تهيئة التطبيق';
@@ -107,7 +107,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get viewList => 'عرض القائمة';
 
   @override
-  String get addNew => 'إضافة جديد';
+  String get addNew => 'جديد';
 
   @override
   String form(num count) {
@@ -441,10 +441,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get failed => 'فشل';
 
   @override
-  String get lastConfigurationSyncTime => 'آخر تحديث';
+  String get lastConfigurationSyncTime => 'آخر مزامنة';
 
   @override
-  String get lastSyncStatus => 'حالة آخر تحديث';
+  String get lastSyncStatus => 'حالة آخر عملية مزامنة';
 
   @override
   String get about => 'عنا';
@@ -783,13 +783,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loading => 'تحميل ...';
 
   @override
-  String get loadMore => 'Load More';
+  String get loadMore => 'تحميل المزيد';
 
   @override
-  String get noMoreItems => 'No more items.';
+  String get noMoreItems => 'لا توجد عناصر أخرى.';
 
   @override
-  String get assignmentList => 'Assignment List';
+  String get assignmentList => 'قائمة المهام';
 
   @override
   String get dateOfBirth => 'تاريخ الميلاد';
@@ -801,106 +801,106 @@ class AppLocalizationsAr extends AppLocalizations {
   String get days => 'أيام';
 
   @override
-  String get textHint => 'Enter a text';
+  String get textHint => 'أدخل نصًا';
 
   @override
-  String get longTextHint => 'Enter a text';
+  String get longTextHint => 'أدخل نصًا لا يتجاوز 500 حرف';
 
   @override
-  String get oneLetterFieldHint => 'Enter a Letter';
+  String get oneLetterFieldHint => 'أدخل حرفًا واحدًا';
 
   @override
-  String get numberFieldHint => 'Enter a number';
+  String get numberFieldHint => 'أدخل رقمًا';
 
   @override
-  String get unitIntervalFieldHint => 'Enter unit Interval';
+  String get unitIntervalFieldHint => 'أدخل قيمة بين 0 و1';
 
   @override
-  String get percentageFieldHint => 'Enter a Percentage';
+  String get percentageFieldHint => 'أدخل نسبة مئوية';
 
   @override
-  String get integerFieldHint => 'Enter an integer';
+  String get integerFieldHint => 'أدخل عددًا صحيحًا';
 
   @override
-  String get positiveIntegerFieldHint => 'Enter a positive integer';
+  String get positiveIntegerFieldHint => 'أدخل عددًا صحيحًا موجبًا';
 
   @override
-  String get negativeIntegerFieldHint => 'Enter a negative integer';
+  String get negativeIntegerFieldHint => 'أدخل عددًا صحيحًا سالبًا';
 
   @override
-  String get integerOrZeroFieldHint => 'Enter an integer or zero';
+  String get integerOrZeroFieldHint => 'أدخل عددًا صحيحًا أو صفرًا';
 
   @override
-  String get phoneNumberFieldHint => 'Enter a phone number';
+  String get phoneNumberFieldHint => 'أدخل رقم هاتف';
 
   @override
-  String get emailFieldHint => 'Enter An Email';
+  String get emailFieldHint => 'أدخل بريدًا إلكترونيًا';
 
   @override
-  String get urlFieldHint => 'Enter a URL';
+  String get urlFieldHint => 'أدخل رابط URL';
 
   @override
-  String get fileResourceFieldHint => 'Select A file';
+  String get fileResourceFieldHint => 'اختر ملفًا';
 
   @override
-  String get usernameFieldHint => 'Select a Username';
+  String get usernameFieldHint => 'أدخل اسم مستخدم';
 
   @override
-  String get ageFieldHint => 'Enter an Age';
+  String get ageFieldHint => 'أدخل العمر';
 
   @override
-  String get booleanFieldHint => 'Enter a Boolean';
+  String get booleanFieldHint => 'أدخل قيمة منطقية';
 
   @override
-  String get trueOnlyFieldHint => 'fieldHintText';
+  String get trueOnlyFieldHint => 'قيمة صحيحة فقط';
 
   @override
-  String get orgunitFieldHint => 'Select an OrgUnit';
+  String get orgunitFieldHint => 'اختر وحدة تنظيمية';
 
   @override
-  String get dataFieldHint => 'Select a date';
+  String get dataFieldHint => 'اختر تاريخًا';
 
   @override
-  String get dataTimeFieldHint => 'Enter a Data time';
+  String get dataTimeFieldHint => 'أدخل تاريخًا ووقتًا';
 
   @override
-  String get referenceFieldHint => 'Select a reference';
+  String get referenceFieldHint => 'اختر مرجعًا';
 
   @override
-  String get timeFieldHint => 'Select a Time';
+  String get timeFieldHint => 'اختر وقتًا';
 
   @override
-  String get teamFieldHint => 'Select a Team';
+  String get teamFieldHint => 'اختر فريقًا';
 
   @override
-  String get fullNameFieldHint => 'Enter a full name';
+  String get fullNameFieldHint => 'أدخل الاسم الكامل';
 
   @override
-  String get selectMultiFieldHint => 'fieldHintText';
+  String get selectMultiFieldHint => 'اختر خيارات متعددة';
 
   @override
-  String get selectOneFieldHint => 'Select One';
+  String get selectOneFieldHint => 'اختر خيارًا واحدًا';
 
   @override
-  String get yesOrNoFieldHint => 'Select Yes or No';
+  String get yesOrNoFieldHint => 'اختر نعم أو لا';
 
   @override
-  String get scanCodeFieldHint => 'Scan Code';
+  String get scanCodeFieldHint => 'امسح الرمز';
 
   @override
-  String get coordinatesFieldHint => 'Select Coordinates';
+  String get coordinatesFieldHint => 'اختر إحداثيات';
 
   @override
-  String get imageFieldHint => 'Select an Image';
+  String get imageFieldHint => 'اختر صورة';
 
   @override
-  String get progressFieldHint => 'fieldHintText';
+  String get progressFieldHint => 'أدخل تقدمًا';
 
   @override
-  String get unknownValueType => 'Unknown Value Type';
+  String get unknownValueType => 'نوع غير معروف للقيمة';
 
   @override
-  String get unsupportedValueType => 'Unsupported value type';
+  String get unsupportedValueType => 'نوع غير مدعوم للقيمة';
 
   @override
   String noActiveDatabaseFound(Object error) {
@@ -958,43 +958,43 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get noActivitiesYet => 'No activities yet';
+  String get noActivitiesYet => 'لا توجد أنشطة حتى الآن';
 
   @override
   String get materialVersion => 'Material Version';
 
   @override
-  String get syncSummaryLoadError => 'Sync Summary Load Error';
+  String get syncSummaryLoadError => 'خطأ في تحميل ملخص المزامنة';
 
   @override
-  String get noSyncsYet => 'No Syncs Yet';
+  String get noSyncsYet => 'لم تتم أي مزامنة بعد';
 
   @override
-  String get performFirstSync => 'Perform First Sync';
+  String get performFirstSync => 'قم بالمزامنة الأولى';
 
   @override
-  String get successCount => 'Success Count';
+  String get successCount => 'عدد النجاحات';
 
   @override
-  String get failureCount => 'Failure Count';
+  String get failureCount => 'عدد الإخفاقات';
 
   @override
-  String get close => 'Close';
+  String get close => 'إغلاق';
 
   @override
-  String get copyAll => 'Copy All';
+  String get copyAll => 'نسخ الكل';
 
   @override
-  String get errorSummary => 'Error Summary';
+  String get errorSummary => 'ملخص الأخطاء';
 
   @override
-  String get syncErrors => 'Sync Errors';
+  String get syncErrors => 'أخطاء المزامنة';
 
   @override
-  String get viewErrors => 'View Errors';
+  String get viewErrors => 'عرض الأخطاء';
 
   @override
-  String get syncSummaryTitle => 'Sync Summary Title';
+  String get syncSummaryTitle => 'ملخص المزامنة';
 
   @override
   String get projects => 'المشاريع';
@@ -1028,4 +1028,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get currentOperations => 'العملية الحالية:';
+
+  @override
+  String get showLess => 'عرض أقل';
+
+  @override
+  String get showMore => 'عرض المزيد';
+
+  @override
+  String get syncProgressDashboard => 'Sync Progress Dashboard';
+
+  @override
+  String get checkingSession => 'Checking session...';
+
+  @override
+  String get datarun => 'DATARUN';
 }

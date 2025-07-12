@@ -19,7 +19,7 @@
   "showPassword": "Show Password",
   "hidePassword": "Hide Password",
   "syncingConfiguration": "Syncing Configuration",
-  "login": "Login",
+  "login": "Datarun Login",
   "configurationReady": "Configuration Ready",
   "syncingData": "Syncing Data",
   "syncingEvents": "Syncing Events",
@@ -376,5 +376,10 @@
   "dataElements": "Data Elements",
   "orgUnits": "Organisation Units",
   "downloaded": "Downloaded",
-  "currentOperations": "Current Operations:"
+  "currentOperations": "Current Operations:",
+  "showLess": "Show less",
+  "showMore": "Show more",
+  "syncProgressDashboard": "Sync Progress Dashboard",
+  "checkingSession": "Checking session...",
+  "datarun": "DATARUN"
 }

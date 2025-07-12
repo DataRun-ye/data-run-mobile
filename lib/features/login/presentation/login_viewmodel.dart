@@ -1,8 +1,8 @@
-import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
-import 'package:datarunmobile/core/auth/auth_manager.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
-import 'package:flutter/foundation.dart';
+import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
+import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -36,7 +36,8 @@ class LoginViewModel extends BaseViewModel {
       // await appLocator<SessionScopeInitializer>().initAuthScope();
 
       // await _navigationService.replaceWithSyncScreen();
-      _navigationService.replaceWithSyncProgressView();
+      // _navigationService.replaceWithSyncProgressView();
+      _navigationService.replaceWithSyncResourcesView();
       // await _router.replace(SyncProgressRoute());
       // _router.replace(HomeRoute());
 
@@ -66,7 +67,7 @@ class LoginViewModel extends BaseViewModel {
       form.markAsEnabled();
       usernameControl.markAsEnabled();
       passwordControl.markAsEnabled();
-      debugPrintStack(stackTrace: s);
+      logError('couldn\'t login', stackTrace: s);
       DExceptionReporter.instance.report(e, showToUser: true);
       rethrow;
     }

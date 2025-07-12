@@ -1,3 +1,5 @@
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
@@ -38,6 +40,7 @@ class QTextTypeField<T> extends HookConsumerWidget {
           errorMaxLines: 2,
           enabled: control.enabled,
           labelText: element.label,
+          hintText: appLocator<HintProvider>().provideHint(element.type)
         ));
   }
 }

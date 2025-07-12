@@ -93,7 +93,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
                 ? () async {
                     await showFormSelectionBottomSheet(
                         context, assignment, activityModel);
-                    ref.invalidate(assignmentsProvider);
+                    // ref.invalidate(assignmentsProvider);
                   }
                 : null,
             icon: const Icon(Icons.document_scanner),

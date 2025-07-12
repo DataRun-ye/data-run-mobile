@@ -11,7 +11,7 @@ import 'package:stacked/stacked_annotations.dart';
 final appLocator = StackedLocator.instance.locator;
 
 @InjectableInit(
-  initializerName: 'init', // default
+  initializerName: 'setupGlobalDependencies', // default
   preferRelativeImports: false, // default
   asExtension: false, // default
 )
@@ -20,9 +20,13 @@ Future<GetIt> configureDependencies() async {
   await setupLocator();
   setupDialogUi();
   setupBottomSheetUi();
-  //
+
   // app
-  final getIt = await init(appLocator);
+  // Sets up global dependencies that persist throughout the app's lifecycle.
+  // Register AuthService, and other global services  e.g., a global API client
+  // that doesn't require user-specific tokens initially.
+  final getIt = await setupGlobalDependencies(appLocator);
+  //
 
   // sdk
   setupSdkLocator();

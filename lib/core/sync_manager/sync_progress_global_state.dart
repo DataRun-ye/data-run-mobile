@@ -10,16 +10,18 @@ class SyncProgressGlobalState {
     required this.overallState,
     this.currentMessage,
   });
+
   final double percentage;
   final SyncProgressState overallState;
   final String? currentMessage;
 
-  static SyncProgressGlobalState aggregate(List<SyncResourceStatus> states) {
+  static SyncProgressGlobalState aggregate(List<SyncResourceStatus> states,
+      double percentage, String currentMessage) {
     if (states.isEmpty) return SyncProgressGlobalState.initial();
-
-    final totalPercentage =
-        states.map((s) => s.percentage).reduce((a, b) => a + b);
-    final avgPercentage = totalPercentage / states.length;
+    //
+    // final totalPercentage =
+    //     states.map((s) => s.percentage).reduce((a, b) => a + b);
+    // final avgPercentage = totalPercentage / states.length;
 
     final anyFailed = states.any((s) => s.state == SyncProgressState.FAILED);
     final allComplete = states.every((s) => s.completed);
@@ -31,8 +33,9 @@ class SyncProgressGlobalState {
             : SyncProgressState.RUNNING;
 
     return SyncProgressGlobalState(
-      percentage: avgPercentage,
+      percentage: percentage,
       overallState: overallState,
+      currentMessage: currentMessage
     );
   }
 }

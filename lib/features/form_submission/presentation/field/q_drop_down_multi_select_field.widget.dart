@@ -1,5 +1,7 @@
-import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
@@ -28,10 +30,10 @@ class QDropDownMultiSelectWithSearchField extends HookConsumerWidget {
       // valueAccessor: NameToLabelValueAccessor(options: element.visibleOption),
       dropdownDecoratorProps: DropDownDecoratorProps(
         decoration: InputDecoration(
-          labelText: element.label,
-          contentPadding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
-          border: const OutlineInputBorder(),
-        ),
+            labelText: element.label,
+            contentPadding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
+            border: const OutlineInputBorder(),
+            hintText: appLocator<HintProvider>().provideHint(element.type)),
       ),
       popupProps: const PopupPropsMultiSelection.menu(
         showSelectedItems: false,

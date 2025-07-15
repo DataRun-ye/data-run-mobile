@@ -28,10 +28,10 @@ class FormSubmissions extends _$FormSubmissions {
     return submissions;
   }
 
-  AppDatabase get db => DSdk.db;
+  AppDatabase get _db => DSdk.db;
 
   Future<void> markSubmissionAsFinal(String uid) async {
-    await db.managers.dataInstances.filter((f) => f.id(uid)).update(
+    await _db.managers.dataInstances.filter((f) => f.id(uid)).update(
         (o) => o.call(syncState: const Value(InstanceSyncStatus.finalized)));
 
     ref.invalidateSelf();
@@ -47,7 +47,7 @@ class FormSubmissions extends _$FormSubmissions {
       // required int version,
       Map<String, dynamic> formData = const {},
       Geometry? geometry}) async {
-    final submission = await db.managers.dataInstances.createReturning(
+    final submission = await _db.managers.dataInstances.createReturning(
         (o) => o(
             id: CodeGenerator.generateUid(),
             formTemplate: form,
@@ -76,7 +76,7 @@ class FormSubmissions extends _$FormSubmissions {
     } else {
       toUpdate = submission.copyWith(syncState: InstanceSyncStatus.draft);
     }
-    await db.update(db.dataInstances).replace(toUpdate);
+    await _db.update(_db.dataInstances).replace(toUpdate);
     ref.invalidateSelf();
     await future;
 
@@ -85,7 +85,7 @@ class FormSubmissions extends _$FormSubmissions {
 
   Future<bool> deleteSubmission(Iterable<String> syncableIds) async {
     try {
-      await (db.delete(db.dataInstances)
+      await (_db.delete(_db.dataInstances)
             ..where((tbl) => tbl.id.isIn(syncableIds)))
           .go();
 

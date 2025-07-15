@@ -13,6 +13,8 @@ analyzer:
     - '**/*.g.dart'       # Exclude generated files (common pattern)
     - 'lib/generated/'    # Exclude a specific generated directory
     - 'lib/l10n/'    # Exclude a specific generated directory
+    - 'lib/di/'    # Exclude a specific generated directory
+    - 'lib/stacked/'    # Exclude a specific generated directory
 linter:
   rules:
     - avoid_print  # Discourages usage of `print` statements

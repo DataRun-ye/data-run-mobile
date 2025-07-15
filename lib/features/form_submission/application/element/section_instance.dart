@@ -37,7 +37,7 @@ class Section extends SectionElement<Map<String, Object?>> {
       if (element.visible && element.hasErrors) {
         allErrors.update(
           name,
-          (_) => element.errors,
+          (final _) => element.errors,
           ifAbsent: () => element.errors,
         );
       }

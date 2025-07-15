@@ -181,7 +181,7 @@ class _SubmissionEditStatusProviderElement
       (origin as SubmissionEditStatusProvider).formMetadata;
 }
 
-String _$formSubmissionsHash() => r'947c41637028ecd94b32d4ce7e77a01f0e1059c9';
+String _$formSubmissionsHash() => r'04baef9bd78eb1d85b091e587d2e49bfb8cfdf46';
 
 abstract class _$FormSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<IList<DataInstance>> {

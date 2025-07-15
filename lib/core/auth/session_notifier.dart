@@ -1,4 +1,3 @@
-import 'package:d_sdk/core/auth/token_string_extension.dart';
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/user_session/user_session.dart';
@@ -7,6 +6,7 @@ import 'package:d_sdk/database/db_factory/database_factory.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/auth/auth_storage.dart';
 import 'package:datarunmobile/core/auth/token_refresher.dart';
+import 'package:datarunmobile/core/auth/token_string_extension.dart';
 import 'package:datarunmobile/core/database/user_db_session.dart';
 import 'package:datarunmobile/core/network/connectivy_service.dart';
 import 'package:get_it/get_it.dart';

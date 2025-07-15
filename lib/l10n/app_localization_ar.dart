@@ -1036,11 +1036,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String get showMore => 'عرض المزيد';
 
   @override
-  String get syncProgressDashboard => 'Sync Progress Dashboard';
+  String get syncProgressDashboard => 'مزامنة إعدادات المستخدم';
 
   @override
-  String get checkingSession => 'Checking session...';
+  String get checkingSession => 'ضبط جلسة المستخدم...';
 
   @override
   String get datarun => 'DATARUN';
+
+  @override
+  String get signingOutWarning =>
+      'سيؤدي تسجيل الخروج إلى فقدان أي تغييرات لم يتم مزامنتها. هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get logOutAnyway => 'نأكيد تسجيل الخروج';
+
+  @override
+  String get logOut => 'تسجيل الخروج؟';
+
+  @override
+  String systemFilesAccessError(Object error) {
+    return 'خطأ عند محاولة الوصول لملفات التخزين: $error';
+  }
 }

@@ -31,9 +31,15 @@ class DrawerSyncItem extends StackedHookView<AppDrawerViewModel> {
     final isOnline = model.isOnline;
 
     return ListTile(
+      isThreeLine: true,
       style: ListTileStyle.drawer,
       leading: const Icon(Icons.sync),
       title: Text(S.of(context).fetchUpdates),
+      subtitle: Text(
+        '${S.of(context).lastSync}:\n '
+        '$lastSynced',
+        softWrap: true,
+      ),
       trailing: isOnline
           ? Icon(Icons.check_circle,
               color: syncMetadataRepo.isInitialSyncDone
@@ -42,12 +48,9 @@ class DrawerSyncItem extends StackedHookView<AppDrawerViewModel> {
           : Icon(MdiIcons.webOff, color: Colors.grey),
       onTap: isOnline
           ? () {
-              // appLocator<NavigationService>()
-              //     .navigateToSyncProgressView();
-              // appLocator<NavigationService>().replaceWithSyncProgressView();
-              appLocator<NavigationService>().replaceWithSyncResourcesView();
-              // router.pushSync();
-            }
+        appLocator<NavigationService>().back();
+        appLocator<NavigationService>().replaceWithSyncResourcesView();
+      }
           : null,
     );
   }

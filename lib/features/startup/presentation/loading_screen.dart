@@ -1,18 +1,13 @@
 import 'package:datarunmobile/features/common_ui_element/common/ui_helpers.dart';
-import 'package:datarunmobile/features/startup/presentation/splash_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:stacked/stacked.dart';
 
-class StartupView extends StackedView<StartupViewModel> {
-  const StartupView({Key? key}) : super(key: key);
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({Key? key}) : super(key: key);
 
   @override
-  Widget builder(
+  Widget build(
     BuildContext context,
-    StartupViewModel viewModel,
-    Widget? child,
   ) {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
@@ -38,7 +33,6 @@ class StartupView extends StackedView<StartupViewModel> {
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
                         Colors.orangeAccent[400]!),
-                    // color: Colors.orangeAccent[400],
                     strokeWidth: 6,
                   ),
                 )
@@ -49,14 +43,4 @@ class StartupView extends StackedView<StartupViewModel> {
       ),
     );
   }
-
-  @override
-  StartupViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      StartupViewModel();
-
-  @override
-  void onViewModelReady(StartupViewModel viewModel) => SchedulerBinding.instance
-      .addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
 }

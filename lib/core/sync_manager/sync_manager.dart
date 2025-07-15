@@ -66,7 +66,7 @@ class SyncManager {
         _progressController.add(SyncProgressEvent(
           resourceName: remoteDataSource.resourceName,
           syncProgressState: SyncProgressState.ENQUEUED,
-          message: '${onlineData.length} records downloaded',
+          message: '${onlineData.length}',
           percentage: overallProgress,
           completed: true,
         ));

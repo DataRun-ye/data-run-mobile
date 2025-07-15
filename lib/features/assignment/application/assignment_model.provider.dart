@@ -3,6 +3,7 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data/data.dart';
+import 'package:datarunmobile/features/activity/application/activity.provider.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -41,8 +42,7 @@ class Assignments extends _$Assignments {
       final assignmentForms = userForms
           .where((uf) => uf.first.assignment == assignment.id)
           .toList();
-      return assignment.copyWith(
-        userForms: assignmentForms);
+      return assignment.copyWith(userForms: assignmentForms);
     }).toList();
     // final futures =
     //     assignments.map<Future<AssignmentModel>>((assignment) async {

@@ -1,8 +1,7 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
+// @injectable
 class TeamConfiguration {
   Future<ManagedTeam?> managedTeamByUid(String uid) async {
     return DSdk.db.managers.managedTeams

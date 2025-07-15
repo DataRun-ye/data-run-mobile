@@ -2,11 +2,12 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
-import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/assignment_detail_page.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_highlighted_text.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
+import 'package:datarunmobile/features/assignment_detail/presentation/assignment_detail_page.dart';
 import 'package:datarunmobile/features/form_submission/presentation/submission_count_chips.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -88,12 +89,10 @@ class AssignmentOverviewItem extends ConsumerWidget {
       overflowAlignment: OverflowBarAlignment.start,
       children: [
         ElevatedButton.icon(
-            // style: Theme.of(context).buttonTheme,
             onPressed: assignment.availableForms.isNotEmpty
                 ? () async {
                     await showFormSelectionBottomSheet(
                         context, assignment, activityModel);
-                    // ref.invalidate(assignmentsProvider);
                   }
                 : null,
             icon: const Icon(Icons.document_scanner),

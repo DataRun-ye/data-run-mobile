@@ -1,5 +1,6 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
+import 'package:datarunmobile/core/auth/sync_interactor.dart';
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart';
 import 'package:datarunmobile/core/sync_manager/sync_progress_event.dart';
 import 'package:datarunmobile/core/sync_manager/sync_progress_global_state.dart';
@@ -27,6 +28,7 @@ class SyncResourcesViewModel extends StreamViewModel<SyncProgressEvent> {
       globalState = SyncProgressGlobalState.aggregate(
           resourceStates, event.percentage, event.message);
       if (event.percentage == 100) {
+        appLocator<SyncInteractor>().markSyncDone();
         appLocator<NavigationService>().replaceWithHomeWrapperPage();
       }
     }

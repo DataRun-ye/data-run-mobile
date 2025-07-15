@@ -381,5 +381,9 @@
   "showMore": "Show more",
   "syncProgressDashboard": "Sync Progress Dashboard",
   "checkingSession": "Checking session...",
-  "datarun": "DATARUN"
+  "datarun": "DATARUN",
+  "signingOutWarning": "Signing out will discard any unsynced changes. Are you sure you want to log out?",
+  "logOutAnyway": "LOG OUT ANYWAY",
+  "logOut": "Log out?",
+  "systemFilesAccessError": "System Files Access Error: {error}"
 }

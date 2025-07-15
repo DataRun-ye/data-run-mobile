@@ -5,12 +5,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// The shell widget fetches and provides the template
 class FormShell extends ConsumerWidget {
+  const FormShell(
+      {required this.titel, required this.formId, required this.child});
+
   final String titel;
   final String formId;
   final Widget child;
-
-  const FormShell(
-      {required this.titel, required this.formId, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

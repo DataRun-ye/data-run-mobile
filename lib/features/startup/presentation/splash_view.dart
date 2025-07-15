@@ -38,7 +38,6 @@ class SplashView extends StackedView<StartupViewModel> {
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
                         Colors.orangeAccent[400]!),
-                    // color: Colors.orangeAccent[400],
                     strokeWidth: 6,
                   ),
                 )

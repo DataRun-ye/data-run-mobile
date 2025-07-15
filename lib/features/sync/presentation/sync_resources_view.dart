@@ -13,7 +13,7 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
     final global = viewModel.globalState;
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
-      // backgroundColor: cs.surfaceContainer,
+      backgroundColor: cs.surfaceContainer,
       appBar: AppBar(
         title: Text(S.of(context).syncProgressDashboard),
       ),
@@ -32,7 +32,7 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
                         ? Colors.red
                         : global.overallState == SyncProgressState.SUCCEEDED
                             ? Colors.green
-                            : Colors.blue,
+                            : cs.primary,
                   ),
                 ),
                 SizedBox(height: 8),
@@ -51,8 +51,15 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
           Divider(),
           // Detailed list of resource statuses
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: viewModel.resourceStates.length,
+              separatorBuilder: (_, __) => Divider(
+                color: cs.primary,
+                thickness: 0.1,
+                height: 1,
+                indent: 16,
+                endIndent: 16,
+              ),
               itemBuilder: (context, index) {
                 final res = viewModel.resourceStates[index];
                 return ListTile(
@@ -66,11 +73,11 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
                         ? Colors.green
                         : res.state == SyncProgressState.FAILED
                             ? Colors.red
-                            : Colors.blue,
+                            : cs.primary,
                   ),
-                  title: Text(Intl.message(res.name)),
-                  subtitle: Text(res.message ?? ''),
-                  trailing: Text('${res.percentage.toStringAsFixed(0)}%'),
+                  title: Text(Intl.message(res.name), style: TextStyle(fontWeight: FontWeight.bold, color: cs.primary)),
+                  // subtitle: Text(res.message ?? ''),
+                  trailing: Text(res.message ?? ''),
                 );
               },
             ),

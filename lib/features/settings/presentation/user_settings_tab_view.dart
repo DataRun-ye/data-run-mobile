@@ -1,5 +1,6 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
+import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/settings/presentation/settings_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -15,7 +16,7 @@ class UserSettingsTabView extends StackedHookView<SettingsViewmodel> {
   Widget builder(BuildContext context, SettingsViewmodel model) {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final currentAuthUser = appLocator<AuthManager>().currentUser;
+        final currentAuthUser = appLocator<AuthManager>().activeUserSession;
         // final currentAuthUser = model.user;
         return ListView(
           padding: const EdgeInsets.all(16.0),
@@ -95,7 +96,13 @@ class UserSettingsTabView extends StackedHookView<SettingsViewmodel> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 onTap: () async {
-                  model.logout();
+                  ref.read(confirmationProvider).confirmAndExecute(
+                      context: context,
+                      title: S.of(context).logOut,
+                      body: S.of(context).signingOutWarning,
+                      confirmLabel: S.of(context).logOutAnyway,
+                      action: () => model.logout());
+                  ;
                 },
               ),
             ),
@@ -111,7 +118,9 @@ class _SettingsLanguageItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final language = ref.watch(preferenceNotifierProvider(Preference.language));
+    String prefLang = ref.watch(preferenceNotifierProvider(Preference.language)) as String;
+    String language = prefLang == 'NA' ? 'en' : prefLang;
+
     return Card(
       child: ListTile(
         leading: const Icon(

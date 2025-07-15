@@ -1939,6 +1939,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'DATARUN'**
   String get datarun;
+
+  /// No description provided for @signingOutWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing out will discard any unsynced changes. Are you sure you want to log out?'**
+  String get signingOutWarning;
+
+  /// No description provided for @logOutAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'LOG OUT ANYWAY'**
+  String get logOutAnyway;
+
+  /// No description provided for @logOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out?'**
+  String get logOut;
+
+  /// No description provided for @systemFilesAccessError.
+  ///
+  /// In en, this message translates to:
+  /// **'System Files Access Error: {error}'**
+  String systemFilesAccessError(Object error);
 }
 
 class _AppLocalizationsDelegate

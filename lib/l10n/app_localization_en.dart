@@ -1043,4 +1043,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get datarun => 'DATARUN';
+
+  @override
+  String get signingOutWarning =>
+      'Signing out will discard any unsynced changes. Are you sure you want to log out?';
+
+  @override
+  String get logOutAnyway => 'LOG OUT ANYWAY';
+
+  @override
+  String get logOut => 'Log out?';
+
+  @override
+  String systemFilesAccessError(Object error) {
+    return 'System Files Access Error: $error';
+  }
 }

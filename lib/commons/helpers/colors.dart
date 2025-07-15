@@ -18,7 +18,7 @@ Color? convertHexStringToColor(String? value) {
 
 String? convertColorToHexString(Color color) {
   try {
-    final String hex = color.value.toRadixString(16);
+    final String hex = color.toARGB32().toRadixString(16);
     return '#${hex.substring(2, hex.length)}';
   } catch (e) {
     return null;

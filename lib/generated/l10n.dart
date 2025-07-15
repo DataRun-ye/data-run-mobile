@@ -2556,6 +2556,41 @@ class S {
   String get datarun {
     return Intl.message('DATARUN', name: 'datarun', desc: '', args: []);
   }
+
+  /// `Signing out will discard any unsynced changes. Are you sure you want to log out?`
+  String get signingOutWarning {
+    return Intl.message(
+      'Signing out will discard any unsynced changes. Are you sure you want to log out?',
+      name: 'signingOutWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LOG OUT ANYWAY`
+  String get logOutAnyway {
+    return Intl.message(
+      'LOG OUT ANYWAY',
+      name: 'logOutAnyway',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log out?`
+  String get logOut {
+    return Intl.message('Log out?', name: 'logOut', desc: '', args: []);
+  }
+
+  /// `System Files Access Error: {error}`
+  String systemFilesAccessError(Object error) {
+    return Intl.message(
+      'System Files Access Error: $error',
+      name: 'systemFilesAccessError',
+      desc: '',
+      args: [error],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

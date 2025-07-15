@@ -4,6 +4,7 @@ import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
+import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
 import 'package:datarunmobile/features/form/application/form_list_filter.dart';
 import 'package:datarunmobile/features/form/application/form_template_model.dart';
@@ -39,7 +40,8 @@ class FormTemplateService {
 
   Future<List<AssignmentForm>> fetchAssignmentForms(String assignmentId) async {
     final db = appLocator<DbManager>().db;
-    final userForms = appLocator<User>().userFormsUIDs;
+    final userForms =
+        appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
 
     return db.managers.assignmentForms
         .filter((f) => f.assignment.id(assignmentId))
@@ -48,7 +50,7 @@ class FormTemplateService {
 
   Future<List<FormTemplate>> fetchByAssignment(assignmentId) async {
     final db = appLocator<DbManager>().db;
-    final userForms = appLocator<User>().userFormsUIDs;
+    final userForms = appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
 
     final query = db.managers.assignmentForms
         .filter((f) => f.assignment.id(assignmentId));
@@ -107,7 +109,7 @@ class FormTemplateService {
       if (versionId != null) {
         query = query.filter((f) => f.id(versionId));
       } else {
-        query =  query.filter((f) => f.template.id(templateId))
+        query = query.filter((f) => f.template.id(templateId))
           ..orderBy((o) => o.versionNumber.desc()).limit(1);
       }
 

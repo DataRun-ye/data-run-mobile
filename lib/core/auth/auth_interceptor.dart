@@ -3,43 +3,34 @@ import 'dart:io';
 
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:d_sdk/di/app_environment.dart';
-import 'package:d_sdk/user_session/session_context.dart';
-import 'package:d_sdk/user_session/session_repository.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:datarunmobile/core/auth/auth_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class AuthInterceptor extends QueuedInterceptor {
-  AuthInterceptor({required SessionRepository sessionRepository})
-      : this._sessionRepository = sessionRepository,
+  AuthInterceptor({required AuthStorage authStorage})
+      : this._authStorage = authStorage,
         this.refreshClient = Dio()
           ..options = BaseOptions(baseUrl: AppEnvironment.apiBaseUrl),
         this.retryClient = Dio()
           ..options = BaseOptions(baseUrl: AppEnvironment.apiBaseUrl);
 
-  final SessionRepository _sessionRepository;
+  final AuthStorage _authStorage;
+
   late final Dio refreshClient;
   late final Dio retryClient;
 
-  Future<SessionContext?> get _activeSession =>
-      _sessionRepository.getActiveSession();
-
-  Future<TokenPair?> _getTokenPair() async {
-    final activeSession = await _activeSession;
-    final accessToken = activeSession?.accessToken;
-    final refreshToken = activeSession?.refreshToken;
-
-    if ((accessToken ?? '').isNotEmpty && (refreshToken ?? '').isNotEmpty) {
-      return (accessToken: accessToken!, refreshToken: refreshToken!);
-    }
-    return null;
+  Future<TokenPair?> _getTokenPair() {
+    return _authStorage.getActiveUserToken();
   }
 
   Future<void> _clearTokenPair() async {
-    await _sessionRepository.clearActiveSession();
+    await _authStorage.clearActiveUser();
   }
 
   Future<bool> get _isAccessTokenValid async {
@@ -154,11 +145,15 @@ class AuthInterceptor extends QueuedInterceptor {
       // error is 401 Unauthorized, and access token still valid,
       // Retry immediately (transient error)
       if (isAccessValid) {
+        logDebug(
+            'error is 401  Unauthorized, err code: (${err.response?.statusCode}), and access token still valid, Retry immediately (transient error)');
         final previousRequest = await _retry(err.requestOptions);
         return handler.resolve(previousRequest);
       } else {
         // error is 401 Unauthorized, and access token invalid,
         // Refresh tokens then retry
+        logDebug(
+            'error is 401  Unauthorized, err code: (${err.response?.statusCode}), and access token still invalid, Refresh tokens then retry');
         await _refresh(options: err.requestOptions, tokenPair: tokenPair);
         final previousRequest = await _retry(err.requestOptions);
         return handler.resolve(previousRequest);
@@ -176,17 +171,21 @@ class AuthInterceptor extends QueuedInterceptor {
     required RequestOptions options,
     TokenPair? tokenPair,
   }) async {
+    logDebug('refreshing token');
     if (tokenPair == null) {
+      logDebug('not token pair to refresh');
       throw RevokeTokenException(requestOptions: options);
     }
 
     try {
-      refreshClient
-        ..options = refreshClient.options.copyWith(
-          headers: {'refreshToken': tokenPair.refreshToken},
-        );
+      // refreshClient
+      //   ..options = refreshClient.options.copyWith(
+      //     headers: {'refreshToken': tokenPair.refreshToken},
+      //   );
 
-      final response = await refreshClient.post('/refresh');
+      final response = await refreshClient.post('/v1/refresh',
+        data: {'refreshToken': tokenPair.refreshToken},
+      );
 
       final TokenPair newTokenPair = (
         accessToken: response.data['accessToken'],
@@ -199,11 +198,11 @@ class AuthInterceptor extends QueuedInterceptor {
       // }
       // await _saveTokenPair(newTokenPair);
       //
-      await _sessionRepository.updateActiveSessionTokenPair(tokenPair);
+      await _authStorage.updateActiveUserToken(tokenPair);
       return newTokenPair;
-    } catch (_) {
-      logError('could not refresh accessToken, clearing and logging out...',
-          source: this);
+    } catch (e, s) {
+      logError('could not refresh accessToken, clearing and revoke out...',
+          source: e, stackTrace: s);
       await _clearTokenPair();
       throw RevokeTokenException(requestOptions: options);
     }

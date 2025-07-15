@@ -60,17 +60,19 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m17(count) =>
       "${Intl.plural(count, zero: 'No Syncable submissions', one: '1 submission', two: '2 submissions', other: '${count} submissions')}";
 
-  static String m18(error) => "Unauthorized Access to end point: ${error}.";
+  static String m18(error) => "System Files Access Error: ${error}";
 
-  static String m19(error) => "Error: ${error}.";
+  static String m19(error) => "Unauthorized Access to end point: ${error}.";
 
-  static String m20(error) =>
-      "The value must be greater than or equal to ${error}.";
+  static String m20(error) => "Error: ${error}.";
 
   static String m21(error) =>
+      "The value must be greater than or equal to ${error}.";
+
+  static String m22(error) =>
       "The value must be less than or equal to ${error}.";
 
-  static String m22(count) =>
+  static String m23(count) =>
       "${Intl.plural(count, zero: ' ', one: '1 Year', two: '2 Years', few: '${count} Years', other: '${count} Years')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -301,6 +303,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "level": MessageLookupByLibrary.simpleMessage("Level"),
     "loadMore": MessageLookupByLibrary.simpleMessage("Load More"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
+    "logOut": MessageLookupByLibrary.simpleMessage("Log out?"),
+    "logOutAnyway": MessageLookupByLibrary.simpleMessage("LOG OUT ANYWAY"),
     "login": MessageLookupByLibrary.simpleMessage("Datarun Login"),
     "loginUsername": MessageLookupByLibrary.simpleMessage("Login Username"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
@@ -476,6 +480,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "showLess": MessageLookupByLibrary.simpleMessage("Show less"),
     "showMore": MessageLookupByLibrary.simpleMessage("Show more"),
     "showPassword": MessageLookupByLibrary.simpleMessage("Show Password"),
+    "signingOutWarning": MessageLookupByLibrary.simpleMessage(
+      "Signing out will discard any unsynced changes. Are you sure you want to log out?",
+    ),
     "startDate": MessageLookupByLibrary.simpleMessage("Start Date"),
     "startingSync": MessageLookupByLibrary.simpleMessage("Starting sync..."),
     "status": MessageLookupByLibrary.simpleMessage("Status"),
@@ -504,6 +511,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "syncingData": MessageLookupByLibrary.simpleMessage("Syncing Data"),
     "syncingEvents": MessageLookupByLibrary.simpleMessage("Syncing Events"),
+    "systemFilesAccessError": m18,
     "team": MessageLookupByLibrary.simpleMessage("Team"),
     "teamFieldHint": MessageLookupByLibrary.simpleMessage("Select a Team"),
     "teams": MessageLookupByLibrary.simpleMessage("teams"),
@@ -524,9 +532,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Toggle List/Table View",
     ),
     "trueOnlyFieldHint": MessageLookupByLibrary.simpleMessage("fieldHintText"),
-    "unauthorizedAccessToEndPoint": m18,
+    "unauthorizedAccessToEndPoint": m19,
     "undo": MessageLookupByLibrary.simpleMessage("Undo"),
-    "unexpected": m19,
+    "unexpected": m20,
     "unitIntervalFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter unit Interval",
     ),
@@ -552,8 +560,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "validationErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Validation Error Message",
     ),
-    "valueMustBeGreaterThanOrEqualToError": m20,
-    "valueMustBeLessThanOrEqualToError": m21,
+    "valueMustBeGreaterThanOrEqualToError": m21,
+    "valueMustBeLessThanOrEqualToError": m22,
     "version": MessageLookupByLibrary.simpleMessage("Version"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "Expand to View Available Forms",
@@ -562,7 +570,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("View Errors"),
     "viewList": MessageLookupByLibrary.simpleMessage("View List"),
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
-    "year": m22,
+    "year": m23,
     "years": MessageLookupByLibrary.simpleMessage("Years"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("Y/M"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),

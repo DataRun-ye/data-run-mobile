@@ -1,7 +1,7 @@
 // services/locale_service.dart
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/data/data.dart';
+import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

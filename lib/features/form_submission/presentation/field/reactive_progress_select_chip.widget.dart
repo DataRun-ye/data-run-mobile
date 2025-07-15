@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,6 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
       formControl: formInstance.form.control(element.elementPath!)
           as FormControl<String>,
       validationMessages: validationMessages(),
-      selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
       options: _getChipOptions(progressStatuses),
       decoration: InputDecoration(
         enabled: element.elementControl.enabled,

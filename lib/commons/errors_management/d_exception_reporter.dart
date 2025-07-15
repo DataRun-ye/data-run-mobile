@@ -18,31 +18,11 @@ class DExceptionReporter {
     logException(DException(error.toString(), error));
 
     if (showToUser) {
-      // _showUserAlert(message);
       _dialogService.showDialog(
-        // variant: DialogType.infoAlert,
         title: Intl.message('error'),
         buttonTitle: S.current.ok,
         description: message,
       );
-
-      // throw error;
     }
   }
-
-// Future<void> _showUserAlert(String message) {
-//   return showDialog(
-//     context: navigatorKey.currentContext!,
-//     builder: (context) => AlertDialog(
-//       title: const Text('An Error Occurred'),
-//       content: Text(message),
-//       actions: [
-//         TextButton(
-//           onPressed: () => Navigator.of(context).pop(),
-//           child: Text(S.current.ok),
-//         ),
-//       ],
-//     ),
-//   );
-// }
 }

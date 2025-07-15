@@ -342,7 +342,11 @@
   "appTitle": "Datarun",
   "showLess": "عرض أقل",
   "showMore": "عرض المزيد",
-  "syncProgressDashboard": "Sync Progress Dashboard",
-  "checkingSession": "Checking session...",
-  "datarun": "DATARUN"
+  "syncProgressDashboard": "مزامنة إعدادات المستخدم",
+  "checkingSession": "ضبط جلسة المستخدم...",
+  "datarun": "DATARUN",
+  "signingOutWarning": "سيؤدي تسجيل الخروج إلى فقدان أي تغييرات لم يتم مزامنتها. هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "logOutAnyway": "نأكيد تسجيل الخروج",
+  "logOut": "تسجيل الخروج؟",
+  "systemFilesAccessError": "خطأ عند محاولة الوصول لملفات التخزين: {error}"
 }

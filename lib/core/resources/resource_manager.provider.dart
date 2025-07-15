@@ -66,26 +66,4 @@ class ResourceManager {
   String parseD2Error(Exception throwable) {
     return ErrorMessage.getMessage(throwable);
   }
-
-  String defaultEventLabel() => getString('events');
-
-  String defaultDataSetLabel() => getString('string.data_sets');
-
-  String defaultTeiLabel() => getString('tei');
-
-  String jiraIssueSentMessage() => getString('string.jira_issue_sent');
-
-  String jiraIssueSentErrorMessage() =>
-      getString('string.jira_issue_sent_error');
-
-  String sectionFeedback() => getString('string.section_feedback');
-
-  String sectionIndicators() => getString('string.section_indicators');
-
-  String sectionCharts() => getString('string.section_charts');
-
-  String sectionChartsAndIndicators() =>
-      getString('string.section_charts_indicators');
-
-  String defaultIndicatorLabel() => getString('string.info');
 }

@@ -1,4 +1,4 @@
-import 'package:datarunmobile/data/activity/activity.provider.dart';
+import 'package:datarunmobile/features/activity/application/activity.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_card.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_list_viewmodel.dart';

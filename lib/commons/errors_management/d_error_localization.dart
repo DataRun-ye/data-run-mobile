@@ -1,5 +1,4 @@
-import 'package:d_sdk/core/exception/d_error.dart';
-import 'package:d_sdk/core/exception/d_error_code.dart';
+import 'package:d_sdk/core/exception/exception.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 
 class ErrorMessage {
@@ -8,8 +7,8 @@ class ErrorMessage {
   static String getMessage(Object? exception) {
     return switch (exception) {
       final DError error => _handleDError(error),
-      // final DException dException => _handleDException(dException.c),
-      _ => S.current.unexpected(exception.toString().substring(0, 20)),
+      final DException dException => _handleDException(dException),
+      _ => S.current.unexpected(exception.toString().substring(0, 255)),
     };
   }
 
@@ -46,8 +45,16 @@ class ErrorMessage {
       //   S.current.noAuthenticatedUserOffline,
       DRunErrorCode.noActiveDatabaseInstance =>
         S.current.noActiveDatabaseFound(message),
+      DRunErrorCode.systemFileError =>
+        S.current.systemFilesAccessError(message),
       DRunErrorCode.unexpected => S.current.unexpected(message),
       null => S.current.unexpected(d2Error.toString()),
     };
+  }
+
+  static String _handleDException(DException dException) {
+    return dException.message ??
+        dException.cause?.toString() ??
+        dException.toString();
   }
 }

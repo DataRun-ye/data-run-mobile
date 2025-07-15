@@ -13,7 +13,7 @@ class NetworkUtil {
   CancelToken? _currentPingToken;
 
   final StreamController<bool> _connectivityStatusController =
-      StreamController<bool>.broadcast();
+  StreamController<bool>.broadcast();
 
   Stream<bool> get connectivityStatusStream =>
       _connectivityStatusController.stream;
@@ -34,6 +34,10 @@ class NetworkUtil {
   }
 
   Future<bool> isOnline() async {
+    if (_currentPingToken?.isCancelled == false) {
+      _currentPingToken?.cancel();
+    }
+
     _currentPingToken = CancelToken();
     try {
       if (await noAvailableNetwork()) return false;

@@ -19,7 +19,6 @@ class LoginViewModel extends BaseViewModel {
   final FormGroup form;
   final AuthManager _authManager = appLocator<AuthManager>();
 
-  // final _router = appLocator<AppRouter>();
   final NavigationService _navigationService = appLocator<NavigationService>();
 
   Future<void> userLogin() async {
@@ -33,37 +32,8 @@ class LoginViewModel extends BaseViewModel {
     try {
       final userDetails = await _authManager.login(
           username: usernameControl.value!, password: passwordControl.value!);
-      // await appLocator<SessionScopeInitializer>().initAuthScope();
-
-      // await _navigationService.replaceWithSyncScreen();
-      // _navigationService.replaceWithSyncProgressView();
       _navigationService.replaceWithSyncResourcesView();
-      // await _router.replace(SyncProgressRoute());
-      // _router.replace(HomeRoute());
-
-      // _navigationService.replaceWithHomeScreen();
-      // } else {
-      //   _router.replace(HomeRoute());
-      // }
-      // await _navigationService.replaceWithSyncProgressView()
-
-      // final SessionContext? session =
-      //     await _sessionRepository.getActiveSession();
-      // onResult?.call(true, session);
-      // if (authResult.isSuccess()) {
-      //   await init(authResult.getOrThrow());
-      //   await _navigationService.replaceWithSyncProgressView();
-      // } else {
-      //   authResult.whenError((failure) => throw failure);
-      // }
     } catch (e, s) {
-      // if (appLocator.currentScopeName == 'authenticated') {
-      //   await _scopeInitializer.popScope();
-      // }
-      // onResult?.call(false, null);
-      // await _router.replace(LoginRoute());
-      // await appLocator<SessionScopeInitializer>().popAuthScope();
-
       form.markAsEnabled();
       usernameControl.markAsEnabled();
       passwordControl.markAsEnabled();

@@ -1,5 +1,6 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
+import 'package:datarunmobile/app/theme/color_scheme_extension.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/app_drawer_sync_item.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/app_drawer_version_item.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/app_drawer_viewmodel.dart';
@@ -18,11 +19,15 @@ class AppDrawer extends StackedView<AppDrawerViewModel> {
     AppDrawerViewModel model,
     Widget? child,
   ) {
+    final cs = Theme.of(context).colorScheme;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+              color: cs.isDark ? cs.onSecondary : cs.primary,
+            ),
             accountName: Text(model.user?.firstName ?? '-'),
             accountEmail: Text(model.user?.username ?? '-'),
             currentAccountPicture: CircleAvatar(

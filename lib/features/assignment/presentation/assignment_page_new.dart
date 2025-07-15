@@ -1,6 +1,6 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/activity/assignment.provider.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/assignment/presentation/active_filters_widget.dart';
@@ -17,7 +17,6 @@ class AssignmentPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final isCardView = filterQuery.isCardView;
     final controller = useTextEditingController();
     final update = ref.watch(filterQueryProvider).searchQuery;
     useEffect(() {
@@ -85,7 +84,6 @@ class AssignmentPage extends HookConsumerWidget {
       ),
       body: Column(
         children: [
-          // if (activeFilters.isNotEmpty)
           const ActiveFiltersWidget(),
 
           Expanded(
@@ -216,7 +214,6 @@ class AssignmentPage extends HookConsumerWidget {
                         flex: 2,
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            // onApply(selectedFilters);
                             ref
                                 .read(filterQueryProvider.notifier)
                                 .updateFilters(selectedFilters);

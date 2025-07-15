@@ -1,4 +1,4 @@
-import 'package:d_sdk/user_session/session_context.dart';
+import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:datarunmobile/data/password_visibility.provider.dart';
 import 'package:datarunmobile/features/login/presentation/login_view_header.dart';
 import 'package:datarunmobile/features/login/presentation/login_view_submit_button.dart';
@@ -12,7 +12,7 @@ import 'package:stacked/stacked.dart';
 class LoginView extends StatelessWidget {
   const LoginView({Key? key, this.onResult}) : super(key: key);
 
-  final Function(bool didLogin, SessionContext? context)? onResult;
+  final Function(bool didLogin, UserSession? context)? onResult;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,6 @@ class LoginView extends StatelessWidget {
                 viewModel.form.control('username') as FormControl<String>;
             final password =
                 viewModel.form.control('password') as FormControl<String>;
-            // final language =
-            // ref.watch(preferenceNotifierProvider(Preference.language));
-            // final currentAuthUser = viewModel.user;
             final cs = Theme.of(context).colorScheme;
             return ReactiveForm(
               formGroup: viewModel.form,
@@ -39,13 +36,13 @@ class LoginView extends StatelessWidget {
                 child: Scaffold(
                   body: Container(
                     decoration: BoxDecoration(
-                      gradient: RadialGradient(
-                        center: Alignment(-0.5, -0.6),
-                        radius: 0.15,
-                        colors: <Color>[cs.onPrimary, cs.primary],
-                        // colors: <Color>[cs.onPrimary, cs.primary],
-                        stops: <double>[0.4, 0.8],
-                      ),
+                      gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            cs.primary,
+                            cs.onPrimary,
+                          ]),
                     ),
                     child: Center(
                       child: SingleChildScrollView(
@@ -89,7 +86,7 @@ class LoginView extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 16),
-                                // Password input with visibility toggle
+                                // Password input
                                 ReactiveTextField<String>(
                                   formControl: password,
                                   obscureText: isPasswordObscured,
@@ -104,12 +101,10 @@ class LoginView extends StatelessWidget {
                                             : Icons.visibility_off,
                                         color: cs.primary,
                                       ),
-                                      onPressed: () {
-                                        ref
-                                            .read(passwordVisibilityProvider
-                                                .notifier)
-                                            .toggle();
-                                      },
+                                      onPressed: () => ref
+                                          .read(passwordVisibilityProvider
+                                              .notifier)
+                                          .toggle(),
                                     ),
                                   ),
                                 ),
@@ -118,14 +113,6 @@ class LoginView extends StatelessWidget {
                                   width: double.infinity,
                                   child: LoginViewSubmitButton(
                                     onPressed: () => viewModel.userLogin(),
-                                    // if (result.success) {
-                                    //   Navigator.of(context).pushReplacement(
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => AuthSyncWrapper(
-                                    //             isAuthenticated: result.success,
-                                    //             needsSync: true)),
-                                    //   );
-                                    // }
                                   ),
                                 ),
                               ],

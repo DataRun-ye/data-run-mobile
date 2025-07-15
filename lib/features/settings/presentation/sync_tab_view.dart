@@ -1,6 +1,5 @@
 import 'package:datarunmobile/core/sync/model/sync_interval.dart';
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
-import 'package:datarunmobile/features/shared/sync_summary_card.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -45,22 +44,6 @@ class SyncSettingTabView extends HookConsumerWidget {
         ),
 
         const SizedBox(height: 10),
-        // Card(
-        //   child: ListTile(
-        //     title: Text(S.of(context).lastConfigurationSyncTime),
-        //     subtitle: Text(syncMetadataRepo.lastSyncTime.toString()),
-        //     trailing: FilledButton(
-        //         onPressed: () async {
-        //           // appLocator<AppRouter>().pushSync();
-        //           // await appLocator<AppRouter>().navigate(SyncProgressRoute());
-        //           // await appLocator<NavigationService>()
-        //           //     .navigateToSyncProgressView();
-        //         },
-        //         child: Text(S.of(context).syncNow)),
-        //   ),
-        // ),
-        // Sync Status Card
-
         Card(
           child: ListTile(
             leading: Icon(Icons.check_circle,
@@ -74,12 +57,12 @@ class SyncSettingTabView extends HookConsumerWidget {
           ),
         ),
 
-        const SizedBox(height: 20),
-        Text(S.of(context).syncSummaryTitle,
-            style: Theme.of(context).textTheme.titleMedium),
+        // const SizedBox(height: 20),
+        // Text(S.of(context).syncSummaryTitle,
+        //     style: Theme.of(context).textTheme.titleMedium),
 
         // Show summary for *all* entities:
-        const SyncSummaryCard(),
+        // const SyncSummaryCard(),
 
         // Or, show just “formTemplates”:
         // const SyncSummaryCard(entityFilter: 'formTemplates'),

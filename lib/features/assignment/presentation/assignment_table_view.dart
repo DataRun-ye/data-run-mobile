@@ -1,8 +1,8 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/activity/assignment.provider.dart';
-import 'package:datarunmobile/data/assignment/assignment_model.provider.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_highlighted_text.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form_submission/presentation/submission_count_chips.dart';
@@ -23,12 +23,6 @@ class AssignmentTableView extends HookConsumerWidget {
     return AsyncValueWidget(
       value: assignmentsAsync,
       valueBuilder: (assignments) {
-        // final resourceHeaders =
-        //     assignments.firstOrNull?.reportedResources.keys.toList() ?? [];
-        // final rows = assignments.map((t) => t.reportedResources).toList();
-        // final totalSummary = {
-        //   for (var i in resourceHeaders) i: calculateColumnSum(rows, i)
-        // };
         return _buildTable(context, assignments, searchQuery);
       },
     );
@@ -56,29 +50,8 @@ class AssignmentTableView extends HookConsumerWidget {
         DataColumn2(label: Text(S.current.dueDay), size: ColumnSize.S),
         DataColumn2(label: Text(S.current.synced), size: ColumnSize.S),
         DataColumn2(label: Text(S.current.entity), size: ColumnSize.L),
-        // ...resourceHeaders
-        //     .map((header) => DataColumn2(
-        //         numeric: true,
-        //         label: Column(
-        //           mainAxisAlignment: MainAxisAlignment.start,
-        //           children: [
-        //             Text(
-        //               '${totalSummary[header]}',
-        //               style: Theme.of(context)
-        //                   .textTheme
-        //                   .titleMedium,
-        //             ),
-        //             const Divider(color: Colors.blueGrey, height: 5.0),
-        //             Text(
-        //               '${Intl.message(header.toLowerCase())} ${S.of(context).reported}',
-        //             ),
-        //           ],
-        //         ),
-        //         size: ColumnSize.S))
-        //     .toList(),
         DataColumn2(label: Text(S.current.status)),
         DataColumn2(label: Text(S.current.team), size: ColumnSize.S),
-        // DataColumn2(label: Text(S.current.scope), size: ColumnSize.S),
       ],
       rows: assignments
           .map((assignment) => DataRow2(

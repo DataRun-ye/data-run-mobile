@@ -20,11 +20,8 @@ abstract class ThirdPartyServicesModule {
   // @lazySingleton
   // BottomSheetService get bottomSheetService;
 
-  @singleton
-  CancelToken cancelToken() => CancelToken();
-
   @injectable
-  Dio dio(AuthInterceptor authInterceptor, CancelToken cancelToken) {
+  Dio dio(AuthInterceptor authInterceptor) {
     final Map<String, String> _headers = {};
     _headers['content-type'] = 'application/json; charset=utf-8';
 
@@ -41,7 +38,7 @@ abstract class ThirdPartyServicesModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
-  @lazySingleton
+  @injectable
   FlutterSecureStorage get flutterSecureStorage => const FlutterSecureStorage(
         aOptions: _androidOptions,
         iOptions: _iosOptions,

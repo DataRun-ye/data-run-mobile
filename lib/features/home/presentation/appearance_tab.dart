@@ -51,10 +51,6 @@ class AppearanceTab extends StackedHookView<SettingsViewmodel> {
               title: Text(S.of(context).selectColorTheme),
               trailing: const _ColorSeedButton(),
             ),
-            // ListTile(
-            //   title: Text(S.of(context).selectImageForColorExtraction),
-            //   trailing: const _ColorImageButton(),
-            // ),
           ],
         );
       },

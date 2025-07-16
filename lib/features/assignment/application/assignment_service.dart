@@ -1,12 +1,13 @@
+import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:datarunmobile/features/assignment/application/assignment_access.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
 
 abstract class AssignmentService {
   Future<AssignmentModel> fetchById(String id);
 
   Future<bool> isOpen(String assignmentUid);
 
-  Future<AssignmentAccess> getAssignmentAccess(
+  Future<AssignmentForm?> getAssignmentAccessForForm(
       String assignmentUid, String formTemplateUid);
 
   Future<bool> allowInstanceCreation(
@@ -16,4 +17,8 @@ abstract class AssignmentService {
 
   Future<bool> allowInstanceDelete(
       String assignmentUid, String formTemplateUid);
+
+  // nmc
+  Future<void> updateAssignmentStatus(
+      AssignmentStatus? progressStatus, String assignmentId);
 }

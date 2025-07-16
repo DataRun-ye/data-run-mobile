@@ -60,10 +60,10 @@ class AssignmentOverviewItem extends ConsumerWidget {
       children: [
         const Icon(Icons.location_on),
         const SizedBox(width: 4),
-        BuildHighlightedText(assignment.orgUnit.code!, searchQuery,
+        BuildHighlightedText(assignment.orgUnit.code ?? '', searchQuery,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
         const SizedBox(width: 8),
-        BuildHighlightedText(assignment.orgUnit.code!, searchQuery)
+        BuildHighlightedText(assignment.orgUnit.name, searchQuery)
       ],
     );
   }

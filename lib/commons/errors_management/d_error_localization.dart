@@ -1,5 +1,6 @@
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:datarunmobile/generated/l10n.dart';
+import 'package:dio/dio.dart';
 
 class ErrorMessage {
   const ErrorMessage();
@@ -53,8 +54,51 @@ class ErrorMessage {
   }
 
   static String _handleDException(DException dException) {
+    if (dException.cause is DioException) {
+      final dioException = dException.cause as DioException;
+      return dioException.type.toPrettyDescription(dioException);
+    }
+
+    if (dException.cause is DError) {
+      final d2Error = dException.cause as DError;
+      return _handleDError(d2Error);
+    }
+
+    if (dException.cause is DException) {
+      final d2Exception = dException.cause as DException;
+      return _handleDException(d2Exception);
+    }
+
     return dException.message ??
         dException.cause?.toString() ??
         dException.toString();
+  }
+}
+
+extension DioExceptionTypeExtension on DioExceptionType {
+  String toPrettyDescription(DioException e) {
+    final errorMessage = e.message ?? '';
+    final responseCode = e.response?.statusCode.toString() ?? '';
+    final type = e.type.toString();
+    final message = '$type: $responseCode $errorMessage';
+    switch (this) {
+      case DioExceptionType.connectionTimeout:
+        return S.current
+            .connectionTimeout(DioExceptionType.connectionTimeout.name);
+      case DioExceptionType.sendTimeout:
+        return S.current.sendTimeout(DioExceptionType.sendTimeout.name);
+      case DioExceptionType.receiveTimeout:
+        return S.current.receiveTimeout(DioExceptionType.receiveTimeout.name);
+      case DioExceptionType.badCertificate:
+        return S.current.badCertificate(message);
+      case DioExceptionType.badResponse:
+        return S.current.badResponse(message);
+      case DioExceptionType.cancel:
+        return S.current.requestCancelled;
+      case DioExceptionType.connectionError:
+        return S.current.connectionError(message);
+      case DioExceptionType.unknown:
+        return S.current.unexpected(message);
+    }
   }
 }

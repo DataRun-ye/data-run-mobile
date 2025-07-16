@@ -1,5 +1,5 @@
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_ui_elements/application/configure_form_completion_dialog.dart';
 import 'package:datarunmobile/features/form_ui_elements/application/form_completion_dialog.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

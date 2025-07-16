@@ -5,20 +5,20 @@ import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/app/stacked/app.dialogs.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
 import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
-import 'package:datarunmobile/data/submission_list.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
-import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
-import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
-import 'package:datarunmobile/features/form_submission/presentation/submission_sync_dialog.widget.dart';
-import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 import 'package:datarunmobile/features/form/application/form_template_model.dart';
-import 'package:datarunmobile/app/stacked/app.dialogs.dart';
+import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
+import 'package:datarunmobile/features/form_submission/presentation/submission_sync_dialog.widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -101,6 +101,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                             '${S.of(context).send}: ${S.of(context).syncSubmissions(toSync.length)}'))
                   ],
                 ),
+              SizedBox(height: 8,),
               submissions.value.isNotEmpty
                   ? LayoutBuilder(builder: (context, constraints) {
                       return Scrollbar(

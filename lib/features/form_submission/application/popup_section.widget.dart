@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/form_widget_factory.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';

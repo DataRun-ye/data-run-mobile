@@ -39,7 +39,6 @@ class LoginViewModel extends BaseViewModel {
       passwordControl.markAsEnabled();
       logError('couldn\'t login', stackTrace: s);
       DExceptionReporter.instance.report(e, showToUser: true);
-      rethrow;
     }
   }
 }

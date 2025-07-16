@@ -195,9 +195,9 @@ class App extends ConsumerWidget {
 
   ThemeData buildTheme(
       {required ColorSeed colorSeed,
-        required ThemeData base,
-        required TargetPlatform platform,
-        Brightness brightness = Brightness.light}) {
+      required ThemeData base,
+      required TargetPlatform platform,
+      Brightness brightness = Brightness.light}) {
     final cs = ColorScheme.fromSeed(
         seedColor: colorSeed.color, brightness: brightness, contrastLevel: 0.5);
 
@@ -234,16 +234,11 @@ class App extends ConsumerWidget {
         surfaceTintColor: barBg,
         // M3 elevation tint :contentReference[oaicite:1]{index=1}
         systemOverlayStyle:
-        isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+            isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
       cardTheme: CardThemeData(
         color: cs.surfaceContainerLow,
         surfaceTintColor: cs.surfaceTint,
-        // elevation: 4,
-        // margin: const EdgeInsets.all(16),
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.circular(15),
-        // ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -270,7 +265,6 @@ class App extends ConsumerWidget {
         prefixIconColor: cs.onSurfaceVariant,
         floatingLabelStyle: TextStyle(color: cs.primary),
       ),
-
       //
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -284,15 +278,6 @@ class App extends ConsumerWidget {
           // textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
-
-      // textButtonTheme: TextButtonThemeData(
-      //   style: TextButton.styleFrom(
-      //     foregroundColor: cs.primary,
-      //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      //     textStyle: Typography.material2021().bodyMedium,
-      //   ),
-      // ),
-
       dividerTheme: DividerThemeData(
         color: cs.primary,
         thickness: 0.3,
@@ -337,7 +322,7 @@ class App extends ConsumerWidget {
       ),
       dataTableTheme: DataTableThemeData(
         headingRowColor:
-        WidgetStateProperty.all(cs.primary.withValues(alpha: 0.08)),
+            WidgetStateProperty.all(cs.primary.withValues(alpha: 0.08)),
         headingTextStyle: base.textTheme.titleSmall!.copyWith(
           color: cs.onSurface,
           fontWeight: FontWeight.w600,
@@ -362,19 +347,9 @@ class App extends ConsumerWidget {
       textTheme: _buildShrineTextTheme(base.textTheme),
       // 1️⃣ Global ChipTheme (applies to basic Chip/ActionChip/InputChip)
       chipTheme: base.chipTheme.copyWith(
-        // backgroundColor:  cs.surfaceContainerLow,
-        // brightness: brightness,
-        // selectedColor: DColors.Orange500,
-        secondarySelectedColor: cs.primaryFixedDim, // label color when selected
-        // secondaryLabelStyle: base.textTheme.bodyMedium!.copyWith(
-        //   fontSize: 14,
-        // ),
+        secondarySelectedColor: cs.primaryFixedDim,
         checkmarkColor: DColors.Orange600,
         elevation: 2,
-        // labelStyle: base.textTheme.bodyMedium!.copyWith(
-        //   color: isDark ? cs.onSurface : cs.onPrimary,
-        // ),
-        // disabledColor: cs.onSurface.withValues(alpha:0.12),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -382,8 +357,6 @@ class App extends ConsumerWidget {
         ),
         // labelPadding: const EdgeInsets.symmetric(horizontal: 8),
       ),
-      // focusColor: cs.primary,
-      // hoverColor: cs.primarywithValues(alpha:0.06),
       splashColor: cs.primary.withValues(alpha: 0.08),
       // highlightColor: cs.primary.withValues(alpha:0.1),
       //
@@ -415,14 +388,13 @@ class App extends ConsumerWidget {
   }
 }
 
-
 class _CustomEndDrawerIcon extends StatelessWidget {
   const _CustomEndDrawerIcon();
 
   @override
   Widget build(BuildContext context) {
     final MaterialLocalizations localization =
-    MaterialLocalizations.of(context);
+        MaterialLocalizations.of(context);
     return Icon(
       Icons.more_horiz,
       semanticLabel: localization.openAppDrawerTooltip,
@@ -436,7 +408,7 @@ class _CustomDrawerIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MaterialLocalizations localization =
-    MaterialLocalizations.of(context);
+        MaterialLocalizations.of(context);
     return Icon(
       Icons.segment,
       semanticLabel: localization.openAppDrawerTooltip,

@@ -1782,11 +1782,11 @@ class S {
     );
   }
 
-  /// `Changing state might result clearing dependents elements`
-  String get changingStateMightResultClearingDependentsElements {
+  /// `Changing response might result clearing data from dependent elements`
+  String get confirmationWarning {
     return Intl.message(
-      'Changing state might result clearing dependents elements',
-      name: 'changingStateMightResultClearingDependentsElements',
+      'Changing response might result clearing data from dependent elements',
+      name: 'confirmationWarning',
       desc: '',
       args: [],
     );
@@ -2247,10 +2247,10 @@ class S {
     );
   }
 
-  /// `Bad certificate: {error}.`
+  /// `Bad certificate: {error}`
   String badCertificate(Object error) {
     return Intl.message(
-      'Bad certificate: $error.',
+      'Bad certificate: $error',
       name: 'badCertificate',
       desc: '',
       args: [error],
@@ -2589,6 +2589,76 @@ class S {
       name: 'systemFilesAccessError',
       desc: '',
       args: [error],
+    );
+  }
+
+  /// `Connection timeout: {error}`
+  String connectionTimeout(Object error) {
+    return Intl.message(
+      'Connection timeout: $error',
+      name: 'connectionTimeout',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `send timeout: {error}`
+  String sendTimeout(Object error) {
+    return Intl.message(
+      'send timeout: $error',
+      name: 'sendTimeout',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `receive timeout: {error}`
+  String receiveTimeout(Object error) {
+    return Intl.message(
+      'receive timeout: $error',
+      name: 'receiveTimeout',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `bad response: {error}`
+  String badResponse(Object error) {
+    return Intl.message(
+      'bad response: $error',
+      name: 'badResponse',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `connection error: {error}`
+  String connectionError(Object error) {
+    return Intl.message(
+      'connection error: $error',
+      name: 'connectionError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `request cancelled`
+  String get requestCancelled {
+    return Intl.message(
+      'request cancelled',
+      name: 'requestCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `confirm before proceed`
+  String get actionNeedsConfirmation {
+    return Intl.message(
+      'confirm before proceed',
+      name: 'actionNeedsConfirmation',
+      desc: '',
+      args: [],
     );
   }
 }

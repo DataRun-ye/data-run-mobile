@@ -19,6 +19,11 @@ import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
 import 'package:datarunmobile/core/auth/auth_storage.dart' as _i324;
 import 'package:datarunmobile/core/auth/sync_interactor.dart' as _i842;
 import 'package:datarunmobile/core/auth/token_refresher.dart' as _i48;
+import 'package:datarunmobile/core/common/confirmation_service.dart' as _i18;
+import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
+    as _i595;
+import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
+    as _i1066;
 import 'package:datarunmobile/core/http/default_http_adapter.dart' as _i832;
 import 'package:datarunmobile/core/network/connectivy_service.dart' as _i761;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
@@ -65,6 +70,7 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
   gh.factory<_i1027.AssignmentServiceImpl>(
       () => _i1027.AssignmentServiceImpl());
+  gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i28.SyncProgressNotifier>(
     () => _i28.SyncProgressNotifier(),
     dispose: (i) => i.dispose(),
@@ -83,6 +89,7 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i842.SyncInteractor(gh<_i460.SharedPreferences>()));
   gh.factory<_i148.SyncExecutor>(() =>
       _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
+  gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
   gh.factory<_i537.StorageService>(() => sdkModule.getStorageService(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i460.SharedPreferences>(),

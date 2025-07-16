@@ -1412,11 +1412,11 @@ abstract class AppLocalizations {
   /// **'{value} is Copied To Clipboard'**
   String copiedToClipboard(Object value);
 
-  /// No description provided for @changingStateMightResultClearingDependentsElements.
+  /// No description provided for @confirmationWarning.
   ///
   /// In en, this message translates to:
-  /// **'Changing state might result clearing dependents elements'**
-  String get changingStateMightResultClearingDependentsElements;
+  /// **'Changing response might result clearing data from dependent elements'**
+  String get confirmationWarning;
 
   /// No description provided for @restoreItem.
   ///
@@ -1715,7 +1715,7 @@ abstract class AppLocalizations {
   /// No description provided for @badCertificate.
   ///
   /// In en, this message translates to:
-  /// **'Bad certificate: {error}.'**
+  /// **'Bad certificate: {error}'**
   String badCertificate(Object error);
 
   /// No description provided for @invalidData.
@@ -1963,6 +1963,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System Files Access Error: {error}'**
   String systemFilesAccessError(Object error);
+
+  /// No description provided for @connectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout: {error}'**
+  String connectionTimeout(Object error);
+
+  /// No description provided for @sendTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'send timeout: {error}'**
+  String sendTimeout(Object error);
+
+  /// No description provided for @receiveTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'receive timeout: {error}'**
+  String receiveTimeout(Object error);
+
+  /// No description provided for @badResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'bad response: {error}'**
+  String badResponse(Object error);
+
+  /// No description provided for @connectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'connection error: {error}'**
+  String connectionError(Object error);
+
+  /// No description provided for @requestCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'request cancelled'**
+  String get requestCancelled;
+
+  /// No description provided for @actionNeedsConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'confirm before proceed'**
+  String get actionNeedsConfirmation;
 }
 
 class _AppLocalizationsDelegate

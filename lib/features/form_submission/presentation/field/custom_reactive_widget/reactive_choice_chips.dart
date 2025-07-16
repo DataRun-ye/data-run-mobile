@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 /// A list of `Chip`s that acts like radio buttons
@@ -13,6 +16,7 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
     super.valueAccessor,
     super.showErrors,
     super.focusNode,
+    this.confirmChangingValue = false,
     required this.options,
     this.alignment = WrapAlignment.start,
     InputDecoration decoration = const InputDecoration(),
@@ -43,6 +47,12 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
           final effectiveDecoration = decoration
               .applyDefaults(Theme.of(state.context).inputDecorationTheme);
 
+          changeValue(bool selected, ReactiveChipOption<T> option) {
+            final choice = selected ? option.value : null;
+            state.didChange(choice);
+            onChanged?.call(field.control);
+          }
+
           return InputDecorator(
             decoration:
                 effectiveDecoration.copyWith(errorText: state.errorText),
@@ -63,9 +73,20 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
                     selected: field.value == option.value,
                     onSelected: state.control.enabled
                         ? (selected) {
-                            final choice = selected ? option.value : null;
-                            state.didChange(choice);
-                            onChanged?.call(field.control);
+                            confirmChangingValue && field.value != null
+                                ? appLocator<ConfirmationService>()
+                                    .confirmAndExecute(
+                                        context: state.context,
+                                        title: S
+                                            .of(state.context)
+                                            .actionNeedsConfirmation,
+                                        body: S
+                                            .of(state.context)
+                                            .confirmationWarning,
+                                        confirmLabel: S.of(state.context).confirm,
+                                        action: () =>
+                                            changeValue(selected, option))
+                                : changeValue(selected, option);
                           }
                         : null,
                     avatar: option.avatar,
@@ -87,6 +108,7 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
             ),
           );
         });
+  final bool confirmChangingValue;
   final List<ReactiveChipOption<T>> options;
   final double? elevation;
   final double? pressElevation;

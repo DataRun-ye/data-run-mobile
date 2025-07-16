@@ -1,17 +1,11 @@
 import 'dart:async';
 
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:injectable/injectable.dart';
 
-final confirmationProvider = Provider<ConfirmationService>((ref) {
-  return ConfirmationService(ref);
-});
-
+@lazySingleton
 class ConfirmationService {
-
-  ConfirmationService(this.ref);
-  final Ref ref;
-
   Future<bool> confirmAndExecute({
     required BuildContext context,
     required String title,
@@ -38,20 +32,20 @@ Future<bool> withConfirmation({
   required FutureOr<void> Function() onConfirmed,
 }) async {
   final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (_) => AlertDialog(
-      title: Text(title),
-      content: Text(body),
-      actions: [
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('CANCEL')),
-        ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(confirmLabel)),
-      ],
-    ),
-  ) ??
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(title),
+          content: Text(body),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(S.of(context).cancel)),
+            ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(confirmLabel)),
+          ],
+        ),
+      ) ??
       false;
 
   if (confirmed) {

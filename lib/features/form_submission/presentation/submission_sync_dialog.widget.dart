@@ -1,6 +1,7 @@
+import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 
 class SyncDialog extends ConsumerStatefulWidget {
   const SyncDialog({
@@ -89,7 +90,7 @@ class SyncDialogState extends ConsumerState<SyncDialog> {
     try {
       await widget.syncEntity(widget.entityIds);
     } catch (e) {
-      _syncErrors.addAll(widget.entityIds);
+      _syncErrors.addAll([ErrorMessage.getMessage(e)]);
     }
 
     setState(() {

@@ -1,1 +1,8 @@
-enum AssignmentAccess { noAccess, readAccess, writeAccess, closedDenied }
+enum AssignmentAccess {
+  noAccess,
+  readAccess,
+  editAccess,
+  deleteAccess,
+  addAccess,
+  closedDenied
+}

@@ -294,7 +294,7 @@
   "teams": "teams",
   "clearAll": "Clear All",
   "copiedToClipboard": "{value} is Copied To Clipboard",
-  "changingStateMightResultClearingDependentsElements": "Changing state might result clearing dependents elements",
+  "confirmationWarning": "Changing response might result clearing data from dependent elements",
   "restoreItem": "Restore Item",
   "deleteRestore": "Delete / Restore",
   "fieldIsMandatory": "Field Is Mandatory",
@@ -344,7 +344,7 @@
   "unsupportedValueType": "Unsupported value type",
   "noActiveDatabaseFound": "No active database found: {error}.",
   "sessionExpired": "Session expired: {error}.",
-  "badCertificate": "Bad certificate: {error}.",
+  "badCertificate": "Bad certificate: {error}",
   "invalidData": "Invalid data: {error}.",
   "badHttpRequest": "Bad http request: {error}.",
   "badRequestToEndPoint": "Bad request to end point: {error}.",
@@ -385,5 +385,12 @@
   "signingOutWarning": "Signing out will discard any unsynced changes. Are you sure you want to log out?",
   "logOutAnyway": "LOG OUT ANYWAY",
   "logOut": "Log out?",
-  "systemFilesAccessError": "System Files Access Error: {error}"
+  "systemFilesAccessError": "System Files Access Error: {error}",
+  "connectionTimeout": "Connection timeout: {error}",
+  "sendTimeout": "send timeout: {error}",
+  "receiveTimeout": "receive timeout: {error}",
+  "badResponse": "bad response: {error}",
+  "connectionError": "connection error: {error}",
+  "requestCancelled": "request cancelled",
+  "actionNeedsConfirmation": "confirm before proceed"
 }

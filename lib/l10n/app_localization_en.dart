@@ -758,8 +758,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get changingStateMightResultClearingDependentsElements =>
-      'Changing state might result clearing dependents elements';
+  String get confirmationWarning =>
+      'Changing response might result clearing data from dependent elements';
 
   @override
   String get restoreItem => 'Restore Item';
@@ -914,7 +914,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String badCertificate(Object error) {
-    return 'Bad certificate: $error.';
+    return 'Bad certificate: $error';
   }
 
   @override
@@ -1058,4 +1058,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String systemFilesAccessError(Object error) {
     return 'System Files Access Error: $error';
   }
+
+  @override
+  String connectionTimeout(Object error) {
+    return 'Connection timeout: $error';
+  }
+
+  @override
+  String sendTimeout(Object error) {
+    return 'send timeout: $error';
+  }
+
+  @override
+  String receiveTimeout(Object error) {
+    return 'receive timeout: $error';
+  }
+
+  @override
+  String badResponse(Object error) {
+    return 'bad response: $error';
+  }
+
+  @override
+  String connectionError(Object error) {
+    return 'connection error: $error';
+  }
+
+  @override
+  String get requestCancelled => 'request cancelled';
+
+  @override
+  String get actionNeedsConfirmation => 'confirm before proceed';
 }

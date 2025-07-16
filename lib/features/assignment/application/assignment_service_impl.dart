@@ -1,9 +1,11 @@
+import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/features/assignment/application/assignment_access.dart';
+import 'package:datarunmobile/commons/extensions/string_extension.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_service.dart';
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
@@ -35,19 +37,26 @@ class AssignmentServiceImpl implements AssignmentService {
   final AppDatabase _db = appLocator<DbManager>().db;
 
   @override
-  Future<AssignmentModel> fetchById(String assignmentUid) {
-    return _db.managers.assignments
-        .filter((f) => f.id(assignmentUid))
+  Future<AssignmentModel> fetchById(String assignmentUid) async {
+    final List<Pair<AssignmentForm, bool>> userForms =
+        await userAvailableForms(assignment: assignmentUid);
+    final assignmentForms =
+        userForms.where((uf) => uf.first.assignment == assignmentUid).toList();
+
+    final assignmentModel = await _db.managers.assignments
+        .filter((f) => f.id(assignmentUid) & f.disabled.not(true))
         .withReferences((prefetch) => prefetch(
               orgUnit: true,
               team: true,
               activity: true,
+              forms: true,
             ))
         .map((assignmentWithRefs) {
       final (assignment, ref) = assignmentWithRefs;
       final orgUnit = ref.orgUnit.prefetchedData!.first;
       final team = ref.team.prefetchedData!.first;
       final activity = ref.activity.prefetchedData!.first;
+      final forms = ref.forms.prefetchedData ?? [];
       return AssignmentModel(
           id: assignment.id,
           activity: IdentifiableModel(
@@ -65,41 +74,44 @@ class AssignmentServiceImpl implements AssignmentService {
               id: team.id,
               name: '${Intl.message('team')} ${team.code}',
               code: team.code ?? ''),
+          formCount: forms.length,
+          userForms: assignmentForms,
           status: assignment.status ?? AssignmentStatus.PLANNED);
     }).getSingle();
+
+    return assignmentModel;
   }
 
   @override
   Future<bool> isOpen(String assignmentUid) async {
-    final enrollment = await _db.managers.assignments
-        .filter((f) => f.id(assignmentUid))
+    final assignment = await _db.managers.assignments
+        .filter((f) => f.id(assignmentUid) & f.disabled.not(true))
         .getSingleOrNull();
-    if (enrollment == null || enrollment.status == null) return true;
-    return enrollment.status!.isActive();
+    if (assignment == null || assignment.status == null) return true;
+    return assignment.status!.isActive();
   }
 
   @override
-  Future<AssignmentAccess> getAssignmentAccess(
+  Future<AssignmentForm?> getAssignmentAccessForForm(
       String assignmentUid, String formTemplateUid) async {
-    final formTemplate = await await _db.managers.assignmentForms
-        .filter(
-            (f) => f.assignment.id(assignmentUid) & f.form.id(formTemplateUid))
+    final assignmentFormAccess = await await _db.managers.assignmentForms
+        .filter((f) =>
+            f.assignment.id(assignmentUid) &
+            f.form.id(formTemplateUid) &
+            f.assignment.disabled.not(true))
         .getSingleOrNull();
-    if (formTemplate == null) return AssignmentAccess.noAccess;
 
-    final hasWrite = formTemplate.canAddSubmissions == true;
-    final dataAccess =
-        hasWrite ? AssignmentAccess.writeAccess : AssignmentAccess.readAccess;
-
-    return dataAccess;
+    return assignmentFormAccess;
   }
 
   @override
   Future<bool> allowInstanceCreation(
       String assignmentUid, String formTemplateUid) async {
     final formTemplate = await await _db.managers.assignmentForms
-        .filter(
-            (f) => f.assignment.id(assignmentUid) & f.form.id(formTemplateUid))
+        .filter((f) =>
+            f.assignment.id(assignmentUid) &
+            f.form.id(formTemplateUid) &
+            f.assignment.disabled.not(true))
         .getSingleOrNull();
 
     return formTemplate?.canAddSubmissions == true;
@@ -116,7 +128,8 @@ class AssignmentServiceImpl implements AssignmentService {
     final formTemplateAccess = await await _db.managers.assignmentForms
         .filter((f) =>
             f.assignment.id(assignmentUid) &
-            f.form.id(formInstance.formTemplate))
+            f.form.id(formInstance.formTemplate) &
+            f.assignment.disabled.not(true))
         .getSingleOrNull();
     if (formTemplateAccess == null) return false;
 
@@ -129,22 +142,62 @@ class AssignmentServiceImpl implements AssignmentService {
   @override
   Future<bool> allowInstanceDelete(
       String assignmentUid, String formInstanceUid) async {
-    final formInstance = await _db.managers.dataInstances
+    final dataSubmission = await _db.managers.dataInstances
         .filter((f) => f.id(formInstanceUid))
         .getSingleOrNull();
-    if (formInstance == null) return false;
+    if (dataSubmission == null) return false;
 
     final formTemplate = await await _db.managers.assignmentForms
         .filter((f) =>
             f.assignment.id(assignmentUid) &
-            f.form.id(formInstance.formTemplate))
+            f.form.id(dataSubmission.formTemplate) &
+            f.assignment.disabled.not(true))
         .getSingleOrNull();
 
     if (formTemplate == null) return false;
 
     // if is not already synced with server instance
-    if (!formInstance.isToUpdate) return true;
+    if (!dataSubmission.isToUpdate) return true;
 
     return formTemplate.canDeleteSubmissions == true;
+  }
+
+  Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
+      {String? assignment}) async {
+    List<AssignmentForm> assignmentForms = [];
+    var query = DSdk.db.managers.assignmentForms;
+
+    if (assignment.isNotNullOrEmpty) {
+      query = query
+        ..filter((f) =>
+            f.assignment.id(assignment) & f.assignment.disabled.not(true));
+    }
+
+    assignmentForms.addAll(await query.get());
+
+    final userForm = assignmentForms.map((a) => a.form);
+    final List<FormTemplate> availableFormTemplates = await DSdk
+        .db.managers.formTemplates
+        .filter((f) => f.id.isIn(userForm))
+        .get();
+
+    final List<String> availableForms =
+        availableFormTemplates.map((f) => f.id).toList();
+
+    final availableAssignedForms = assignmentForms
+        .map((fp) => Pair(fp, availableForms.contains(fp.form)))
+        .toList();
+
+    return availableAssignedForms;
+  }
+
+  @override
+  Future<void> updateAssignmentStatus(
+      AssignmentStatus? progressStatus, String assignmentId) async {
+    await DSdk.db.managers.assignments
+        .filter((f) => f.id(assignmentId))
+        .update((o) => o.call(
+              status: Value.absentIfNull(progressStatus),
+            ));
   }
 }

@@ -256,7 +256,7 @@
   "teams": "الفرق",
   "clearAll": "تفريق الكل",
   "copiedToClipboard": "تم نسخ {value} للحافظة",
-  "changingStateMightResultClearingDependentsElements": "قد يؤدي إلى تفريغ بيانات حقول تعتمد على الحالة!",
+  "confirmationWarning": "قد يؤدي تغيير الخيار إلى تفريغ أي بيانات تعتمد على إجابة هذا السؤال، تأكيد؟",
   "restoreItem": "استعادة العنصر",
   "deleteRestore": "حذف/استعادة",
   "fieldIsMandatory": "الحقل مطلوب",
@@ -306,7 +306,7 @@
   "unsupportedValueType": "نوع غير مدعوم للقيمة",
   "noActiveDatabaseFound": "لم يتم العثور على قاعدة بيانات نشطة: {error}.",
   "sessionExpired": "انتهت صلاحية الجلسة: {error}.",
-  "badCertificate": "شهادة غير صالحة: {error}.",
+  "badCertificate": "شهادة غير صالحة: {error}",
   "invalidData": "بيانات غير صالحة: {error}.",
   "badHttpRequest": "طلب HTTP غير صحيح: {error}.",
   "badRequestToEndPoint": "طلب غير صحيح: {error}.",
@@ -348,5 +348,12 @@
   "signingOutWarning": "سيؤدي تسجيل الخروج إلى فقدان أي تغييرات لم يتم مزامنتها. هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "logOutAnyway": "نأكيد تسجيل الخروج",
   "logOut": "تسجيل الخروج؟",
-  "systemFilesAccessError": "خطأ عند محاولة الوصول لملفات التخزين: {error}"
+  "systemFilesAccessError": "خطأ عند محاولة الوصول لملفات التخزين: {error}",
+  "connectionTimeout": "الإتصال بالسيرفر يستغرق وقتًا طويلًا، ابحث عن انترنت جيد وحاول مجدداً: {error}",
+  "sendTimeout": "الإتصال بالسيرفر يستغرق وقتًا طويلًا، حاول مرة أخرى: {error}",
+  "receiveTimeout": "الإتصال بالسيرفر يستغرق وقتًا طويلًا، حاول مرة أخرى: {error}",
+  "badResponse": "bad response: {error}",
+  "connectionError": "لم يتمكن من الإتصال بالسيرفر: {error}",
+  "requestCancelled": "تم إلغاء الطلب",
+  "actionNeedsConfirmation": "تأكيد الطلب"
 }

@@ -758,8 +758,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get changingStateMightResultClearingDependentsElements =>
-      'قد يؤدي إلى تفريغ بيانات حقول تعتمد على الحالة!';
+  String get confirmationWarning =>
+      'قد يؤدي تغيير الخيار إلى تفريغ أي بيانات تعتمد على إجابة هذا السؤال، تأكيد؟';
 
   @override
   String get restoreItem => 'استعادة العنصر';
@@ -914,7 +914,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String badCertificate(Object error) {
-    return 'شهادة غير صالحة: $error.';
+    return 'شهادة غير صالحة: $error';
   }
 
   @override
@@ -1058,4 +1058,35 @@ class AppLocalizationsAr extends AppLocalizations {
   String systemFilesAccessError(Object error) {
     return 'خطأ عند محاولة الوصول لملفات التخزين: $error';
   }
+
+  @override
+  String connectionTimeout(Object error) {
+    return 'الإتصال بالسيرفر يستغرق وقتًا طويلًا، ابحث عن انترنت جيد وحاول مجدداً: $error';
+  }
+
+  @override
+  String sendTimeout(Object error) {
+    return 'الإتصال بالسيرفر يستغرق وقتًا طويلًا، حاول مرة أخرى: $error';
+  }
+
+  @override
+  String receiveTimeout(Object error) {
+    return 'الإتصال بالسيرفر يستغرق وقتًا طويلًا، حاول مرة أخرى: $error';
+  }
+
+  @override
+  String badResponse(Object error) {
+    return 'bad response: $error';
+  }
+
+  @override
+  String connectionError(Object error) {
+    return 'لم يتمكن من الإتصال بالسيرفر: $error';
+  }
+
+  @override
+  String get requestCancelled => 'تم إلغاء الطلب';
+
+  @override
+  String get actionNeedsConfirmation => 'تأكيد الطلب';
 }

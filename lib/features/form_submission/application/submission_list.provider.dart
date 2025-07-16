@@ -5,8 +5,8 @@ import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/data/code_generator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/form_submission_repository.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -103,7 +103,7 @@ class FormSubmissions extends _$FormSubmissions {
     //         as SyncableQuery)
     //     .upload();
 
-    await DSdk.dataInstanceSource.upload(uids);
+    await DSdk.db.dataInstancesDao.upload(uids);
 
     ref.invalidateSelf();
     await future;
@@ -114,85 +114,12 @@ class FormSubmissions extends _$FormSubmissions {
 Future<bool> submissionEditStatus(Ref ref,
     {required FormMetadata formMetadata}) async {
   final db = DSdk.db;
-  final teamsWithRefs = await db.managers.teams
-      .filter((f) => f.id(formMetadata.assignmentModel.team.id))
-      .withReferences((prefetch) => prefetch(teamFormPermissions: true))
+  final assignmentForm = await db.managers.assignmentForms
+      .filter((f) =>
+          f.assignment.id(formMetadata.assignmentModel.id) &
+          f.form.id(formMetadata.formId))
       .getSingleOrNull();
-  if (teamsWithRefs == null) {
-    return false;
-  }
-
-  final (todo, refs) = teamsWithRefs;
-
-  final formPermission = refs.teamFormPermissions.prefetchedData
-      ?.where((t) => t.form == formMetadata.formId)
-      .firstOrNull;
-  return formPermission?.permissions.canEdit ?? false;
+  if (assignmentForm == null) return false;
+  return assignmentForm.canAddSubmissions == true ||
+      assignmentForm.canEditSubmissions == true;
 }
-//
-// @riverpod
-// Future<IMap<String, dynamic>> formSubmissionData(FormSubmissionDataRef ref,
-//     {required String submissionId}) async {
-//   final DataInstance? formSubmission = await ref
-//       .watch(formSubmissionRepositoryProvider)
-//       .getSubmission(submissionId);
-//   final submissionData = await ref.watch(
-//       formSubmissionsProvider(formSubmission!.formTemplate).selectAsync(
-//           (IList<DataInstance> submissions) => submissions
-//               .firstWhere((item) => item.id == submissionId)
-//               .formData));
-//   return IMap.withConfig(submissionData, const ConfigMap(cacheHashCode: false));
-// }
-//
-// @riverpod
-// Future<List<DataInstance>> submissionFilteredByState(
-//     SubmissionFilteredByStateRef ref,
-//     {required String form,
-//     SyncStatus? status,
-//     String sortBy = 'name'}) async {
-//   final allSubmissions = await ref.watch(formSubmissionsProvider(form).future);
-//
-//   final filteredSubmission = allSubmissions
-//       .where(SubmissionListUtil.getFilterPredicate(status))
-//       .toList();
-//
-//   filteredSubmission.sort((a, b) =>
-//       (b.finishedEntryTime ?? b.startEntryTime ?? b.name ?? '')
-//           .compareTo(a.finishedEntryTime ?? a.startEntryTime ?? a.name ?? ''));
-//   return filteredSubmission;
-// }
-//
-// @riverpod
-// Future<SubmissionItemSummaryModel> submissionInfo(SubmissionInfoRef ref,
-//     {required FormMetadata formMetadata}) async {
-//   final allSubmissions =
-//       await ref.watch(formSubmissionsProvider(formMetadata.formId).future);
-//
-//   final submission =
-//       allSubmissions.firstWhere((t) => t.id == formMetadata.submission!);
-//
-//   final Assignment? assignment = submission.assignment != null
-//       ? await D2Remote.assignmentModuleD.assignment
-//           .byId(submission.assignment!)
-//           .getOne()
-//       : null;
-//
-//   final OrgUnit? orgUnit = assignment != null
-//       ? await D2Remote.organisationUnitModuleD.orgUnit
-//           .byId(assignment.orgUnit!)
-//           .getOne()
-//       : null;
-//
-//   // final extract = extractValues(
-//   //     submission.formData, formConfig.allFields.unlockView.values.toList(),
-//   //     criteria: (Template t) => t.mainField == true);
-//   // final formData = extract.map((k, v) => MapEntry(
-//   //     formConfig.getFieldDisplayName(k),
-//   //     formConfig.getUserFriendlyValue(k, v)));
-//
-//   return SubmissionItemSummaryModel(
-//       syncStatus: SubmissionListUtil.getSyncStatus(submission)!,
-//       code: orgUnit?.code,
-//       orgUnit: '${orgUnit?.displayName ?? getItemLocalString(orgUnit?.label)}',
-//       formData: submission.formData);
-// }

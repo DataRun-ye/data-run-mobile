@@ -5,7 +5,7 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/data/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
@@ -31,6 +31,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
     return ReactiveChoiceChips<String>(
       formControl: formInstance.form.control(element.elementPath!)
           as FormControl<String>,
+      confirmChangingValue: true,
       validationMessages: validationMessages(),
       options: _getChipOptions(progressStatuses),
       decoration: InputDecoration(
@@ -66,7 +67,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
         return AlertDialog(
           title: Text(S.of(context).confirm),
           content: Text(
-              S.of(context).changingStateMightResultClearingDependentsElements),
+              S.of(context).confirmationWarning),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),

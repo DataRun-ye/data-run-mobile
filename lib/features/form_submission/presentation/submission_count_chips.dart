@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/submission_count.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_count.provider.dart';
 import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -57,6 +57,8 @@ class AuthApi {
         'username': response.data['username'],
         'authorities': authorities,
       });
+    } on DioException catch (e) {
+      throw DException(e.toString(), e);
     } catch (e, s) {
       logError('Error while fetching user details', source: e, stackTrace: s);
       throw AuthException('Error while fetching user details', cause: e);

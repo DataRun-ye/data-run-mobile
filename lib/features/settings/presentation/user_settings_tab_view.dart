@@ -96,13 +96,12 @@ class UserSettingsTabView extends StackedHookView<SettingsViewmodel> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 onTap: () async {
-                  ref.read(confirmationProvider).confirmAndExecute(
+                  appLocator<ConfirmationService>().confirmAndExecute(
                       context: context,
                       title: S.of(context).logOut,
                       body: S.of(context).signingOutWarning,
                       confirmLabel: S.of(context).logOutAnyway,
                       action: () => model.logout());
-                  ;
                 },
               ),
             ),
@@ -118,7 +117,8 @@ class _SettingsLanguageItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String prefLang = ref.watch(preferenceNotifierProvider(Preference.language)) as String;
+    String prefLang =
+        ref.watch(preferenceNotifierProvider(Preference.language)) as String;
     String language = prefLang == 'NA' ? 'en' : prefLang;
 
     return Card(

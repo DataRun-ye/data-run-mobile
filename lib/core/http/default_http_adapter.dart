@@ -30,9 +30,9 @@ class DefaultHttpAdapter extends HttpClient<dynamic> {
     Future<Response<dynamic>>? futureResponse;
     try {
       if (method == 'post') {
-        dioClient.options.copyWith(
-            headers: defaultHeaders,
-            receiveTimeout: const Duration(milliseconds: 100000));
+        // dioClient.options.copyWith(
+        //     // headers: defaultHeaders,
+        //     receiveTimeout: const Duration(milliseconds: 100000));
 
         futureResponse = dioClient.post(resourcePath,
             data: data,

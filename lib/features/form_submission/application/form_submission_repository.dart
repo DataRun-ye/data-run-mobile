@@ -10,7 +10,7 @@ class FormSubmissionRepository {
 
   Future<IList<DataInstance>> getSubmissions(String form) async {
     final query =
-        await _db.managers.dataInstances.filter((f) => f.formTemplate.id(form));
+    await _db.managers.dataInstances.filter((f) => f.formTemplate.id(form));
     final List<DataInstance> submissions = await query.get();
     return submissions.lock;
   }
@@ -23,6 +23,7 @@ class FormSubmissionRepository {
   }
 
   Future<void> deleteSubmission(String uid) async {
+    _db.dataInstancesDao.deleteById(uid);
     await _db.managers.dataInstances.filter((f) => f.id(uid)).delete();
   }
 }

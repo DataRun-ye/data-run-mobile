@@ -1,8 +1,10 @@
+import 'dart:async';
+
+import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
-import 'package:datarunmobile/core/auth/sync_interactor.dart';
+import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart';
-import 'package:datarunmobile/core/sync_manager/sync_progress_event.dart';
 import 'package:datarunmobile/core/sync_manager/sync_progress_global_state.dart';
 import 'package:datarunmobile/core/sync_manager/sync_resource_status.dart';
 import 'package:stacked/stacked.dart';
@@ -10,26 +12,29 @@ import 'package:stacked_services/stacked_services.dart';
 
 class SyncResourcesViewModel extends StreamViewModel<SyncProgressEvent> {
   final SyncManager _manager = appLocator<SyncManager>();
+  final SyncMetadataRepository _metadataRepo =
+      appLocator<SyncMetadataRepository>();
 
-  SyncProgressGlobalState globalState = SyncProgressGlobalState.initial();
-  List<SyncResourceStatus> resourceStates = [];
+  SyncProgressGlobalState? globalState;
+  Map<String, SyncResourceStatus> resourceStates = {};
 
   @override
   void onData(SyncProgressEvent? event) {
     if (event != null) {
-      final index =
-          resourceStates.indexWhere((r) => r.name == event.resourceName);
-      if (index >= 0) {
-        resourceStates[index] = SyncResourceStatus.fromEvent(event);
-      } else {
-        resourceStates.add(SyncResourceStatus.fromEvent(event));
-      }
+      resourceStates.update(
+          event.resourceName, (oldValue) => SyncResourceStatus.fromEvent(event),
+          ifAbsent: () => SyncResourceStatus.fromEvent(event));
+
       // Aggregate global progress from resource states.
-      globalState = SyncProgressGlobalState.aggregate(
-          resourceStates, event.percentage, event.message);
-      if (event.percentage == 100) {
-        appLocator<SyncInteractor>().markSyncDone();
-        appLocator<NavigationService>().replaceWithHomeWrapperPage();
+      globalState = _manager.globalState;
+
+      if (globalState!.completed) {
+        unawaited(_metadataRepo.updateInitialSyncDone(true));
+        unawaited(_metadataRepo.updateLastSync());
+        appLocator<NavigationService>().clearStackAndShow(
+          Routes.homeWrapperPage,
+        );
+        // appLocator<NavigationService>().replaceWithHomeWrapperPage();
       }
     }
 
@@ -41,6 +46,8 @@ class SyncResourcesViewModel extends StreamViewModel<SyncProgressEvent> {
 
   Future<void> triggerSync() async {
     try {
+      globalState = SyncProgressGlobalState.initial(
+          totalResources: _manager.totalResources);
       await _manager.syncAll();
     } catch (e) {
       // state = state.copyWith(

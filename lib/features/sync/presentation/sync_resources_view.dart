@@ -1,4 +1,5 @@
-import 'package:datarunmobile/core/sync_manager/sync_progress_event.dart';
+import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
+import 'package:datarunmobile/features/sync/presentation/sync_progress_circular_indicator.dart';
 import 'package:datarunmobile/features/sync/presentation/sync_resources_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -22,30 +23,8 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
           // Global indicator
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                CircularProgressIndicator(
-                  value: global.percentage / 100,
-                  strokeWidth: 8,
-                  valueColor: AlwaysStoppedAnimation(
-                    global.overallState == SyncProgressState.FAILED
-                        ? Colors.red
-                        : global.overallState == SyncProgressState.SUCCEEDED
-                            ? Colors.green
-                            : cs.primary,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Overall: ${global.percentage.toStringAsFixed(0)}%',
-                  style: TextStyle(fontSize: 16),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  '${global.currentMessage}',
-                  style: TextStyle(fontSize: 14),
-                ),
-              ],
+            child: SyncProgressCircularIndicator(
+              syncProgressInfo: global,
             ),
           ),
           Divider(),
@@ -55,13 +34,14 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
               itemCount: viewModel.resourceStates.length,
               separatorBuilder: (_, __) => Divider(
                 color: cs.primary,
-                thickness: 0.1,
+                thickness: 0.2,
                 height: 1,
                 indent: 16,
                 endIndent: 16,
               ),
               itemBuilder: (context, index) {
-                final res = viewModel.resourceStates[index];
+                final res =
+                    viewModel.resourceStates.entries.toList()[index].value;
                 return ListTile(
                   leading: Icon(
                     res.state == SyncProgressState.SUCCEEDED
@@ -75,9 +55,12 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
                             ? Colors.red
                             : cs.primary,
                   ),
-                  title: Text(Intl.message(res.name), style: TextStyle(fontWeight: FontWeight.bold, color: cs.primary)),
-                  // subtitle: Text(res.message ?? ''),
-                  trailing: Text(res.message ?? ''),
+                  title: Text(Intl.message(res.name),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: cs.primary,
+                      )),
+                  trailing: Text(res.syncedResources?.toString() ?? ''),
                 );
               },
             ),

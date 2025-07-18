@@ -1,7 +1,7 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
-import 'package:datarunmobile/core/network/connectivy_service.dart';
+import 'package:datarunmobile/core/network/network_util.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:stacked/stacked.dart';
 

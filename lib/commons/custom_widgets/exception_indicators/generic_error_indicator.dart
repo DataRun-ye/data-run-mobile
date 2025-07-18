@@ -1,4 +1,5 @@
-import 'package:datarunmobile/features/shared/exception_indicators/exception_indicator.dart';
+import 'package:datarunmobile/commons/custom_widgets/exception_indicators/exception_indicator.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 
 /// Indicates that an unknown error occurred.
@@ -12,9 +13,8 @@ class GenericErrorIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ExceptionIndicator(
-        title: 'Something went wrong',
-        message: 'The application has encountered an unknown error.\n'
-            'Please try again later.',
+        title: S.of(context).generalErrorTitle,
+        message: '${S.of(context).generalErrorMessage}\n',
         assetName: 'assets/confused-face.png',
         onTryAgain: onTryAgain,
       );

@@ -69,23 +69,26 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m20(error) => "انتهت صلاحية الجلسة: ${error}.";
 
   static String m21(error) =>
+      "حدث خطأ أثناء محاولة الإرسال، حاول مرة أخرى:\n ${error}";
+
+  static String m22(error) =>
       "حدث خطأ أثناء مزامنة البيانات: ${error}. يرجى المحاولة مرة أخرى.";
 
-  static String m22(count) =>
+  static String m23(count) =>
       "${Intl.plural(count, zero: 'لا تتوفر استمارات نهائية', one: 'عدد 1 استمارة', two: 'عدد استمارتان', other: 'عدد ${count} استمارة')}";
 
-  static String m23(error) => "خطأ عند محاولة الوصول لملفات التخزين: ${error}";
+  static String m24(error) => "خطأ عند محاولة الوصول لملفات التخزين: ${error}";
 
-  static String m24(error) => "وصول غير مصرح به إلى نقطة المورد: ${error}.";
+  static String m25(error) => "وصول غير مصرح به إلى نقطة المورد: ${error}.";
 
-  static String m25(error) =>
+  static String m26(error) =>
       "حدث خطأ غير متوقع: ${error}. يرجى المحاولة مرة أخرى.";
 
-  static String m26(error) => "يجب أن تكون القيمة أكبر من أو تساوي ${error}.";
+  static String m27(error) => "يجب أن تكون القيمة أكبر من أو تساوي ${error}.";
 
-  static String m27(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
+  static String m28(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
 
-  static String m28(count) =>
+  static String m29(count) =>
       "${Intl.plural(count, zero: '', one: 'سنة', two: 'سنتان', few: '${count} سنوات', other: '${count} سنة')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -139,6 +142,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "أدخل قيمة منطقية",
     ),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+    "cancelSyncing": MessageLookupByLibrary.simpleMessage(
+      "إيقاف والمزامنة لاحقًا",
+    ),
     "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
     "changePassword": MessageLookupByLibrary.simpleMessage("تغيير كلمة السر"),
     "checkFieldsLater": MessageLookupByLibrary.simpleMessage("ليس الآن"),
@@ -246,6 +252,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorOpeningNewForm": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء فتح الإستمارة",
     ),
+    "errorSubmittingForm": MessageLookupByLibrary.simpleMessage(
+      "خطأ وقت الإرسال",
+    ),
     "errorSummary": MessageLookupByLibrary.simpleMessage("ملخص الأخطاء"),
     "everyFifteenDays": MessageLookupByLibrary.simpleMessage("كل 15 يوم"),
     "everyTwoDays": MessageLookupByLibrary.simpleMessage("كل يومين"),
@@ -276,6 +285,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "fullNameFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل الاسم الكامل",
     ),
+    "generalErrorMessage": MessageLookupByLibrary.simpleMessage(
+      "The application has encountered an unknown error, Please try again later.",
+    ),
+    "generalErrorTitle": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
     "genericError": MessageLookupByLibrary.simpleMessage("خطأ غير محدد"),
     "gtin": MessageLookupByLibrary.simpleMessage("الرقم التجاري"),
     "hidePassword": MessageLookupByLibrary.simpleMessage("اخفاء كلمة السر"),
@@ -363,6 +376,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAuthenticatedUserOffline": MessageLookupByLibrary.simpleMessage(
       "لم يتم توثيق المستخدم مسبقاً. لا يمكن تسجيل الدخول في وضع عدم الاتصال.",
     ),
+    "noConnection": MessageLookupByLibrary.simpleMessage("لا يتوفر إنترنت"),
+    "noConnectionMessage": MessageLookupByLibrary.simpleMessage(
+      "يرجى تفحص خط الإنترنت ثم المحاولة مرة أخرى",
+    ),
     "noFormsAvailable": MessageLookupByLibrary.simpleMessage(
       "لا تتوفر استمارات لهذا النشاط",
     ),
@@ -399,11 +416,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "orgUnitInputLabel": MessageLookupByLibrary.simpleMessage(
       "اختر اسم المكان",
     ),
-    "orgUnits": MessageLookupByLibrary.simpleMessage("وحدات تنظيمة"),
+    "orgUnits": MessageLookupByLibrary.simpleMessage("وحدات تنظيمية"),
     "organization": MessageLookupByLibrary.simpleMessage("الوحدة التنظيمية"),
     "orgunitFieldHint": MessageLookupByLibrary.simpleMessage(
       "اختر وحدة تنظيمية",
     ),
+    "ouLevels": MessageLookupByLibrary.simpleMessage("مستويات إدارية"),
     "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
     "percentageFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل نسبة مئوية",
@@ -488,9 +506,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "startingSync": MessageLookupByLibrary.simpleMessage("بدء التحديث"),
     "status": MessageLookupByLibrary.simpleMessage("الحالة"),
     "submissionDataEntry": MessageLookupByLibrary.simpleMessage("بيانات"),
+    "submissionError": m21,
     "submissionInitialData": MessageLookupByLibrary.simpleMessage("الرئيسة"),
     "successCount": MessageLookupByLibrary.simpleMessage("عدد النجاحات"),
-    "syncError": m21,
+    "syncError": m22,
     "syncErrors": MessageLookupByLibrary.simpleMessage("أخطاء المزامنة"),
     "syncFormData": MessageLookupByLibrary.simpleMessage(
       "مزامنة بيانات الاستمارة",
@@ -503,7 +522,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "مزامنة إعدادات المستخدم",
     ),
     "syncSettings": MessageLookupByLibrary.simpleMessage("التحديث التلقائي"),
-    "syncSubmissions": m22,
+    "syncSubmissions": m23,
     "syncSummaryLoadError": MessageLookupByLibrary.simpleMessage(
       "خطأ في تحميل ملخص المزامنة",
     ),
@@ -514,7 +533,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "syncingData": MessageLookupByLibrary.simpleMessage("مزامنة بيانات"),
     "syncingEvents": MessageLookupByLibrary.simpleMessage("مزامنة الإستمارات"),
-    "systemFilesAccessError": m23,
+    "systemFilesAccessError": m24,
     "team": MessageLookupByLibrary.simpleMessage("الفريق"),
     "teamFieldHint": MessageLookupByLibrary.simpleMessage("اختر فريقًا"),
     "teams": MessageLookupByLibrary.simpleMessage("الفرق"),
@@ -533,9 +552,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "تحويل بين قائمة/جدول",
     ),
     "trueOnlyFieldHint": MessageLookupByLibrary.simpleMessage("قيمة صحيحة فقط"),
-    "unauthorizedAccessToEndPoint": m24,
+    "unauthorizedAccessToEndPoint": m25,
     "undo": MessageLookupByLibrary.simpleMessage("تراجع"),
-    "unexpected": m25,
+    "unexpected": m26,
     "unitIntervalFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل قيمة بين 0 و1",
     ),
@@ -559,8 +578,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "يرجى تصحيح الأخطاء في النموذج قبل المتابعة.",
     ),
     "validationErrorMessage": MessageLookupByLibrary.simpleMessage("خطأ تحقق"),
-    "valueMustBeGreaterThanOrEqualToError": m26,
-    "valueMustBeLessThanOrEqualToError": m27,
+    "valueMustBeGreaterThanOrEqualToError": m27,
+    "valueMustBeLessThanOrEqualToError": m28,
     "version": MessageLookupByLibrary.simpleMessage("الإصدار"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "افتح لاستعرض الاستمارات المتاحة",
@@ -569,7 +588,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("عرض الأخطاء"),
     "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
-    "year": m28,
+    "year": m29,
     "years": MessageLookupByLibrary.simpleMessage("سنوات"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("أشهر/سنوات"),
     "yes": MessageLookupByLibrary.simpleMessage("نعم"),

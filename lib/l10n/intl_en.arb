@@ -392,5 +392,13 @@
   "badResponse": "bad response: {error}",
   "connectionError": "connection error: {error}",
   "requestCancelled": "request cancelled",
-  "actionNeedsConfirmation": "confirm before proceed"
+  "actionNeedsConfirmation": "confirm before proceed",
+  "noConnection": "No connection",
+  "noConnectionMessage": "Please check internet connection and try again.",
+  "generalErrorMessage": "The application has encountered an unknown error.'             'Please try again later.",
+  "generalErrorTitle": "Something went wrong",
+  "ouLevels": "OU Levels",
+  "submissionError": "An Error Was Encountered during for submission:\n {error}",
+  "errorSubmittingForm": "Error Submitting form",
+  "cancelSyncing": "Cancel Syncing"
 }

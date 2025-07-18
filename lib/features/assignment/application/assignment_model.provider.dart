@@ -1,6 +1,5 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/features/activity/application/activity.provider.dart';

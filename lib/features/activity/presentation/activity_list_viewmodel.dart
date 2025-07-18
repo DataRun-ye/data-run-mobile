@@ -55,17 +55,17 @@ class ActivityListViewModel extends BaseViewModel {
 
     final List<Activity> userEnabledActivities = await DSdk
         .db.managers.activities
-        .filter((f) => f.disabled(false))
+        .filter((f) => f.disabled.not(true))
         .get();
 
     final List<ActivityModel> userActivities = [];
 
     for (final activity in userEnabledActivities) {
       final activityAssignedTeam = assignedTeams
-          .where((t) => t.properties[activity] == activity.id)
+          .where((t) => t.properties['activity'] == activity.id)
           .firstOrNull;
       final List<IdentifiableModel> activityManagedTeams =
-          managed.where((t) => t.properties[activity] == activity.id).toList();
+          managed.where((t) => t.properties['activity'] == activity.id).toList();
       final List<Assignment> assignedAssignment = await DSdk
           .db.managers.assignments
           .filter((f) => f.team.id(activityAssignedTeam?.id))

@@ -1,7 +1,7 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
-import 'package:datarunmobile/features/assignment/presentation/assignment_overview_item.dart';
+import 'package:datarunmobile/features/assignment/presentation/assignment_card_view/assignment_overview_item.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

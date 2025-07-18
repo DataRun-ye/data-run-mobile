@@ -1,19 +1,19 @@
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
+import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/active_filters_widget.dart';
+import 'package:datarunmobile/features/assignment/presentation/assignment_card_view/assignments_card_view.dart';
+import 'package:datarunmobile/features/assignment/presentation/assignments_table/assignment_table_view.dart';
 import 'package:datarunmobile/features/assignment_detail/presentation/assignment_detail_page.dart';
-import 'package:datarunmobile/features/assignment/presentation/assignment_table_view.dart';
-import 'package:datarunmobile/features/assignment/presentation/assignments_card_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AssignmentPage extends HookConsumerWidget {
-  const AssignmentPage({super.key});
+class AssignmentScreen extends HookConsumerWidget {
+  const AssignmentScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -85,7 +85,6 @@ class AssignmentPage extends HookConsumerWidget {
       body: Column(
         children: [
           const ActiveFiltersWidget(),
-
           Expanded(
             child: ref.watch(
                     filterQueryProvider.select((value) => value.isCardView))

@@ -34,8 +34,8 @@ class ActivityCard extends StatelessWidget {
                       // color: Theme.of(context).primaryColor,
                     ),
               ),
-              const SizedBox(height: 8.0),
-
+              const SizedBox(height: 12.0),
+              const Divider(),
               // Assigned Team
               if (activity.assignedTeam?.name != null)
                 Row(
@@ -49,22 +49,22 @@ class ActivityCard extends StatelessWidget {
                   ],
                 ),
 
-              const SizedBox(height: 12.0),
-              Divider(color: Colors.grey.shade300, thickness: 1.0),
-
               // Managed Teams and Assignments
+              if(activity.managedTeams.length > 0)
               _infoRow(
                 context,
                 icon: Icons.groups,
                 label: S.of(context).managedTeams,
                 value: activity.managedTeams.length.toString(),
               ),
+              if(activity.assignedAssignments > 0)
               _infoRow(
                 context,
                 icon: Icons.assignment,
                 label: S.of(context).assignedAssignments,
                 value: activity.assignedAssignments.toString(),
               ),
+              if(activity.managedAssignments > 0)
               _infoRow(
                 context,
                 icon: Icons.assignment_turned_in,

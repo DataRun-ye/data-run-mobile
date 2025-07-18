@@ -9,7 +9,9 @@ class ErrorMessage {
     return switch (exception) {
       final DError error => _handleDError(error),
       final DException dException => _handleDException(dException),
-      _ => S.current.unexpected(exception.toString().substring(0, 255)),
+      _ => S.current.unexpected((exception.toString().length > 255
+          ? exception.toString().substring(0, 255)
+          : exception.toString())),
     };
   }
 
@@ -80,7 +82,9 @@ extension DioExceptionTypeExtension on DioExceptionType {
     final errorMessage = e.message ?? '';
     final responseCode = e.response?.statusCode.toString() ?? '';
     final type = e.type.toString();
-    final message = '$type: $responseCode $errorMessage';
+    final longMessage = '$type: $responseCode $errorMessage';
+    final message =
+        longMessage.length > 256 ? longMessage.substring(0, 255) : longMessage;
     switch (this) {
       case DioExceptionType.connectionTimeout:
         return S.current
@@ -98,7 +102,8 @@ extension DioExceptionTypeExtension on DioExceptionType {
       case DioExceptionType.connectionError:
         return S.current.connectionError(message);
       case DioExceptionType.unknown:
-        return S.current.unexpected(message);
+        return S.current.unexpected(
+            (message.length > 255 ? message.substring(0, 255) : message));
     }
   }
 }

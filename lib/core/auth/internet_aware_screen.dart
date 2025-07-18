@@ -1,4 +1,4 @@
-import 'package:datarunmobile/core/network/connectivy_service.dart';
+import 'package:datarunmobile/core/network/network_util.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';

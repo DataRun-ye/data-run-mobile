@@ -2661,6 +2661,81 @@ class S {
       args: [],
     );
   }
+
+  /// `No connection`
+  String get noConnection {
+    return Intl.message(
+      'No connection',
+      name: 'noConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check internet connection and try again.`
+  String get noConnectionMessage {
+    return Intl.message(
+      'Please check internet connection and try again.',
+      name: 'noConnectionMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The application has encountered an unknown error.'             'Please try again later.`
+  String get generalErrorMessage {
+    return Intl.message(
+      'The application has encountered an unknown error.\'             \'Please try again later.',
+      name: 'generalErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong`
+  String get generalErrorTitle {
+    return Intl.message(
+      'Something went wrong',
+      name: 'generalErrorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OU Levels`
+  String get ouLevels {
+    return Intl.message('OU Levels', name: 'ouLevels', desc: '', args: []);
+  }
+
+  /// `An Error Was Encountered during for submission:\n {error}`
+  String submissionError(Object error) {
+    return Intl.message(
+      'An Error Was Encountered during for submission:\n $error',
+      name: 'submissionError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Error Submitting form`
+  String get errorSubmittingForm {
+    return Intl.message(
+      'Error Submitting form',
+      name: 'errorSubmittingForm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel Syncing`
+  String get cancelSyncing {
+    return Intl.message(
+      'Cancel Syncing',
+      name: 'cancelSyncing',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

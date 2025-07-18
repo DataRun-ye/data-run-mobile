@@ -1,14 +1,13 @@
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
+import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
+import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
-import 'package:datarunmobile/features/assignment/presentation/build_highlighted_text.dart';
-import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/assignment_detail/presentation/assignment_detail_page.dart';
-import 'package:datarunmobile/features/form_submission/presentation/submission_count_chips.dart';
+import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -40,12 +39,18 @@ class AssignmentOverviewItem extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _CardHeaderRow(),
+            CardHeaderRow(),
             const SizedBox(height: 8),
             _buildEntityInfo(assignment, searchQuery, context),
             const SizedBox(height: 8),
-            _buildCountChips(),
+            SyncStatusBadgesView(
+              id: assignment.id,
+              aggregationLevel: StatusAggregationLevel.assignment,
+            ),
+            const SizedBox(height: 8),
+
             const Divider(height: 5.0),
+            const SizedBox(height: 4),
             _buildActionButtons(context, assignment, activityModel, ref),
           ],
         ),
@@ -60,23 +65,10 @@ class AssignmentOverviewItem extends ConsumerWidget {
       children: [
         const Icon(Icons.location_on),
         const SizedBox(width: 4),
-        BuildHighlightedText(assignment.orgUnit.code ?? '', searchQuery,
+        HighlightedByValueLabel('${assignment.orgUnit.code ?? ''}: ${assignment.orgUnit.name}', searchQuery,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
-        const SizedBox(width: 8),
-        BuildHighlightedText(assignment.orgUnit.name, searchQuery)
-      ],
-    );
-  }
-
-  Widget _buildCountChips() {
-    return Wrap(
-      alignment: WrapAlignment.end,
-      children: const [
-        CountChip(syncStatus: InstanceSyncStatus.synced),
-        SizedBox(width: 2),
-        CountChip(syncStatus: InstanceSyncStatus.finalized),
-        SizedBox(width: 2),
-        CountChip(syncStatus: InstanceSyncStatus.draft)
+        // const SizedBox(width: 8),
+        // HighlightedByValueLabel(assignment.orgUnit.name, searchQuery)
       ],
     );
   }
@@ -135,8 +127,8 @@ class AssignmentOverviewItem extends ConsumerWidget {
   }
 }
 
-class _CardHeaderRow extends ConsumerWidget {
-  const _CardHeaderRow();
+class CardHeaderRow extends ConsumerWidget {
+  const CardHeaderRow();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -156,9 +148,7 @@ class _CardHeaderRow extends ConsumerWidget {
             spacing: 8,
             overflowSpacing: 2,
             children: [
-              // DetailRowWithIcon(Icons.group,
-              //     '${S.of(context).team}: ${assignment.teamCode}', searchQuery),
-              DetailRowWithIcon(
+              HighlightedLabelWithIcon(
                 Icons.document_scanner,
                 availableLocally.length == userForms.length
                     ? '(${S.of(context).form(availableLocally.length)})'
@@ -168,37 +158,7 @@ class _CardHeaderRow extends ConsumerWidget {
             ],
           ),
         ),
-        buildStatusBadge(assignment.status),
-      ],
-    );
-  }
-}
-
-class DetailRowWithIcon extends StatelessWidget {
-  const DetailRowWithIcon(
-    this.icon,
-    this.text,
-    this.searchQuery, {
-    super.key,
-    this.style,
-  });
-
-  final IconData? icon;
-  final String text;
-
-  final String searchQuery;
-
-  final TextStyle? style;
-
-  @override
-  Widget build(BuildContext context) {
-    return OverflowBar(
-      spacing: 2,
-      overflowSpacing: 2,
-      children: [
-        Icon(icon, size: 20, color: Colors.grey[600]),
-        const SizedBox(width: 4),
-        BuildHighlightedText(text, searchQuery, style: style)
+        // buildStatusBadge(assignment.status),
       ],
     );
   }

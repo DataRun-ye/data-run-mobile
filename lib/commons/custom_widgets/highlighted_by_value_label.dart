@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class BuildHighlightedText extends ConsumerWidget {
-  const BuildHighlightedText(
+class HighlightedByValueLabel extends ConsumerWidget {
+  const HighlightedByValueLabel(
     this.text,
     this.searchQuery, {
     super.key,

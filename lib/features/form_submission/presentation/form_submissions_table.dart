@@ -4,6 +4,7 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.dialogs.dart';
@@ -13,7 +14,6 @@ import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form/application/form_template_model.dart';
-import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
@@ -38,9 +38,12 @@ class FormSubmissionsTable extends HookConsumerWidget {
     final selectedSubmissions = useState<IList<DataInstance>>(IList());
     final toSync = selectedSubmissions.value
         .where((s) =>
-            SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_POST ||
-            SubmissionListUtil.getSyncStatus(s) == SyncStatus.ERROR ||
-            SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_UPDATE)
+                SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_POST ||
+                SubmissionListUtil.getSyncStatus(s) ==
+                    SyncStatus
+                        .ERROR /*||
+            SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_UPDATE*/
+            )
         .map((s) => s.id)
         .toList();
     final activityModel = ActivityInheritedWidget.of(context);
@@ -101,7 +104,9 @@ class FormSubmissionsTable extends HookConsumerWidget {
                             '${S.of(context).send}: ${S.of(context).syncSubmissions(toSync.length)}'))
                   ],
                 ),
-              SizedBox(height: 8,),
+              SizedBox(
+                height: 8,
+              ),
               submissions.value.isNotEmpty
                   ? LayoutBuilder(builder: (context, constraints) {
                       return Scrollbar(
@@ -196,7 +201,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                   },
                                   cells: <DataCell>[
                                     DataCell(
-                                        buildStatusIcon(submission.syncState)),
+                                        buildStatusIcon(submission, context)),
                                     DataCell(IconButton(
                                       onPressed: !deleted
                                           ? () async {
@@ -293,14 +298,6 @@ class FormSubmissionsTable extends HookConsumerWidget {
                     .firstOrNullWhere((t) => t.id == data[field.name])
                     ?.name ??
                 data[field.name];
-            // } else if (field.type == ValueType.SelectOne &&
-            //     data.containsKey(field.name)) {
-            //   extractedValues[field.name!] = getItemLocalString(
-            //       formTemplate.options
-            //           .firstOrNullWhere((t) => t.name == data[field.name])
-            //           ?.label
-            //           .unlock,
-            //       defaultString: data[field.name] ?? '');
           } else if (data.containsKey(field.name)) {
             extractedValues[field.name!] = data[field.name];
           }
@@ -347,6 +344,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
               await ref
                   .read(formSubmissionsProvider(formId).notifier)
                   .syncEntities(ids);
+              await appLocator<NavigationService>().back();
             }
           },
         );
@@ -410,6 +408,39 @@ class FormSubmissionsTable extends HookConsumerWidget {
         ),
       ),
     );
+  }
+
+  Widget buildStatusIcon(DataInstance? instance, BuildContext context) {
+    switch (instance?.syncState) {
+      case InstanceSyncStatus.synced:
+        return const Icon(Icons.cloud_done, color: Colors.green, size: 18);
+      case InstanceSyncStatus.finalized:
+        return const Icon(Icons.cloud_sync, color: Colors.grey, size: 18);
+      case InstanceSyncStatus.draft:
+        return Icon(Icons.update, color: Colors.grey[500], size: 18);
+      case InstanceSyncStatus.syncFailed:
+        return GestureDetector(
+          child: Icon(Icons.error, color: Colors.red, size: 18),
+          onTap: () => showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                    title: Text(S.of(context).errorSubmittingForm),
+                    content: Text(S
+                        .of(context)
+                        .submissionError(instance?.lastSyncMessage ?? '')),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text(S.of(context).ok),
+                        onPressed: () {
+                          appLocator<NavigationService>().back();
+                        },
+                      ),
+                    ],
+                  )),
+        );
+      default:
+        return const Icon(Icons.all_inclusive, size: 18);
+    }
   }
 }
 

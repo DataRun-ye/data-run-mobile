@@ -2,7 +2,7 @@ import 'package:datarunmobile/features/activity/application/activity.provider.da
 import 'package:datarunmobile/features/activity/presentation/activity_card.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_list_viewmodel.dart';
-import 'package:datarunmobile/features/assignment/presentation/assignment_page_new.dart';
+import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -37,7 +37,7 @@ class ActivityListView extends StackedView<ActivityListViewModel> {
                     activityModelProvider.overrideWithValue(activity)
                   ],
                   child: ActivityInheritedWidget(
-                      activityModel: activity, child: const AssignmentPage()),
+                      activityModel: activity, child: const AssignmentScreen()),
                 ),
               ),
             );

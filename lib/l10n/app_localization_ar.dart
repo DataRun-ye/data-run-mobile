@@ -1021,7 +1021,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dataElements => 'عناصر البيانات';
 
   @override
-  String get orgUnits => 'وحدات تنظيمة';
+  String get orgUnits => 'وحدات تنظيمية';
 
   @override
   String get downloaded => 'حفظ';
@@ -1089,4 +1089,32 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get actionNeedsConfirmation => 'تأكيد الطلب';
+
+  @override
+  String get noConnection => 'لا يتوفر إنترنت';
+
+  @override
+  String get noConnectionMessage =>
+      'يرجى تفحص خط الإنترنت ثم المحاولة مرة أخرى';
+
+  @override
+  String get generalErrorMessage =>
+      'The application has encountered an unknown error, Please try again later.';
+
+  @override
+  String get generalErrorTitle => 'حدث خطأ ما';
+
+  @override
+  String get ouLevels => 'مستويات إدارية';
+
+  @override
+  String submissionError(Object error) {
+    return 'حدث خطأ أثناء محاولة الإرسال، حاول مرة أخرى:\n $error';
+  }
+
+  @override
+  String get errorSubmittingForm => 'خطأ وقت الإرسال';
+
+  @override
+  String get cancelSyncing => 'إيقاف والمزامنة لاحقًا';
 }

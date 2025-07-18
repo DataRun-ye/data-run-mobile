@@ -336,7 +336,7 @@
   "optionSets": "مجموعات الاختيار",
   "options": "خيارات",
   "dataElements": "عناصر البيانات",
-  "orgUnits": "وحدات تنظيمة",
+  "orgUnits": "وحدات تنظيمية",
   "downloaded": "حفظ",
   "currentOperations": "العملية الحالية:",
   "appTitle": "Datarun",
@@ -355,5 +355,14 @@
   "badResponse": "bad response: {error}",
   "connectionError": "لم يتمكن من الإتصال بالسيرفر: {error}",
   "requestCancelled": "تم إلغاء الطلب",
-  "actionNeedsConfirmation": "تأكيد الطلب"
+  "actionNeedsConfirmation": "تأكيد الطلب",
+  "noConnection": "لا يتوفر إنترنت",
+  "noConnectionMessage": "يرجى تفحص خط الإنترنت ثم المحاولة مرة أخرى",
+  "generalErrorMessage": "The application has encountered an unknown error, Please try again later.",
+  "generalErrorTitle": "حدث خطأ ما",
+  "ouLevels": "مستويات إدارية",
+  "formPermissions": "نماذج وصلاحيات وصول",
+  "submissionError": "حدث خطأ أثناء محاولة الإرسال، حاول مرة أخرى:\n {error}",
+  "errorSubmittingForm": "خطأ وقت الإرسال",
+  "cancelSyncing": "إيقاف والمزامنة لاحقًا"
 }

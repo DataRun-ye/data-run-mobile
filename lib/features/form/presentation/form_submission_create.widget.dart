@@ -5,7 +5,7 @@ import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
-import 'package:datarunmobile/features/custom/expandable_text.dart';
+import 'package:datarunmobile/commons/custom_widgets/expandable_text.dart';
 import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:datarunmobile/generated/l10n.dart';

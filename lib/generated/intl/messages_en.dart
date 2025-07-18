@@ -65,24 +65,27 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m20(error) => "Session expired: ${error}.";
 
-  static String m21(error) => "Error While Trying to Sync data ${error}.";
+  static String m21(error) =>
+      "An Error Was Encountered during for submission:\n ${error}";
 
-  static String m22(count) =>
+  static String m22(error) => "Error While Trying to Sync data ${error}.";
+
+  static String m23(count) =>
       "${Intl.plural(count, zero: 'No Syncable submissions', one: '1 submission', two: '2 submissions', other: '${count} submissions')}";
 
-  static String m23(error) => "System Files Access Error: ${error}";
+  static String m24(error) => "System Files Access Error: ${error}";
 
-  static String m24(error) => "Unauthorized Access to end point: ${error}.";
+  static String m25(error) => "Unauthorized Access to end point: ${error}.";
 
-  static String m25(error) => "Error: ${error}.";
-
-  static String m26(error) =>
-      "The value must be greater than or equal to ${error}.";
+  static String m26(error) => "Error: ${error}.";
 
   static String m27(error) =>
+      "The value must be greater than or equal to ${error}.";
+
+  static String m28(error) =>
       "The value must be less than or equal to ${error}.";
 
-  static String m28(count) =>
+  static String m29(count) =>
       "${Intl.plural(count, zero: ' ', one: '1 Year', two: '2 Years', few: '${count} Years', other: '${count} Years')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -138,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "batch": MessageLookupByLibrary.simpleMessage("Batch"),
     "booleanFieldHint": MessageLookupByLibrary.simpleMessage("Enter a Boolean"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "cancelSyncing": MessageLookupByLibrary.simpleMessage("Cancel Syncing"),
     "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
     "changePassword": MessageLookupByLibrary.simpleMessage("Change Password"),
     "checkFieldsLater": MessageLookupByLibrary.simpleMessage(
@@ -247,6 +251,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorOpeningNewForm": MessageLookupByLibrary.simpleMessage(
       "Error Opening New Form",
     ),
+    "errorSubmittingForm": MessageLookupByLibrary.simpleMessage(
+      "Error Submitting form",
+    ),
     "errorSummary": MessageLookupByLibrary.simpleMessage("Error Summary"),
     "everyFifteenDays": MessageLookupByLibrary.simpleMessage("Every 15 days"),
     "everyTwoDays": MessageLookupByLibrary.simpleMessage("Every two days"),
@@ -282,6 +289,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
     "fullNameFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter a full name",
+    ),
+    "generalErrorMessage": MessageLookupByLibrary.simpleMessage(
+      "The application has encountered an unknown error.\'             \'Please try again later.",
+    ),
+    "generalErrorTitle": MessageLookupByLibrary.simpleMessage(
+      "Something went wrong",
     ),
     "genericError": MessageLookupByLibrary.simpleMessage("Generic Error"),
     "gtin": MessageLookupByLibrary.simpleMessage("GTIN"),
@@ -366,6 +379,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAuthenticatedUserOffline": MessageLookupByLibrary.simpleMessage(
       "The user hasn\'t been previously authenticated. Cannot login offline.",
     ),
+    "noConnection": MessageLookupByLibrary.simpleMessage("No connection"),
+    "noConnectionMessage": MessageLookupByLibrary.simpleMessage(
+      "Please check internet connection and try again.",
+    ),
     "noFormsAvailable": MessageLookupByLibrary.simpleMessage(
       "No forms available",
     ),
@@ -409,6 +426,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "orgunitFieldHint": MessageLookupByLibrary.simpleMessage(
       "Select an OrgUnit",
     ),
+    "ouLevels": MessageLookupByLibrary.simpleMessage("OU Levels"),
     "password": MessageLookupByLibrary.simpleMessage("password"),
     "percentageFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter a Percentage",
@@ -507,9 +525,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "startingSync": MessageLookupByLibrary.simpleMessage("Starting sync..."),
     "status": MessageLookupByLibrary.simpleMessage("Status"),
     "submissionDataEntry": MessageLookupByLibrary.simpleMessage("Data"),
+    "submissionError": m21,
     "submissionInitialData": MessageLookupByLibrary.simpleMessage("Main"),
     "successCount": MessageLookupByLibrary.simpleMessage("Success Count"),
-    "syncError": m21,
+    "syncError": m22,
     "syncErrors": MessageLookupByLibrary.simpleMessage("Sync Errors"),
     "syncFormData": MessageLookupByLibrary.simpleMessage("Sync Form Data"),
     "syncInterval": MessageLookupByLibrary.simpleMessage("Sync Interval"),
@@ -518,7 +537,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sync Progress Dashboard",
     ),
     "syncSettings": MessageLookupByLibrary.simpleMessage("Sync Settings"),
-    "syncSubmissions": m22,
+    "syncSubmissions": m23,
     "syncSummaryLoadError": MessageLookupByLibrary.simpleMessage(
       "Sync Summary Load Error",
     ),
@@ -531,7 +550,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "syncingData": MessageLookupByLibrary.simpleMessage("Syncing Data"),
     "syncingEvents": MessageLookupByLibrary.simpleMessage("Syncing Events"),
-    "systemFilesAccessError": m23,
+    "systemFilesAccessError": m24,
     "team": MessageLookupByLibrary.simpleMessage("Team"),
     "teamFieldHint": MessageLookupByLibrary.simpleMessage("Select a Team"),
     "teams": MessageLookupByLibrary.simpleMessage("teams"),
@@ -552,9 +571,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Toggle List/Table View",
     ),
     "trueOnlyFieldHint": MessageLookupByLibrary.simpleMessage("fieldHintText"),
-    "unauthorizedAccessToEndPoint": m24,
+    "unauthorizedAccessToEndPoint": m25,
     "undo": MessageLookupByLibrary.simpleMessage("Undo"),
-    "unexpected": m25,
+    "unexpected": m26,
     "unitIntervalFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter unit Interval",
     ),
@@ -580,8 +599,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "validationErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Validation Error Message",
     ),
-    "valueMustBeGreaterThanOrEqualToError": m26,
-    "valueMustBeLessThanOrEqualToError": m27,
+    "valueMustBeGreaterThanOrEqualToError": m27,
+    "valueMustBeLessThanOrEqualToError": m28,
     "version": MessageLookupByLibrary.simpleMessage("Version"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "Expand to View Available Forms",
@@ -590,7 +609,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("View Errors"),
     "viewList": MessageLookupByLibrary.simpleMessage("View List"),
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
-    "year": m28,
+    "year": m29,
     "years": MessageLookupByLibrary.simpleMessage("Years"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("Y/M"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),

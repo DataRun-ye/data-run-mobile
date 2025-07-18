@@ -1,4 +1,4 @@
-import 'package:datarunmobile/features/shared/exception_indicators/exception_indicator.dart';
+import 'package:datarunmobile/commons/custom_widgets/exception_indicators/exception_indicator.dart';
 import 'package:flutter/cupertino.dart';
 
 /// Indicates that no items were found.

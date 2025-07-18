@@ -33,6 +33,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 /// Basic layout for indicating that an exception occurred.
 class ExceptionIndicator extends StatelessWidget {
@@ -44,7 +45,7 @@ class ExceptionIndicator extends StatelessWidget {
     super.key,
   });
 
-  final String title;
+  final String? title;
   final String? message;
   final String assetName;
   final VoidCallback? onTryAgain;
@@ -55,24 +56,29 @@ class ExceptionIndicator extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
           child: Column(
             children: [
-              Image.asset(
+              SvgPicture.asset(
                 assetName,
+                // 'assets/app/offline.svg',
+                width: 80,
+                height: 80,
               ),
-              const SizedBox(
-                height: 32,
-              ),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+              if (title != null)
+                const SizedBox(
+                  height: 32,
+                ),
+              if (title != null)
+                Text(
+                  title!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               if (message != null)
                 const SizedBox(
                   height: 16,
                 ),
               if (message != null)
                 Text(
-                  message ?? '',
+                  message!,
                   textAlign: TextAlign.center,
                 ),
               if (onTryAgain != null) const Spacer(),

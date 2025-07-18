@@ -20,13 +20,15 @@ class SyncStatusBadgesView extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : Wrap(
-              spacing: 16,
-              runSpacing: 8,
+              spacing: 2,
+              runSpacing: 2,
+              alignment: WrapAlignment.end,
               children: model.data
-                  .where((e) => e.count > 0)
-                  .map<Widget>((e) =>
-                      _SyncStatusBadge(syncStatus: e.syncState, count: e.count))
-                  .toList(),
+                      ?.where((e) => e.count > 0)
+                      .map<Widget>((e) => _SyncStatusBadge(
+                          syncStatus: e.syncState, count: e.count))
+                      .toList() ??
+                  [],
             ),
       viewModelBuilder: () =>
           SyncBadgesViewModel(aggregationLevel: aggregationLevel, id: id),

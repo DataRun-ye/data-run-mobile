@@ -1,4 +1,4 @@
-import 'package:datarunmobile/features/assignment/presentation/assignment_page_new.dart';
+import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
 import 'package:datarunmobile/features/common_ui_element/info_alert/info_alert_dialog.dart';
 import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet.dart';
 import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart';
@@ -17,7 +17,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SplashView),
     MaterialRoute(page: SettingsView),
     MaterialRoute(page: SyncResourcesView),
-    MaterialRoute(page: AssignmentPage),
+    MaterialRoute(page: AssignmentScreen),
     // @stacked-route
   ],
   dependencies: [

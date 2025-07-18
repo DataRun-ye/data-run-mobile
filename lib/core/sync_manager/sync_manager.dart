@@ -1,18 +1,31 @@
 import 'dart:async';
 
 import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
 import 'package:d_sdk/datasource/datasource.dart';
-import 'package:datarunmobile/core/sync_manager/sync_progress_event.dart';
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
+import 'package:datarunmobile/core/sync_manager/sync_progress_global_state.dart';
+import 'package:dio/dio.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton()
-class SyncManager {
-  SyncManager()
-      : this._remoteDataSources =
-            appLocator.getAll<AbstractDatasource<dynamic>>();
+@Injectable()
+class SyncManager extends Disposable {
+  SyncManager(ConnectivityService connectivityService)
+      : _remoteDataSourcesMap = IMap.fromIterable(
+          appLocator.getAll<AbstractDatasource<dynamic>>(),
+          keyMapper: (resource) => resource.resourceName,
+          valueMapper: (resource) => resource,
+        ),
+        _connectivityService = connectivityService;
 
-  final Iterable<AbstractDatasource<dynamic>> _remoteDataSources;
+  final IMap<String, AbstractDatasource<dynamic>> _remoteDataSourcesMap;
+
+  int get totalResources => _remoteDataSourcesMap.length;
+  int _currentResource = 0;
+  final ConnectivityService _connectivityService;
 
   /// A stream controller for progress events.
   final StreamController<SyncProgressEvent> _progressController =
@@ -21,71 +34,74 @@ class SyncManager {
   /// Expose the progress stream so the UI can subscribe.
   Stream<SyncProgressEvent> get progressStream => _progressController.stream;
 
+  late SyncProgressGlobalState globalState;
+
+  /// Sync a specific entity type T with granular progress.
+  Future<void> syncEntity(String resourceName) async {
+    final remoteSource = _remoteDataSourcesMap.get(resourceName);
+    globalState = globalState.addSyncStatus(currentMessage: resourceName);
+    _currentResource++;
+    final basePercent = ((_currentResource - 1) / totalResources) * 100;
+    await remoteSource?.syncWithRemote(progressCallback: (event) {
+      _progressController.add(event);
+      final overallProgress =
+          basePercent + (event.percentage / 100) * (100 / totalResources);
+
+      globalState = globalState.addSyncStatus(
+        syncStatus: event.syncProgressState,
+        overallPercentage: overallProgress,
+        currentMessage:
+            '${event.resourceName}',
+        completedResources: _currentResource,
+        syncedItems: event.resources,
+      );
+    });
+  }
+
   Future<void> syncAll() async {
-    final totalResources = _remoteDataSources.length;
+    // _progressController
+    globalState =
+        SyncProgressGlobalState.initial(totalResources: totalResources);
+
     int resourceIndex = 0;
 
-    _progressController.add(SyncProgressEvent(
-      resourceName: '$totalResources resources',
-      syncProgressState: SyncProgressState.ENQUEUED,
-      message: 'Start download...',
-      percentage: 0,
-    ));
-
-    for (var remoteDataSource in _remoteDataSources) {
+    for (var remoteDataSource in _remoteDataSourcesMap.keys) {
       resourceIndex++;
 
       // Calculate the base percentage completed before this resource.
       final basePercentage = ((resourceIndex - 1) / totalResources) * 100;
 
-      _progressController.add(SyncProgressEvent(
-        resourceName: remoteDataSource.resourceName,
-        syncProgressState: SyncProgressState.RUNNING,
-        message: 'syncing ${remoteDataSource.resourceName}...',
-        percentage: basePercentage,
-        completed: false,
-      ));
-
       try {
-        final onlineData = await remoteDataSource.syncWithRemote(
-          progressCallback: (resourceProgress) {
-            // Compute overall progress: add a fraction of this resource's progress.
-            final overallProgress = basePercentage +
-                (resourceProgress / 100) * (100 / totalResources);
-            _progressController.add(SyncProgressEvent(
-              resourceName: remoteDataSource.resourceName,
-              syncProgressState: SyncProgressState.SUCCEEDED,
-              message: '✔',
-              percentage: overallProgress,
-              completed: false,
-            ));
-          },
-        );
+        final onlineData = await syncEntity(remoteDataSource);
 
         final overallProgress = (resourceIndex / totalResources) * 100;
-        _progressController.add(SyncProgressEvent(
-          resourceName: remoteDataSource.resourceName,
-          syncProgressState: SyncProgressState.ENQUEUED,
-          message: '${onlineData.length}',
-          percentage: overallProgress,
-          completed: true,
-        ));
-      } catch (e) {
+      } on DioException catch (e) {
         final overallProgress = (resourceIndex / totalResources) * 100;
         _progressController.add(SyncProgressEvent(
-          resourceName: remoteDataSource.resourceName,
+          resourceName: remoteDataSource,
           syncProgressState: SyncProgressState.FAILED,
           message: '❌ Sync error: $e',
           percentage: overallProgress,
           completed: true,
         ));
-        logError('Error syncing ${remoteDataSource.resourceName}: $e');
+        logError('Error syncing ${remoteDataSource}: $e');
+      } catch (e) {
+        final overallProgress = (resourceIndex / totalResources) * 100;
+        _progressController.add(SyncProgressEvent(
+          resourceName: remoteDataSource,
+          syncProgressState: SyncProgressState.FAILED,
+          message: '❌ Sync error: $e',
+          percentage: overallProgress,
+          completed: true,
+        ));
+        logError('Error syncing ${remoteDataSource}: $e');
       }
     }
   }
 
-  @disposeMethod
-  void dispose() {
-    _progressController.close();
+  @override
+  FutureOr<dynamic> onDispose() {
+    logDebug('dispose sync Manager');
+    return _progressController.close();
   }
 }

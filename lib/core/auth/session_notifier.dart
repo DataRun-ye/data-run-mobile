@@ -8,7 +8,7 @@ import 'package:datarunmobile/core/auth/auth_storage.dart';
 import 'package:datarunmobile/core/auth/token_refresher.dart';
 import 'package:datarunmobile/core/auth/token_string_extension.dart';
 import 'package:datarunmobile/core/database/user_db_session.dart';
-import 'package:datarunmobile/core/network/connectivy_service.dart';
+import 'package:datarunmobile/core/network/network_util.dart';
 import 'package:get_it/get_it.dart';
 
 Future<UserDbSession?> initializeApp() async {

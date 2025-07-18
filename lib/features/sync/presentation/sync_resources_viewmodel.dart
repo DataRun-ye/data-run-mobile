@@ -19,7 +19,7 @@ class SyncResourcesViewModel extends StreamViewModel<SyncProgressEvent> {
   Map<String, SyncResourceStatus> resourceStates = {};
 
   @override
-  void onData(SyncProgressEvent? event) {
+  void onData(SyncProgressEvent? event) async {
     if (event != null) {
       resourceStates.update(
           event.resourceName, (oldValue) => SyncResourceStatus.fromEvent(event),
@@ -31,6 +31,7 @@ class SyncResourcesViewModel extends StreamViewModel<SyncProgressEvent> {
       if (globalState!.completed) {
         unawaited(_metadataRepo.updateInitialSyncDone(true));
         unawaited(_metadataRepo.updateLastSync());
+        await Future.delayed(const Duration(seconds: 2));
         appLocator<NavigationService>().clearStackAndShow(
           Routes.homeWrapperPage,
         );

@@ -18,6 +18,7 @@ class OptionSetService {
     if (optionSets.isNotEmpty) {
       final List<DataOption> options = await DSdk.db.managers.dataOptions
           .filter((f) => f.optionSet.id.isIn(optionSets))
+          .orderBy((o) => o.order.asc())
           .get();
 
       optionLists = Map.fromIterable(options,

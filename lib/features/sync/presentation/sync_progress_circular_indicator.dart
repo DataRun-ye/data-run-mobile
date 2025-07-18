@@ -17,38 +17,28 @@ class SyncProgressCircularIndicator extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return CircularPercentIndicator(
       radius: 40.0,
-      lineWidth: 3.0,
+      lineWidth: 9.0,
       animation: true,
       animateFromLastPercent: true,
+      circularStrokeCap: CircularStrokeCap.round,
+      backgroundColor: Colors.transparent,
+      progressColor: cs.inversePrimary,
       percent: ((syncProgressInfo?.overallPercentage ?? 0) / 100),
-      center: (syncProgressInfo?.overallState.isSuccess ?? false)
+      center: (syncProgressInfo?.completed ?? false)
           ? const Icon(
               Icons.check,
               color: DColors.Orange600,
-              size: 35,
+              size: 40,
             )
           : Text(
-              '${(syncProgressInfo?.overallPercentage ?? 0).round()}%',
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium
-                  ?.copyWith(fontWeight: FontWeight.bold, fontSize: 14.0),
+              syncProgressInfo?.overallState.isSuccess == false
+                  ? '${syncProgressInfo?.completedResources}/${syncProgressInfo?.totalResources}'
+                  : S.of(context).configurationReady,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                  color: cs.onPrimary),
             ),
-      footer: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          syncProgressInfo?.overallState.isSuccess == false
-              ? '${syncProgressInfo?.completedResources}/${syncProgressInfo?.totalResources}'
-              : S.of(context).configurationReady,
-          style: Theme.of(context)
-              .textTheme
-              .headlineMedium
-              ?.copyWith(fontSize: 13.0),
-        ),
-      ),
-      circularStrokeCap: CircularStrokeCap.round,
-      backgroundColor: Colors.transparent,
-      progressColor: cs.primary,
     );
   }
 }

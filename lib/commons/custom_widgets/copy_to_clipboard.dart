@@ -32,17 +32,20 @@ class CopyToClipboard extends StatelessWidget {
 
     void onTap() => _onTap(context);
 
-    return OverflowBar(
-      spacing: 2,
-      overflowSpacing: 1,
-      children: [
-        ...children,
-        IconButton(
-          onPressed: onTap,
-          icon: const Icon(Icons.copy),
-          tooltip: S.of(context).copyToClipboard,
-        )
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        // spacing: 2,
+        // overflowSpacing: 1,
+        children: [
+          ...children,
+          IconButton(
+            onPressed: onTap,
+            icon: const Icon(Icons.copy),
+            tooltip: S.of(context).copyToClipboard,
+          )
+        ],
+      ),
     );
   }
 

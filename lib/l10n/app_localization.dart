@@ -2005,6 +2005,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'confirm before proceed'**
   String get actionNeedsConfirmation;
+
+  /// No description provided for @noConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection'**
+  String get noConnection;
+
+  /// No description provided for @noConnectionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check internet connection and try again.'**
+  String get noConnectionMessage;
+
+  /// No description provided for @generalErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The application has encountered an unknown error.\'             \'Please try again later.'**
+  String get generalErrorMessage;
+
+  /// No description provided for @generalErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get generalErrorTitle;
+
+  /// No description provided for @ouLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'OU Levels'**
+  String get ouLevels;
+
+  /// No description provided for @submissionError.
+  ///
+  /// In en, this message translates to:
+  /// **'An Error Was Encountered during for submission:\n {error}'**
+  String submissionError(Object error);
+
+  /// No description provided for @errorSubmittingForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Submitting form'**
+  String get errorSubmittingForm;
+
+  /// No description provided for @cancelSyncing.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Syncing'**
+  String get cancelSyncing;
 }
 
 class _AppLocalizationsDelegate

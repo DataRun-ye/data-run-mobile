@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
@@ -74,13 +72,12 @@ class SyncSummaryCard extends HookConsumerWidget {
               '${S.of(context).failureCount}: ${s.failureCount}',
             ),
             isThreeLine: true,
-            trailing: s.errorsJson != null
+            trailing: s.errors != null
                 ? IconButton(
                     icon: const Icon(Icons.visibility),
                     tooltip: S.of(context).viewErrors,
                     onPressed: () {
-                      final errors =
-                          List<String>.from(jsonDecode(s.errorsJson!));
+                      final errors = s.errors!;
                       showDialog(
                         context: context,
                         builder: (_) => AlertDialog(

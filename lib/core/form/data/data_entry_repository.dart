@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 
 /// Provides access to the raw form structure and data.

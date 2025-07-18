@@ -6,7 +6,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:d_sdk/core/user_session/user_session.dart' as _i9;
-import 'package:datarunmobile/features/assignment/presentation/assignment_page_new.dart'
+import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart'
     as _i7;
 import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart'
     as _i2;
@@ -70,7 +70,7 @@ class StackedRouter extends _i1.RouterBase {
     ),
     _i1.RouteDef(
       Routes.assignmentPage,
-      page: _i7.AssignmentPage,
+      page: _i7.AssignmentScreen,
     ),
   ];
 
@@ -113,9 +113,9 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i7.AssignmentPage: (data) {
+    _i7.AssignmentScreen: (data) {
       return _i8.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i7.AssignmentPage(),
+        builder: (context) => const _i7.AssignmentScreen(),
         settings: data,
       );
     },

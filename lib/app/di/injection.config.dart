@@ -17,7 +17,6 @@ import 'package:datarunmobile/core/auth/auth_api.dart' as _i64;
 import 'package:datarunmobile/core/auth/auth_interceptor.dart' as _i656;
 import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
 import 'package:datarunmobile/core/auth/auth_storage.dart' as _i324;
-import 'package:datarunmobile/core/auth/sync_interactor.dart' as _i842;
 import 'package:datarunmobile/core/auth/token_refresher.dart' as _i48;
 import 'package:datarunmobile/core/common/confirmation_service.dart' as _i18;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
@@ -25,7 +24,9 @@ import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
 import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
     as _i1066;
 import 'package:datarunmobile/core/http/default_http_adapter.dart' as _i832;
-import 'package:datarunmobile/core/network/connectivy_service.dart' as _i761;
+import 'package:datarunmobile/core/network/network_util.dart' as _i537;
+import 'package:datarunmobile/core/network/reactive_connectivity_service.dart'
+    as _i658;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
     as _i775;
 import 'package:datarunmobile/core/sync/sync_coordinator.dart' as _i432;
@@ -71,12 +72,10 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i1027.AssignmentServiceImpl>(
       () => _i1027.AssignmentServiceImpl());
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
+  gh.lazySingleton<_i658.ConnectivityService>(
+      () => _i658.ConnectivityService());
   gh.lazySingleton<_i28.SyncProgressNotifier>(
     () => _i28.SyncProgressNotifier(),
-    dispose: (i) => i.dispose(),
-  );
-  gh.lazySingleton<_i602.SyncManager>(
-    () => _i602.SyncManager(),
     dispose: (i) => i.dispose(),
   );
   gh.factory<_i775.UserSessionService>(
@@ -85,8 +84,12 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
   gh.factory<_i492.SyncMetadataRepository>(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
-  gh.factory<_i842.SyncInteractor>(
-      () => _i842.SyncInteractor(gh<_i460.SharedPreferences>()));
+  gh.factory<_i658.SyncScheduler>(() => _i658.SyncScheduler(
+        metadataRepo: gh<_i492.SyncMetadataRepository>(),
+        connectivity: gh<_i658.ConnectivityService>(),
+      ));
+  gh.factory<_i602.SyncManager>(
+      () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
   gh.factory<_i148.SyncExecutor>(() =>
       _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
@@ -108,6 +111,11 @@ Future<_i174.GetIt> setupGlobalDependencies(
         sessionStorage: gh<_i139.SessionStorage>(),
         prefs: gh<_i460.SharedPreferences>(),
       ));
+  gh.factory<_i432.SyncCoordinator>(() => _i432.SyncCoordinator(
+        gh<_i492.SyncMetadataRepository>(),
+        gh<_i658.SyncScheduler>(),
+        gh<_i148.SyncExecutor>(),
+      ));
   gh.factory<_i656.AuthInterceptor>(
       () => _i656.AuthInterceptor(authStorage: gh<_i324.AuthStorage>()));
   gh.factory<_i361.Dio>(
@@ -118,21 +126,12 @@ Future<_i174.GetIt> setupGlobalDependencies(
         authStorage: gh<_i324.AuthStorage>(),
         authApi: gh<_i64.AuthApi>(),
       ));
-  gh.lazySingleton<_i761.NetworkUtil>(
-    () => _i761.NetworkUtil(dio: gh<_i361.Dio>()),
+  gh.lazySingleton<_i537.NetworkUtil>(
+    () => _i537.NetworkUtil(dio: gh<_i361.Dio>()),
     dispose: (i) => i.dispose(),
   );
   gh.factory<_i8.HttpClient<dynamic>>(
       () => _i832.DefaultHttpAdapter(gh<_i361.Dio>()));
-  gh.factory<_i658.SyncScheduler>(() => _i658.SyncScheduler(
-        metadataRepo: gh<_i492.SyncMetadataRepository>(),
-        connectivity: gh<_i761.NetworkUtil>(),
-      ));
-  gh.factory<_i432.SyncCoordinator>(() => _i432.SyncCoordinator(
-        gh<_i492.SyncMetadataRepository>(),
-        gh<_i658.SyncScheduler>(),
-        gh<_i148.SyncExecutor>(),
-      ));
   return getIt;
 }
 

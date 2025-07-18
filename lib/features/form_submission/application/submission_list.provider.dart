@@ -99,12 +99,7 @@ class FormSubmissions extends _$FormSubmissions {
   }
 
   Future<void> syncEntities(List<String> uids) async {
-    // await (D2Remote.formSubmissionModule.formSubmission.byIds(uids)
-    //         as SyncableQuery)
-    //     .upload();
-
     await DSdk.db.dataInstancesDao.upload(uids);
-
     ref.invalidateSelf();
     await future;
   }

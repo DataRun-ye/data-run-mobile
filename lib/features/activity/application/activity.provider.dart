@@ -1,6 +1,5 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,16 +25,16 @@ Future<List<ActivityModel>> activities(Ref ref) async {
       await ref.watch(managedTeamsProvider().future);
 
   final List<Activity> userEnabledActivities =
-      await DSdk.db.managers.activities.filter((f) => f.disabled(false)).get();
+      await DSdk.db.managers.activities.filter((f) => f.disabled.not(true)).get();
 
   final List<ActivityModel> userActivities = [];
 
   for (final activity in userEnabledActivities) {
     final activityAssignedTeam = assignedTeams
-        .where((t) => t.properties[activity] == activity.id)
+        .where((t) => t.properties['activity'] == activity.id)
         .firstOrNull;
     final List<IdentifiableModel> activityManagedTeams = managedTeams
-        .where((t) => t.properties[activity] == activity.id)
+        .where((t) => t.properties['activity'] == activity.id)
         .toList();
     final List<Assignment> assignedAssignment = await DSdk
         .db.managers.assignments

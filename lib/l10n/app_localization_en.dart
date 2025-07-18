@@ -1089,4 +1089,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionNeedsConfirmation => 'confirm before proceed';
+
+  @override
+  String get noConnection => 'No connection';
+
+  @override
+  String get noConnectionMessage =>
+      'Please check internet connection and try again.';
+
+  @override
+  String get generalErrorMessage =>
+      'The application has encountered an unknown error.\'             \'Please try again later.';
+
+  @override
+  String get generalErrorTitle => 'Something went wrong';
+
+  @override
+  String get ouLevels => 'OU Levels';
+
+  @override
+  String submissionError(Object error) {
+    return 'An Error Was Encountered during for submission:\n $error';
+  }
+
+  @override
+  String get errorSubmittingForm => 'Error Submitting form';
+
+  @override
+  String get cancelSyncing => 'Cancel Syncing';
 }

@@ -21,6 +21,20 @@ import 'package:datarunmobile/features/form_submission/presentation/field/reacti
 /// Factory that instantiate form input fields based on a dynamic element tree
 class PopupFormElementWidgetFactory {
   static Widget createWidget(FormElementInstance<dynamic> element) {
+    final key = switch (element) {
+      FieldInstance() =>
+          FieldWidget(key: ValueKey(element.elementPath), element: element),
+      RepeatSection() => RepeatTable(
+        key: Key(element.elementPath!),
+        repeatInstance: element,
+      ),
+      Section() => PopupSectionWidget(
+          key: ValueKey(element.elementPath), element: element),
+    // // TODO: Handle this case.
+    // RepeatScanInstance() => throw UnimplementedError(),
+    // TODO: Handle this case.
+    // RepeatScanInstance() => throw UnimplementedError(),
+    };
     return switch (element) {
       FieldInstance() =>
         FieldWidget(key: ValueKey(element.elementPath), element: element),

@@ -12,7 +12,6 @@ class FieldWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // useRegisterDependencies(element);
 
     final elementPropertiesSnapshot = useStream(element.propertiesChanged);
 

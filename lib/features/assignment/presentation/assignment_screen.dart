@@ -1,7 +1,4 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/teams.provider.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/active_filters_widget.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignment_card_view/assignments_card_view.dart';

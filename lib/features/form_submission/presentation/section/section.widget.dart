@@ -33,7 +33,6 @@ class SectionWidget extends HookConsumerWidget {
     return SliverStickyHeader(
         header: Container(
           color: headerColor ?? Theme.of(context).colorScheme.primary,
-          // color: cs.primaryContainer,
           padding: const EdgeInsets.all(16),
           child: Text(element.label,
               style: TextStyle(

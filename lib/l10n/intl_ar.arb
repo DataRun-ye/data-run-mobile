@@ -364,5 +364,8 @@
   "formPermissions": "نماذج وصلاحيات وصول",
   "submissionError": "حدث خطأ أثناء محاولة الإرسال، حاول مرة أخرى:\n {error}",
   "errorSubmittingForm": "خطأ وقت الإرسال",
+  "draft": "مسودة",
+  "finalized": "نهائية",
+  "syncFailed": "فشل مزامنة",
   "cancelSyncing": "إيقاف والمزامنة لاحقًا"
 }

@@ -324,7 +324,11 @@ class ReactiveDateTimePicker
                             ),
                         child: valueBuilder?.call(field.context, field.value) ??
                             Text(
+                              // textAlign: TextAlign.center,
                               field.value ?? '',
+                              textDirection: textDirection,
+                              style: Theme.of(field.context)
+                                  .inputDecorationTheme.labelStyle?.copyWith(),
                             ),
                       ),
                     ),
@@ -340,16 +344,16 @@ class ReactiveDateTimePicker
     switch (fieldType) {
       case ReactiveDatePickerFieldType.date:
         return _DateTimeValueAccessor(
-          dateTimeFormat: dateFormat ?? DateFormat(DateHelper.UI_DATE_FORMAT),
+          dateTimeFormat: dateFormat ?? DateFormat(DateHelper.UI_DATE_FORMAT, 'en_US'),
         );
       case ReactiveDatePickerFieldType.time:
         return _DateTimeValueAccessor(
-          dateTimeFormat: dateFormat ?? DateFormat(DateHelper.TIME_FORMAT),
+          dateTimeFormat: dateFormat ?? DateFormat(DateHelper.TIME_FORMAT, 'en_US'),
         );
       case ReactiveDatePickerFieldType.dateTime:
         return _DateTimeValueAccessor(
           dateTimeFormat:
-              dateFormat ?? DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION),
+              dateFormat ?? DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION, 'en_US'),
         );
     }
   }

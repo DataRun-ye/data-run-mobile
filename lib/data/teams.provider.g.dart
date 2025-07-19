@@ -166,7 +166,7 @@ class _UserAvailableFormsProviderElement
   String? get assignment => (origin as UserAvailableFormsProvider).assignment;
 }
 
-String _$teamsHash() => r'3256b5e57acf12e2c4c182e1ab1e0678685d881f';
+String _$teamsHash() => r'17c914c54bb0c42b261af697d8f0a379b72c92a9';
 
 /// See also [teams].
 @ProviderFor(teams)

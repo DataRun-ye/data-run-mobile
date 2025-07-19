@@ -7,6 +7,7 @@ import 'package:datarunmobile/features/sync/presentation/sync_resources_viewmode
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -138,7 +139,7 @@ class _AnimatedGridSyncCardState extends State<_AnimatedGridSyncCard> {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  widget.status.name,
+                  Intl.message(widget.status.name),
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context)
                       .textTheme

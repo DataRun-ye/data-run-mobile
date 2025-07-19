@@ -1259,7 +1259,7 @@ abstract class AppLocalizations {
   /// No description provided for @assignedTeam.
   ///
   /// In en, this message translates to:
-  /// **'Assigned Team'**
+  /// **'Team'**
   String get assignedTeam;
 
   /// No description provided for @managedTeams.
@@ -1271,7 +1271,7 @@ abstract class AppLocalizations {
   /// No description provided for @assignedAssignments.
   ///
   /// In en, this message translates to:
-  /// **'Assigned Assignments'**
+  /// **'Assignments'**
   String get assignedAssignments;
 
   /// No description provided for @managedAssignments.
@@ -2047,6 +2047,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error Submitting form'**
   String get errorSubmittingForm;
+
+  /// No description provided for @draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get draft;
+
+  /// No description provided for @finalized.
+  ///
+  /// In en, this message translates to:
+  /// **'Finalized'**
+  String get finalized;
+
+  /// No description provided for @syncFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Failed'**
+  String get syncFailed;
 
   /// No description provided for @cancelSyncing.
   ///

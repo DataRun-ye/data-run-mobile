@@ -2,9 +2,10 @@ import 'package:d_sdk/core/common/standard_extensions.dart';
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
 import 'package:datarunmobile/commons/helpers/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
-// @injectable
+@injectable
 class ResourceManager {
   const ResourceManager();
 

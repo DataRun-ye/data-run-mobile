@@ -3,11 +3,10 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/commons/custom_widgets/expandable_text.dart';
 import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/features/form/application/form_template_model.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,16 +25,14 @@ class FormSubmissionCreate extends ConsumerStatefulWidget {
 class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
   Future<DataInstance> _createEntity(
       BuildContext context, FormTemplateModel formTemplate) async {
-    final activityModel = ActivityInheritedWidget.of(context);
     final submissionInitialRepository =
-    ref.read(formSubmissionsProvider(formTemplate.id).notifier);
+        ref.read(formSubmissionsProvider(formTemplate.id).notifier);
 
     final submission = await submissionInitialRepository.createNewSubmission(
       assignmentId: widget.assignment.id,
       form: formTemplate.id,
       formVersion: formTemplate.versionUid,
       team: widget.assignment.team.id,
-      // versionNumber: formTemplate.versionNumber,
     );
     return submission;
   }
@@ -64,7 +61,6 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
       heightFactor: 0.7,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        // padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,8 +76,8 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
                         .textTheme
                         .titleLarge
                         ?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    )
+                          fontWeight: FontWeight.bold,
+                        )
                         .copyWith(color: cs.onSurfaceVariant),
                   ),
                 ),
@@ -91,19 +87,16 @@ class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
                       ? '(${S.of(context).form(availableLocally.length)})'
                       : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: cs.onSurfaceVariant,
-                  ),
+                        color: cs.onSurfaceVariant,
+                      ),
                 ),
               ],
             ),
             const SizedBox(height: 20.0),
-            // Divider(color: Colors.grey.shade400, thickness: 1.0),
-            // const SizedBox(height: 10.0),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.separated(
-                  // physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
                   separatorBuilder: (_, __) => const Divider(
                     height: 4,
@@ -149,7 +142,6 @@ class _FormListItem extends ConsumerWidget {
       valueBuilder: (formTemplate) {
         final cs = Theme.of(context).colorScheme;
         return ListTile(
-          // style: ListTileStyle.drawer,
           tileColor: cs.surfaceContainerHigh.withValues(alpha: .7),
           iconColor: cs.primary,
           textColor: cs.onSurfaceVariant,
@@ -159,17 +151,16 @@ class _FormListItem extends ConsumerWidget {
           leading: const Icon(Icons.description),
           title: Text(
             '${index + 1}. ${getItemLocalString(formTemplate.label, defaultString: formTemplate.name)}',
-            // softWrap: true,
           ),
           subtitle: formTemplate.description != null
               ? ExpandableText(
-            text: formTemplate.description!,
-          )
+                  text: formTemplate.description!,
+                )
               : null,
           onTap: () => onTap(formTemplate),
           trailing: const Icon(Icons.chevron_right),
           contentPadding:
-          const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
+              const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),

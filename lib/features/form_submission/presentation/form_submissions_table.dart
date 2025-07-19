@@ -1,22 +1,19 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.dialogs.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
 import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
-import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
+import 'package:datarunmobile/features/form_submission/presentation/status_icon.dart';
 import 'package:datarunmobile/features/form_submission/presentation/submission_sync_dialog.widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -28,26 +25,24 @@ import 'package:stacked_services/stacked_services.dart';
 
 class FormSubmissionsTable extends HookConsumerWidget {
   const FormSubmissionsTable(
-      {super.key, required this.assignment, required this.formId});
+      {super.key,
+      required this.assignment,
+      required this.formId,
+      required this.index});
 
   final AssignmentModel assignment;
   final String formId;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedSubmissions = useState<IList<DataInstance>>(IList());
     final toSync = selectedSubmissions.value
         .where((s) =>
-                SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_POST ||
-                SubmissionListUtil.getSyncStatus(s) ==
-                    SyncStatus
-                        .ERROR /*||
-            SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_UPDATE*/
-            )
+            SubmissionListUtil.getSyncStatus(s) == SyncStatus.TO_POST ||
+            SubmissionListUtil.getSyncStatus(s) == SyncStatus.ERROR)
         .map((s) => s.id)
         .toList();
-    final activityModel = ActivityInheritedWidget.of(context);
-
     final formAsync = ref.watch(latestFormTemplateProvider(formId: formId));
     final _sortColumnIndex = useState<int?>(null);
     final _sortAscending = useState(true);
@@ -79,15 +74,14 @@ class FormSubmissionsTable extends HookConsumerWidget {
             final field = entry;
             return field.mainField;
           }).toList();
-
-          // final columns =
+          final title = getItemLocalString(template.template.label,
+              defaultString: template.template.name);
 
           return Column(
+            key: ValueKey('${assignment.id}_cold'),
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                  getItemLocalString(template.template.label,
-                      defaultString: template.template.name),
+              Text('${index + 1}. $title',
                   style: Theme.of(context).textTheme.titleMedium),
               if (selectedSubmissions.value.isNotEmpty)
                 Row(
@@ -122,6 +116,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                             constraints:
                                 BoxConstraints(minWidth: constraints.maxWidth),
                             child: DataTable(
+                              key: ValueKey('${assignment}_submissions_table'),
                               sortAscending: _sortAscending.value,
                               sortColumnIndex: _sortColumnIndex.value,
                               columns: <DataColumn>[
@@ -173,8 +168,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                 try {
                                   extractedValues = _extractValues(
                                       submission.formData ?? {},
-                                      template.template,
-                                      activityModel);
+                                      template.rootSection);
                                   totalResources = _sumNumericResources(
                                       submission.formData ?? {});
                                 } catch (e) {
@@ -200,16 +194,19 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                     }
                                   },
                                   cells: <DataCell>[
-                                    DataCell(
-                                        buildStatusIcon(submission, context)),
+                                    DataCell(GestureDetector(
+                                      onTap: submission.syncState.isSyncFailed
+                                          ? () => buildShowDialog(
+                                              context, submission)
+                                          : null,
+                                      child: StatusIcon(
+                                          syncState: submission.syncState),
+                                    )),
                                     DataCell(IconButton(
                                       onPressed: !deleted
                                           ? () async {
-                                              goToDataEntryForm(
-                                                  context,
-                                                  assignment,
-                                                  submission,
-                                                  activityModel);
+                                              goToDataEntryForm(context,
+                                                  assignment, submission);
                                               // ref.invalidate(assignmentsProvider);
                                             }
                                           : null,
@@ -270,19 +267,36 @@ class FormSubmissionsTable extends HookConsumerWidget {
         });
   }
 
-  Map<String, dynamic> _extractValues(Map<String, dynamic> formData,
-      FormTemplateModel formTemplate, ActivityModel activityModel) {
+  Future<dynamic> buildShowDialog(
+      BuildContext context, DataInstance submission) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: Text(S.of(context).errorSubmittingForm),
+                content: Text(S
+                    .of(context)
+                    .submissionError(submission.lastSyncMessage ?? '')),
+                actions: <Widget>[
+                  TextButton(
+                      child: Text(S.of(context).ok),
+                      onPressed: () {
+                        appLocator<NavigationService>().back();
+                      })
+                ]));
+  }
+
+  Map<String, dynamic> _extractValues(
+      Map<String, dynamic> formData, SectionTemplate formTemplate) {
     Map<String, dynamic> extractedValues = {};
 
     void _extract(Map<String, dynamic> data, Iterable<Template> fields) {
       fields.forEach((field) {
         if (field.name != null) {
-          if (field.type!.isSection && data.containsKey(field.name)) {
+          if (field.children.isNotEmpty && data.containsKey(field.name)) {
             _extract(
                 data[field.name], (field as SectionTemplate).children.toList());
-          } else if (field.type!.isRepeatSection &&
-              data.containsKey(field.name)) {
-            // extractedValues[field.name!] = data[field.name];
+          } else if (field.repeatable && data.containsKey(field.name)) {
+            extractedValues[field.name!] = data[field.name];
           } else if (field.type == ValueType.Progress &&
               data.containsKey(field.name)) {
             final value = ((AssignmentStatus.values
@@ -292,12 +306,12 @@ class FormSubmissionsTable extends HookConsumerWidget {
                 ?.toString());
             extractedValues[field.name!] =
                 value != null ? Intl.message(value.toLowerCase()) : '-';
-          } else if (field.type == ValueType.Team &&
-              data.containsKey(field.name)) {
-            extractedValues[field.name!] = activityModel.managedTeams
-                    .firstOrNullWhere((t) => t.id == data[field.name])
-                    ?.name ??
-                data[field.name];
+            // } else if (field.type == ValueType.Team &&
+            //     data.containsKey(field.name)) {
+            //   extractedValues[field.name!] = activityModel.managedTeams
+            //           .firstOrNullWhere((t) => t.id == data[field.name])
+            //           ?.name ??
+            //       data[field.name];
           } else if (data.containsKey(field.name)) {
             extractedValues[field.name!] = data[field.name];
           }
@@ -305,7 +319,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
       });
     }
 
-    _extract(formData, formTemplate.fields);
+    _extract(formData, formTemplate.children);
     return extractedValues;
   }
 
@@ -408,39 +422,6 @@ class FormSubmissionsTable extends HookConsumerWidget {
         ),
       ),
     );
-  }
-
-  Widget buildStatusIcon(DataInstance? instance, BuildContext context) {
-    switch (instance?.syncState) {
-      case InstanceSyncStatus.synced:
-        return const Icon(Icons.cloud_done, color: Colors.green, size: 18);
-      case InstanceSyncStatus.finalized:
-        return const Icon(Icons.cloud_sync, color: Colors.grey, size: 18);
-      case InstanceSyncStatus.draft:
-        return Icon(Icons.update, color: Colors.grey[500], size: 18);
-      case InstanceSyncStatus.syncFailed:
-        return GestureDetector(
-          child: Icon(Icons.error, color: Colors.red, size: 18),
-          onTap: () => showDialog(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    title: Text(S.of(context).errorSubmittingForm),
-                    content: Text(S
-                        .of(context)
-                        .submissionError(instance?.lastSyncMessage ?? '')),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text(S.of(context).ok),
-                        onPressed: () {
-                          appLocator<NavigationService>().back();
-                        },
-                      ),
-                    ],
-                  )),
-        );
-      default:
-        return const Icon(Icons.all_inclusive, size: 18);
-    }
   }
 }
 

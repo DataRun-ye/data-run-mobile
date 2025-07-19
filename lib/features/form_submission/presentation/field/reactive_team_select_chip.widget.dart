@@ -1,8 +1,9 @@
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
@@ -22,18 +23,24 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
 
-    final teams = ActivityInheritedWidget.of(context).managedTeams;
+    final managedTeamsAsync = ref.watch(managedTeamsProvider(
+        team: formInstance.formMetadata.assignmentModel.team.id));
 
-    return ReactiveChoiceChips<String>(
-        formControl: formInstance.form.control(element.elementPath!)
-            as FormControl<String>,
-        validationMessages: validationMessages(),
-        selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
-        options: _getChipOptions(teams),
-        decoration: InputDecoration(
-          enabled: element.elementControl.enabled,
-          labelText: element.label,
-        ));
+    return AsyncValueWidget(
+      value: managedTeamsAsync,
+      valueBuilder: (List<IdentifiableModel> teams) {
+        return ReactiveChoiceChips<String>(
+            formControl: formInstance.form.control(element.elementPath!)
+                as FormControl<String>,
+            validationMessages: validationMessages(),
+            selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
+            options: _getChipOptions(teams),
+            decoration: InputDecoration(
+              enabled: element.elementControl.enabled,
+              labelText: element.label,
+            ));
+      },
+    );
   }
 
   List<ReactiveChipOption<String>> _getChipOptions(

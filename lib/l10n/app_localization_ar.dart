@@ -1116,5 +1116,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errorSubmittingForm => 'خطأ وقت الإرسال';
 
   @override
+  String get draft => 'مسودة';
+
+  @override
+  String get finalized => 'نهائية';
+
+  @override
+  String get syncFailed => 'فشل مزامنة';
+
+  @override
   String get cancelSyncing => 'إيقاف والمزامنة لاحقًا';
 }

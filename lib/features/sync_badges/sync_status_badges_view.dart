@@ -1,8 +1,7 @@
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
+import 'package:datarunmobile/features/form_submission/presentation/status_icon.dart';
 import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 class SyncStatusBadgesView extends StatelessWidget {
@@ -44,15 +43,12 @@ class _SyncStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: Intl.message(syncStatus.name.toLowerCase()),
-      child: Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 2.0),
-          child: Column(children: [
-            buildStatusIcon(syncStatus),
-            const SizedBox(width: 4),
-            Text('$count', style: Theme.of(context).textTheme.bodyMedium)
-          ])),
-    );
+    return Padding(
+        padding: const EdgeInsets.only(left: 8.0, right: 2.0),
+        child: Column(children: [
+          StatusIcon(syncState: syncStatus),
+          const SizedBox(width: 4),
+          Text('$count', style: Theme.of(context).textTheme.bodyMedium)
+        ]));
   }
 }

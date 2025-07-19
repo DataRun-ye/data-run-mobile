@@ -1598,14 +1598,9 @@ class S {
     );
   }
 
-  /// `Assigned Team`
+  /// `Team`
   String get assignedTeam {
-    return Intl.message(
-      'Assigned Team',
-      name: 'assignedTeam',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Team', name: 'assignedTeam', desc: '', args: []);
   }
 
   /// `Managed Teams`
@@ -1618,10 +1613,10 @@ class S {
     );
   }
 
-  /// `Assigned Assignments`
+  /// `Assignments`
   String get assignedAssignments {
     return Intl.message(
-      'Assigned Assignments',
+      'Assignments',
       name: 'assignedAssignments',
       desc: '',
       args: [],
@@ -2725,6 +2720,21 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Draft`
+  String get draft {
+    return Intl.message('Draft', name: 'draft', desc: '', args: []);
+  }
+
+  /// `Finalized`
+  String get finalized {
+    return Intl.message('Finalized', name: 'finalized', desc: '', args: []);
+  }
+
+  /// `Sync Failed`
+  String get syncFailed {
+    return Intl.message('Sync Failed', name: 'syncFailed', desc: '', args: []);
   }
 
   /// `Cancel Syncing`

@@ -34,7 +34,7 @@ class Routes {
 
   static const syncResourcesView = '/sync-resources-view';
 
-  static const assignmentPage = '/assignment-page';
+  static const assignmentScreen = '/assignment-screen';
 
   static const all = <String>{
     homeWrapperPage,
@@ -42,7 +42,7 @@ class Routes {
     splashView,
     settingsView,
     syncResourcesView,
-    assignmentPage,
+    assignmentScreen,
   };
 }
 
@@ -69,7 +69,7 @@ class StackedRouter extends _i1.RouterBase {
       page: _i6.SyncResourcesView,
     ),
     _i1.RouteDef(
-      Routes.assignmentPage,
+      Routes.assignmentScreen,
       page: _i7.AssignmentScreen,
     ),
   ];
@@ -265,14 +265,14 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToAssignmentPage([
+  Future<dynamic> navigateToAssignmentScreen([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.assignmentPage,
+    return navigateTo<dynamic>(Routes.assignmentScreen,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -358,14 +358,14 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithAssignmentPage([
+  Future<dynamic> replaceWithAssignmentScreen([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.assignmentPage,
+    return replaceWith<dynamic>(Routes.assignmentScreen,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

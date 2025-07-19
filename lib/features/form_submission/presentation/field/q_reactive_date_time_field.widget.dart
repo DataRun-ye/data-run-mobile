@@ -2,14 +2,13 @@ import 'package:d_sdk/core/utilities/date_helper.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import 'reactive_date_time_picker/reactive_date_time_picker.dart';
@@ -27,21 +26,21 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
         .watch(
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
-    final displayFormat = DateHelper.getEffectiveUiFormat(element.type);
-    final viewFormat =
-        DateFormat(DateHelper.getEffectiveUiFormat(element.type));
+    final viewFormat = DateHelper.getEffectiveUiFormat(element.type);
     final control =
         formInstance.form.control(element.elementPath!) as FormControl<String>;
     return ReactiveDateTimePicker(
       formControl: control,
       dateFormat: viewFormat,
+      textDirection: TextDirection.ltr,
       type: reactiveFieldType,
       validationMessages: validationMessages(),
       decoration: InputDecoration(
           labelText: element.label,
           enabled: control.enabled,
           suffixIcon: Icon(elementIcon),
-          hintText: appLocator<HintProvider>().provideHint(element.type)),
+          hintText: appLocator<HintProvider>().provideHint(element.type),
+      ),
     );
   }
 

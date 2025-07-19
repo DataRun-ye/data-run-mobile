@@ -1,13 +1,11 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
-import 'package:d_sdk/database/shared/activity_model.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
+import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_panel.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_rows_source.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
-import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -49,8 +47,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
     final itemInstance = _dataSource.elements[index];
-    await _showEditPanel(context, formInstance,
-        ActivityInheritedWidget.of(context), itemInstance);
+    await _showEditPanel(context, formInstance, itemInstance);
   }
 
   void onDelete(int index) {
@@ -72,7 +69,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       elements: widget.repeatInstance.elements,
       onEdit: (value) => onEdit(value),
       onDelete: onDelete,
-      activityModel: () => ActivityInheritedWidget.of(context),
+      // activityModel: () => ActivityInheritedWidget.of(context),
       editable: widget.repeatInstance.elementControl.enabled,
     );
   }
@@ -90,7 +87,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   @override
   Widget build(BuildContext context) {
-    final activityModel = ActivityInheritedWidget.of(context);
+    // final activityModel = ActivityInheritedWidget.of(context);
     final formInstance = ref
         .watch(
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
@@ -118,8 +115,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                       final repeatItem =
                           formInstance.onAddRepeatedItem(_repeatInstance);
                       _dataSource.addItem(repeatItem);
-                      await _showEditPanel(
-                          context, formInstance, activityModel, repeatItem);
+                      await _showEditPanel(context, formInstance, repeatItem);
                     }
                   : null,
               child: const Icon(Icons.add),
@@ -178,7 +174,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   }
 
   Future<void> _showEditPanel(BuildContext context, FormInstance formInstance,
-      ActivityModel activityModel,
       [RepeatItemInstance? repeatItem]) async {
     bool itemSaved = false;
 
@@ -204,41 +199,38 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
             }
           },
           child: Dialog(
-            child: ActivityInheritedWidget(
-              activityModel: activityModel,
-              child: FormMetadataWidget(
-                formMetadata: formInstance.formMetadata,
-                child: Builder(builder: (context) {
-                  String title = repeatItem == null
-                      ? '${S.of(context).newItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}'
-                      : '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
+            child: FormMetadataWidget(
+              formMetadata: formInstance.formMetadata,
+              child: Builder(builder: (context) {
+                String title = repeatItem == null
+                    ? '${S.of(context).newItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}'
+                    : '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
 
-                  // if (repeatItem == null) {
-                  //   repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
-                  //   _dataSource.addItem(repeatItem!);
-                  // }
+                // if (repeatItem == null) {
+                //   repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
+                //   _dataSource.addItem(repeatItem!);
+                // }
 
-                  return ReactiveForm(
-                    formGroup: repeatItem!.elementControl,
-                    child: EditPanel(
-                      title: title,
-                      repeatInstance: _repeatInstance,
-                      item: repeatItem,
-                      onSave: (formGroup, action) {
-                        _repeatInstance.elementControl.markAsTouched();
-                        formInstance.saveFormData();
-                        _dataSource.updateItems(_repeatInstance.elements);
-                        repeatItem.updateValue(formGroup.value);
-                        if (formGroup.valid) {
-                          itemSaved = true;
-                          _handleSave(context, formInstance, _repeatInstance,
-                              repeatItem, action, activityModel);
-                        }
-                      },
-                    ),
-                  );
-                }),
-              ),
+                return ReactiveForm(
+                  formGroup: repeatItem!.elementControl,
+                  child: EditPanel(
+                    title: title,
+                    repeatInstance: _repeatInstance,
+                    item: repeatItem,
+                    onSave: (formGroup, action) {
+                      _repeatInstance.elementControl.markAsTouched();
+                      formInstance.saveFormData();
+                      _dataSource.updateItems(_repeatInstance.elements);
+                      repeatItem.updateValue(formGroup.value);
+                      if (formGroup.valid) {
+                        itemSaved = true;
+                        _handleSave(context, formInstance, _repeatInstance,
+                            repeatItem, action);
+                      }
+                    },
+                  ),
+                );
+              }),
             ),
           ),
         );
@@ -251,8 +243,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       FormInstance formInstance,
       RepeatSection repeatInstance,
       RepeatItemInstance repeatItem,
-      EditActionType action,
-      ActivityModel activityModel) async {
+      EditActionType action) async {
     if (repeatItem.elementControl.valid) {
       // the values are already updated, just to let the repeat
       // instance emit on stream so it rebuilds,
@@ -261,7 +252,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       if (action == EditActionType.SAVE_AND_ADD_ANOTHER) {
         final repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
         _dataSource.addItem(repeatItem);
-        _showEditPanel(context, formInstance, activityModel, repeatItem);
+        _showEditPanel(context, formInstance, repeatItem);
       } else if (action == EditActionType.SAVE_AND_CLOSE) {
         // Do nothing, as we've already closed the dialog
       }

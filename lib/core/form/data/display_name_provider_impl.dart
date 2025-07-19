@@ -1,10 +1,10 @@
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/core/utilities/date_helper.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/data/display_name_provider.dart';
 import 'package:datarunmobile/core/form/data/metadata/option_set_configuration.dart';
 import 'package:datarunmobile/core/form/data/metadata/org_unit_configuration.dart';
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:intl/intl.dart';
 
 // @Injectable(as: DisplayNameProvider)
@@ -59,12 +59,13 @@ class DisplayNameProviderImpl implements DisplayNameProvider {
       case ValueType.Date:
         return DateHelper.fromDbUtcToUiLocalFormat(value);
       case ValueType.DateTime:
-        return DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION).format(
-            DateFormat(DateHelper.DATABASE_FORMAT_EXPRESSION_NO_SECONDS)
+        return DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION, 'en_US')
+            .format(DateFormat(
+                    DateHelper.DATABASE_FORMAT_EXPRESSION_NO_SECONDS, 'en_US')
                 .parse(value));
       case ValueType.Time:
-        return DateFormat(DateHelper.TIME_FORMAT)
-            .format(DateFormat(DateHelper.TIME_FORMAT).parse(value));
+        return DateFormat(DateHelper.TIME_FORMAT, 'en_US')
+            .format(DateFormat(DateHelper.TIME_FORMAT, 'en_US').parse(value));
       default:
     }
     return value;

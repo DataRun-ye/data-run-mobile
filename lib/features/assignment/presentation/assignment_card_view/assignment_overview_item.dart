@@ -3,7 +3,6 @@ import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:datarunmobile/features/assignment_detail/presentation/assignment_detail_page.dart';
@@ -24,7 +23,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final searchQuery =
         ref.watch(filterQueryProvider.select((value) => value.searchQuery));
-    final activityModel = ActivityInheritedWidget.of(context);
+    // final activityModel = ActivityInheritedWidget.of(context);
     final assignment = ref.watch(assignmentProvider);
     final List<Pair<AssignmentForm, bool>> userForms = assignment.userForms;
     final List<Pair<AssignmentForm, bool>> availableLocally =
@@ -39,19 +38,54 @@ class AssignmentOverviewItem extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CardHeaderRow(),
-            const SizedBox(height: 8),
+            // CardHeaderRow(),
+            // const SizedBox(height: 8),
             _buildEntityInfo(assignment, searchQuery, context),
             const SizedBox(height: 8),
-            SyncStatusBadgesView(
-              id: assignment.id,
-              aggregationLevel: StatusAggregationLevel.assignment,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SyncStatusBadgesView(
+                  id: assignment.id,
+                  aggregationLevel: StatusAggregationLevel.assignment,
+                ),
+                _buildActionButtons(context, assignment, ref),
+              ],
             ),
             const SizedBox(height: 8),
-
             const Divider(height: 5.0),
             const SizedBox(height: 4),
-            _buildActionButtons(context, assignment, activityModel, ref),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Tooltip(
+                  message: S.of(context).openNewForm,
+                  child: IconButton(
+                    visualDensity: VisualDensity.standard,
+                    onPressed: assignment.availableForms.isNotEmpty
+                        ? () async {
+                            await showFormSelectionBottomSheet(
+                                context, assignment);
+                          }
+                        : null,
+                    // enableFeedback: true,
+                    icon: const Icon(Icons.document_scanner),
+                    // label: Text(S.of(context).openNewForm),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                      shadowColor: Theme.of(context).colorScheme.shadow,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 12.0),
+                      // shape: RoundedRectangleBorder(
+                      //   borderRadius: BorderRadius.circular(8.0),
+                      // ),
+                    ),
+                  ),
+                ),
+                CardHeaderRow(showIcon: false,),
+              ],
+            ),
           ],
         ),
       ),
@@ -65,7 +99,9 @@ class AssignmentOverviewItem extends ConsumerWidget {
       children: [
         const Icon(Icons.location_on),
         const SizedBox(width: 4),
-        HighlightedByValueLabel('${assignment.orgUnit.code ?? ''}: ${assignment.orgUnit.name}', searchQuery,
+        HighlightedByValueLabel(
+            '${assignment.orgUnit.code ?? ''}: ${assignment.orgUnit.name}',
+            searchQuery,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
         // const SizedBox(width: 8),
         // HighlightedByValueLabel(assignment.orgUnit.name, searchQuery)
@@ -73,32 +109,13 @@ class AssignmentOverviewItem extends ConsumerWidget {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context, AssignmentModel assignment,
-      ActivityModel activityModel, WidgetRef ref) {
+  Widget _buildActionButtons(
+      BuildContext context, AssignmentModel assignment, WidgetRef ref) {
     return OverflowBar(
       spacing: 8,
       overflowSpacing: 8,
       overflowAlignment: OverflowBarAlignment.start,
       children: [
-        ElevatedButton.icon(
-            onPressed: assignment.availableForms.isNotEmpty
-                ? () async {
-                    await showFormSelectionBottomSheet(
-                        context, assignment, activityModel);
-                  }
-                : null,
-            icon: const Icon(Icons.document_scanner),
-            label: Text(S.of(context).openNewForm),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              shadowColor: Theme.of(context).colorScheme.shadow,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-            )),
         TextButton.icon(
           onPressed: () => onViewDetails.call(assignment),
           icon: const Icon(Icons.info_outline),
@@ -128,38 +145,24 @@ class AssignmentOverviewItem extends ConsumerWidget {
 }
 
 class CardHeaderRow extends ConsumerWidget {
-  const CardHeaderRow();
-
+  const CardHeaderRow({this.showIcon = true});
+  final bool showIcon;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchQuery =
         ref.watch(filterQueryProvider.select((value) => value.searchQuery));
-    final activityModel = ActivityInheritedWidget.of(context);
+    // final activityModel = ActivityInheritedWidget.of(context);
     final assignment = ref.watch(assignmentProvider);
     final List<Pair<AssignmentForm, bool>> userForms = assignment.userForms;
     final List<Pair<AssignmentForm, bool>> availableLocally =
         assignment.availableForms;
 
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: OverflowBar(
-            spacing: 8,
-            overflowSpacing: 2,
-            children: [
-              HighlightedLabelWithIcon(
-                Icons.document_scanner,
-                availableLocally.length == userForms.length
-                    ? '(${S.of(context).form(availableLocally.length)})'
-                    : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
-                searchQuery,
-              ),
-            ],
-          ),
-        ),
-        // buildStatusBadge(assignment.status),
-      ],
+    return HighlightedLabelWithIcon(
+     showIcon ? Icons.document_scanner : null,
+      availableLocally.length == userForms.length
+          ? '(${S.of(context).form(availableLocally.length)})'
+          : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
+      searchQuery,
     );
   }
 }

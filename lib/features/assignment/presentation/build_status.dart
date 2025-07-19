@@ -85,20 +85,18 @@ Color? statusColor(AssignmentStatus? status) {
 }
 
 Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
-    DataInstance submission, ActivityModel activityModel) async {
+    DataInstance submission) async {
+
   await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ActivityInheritedWidget(
-                activityModel: activityModel,
-                child: FormMetadataWidget(
-                  formMetadata: FormMetadata(
-                    assignmentModel: assignment,
-                    versionUid: submission.templateVersion,
-                    formId: submission.formTemplate,
-                    submission: submission.id,
-                  ),
-                  child: const FormSubmissionScreen(currentPageIndex: 1),
-                ),
-              )));
+          builder: (context) => FormMetadataWidget(
+            formMetadata: FormMetadata(
+              assignmentModel: assignment,
+              versionUid: submission.templateVersion,
+              formId: submission.formTemplate,
+              submission: submission.id,
+            ),
+            child: const FormSubmissionScreen(currentPageIndex: 1),
+          )));
 }

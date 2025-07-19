@@ -6,9 +6,9 @@ Widget buildStatusIcon(InstanceSyncStatus? status) {
     case InstanceSyncStatus.synced:
       return const Icon(Icons.cloud_done, color: Colors.green, size: 18);
     case InstanceSyncStatus.finalized:
-      return Icon(Icons.cloud_sync, color: Colors.orange[300], size: 18);
+      return Icon(Icons.cloud_upload, color: Colors.grey[500], size: 18);
     case InstanceSyncStatus.draft:
-      return Icon(Icons.update, color: Colors.grey[500], size: 18);
+      return Icon(Icons.edit_note, color: Colors.grey[500], size: 18);
     case InstanceSyncStatus.syncFailed:
       return Icon(Icons.error, color: Colors.red, size: 18);
     default:

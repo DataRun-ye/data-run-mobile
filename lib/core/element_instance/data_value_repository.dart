@@ -1,9 +1,10 @@
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:drift/drift.dart';
+import 'package:injectable/injectable.dart';
 
-// @injectable
+@injectable
 class DataValueRepository {
   static AppDatabase get db => DSdk.db;
 
@@ -92,5 +93,13 @@ class DataValueRepository {
     final Team? team =
         await db.managers.teams.filter((f) => f.id(teamUid)).getSingleOrNull();
     return team?.code;
+  }
+
+  Future<String?> getOptionById(String optionUid) async {
+    final DataOption? dataOption = await db.managers.dataOptions
+        .filter((f) => f.id(optionUid))
+        .getSingleOrNull();
+    return getItemLocalString(dataOption?.label,
+        defaultString: dataOption?.code ?? dataOption?.name);
   }
 }

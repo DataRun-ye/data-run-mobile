@@ -232,7 +232,6 @@ class App extends ConsumerWidget {
         iconTheme: IconThemeData(color: barFg),
         actionsIconTheme: IconThemeData(color: barFg),
         surfaceTintColor: barBg,
-        // M3 elevation tint :contentReference[oaicite:1]{index=1}
         systemOverlayStyle:
             isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
@@ -300,19 +299,7 @@ class App extends ConsumerWidget {
         foregroundColor: cs.onSecondary,
         elevation: 4,
       ),
-      // bottomSheetTheme: base.bottomSheetTheme.copyWith(
-      //   elevation: 2,
-      //   surfaceTintColor: cs.surfaceTint,
-      //   // backgroundColor: cs.surfaceContainer,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(16),
-      //   ),
-      // ),
-
       actionIconTheme: ActionIconThemeData(
-        // backButtonIconBuilder: (BuildContext context) {
-        //   return const Icon(Icons.arrow_back_ios_new_rounded);
-        // },
         drawerButtonIconBuilder: (BuildContext context) {
           return const _CustomDrawerIcon();
         },

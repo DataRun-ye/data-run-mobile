@@ -1,8 +1,6 @@
-import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/team_display.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form/presentation/form_submission_create.widget.dart';
@@ -20,13 +18,13 @@ class AssignmentDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activityModel = ActivityInheritedWidget.of(context);
+    // final activityModel = ActivityInheritedWidget.of(context);
     final cs = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(S.of(context).assignmentDetail),
             VerticalDivider(color: cs.onPrimary),
@@ -38,7 +36,7 @@ class AssignmentDetailPage extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _buildEntityInfo(assignment, '', context),
               const SizedBox(height: 32.0),
@@ -51,17 +49,21 @@ class AssignmentDetailPage extends ConsumerWidget {
                   ''),
               // Form Submissions Section
               const SizedBox(height: 20.0),
+              Divider(),
               ...assignment.availableForms
+                  .asMap()
+                  .entries
                   .map(
-                    (form) => Padding(
+                    (entry) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: _EagerInitialization(
                         child: FormSubmissionsTable(
+                          index: entry.key,
                           assignment: assignment,
-                          formId: form.first.form,
+                          formId: entry.value.first.form,
                         ),
                         assignment: assignment,
-                        formId: form.first.form,
+                        formId: entry.value.first.form,
                       ),
                     ),
                   )
@@ -73,8 +75,7 @@ class AssignmentDetailPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: assignment.availableForms.length > 0
             ? () async {
-                await showFormSelectionBottomSheet(
-                    context, assignment, activityModel);
+                await showFormSelectionBottomSheet(context, assignment);
               }
             : null,
         child: const Icon(Icons.document_scanner),
@@ -122,8 +123,8 @@ class _EagerInitialization extends ConsumerWidget {
   }
 }
 
-Future<void> showFormSelectionBottomSheet(BuildContext context,
-    AssignmentModel assignment, ActivityModel activityModel) async {
+Future<void> showFormSelectionBottomSheet(
+    BuildContext context, AssignmentModel assignment) async {
   final cs = Theme.of(context).colorScheme;
   try {
     await showModalBottomSheet(
@@ -133,16 +134,12 @@ Future<void> showFormSelectionBottomSheet(BuildContext context,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (BuildContext context) {
-        return ActivityInheritedWidget(
-          activityModel: activityModel,
-          child: FormSubmissionCreate(
-            assignment: assignment,
-            onNewFormCreated: (createdSubmission) async {
-              Navigator.of(context).pop();
-              goToDataEntryForm(
-                  context, assignment, createdSubmission, activityModel);
-            },
-          ),
+        return FormSubmissionCreate(
+          assignment: assignment,
+          onNewFormCreated: (createdSubmission) async {
+            Navigator.of(context).pop();
+            goToDataEntryForm(context, assignment, createdSubmission);
+          },
         );
       },
     );

@@ -19,6 +19,8 @@ import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
 import 'package:datarunmobile/core/auth/auth_storage.dart' as _i324;
 import 'package:datarunmobile/core/auth/token_refresher.dart' as _i48;
 import 'package:datarunmobile/core/common/confirmation_service.dart' as _i18;
+import 'package:datarunmobile/core/element_instance/data_value_repository.dart'
+    as _i730;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
     as _i595;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
@@ -27,6 +29,8 @@ import 'package:datarunmobile/core/http/default_http_adapter.dart' as _i832;
 import 'package:datarunmobile/core/network/network_util.dart' as _i537;
 import 'package:datarunmobile/core/network/reactive_connectivity_service.dart'
     as _i658;
+import 'package:datarunmobile/core/resources/resource_manager.provider.dart'
+    as _i683;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
     as _i775;
 import 'package:datarunmobile/core/sync/sync_coordinator.dart' as _i432;
@@ -68,6 +72,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i558.FlutterSecureStorage>(
       () => thirdPartyServicesModule.flutterSecureStorage);
   gh.factory<_i64.AuthApi>(() => _i64.AuthApi());
+  gh.factory<_i730.DataValueRepository>(() => _i730.DataValueRepository());
+  gh.factory<_i683.ResourceManager>(() => const _i683.ResourceManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
   gh.factory<_i1027.AssignmentServiceImpl>(
       () => _i1027.AssignmentServiceImpl());

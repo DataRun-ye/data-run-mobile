@@ -1,16 +1,15 @@
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/core/utilities/date_helper.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
+import 'package:datarunmobile/features/form/presentation/widgets/value_type_value_display.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RepeatTableDataSource extends DataTableSource {
@@ -18,12 +17,12 @@ class RepeatTableDataSource extends DataTableSource {
       {this.onDelete,
       this.onEdit,
       this.editable = true,
-      required this.activityModel,
+      // required this.activityModel,
       List<RepeatItemInstance> elements = const []}) {
     this.elements.addAll(elements);
   }
 
-  final ActivityModel Function() activityModel;
+  // final ActivityModel Function() activityModel;
 
   void markEnabled() {
     if (editable) {
@@ -148,14 +147,18 @@ class RepeatTableDataSource extends DataTableSource {
           children: [
             Icon(MdiIcons.accountGroup),
             const SizedBox(width: 4),
-            Text(activityModel
-                    .call()
-                    .managedTeams
-                    .where((t) => t.id == field.value)
-                    .firstOrNull
-                    ?.name ??
-                field.value ??
-                ''),
+            ValueTypeValueDisplay(
+              valueType: field.template.type,
+              value: field.value,
+            )
+            // Text(activityModel
+            //     .call()
+            //     .managedTeams
+            //     .where((t) => t.id == field.value)
+            //     .firstOrNull
+            //     ?.name ??
+            //     field.value ??
+            //     ''),
           ],
         );
         break;
@@ -163,8 +166,7 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.Date:
       case ValueType.DateTime:
       case ValueType.Time:
-        final viewFormat =
-            DateFormat(DateHelper.getEffectiveUiFormat(field.type));
+        final viewFormat = DateHelper.getEffectiveUiFormat(field.type);
         final pickedValue = DateTime.tryParse(field.value ?? '');
         final value =
             pickedValue != null ? viewFormat.format(pickedValue) : null;

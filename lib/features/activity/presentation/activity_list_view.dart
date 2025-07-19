@@ -1,6 +1,5 @@
 import 'package:datarunmobile/features/activity/application/activity.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_card.dart';
-import 'package:datarunmobile/features/activity/presentation/activity_inherited_widget.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_list_viewmodel.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -36,8 +35,7 @@ class ActivityListView extends StackedView<ActivityListViewModel> {
                   overrides: [
                     activityModelProvider.overrideWithValue(activity)
                   ],
-                  child: ActivityInheritedWidget(
-                      activityModel: activity, child: const AssignmentScreen()),
+                  child: const AssignmentScreen(),
                 ),
               ),
             );

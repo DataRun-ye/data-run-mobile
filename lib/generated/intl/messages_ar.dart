@@ -228,6 +228,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dismiss": MessageLookupByLibrary.simpleMessage("حسنًا"),
     "done": MessageLookupByLibrary.simpleMessage("اكتمل"),
     "downloaded": MessageLookupByLibrary.simpleMessage("حفظ"),
+    "draft": MessageLookupByLibrary.simpleMessage("مسودة"),
     "dueDate": MessageLookupByLibrary.simpleMessage("تاريخ الاستحقاق"),
     "dueDay": MessageLookupByLibrary.simpleMessage("يوم الاستحقاق"),
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
@@ -269,6 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "fileResourceFieldHint": MessageLookupByLibrary.simpleMessage("اختر ملفًا"),
     "filters": MessageLookupByLibrary.simpleMessage("تصفية البيانات"),
     "finalData": MessageLookupByLibrary.simpleMessage("بيانات نهائية"),
+    "finalized": MessageLookupByLibrary.simpleMessage("نهائية"),
     "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
     "forbidden": m10,
     "form": m11,
@@ -511,6 +513,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "successCount": MessageLookupByLibrary.simpleMessage("عدد النجاحات"),
     "syncError": m22,
     "syncErrors": MessageLookupByLibrary.simpleMessage("أخطاء المزامنة"),
+    "syncFailed": MessageLookupByLibrary.simpleMessage("فشل مزامنة"),
     "syncFormData": MessageLookupByLibrary.simpleMessage(
       "مزامنة بيانات الاستمارة",
     ),

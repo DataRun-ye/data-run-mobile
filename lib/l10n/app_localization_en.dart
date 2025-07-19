@@ -662,13 +662,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearFilters => 'Clear Filters';
 
   @override
-  String get assignedTeam => 'Assigned Team';
+  String get assignedTeam => 'Team';
 
   @override
   String get managedTeams => 'Managed Teams';
 
   @override
-  String get assignedAssignments => 'Assigned Assignments';
+  String get assignedAssignments => 'Assignments';
 
   @override
   String get managedAssignments => 'Managed Assignments';
@@ -1114,6 +1114,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorSubmittingForm => 'Error Submitting form';
+
+  @override
+  String get draft => 'Draft';
+
+  @override
+  String get finalized => 'Finalized';
+
+  @override
+  String get syncFailed => 'Sync Failed';
 
   @override
   String get cancelSyncing => 'Cancel Syncing';

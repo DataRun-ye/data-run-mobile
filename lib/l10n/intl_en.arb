@@ -259,9 +259,9 @@
   "day": "Day",
   "toggleListTableView": "Toggle List/Table View",
   "clearFilters": "Clear Filters",
-  "assignedTeam": "Assigned Team",
+  "assignedTeam": "Team",
   "managedTeams": "Managed Teams",
-  "assignedAssignments": "Assigned Assignments",
+  "assignedAssignments": "Assignments",
   "managedAssignments": "Managed Assignments",
   "startDate": "Start Date",
   "endDate": "End Date",
@@ -400,5 +400,8 @@
   "ouLevels": "OU Levels",
   "submissionError": "An Error Was Encountered during for submission:\n {error}",
   "errorSubmittingForm": "Error Submitting form",
+  "draft": "Draft",
+  "finalized": "Finalized",
+  "syncFailed": "Sync Failed",
   "cancelSyncing": "Cancel Syncing"
 }

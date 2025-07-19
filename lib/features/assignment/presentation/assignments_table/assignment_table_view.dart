@@ -4,7 +4,7 @@ import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/org_unit_display.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/team_display.dart';
-import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
+import 'package:datarunmobile/features/assignment_detail/presentation/assignment_detail_page.dart';
 import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -41,24 +41,46 @@ class AssignmentTableView extends HookConsumerWidget {
   Widget _buildTable(BuildContext context,
       Map<String, AssignmentModel> assignments, String searchQuery) {
     return DataTable2(
-      minWidth: 1200,
+      minWidth: 800,
       isVerticalScrollBarVisible: true,
       isHorizontalScrollBarVisible: true,
       showBottomBorder: true,
       showCheckboxColumn: false,
       columns: <DataColumn>[
+        DataColumn2(label: Text(S.current.openNewForm), size: ColumnSize.S),
         DataColumn2(label: Text(S.current.synced), size: ColumnSize.S),
         DataColumn2(label: Text(S.current.entity), size: ColumnSize.L),
         DataColumn2(label: Text(S.current.team), size: ColumnSize.S),
       ],
       rows: assignments.values
-          .map((assignment) => DataRow2(
-                color: WidgetStateProperty.resolveWith<Color?>(
-                  (Set<WidgetState> states) {
-                    return statusColor(assignment.status);
-                  },
-                ),
+          .map((assignment) => DataRow(
+                // color: WidgetStateProperty.resolveWith<Color?>(
+                //   (Set<WidgetState> states) {
+                //     return statusColor(assignment.status);
+                //   },
+                // ),
                 cells: <DataCell>[
+                  DataCell(IconButton(
+                      visualDensity: VisualDensity.comfortable,
+                      onPressed: assignment.availableForms.isNotEmpty
+                          ? () async {
+                              await showFormSelectionBottomSheet(
+                                  context, assignment);
+                            }
+                          : null,
+                      icon: const Icon(Icons.document_scanner),
+                      // label: Text(S.of(context).openNewForm),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        shadowColor: Theme.of(context).colorScheme.shadow,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ))),
                   DataCell(
                     SyncStatusBadgesView(
                         id: assignment.id,

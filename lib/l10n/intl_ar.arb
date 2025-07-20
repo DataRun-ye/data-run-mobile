@@ -28,7 +28,7 @@
   "username": "اسم المستخدم",
   "viewList": "عرض القائمة",
   "addNew": "جديد",
-  "form": "{count, plural, =0{لا تتوفر استمارات لهذا النشاط} =1{تتوفر 1 استمارة} =2{تتوفر استمارتان} other{{count} استمارة متوفرة}}",
+  "form": "{count, plural, =0{لا تتوفر استمارات لهذا العنصر} =1{تتوفر استمارة واحدة} =2{تتوفر استمارتان} other{تتوفر {count} استمارات}}",
   "@form": {
     "description": "A plural message",
     "placeholders": {
@@ -227,7 +227,7 @@
   "managedAssignments": "إدارة",
   "startDate": "تاريخ البدء",
   "endDate": "تاريخ الانتهاء",
-  "syncSubmissions": "{count, plural, =0{لا تتوفر استمارات نهائية} =1{عدد 1 استمارة} =2{عدد استمارتان} other{عدد {count} استمارة}}",
+  "syncSubmissions": "{count, plural, =0{لا تتوفر استمارات نهائية للمزامنة} =1{استمارة 1 للمزامنة} =2{استمارتان للمزامنة} other{{count} استمارات للمزامنة}}",
   "@syncSubmissions": {
     "description": "A plural message",
     "placeholders": {

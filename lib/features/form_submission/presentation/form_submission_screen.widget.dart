@@ -1,21 +1,24 @@
-import 'package:datarunmobile/features/form_submission/presentation/form_entry_view_silver.widget.dart';
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/completion_dialog_config.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
+import 'package:datarunmobile/features/form_submission/presentation/form_entry_view_silver.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/form_initial_view.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_template_inherit_widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/hooks/scroll_controller_for_animation.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/bottom_sheet.widget.dart';
+import 'package:datarunmobile/features/form_ui_elements/presentation/get_error_widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_initial_view.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/hooks/scroll_controller_for_animation.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_template_inherit_widget.dart';
-import 'package:datarunmobile/features/form_ui_elements/presentation/bottom_sheet.widget.dart';
-import 'package:datarunmobile/data/completion_dialog_config.provider.dart';
-import 'package:datarunmobile/features/form_ui_elements/application/form_completion_dialog.dart';
-import 'package:datarunmobile/features/form_ui_elements/presentation/get_error_widget.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FormSubmissionScreen extends StatefulHookConsumerWidget {
@@ -75,11 +78,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
 
   FormMetadata get formMetadata => FormMetadataWidget.of(context);
 
-  FormGroup formGroup(BuildContext context) => ref
-      .read(formInstanceProvider(formMetadata: formMetadata))
-      .requireValue
-      .form;
-
   @override
   Widget build(BuildContext context) {
     final currentPageIndex = useState(widget.currentPageIndex);
@@ -104,7 +102,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         if (didPop) {
           return;
         }
-        backButtonPressed(formInstance.form);
+        backButtonPressed(formInstance);
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -146,7 +144,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
               child: getFloatIcon(),
               onPressed: () {
                 if (widget.enabled) {
-                  _saveAndShowBottomSheet(formGroup(context));
+                  _saveAndShowBottomSheet(formInstance);
                 } else {
                   Navigator.pop(context);
                 }
@@ -165,16 +163,16 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         : const Icon(Icons.arrow_back);
   }
 
-  Future<void> _saveAndShowBottomSheet(FormGroup form) async {
+  Future<void> _saveAndShowBottomSheet(FormInstance formInstance) async {
     await _onSaveForm();
     if (context.mounted) {
-      return _showBottomSheet(form);
+      return _showBottomSheet(formInstance);
     }
   }
 
-  Future<void> backButtonPressed(FormGroup form) async {
-    if (form.dirty) {
-      await _saveAndShowBottomSheet(form);
+  Future<void> backButtonPressed(FormInstance formInstance) async {
+    if (formInstance.form.hasErrors) {
+      await _saveAndShowBottomSheet(formInstance);
     } else {
       Navigator.pop(context);
     }
@@ -188,7 +186,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         .saveFormData();
   }
 
-  Future<void> _showBottomSheet(FormGroup form) async {
+  Future<void> _showBottomSheet(FormInstance formInstance) async {
     final bottomSheetUiModel = ref.read(formCompletionBottomSheetProvider(
         formMetadata: FormMetadataWidget.of(context)));
     await showModalBottomSheet(
@@ -198,10 +196,55 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         return QBottomSheetDialog(
           completionDialogModel: bottomSheetUiModel,
           onButtonClicked: (action) =>
-              _onCompletionDialogButtonClicked(form, action),
+              _onCompletionDialogButtonClicked(formInstance.form, action),
+          onItemWithErrorClicked: (path) {
+            logDebug('${path} clicked');
+            _onErrorTap(path!, formInstance);
+            // scrollToField(path!, formInstance.fieldKeysRegistery);
+          },
         );
       },
     );
+  }
+
+  void _onErrorTap(
+      String elementPath,
+      FormInstance formInstance,
+      ) {
+
+    final registry = formInstance.fieldKeysRegistery;
+
+    final key = registry.getKey(elementPath);
+
+    if (key?.currentContext != null) {
+      Scrollable.ensureVisible(
+        key!.currentContext!,
+        duration: const Duration(milliseconds: 300),
+        alignment: 0.1,
+        curve: Curves.easeInOut,
+      );
+    }
+    Navigator.pop(context);
+    formInstance.form.control(elementPath).markAsTouched();
+  }
+
+  void scrollToField(String elementPath, FieldContextRegistry registry) {
+    logDebug('${elementPath} scroll');
+    final key = registry.getKey(elementPath);
+    logDebug('scroll to key: ${key} ');
+    if (key == null) return;
+
+    final ctx = key.currentContext;
+    if (ctx == null) return;
+
+    Scrollable.ensureVisible(
+      ctx,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+      alignment: 0.1,
+    ).then((_) {
+      FocusScope.of(ctx).requestFocus(); // if applicable
+    });
   }
 
   Future<void> _onCompletionDialogButtonClicked(

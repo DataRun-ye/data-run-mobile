@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class OptionSetService {
-  Future<Map<String, List<DataOption>>> getOptionSets(
+  Future<Map<String, List<DataOption>>> getOptions(
       FormTemplateModel? template) async {
     final List<String> optionSets = (template?.fields)
             ?.where((t) => t.type?.isSelectType == true && t.optionSet != null)
@@ -28,6 +28,26 @@ class OptionSetService {
     }
 
     return optionLists;
+  }
+
+  Future<Map<String, DataOptionSet>> getOptionSets(
+      FormTemplateModel? template) async {
+    final List<String> optionSets = (template?.fields)
+            ?.where((t) => t.type?.isSelectType == true && t.optionSet != null)
+            .map((t) => t.optionSet!)
+            .toList() ??
+        [];
+
+    final Map<String, DataOptionSet> formOptionSets = {};
+    if (optionSets.isNotEmpty) {
+      final List<DataOptionSet> sets = await DSdk.db.managers.dataOptionSets
+          .filter((f) => f.id.isIn(optionSets))
+          .get();
+      formOptionSets.addAll(
+          Map.fromIterable(sets, key: (set) => set.id, value: (set) => set));
+    }
+
+    return formOptionSets;
   }
 
   Future<DataOptionSet?> getOptionSet(String id) async {

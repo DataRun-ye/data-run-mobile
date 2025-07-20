@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
@@ -11,15 +12,45 @@ import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class FormTemplateService {
-  FormTemplateService({required this.optionSetService});
+class FormTemplateListService {
+  FormTemplateListService({required this.optionSetService});
 
   final OptionSetService optionSetService;
 
-  Future<List<FormTemplate>> fetchByAssignment(assignmentId) async {
+  Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
+      String assignment) async {
+    List<AssignmentForm> assignmentForms =
+    await _fetchAssignmentForms(assignment);
+    final List<String> userForms = assignmentForms.map((a) => a.form).toList();
+
+    final List<FormTemplate> availableFormTemplates = await DSdk
+        .db.managers.formTemplates
+        .filter((f) => f.id.isIn(userForms))
+        .get();
+
+    final List<String> availableForms =
+    availableFormTemplates.map((f) => f.id).toList();
+
+    final availableAssignedForms = assignmentForms
+        .map((fp) => Pair(fp, availableForms.contains(fp.form)))
+        .toList();
+
+    return availableAssignedForms;
+  }
+
+  Future<List<AssignmentForm>> _fetchAssignmentForms(String assignmentId) async {
     final db = appLocator<DbManager>().db;
     final userForms =
         appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
+
+    return db.managers.assignmentForms
+        .filter((f) => f.assignment.id(assignmentId))
+        .get();
+  }
+
+  Future<List<FormTemplate>> fetchByAssignment(assignmentId) async {
+    final db = appLocator<DbManager>().db;
+    final userForms = appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
 
     final query = db.managers.assignmentForms
         .filter((f) => f.assignment.id(assignmentId));
@@ -31,7 +62,7 @@ class FormTemplateService {
         .get();
 
     final List<FormTemplate> assignmentFormTemplates =
-        assignmentFormsWithRefs.map((assignmentWithRef) {
+    assignmentFormsWithRefs.map((assignmentWithRef) {
       final (assignmentForm, ref) = assignmentWithRef;
       return ref.form.prefetchedData!.first;
     }).toList();
@@ -45,7 +76,8 @@ class FormTemplateService {
         .selectFormTemplatesWithRefs(assignmentId: filter.assignment);
 
     final List<(FormTemplate, FormTemplateVersion)> formTemplateWithRefs =
-        await query.get();
+    await query.get();
+    // final (templateVersion, refs) = formTemplateWithRefs;
 
     return formTemplateWithRefs.map((withRef) {
       final (t, v) = withRef;
@@ -63,7 +95,7 @@ class FormTemplateService {
     }).toList();
   }
 
-  Future<FormTemplateModel> _getTemplateByVersionOrLatest(
+  Future<FormTemplateModel> getTemplateByVersionOrLatest(
       {String? templateId, String? versionId}) async {
     assert(templateId != null || versionId != null);
 
@@ -71,7 +103,7 @@ class FormTemplateService {
     /// It would retrieve the specific versions of formTemplate
     try {
       var query = DSdk.db.managers.formTemplateVersions
-          // .filter((f) => f.template.formAssignments((fs) => fs.assignment.id("")))
+      // .filter((f) => f.template.formAssignments((fs) => fs.assignment.id("")))
           .withReferences((prefetch) => prefetch(template: true));
 
       if (versionId != null) {
@@ -82,7 +114,7 @@ class FormTemplateService {
       }
 
       final List<(FormTemplateVersion, $$FormTemplateVersionsTableReferences)>
-          formTemplateWithRefs = await query.get();
+      formTemplateWithRefs = await query.get();
       final (templateVersion, refs) = formTemplateWithRefs.first;
 
       final formTemplate = refs.template.prefetchedData!.first;
@@ -101,11 +133,5 @@ class FormTemplateService {
       DExceptionReporter.instance.report(e, showToUser: true);
       rethrow;
     }
-  }
-
-  Future<FormTemplateModel> fetchTemplateVersion(templateVersionUid) async {
-    final template =
-        await _getTemplateByVersionOrLatest(versionId: templateVersionUid);
-    return template;
   }
 }

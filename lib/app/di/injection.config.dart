@@ -40,12 +40,21 @@ import 'package:datarunmobile/core/sync/sync_progress_notifier.dart' as _i28;
 import 'package:datarunmobile/core/sync/sync_scheduler.dart' as _i658;
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart' as _i602;
 import 'package:datarunmobile/core/user_session/session_storage.dart' as _i139;
+import 'package:datarunmobile/data/form_template_list_service.dart' as _i760;
 import 'package:datarunmobile/data/form_template_service.dart' as _i991;
 import 'package:datarunmobile/data/option_set_service.dart' as _i158;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
+import 'package:datarunmobile/features/form_submission/application/device_info_service.dart'
+    as _i1058;
+import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart'
+    as _i54;
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart'
+    as _i342;
 import 'package:datarunmobile/features/form_submission/application/form_instance_service_impl.dart'
     as _i756;
+import 'package:datarunmobile/features/form_submission/application/form_metadata_service.dart'
+    as _i747;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
@@ -71,12 +80,17 @@ Future<_i174.GetIt> setupGlobalDependencies(
   );
   gh.factory<_i558.FlutterSecureStorage>(
       () => thirdPartyServicesModule.flutterSecureStorage);
+  await gh.factoryAsync<_i1058.AndroidDeviceInfoService>(
+    () => thirdPartyServicesModule.getAndroidDeviceInfo(),
+    preResolve: true,
+  );
   gh.factory<_i64.AuthApi>(() => _i64.AuthApi());
   gh.factory<_i730.DataValueRepository>(() => _i730.DataValueRepository());
   gh.factory<_i683.ResourceManager>(() => const _i683.ResourceManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
   gh.factory<_i1027.AssignmentServiceImpl>(
       () => _i1027.AssignmentServiceImpl());
+  gh.factory<_i342.FieldContextRegistry>(() => _i342.FieldContextRegistry());
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());
@@ -103,7 +117,17 @@ Future<_i174.GetIt> setupGlobalDependencies(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i460.SharedPreferences>(),
       ));
+  gh.factoryParam<_i747.FormMetadataService, _i54.FormMetadata, dynamic>((
+    formMetadata,
+    _,
+  ) =>
+      _i747.FormMetadataService(
+        deviceInfoService: gh<_i1058.AndroidDeviceInfoService>(),
+        formMetadata: formMetadata,
+      ));
   gh.factory<_i991.FormTemplateService>(() => _i991.FormTemplateService(
+      optionSetService: gh<_i158.OptionSetService>()));
+  gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
       optionSetService: gh<_i158.OptionSetService>()));
   gh.factoryParam<_i756.FormInstanceServiceImpl, String, dynamic>((
     formId,

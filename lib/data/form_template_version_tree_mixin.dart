@@ -2,37 +2,38 @@ import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/tree/tree_element.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/features/form/application/form_template_model.dart';
-import 'package:datarunmobile/data/form_template_service.dart';
+import 'package:datarunmobile/data/form_template_list_service.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
+import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormTemplateRepository {
   FormTemplateRepository._(
-      {required FormTemplateModel formTemplateModel, required this.optionMap})
+      {required FormTemplateModel formTemplateModel,
+      required this.optionMap,
+      required this.optionSets})
       : _formTemplateModel = formTemplateModel;
 
   static Future<FormTemplateRepository> create(
       {required String versionUid}) async {
-    // final formVersion = await DSdk.db.managers.formTemplateVersions
-    //     .filter((f) => f.id(versionUid))
-    //     .getSingle();
-    // final formTemplate = await DSdk.db.managers.formTemplates
-    //     .filter((f) => f.id(formVersion.template))
-    //     .getSingle();
     final FormTemplateModel versionModel =
-        await appLocator<FormTemplateService>()
+        await appLocator<FormTemplateListService>()
             .getTemplateByVersionOrLatest(versionId: versionUid);
     final options =
+        await appLocator<OptionSetService>().getOptions(versionModel);
+    final optionSets =
         await appLocator<OptionSetService>().getOptionSets(versionModel);
     return FormTemplateRepository._(
-        formTemplateModel: versionModel, optionMap: options);
+        formTemplateModel: versionModel,
+        optionMap: options,
+        optionSets: optionSets);
   }
 
   // final FormTemplate _formTemplate;
   // final FormTemplateVersion _formTemplateVersion;
   final FormTemplateModel _formTemplateModel;
   final Map<String, List<DataOption>> optionMap;
+  final Map<String, DataOptionSet> optionSets;
   SectionTemplate? _root;
   final Map<String, Template> _rootsFlatCache = {};
 

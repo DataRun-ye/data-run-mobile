@@ -377,10 +377,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fieldsWithErrorInfo => 'Fields with Error';
 
   @override
-  String get reviewFormData => 'Review Form';
+  String get reviewFormData => 'Review';
 
   @override
-  String get checkFieldsLater => 'Check Fields later';
+  String get checkFieldsLater => 'Not Now';
 
   @override
   String get makeFormFinalOrSaveBody =>

@@ -4,7 +4,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
 import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
 import 'package:datarunmobile/data/model/dialog_button_style.data.dart';
-import 'package:datarunmobile/features/form_ui_elements/application/form_completion_dialog.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';

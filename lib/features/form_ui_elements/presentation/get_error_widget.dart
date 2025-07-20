@@ -4,29 +4,12 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 Widget getErrorWidget(Object? error, StackTrace? stackTrace) {
-  // logError('error: $error');
-  // debugPrintStack(stackTrace: stackTrace, label: error.toString());
   return Center(
       child: ExceptionIndicator(
     title: S.current.generalErrorTitle,
     message: '${S.current.generalErrorMessage}\n',
     assetName: 'assets/app/confused-face.svg',
   ));
-  // return Builder(builder: (context) {
-  //   final cs = Theme.of(context).colorScheme;
-  //   return Center(
-  //     child: Container(
-  //       color: cs.errorContainer,
-  //       child: Text(
-  //         'Error $error',
-  //         style: Theme.of(context)
-  //             .textTheme
-  //             .headlineSmall!
-  //             .copyWith(color: cs.error),
-  //       ),
-  //     ),
-  //   );
-  // });
 }
 
 Widget getErrorWidget2(Object? error, StackTrace? stackTrace) {

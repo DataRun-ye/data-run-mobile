@@ -211,6 +211,7 @@ class App extends ConsumerWidget {
     final barFg = isDark ? cs.onSurface : cs.onPrimary;
 
     return base.copyWith(
+      iconTheme: base.iconTheme.copyWith(color: cs.outlineVariant),
       colorScheme: cs,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       typography: Typography.material2021(platform: platform, colorScheme: cs),
@@ -229,7 +230,7 @@ class App extends ConsumerWidget {
         backgroundColor: barBg,
         foregroundColor: barFg,
         centerTitle: true,
-        iconTheme: IconThemeData(color: barFg),
+        iconTheme: IconThemeData(color: barFg.withValues(alpha: 0.6)),
         actionsIconTheme: IconThemeData(color: barFg),
         surfaceTintColor: barBg,
         systemOverlayStyle:

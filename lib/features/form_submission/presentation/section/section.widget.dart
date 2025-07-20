@@ -1,5 +1,8 @@
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_sliver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -42,13 +45,17 @@ class SectionWidget extends HookConsumerWidget {
         ),
         sliver: MultiSliver(
           pushPinnedChildren: true,
-          children: buildSliverList(element.elements.values, context),
+          children: buildSliverList(element.elements.values, context, ref),
         ));
   }
 
-  List<Widget> buildSliverList(
-      Iterable<FormElementInstance<dynamic>> elements, BuildContext context) {
+  List<Widget> buildSliverList(Iterable<FormElementInstance<dynamic>> elements,
+      BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
+    final FormInstance formInstance = ref
+        .watch(
+            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+        .requireValue;
 
     return elements.map((element) {
       if (element is Section) {
@@ -66,9 +73,9 @@ class SectionWidget extends HookConsumerWidget {
         return SliverToBoxAdapter(
           child: ListTile(
             title: FieldWidget(
-              key: Key(element.elementPath!),
-              element: element,
-            ),
+                key: formInstance.fieldKeysRegistery
+                    .getOrCreateKey(element.elementPath!),
+                element: element),
           ),
         );
       }

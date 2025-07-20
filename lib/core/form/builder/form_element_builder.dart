@@ -59,8 +59,7 @@ class FormElementBuilder {
 
   static RepeatItemInstance buildRepeatItem(FormGroup rootFormControl,
       FormTemplateRepository formFlatTemplate, SectionTemplate template,
-      {Map<String, Object?>? initialFormValue /*, required String parentUid*/
-      }) {
+      {Map<String, Object?>? initialFormValue}) {
     final Map<String, FormElementInstance<dynamic>> elements = {};
 
     final repeatedSection = RepeatItemInstance(

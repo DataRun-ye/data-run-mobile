@@ -3,7 +3,7 @@ import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_panel.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_rows_source.dart';
 import 'package:datarunmobile/generated/l10n.dart';

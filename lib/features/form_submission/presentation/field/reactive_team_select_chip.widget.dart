@@ -6,7 +6,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -32,6 +32,7 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
         return ReactiveChoiceChips<String>(
             formControl: formInstance.form.control(element.elementPath!)
                 as FormControl<String>,
+            confirmChangingValue: element.dependents.length > 0,
             validationMessages: validationMessages(),
             selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
             options: _getChipOptions(teams),

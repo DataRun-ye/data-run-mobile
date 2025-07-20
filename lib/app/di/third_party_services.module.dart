@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:d_sdk/di/app_environment.dart';
 import 'package:datarunmobile/core/auth/auth_interceptor.dart';
+import 'package:datarunmobile/features/form_submission/application/device_info_service.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -33,6 +37,17 @@ abstract class ThirdPartyServicesModule {
       ..interceptors.add(authInterceptor);
 
     return dio;
+  }
+
+  @preResolve
+  Future<AndroidDeviceInfoService> getAndroidDeviceInfo() async {
+
+    if (Platform.isAndroid) {
+      return AndroidDeviceInfoService(
+          androidDeviceInfo: await DeviceInfoPlugin().androidInfo);
+    }
+
+    return AndroidDeviceInfoService(androidDeviceInfo: null);
   }
 
   @preResolve

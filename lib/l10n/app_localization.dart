@@ -695,13 +695,13 @@ abstract class AppLocalizations {
   /// No description provided for @reviewFormData.
   ///
   /// In en, this message translates to:
-  /// **'Review Form'**
+  /// **'Review'**
   String get reviewFormData;
 
   /// No description provided for @checkFieldsLater.
   ///
   /// In en, this message translates to:
-  /// **'Check Fields later'**
+  /// **'Not Now'**
   String get checkFieldsLater;
 
   /// No description provided for @makeFormFinalOrSaveBody.

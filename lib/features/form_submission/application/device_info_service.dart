@@ -1,17 +1,17 @@
 import 'package:device_info_plus/device_info_plus.dart';
 
 class AndroidDeviceInfoService {
-  AndroidDeviceInfoService({required this.deviceInfo});
+  AndroidDeviceInfoService({required this.androidDeviceInfo});
 
-  final AndroidDeviceInfo? deviceInfo;
+  final AndroidDeviceInfo? androidDeviceInfo;
 
-  String? deviceId() => deviceInfo?.id;
+  String? deviceId() => androidDeviceInfo?.id;
 
-  String? model() => deviceInfo?.model;
+  String? model() => androidDeviceInfo?.model;
 
-  String? manufacturer() => deviceInfo?.manufacturer;
+  String? manufacturer() => androidDeviceInfo?.manufacturer;
 
-  String? release() => deviceInfo?.version.release;
+  String? release() => androidDeviceInfo?.version.release;
 
-  bool? isLowRamDevice() => deviceInfo?.isLowRamDevice;
+  bool? isLowRamDevice() => androidDeviceInfo?.isLowRamDevice;
 }

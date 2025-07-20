@@ -119,10 +119,10 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$countString استمارة متوفرة',
+      other: 'تتوفر $countString استمارات',
       two: 'تتوفر استمارتان',
-      one: 'تتوفر 1 استمارة',
-      zero: 'لا تتوفر استمارات لهذا النشاط',
+      one: 'تتوفر استمارة واحدة',
+      zero: 'لا تتوفر استمارات لهذا العنصر',
     );
     return '$_temp0';
   }
@@ -690,10 +690,10 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'عدد $countString استمارة',
-      two: 'عدد استمارتان',
-      one: 'عدد 1 استمارة',
-      zero: 'لا تتوفر استمارات نهائية',
+      other: '$countString استمارات للمزامنة',
+      two: 'استمارتان للمزامنة',
+      one: 'استمارة 1 للمزامنة',
+      zero: 'لا تتوفر استمارات نهائية للمزامنة',
     );
     return '$_temp0';
   }

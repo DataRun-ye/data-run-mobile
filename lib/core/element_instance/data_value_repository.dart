@@ -8,6 +8,16 @@ import 'package:injectable/injectable.dart';
 class DataValueRepository {
   static AppDatabase get db => DSdk.db;
 
+  Future<List<DataValue>> fetchDataValuesFor(
+      {required String dataInstanceId}) async {
+    final submission;
+    return (db.select(db.dataValues)
+          ..where(
+            (row) => row.dataInstance.equals(dataInstanceId),
+          ))
+        .get();
+  }
+
   static Future<DataValue?> get(
       {required String submissionId, required String dataElementId}) async {
     await db.select(db.dataValues)

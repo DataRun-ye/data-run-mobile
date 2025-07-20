@@ -142,9 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancelSyncing": MessageLookupByLibrary.simpleMessage("Cancel Syncing"),
     "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
     "changePassword": MessageLookupByLibrary.simpleMessage("Change Password"),
-    "checkFieldsLater": MessageLookupByLibrary.simpleMessage(
-      "Check Fields later",
-    ),
+    "checkFieldsLater": MessageLookupByLibrary.simpleMessage("Not Now"),
     "checkingSession": MessageLookupByLibrary.simpleMessage(
       "Checking session...",
     ),
@@ -471,7 +469,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resources": MessageLookupByLibrary.simpleMessage("Resources"),
     "restoreItem": MessageLookupByLibrary.simpleMessage("Restore Item"),
-    "reviewFormData": MessageLookupByLibrary.simpleMessage("Review Form"),
+    "reviewFormData": MessageLookupByLibrary.simpleMessage("Review"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
     "saveAndAddAnother": MessageLookupByLibrary.simpleMessage("Add Another"),
     "saveAndCheck": MessageLookupByLibrary.simpleMessage("Save and Check"),

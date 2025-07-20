@@ -1,15 +1,11 @@
-import 'package:d_sdk/di/app_environment.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 @lazySingleton
 class ConnectivityService {
-  ConnectivityService()
-      : _connection = InternetConnection.createInstance(
-          customCheckOptions: [
-            InternetCheckOption(uri: Uri.parse(AppEnvironment.apiPingUrl)),
-          ],
-        );
+  ConnectivityService() : _connection = InternetConnection.createInstance(
+    checkInterval: Duration(seconds: 3),
+  );
 
   final InternetConnection _connection;
 

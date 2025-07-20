@@ -10,8 +10,6 @@ class FormInstanceServiceImpl extends FormInstanceService {
   FormInstanceServiceImpl({@factoryParam required this.formId});
 
   final String formId;
-  String? assignment;
-  String? team;
 
   final AppDatabase _db = appLocator<DbManager>().db;
 

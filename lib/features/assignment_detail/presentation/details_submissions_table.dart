@@ -1,5 +1,4 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
-import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
@@ -13,8 +12,8 @@ import 'package:datarunmobile/features/assignment/presentation/build_status.dart
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
-import 'package:datarunmobile/features/form_submission/presentation/status_icon.dart';
-import 'package:datarunmobile/features/form_submission/presentation/submission_sync_dialog.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/status_icon.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/submission_sync_dialog.widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +22,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class FormSubmissionsTable extends HookConsumerWidget {
-  const FormSubmissionsTable(
+class DetailSubmissionsTable extends HookConsumerWidget {
+  const DetailSubmissionsTable(
       {super.key,
       required this.assignment,
       required this.formId,
@@ -95,7 +94,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                             : null,
                         icon: const Icon(Icons.sync),
                         label: Text(
-                            '${S.of(context).send}: ${S.of(context).syncSubmissions(toSync.length)}'))
+                            '${S.of(context).syncSubmissions(toSync.length)}'))
                   ],
                 ),
               SizedBox(
@@ -132,8 +131,6 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                     label: Text(getItemLocalString(
                                         header.label.unlock,
                                         defaultString: header.name)))),
-                                // DataColumn(label: Text()),
-                                // DataColumn(label: Text()),
                                 DataColumn(
                                   label: Text(S.of(context).createdDate),
                                   onSort: (columnIndex, ascending) {
@@ -167,8 +164,7 @@ class FormSubmissionsTable extends HookConsumerWidget {
                                 Map<String, dynamic> totalResources = {};
                                 try {
                                   extractedValues = _extractValues(
-                                      submission.formData ?? {},
-                                      template.rootSection);
+                                      submission.formData ?? {}, template);
                                   totalResources = _sumNumericResources(
                                       submission.formData ?? {});
                                 } catch (e) {
@@ -286,40 +282,42 @@ class FormSubmissionsTable extends HookConsumerWidget {
   }
 
   Map<String, dynamic> _extractValues(
-      Map<String, dynamic> formData, SectionTemplate formTemplate) {
+      Map<String, dynamic> formData, FormTemplateRepository formTemplate) {
     Map<String, dynamic> extractedValues = {};
 
     void _extract(Map<String, dynamic> data, Iterable<Template> fields) {
       fields.forEach((field) {
-        if (field.name != null) {
-          if (field.children.isNotEmpty && data.containsKey(field.name)) {
-            _extract(
-                data[field.name], (field as SectionTemplate).children.toList());
-          } else if (field.repeatable && data.containsKey(field.name)) {
-            extractedValues[field.name!] = data[field.name];
-          } else if (field.type == ValueType.Progress &&
-              data.containsKey(field.name)) {
-            final value = ((AssignmentStatus.values
-                        .firstOrNullWhere((t) => t.name == data[field.name])
-                        ?.name ??
-                    data[field.name])
-                ?.toString());
-            extractedValues[field.name!] =
-                value != null ? Intl.message(value.toLowerCase()) : '-';
-            // } else if (field.type == ValueType.Team &&
-            //     data.containsKey(field.name)) {
-            //   extractedValues[field.name!] = activityModel.managedTeams
-            //           .firstOrNullWhere((t) => t.id == data[field.name])
-            //           ?.name ??
-            //       data[field.name];
-          } else if (data.containsKey(field.name)) {
-            extractedValues[field.name!] = data[field.name];
-          }
+        // if (field.name != null) {
+        if (field.repeatable && data.containsKey(field.name)) {
+          _extract(data[field.name], field.children.toList());
+          // extractedValues[field.name!] = data[field.name];
+        } else if (field is SectionTemplate && data.containsKey(field.name)) {
+          _extract(data[field.name], field.children.toList());
+        } else if (field.type == ValueType.Progress &&
+            data.containsKey(field.name)) {
+          final value = ((AssignmentStatus.getType(data[field.name])?.name ??
+                  data[field.name])
+              ?.toString());
+          extractedValues[field.name!] =
+              value != null ? Intl.message(value.toLowerCase()) : '-';
+          // } else if (field.type == ValueType.Team &&
+          //     data.containsKey(field.name)) {
+          //   extractedValues[field.name!] = activityModel.managedTeams
+          //           .firstOrNullWhere((t) => t.id == data[field.name])
+          //           ?.name ??
+          //       data[field.name];
+        } else if (field.type?.isSelectType == true &&
+            formTemplate.optionSets[field.optionSet] != null &&
+            data.containsKey(field.name)) {
+          extractedValues[field.name!] = data[field.name];
+        } else if (field.name != null) {
+          extractedValues[field.name!] = data[field.name];
         }
+        // }
       });
     }
 
-    _extract(formData, formTemplate.children);
+    _extract(formData, formTemplate.rootSection.children);
     return extractedValues;
   }
 

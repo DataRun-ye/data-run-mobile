@@ -44,7 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m10(error) => "ممنوع: ${error}.";
 
   static String m11(count) =>
-      "${Intl.plural(count, zero: 'لا تتوفر استمارات لهذا النشاط', one: 'تتوفر 1 استمارة', two: 'تتوفر استمارتان', other: '${count} استمارة متوفرة')}";
+      "${Intl.plural(count, zero: 'لا تتوفر استمارات لهذا العنصر', one: 'تتوفر استمارة واحدة', two: 'تتوفر استمارتان', other: 'تتوفر ${count} استمارات')}";
 
   static String m12(error) => "بيانات غير صالحة: ${error}.";
 
@@ -75,7 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "حدث خطأ أثناء مزامنة البيانات: ${error}. يرجى المحاولة مرة أخرى.";
 
   static String m23(count) =>
-      "${Intl.plural(count, zero: 'لا تتوفر استمارات نهائية', one: 'عدد 1 استمارة', two: 'عدد استمارتان', other: 'عدد ${count} استمارة')}";
+      "${Intl.plural(count, zero: 'لا تتوفر استمارات نهائية للمزامنة', one: 'استمارة 1 للمزامنة', two: 'استمارتان للمزامنة', other: '${count} استمارات للمزامنة')}";
 
   static String m24(error) => "خطأ عند محاولة الوصول لملفات التخزين: ${error}";
 

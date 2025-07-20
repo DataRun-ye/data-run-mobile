@@ -908,20 +908,15 @@ class S {
     );
   }
 
-  /// `Review Form`
+  /// `Review`
   String get reviewFormData {
-    return Intl.message(
-      'Review Form',
-      name: 'reviewFormData',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Review', name: 'reviewFormData', desc: '', args: []);
   }
 
-  /// `Check Fields later`
+  /// `Not Now`
   String get checkFieldsLater {
     return Intl.message(
-      'Check Fields later',
+      'Not Now',
       name: 'checkFieldsLater',
       desc: '',
       args: [],

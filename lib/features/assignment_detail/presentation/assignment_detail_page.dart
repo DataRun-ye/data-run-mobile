@@ -3,9 +3,9 @@ import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.
 import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/team_display.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
+import 'package:datarunmobile/features/assignment_detail/presentation/details_submissions_table.dart';
 import 'package:datarunmobile/features/form/presentation/form_submission_create.widget.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_submissions_table.dart';
 import 'package:datarunmobile/features/form_ui_elements/presentation/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +23,9 @@ class AssignmentDetailPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        title: Wrap(
+          spacing: 3,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(S.of(context).assignmentDetail),
             VerticalDivider(color: cs.onPrimary),
@@ -57,7 +58,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                     (entry) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: _EagerInitialization(
-                        child: FormSubmissionsTable(
+                        child: DetailSubmissionsTable(
                           index: entry.key,
                           assignment: assignment,
                           formId: entry.value.first.form,

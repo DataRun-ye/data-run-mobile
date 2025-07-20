@@ -4,13 +4,16 @@ import 'package:d_sdk/core/form/attribute_type.dart';
 import 'package:d_sdk/core/utilities/date_helper.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
+import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
-class FormInstanceService {
-  FormInstanceService(
-      {AndroidDeviceInfoService? deviceInfoService, required this.formMetadata})
+@injectable
+class FormMetadataService {
+  FormMetadataService(
+      {AndroidDeviceInfoService? deviceInfoService,
+      @factoryParam required this.formMetadata})
       : _uuid = const Uuid().v4(),
         _deviceInfoService = deviceInfoService;
 
@@ -30,16 +33,6 @@ class FormInstanceService {
       _ => null
     };
   }
-
-  //
-  // FormControl<String> orgUnitControl(
-  //     List<String> formSelectableOrgUnit, initialValue) {
-  //   return FormControl<String>(
-  //       value: initialValue ??
-  //           (formSelectableOrgUnit.length == 1
-  //               ? formSelectableOrgUnit.first
-  //               : null));
-  // }
 
   FutureOr<dynamic> attributeControl(AttributeType attributeType,
           {initialValue}) async =>
@@ -114,31 +107,4 @@ class FormInstanceService {
 
     return controls;
   }
-//
-// Future<Map<String, AbstractControl<dynamic>>> formDataControls(
-//     initialValue) async {
-//   final Map<String, AbstractControl<dynamic>> controls =
-//       await formAttributesControls(initialValue);
-//
-//   for (var element in formFlatTemplate.formTemplate.fields) {
-//     controls[element.name] = FromElementControlFactory.createTemplateControl(
-//         element,
-//         savedValue: initialValue?[element.name]);
-//   }
-//
-//   return controls;
-// }
-
-// Future<Map<String, FormElementInstance<dynamic>>> formDataElements(
-//     FormGroup form, FormValueMap formValueMap, initialValue) async {
-//   final Map<String, FormElementInstance<dynamic>> elements = {};
-//
-//   for (var element in formFlatTemplate.formTemplate.fields) {
-//     elements[element.name] = FromElementFactory.createElementInstance(
-//         form, element,
-//         savedValue: initialValue?[element.name]);
-//   }
-//
-//   return elements;
-// }
 }

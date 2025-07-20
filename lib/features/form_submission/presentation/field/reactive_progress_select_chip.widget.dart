@@ -9,7 +9,7 @@ import 'package:datarunmobile/features/form_submission/application/form_instance
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -31,7 +31,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
     return ReactiveChoiceChips<String>(
       formControl: formInstance.form.control(element.elementPath!)
           as FormControl<String>,
-      confirmChangingValue: true,
+      confirmChangingValue: element.dependents.length > 0,
       validationMessages: validationMessages(),
       options: _getChipOptions(progressStatuses),
       decoration: InputDecoration(

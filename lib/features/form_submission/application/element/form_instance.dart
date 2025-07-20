@@ -5,9 +5,10 @@ import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
-import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -27,6 +28,7 @@ class FormInstance {
       required this.formFlatTemplate,
       required this.formMetadata,
       required this.entryStarted,
+      required this.fieldKeysRegistery,
       // AssignmentStatus? assignmentStatus,
       Map<String, Object?> initialValue = const {},
       required Section rootSection,
@@ -59,6 +61,7 @@ class FormInstance {
   final Map<String, FormElementInstance<dynamic>> _forElementMap = {};
   final Section _formSection;
   AssignmentStatus? _assignmentStatus;
+  final FieldContextRegistry fieldKeysRegistery;
 
   // final FormConfiguration formConfiguration;
 
@@ -112,10 +115,7 @@ class FormInstance {
     parent.elementControl.add(itemFormGroup);
 
     final itemInstance = FormElementBuilder.buildRepeatItem(
-      form,
-      formFlatTemplate,
-      parent.template, /*parentUid: _formDataUid as String*/
-    );
+        form, formFlatTemplate, parent.template);
     parent
       ..add(itemInstance)
       ..resolveDependencies()

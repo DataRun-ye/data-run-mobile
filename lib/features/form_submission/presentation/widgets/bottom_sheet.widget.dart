@@ -1,4 +1,4 @@
-import 'package:datarunmobile/features/form_ui_elements/application/form_completion_dialog.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';
 import 'package:flutter/material.dart';
 
 class QBottomSheetDialog extends StatelessWidget {
@@ -32,14 +32,7 @@ class QBottomSheetDialog extends StatelessWidget {
             completionDialogModel.bottomSheetContentModel.title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          // const Divider(),
           const SizedBox(height: 30),
-          // Text(
-          //   completionDialogModel.bottomSheetContentModel.subtitle,
-          //   style: Theme.of(context).textTheme.titleMedium,
-          // ),
-          // const SizedBox(height: 10),
-          // Scrollable Error Body with max height
           Flexible(
             child: SingleChildScrollView(
               child: Padding(
@@ -69,13 +62,19 @@ class QBottomSheetDialog extends StatelessWidget {
                                 color: cs.error, fontWeight: FontWeight.bold),
                           ),
                           children: fieldErrors.map((fieldEntry) {
-                            return GestureDetector(
-                              onTap: () => onItemWithErrorClicked
-                                  ?.call(fieldEntry.fieldPath),
-                              child: ListTile(
-                                dense: true,
-                                leading: Icon(Icons.error, color: cs.error),
-                                title: Wrap(
+                            return ListTile(
+                              dense: true,
+                              leading: Icon(Icons.error, color: cs.error),
+                              title: GestureDetector(
+                                onTap: () {
+                                  Feedback.wrapForTap(
+                                      onItemWithErrorClicked
+                                          ?.call(fieldEntry.fieldPath),
+                                      context);
+                                  // onItemWithErrorClicked
+                                  //     ?.call(fieldEntry.fieldPath);
+                                },
+                                child: Wrap(
                                   children: [
                                     Text('${fieldEntry.fieldName}: ',
                                         style: Theme.of(context)
@@ -101,8 +100,8 @@ class QBottomSheetDialog extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           // Buttons with spacing
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Wrap(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               _buildButton(context, completionDialogModel.secondaryButton),
               _buildButton(context, completionDialogModel.mainButton),

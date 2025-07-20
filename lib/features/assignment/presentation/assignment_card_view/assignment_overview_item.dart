@@ -75,15 +75,17 @@ class AssignmentOverviewItem extends ConsumerWidget {
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Theme.of(context).colorScheme.onPrimary,
                       shadowColor: Theme.of(context).colorScheme.shadow,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 12.0),
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(8.0),
-                      // ),
+                          horizontal: 12.0, vertical: 10.0),
                     ),
                   ),
                 ),
-                CardHeaderRow(showIcon: false,),
+                CardHeaderRow(
+                  showIcon: false,
+                ),
               ],
             ),
           ],
@@ -103,8 +105,6 @@ class AssignmentOverviewItem extends ConsumerWidget {
             '${assignment.orgUnit.code ?? ''}: ${assignment.orgUnit.name}',
             searchQuery,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
-        // const SizedBox(width: 8),
-        // HighlightedByValueLabel(assignment.orgUnit.name, searchQuery)
       ],
     );
   }
@@ -146,7 +146,9 @@ class AssignmentOverviewItem extends ConsumerWidget {
 
 class CardHeaderRow extends ConsumerWidget {
   const CardHeaderRow({this.showIcon = true});
+
   final bool showIcon;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchQuery =
@@ -158,7 +160,7 @@ class CardHeaderRow extends ConsumerWidget {
         assignment.availableForms;
 
     return HighlightedLabelWithIcon(
-     showIcon ? Icons.document_scanner : null,
+      showIcon ? Icons.document_scanner : null,
       availableLocally.length == userForms.length
           ? '(${S.of(context).form(availableLocally.length)})'
           : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',

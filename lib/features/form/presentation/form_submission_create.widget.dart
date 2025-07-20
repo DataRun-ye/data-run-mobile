@@ -157,6 +157,7 @@ class _FormListItem extends ConsumerWidget {
                   text: formTemplate.description!,
                 )
               : null,
+          enableFeedback: true,
           onTap: () => onTap(formTemplate),
           trailing: const Icon(Icons.chevron_right),
           contentPadding:

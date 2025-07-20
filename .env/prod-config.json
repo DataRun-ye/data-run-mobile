@@ -2,5 +2,5 @@
   "env_label": "prod",
   "api_base_url": "https://api.nmcpye.org",
   "default_locale": "ar",
-  "secure_cache": false
+  "secure_cache": true
 }

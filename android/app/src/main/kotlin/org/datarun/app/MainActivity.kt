@@ -1,4 +1,4 @@
-package org.datarun.datarunmobile
+package org.datarun.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -5,7 +5,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 class ConnectivityService {
   ConnectivityService() : _connection = InternetConnection.createInstance(
     checkInterval: Duration(seconds: 3),
-  );
+  )..hasInternetAccess;
 
   final InternetConnection _connection;
 

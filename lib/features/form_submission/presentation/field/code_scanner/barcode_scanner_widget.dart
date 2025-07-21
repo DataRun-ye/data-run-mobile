@@ -170,7 +170,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget>
           MobileScanner(
             controller: _controller,
             scanWindow: scanWindow,
-            errorBuilder: (context, error, child) {
+            errorBuilder: (context, error) {
               return ScannerErrorWidget(error: error);
             },
             fit: BoxFit.cover,

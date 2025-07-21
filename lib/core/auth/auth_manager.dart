@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:d_sdk/core/exception/session_expired_exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:d_sdk/database/app_database.dart';
@@ -11,11 +12,13 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_api.dart';
 import 'package:datarunmobile/core/auth/auth_storage.dart';
-import 'package:datarunmobile/core/auth/session_notifier.dart';
-import 'package:datarunmobile/core/database/user_db_session.dart';
+import 'package:datarunmobile/core/auth/token_refresher.dart';
+import 'package:datarunmobile/core/auth/token_string_extension.dart';
+import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
 import 'package:datarunmobile/core/user_session/locale_service.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -35,8 +38,6 @@ class AuthManager extends ChangeNotifier {
   final AuthStorage _authStorage;
   AuthStatus _status = AuthStatus.unknown;
 
-  UserDbSession? _activeUserDbSession;
-
   /// The full User object for the active user
   UserSession? _activeUserSession;
 
@@ -46,11 +47,9 @@ class AuthManager extends ChangeNotifier {
 
   AuthStatus get status => _status;
 
-  String? get activeUserId => _activeUserDbSession?.userId;
+  String? get activeUserId => _activeUserSession?.username;
 
   UserSession? get activeUserSession => _activeUserSession;
-
-  UserDbSession? get activeUserDbSession => _activeUserDbSession;
 
   /// Checks for any active session or previously logged in users.
   Future<void> initialize() async {
@@ -58,12 +57,11 @@ class AuthManager extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final userSession = _authStorage.getActiveSession();
+      final userSession = await initializeApp();
       await _restoreSession(userSession);
     } catch (e) {
       _status = AuthStatus.unauthenticated;
       _activeUserSession = null;
-      _activeUserDbSession = null;
     } finally {
       notifyListeners();
     }
@@ -101,7 +99,6 @@ class AuthManager extends ChangeNotifier {
       logError('Login failed', source: error, stackTrace: s);
       _status = AuthStatus.unauthenticated;
       _activeUserSession = null;
-      _activeUserDbSession = null;
       rethrow; // Re-throw to be caught by UI for error display
     } finally {
       notifyListeners();
@@ -127,9 +124,6 @@ class AuthManager extends ChangeNotifier {
       logDebug('Previous user session scope popped: $sessionUserId');
     }
 
-    _activeUserDbSession = await initializeApp();
-    _activeUserSession = userSession;
-    _status = AuthStatus.authenticated;
     // Push new scope for the active user
     // appLocator.pushNewScope(scopeName: sessionUserId);
     // driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
@@ -159,6 +153,9 @@ class AuthManager extends ChangeNotifier {
 
     logDebug('New user session scope pushed: ${sessionUserId}');
 
+    _activeUserSession = userSession;
+    _status = AuthStatus.authenticated;
+
     // Register user-specific dependencies in the new scope
     appLocator.registerLazySingleton<LocaleService>(
       () => LocaleService(Locale(userSession.langKey ?? 'en', 'en_US')),
@@ -175,10 +172,8 @@ class AuthManager extends ChangeNotifier {
 
     try {
       _activeUserSession = null;
-      _activeUserDbSession = null;
       _status = AuthStatus.unauthenticated;
       await _authStorage.clearActiveUser();
-
       // Pop the current user's scope. This disposes all user-specific services.
       if (appLocator.hasScope(userIdToLogout)) {
         await appLocator.popScopesTill(userIdToLogout);
@@ -192,11 +187,10 @@ class AuthManager extends ChangeNotifier {
       logDebug('User session deleted: $userIdToLogout');
     } catch (e) {
       debugPrint('Logout failed: $e');
-      _activeUserDbSession = null;
+    } finally {
       _activeUserSession = null;
       _status = AuthStatus.unauthenticated;
       await _authStorage.clearActiveUser();
-    } finally {
       notifyListeners();
     }
   }
@@ -250,4 +244,22 @@ class AuthManager extends ChangeNotifier {
 //     notifyListeners();
 //   }
 // }
+}
+
+Future<UserSession> initializeApp() async {
+  // Get last active user ID
+  String userActiveUserId = appLocator<AuthStorage>().getActiveUserId();
+  // Load tokens securely
+  TokenPair tokenPair = await appLocator<AuthStorage>().getActiveUserToken();
+  final expiry = tokenPair.accessToken.expirationTime;
+  if (!tokenPair.accessToken.isAccessTokenValid) {
+    final isOnline = await appLocator<ConnectivityService>().isOnline;
+    throwIfNot(isOnline,
+        SessionExpiredException('No connection to refresh User Expired Token'));
+    tokenPair =
+        await appLocator<TokenRefresher>().refreshToken(userActiveUserId);
+  }
+
+  UserSession userSession = await appLocator<AuthStorage>().getActiveSession();
+  return userSession;
 }

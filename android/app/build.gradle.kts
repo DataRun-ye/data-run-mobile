@@ -1,5 +1,6 @@
-import java.util.Properties
+import com.android.build.gradle.BaseExtension
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -21,12 +22,12 @@ android {
     ndkVersion = "27.0.12077973"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -54,8 +55,8 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now,
             // so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
             signingConfig = signingConfigs.getByName("release")
+//            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

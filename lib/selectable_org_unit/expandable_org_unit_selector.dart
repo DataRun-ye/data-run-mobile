@@ -3,16 +3,16 @@
 // import 'package:recursive_tree_flutter/recursive_tree_flutter.dart';
 //
 // class ExpandableOrgUnitSelector extends StatefulWidget {
-//   final TreeType<OrgUnitNode> tree;
-//   final int selectableLevel;
-//   final ValueChanged<List<OrgUnitNode>> onSelectionChanged;
-//
 //   const ExpandableOrgUnitSelector({
 //     required this.tree,
 //     required this.selectableLevel,
 //     required this.onSelectionChanged,
 //     super.key,
 //   });
+//
+//   final TreeType<OrgUnitNode> tree;
+//   final int selectableLevel;
+//   final ValueChanged<List<OrgUnitNode>> onSelectionChanged;
 //
 //   @override
 //   _ExpandableOrgUnitSelectorState createState() =>
@@ -24,8 +24,8 @@
 //   @override
 //   void initState() {
 //     super.initState();
-//     initTree();                    // from mixin :contentReference[oaicite:4]{index=4}
-//     initRotationController();      // from mixin :contentReference[oaicite:5]{index=5}
+//     initTree(); // from mixin :contentReference[oaicite:4]{index=4}
+//     initRotationController(); // from mixin :contentReference[oaicite:5]{index=5}
 //   }
 //
 //   @override
@@ -47,20 +47,23 @@
 //
 //   @override
 //   Widget build(BuildContext context) => Column(
-//     children: [
-//       _buildBreadcrumbs(tree),    // custom context indicator :contentReference[oaicite:6]{index=6}
-//       Expanded(child: SingleChildScrollView(child: buildView())),
-//     ],
-//   );
+//         children: [
+//           _buildBreadcrumbs(tree),
+//           // custom context indicator :contentReference[oaicite:6]{index=6}
+//           Expanded(child: SingleChildScrollView(child: buildView())),
+//         ],
+//       );
 //
 //   @override
 //   Widget buildNode() {
 //     final node = tree.data;
 //     return InkWell(
-//       onTap: updateStateToggleExpansion, // toggles isExpanded :contentReference[oaicite:7]{index=7}
+//       onTap: updateStateToggleExpansion,
+//       // toggles isExpanded :contentReference[oaicite:7]{index=7}
 //       child: Row(
 //         children: [
-//           buildRotationIcon(),           // arrow icon animation :contentReference[oaicite:8]{index=8}
+//           buildRotationIcon(),
+//           // arrow icon animation :contentReference[oaicite:8]{index=8}
 //           Expanded(child: Text(node.title)),
 //           if (node.level == widget.selectableLevel)
 //             Checkbox(
@@ -68,7 +71,7 @@
 //               onChanged: (_) {
 //                 updateTreeSingleChoice(tree, !node.isChosen!);
 //                 widget.onSelectionChanged(
-//                   return ChosenLeaves(widget.tree, []),
+//                   returnChosenLeaves(widget.tree, []),
 //                 );
 //                 setState(() {});
 //               },
@@ -79,14 +82,13 @@
 //   }
 //
 //   @override
-//   List<Widget> generateChildrenNodesWidget(
-//       List<TreeType<OrgUnitNode>> list) =>
+//   List<Widget> generateChildrenNodesWidget(List<TreeType<OrgUnitNode>> list) =>
 //       list
 //           .map((sub) => ExpandableOrgUnitSelector(
-//         tree: sub,
-//         selectableLevel: widget.selectableLevel,
-//         onSelectionChanged: widget.onSelectionChanged,
-//       ))
+//                 tree: sub,
+//                 selectableLevel: widget.selectableLevel,
+//                 onSelectionChanged: widget.onSelectionChanged,
+//               ))
 //           .toList();
 //
 //   @override

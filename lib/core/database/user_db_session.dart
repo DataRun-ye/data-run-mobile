@@ -1,13 +1,10 @@
 import 'package:d_sdk/core/user_session/user_session.dart';
-import 'package:d_sdk/database/app_database.dart';
 import 'package:equatable/equatable.dart';
 
 class UserDbSession with EquatableMixin {
-  UserDbSession(
-      {required this.userId, required this.database, required this.tokens});
+  UserDbSession({required this.userId, required this.tokens});
 
   final String userId;
-  final AppDatabase database;
   final TokenPair tokens;
 
   UserDbSession copyWith({
@@ -15,7 +12,6 @@ class UserDbSession with EquatableMixin {
   }) {
     return UserDbSession(
       userId: this.userId,
-      database: this.database,
       tokens: tokens ?? this.tokens,
     );
   }

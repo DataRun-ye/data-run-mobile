@@ -18,14 +18,12 @@ class AssignmentDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final activityModel = ActivityInheritedWidget.of(context);
     final cs = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
         title: Wrap(
           spacing: 3,
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(S.of(context).assignmentDetail),
             VerticalDivider(color: cs.onPrimary),

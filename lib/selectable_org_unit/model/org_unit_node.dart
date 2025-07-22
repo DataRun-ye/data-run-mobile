@@ -1,84 +1,32 @@
-// import 'package:collection/collection.dart';
-// import 'package:d_sdk/database/database.dart';
-// import 'package:recursive_tree_flutter/recursive_tree_flutter.dart';
-//
-// class OrgUnitNode extends AbsNodeType {
-//   OrgUnitNode({
-//     required dynamic id,
-//     required dynamic name,
-//     bool isInner = true,
-//     bool isUnavailable = false,
-//     bool isChosen = false,
-//     bool isExpanded = false,
-//   }) : super(
-//           id: id,
-//           title: name,
-//           isInner: isInner,
-//           isUnavailable: isUnavailable,
-//           isChosen: isChosen,
-//           isExpanded: isExpanded,
-//         );
-//
-//   OrgUnitNode.sampleInner(OrgUnit ou,
-//       {bool isExpanded = false, bool isChosen = false})
-//       : super(
-//             id: ou.id,
-//             title: ou.name,
-//             isExpanded: isExpanded,
-//             isChosen: isExpanded,
-//             isShowedInSearching: false);
-//
-//   OrgUnitNode.sampleLeaf(OrgUnit ou, {bool isChosen = false})
-//       : super(
-//             id: ou.id,
-//             title: ou.name,
-//             isInner: false,
-//             isChosen: isChosen,
-//             isShowedInSearching: true);
-//
-//   @override
-//   T clone<T extends AbsNodeType>() {
-//     final node = OrgUnitNode(
-//       id: id,
-//       name: title,
-//       isInner: isInner,
-//       isUnavailable: isUnavailable,
-//       isChosen: isChosen!,
-//       isExpanded: isExpanded,
-//     );
-//     node.isBlurred = isBlurred;
-//     node.isFavorite = isFavorite;
-//     node.isShowedInSearching = isShowedInSearching;
-//
-//     return node as T;
-//   }
-// }
-//
-// Future<TreeType<OrgUnitNode>> buildOrgUnitTree(int startLevel) async {
-//   final List<OrgUnit> allUnits = [];
-//
-//   // final mapByParent = groupBy(allUnits, (u) => u.parentUid);
-//   final Map<String?, List<OrgUnit>> mapByParent =
-//       allUnits.groupListsBy((u) => u.parent);
-//   TreeType<OrgUnitNode>? build(String? parentUid) {
-//     final childrenDtos = mapByParent[parentUid] ?? [];
-//     return TreeType(
-//       data: OrgUnitNode(
-//         id: parentUid ?? 'root',
-//         name: parentUid == null
-//             ? 'All Units'
-//             : childrenDtos.firstWhere((d) => d.id == parentUid).name,
-//         level: parentUid == null ? 0 : childrenDtos.first.level,
-//         path: parentUid == null ? '' : childrenDtos.first.path,
-//         hasChildren: childrenDtos.isNotEmpty, name: null,
-//       ),
-//       children: childrenDtos
-//           .where((d) => d.level >= startLevel)
-//           .map((d) => build(d.id)!)
-//           .toList(),
-//       parent: null,
-//     );
-//   }
-//
-//   return build(null)!;
-// }
+import 'package:d_sdk/database/app_database.dart';
+import 'package:recursive_tree_flutter/recursive_tree_flutter.dart';
+
+/// Wraps OrgUnit Drift data in an AbsNodeType so it be part of
+/// the tree node picker.
+class OrgUnitNode extends AbsNodeType {
+  OrgUnitNode(this.org)
+      : super(
+          id: org.id,
+          title: org.name,
+          isInner: true,
+          // assume inner; we’ll flip to false if no children
+          isUnavailable: false,
+          isChosen: false,
+          isExpanded: false,
+          isFavorite: false,
+          isShowedInSearching: true,
+          isBlurred: false,
+        );
+  final OrgUnit org;
+
+  @override
+  T clone<T extends AbsNodeType>() {
+    final copy = OrgUnitNode(org)..title = title;
+    copy.isInner = isInner;
+    copy.isChosen = isChosen;
+    copy.isExpanded = isExpanded;
+    copy.isUnavailable = isUnavailable;
+    copy.isFavorite = isFavorite;
+    return copy as T;
+  }
+}

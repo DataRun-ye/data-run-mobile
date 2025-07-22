@@ -125,9 +125,9 @@ Future<_i174.GetIt> setupGlobalDependencies(
         deviceInfoService: gh<_i1058.AndroidDeviceInfoService>(),
         formMetadata: formMetadata,
       ));
-  gh.factory<_i991.FormTemplateService>(() => _i991.FormTemplateService(
-      optionSetService: gh<_i158.OptionSetService>()));
   gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
+      optionSetService: gh<_i158.OptionSetService>()));
+  gh.factory<_i991.FormTemplateService>(() => _i991.FormTemplateService(
       optionSetService: gh<_i158.OptionSetService>()));
   gh.factoryParam<_i756.FormInstanceServiceImpl, String, dynamic>((
     formId,

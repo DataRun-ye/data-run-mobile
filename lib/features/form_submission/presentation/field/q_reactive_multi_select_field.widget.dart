@@ -11,8 +11,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class QDropDownMultiSelectWithSearchField extends HookConsumerWidget {
-  const QDropDownMultiSelectWithSearchField({super.key, required this.element});
+class QReactiveMultiSelectSearchField extends HookConsumerWidget {
+  const QReactiveMultiSelectSearchField({super.key, required this.element});
 
   final FieldInstance<List<String>> element;
 

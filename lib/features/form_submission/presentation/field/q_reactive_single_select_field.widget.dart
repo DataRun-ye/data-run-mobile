@@ -10,8 +10,8 @@ import 'package:datarunmobile/features/form_submission/presentation/widgets/form
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class QReactiveChoiceSingleSelectChips extends ConsumerWidget {
-  QReactiveChoiceSingleSelectChips({super.key, required this.element});
+class QReactiveSingleSelectField extends ConsumerWidget {
+  QReactiveSingleSelectField({super.key, required this.element});
 
   final FieldInstance<String> element;
 

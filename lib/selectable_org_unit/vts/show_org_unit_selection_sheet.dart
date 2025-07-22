@@ -1,4 +1,4 @@
-import 'package:datarunmobile/selectable_org_unit/vts/org_unit_tree_view.dart';
+import 'package:datarunmobile/selectable_org_unit/vts/org_unit_searchable_tree_view.dart';
 import 'package:flutter/material.dart';
 import 'package:recursive_tree_flutter/recursive_tree_flutter.dart';
 
@@ -78,8 +78,8 @@ void showOrgUnitSelectionSheet<T extends AbsNodeType>({
                           return emptyPage;
                         } else {
                           tree = snapshot.data!;
-                          return OrgUnitTreeView(
-                            tree,
+                          return OrgUnitSearchableTreeView(
+                            tree: tree,
                             buildLeadingWidget: buildLeadingWidgetNode,
                             singleChoice: singleChoice,
                             selectedIds: selectedIds,

@@ -162,7 +162,7 @@ class _FormListItemsProviderElement
 }
 
 String _$formTemplateOptionsHash() =>
-    r'e06c7407aa6932937d86084a6984b2ef873f87fe';
+    r'c2dcd45978303d0c00a6ee9d80cf5d2b49c0272d';
 
 /// See also [formTemplateOptions].
 @ProviderFor(formTemplateOptions)

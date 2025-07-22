@@ -84,11 +84,13 @@ class DataValueRepository {
   }
 
   Future<String?> getOrgUnitById(String orgUnitUid) async {
-    final OrgUnit? orgUnit = await db.managers.orgUnits
-        .filter((f) => f.id(orgUnitUid))
-        .getSingleOrNull();
-    return orgUnit != null
-        ? getItemLocalString(orgUnit.label, defaultString: orgUnit.name)
+    final List<OrgUnit> orgUnit = await db.managers.orgUnits
+        .filter((f) => f.id.isIn(orgUnitUid.split(',')))
+        .get();
+    return orgUnit.isNotEmpty
+        ? orgUnit
+            .map((ou) => getItemLocalString(ou.label, defaultString: ou.name))
+            .join(', ')
         : null;
   }
 

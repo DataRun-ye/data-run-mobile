@@ -5,12 +5,13 @@ import 'package:datarunmobile/features/form_submission/application/popup_section
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_age_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_barcode_reader_field.dart';
-import 'package:datarunmobile/features/form_submission/presentation/field/q_drop_down_multi_select_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_drop_down_with_search_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_date_time_field.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_multi_select_field.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_org_unit_select_field.dart';
+import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_single_select_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_switch_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_text_type_field.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/field/reactive_choice_single_select_chip.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_progress_select_chip.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_team_select_chip.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_yes_no_choice_chips.widget.dart';
@@ -69,8 +70,9 @@ class FieldFactory {
             element: element as FieldInstance<bool>);
       case ValueType.TrueOnly:
         return QSwitchField(element: element as FieldInstance<bool>);
-      // case ValueType.OrganisationUnit:
-      //   return QOrgUnitPickerField(element: element as FieldInstance<String>);
+      case ValueType.OrganisationUnit:
+        return QReactiveOrgUnitSelectField(
+            element: element as FieldInstance<String>);
       case ValueType.Progress:
         return QReactiveProgressSelectChip(
             element: element as FieldInstance<String>);
@@ -80,7 +82,7 @@ class FieldFactory {
       case ValueType.SelectOne:
         if ((element.choiceFilter?.options ?? element.visibleOption).length <=
             6) {
-          return QReactiveChoiceSingleSelectChips(
+          return QReactiveSingleSelectField(
               element: element as FieldInstance<String>);
         } else {
           return QDropDownWithSearchField(
@@ -88,7 +90,7 @@ class FieldFactory {
         }
 
       case ValueType.SelectMulti:
-        return QDropDownMultiSelectWithSearchField(
+        return QReactiveMultiSelectSearchField(
             element: element as FieldInstance<List<String>>);
       case ValueType.ScannedCode:
         // return QTextTypeField(element: element);

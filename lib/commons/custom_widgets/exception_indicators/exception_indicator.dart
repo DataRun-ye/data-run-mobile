@@ -39,7 +39,7 @@ import 'package:flutter_svg/svg.dart';
 class ExceptionIndicator extends StatelessWidget {
   const ExceptionIndicator({
     required this.title,
-    required this.assetName,
+    this.assetName,
     this.message,
     this.onTryAgain,
     super.key,
@@ -47,7 +47,7 @@ class ExceptionIndicator extends StatelessWidget {
 
   final String? title;
   final String? message;
-  final String assetName;
+  final String? assetName;
   final VoidCallback? onTryAgain;
 
   @override
@@ -57,8 +57,7 @@ class ExceptionIndicator extends StatelessWidget {
           child: Column(
             children: [
               SvgPicture.asset(
-                assetName,
-                // 'assets/app/offline.svg',
+                assetName ?? 'assets/app/confused-face.svg',
                 width: 80,
                 height: 80,
               ),

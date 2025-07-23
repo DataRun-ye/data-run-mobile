@@ -78,7 +78,7 @@ void showOrgUnitSelectionSheet<T extends AbsNodeType>({
                           return emptyPage;
                         } else {
                           tree = snapshot.data!;
-                          return OrgUnitSearchableTreeView(
+                          return OrgUnitSearchableTreeView<T>(
                             tree: tree,
                             buildLeadingWidget: buildLeadingWidgetNode,
                             singleChoice: singleChoice,

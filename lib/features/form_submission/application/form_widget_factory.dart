@@ -8,7 +8,6 @@ import 'package:datarunmobile/features/form_submission/presentation/field/q_barc
 import 'package:datarunmobile/features/form_submission/presentation/field/q_drop_down_with_search_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_date_time_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_multi_select_field.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_org_unit_select_field.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_single_select_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_switch_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_text_type_field.widget.dart';
@@ -70,9 +69,9 @@ class FieldFactory {
             element: element as FieldInstance<bool>);
       case ValueType.TrueOnly:
         return QSwitchField(element: element as FieldInstance<bool>);
-      case ValueType.OrganisationUnit:
-        return QReactiveOrgUnitSelectField(
-            element: element as FieldInstance<String>);
+      // case ValueType.OrganisationUnit:
+      //   return QReactiveOrgUnitSelectField(
+      //       element: element as FieldInstance<String>);
       case ValueType.Progress:
         return QReactiveProgressSelectChip(
             element: element as FieldInstance<String>);

@@ -109,12 +109,16 @@ class FormSubmissions extends _$FormSubmissions {
 Future<bool> submissionEditStatus(Ref ref,
     {required FormMetadata formMetadata}) async {
   final db = DSdk.db;
+  final s = await db.managers.dataInstances
+      .filter((f) => f.id(formMetadata.submission))
+      .getSingleOrNull();
+  final isSynced = s?.syncState.isSynced == true;
   final assignmentForm = await db.managers.assignmentForms
       .filter((f) =>
           f.assignment.id(formMetadata.assignmentModel.id) &
           f.form.id(formMetadata.formId))
       .getSingleOrNull();
   if (assignmentForm == null) return false;
-  return assignmentForm.canAddSubmissions == true ||
-      assignmentForm.canEditSubmissions == true;
+  final editable = assignmentForm.canEditSubmissions == true || !isSynced;
+  return editable;
 }

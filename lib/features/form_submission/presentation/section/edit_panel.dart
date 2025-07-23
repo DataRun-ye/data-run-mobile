@@ -62,8 +62,10 @@ class EditPanel extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Wrap(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            spacing: 4,
+            runSpacing: 4,
             children: <Widget>[
               ReactiveValidButton(
                 label: Text(S.of(context).addNew),

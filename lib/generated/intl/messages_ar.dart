@@ -191,6 +191,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dashboard": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "dataElements": MessageLookupByLibrary.simpleMessage("عناصر البيانات"),
     "dataFieldHint": MessageLookupByLibrary.simpleMessage("اختر تاريخًا"),
+    "dataSubmission": MessageLookupByLibrary.simpleMessage("بيانات مرسلة"),
     "dataSubmissions": MessageLookupByLibrary.simpleMessage("بيانات مرسلة"),
     "dataTimeFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل تاريخًا ووقتًا",
@@ -277,6 +278,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "formContainsSomeErrors": MessageLookupByLibrary.simpleMessage(
       " يوجد أخطاء في بعض الحقول",
     ),
+    "formPermissions": MessageLookupByLibrary.simpleMessage("صلاحيات وصول"),
     "formSummaryView": MessageLookupByLibrary.simpleMessage(
       "عرض خلاصة الاستمارة",
     ),

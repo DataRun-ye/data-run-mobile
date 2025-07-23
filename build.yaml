@@ -35,6 +35,7 @@ targets:
       injectable_generator|injectable_builder:
         enabled: true
         generate_for:
+          - lib/**/application/**/*.dart
           - lib/**/application/*.dart
           - lib/app/di/*.dart
           - lib/core/*.dart

@@ -18,8 +18,8 @@ class OrgUnitSearchableTreeView<T extends AbsNodeType> extends StatefulWidget {
   final bool singleChoice;
 
   @override
-  State<OrgUnitSearchableTreeView> createState() =>
-      _OrgUnitSearchableTreeViewState();
+  State<OrgUnitSearchableTreeView<T>> createState() =>
+      _OrgUnitSearchableTreeViewState<T>();
 }
 
 class _OrgUnitSearchableTreeViewState<T extends AbsNodeType>
@@ -59,7 +59,7 @@ class _OrgUnitSearchableTreeViewState<T extends AbsNodeType>
           Expanded(
             flex: 4,
             child: SingleChildScrollView(
-              child: OrgUnitNodeWidgetVts(
+              child: OrgUnitNodeWidgetVts<T>(
                 widget.tree,
                 onNodeDataChanged: () => setState(() {}),
                 buildLeadingWidget: widget.buildLeadingWidget,
@@ -110,7 +110,7 @@ class OrgUnitNodeWidgetVts<T extends AbsNodeType> extends StatefulWidget {
   final FunctionBuildLeadingWidget<T> buildLeadingWidget;
 
   @override
-  State<OrgUnitNodeWidgetVts> createState() => _OrgUnitNodeWidgetVtsState();
+  State<OrgUnitNodeWidgetVts<T>> createState() => _OrgUnitNodeWidgetVtsState<T>();
 }
 
 class _OrgUnitNodeWidgetVtsState<T extends AbsNodeType>
@@ -238,7 +238,7 @@ class _OrgUnitNodeWidgetVtsState<T extends AbsNodeType>
   List<Widget> generateChildrenNodesWidget(List<TreeType<T>> list) =>
       List.generate(
         list.length,
-        (int index) => OrgUnitNodeWidgetVts(
+        (int index) => OrgUnitNodeWidgetVts<T>(
           list[index],
           onNodeDataChanged: widget.onNodeDataChanged,
           buildLeadingWidget: widget.buildLeadingWidget,

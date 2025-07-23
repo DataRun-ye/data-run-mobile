@@ -1009,6 +1009,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataSubmissions => 'Data Submissions';
 
   @override
+  String get dataSubmission => 'Data Submission';
+
+  @override
   String get assignments => 'Assignments';
 
   @override
@@ -1126,4 +1129,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancelSyncing => 'Cancel Syncing';
+
+  @override
+  String get formPermissions => 'Permission';
 }

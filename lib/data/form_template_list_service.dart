@@ -20,7 +20,7 @@ class FormTemplateListService {
   Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
       String assignment) async {
     List<AssignmentForm> assignmentForms =
-    await _fetchAssignmentForms(assignment);
+        await _fetchAssignmentForms(assignment);
     final List<String> userForms = assignmentForms.map((a) => a.form).toList();
 
     final List<FormTemplate> availableFormTemplates = await DSdk
@@ -29,7 +29,7 @@ class FormTemplateListService {
         .get();
 
     final List<String> availableForms =
-    availableFormTemplates.map((f) => f.id).toList();
+        availableFormTemplates.map((f) => f.id).toList();
 
     final availableAssignedForms = assignmentForms
         .map((fp) => Pair(fp, availableForms.contains(fp.form)))
@@ -38,7 +38,8 @@ class FormTemplateListService {
     return availableAssignedForms;
   }
 
-  Future<List<AssignmentForm>> _fetchAssignmentForms(String assignmentId) async {
+  Future<List<AssignmentForm>> _fetchAssignmentForms(
+      String assignmentId) async {
     final db = appLocator<DbManager>().db;
     final userForms =
         appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
@@ -50,7 +51,8 @@ class FormTemplateListService {
 
   Future<List<FormTemplate>> fetchByAssignment(assignmentId) async {
     final db = appLocator<DbManager>().db;
-    final userForms = appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
+    final userForms =
+        appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
 
     final query = db.managers.assignmentForms
         .filter((f) => f.assignment.id(assignmentId));
@@ -62,7 +64,7 @@ class FormTemplateListService {
         .get();
 
     final List<FormTemplate> assignmentFormTemplates =
-    assignmentFormsWithRefs.map((assignmentWithRef) {
+        assignmentFormsWithRefs.map((assignmentWithRef) {
       final (assignmentForm, ref) = assignmentWithRef;
       return ref.form.prefetchedData!.first;
     }).toList();
@@ -76,7 +78,7 @@ class FormTemplateListService {
         .selectFormTemplatesWithRefs(assignmentId: filter.assignment);
 
     final List<(FormTemplate, FormTemplateVersion)> formTemplateWithRefs =
-    await query.get();
+        await query.get();
     // final (templateVersion, refs) = formTemplateWithRefs;
 
     return formTemplateWithRefs.map((withRef) {
@@ -103,18 +105,17 @@ class FormTemplateListService {
     /// It would retrieve the specific versions of formTemplate
     try {
       var query = DSdk.db.managers.formTemplateVersions
-      // .filter((f) => f.template.formAssignments((fs) => fs.assignment.id("")))
           .withReferences((prefetch) => prefetch(template: true));
 
       if (versionId != null) {
         query = query.filter((f) => f.id(versionId));
       } else {
-        query = query.filter((f) => f.template.id(templateId))
-          ..orderBy((o) => o.versionNumber.desc()).limit(1);
+        query = query.filter((f) => f.template.id(templateId));
       }
 
       final List<(FormTemplateVersion, $$FormTemplateVersionsTableReferences)>
-      formTemplateWithRefs = await query.get();
+          formTemplateWithRefs =
+          await query.orderBy((o) => o.versionNumber.desc()).limit(1).get();
       final (templateVersion, refs) = formTemplateWithRefs.first;
 
       final formTemplate = refs.template.prefetchedData!.first;

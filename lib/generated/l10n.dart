@@ -2462,6 +2462,16 @@ class S {
     );
   }
 
+  /// `Data Submission`
+  String get dataSubmission {
+    return Intl.message(
+      'Data Submission',
+      name: 'dataSubmission',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Assignments`
   String get assignments {
     return Intl.message('Assignments', name: 'assignments', desc: '', args: []);
@@ -2737,6 +2747,16 @@ class S {
     return Intl.message(
       'Cancel Syncing',
       name: 'cancelSyncing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permission`
+  String get formPermissions {
+    return Intl.message(
+      'Permission',
+      name: 'formPermissions',
       desc: '',
       args: [],
     );

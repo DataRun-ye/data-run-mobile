@@ -1009,6 +1009,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dataSubmissions => 'بيانات مرسلة';
 
   @override
+  String get dataSubmission => 'بيانات مرسلة';
+
+  @override
   String get assignments => 'المهام';
 
   @override
@@ -1126,4 +1129,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cancelSyncing => 'إيقاف والمزامنة لاحقًا';
+
+  @override
+  String get formPermissions => 'صلاحيات وصول';
 }

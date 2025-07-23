@@ -4,10 +4,14 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 Widget getErrorWidget(Object? error, StackTrace? stackTrace) {
+  logError('error: $error');
+  debugPrintStack(stackTrace: stackTrace, label: error.toString());
+  final message =
+      error != null ? error.toString() : S.current.generalErrorMessage;
   return Center(
       child: ExceptionIndicator(
     title: S.current.generalErrorTitle,
-    message: '${S.current.generalErrorMessage}\n',
+    message: '${message}\n',
     assetName: 'assets/app/confused-face.svg',
   ));
 }

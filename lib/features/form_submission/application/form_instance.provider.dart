@@ -12,6 +12,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_metadata_service.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -71,13 +72,15 @@ Future<FormInstance> formInstance(Ref ref,
   final _formSection = Section(
       template: formFlatTemplate.rootSection, elements: elements, form: form)
     ..resolveDependencies()
-    ..evaluate();
+    ..evaluate(emitEvent: false);
   final attributeMap =
       await formMetadataService.formAttributesControls(initialFormValue);
+  final bool submissionEditStatus = await ref
+      .watch(submissionEditStatusProvider(formMetadata: formMetadata).future);
 
   return FormInstance(ref,
       entryStarted: submission.startEntryTime.toLocal(),
-      enabled: submission.syncState != InstanceSyncStatus.synced,
+      enabled: submissionEditStatus,
       initialValue: {...?initialFormValue, ...attributeMap},
       elements: elements,
       formMetadata: formMetadata,

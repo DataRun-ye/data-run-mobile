@@ -1868,6 +1868,12 @@ abstract class AppLocalizations {
   /// **'Data Submissions'**
   String get dataSubmissions;
 
+  /// No description provided for @dataSubmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Submission'**
+  String get dataSubmission;
+
   /// No description provided for @assignments.
   ///
   /// In en, this message translates to:
@@ -2071,6 +2077,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel Syncing'**
   String get cancelSyncing;
+
+  /// No description provided for @formPermissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission'**
+  String get formPermissions;
 }
 
 class _AppLocalizationsDelegate

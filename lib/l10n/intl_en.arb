@@ -370,6 +370,7 @@
   "activities": "Activities",
   "formTemplates": "Form Templates",
   "dataSubmissions": "Data Submissions",
+  "dataSubmission": "Data Submission",
   "assignments": "Assignments",
   "optionSets": "Option Sets",
   "options": "Options",
@@ -403,5 +404,6 @@
   "draft": "Draft",
   "finalized": "Finalized",
   "syncFailed": "Sync Failed",
-  "cancelSyncing": "Cancel Syncing"
+  "cancelSyncing": "Cancel Syncing",
+  "formPermissions": "Permission"
 }

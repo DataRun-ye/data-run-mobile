@@ -8,9 +8,11 @@ import 'package:d_sdk/core/form/rule/rule_parse_extension.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
-import 'package:datarunmobile/features/form_submission/application/element/rule.extension.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
+import 'package:datarunmobile/features/form_submission/application/element/rule.extension.dart';
+import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +57,8 @@ sealed class FormElementInstance<T> {
   FormGroup form;
 
   bool _isEvaluating = false;
+  RuleEffectStateFactory ruleEffectStateFactory =
+      appLocator<RuleEffectStateFactory>();
 
   Iterable<RuleAction> get elementRuleActions => _template.ruleActions();
 
@@ -112,23 +116,6 @@ sealed class FormElementInstance<T> {
     return control!.errors[errorCode];
   }
 
-  // void _updateControlsErrors() {
-  //   _elementState = _calculateStatus();
-  //   // _statusChanges.add(_status);
-  //
-  //   _parentSection?._updateControlsErrors();
-  // }
-
-  // FormElementState _calculateStatus() {
-  //   if (allElementsHidden()) {
-  //     return _elementState.copyWith(hidden: true);
-  //   } else if (hasErrors) {
-  //     return _elementState.copyWith(errors: errors);
-  //   }
-  //
-  //   return _elementState;
-  // }
-
   T? reduceValue();
 
   AbstractControl<dynamic>? get elementControl =>
@@ -184,7 +171,7 @@ sealed class FormElementInstance<T> {
     updateStatus(_elementState.copyWith(hidden: false), emitEvent: emitEvent);
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-    // updateValueAndValidity(updateParent: true, emitEvent: emitEvent);
+    updateValueAndValidity(updateParent: true, emitEvent: false);
     // _updateAncestors(updateParent);
   }
 
@@ -235,6 +222,15 @@ sealed class FormElementInstance<T> {
 
   static final Set<String> _evaluationStack = {};
 
+  List<RuleAction> get effectiveRuleEffects {
+    final rules = elementRuleActions;
+    final effectiveRules = elementRuleActions
+        .map((ruleAction) =>
+            ruleAction.copyWith(applyEffect: ruleAction.evaluate(evalContext)))
+        .toList();
+    return effectiveRules;
+  }
+
   void evaluate(
       {String? changedDependency,
       bool updateParent = true,
@@ -244,13 +240,6 @@ sealed class FormElementInstance<T> {
     }
 
     _isEvaluating = true;
-
-    // if(hidden) {
-    //   return;
-    // }
-    // if (dependencies.length == 0 || !dependencies.contains(changedDependency)) {
-    //   return;
-    // }
 
     logDebug(
         'Evaluating ${name ?? 'root'} due to change in $changedDependency');
@@ -269,14 +258,17 @@ sealed class FormElementInstance<T> {
         logDebug('Expression: ${ruleAction.expression}');
         logDebug('Evaluation Result: ${ruleAction.evaluate(evalContext)}');
         ruleAction.evaluate(evalContext)
-            ? ruleAction.apply(this)
-            : ruleAction.reset(this);
+            ? ruleAction.apply(
+                this,
+                emitEvent: emitEvent,
+                updateParent: updateParent,
+              )
+            : ruleAction.reset(
+                this,
+                emitEvent: emitEvent,
+                updateParent: updateParent,
+              );
       }
-      // FormElementState newState = calculateState();
-
-      // if (newState != previousState) {
-      //   updateStatus(newState, emitEvent: emitEvent);
-      // }
     } catch (e) {
       logError('Error Evaluating: ${name ?? 'root'}');
     } finally {
@@ -285,51 +277,74 @@ sealed class FormElementInstance<T> {
     }
   }
 
-  // FormElementState calculateState() {
-  //   FormElementState newState = elementState.copyWith();
-  //
-  //   ///
-  //   for (var ruleAction in elementRuleActions) {
-  //     logDebug('Expression: ${ruleAction.expression}');
-  //     logDebug('Evaluation Result: ${ruleAction.evaluate(evalContext)}');
-  //     newState = ruleAction.evaluate(evalContext)
-  //         ? ruleAction.apply(this)
-  //         : ruleAction.reset(this);
-  //   }
-  //   return newState;
-  // }
-  //
-  // void _updateAncestors(bool updateParent) {
-  //   if (updateParent) {
-  //     _parentSection?.updateValueAndValidity(updateParent: updateParent);
-  //   }
-  // }
+  FormElementState _calculateStatus() {
+    if (allElementsHidden()) {
+      return _elementState.copyWith(
+          hidden: true, errors: {}, mandatory: false, error: '', warning: '');
+    }
 
-  // FormElementState _calculateStatus() {
-  //   if (allElementsHidden()) {
-  //     elementControl?.markAsDisabled();
-  //     return _elementState.copyWith(hidden: true, errors: {});
-  //   } else if (elementControl?.hasErrors == true) {
-  //     return _elementState.copyWith(errors: elementControl!.errors);
-  //   }
-  //
-  //   elementControl?.markAsDisabled();
-  //   return _elementState.copyWith(hidden: false, errors: {});
-  // }
+    final state = ruleEffectStateFactory.applyRuleEffects(
+        elementState: elementState, calcResult: effectiveRuleEffects);
+    return state;
+  }
+
+  void notifyStatus(FormElementState status,
+      {bool updateParent = false, bool emitEvent = false}) {
+    if (allElementsHidden()) {
+      elementControl!
+          .reset(disabled: true, updateParent: false, emitEvent: false);
+    } else {
+      elementControl!
+          .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
+      if (mandatory) {
+        final elementValidators = [
+          ...elementControl!.validators,
+          Validators.required
+        ];
+        elementControl!.setValidators(elementValidators, autoValidate: true);
+      }
+    }
+    updateStatus(status, emitEvent: emitEvent);
+  }
+
+  void _setInitialStatus() {
+    if (allElementsHidden()) {
+      _elementState = _elementState.copyWith(
+        hidden: true,
+        errors: {},
+        mandatory: false,
+        error: '',
+        warning: '',
+      );
+    } else {
+      _elementState =
+          _elementState.copyWith(hidden: false, mandatory: mandatory);
+    }
+  }
+
+  void _updateAncestors(bool updateParent) {
+    if (updateParent) {
+      parentSection?.updateValueAndValidity(updateParent: updateParent);
+    }
+  }
 
   void updateValueAndValidity({
     bool updateParent = true,
     bool emitEvent = true,
   }) {
-    // if (visible) {
-    //   _elementState = _calculateStatus();
-    // }
-
-    // if (emitEvent) {
-    //   updateStatus(_elementState);
-    // }
-
-    // _updateAncestors(updateParent);
+    _setInitialStatus();
+    if (visible) {
+      _elementState = _calculateStatus();
+    }
+    if (hidden) {
+      _elementState = _elementState.copyWith(mandatory: false);
+      elementControl!.reset(disabled: true, emitEvent: false);
+    } else {
+      _elementState = _elementState.copyWith(mandatory: _template.mandatory);
+      // elementControl?.markAsEnabled(emitEvent: emitEvent);
+    }
+    updateStatus(_elementState, emitEvent: emitEvent);
+    _updateAncestors(updateParent);
   }
 
   List<String> get dependencies => template.dependencies;

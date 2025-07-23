@@ -136,7 +136,10 @@ class _FormListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formTemplateAsync = ref
         .watch(submissionVersionFormTemplateProvider(formId: permission.form));
-
+    final theme = Theme.of(context);
+    final metadataStyle =
+        theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade700);
+    final cs = Theme.of(context).colorScheme;
     return AsyncValueWidget(
       value: formTemplateAsync,
       valueBuilder: (formTemplate) {
@@ -148,10 +151,24 @@ class _FormListItem extends ConsumerWidget {
           titleTextStyle: Theme.of(context).textTheme.titleMedium,
           subtitleTextStyle: Theme.of(context).textTheme.bodySmall,
           isThreeLine: formTemplate.description != null,
-          leading: const Icon(Icons.description),
-          title: Text(
-            '${index + 1}. ${getItemLocalString(formTemplate.label, defaultString: formTemplate.name)}',
+          leading: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(child: const Icon(Icons.description)),
+              SizedBox(height: 2,),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+                decoration: BoxDecoration(
+                  color: cs.surfaceContainerLow,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Text('v${formTemplate.versionNumber}',
+                    style: metadataStyle),
+              ),
+            ],
           ),
+          title: Text(
+              '${index + 1}. ${getItemLocalString(formTemplate.label, defaultString: formTemplate.name)}'),
           subtitle: formTemplate.description != null
               ? ExpandableText(
                   text: formTemplate.description!,

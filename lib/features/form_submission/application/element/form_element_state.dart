@@ -9,17 +9,31 @@ class FormElementState with EquatableMixin {
     this.hidden = false,
     this.readOnly = false,
     this.mandatory = false,
+    this.warning = '',
+    this.error = '',
     this.errors = const {},
   });
 
   final bool hidden;
   final bool readOnly;
   final bool mandatory;
+  final String warning;
+  final String error;
   final Map<String, dynamic> errors;
 
-  bool get hasErrors => errors.isNotEmpty;
+  bool get hasErrors => errors.isNotEmpty || error.isNotEmpty;
 
   bool get isVisible => !hidden;
+
+  FormElementState setWarning(String warning) => copyWith(warning: warning);
+  FormElementState resetWarning(String warning) => copyWith(warning: warning);
+
+  FormElementState setError(String error) => copyWith(
+      error: error,
+      errors: Map<String, dynamic>.of(errors)..addAll({error: error}));
+
+  FormElementState resetError(String error) => copyWith(
+      error: '', errors: Map<String, dynamic>.of(errors)..remove(error));
 
   FormElementState AddError(MapEntry<String, dynamic> newErrors) => copyWith(
       errors: Map<String, dynamic>.of(errors)..addEntries([newErrors]));
@@ -34,6 +48,8 @@ class FormElementState with EquatableMixin {
     bool? hidden,
     bool? readOnly,
     bool? mandatory,
+    String? warning,
+    String? error,
     Map<String, dynamic>? errors,
   }) {
     return FormElementState(
@@ -41,11 +57,13 @@ class FormElementState with EquatableMixin {
       readOnly: readOnly ?? this.readOnly,
       mandatory: mandatory ?? this.mandatory,
       errors: errors ?? this.errors,
+      warning: warning ?? this.warning,
+      error: error ?? this.error,
     );
   }
 
   @override
-  List<Object?> get props => [hidden, mandatory, readOnly];
+  List<Object?> get props => [hidden, mandatory, readOnly, warning];
 }
 
 class FieldElementState<T> extends FormElementState {
@@ -53,6 +71,8 @@ class FieldElementState<T> extends FormElementState {
     super.hidden,
     super.readOnly,
     super.mandatory,
+    super.warning,
+    super.error,
     super.errors,
     this.visibleOptions = const [],
     this.value,
@@ -66,6 +86,8 @@ class FieldElementState<T> extends FormElementState {
       {bool? hidden,
       bool? readOnly,
       bool? mandatory,
+      String? warning,
+      String? error,
       Map<String, dynamic>? errors,
       T? value,
       List<DataOption>? visibleOptions}) {
@@ -74,6 +96,8 @@ class FieldElementState<T> extends FormElementState {
       mandatory: mandatory ?? this.mandatory,
       readOnly: readOnly ?? this.readOnly,
       errors: errors ?? this.errors,
+      warning: warning ?? this.warning,
+      error: error ?? this.error,
       value: value ?? this.value,
       visibleOptions: visibleOptions ?? this.visibleOptions,
     );
@@ -84,6 +108,8 @@ class FieldElementState<T> extends FormElementState {
       hidden: this.hidden,
       mandatory: this.mandatory,
       errors: this.errors,
+      warning: this.warning,
+      error: this.error,
       value: value,
       visibleOptions: this.visibleOptions,
     );

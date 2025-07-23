@@ -1,69 +1,177 @@
-import 'package:datarunmobile/selectable_org_unit/model/build_tree.dart';
-import 'package:datarunmobile/selectable_org_unit/model/org_unit_node.dart';
 import 'package:flutter/material.dart';
-import 'package:recursive_tree_flutter/recursive_tree_flutter.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
-/// A widget that displays an org-unit picker as a single tree under a dummy root.
-/// Supports single- or multiple-choice via [singleChoice].
-class OrgUnitPicker extends StatefulWidget {
-  const OrgUnitPicker({
+/// A slick, reusable reactive form field for picking a single node from a TreeSliver.
+class ReactiveTreePickerField<T> extends ReactiveFormField<T, T> {
+  ReactiveTreePickerField({
     Key? key,
-    this.initialLeafIds = const [],
-    this.singleChoice = false,
-    required this.onSelectionChanged,
-  }) : super(key: key);
-  final List<String> initialLeafIds;
-  final ValueChanged<List<String>> onSelectionChanged;
-  final bool singleChoice;
+    required String formControlName,
+    required this.nodes,
+    this.controller,
+    this.onNodeTap,
+    this.searchHint = 'Search…',
+    this.dialogTitle = 'Select Item',
+    this.hintText,
+    this.dialogHeight = 400,
+  }) : super(
+          key: key,
+          formControlName: formControlName,
+          builder: (field) {
+            final state = field as _ReactiveTreePickerFieldState<T>;
+            return InputDecorator(
+              decoration: InputDecoration(
+                hintText: hintText,
+                errorText: field.errorText,
+                suffixIcon: const Icon(Icons.arrow_drop_down),
+                filled: true,
+                fillColor: Colors.grey.shade50,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              isEmpty: field.value == null,
+              child: InkWell(
+                onTap: state._openDialog,
+                child: Text(
+                  field.value?.toString() ?? '',
+                  style: TextStyle(
+                    color: field.value == null
+                        ? Colors.grey.shade600
+                        : Colors.black,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+
+  /// Pre-built tree structure for display.
+  final List<TreeSliverNode<T>> nodes;
+
+  /// Optional controller to manage expand/collapse state.
+  final TreeSliverController? controller;
+
+  /// Callback when a selectable node is tapped.
+  final ValueChanged<T>? onNodeTap;
+
+  /// Placeholder text for the search field inside the dialog.
+  final String searchHint;
+  final String dialogTitle;
+  final String? hintText;
+
+  /// Initial height of the modal sheet.
+  final double dialogHeight;
 
   @override
-  _OrgUnitPickerState createState() => _OrgUnitPickerState();
+  ReactiveFormFieldState<T, T> createState() =>
+      _ReactiveTreePickerFieldState<T>();
 }
 
-class _OrgUnitPickerState extends State<OrgUnitPicker> {
-  TreeType<OrgUnitNode>? _root;
-  late List<String> _selectedIds;
+class _ReactiveTreePickerFieldState<T> extends ReactiveFormFieldState<T, T> {
+  late final TreeSliverController _controller;
 
   @override
   void initState() {
     super.initState();
-    _selectedIds = List.of(widget.initialLeafIds);
-    buildOrgUnitTree(_selectedIds).then((tree) {
-      setState(() {
-        _root = tree;
-        // initialize chosen state
-        for (final id in _selectedIds) {
-          final node = findTreeWithId(_root!, id);
-          if (node != null) node.data.isChosen = true;
-        }
-      });
-    });
+    _controller = (widget as ReactiveTreePickerField<T>).controller ??
+        TreeSliverController();
   }
 
-  void _onLeafToggled(TreeType<OrgUnitNode> node) {
-    if (_root == null) return;
-    if (widget.singleChoice) {
-      updateTreeSingleChoice(node, !node.data.isChosen!);
-    } else {
-      updateTreeMultipleChoice(node, !node.data.isChosen!,
-          isUpdatingParentRecursion: true);
-    }
-    setState(() {
-      final chosen = <String>[];
-      final List<TreeType<OrgUnitNode>> chosenNodes = [];
-      returnChosenLeaves<OrgUnitNode>(_root!, chosenNodes);
-      chosenNodes.forEach((n) => chosen.add(n.data.id as String));
-      widget.onSelectionChanged(chosen);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_root == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    return SingleChildScrollView(
-      child: ExpandableTreeWidget<OrgUnitNode>(_root!),
+  Future<void> _openDialog() async {
+    final picker = widget as ReactiveTreePickerField<T>;
+    final result = await showModalBottomSheet<T>(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      isScrollControlled: true,
+      builder: (ctx) => DraggableScrollableSheet(
+        expand: false,
+        builder: (c, scroll) {
+          final theme = Theme.of(c);
+          return Column(
+            children: [
+              // Header
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(picker.dialogTitle,
+                        style: Theme.of(c).textTheme.headlineMedium),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(ctx).pop(),
+                    ),
+                  ],
+                ),
+              ),
+              // Search
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: picker.searchHint,
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onChanged: (q) {
+                    // TODO: implement filtering of nodes
+                  },
+                ),
+              ),
+              const SizedBox(height: 8),
+              // TreeSliver
+              Expanded(
+                child: CustomScrollView(
+                  controller: scroll,
+                  slivers: [
+                    TreeSliver<T>(
+                      tree: picker.nodes,
+                      controller: _controller,
+                      treeNodeBuilder: (BuildContext context,
+                          TreeSliverNode<Object?> node, AnimationStyle anim) {
+                        final content = node.content as T;
+                        final isActive = _controller.isActive(node);
+                        final base = TreeSliver.defaultTreeNodeBuilder(
+                            context, node, anim);
+                        return GestureDetector(
+                          onTap: () {
+                            if (picker.onNodeTap != null) {
+                              picker.onNodeTap!(content);
+                            }
+                            Navigator.of(ctx).pop(content);
+                          },
+                          child: DecoratedBox(
+                            decoration: isActive
+                                ? BoxDecoration(
+                                    color:
+                                        theme.chipTheme.secondarySelectedColor,
+                                    borderRadius: BorderRadius.circular(4),
+                                  )
+                                : BoxDecoration(
+                                    color: theme.colorScheme.surfaceContainer,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                            child: base,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
+
+    if (result != null) {
+      control.value = result;
+      control.markAsTouched();
+    }
   }
 }

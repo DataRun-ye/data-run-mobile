@@ -75,6 +75,8 @@ class QBottomSheetDialog extends StatelessWidget {
                                   //     ?.call(fieldEntry.fieldPath);
                                 },
                                 child: Wrap(
+                                  spacing: 4,
+                                  runSpacing: 4,
                                   children: [
                                     Text('${fieldEntry.fieldName}: ',
                                         style: Theme.of(context)
@@ -102,6 +104,8 @@ class QBottomSheetDialog extends StatelessWidget {
           // Buttons with spacing
           Wrap(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            spacing: 4,
+            runSpacing: 4,
             children: <Widget>[
               _buildButton(context, completionDialogModel.secondaryButton),
               _buildButton(context, completionDialogModel.mainButton),

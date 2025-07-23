@@ -40,8 +40,9 @@ abstract class ThirdPartyServicesModule {
   }
 
   @preResolve
+  @factoryMethod
   Future<AndroidDeviceInfoService> getAndroidDeviceInfo() async {
-
+    DeviceInfoPlugin;
     if (Platform.isAndroid) {
       return AndroidDeviceInfoService(
           androidDeviceInfo: await DeviceInfoPlugin().androidInfo);

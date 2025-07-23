@@ -1,4 +1,5 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/utilities/date_helper.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
@@ -310,6 +311,12 @@ class DetailSubmissionsTable extends HookConsumerWidget {
             formTemplate.optionSets[field.optionSet] != null &&
             data.containsKey(field.name)) {
           extractedValues[field.name!] = data[field.name];
+        } else if (field.type?.isDateTime == true) {
+          final value = data[field.name];
+          extractedValues[field.name!] = value != null
+              ? DateHelper.getEffectiveUiFormat(field.type)
+                  .tryParse(data[field.name])
+              : value;
         } else if (field.name != null) {
           extractedValues[field.name!] = data[field.name];
         }

@@ -190,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
     "dataElements": MessageLookupByLibrary.simpleMessage("Data Elements"),
     "dataFieldHint": MessageLookupByLibrary.simpleMessage("Select a date"),
+    "dataSubmission": MessageLookupByLibrary.simpleMessage("Data Submission"),
     "dataSubmissions": MessageLookupByLibrary.simpleMessage("Data Submissions"),
     "dataTimeFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter a Data time",
@@ -278,6 +279,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "formContainsSomeErrors": MessageLookupByLibrary.simpleMessage(
       "Form contains some errors",
     ),
+    "formPermissions": MessageLookupByLibrary.simpleMessage("Permission"),
     "formSummaryView": MessageLookupByLibrary.simpleMessage(
       "Form Summary View",
     ),

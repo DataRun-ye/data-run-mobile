@@ -4,7 +4,6 @@ import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/completion_dialog_config.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
-import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_entry_view_silver.widget.dart';
@@ -171,7 +170,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   }
 
   Future<void> backButtonPressed(FormInstance formInstance) async {
-    if (formInstance.form.hasErrors) {
+    if (formInstance.form.hasErrors || formInstance.form.dirty) {
       await _saveAndShowBottomSheet(formInstance);
     } else {
       Navigator.pop(context);
@@ -200,7 +199,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
           onItemWithErrorClicked: (path) {
             logDebug('${path} clicked');
             _onErrorTap(path!, formInstance);
-            // scrollToField(path!, formInstance.fieldKeysRegistery);
           },
         );
       },
@@ -226,25 +224,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     }
     Navigator.pop(context);
     formInstance.form.control(elementPath).markAsTouched();
-  }
-
-  void scrollToField(String elementPath, FieldContextRegistry registry) {
-    logDebug('${elementPath} scroll');
-    final key = registry.getKey(elementPath);
-    logDebug('scroll to key: ${key} ');
-    if (key == null) return;
-
-    final ctx = key.currentContext;
-    if (ctx == null) return;
-
-    Scrollable.ensureVisible(
-      ctx,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-      alignment: 0.1,
-    ).then((_) {
-      FocusScope.of(ctx).requestFocus(); // if applicable
-    });
   }
 
   Future<void> _onCompletionDialogButtonClicked(

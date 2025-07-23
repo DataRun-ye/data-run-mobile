@@ -37,11 +37,11 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
     if (emitEvent) {
       logDebug('${name ?? 'root'}, changed, --> Notifying subscribers');
       propertiesChangedSubject?.add(newValue);
+      notifySubscribers(emitEvent: emitEvent);
     } else {
       logDebug('${name ?? 'root'}, not emitting status update');
     }
     // applyStateToControl(newValue, updateParent: true, emitEvent: emitEvent);
-    notifySubscribers(emitEvent: emitEvent);
   }
 
   // void applyStateToControl(

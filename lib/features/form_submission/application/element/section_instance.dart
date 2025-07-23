@@ -60,12 +60,14 @@ class Section extends SectionElement<Map<String, Object?>> {
       bool updateParent = true,
       bool emitEvent = true}) {
     for (final element in _elements.values) {
+      // decide my children
       element.evaluate(
           changedDependency: changedDependency,
           updateParent: updateParent,
           emitEvent: emitEvent);
     }
 
+    // decide my own status
     super.evaluate(
         changedDependency: changedDependency,
         updateParent: updateParent,
@@ -139,7 +141,7 @@ class Section extends SectionElement<Map<String, Object?>> {
   @override
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
     _elements.forEach((_, element) {
-      element.markAsHidden(updateParent: true);
+      element.markAsHidden(updateParent: true, emitEvent: emitEvent);
     });
     super.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
   }

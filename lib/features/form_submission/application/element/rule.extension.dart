@@ -14,7 +14,8 @@ extension ApplyAction on RuleAction {
   void apply(FormElementInstance<dynamic> element,
       {bool updateParent = true, bool emitEvent = true}) {
     if (element.mandatory && element.hidden) {
-      element.markAsUnMandatory(updateParent: updateParent, emitEvent: false);
+      element.markAsUnMandatory(
+          updateParent: updateParent, emitEvent: emitEvent);
     }
 
     switch (action) {

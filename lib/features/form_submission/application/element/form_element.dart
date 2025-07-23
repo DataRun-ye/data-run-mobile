@@ -153,10 +153,9 @@ sealed class FormElementInstance<T> {
         emitEvent: emitEvent);
     elementControl!.reset(
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
-    // elementControl!.updateValueAndValidity(
-    //     updateParent: updateParent, emitEvent: emitEvent);
-    // _updateAncestors(updateParent);
-    // elementControl!.markAsDisabled();
+
+    // updateValueAndValidity(updateParent: true, emitEvent: false);
+    updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
@@ -171,8 +170,8 @@ sealed class FormElementInstance<T> {
     updateStatus(_elementState.copyWith(hidden: false), emitEvent: emitEvent);
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-    updateValueAndValidity(updateParent: true, emitEvent: false);
-    // _updateAncestors(updateParent);
+    // updateValueAndValidity(updateParent: true, emitEvent: false);
+    updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
@@ -288,25 +287,6 @@ sealed class FormElementInstance<T> {
     return state;
   }
 
-  void notifyStatus(FormElementState status,
-      {bool updateParent = false, bool emitEvent = false}) {
-    if (allElementsHidden()) {
-      elementControl!
-          .reset(disabled: true, updateParent: false, emitEvent: false);
-    } else {
-      elementControl!
-          .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-      if (mandatory) {
-        final elementValidators = [
-          ...elementControl!.validators,
-          Validators.required
-        ];
-        elementControl!.setValidators(elementValidators, autoValidate: true);
-      }
-    }
-    updateStatus(status, emitEvent: emitEvent);
-  }
-
   void _setInitialStatus() {
     if (allElementsHidden()) {
       _elementState = _elementState.copyWith(
@@ -336,12 +316,17 @@ sealed class FormElementInstance<T> {
     if (visible) {
       _elementState = _calculateStatus();
     }
+
+    // if after `_calculateStatus()` it's became hidden
+    // (this fix the initial status of an element when loading the form
     if (hidden) {
       _elementState = _elementState.copyWith(mandatory: false);
       elementControl!.reset(disabled: true, emitEvent: false);
     } else {
+      // if after `_calculateStatus()` is still visible
       _elementState = _elementState.copyWith(mandatory: _template.mandatory);
-      // elementControl?.markAsEnabled(emitEvent: emitEvent);
+      elementControl?.markAsEnabled(
+          emitEvent: emitEvent, updateParent: updateParent);
     }
     updateStatus(_elementState, emitEvent: emitEvent);
     _updateAncestors(updateParent);

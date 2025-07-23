@@ -155,7 +155,7 @@ sealed class FormElementInstance<T> {
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
 
     // updateValueAndValidity(updateParent: true, emitEvent: false);
-    updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
+    // updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
@@ -170,8 +170,8 @@ sealed class FormElementInstance<T> {
     updateStatus(_elementState.copyWith(hidden: false), emitEvent: emitEvent);
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-    // updateValueAndValidity(updateParent: true, emitEvent: false);
-    updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
+    updateValueAndValidity(updateParent: true, emitEvent: false);
+    // updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
@@ -284,6 +284,11 @@ sealed class FormElementInstance<T> {
 
     final state = ruleEffectStateFactory.applyRuleEffects(
         elementState: elementState, calcResult: effectiveRuleEffects);
+    // if (state.isVisible) {
+    //   elementControl!.markAsEnabled(emitEvent: false);
+    // }
+    logDebug(
+        '_calculateStatus: $name, result: ${state.hidden ? 'Hidden' : 'Visible'}');
     return state;
   }
 
@@ -296,10 +301,12 @@ sealed class FormElementInstance<T> {
         error: '',
         warning: '',
       );
+      // elementControl!.reset(disabled: true, emitEvent: false);
     } else {
       _elementState =
           _elementState.copyWith(hidden: false, mandatory: mandatory);
     }
+    logDebug('I am:$name, setting: ${hidden ? 'Hidden' : 'Visible'}');
   }
 
   void _updateAncestors(bool updateParent) {
@@ -312,6 +319,8 @@ sealed class FormElementInstance<T> {
     bool updateParent = true,
     bool emitEvent = true,
   }) {
+    logDebug(
+        'updateValueAndValidity: $name, current: ${hidden ? 'Hidden' : 'Visible'}, updateParent: $updateParent, emitEvent: $emitEvent');
     _setInitialStatus();
     if (visible) {
       _elementState = _calculateStatus();
@@ -325,11 +334,15 @@ sealed class FormElementInstance<T> {
     } else {
       // if after `_calculateStatus()` is still visible
       _elementState = _elementState.copyWith(mandatory: _template.mandatory);
-      elementControl?.markAsEnabled(
-          emitEvent: emitEvent, updateParent: updateParent);
+      elementControl?.markAsEnabled(emitEvent: emitEvent, updateParent: true);
     }
+
     updateStatus(_elementState, emitEvent: emitEvent);
     _updateAncestors(updateParent);
+    elementControl!.updateValueAndValidity(
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
   }
 
   List<String> get dependencies => template.dependencies;

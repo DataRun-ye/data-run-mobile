@@ -27,7 +27,7 @@ final formSubmissionRepositoryProvider =
 typedef FormSubmissionRepositoryRef
     = AutoDisposeProviderRef<FormSubmissionRepository>;
 String _$submissionEditStatusHash() =>
-    r'19ac216cc06f83f97afa01aa85491b8b70d61373';
+    r'491fb1cc9862b4063d3b37135ff1d8502f12effc';
 
 /// Copied from Dart SDK
 class _SystemHash {

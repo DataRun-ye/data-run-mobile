@@ -9,6 +9,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -86,6 +87,8 @@ class FormInstance {
 
   Future<DataInstance> _saveSubmission(DataInstance formSubmission) async {
     final formValue = formSection.value;
+    final formErrors = form.errors;
+    logDebug('formValid: ${form.valid},formErrors: ${formErrors.toString()}');
     formValue.forEach((key, value) {
       _initialValue.update(
         key,
@@ -151,6 +154,74 @@ class FormInstance {
 
   Future<void> markSubmissionAsFinal() {
     return formSubmissionList.markSubmissionAsFinal(submissionUid!);
+  }
+
+  bool hasFocusableFieldNext(String elementPath) {
+    // 3) ask FormInstance for the next visible field’s path
+    final nextElement = getNextVisibleField(elementPath);
+
+    return nextElement?.type?.isText == true;
+  }
+
+  TextInputAction fieldInputAction(String elementPath) {
+    return hasFocusableFieldNext(elementPath)
+        ? TextInputAction.next
+        : TextInputAction.done;
+  }
+
+  /// when user hits the keyboard action…
+  Future<void> moveToNextElement(String elementPath) async {
+    // 3) ask FormInstance for the next visible field’s path
+    final nextElement = getNextVisibleField(elementPath);
+
+    if (nextElement == null) {
+      form.unfocus(); // just blur if there’s no next
+      return;
+    }
+
+    final nextPath = nextElement.elementPath!;
+
+    if (nextElement.type?.isText == true) {
+      // reactive_forms will focus its hidden FocusNode, and keyboard stays up
+      form.focus(nextPath);
+    } else {
+      // hide the keyboard
+      form.unfocus();
+      // // ensure the widget is in view
+      final key = fieldKeysRegistery.getKey(nextPath);
+      if (key?.currentContext != null) {
+        await Scrollable.ensureVisible(
+          key!.currentContext!,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          alignment: 0.3,
+          // alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd
+        );
+      }
+
+      // 3) finally, give it focus (if you want the focus ring / styling)
+      form.focus(nextPath);
+    }
+  }
+
+  /// Returns the elementPath of the next visible FieldInstance, or null if none.
+  FormElementInstance<dynamic>? getNextVisibleField(String currentPath) {
+    // 1) Walk the tree in template order:
+    final allFields =
+        getFormElementIterator<FieldInstance<dynamic>>(_formSection)
+            // 2) Filter to ones with a non-null path:
+            .where((e) => e.elementPath != null)
+            // 3) Filter out hidden ones:
+            .where((e) => !e.hidden)
+            // 4) Extract the paths:
+            .map((e) => e.elementPath!)
+            .toList();
+
+    final idx = allFields.indexOf(currentPath);
+    if (idx == -1 || idx + 1 >= allFields.length) return null;
+    final nextElementPath = allFields[idx + 1];
+
+    return _forElementMap[nextElementPath];
   }
 
 ///////////////

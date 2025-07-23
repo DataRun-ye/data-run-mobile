@@ -70,8 +70,10 @@ class RepeatTableDataSource extends DataTableSource {
     final Iterable<FieldInstance<dynamic>> rowFields =
         getFormElementIterator<FieldInstance<dynamic>>(elements[index]);
 
+    // final rowFieldsStates =
+    //     rowFields.map((field) => field).toList().reversedView;
     final rowFieldsStates =
-        rowFields.map((field) => field).toList().reversedView;
+        rowFields.map((field) => field).toList();
 
     return DataRow.byIndex(index: index, selected: repeatItem.selected, cells: [
       DataCell(Text('${index + 1}')),

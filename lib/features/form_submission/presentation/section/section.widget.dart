@@ -2,8 +2,8 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_sliver.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -29,23 +29,29 @@ class SectionWidget extends HookConsumerWidget {
     }
 
     if (elementPropertiesSnapshot.data!.hidden) {
-      return const SliverToBoxAdapter(child: SizedBox.shrink());
+      return const SliverToBoxAdapter();
     }
     final cs = Theme.of(context).colorScheme;
 
     return SliverStickyHeader(
-        header: Container(
-          color: headerColor ?? Theme.of(context).colorScheme.primary,
-          padding: const EdgeInsets.all(16),
-          child: Text(element.label,
-              style: TextStyle(
-                  color: headerColor != null
-                      ? cs.onPrimaryContainer
-                      : cs.onPrimary)),
+        header: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Container(
+            color: headerColor ?? Theme.of(context).colorScheme.primary,
+            padding: const EdgeInsets.all(16),
+            child: Text(element.label,
+                style: TextStyle(
+                    color: headerColor != null
+                        ? cs.onPrimaryContainer
+                        : cs.onPrimary)),
+          ),
         ),
-        sliver: MultiSliver(
-          pushPinnedChildren: true,
-          children: buildSliverList(element.elements.values, context, ref),
+        sliver: SliverPadding(
+          padding: const EdgeInsets.only(top: 8),
+          sliver: MultiSliver(
+            pushPinnedChildren: true,
+            children: buildSliverList(element.elements.values, context, ref),
+          ),
         ));
   }
 
@@ -70,16 +76,12 @@ class SectionWidget extends HookConsumerWidget {
           repeatInstance: element,
         );
       } else if (element is FieldInstance) {
-        return SliverToBoxAdapter(
-          child: ListTile(
-            title: FieldWidget(
-                key: formInstance.fieldKeysRegistery
-                    .getOrCreateKey(element.elementPath!),
-                element: element),
-          ),
-        );
+        return FieldWidget(
+            key: formInstance.fieldKeysRegistery
+                .getOrCreateKey(element.elementPath!),
+            element: element);
       }
-      return const SliverToBoxAdapter(child: SizedBox.shrink());
+      return const SliverToBoxAdapter();
     }).toList();
   }
 }

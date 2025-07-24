@@ -592,6 +592,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewDetails": MessageLookupByLibrary.simpleMessage("تفاصيل"),
     "viewErrors": MessageLookupByLibrary.simpleMessage("عرض الأخطاء"),
     "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
+    "warning": MessageLookupByLibrary.simpleMessage("Warning"),
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
     "year": m29,
     "years": MessageLookupByLibrary.simpleMessage("سنوات"),

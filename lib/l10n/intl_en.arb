@@ -405,5 +405,6 @@
   "finalized": "Finalized",
   "syncFailed": "Sync Failed",
   "cancelSyncing": "Cancel Syncing",
-  "formPermissions": "Permission"
+  "formPermissions": "Permission",
+  "warning": "Warning"
 }

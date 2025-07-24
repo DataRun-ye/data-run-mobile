@@ -94,7 +94,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i1027.AssignmentServiceImpl());
   gh.factory<_i415.RuleEffectStateFactory>(
       () => _i415.RuleEffectStateFactory());
-  gh.factory<_i342.FieldContextRegistry>(() => _i342.FieldContextRegistry());
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());
@@ -102,6 +101,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
     () => _i28.SyncProgressNotifier(),
     dispose: (i) => i.dispose(),
   );
+  gh.lazySingleton<_i342.FieldContextRegistry>(
+      () => _i342.FieldContextRegistry());
   gh.factory<_i775.UserSessionService>(
       () => _i775.UserSessionService(gh<_i460.SharedPreferences>()));
   gh.factory<_i139.SessionStorage>(

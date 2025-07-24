@@ -194,8 +194,7 @@ class FormInstance {
           key!.currentContext!,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          alignment: 0.3,
-          // alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd
+          alignment: 0.2,
         );
       }
 

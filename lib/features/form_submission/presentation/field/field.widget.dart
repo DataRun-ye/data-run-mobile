@@ -1,9 +1,13 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/form_widget_factory.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 class FieldWidget extends HookConsumerWidget {
   FieldWidget({
@@ -35,16 +39,33 @@ class FieldWidget extends HookConsumerWidget {
     }, [control]);
 
     if (!elementPropertiesSnapshot.hasData) {
-      return const SizedBox.shrink();
+      return const SliverToBoxAdapter(child: CircularProgressIndicator());
     }
 
     if (elementPropertiesSnapshot.data!.hidden) {
-      return const SizedBox.shrink();
+      return const SliverToBoxAdapter();
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: FieldFactory.fromType(element),
+    return SliverPadding(
+      padding: const EdgeInsets.all(16.0),
+      sliver: MultiSliver(children: [
+        SliverToBoxAdapter(
+          child: FieldFactory.fromType(element),
+        ),
+        SliverToBoxAdapter(
+          child:
+              elementPropertiesSnapshot.data?.warning.isNotNullOrEmpty == true
+                  ? Text(
+                      '${S.of(context).warning}: ${elementPropertiesSnapshot.data?.warning}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: SurfaceColors.Warning),
+                    )
+                  : null,
+        )
+      ]),
+      // sliver: SliverToBoxAdapter(
+      //   child: FieldFactory.fromType(element),
+      // ),
     );
   }
 }

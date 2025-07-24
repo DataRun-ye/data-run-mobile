@@ -609,6 +609,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewDetails": MessageLookupByLibrary.simpleMessage("Details"),
     "viewErrors": MessageLookupByLibrary.simpleMessage("View Errors"),
     "viewList": MessageLookupByLibrary.simpleMessage("View List"),
+    "warning": MessageLookupByLibrary.simpleMessage("Warning"),
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
     "year": m29,
     "years": MessageLookupByLibrary.simpleMessage("Years"),

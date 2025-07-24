@@ -1132,4 +1132,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get formPermissions => 'صلاحيات وصول';
+
+  @override
+  String get warning => 'Warning';
 }

@@ -1,18 +1,20 @@
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/completion_dialog_config.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_entry_view_silver.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_initial_view.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/hooks/scroll_controller_for_animation.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/bottom_sheet.widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_template_inherit_widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/hooks/scroll_controller_for_animation.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/bottom_sheet.widget.dart';
 import 'package:datarunmobile/features/form_ui_elements/presentation/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,7 @@ class FormSubmissionScreen extends StatefulHookConsumerWidget {
 }
 
 class FormSubmissionScreenState extends ConsumerState<FormSubmissionScreen> {
+
   @override
   Widget build(BuildContext context) {
     final FormMetadata formMetadata = FormMetadataWidget.of(context);
@@ -76,6 +79,12 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   FormMetadata metadata(BuildContext context) => FormMetadataWidget.of(context);
 
   FormMetadata get formMetadata => FormMetadataWidget.of(context);
+
+  @override
+  void initState() {
+    super.initState();
+    appLocator<FieldContextRegistry>().clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,10 +215,9 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   }
 
   void _onErrorTap(
-      String elementPath,
-      FormInstance formInstance,
-      ) {
-
+    String elementPath,
+    FormInstance formInstance,
+  ) {
     final registry = formInstance.fieldKeysRegistery;
 
     final key = registry.getKey(elementPath);

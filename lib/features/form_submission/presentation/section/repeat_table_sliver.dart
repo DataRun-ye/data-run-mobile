@@ -24,7 +24,7 @@ class RepeatTableSliver extends HookConsumerWidget {
     }
 
     if (elementPropertiesSnapshot.data!.hidden) {
-      return const SliverToBoxAdapter(child: SizedBox.shrink());
+      return const SliverToBoxAdapter();
     }
 
     return SliverStickyHeader(

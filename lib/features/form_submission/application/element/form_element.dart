@@ -298,7 +298,6 @@ sealed class FormElementInstance<T> {
         mandatory: false,
         warning: '',
       );
-      // elementControl!.reset(disabled: true, emitEvent: false);
     } else {
       _elementState = _elementState.copyWith(
         hidden: false,
@@ -329,11 +328,11 @@ sealed class FormElementInstance<T> {
     // (this fix the initial status of an element when loading the form
     if (hidden) {
       _elementState = _elementState.copyWith(mandatory: false);
-      elementControl!.reset(disabled: true, emitEvent: true);
+      elementControl!.reset(disabled: true, emitEvent: emitEvent);
     } else {
       // if after `_calculateStatus()` is still visible
       _elementState = _elementState.copyWith(mandatory: _template.mandatory);
-      elementControl?.markAsEnabled(emitEvent: emitEvent, updateParent: true);
+      elementControl?.markAsEnabled(emitEvent: emitEvent, updateParent: updateParent);
       // elementControl!.updateValueAndValidity(
       //   updateParent: updateParent,
       //   emitEvent: emitEvent,

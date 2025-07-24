@@ -1132,4 +1132,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get formPermissions => 'Permission';
+
+  @override
+  String get warning => 'Warning';
 }

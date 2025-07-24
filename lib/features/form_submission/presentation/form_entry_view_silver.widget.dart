@@ -44,16 +44,12 @@ class FormInstanceEntryViewSliver extends HookConsumerWidget {
           repeatInstance: element,
         );
       } else if (element is FieldInstance) {
-        return SliverToBoxAdapter(
-          child: ListTile(
-            title: FieldWidget(
-                key: formInstance.fieldKeysRegistery
-                    .getOrCreateKey(element.elementPath!),
-                element: element),
-          ),
-        );
+        return FieldWidget(
+            key: formInstance.fieldKeysRegistery
+                .getOrCreateKey(element.elementPath!),
+            element: element);
       }
-      return const SliverToBoxAdapter(child: SizedBox.shrink());
+      return const SliverToBoxAdapter();
     }).toList();
   }
 

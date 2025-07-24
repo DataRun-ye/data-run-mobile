@@ -368,5 +368,6 @@
   "draft": "مسودة",
   "finalized": "نهائية",
   "syncFailed": "فشل مزامنة",
-  "cancelSyncing": "إيقاف والمزامنة لاحقًا"
+  "cancelSyncing": "إيقاف والمزامنة لاحقًا",
+  "warning": "Warning"
 }

@@ -71,7 +71,8 @@ Future<FormInstance> formInstance(Ref ref,
   final _formSection = Section(
       template: formFlatTemplate.rootSection, elements: elements, form: form)
     ..resolveDependencies()
-    ..evaluate(emitEvent: false);
+    // ..updateValueAndValidity(emitEvent: false);
+    ..evaluate(emitEvent: false/*, updateParent: false*/);
   final attributeMap =
       await formMetadataService.formAttributesControls(initialFormValue);
   final bool submissionEditStatus = await ref

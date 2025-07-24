@@ -30,6 +30,18 @@ class Section extends SectionElement<Map<String, Object?>> {
     });
   }
 
+  // void updateValueAndValidity({
+  //   bool updateParent = true,
+  //   bool emitEvent = true,
+  // }) {
+  //   for (final element in _elements.values) {
+  //     element.updateValueAndValidity(
+  //         updateParent: updateParent, emitEvent: emitEvent);
+  //   }
+  //
+  //   super.updateValueAndValidity(
+  //       updateParent: updateParent, emitEvent: emitEvent);
+  // }
   @override
   Map<String, dynamic> get errors {
     final allErrors = Map<String, dynamic>.of(super.errors);

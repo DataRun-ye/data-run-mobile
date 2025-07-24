@@ -7,16 +7,8 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
     List<RepeatItemInstance> elements = const [],
   }) {
     addAll(elements);
-    // final visibilityDependencies = template
-    //     .depthFirstTraversal()
-    //     .where((element) => !element.isSectionType)
-    //     .expand((element) => element.visibilityDependencies)
-    //     .toSet();
-
-    // _visibilityDependencies.addAll(visibilityDependencies);
   }
-  // final _collectionChanges =
-  //     StreamController<List<RepeatItemInstance>>.broadcast();
+
   Stream<List<RepeatItemInstance>> get collectionChanges =>
       (collectionChangedSubject ??=
               BehaviorSubject<List<RepeatItemInstance>>.seeded(_elements))
@@ -26,16 +18,8 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
 
   final List<RepeatItemInstance> _elements = [];
 
-  // final List<String> _visibilityDependencies = [];
-
   /// Gets the list of child elements.
   List<RepeatItemInstance> get elements => List.unmodifiable(_elements);
-
-  // List<String> get dependencies =>
-  //     [...template.dependencies, ...visibilityDependencies]..toSet().toList();
-
-  // List<String> get visibilityDependencies =>
-  //     List.unmodifiable(_visibilityDependencies);
 
   /// Close stream that emit collection change events
   void closeCollectionEvents() {
@@ -91,11 +75,19 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
         emitEvent: emitEvent);
   }
 
-  // @override
-  // List<Map<String, Object?>?> get rawValue =>
-  //     _elements.map<Map<String, Object?>?>((element) {
-  //       return element.rawValue;
-  //     }).toList();
+  //
+  // void updateValueAndValidity({
+  //   bool updateParent = true,
+  //   bool emitEvent = true,
+  // }) {
+  //   for (final element in _elements) {
+  //     element.updateValueAndValidity(
+  //         updateParent: updateParent, emitEvent: emitEvent);
+  //   }
+  //
+  //   super.updateValueAndValidity(
+  //       updateParent: updateParent, emitEvent: emitEvent);
+  // }
 
   /// Insert a new [element] at the end of the RepeatSection.
   void add(RepeatItemInstance element,
@@ -112,14 +104,8 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
     _elements.addAll(elements);
     for (final element in elements) {
       element.parentSection = this;
-      // element.resolveDependencies();
-      // element.evaluate();
     }
-    //
-    // updateValueAndValidity(
-    //   updateParent: updateParent,
-    //   emitEvent: emitEvent,
-    // );
+
     emitsCollectionChanged(_elements);
   }
 
@@ -139,15 +125,6 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
   }) {
     _elements.insert(index, element);
     element.parentSection = this;
-    // element.resolveDependencies();
-    // element.evaluate();
-
-    // evaluate();
-    // updateValueAndValidity(
-    //   emitEvent: emitEvent,
-    //   updateParent: updateParent,
-    // );
-    //
     if (emitEvent) {
       emitsCollectionChanged(_elements);
     }
@@ -173,12 +150,6 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
   }) {
     final removedElement = _elements.removeAt(index);
     removedElement.parentSection = null;
-    // in formInstance
-    // elementControl.removeAt(index);
-    // updateValueAndValidity(
-    //   emitEvent: emitEvent,
-    //   updateParent: updateParent,
-    // );
 
     if (emitEvent) {
       emitsCollectionChanged(_elements);

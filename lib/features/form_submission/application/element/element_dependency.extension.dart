@@ -44,33 +44,6 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
     // applyStateToControl(newValue, updateParent: true, emitEvent: emitEvent);
   }
 
-  // void applyStateToControl(
-  //   FormElementState newState, {
-  //   bool updateParent = true,
-  //   bool emitEvent = true,
-  // }) {
-  //   // updateValue(value);
-  //   // elementControl!
-  //   //     .updateValue(newState.value, updateParent: false, emitEvent: false);
-  //   if (newState.hidden) {
-  //     markAsHidden(/*updateParent: false, emitEvent: false*/);
-  //     // elementControl!
-  //     //     .reset(disabled: true, updateParent: false, emitEvent: false);
-  //   } else {
-  //     markAsVisible(/*updateParent: false, emitEvent: false*/);
-  //     // elementControl!.markAsEnabled(updateParent: false, emitEvent: false);
-  //     if (newState.mandatory) {
-  //       markAsMandatory(/*updateParent: false, emitEvent: false*/);
-  //     }
-  //     if (newState.hasErrors) {
-  //       setErrors(newState.errors);
-  //     }
-  //   }
-  //
-  //   elementControl!.updateValueAndValidity(
-  //       updateParent: updateParent, emitEvent: emitEvent);
-  // }
-
   void addDependency(FormElementInstance<dynamic> dependency) {
     _resolvedDependencies.add(dependency);
     dependency._addDependent(this);

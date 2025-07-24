@@ -22,8 +22,6 @@ class RepeatTableDataSource extends DataTableSource {
     this.elements.addAll(elements);
   }
 
-  // final ActivityModel Function() activityModel;
-
   void markEnabled() {
     if (editable) {
       return;
@@ -113,7 +111,7 @@ class RepeatTableDataSource extends DataTableSource {
         // Light grey background for the entire cell
         padding: const EdgeInsets.all(8.0),
         child: Text(
-          '  '.toString(),
+          '    '.toString(),
           style: const TextStyle(color: Colors.grey),
         ),
       );

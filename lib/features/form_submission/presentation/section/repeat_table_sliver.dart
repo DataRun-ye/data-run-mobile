@@ -1,9 +1,11 @@
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RepeatTableSliver extends HookConsumerWidget {
@@ -23,7 +25,9 @@ class RepeatTableSliver extends HookConsumerWidget {
       return const SliverToBoxAdapter(child: CircularProgressIndicator());
     }
 
-    if (elementPropertiesSnapshot.data!.hidden) {
+    final hidden = repeatInstance.elementState.hidden;
+
+    if (hidden) {
       return const SliverToBoxAdapter();
     }
 
@@ -39,6 +43,8 @@ class RepeatTableSliver extends HookConsumerWidget {
         ]),
       ),
       sliver: SliverToBoxAdapter(
+        key: appLocator<FieldContextRegistry>()
+            .getOrCreateKey(repeatInstance.elementPath!),
         child: Scrollbar(
           child: RepeatTable(
             key: Key(repeatInstance.elementPath!),

@@ -1,5 +1,7 @@
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_sliver.dart';
@@ -22,41 +24,39 @@ class FormInstanceEntryViewSliver extends HookConsumerWidget {
         .watch(
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
         .requireValue;
+    List<Widget> buildSlivers() {
+      return formInstance.formSection.elements.values.map((element) {
+        if (element is Section) {
+          return SectionWidget(
+            // key: key, linked to the nested child table
+            element: element,
+          );
+        } else if (element is RepeatSection) {
+          return RepeatTableSliver(
+            // key: key, linked to the nested child table
+            repeatInstance: element,
+          );
+        } else if (element is FieldInstance) {
+          return FieldWidget(
+              key: appLocator<FieldContextRegistry>()
+                  .getOrCreateKey(element.elementPath!),
+              element: element);
+        }
+        return const SliverToBoxAdapter();
+      }).toList();
+    }
 
     return CustomScrollView(
       shrinkWrap: true,
       controller: scrollController,
-      slivers: buildSliverList(formInstance, context, ref),
+      slivers: buildSlivers(),
     );
-  }
-
-  List<Widget> buildSliverList(
-      FormInstance formInstance, BuildContext context, WidgetRef ref) {
-    return formInstance.formSection.elements.values.map((element) {
-      if (element is Section) {
-        return SectionWidget(
-          key: Key(element.elementPath!),
-          element: element,
-        );
-      } else if (element is RepeatSection) {
-        return RepeatTableSliver(
-          key: Key('${element.elementPath!}_RepeatTableSliver'),
-          repeatInstance: element,
-        );
-      } else if (element is FieldInstance) {
-        return FieldWidget(
-            key: formInstance.fieldKeysRegistery
-                .getOrCreateKey(element.elementPath!),
-            element: element);
-      }
-      return const SliverToBoxAdapter();
-    }).toList();
   }
 
 //
 // /*List<Widget>*/
 //
-// buildSliverList(
+// buildSlivers(
 //     FormInstance formInstance,
 //     WidgetRef ref,
 //     ) {

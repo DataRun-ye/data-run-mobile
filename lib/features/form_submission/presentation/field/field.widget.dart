@@ -42,7 +42,9 @@ class FieldWidget extends HookConsumerWidget {
       return const SliverToBoxAdapter(child: CircularProgressIndicator());
     }
 
-    if (elementPropertiesSnapshot.data!.hidden) {
+    final hidden = element.elementState.hidden;
+
+    if (hidden) {
       return const SliverToBoxAdapter();
     }
 

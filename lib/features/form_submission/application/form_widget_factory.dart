@@ -1,7 +1,5 @@
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
-import 'package:datarunmobile/features/form_submission/application/popup_section.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_age_field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_barcode_reader_field.dart';
@@ -15,29 +13,28 @@ import 'package:datarunmobile/features/form_submission/presentation/field/reacti
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_team_select_chip.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_yes_no_choice_chips.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reference_search/q_reference_drop_down_search_field.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table.widget.dart';
 import 'package:flutter/material.dart';
-
-/// Factory that instantiate form input fields based on a dynamic element tree
-class PopupFormElementWidgetFactory {
-  static Widget createWidget(
-      FormElementInstance<dynamic> element, FieldContextRegistry registry) {
-    return switch (element) {
-      FieldInstance() => FieldWidget(
-          key: registry.getOrCreateKey(element.elementPath!), element: element),
-      RepeatSection() => RepeatTable(
-          key: Key(element.elementPath!),
-          repeatInstance: element,
-        ),
-      Section() => PopupSectionWidget(
-          key: ValueKey(element.elementPath), element: element),
-      // // TODO: Handle this case.
-      // RepeatScanInstance() => throw UnimplementedError(),
-      // TODO: Handle this case.
-      // RepeatScanInstance() => throw UnimplementedError(),
-    };
-  }
-}
+//
+// /// Factory that instantiate form input fields based on a dynamic element tree
+// class PopupFormElementWidgetFactory {
+//   static Widget createWidget(
+//       FormElementInstance<dynamic> element, FieldContextRegistry registry) {
+//     return switch (element) {
+//       FieldInstance() => FieldWidget(
+//           key: registry.getOrCreateKey(element.elementPath!), element: element),
+//       RepeatSection() => RepeatTable(
+//           key: Key(element.elementPath!),
+//           repeatInstance: element,
+//         ),
+//       Section() => PopupSectionWidget(
+//           key: ValueKey(element.elementPath), element: element),
+//       // // TODO: Handle this case.
+//       // RepeatScanInstance() => throw UnimplementedError(),
+//       // TODO: Handle this case.
+//       // RepeatScanInstance() => throw UnimplementedError(),
+//     };
+//   }
+// }
 
 /// a Factory that is called by the [FieldWidget] to create the input widget based on ValueType of element
 class FieldFactory {

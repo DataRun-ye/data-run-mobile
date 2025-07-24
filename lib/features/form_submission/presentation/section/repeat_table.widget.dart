@@ -3,9 +3,9 @@ import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/section/edit_panel.dart';
+import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_rows_source.dart';
+import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -37,10 +37,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   int defaultRowsPerPage = 5;
 
-  // late final int tableColumnsLength;
-
-  // late final FormInstance formInstance;
-
   Future<void> onEdit(int index) async {
     final formInstance = ref
         .read(
@@ -58,7 +54,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     final removed = formInstance.onRemoveRepeatedItem(index, _repeatInstance);
     _dataSource.removeItem(removed);
     _repeatInstance.elementControl.markAsTouched();
-    // formInstance.saveFormData();
   }
 
   @override
@@ -69,7 +64,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       elements: widget.repeatInstance.elements,
       onEdit: (value) => onEdit(value),
       onDelete: onDelete,
-      // activityModel: () => ActivityInheritedWidget.of(context),
       editable: widget.repeatInstance.elementControl.enabled,
     );
   }
@@ -87,7 +81,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   @override
   Widget build(BuildContext context) {
-    // final activityModel = ActivityInheritedWidget.of(context);
     final formInstance = ref
         .watch(
             formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
@@ -198,40 +191,38 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
               Navigator.pop(context);
             }
           },
-          child: Dialog(
-            child: FormMetadataWidget(
-              formMetadata: formInstance.formMetadata,
-              child: Builder(builder: (context) {
-                String title = repeatItem == null
-                    ? '${S.of(context).newItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}'
-                    : '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
+          child: FormMetadataWidget(
+            formMetadata: formInstance.formMetadata,
+            child: Builder(builder: (context) {
+              String title = repeatItem == null
+                  ? '${S.of(context).newItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}'
+                  : '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
 
-                // if (repeatItem == null) {
-                //   repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
-                //   _dataSource.addItem(repeatItem!);
-                // }
+              // if (repeatItem == null) {
+              //   repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
+              //   _dataSource.addItem(repeatItem!);
+              // }
 
-                return ReactiveForm(
-                  formGroup: repeatItem!.elementControl,
-                  child: EditPanel(
-                    title: title,
-                    repeatInstance: _repeatInstance,
-                    item: repeatItem,
-                    onSave: (formGroup, action) {
-                      _repeatInstance.elementControl.markAsTouched();
-                      formInstance.saveFormData();
-                      _dataSource.updateItems(_repeatInstance.elements);
-                      // repeatItem.updateValue(formGroup.value);
-                      if (formGroup.valid) {
-                        itemSaved = true;
-                        _handleSave(context, formInstance, _repeatInstance,
-                            repeatItem, action);
-                      }
-                    },
-                  ),
-                );
-              }),
-            ),
+              return ReactiveForm(
+                formGroup: repeatItem!.elementControl,
+                child: EditRowPanel(
+                  title: title,
+                  repeatInstance: _repeatInstance,
+                  item: repeatItem,
+                  onSave: (formGroup, action) {
+                    _repeatInstance.elementControl.markAsTouched();
+                    formInstance.saveFormData();
+                    _dataSource.updateItems(_repeatInstance.elements);
+                    // repeatItem.updateValue(formGroup.value);
+                    if (formGroup.valid) {
+                      itemSaved = true;
+                      _handleSave(context, formInstance, _repeatInstance,
+                          repeatItem, action);
+                    }
+                  },
+                ),
+              );
+            }),
           ),
         );
       },

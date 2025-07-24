@@ -32,7 +32,6 @@ class FormSubmissionScreen extends StatefulHookConsumerWidget {
 }
 
 class FormSubmissionScreenState extends ConsumerState<FormSubmissionScreen> {
-
   @override
   Widget build(BuildContext context) {
     final FormMetadata formMetadata = FormMetadataWidget.of(context);
@@ -218,18 +217,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     String elementPath,
     FormInstance formInstance,
   ) {
-    final registry = formInstance.fieldKeysRegistery;
-
-    final key = registry.getKey(elementPath);
-
-    if (key?.currentContext != null) {
-      Scrollable.ensureVisible(
-        key!.currentContext!,
-        duration: const Duration(milliseconds: 300),
-        alignment: 0.2,
-        curve: Curves.easeInOut,
-      );
-    }
+    formInstance.onErrorTap(elementPath);
     Navigator.pop(context);
     formInstance.form.control(elementPath).markAsTouched();
   }

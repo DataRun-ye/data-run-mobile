@@ -1,5 +1,7 @@
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_sliver.dart';
@@ -28,12 +30,17 @@ class SectionWidget extends HookConsumerWidget {
       return const SliverToBoxAdapter(child: CircularProgressIndicator());
     }
 
-    if (elementPropertiesSnapshot.data!.hidden) {
+    final hidden = element.elementState.hidden;
+
+    if (hidden) {
       return const SliverToBoxAdapter();
     }
+
     final cs = Theme.of(context).colorScheme;
 
     return SliverStickyHeader(
+        key: appLocator<FieldContextRegistry>()
+            .getOrCreateKey(element.elementPath!),
         header: Padding(
           padding: const EdgeInsets.all(2.0),
           child: Container(
@@ -50,12 +57,12 @@ class SectionWidget extends HookConsumerWidget {
           padding: const EdgeInsets.only(top: 8),
           sliver: MultiSliver(
             pushPinnedChildren: true,
-            children: buildSliverList(element.elements.values, context, ref),
+            children: buildSlivers(element.elements.values, context, ref),
           ),
         ));
   }
 
-  List<Widget> buildSliverList(Iterable<FormElementInstance<dynamic>> elements,
+  List<Widget> buildSlivers(Iterable<FormElementInstance<dynamic>> elements,
       BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     final FormInstance formInstance = ref

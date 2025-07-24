@@ -1,11 +1,13 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
@@ -123,8 +125,8 @@ class FormInstance {
     // ..resolveDependencies()
     // ..evaluate();
     itemInstance.resolveDependencies();
-    itemInstance.evaluate(/*updateParent: false*/);
-    parent.elementControl.markAsDirty(updateParent: false);
+    itemInstance.evaluate(emitEvent: false);
+    // parent.elementControl.markAsDirty(updateParent: false);
     // parent.updateValueAndValidity(emitEvent: false);
     return itemInstance;
   }
@@ -156,15 +158,8 @@ class FormInstance {
     return formSubmissionList.markSubmissionAsFinal(submissionUid!);
   }
 
-  bool hasFocusableFieldNext(String elementPath) {
-    // 3) ask FormInstance for the next visible field’s path
-    final nextElement = getNextVisibleField(elementPath);
-
-    return nextElement?.type?.isText == true;
-  }
-
   TextInputAction fieldInputAction(String elementPath) {
-    return hasFocusableFieldNext(elementPath)
+    return _hasFocusableFieldNext(elementPath)
         ? TextInputAction.next
         : TextInputAction.done;
   }
@@ -172,7 +167,7 @@ class FormInstance {
   /// when user hits the keyboard action…
   Future<void> moveToNextElement(String elementPath) async {
     // 3) ask FormInstance for the next visible field’s path
-    final nextElement = getNextVisibleField(elementPath);
+    final nextElement = _getNextVisibleField(elementPath);
 
     if (nextElement == null) {
       form.unfocus(); // just blur if there’s no next
@@ -203,17 +198,20 @@ class FormInstance {
     }
   }
 
+
+  bool _hasFocusableFieldNext(String elementPath) {
+    // 3) ask FormInstance for the next visible field’s path
+    final nextElement = _getNextVisibleField(elementPath);
+
+    return nextElement?.type?.isText == true;
+  }
+
   /// Returns the elementPath of the next visible FieldInstance, or null if none.
-  FormElementInstance<dynamic>? getNextVisibleField(String currentPath) {
-    // 1) Walk the tree in template order:
+  FormElementInstance<dynamic>? _getNextVisibleField(String currentPath) {
     final allFields =
         getFormElementIterator<FieldInstance<dynamic>>(_formSection)
-            // 2) Filter to ones with a non-null path:
             .where((e) => e.elementPath != null)
-            // 3) Filter out hidden ones:
             .where((e) => !e.hidden)
-            // 4) Extract the paths:
-            // .map((e) => e.elementPath!)
             .toList();
 
     final idx =
@@ -222,6 +220,31 @@ class FormInstance {
     final nextElement = allFields[idx + 1];
 
     return nextElement;
+  }
+
+  void onErrorTap(String elementPath) {
+    final registry = appLocator<FieldContextRegistry>();
+    try {
+      final SectionElement<dynamic>? elementParent =
+          formSection.element(elementPath).parentSection;
+
+      final parentIsRepeat = elementParent is RepeatItemInstance;
+      final elementPathToScrollTo = parentIsRepeat
+          ? elementParent.parentSection!.elementPath!
+          : elementPath;
+      final key = registry.getKey(elementPathToScrollTo);
+      if (key?.currentContext != null) {
+        Scrollable.ensureVisible(
+          key!.currentContext!,
+          duration: const Duration(milliseconds: 300),
+          alignment: 0.2,
+          curve: Curves.easeInOut,
+        );
+      }
+    } on FormElementNotFoundException catch (e, st) {
+      logError('Element With Path: $elementPath, not found: $e',
+          stackTrace: st);
+    }
   }
 
 ///////////////

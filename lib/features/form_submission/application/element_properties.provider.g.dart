@@ -7,7 +7,7 @@ part of 'element_properties.provider.dart';
 // **************************************************************************
 
 String _$elementPropertiesStreamHash() =>
-    r'ab36e9361209f22dd81a68ff213b55cb756bfc70';
+    r'86e38b90da3e60de2491702c088589651449edeb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -36,7 +36,7 @@ const elementPropertiesStreamProvider = ElementPropertiesStreamFamily();
 
 /// See also [elementPropertiesStream].
 class ElementPropertiesStreamFamily
-    extends Family<AsyncValue<FormElementState>> {
+    extends Family<AsyncValue<FormElementState<dynamic>>> {
   /// See also [elementPropertiesStream].
   const ElementPropertiesStreamFamily();
 
@@ -78,7 +78,7 @@ class ElementPropertiesStreamFamily
 
 /// See also [elementPropertiesStream].
 class ElementPropertiesStreamProvider
-    extends AutoDisposeStreamProvider<FormElementState> {
+    extends AutoDisposeStreamProvider<FormElementState<dynamic>> {
   /// See also [elementPropertiesStream].
   ElementPropertiesStreamProvider({
     required String path,
@@ -118,7 +118,8 @@ class ElementPropertiesStreamProvider
 
   @override
   Override overrideWith(
-    Stream<FormElementState> Function(ElementPropertiesStreamRef provider)
+    Stream<FormElementState<dynamic>> Function(
+            ElementPropertiesStreamRef provider)
         create,
   ) {
     return ProviderOverride(
@@ -137,7 +138,7 @@ class ElementPropertiesStreamProvider
   }
 
   @override
-  AutoDisposeStreamProviderElement<FormElementState> createElement() {
+  AutoDisposeStreamProviderElement<FormElementState<dynamic>> createElement() {
     return _ElementPropertiesStreamProviderElement(this);
   }
 
@@ -161,7 +162,7 @@ class ElementPropertiesStreamProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin ElementPropertiesStreamRef
-    on AutoDisposeStreamProviderRef<FormElementState> {
+    on AutoDisposeStreamProviderRef<FormElementState<dynamic>> {
   /// The parameter `path` of this provider.
   String get path;
 
@@ -170,7 +171,7 @@ mixin ElementPropertiesStreamRef
 }
 
 class _ElementPropertiesStreamProviderElement
-    extends AutoDisposeStreamProviderElement<FormElementState>
+    extends AutoDisposeStreamProviderElement<FormElementState<dynamic>>
     with ElementPropertiesStreamRef {
   _ElementPropertiesStreamProviderElement(super.provider);
 

@@ -221,7 +221,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                       _repeatInstance.elementControl.markAsTouched();
                       formInstance.saveFormData();
                       _dataSource.updateItems(_repeatInstance.elements);
-                      repeatItem.updateValue(formGroup.value);
+                      // repeatItem.updateValue(formGroup.value);
                       if (formGroup.valid) {
                         itemSaved = true;
                         _handleSave(context, formInstance, _repeatInstance,

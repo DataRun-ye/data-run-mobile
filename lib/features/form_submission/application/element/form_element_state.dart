@@ -1,16 +1,16 @@
+import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:datarunmobile/commons/extensions/list_extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-class FormElementState with EquatableMixin {
-  const FormElementState({
+class FormElementState<T> with EquatableMixin {
+  FormElementState({
     this.hidden = false,
     this.readOnly = false,
     this.mandatory = false,
     this.warning = '',
-    this.error = '',
+    // this.error = '',
     this.errors = const {},
   });
 
@@ -18,39 +18,42 @@ class FormElementState with EquatableMixin {
   final bool readOnly;
   final bool mandatory;
   final String warning;
-  final String error;
+  final Type? type = T;
+
+  // final String error;
   final Map<String, dynamic> errors;
 
-  bool get hasErrors => errors.isNotEmpty || error.isNotEmpty;
+  bool get hasErrors => errors.isNotEmpty;
 
   bool get isVisible => !hidden;
 
-  FormElementState setWarning(String warning) => copyWith(warning: warning);
-  FormElementState resetWarning(String warning) => copyWith(warning: warning);
+  FormElementState<T> setWarning(String warning) => copyWith(warning: warning);
 
-  FormElementState setError(String error) => copyWith(
-      error: error,
-      errors: Map<String, dynamic>.of(errors)..addAll({error: error}));
+  FormElementState<T> resetWarning(String warning) =>
+      copyWith(warning: warning);
 
-  FormElementState resetError(String error) => copyWith(
-      error: '', errors: Map<String, dynamic>.of(errors)..remove(error));
+  FormElementState<T> setError(String error) =>
+      copyWith(errors: Map<String, dynamic>.of(errors)..addAll({error: error}));
 
-  FormElementState AddError(MapEntry<String, dynamic> newErrors) => copyWith(
+  FormElementState<T> resetError(String error) =>
+      copyWith(errors: Map<String, dynamic>.of(errors)..remove(error));
+
+  FormElementState<T> AddError(MapEntry<String, dynamic> newErrors) => copyWith(
       errors: Map<String, dynamic>.of(errors)..addEntries([newErrors]));
 
-  FormElementState mergeErrors(Map<String, dynamic> newErrors) => copyWith(
+  FormElementState<T> mergeErrors(Map<String, dynamic> newErrors) => copyWith(
       errors: Map<String, dynamic>.of(errors).lock.addMap(newErrors).unlock);
 
-  FormElementState setErrors(Map<String, dynamic> newErrors) =>
+  FormElementState<T> setErrors(Map<String, dynamic> newErrors) =>
       copyWith(errors: newErrors);
 
-  FormElementState copyWith({
+  FormElementState<T> copyWith({
     bool? hidden,
     bool? readOnly,
     bool? mandatory,
     String? warning,
-    String? error,
     Map<String, dynamic>? errors,
+    T? value,
   }) {
     return FormElementState(
       hidden: hidden ?? this.hidden,
@@ -58,7 +61,7 @@ class FormElementState with EquatableMixin {
       mandatory: mandatory ?? this.mandatory,
       errors: errors ?? this.errors,
       warning: warning ?? this.warning,
-      error: error ?? this.error,
+      // error: error ?? this.error,
     );
   }
 
@@ -66,13 +69,13 @@ class FormElementState with EquatableMixin {
   List<Object?> get props => [hidden, mandatory, readOnly, warning];
 }
 
-class FieldElementState<T> extends FormElementState {
+class FieldElementState<T> extends FormElementState<T> {
   FieldElementState({
     super.hidden,
     super.readOnly,
     super.mandatory,
     super.warning,
-    super.error,
+    // super.error,
     super.errors,
     this.visibleOptions = const [],
     this.value,
@@ -81,13 +84,23 @@ class FieldElementState<T> extends FormElementState {
   final T? value;
   final List<DataOption> visibleOptions;
 
+  // Map<String, dynamic>? validationErrors() {
+  //   final error = <String, dynamic>{};
+  //   if (value == null || (value as String).trim().isEmpty) {
+  //     error.addAll({'required': true});
+  //   }
+  //   if (errors.isNotEmpty) {
+  //     error.addAll(errors);
+  //   }
+  //   return null;
+  // }
+
   @override
   FieldElementState<T> copyWith(
       {bool? hidden,
       bool? readOnly,
       bool? mandatory,
       String? warning,
-      String? error,
       Map<String, dynamic>? errors,
       T? value,
       List<DataOption>? visibleOptions}) {
@@ -97,7 +110,6 @@ class FieldElementState<T> extends FormElementState {
       readOnly: readOnly ?? this.readOnly,
       errors: errors ?? this.errors,
       warning: warning ?? this.warning,
-      error: error ?? this.error,
       value: value ?? this.value,
       visibleOptions: visibleOptions ?? this.visibleOptions,
     );
@@ -109,7 +121,7 @@ class FieldElementState<T> extends FormElementState {
       mandatory: this.mandatory,
       errors: this.errors,
       warning: this.warning,
-      error: this.error,
+      // error: this.error,
       value: value,
       visibleOptions: this.visibleOptions,
     );
@@ -141,63 +153,3 @@ class FieldElementState<T> extends FormElementState {
   @override
   List<Object?> get props => super.props..addAll([...visibleOptions, value]);
 }
-
-// class SectionElementState extends FormElementState {
-//   const SectionElementState({
-//     super.hidden,
-//     super.readOnly,
-//     super.mandatory,
-//     super.errors,
-//   });
-//
-//   @override
-//   SectionElementState copyWith(
-//       {bool? hidden,
-//       bool? readOnly,
-//       bool? mandatory,
-//       Map<String, dynamic>? errors}) {
-//     return SectionElementState(
-//       hidden: hidden ?? this.hidden,
-//       mandatory: mandatory ?? this.mandatory,
-//       readOnly: readOnly ?? this.readOnly,
-//       errors: errors ?? this.errors,
-//     );
-//   }
-// }
-
-// class RepeatInstanceState extends SectionElementState {
-//   // element <name, state>..
-//   final List<FieldElementState<dynamic>> columnsStates;
-//
-//   RepeatInstanceState({
-//     super.hidden,
-//     super.mandatory,
-//     super.errors,
-//     super.readOnly,
-//     this.columnsStates = const [],
-//   });
-//
-//   // RepeatInstanceState<T> applyRule(FieldElementState<dynamic> state) {
-//   //   return copyWith(columnsStates: [...columnsStates, state].toSet().toList());
-//   // }
-//
-//   @override
-//   RepeatInstanceState copyWith({
-//     bool? hidden,
-//     bool? readOnly,
-//     bool? mandatory,
-//     Map<String, dynamic>? errors,
-//     List<FieldElementState<dynamic>>? columnsStates,
-//   }) {
-//     return RepeatInstanceState(
-//       hidden: hidden ?? this.hidden,
-//       mandatory: mandatory ?? this.mandatory,
-//       readOnly: readOnly ?? this.readOnly,
-//       errors: errors ?? this.errors,
-//       columnsStates: columnsStates ?? this.columnsStates,
-//     );
-//   }
-//
-//   @override
-//   List<Object?> get props => super.props..addAll([columnsStates]);
-// }

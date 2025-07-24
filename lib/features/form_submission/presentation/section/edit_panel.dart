@@ -43,6 +43,7 @@ class EditPanel extends ConsumerWidget {
       throw FormControlParentNotFoundException(this);
     }
 
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -66,22 +67,28 @@ class EditPanel extends ConsumerWidget {
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             spacing: 4,
             runSpacing: 4,
+            // runAlignment: WrapAlignment.center,
+            alignment: WrapAlignment.spaceBetween,
             children: <Widget>[
+              ReactiveValidButton(
+                color: cs.primary,
+                onPressed: () =>
+                    onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
+                label: Text(S.of(context).saveAndClose),
+                toolTip: S.of(context).saveAndClose,
+                icon: Icon(MdiIcons.contentSaveCheck),
+              ),
               ReactiveValidButton(
                 label: Text(S.of(context).addNew),
                 onPressed: () =>
                     onSave(formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
-                icon: Icon(MdiIcons.contentSavePlus),
-              ),
-              ReactiveValidButton(
-                onPressed: () =>
-                    onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
-                label: Text(S.of(context).saveAndClose),
-                icon: Icon(MdiIcons.contentSaveCheck),
+                icon: Icon(MdiIcons.contentSaveMove),
+                color: cs.secondary,
+                toolTip: S.of(context).addNew,
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
         ],
       ),
     );

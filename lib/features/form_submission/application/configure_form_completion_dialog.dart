@@ -24,7 +24,7 @@ class ConfigureFormCompletionDialog {
         subtitle: rootSection.form.hasErrors
             ? S.current.fieldsWithErrorInfo
             : S.current.markAsFinalData,
-        icon: rootSection.form.hasErrors ? Icons.error : Icons.info,
+        icon: rootSection.form.hasErrors ? Icons.error : Icons.check_circle,
         body: _getBody(rootSection));
 
     return FormCompletionDialog(

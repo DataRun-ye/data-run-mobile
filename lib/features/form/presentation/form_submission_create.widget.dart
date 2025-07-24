@@ -155,7 +155,9 @@ class _FormListItem extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(child: const Icon(Icons.description)),
-              SizedBox(height: 2,),
+              SizedBox(
+                height: 2,
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
                 decoration: BoxDecoration(

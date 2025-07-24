@@ -115,24 +115,24 @@ class FormInstance {
     final itemFormGroup = FormElementControlBuilder.createSectionFormGroup(
         formFlatTemplate, parent.template);
 
-    parent.elementControl.add(itemFormGroup);
+    parent.elementControl.add(itemFormGroup, emitEvent: false);
 
     final itemInstance = FormElementBuilder.buildRepeatItem(
         form, formFlatTemplate, parent.template);
-    parent
-      ..add(itemInstance)
-      ..resolveDependencies()
-      ..evaluate();
+    parent..add(itemInstance);
+    // ..resolveDependencies()
+    // ..evaluate();
     itemInstance.resolveDependencies();
-    itemInstance.evaluate();
-    parent.elementControl.markAsDirty();
+    itemInstance.evaluate(/*updateParent: false*/);
+    parent.elementControl.markAsDirty(updateParent: false);
+    // parent.updateValueAndValidity(emitEvent: false);
     return itemInstance;
   }
 
   RepeatItemInstance onRemoveRepeatedItem(int index, RepeatSection parent) {
     final removedItem = parent.removeAt(index);
     parent.elementControl.removeAt(index);
-    parent.evaluate();
+    parent.evaluate(emitEvent: true);
     return removedItem;
   }
 
@@ -214,14 +214,15 @@ class FormInstance {
             // 3) Filter out hidden ones:
             .where((e) => !e.hidden)
             // 4) Extract the paths:
-            .map((e) => e.elementPath!)
+            // .map((e) => e.elementPath!)
             .toList();
 
-    final idx = allFields.indexOf(currentPath);
+    final idx =
+        allFields.indexWhere((element) => element.elementPath == currentPath);
     if (idx == -1 || idx + 1 >= allFields.length) return null;
-    final nextElementPath = allFields[idx + 1];
+    final nextElement = allFields[idx + 1];
 
-    return _forElementMap[nextElementPath];
+    return nextElement;
   }
 
 ///////////////

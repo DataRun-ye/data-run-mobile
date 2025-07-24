@@ -52,6 +52,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
     if (value == this.value) {
       return;
     }
+
     updateStatus(elementState.reset(value: value));
     elementControl.updateValue(
       value,

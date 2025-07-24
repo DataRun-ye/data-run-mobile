@@ -80,7 +80,7 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
       bool emitEvent = true}) {
     for (final element in _elements) {
       element.evaluate(
-          changedDependency: changedDependency,
+          changedDependency: 'Parent RepeatInstance call',
           updateParent: updateParent,
           emitEvent: emitEvent);
     }
@@ -260,7 +260,7 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
       }
     }
 
-    updateValueAndValidity(updateParent: updateParent);
+    // updateValueAndValidity(updateParent: updateParent);
   }
 
   @override

@@ -6,7 +6,7 @@ sealed class SectionElement<T> extends FormElementInstance<T> {
   SectionElement(
       {required SectionTemplate template,
       required super.form,
-      FormElementState? elementState})
+      FormElementState<T>? elementState})
       : super(
             template: template,
             elementState: elementState ?? FormElementState());

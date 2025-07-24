@@ -31,11 +31,11 @@ extension ApplyAction on RuleAction {
       //   }
       //   break;
       case RuleActionType.Show:
-        logDebug('${element.name}, applying action: ${RuleActionType.Show}');
+        logDebug('${element.elementPath}, applying action: ${RuleActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Hide:
-        logDebug('${element.name}, applying action: ${RuleActionType.Hide}');
+        logDebug('${element.elementPath}, applying action: ${RuleActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Error:
@@ -94,17 +94,16 @@ extension ApplyAction on RuleAction {
       //   break;
       case RuleActionType.Show:
         logDebug(
-            '${element.name}, resetting action to: ${RuleActionType.Hide}');
+            '${element.elementPath}, resetting action to: ${RuleActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Hide:
         logDebug(
-            '${element.name}, resetting action to: ${RuleActionType.Show}');
+            '${element.elementPath}, resetting action to: ${RuleActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Error:
-        element.removeError(getItemLocalString(message.unlockView),
-            updateParent: updateParent, emitEvent: emitEvent);
+        element.removeError(getItemLocalString(message.unlockView));
         break;
       case RuleActionType.Mandatory:
         element.markAsUnMandatory(

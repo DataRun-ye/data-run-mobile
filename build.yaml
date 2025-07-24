@@ -27,7 +27,7 @@ targets:
       riverpod_generator:
         enabled: true
         generate_for:
-          - lib/**/application/*.dart
+          - lib/**/application/**.dart
           - lib/core/*.provider.dart
           - lib/core/**/*.provider.dart
           - lib/data/*.provider.dart

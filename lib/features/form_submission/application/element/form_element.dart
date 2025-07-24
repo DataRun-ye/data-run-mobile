@@ -36,17 +36,17 @@ sealed class FormElementInstance<T> {
   FormElementInstance(
       {required this.form,
       required Template template,
-      required FormElementState elementState})
+      required FormElementState<T> elementState})
       : _elementState = elementState,
         _template = template;
 
-  Stream<FormElementState> get propertiesChanged =>
+  Stream<FormElementState<T>> get propertiesChanged =>
       (propertiesChangedSubject ??=
-              BehaviorSubject<FormElementState>.seeded(_elementState))
-          as Stream<FormElementState>;
+              BehaviorSubject<FormElementState<T>>.seeded(_elementState))
+          as Stream<FormElementState<T>>;
 
   @protected
-  BehaviorSubject<FormElementState?>? propertiesChangedSubject;
+  BehaviorSubject<FormElementState<T>?>? propertiesChangedSubject;
 
   final Template _template;
 
@@ -90,9 +90,9 @@ sealed class FormElementInstance<T> {
     _parentSection = parent;
   }
 
-  FormElementState _elementState;
+  FormElementState<T> _elementState;
 
-  FormElementState get elementState => _elementState;
+  FormElementState<T> get elementState => _elementState;
 
   Map<String, dynamic> get errors => _elementState.errors;
 
@@ -145,7 +145,7 @@ sealed class FormElementInstance<T> {
   // void validate({bool updateParent = true, bool emitEvent = true}) {}
 
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('${name}, mark as Hidden');
+    logDebug('${elementPath}, mark as Hidden');
     if (hidden) {
       return;
     }
@@ -159,10 +159,10 @@ sealed class FormElementInstance<T> {
   }
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('${name}, mark as visible');
-    if (template is FieldTemplate && (template as FieldTemplate).mandatory) {
-      markAsMandatory(emitEvent: false);
-    }
+    logDebug('${elementPath}, mark as visible');
+    // if (template is FieldTemplate && (template as FieldTemplate).mandatory) {
+    //   markAsMandatory(emitEvent: false);
+    // }
     if (!hidden) {
       return;
     }
@@ -170,7 +170,7 @@ sealed class FormElementInstance<T> {
     updateStatus(_elementState.copyWith(hidden: false), emitEvent: emitEvent);
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-    updateValueAndValidity(updateParent: true, emitEvent: false);
+    // updateValueAndValidity(updateParent: true, emitEvent: false);
     // updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
@@ -241,11 +241,11 @@ sealed class FormElementInstance<T> {
     _isEvaluating = true;
 
     logDebug(
-        'Evaluating ${name ?? 'root'} due to change in $changedDependency');
-    logDebug('Evaluation Context for ${name ?? 'root'}: ${evalContext}');
+        'Evaluating ${elementPath ?? 'root'} due to change in $changedDependency');
+    logDebug('${elementPath ?? 'root'} Context: ${evalContext}');
 
     if (_evaluationStack.contains(name)) {
-      logError('Circular dependency detected on: ${name ?? 'root'}');
+      logError('Circular dependency detected on: ${elementPath ?? 'root'}');
       return;
     }
 
@@ -269,26 +269,24 @@ sealed class FormElementInstance<T> {
               );
       }
     } catch (e) {
-      logError('Error Evaluating: ${name ?? 'root'}');
+      logError('Error Evaluating: ${elementPath ?? 'root'}');
     } finally {
       _isEvaluating = false;
       _evaluationStack.remove(name); // Remove from stack after evaluation
     }
   }
 
-  FormElementState _calculateStatus() {
+  FormElementState<T> _calculateStatus() {
     if (allElementsHidden()) {
       return _elementState.copyWith(
-          hidden: true, errors: {}, mandatory: false, error: '', warning: '');
+          hidden: true, errors: {}, mandatory: false, warning: '');
     }
 
     final state = ruleEffectStateFactory.applyRuleEffects(
         elementState: elementState, calcResult: effectiveRuleEffects);
-    // if (state.isVisible) {
-    //   elementControl!.markAsEnabled(emitEvent: false);
-    // }
+
     logDebug(
-        '_calculateStatus: $name, result: ${state.hidden ? 'Hidden' : 'Visible'}');
+        '_calculateStatus: $elementPath, result: ${state.hidden ? 'Hidden' : 'Visible'}');
     return state;
   }
 
@@ -298,15 +296,16 @@ sealed class FormElementInstance<T> {
         hidden: true,
         errors: {},
         mandatory: false,
-        error: '',
         warning: '',
       );
       // elementControl!.reset(disabled: true, emitEvent: false);
     } else {
-      _elementState =
-          _elementState.copyWith(hidden: false, mandatory: mandatory);
+      _elementState = _elementState.copyWith(
+        hidden: false,
+        mandatory: _template.mandatory,
+      );
     }
-    logDebug('I am:$name, setting: ${hidden ? 'Hidden' : 'Visible'}');
+    logDebug('I am:$elementPath, setting: ${hidden ? 'Hidden' : 'Visible'}');
   }
 
   void _updateAncestors(bool updateParent) {
@@ -320,7 +319,7 @@ sealed class FormElementInstance<T> {
     bool emitEvent = true,
   }) {
     logDebug(
-        'updateValueAndValidity: $name, current: ${hidden ? 'Hidden' : 'Visible'}, updateParent: $updateParent, emitEvent: $emitEvent');
+        'updateValueAndValidity: $elementPath, current: ${hidden ? 'Hidden' : 'Visible'}, updateParent: $updateParent, emitEvent: $emitEvent');
     _setInitialStatus();
     if (visible) {
       _elementState = _calculateStatus();
@@ -330,19 +329,19 @@ sealed class FormElementInstance<T> {
     // (this fix the initial status of an element when loading the form
     if (hidden) {
       _elementState = _elementState.copyWith(mandatory: false);
-      elementControl!.reset(disabled: true, emitEvent: false);
+      elementControl!.reset(disabled: true, emitEvent: true);
     } else {
       // if after `_calculateStatus()` is still visible
       _elementState = _elementState.copyWith(mandatory: _template.mandatory);
       elementControl?.markAsEnabled(emitEvent: emitEvent, updateParent: true);
+      // elementControl!.updateValueAndValidity(
+      //   updateParent: updateParent,
+      //   emitEvent: emitEvent,
+      // );
     }
 
     updateStatus(_elementState, emitEvent: emitEvent);
-    _updateAncestors(updateParent);
-    elementControl!.updateValueAndValidity(
-      updateParent: updateParent,
-      emitEvent: emitEvent,
-    );
+    // _updateAncestors(updateParent);
   }
 
   List<String> get dependencies => template.dependencies;
@@ -352,12 +351,11 @@ sealed class FormElementInstance<T> {
 
   void resolveDependencies() {
     if (dependencies.isEmpty) {
-      logDebug('${name ?? 'root'} has no dependencies to resolve.');
+      logDebug('${elementPath ?? 'root'} has no dependencies to resolve.');
       return;
     }
 
-    logDebug('Resolving dependencies', data: {
-      'element': name ?? 'root',
+    logDebug('$elementPath Resolving dependencies', data: {
       'dependencies': dependencies,
     });
 
@@ -375,53 +373,27 @@ sealed class FormElementInstance<T> {
 
     if (unresolvedDependencies.isNotEmpty) {
       logWarning('Could not resolve some dependencies', data: {
-        'element': name ?? 'root',
+        'element': elementPath ?? 'root',
         'unresolved_dependencies': unresolvedDependencies,
       });
     }
 
     if (resolvedDependencies.isNotEmpty) {
       logDebug('Resolved dependencies', data: {
-        'element': name ?? 'root',
+        'element': elementPath ?? 'root',
         'resolved_dependencies': resolvedDependencyNames,
       });
     }
   }
 
-  //
-  // void resolveDependencies() {
-  //   if (dependencies.length > 0) {
-  //     logDebug('$name, resolving dependencies: $dependencies');
-  //   }
-  //
-  //   for (final dependencyName in dependencies) {
-  //     final dependency = findElementInParentSection(dependencyName);
-  //     if (dependency != null) {
-  //       _resolvedDependencies.add(dependency);
-  //       dependency._addDependent(this);
-  //     }
-  //   }
-  //
-  //   if (resolvedDependencies.length != dependencies.length) {
-  //     logDebug(
-  //         info:
-  //             '$name, could not resolve dependencies: ${dependencies..where((dependency) => !resolvedDependencyNames.contains(dependency))}');
-  //   }
-  //
-  //   if (resolvedDependencies.length > 0) {
-  //     logDebug(
-  //         info:
-  //         '$name, resolve dependencies: $resolvedDependencyNames');
-  //   }
-  // }
-
   void dispose() {
     // elementControl?.dispose();
-    logDebug('element: ${name ?? 'root'}, disposeMethod');
+    logDebug('element: ${elementPath ?? 'root'}, disposeMethod');
     if (_resolvedDependencies.isNotEmpty)
       // propertiesChangedSubject?.close();
       _resolvedDependencies.forEach((FormElementInstance<dynamic> d) {
-        logDebug('${name ?? 'root'}, unsubscribing from: ${d.name ?? 'root'}');
+        logDebug(
+            '${elementPath ?? 'root'}, unsubscribing from: ${d.name ?? 'root'}');
         d._dependents.remove(this);
       });
     _resolvedDependencies.clear();

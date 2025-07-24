@@ -8,14 +8,14 @@ import 'package:injectable/injectable.dart';
 class RuleEffectStateFactory {
   final List<String> unsupportedRuleActions = [];
 
-  FormElementState applyRuleEffects({
+  FormElementState<T> applyRuleEffects<T>({
     // required bool applyForEvent,
-    required FormElementState elementState,
+    required FormElementState<T> elementState,
     required List<RuleAction> calcResult,
     // DataValueRepository? valueStore,
   }) {
     unsupportedRuleActions.clear();
-    FormElementState formElementState = elementState.copyWith();
+    FormElementState<T> formElementState = elementState.copyWith();
     for (final effect in calcResult) {
       final message = getItemLocalString(effect.message.unlockView);
       switch (effect.action) {
@@ -31,13 +31,15 @@ class RuleEffectStateFactory {
           break;
         case RuleActionType.Hide:
           formElementState = effect.applyEffect
-              ? formElementState.copyWith(hidden: true, mandatory: false)
+              ? formElementState.copyWith(
+                  hidden: true, mandatory: false, errors: {}, warning: '')
               : formElementState.copyWith(hidden: false);
           break;
         case RuleActionType.Show:
           formElementState = effect.applyEffect
               ? formElementState.copyWith(hidden: false)
-              : formElementState.copyWith(hidden: true, mandatory: false);
+              : formElementState.copyWith(
+                  hidden: true, mandatory: false, errors: {}, warning: '');
           break;
 
         // case RuleActionType.HideSection:

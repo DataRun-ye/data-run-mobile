@@ -36,7 +36,7 @@ class FormElementBuilder {
     } else {
       return buildFieldInstance(
           form, formFlatTemplate, template as FieldTemplate,
-          initialFormValue: initialFormValue);
+          initialValue: initialFormValue);
     }
   }
 
@@ -97,9 +97,10 @@ class FormElementBuilder {
   }
 
   static FieldInstance<dynamic> buildFieldInstance(FormGroup rootFormControl,
-      FormTemplateRepository formFlatTemplate, FieldTemplate templateElement,
-      {dynamic initialFormValue}) {
-    switch (templateElement.type) {
+      FormTemplateRepository formFlatTemplate, FieldTemplate elementTemplate,
+      {dynamic initialValue}) {
+    final initValue = initialValue ?? elementTemplate.defaultValue;
+    switch (elementTemplate.type) {
       case ValueType.Text:
       case ValueType.LongText:
       case ValueType.Letter:
@@ -111,53 +112,63 @@ class FormElementBuilder {
         return FieldInstance<String>(
             form: rootFormControl,
             elementProperties: FieldElementState<String>(
-                readOnly: templateElement.readOnly,
-                value: initialFormValue ?? templateElement.defaultValue,
-                mandatory: templateElement.mandatory),
-            template: templateElement);
+                readOnly: elementTemplate.readOnly,
+                value: initValue,
+                mandatory: elementTemplate.mandatory),
+            template: elementTemplate);
       case ValueType.Date:
       case ValueType.Time:
       case ValueType.DateTime:
         return FieldInstance<String>(
             form: rootFormControl,
             elementProperties: FieldElementState<String>(
-                readOnly: templateElement.readOnly,
-                value: initialFormValue ?? templateElement.defaultValue,
-                mandatory: templateElement.mandatory),
-            template: templateElement);
+                readOnly: elementTemplate.readOnly,
+                value: initialValue,
+                mandatory: elementTemplate.mandatory),
+            template: elementTemplate);
 
       case ValueType.Calculated:
         return CalculatedFieldInstance<dynamic>(
             form: rootFormControl,
             calculatedExpression: CalculatedExpression(
-                expression: templateElement.calculationExpression!),
+                expression: elementTemplate.calculationExpression!),
             elementProperties: FieldElementState<dynamic>(
-                readOnly: true,
-                value: initialFormValue ?? templateElement.defaultValue,
-                mandatory: false),
-            template: templateElement);
+                readOnly: true, value: initialValue, mandatory: false),
+            template: elementTemplate);
       case ValueType.Integer:
       case ValueType.IntegerPositive:
       case ValueType.IntegerNegative:
       case ValueType.IntegerZeroOrPositive:
+        final initValue = initialValue ??
+            (elementTemplate.defaultValue != null
+                ? elementTemplate.defaultValue is int
+                    ? elementTemplate.defaultValue
+                    : int.tryParse(elementTemplate.defaultValue)
+                : null);
         return FieldInstance<int>(
             form: rootFormControl,
             elementProperties: FieldElementState<int>(
-                readOnly: templateElement.readOnly,
-                value: initialFormValue ?? templateElement.defaultValue,
-                mandatory: templateElement.mandatory),
-            template: templateElement);
+                readOnly: elementTemplate.readOnly,
+                value: initValue,
+                mandatory: elementTemplate.mandatory),
+            template: elementTemplate);
 
       case ValueType.Number:
       case ValueType.UnitInterval:
       case ValueType.Percentage:
+        final initValue = initialValue ??
+            (elementTemplate.defaultValue != null
+                ? elementTemplate.defaultValue is int
+                    ? elementTemplate.defaultValue
+                    : double.tryParse(elementTemplate.defaultValue)
+                : null);
         return FieldInstance<double>(
           form: rootFormControl,
           elementProperties: FieldElementState<double>(
-              readOnly: templateElement.readOnly,
-              value: initialFormValue ?? templateElement.defaultValue,
-              mandatory: templateElement.mandatory),
-          template: templateElement,
+              readOnly: elementTemplate.readOnly,
+              value: initValue,
+              mandatory: elementTemplate.mandatory),
+          template: elementTemplate,
         );
       case ValueType.Boolean:
       case ValueType.TrueOnly:
@@ -165,76 +176,76 @@ class FormElementBuilder {
         return FieldInstance<bool>(
           form: rootFormControl,
           elementProperties: FieldElementState<bool>(
-              readOnly: templateElement.readOnly,
-              value: initialFormValue ?? templateElement.defaultValue,
-              mandatory: templateElement.mandatory),
-          template: templateElement,
+              readOnly: elementTemplate.readOnly,
+              value: initialValue ?? elementTemplate.defaultValue,
+              mandatory: elementTemplate.mandatory),
+          template: elementTemplate,
         );
       case ValueType.SelectOne:
         return FieldInstance<String>(
           form: rootFormControl,
-          choiceFilter: templateElement.choiceFilter != null
+          choiceFilter: elementTemplate.choiceFilter != null
               ? ChoiceFilter(
-                  expression: templateElement.evalChoiceFilterExpression,
+                  expression: elementTemplate.evalChoiceFilterExpression,
                   options: formFlatTemplate
-                          .optionMap[templateElement.optionSet!]
+                          .optionMap[elementTemplate.optionSet!]
                           ?.toList() ??
                       [])
               : null,
           elementProperties: FieldElementState<String>(
-              readOnly: templateElement.readOnly,
-              value: initialFormValue ?? templateElement.defaultValue,
-              mandatory: templateElement.mandatory,
+              readOnly: elementTemplate.readOnly,
+              value: initValue,
+              mandatory: elementTemplate.mandatory,
               visibleOptions: formFlatTemplate
-                      .optionMap[templateElement.optionSet!]
+                      .optionMap[elementTemplate.optionSet!]
                       ?.toList() ??
                   []),
-          template: templateElement,
+          template: elementTemplate,
         );
       case ValueType.SelectMulti:
         return FieldInstance<List<String>>(
             form: rootFormControl,
-            choiceFilter: templateElement.choiceFilter != null
+            choiceFilter: elementTemplate.choiceFilter != null
                 ? ChoiceFilter(
-                    expression: templateElement.evalChoiceFilterExpression,
+                    expression: elementTemplate.evalChoiceFilterExpression,
                     options: formFlatTemplate
-                            .optionMap[templateElement.optionSet!]
+                            .optionMap[elementTemplate.optionSet!]
                             ?.toList() ??
                         [])
                 : null,
             elementProperties: FieldElementState<List<String>>(
-                readOnly: templateElement.readOnly,
-                value: initialFormValue != null
-                    ? (initialFormValue is List)
-                        ? initialFormValue.cast<String>()
-                        : <String>[initialFormValue]
+                readOnly: elementTemplate.readOnly,
+                value: initialValue != null
+                    ? (initialValue is List)
+                        ? initialValue.cast<String>()
+                        : <String>[initialValue]
                     : <String>[],
-                mandatory: templateElement.mandatory,
+                mandatory: elementTemplate.mandatory,
                 visibleOptions: formFlatTemplate
-                        .optionMap[templateElement.optionSet!]
+                        .optionMap[elementTemplate.optionSet!]
                         ?.toList() ??
                     []),
-            template: templateElement);
+            template: elementTemplate);
       case ValueType.Reference:
         return FieldInstance<String>(
           form: rootFormControl,
           elementProperties: FieldElementState<String>(
-              readOnly: templateElement.readOnly,
-              value: initialFormValue,
-              mandatory: templateElement.mandatory),
-          template: templateElement,
+              readOnly: elementTemplate.readOnly,
+              value: initialValue,
+              mandatory: elementTemplate.mandatory),
+          template: elementTemplate,
         );
       case ValueType.ScannedCode:
         return FieldInstance<String>(
           form: rootFormControl,
           elementProperties: FieldElementState<String>(
-              readOnly: templateElement.readOnly,
-              value: initialFormValue,
-              mandatory: templateElement.mandatory),
-          template: templateElement,
+              readOnly: elementTemplate.readOnly,
+              value: initialValue,
+              mandatory: elementTemplate.mandatory),
+          template: elementTemplate,
         );
       default:
-        throw Exception('Unsupported element type: ${templateElement.type}');
+        throw Exception('Unsupported element type: ${elementTemplate.type}');
     }
   }
 }

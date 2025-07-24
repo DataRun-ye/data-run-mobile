@@ -31,15 +31,15 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
     }
   }
 
-  void updateStatus(FormElementState newValue, {bool emitEvent = true}) {
+  void updateStatus(FormElementState<T> newValue, {bool emitEvent = true}) {
     // if (newValue != _elementState) {
     _elementState = newValue;
     if (emitEvent) {
-      logDebug('${name ?? 'root'}, changed, --> Notifying subscribers');
+      logDebug('${elementPath ?? 'root'}, changed, --> Notifying subscribers');
       propertiesChangedSubject?.add(newValue);
       notifySubscribers(emitEvent: emitEvent);
     } else {
-      logDebug('${name ?? 'root'}, not emitting status update');
+      logDebug('${elementPath ?? 'root'}, not emitting status update');
     }
     // applyStateToControl(newValue, updateParent: true, emitEvent: emitEvent);
   }

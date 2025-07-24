@@ -62,7 +62,7 @@ class Section extends SectionElement<Map<String, Object?>> {
     for (final element in _elements.values) {
       // decide my children
       element.evaluate(
-          changedDependency: changedDependency,
+          changedDependency: 'Parent Section call',
           updateParent: updateParent,
           emitEvent: emitEvent);
     }

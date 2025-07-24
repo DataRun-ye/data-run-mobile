@@ -34,8 +34,8 @@ class QTextTypeField<T> extends HookConsumerWidget {
       maxLines: element.maxLines,
       textInputAction: formInstance.fieldInputAction(elementPath),
       keyboardType: element.inputType,
-      textAlign:
-          element.template.type.isNumeric ? TextAlign.end : TextAlign.start,
+      // textAlign:
+      //     element.template.type.isNumeric ? TextAlign.end : TextAlign.start,
       validationMessages: validationMessages(),
       decoration: InputDecoration(
           errorMaxLines: 2,

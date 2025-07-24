@@ -337,7 +337,7 @@ class App extends ConsumerWidget {
       chipTheme: base.chipTheme.copyWith(
         secondarySelectedColor: cs.primaryFixedDim,
         checkmarkColor: DColors.Orange600,
-        elevation: 2,
+        elevation: 3,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

@@ -218,7 +218,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
       Scrollable.ensureVisible(
         key!.currentContext!,
         duration: const Duration(milliseconds: 300),
-        alignment: 0.1,
+        alignment: 0.2,
         curve: Curves.easeInOut,
       );
     }

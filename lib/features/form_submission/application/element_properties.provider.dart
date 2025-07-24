@@ -9,7 +9,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'element_properties.provider.g.dart';
 
 @riverpod
-Stream<FormElementState> elementPropertiesStream(Ref ref,
+Stream<FormElementState<dynamic>> elementPropertiesStream(Ref ref,
     {required String path, required FormMetadata formMetadata}) {
   return ref
       .watch(formInstanceProvider(formMetadata: formMetadata))

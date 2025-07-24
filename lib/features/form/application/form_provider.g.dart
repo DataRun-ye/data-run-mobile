@@ -446,7 +446,7 @@ class _OptionSetProviderElement
 }
 
 String _$submissionVersionFormTemplateHash() =>
-    r'826ff95e5a606076c9a0f8f4863d686ff517d5bc';
+    r'2b719398bd09937ce3932889fa28217c61379f7f';
 
 /// form id could be on the format of formId-version or formId
 /// look for the latest version of the form template or the form template
@@ -477,10 +477,12 @@ class SubmissionVersionFormTemplateFamily
   ///
   /// Copied from [submissionVersionFormTemplate].
   SubmissionVersionFormTemplateProvider call({
-    required String formId,
+    String? formId,
+    String? versionId,
   }) {
     return SubmissionVersionFormTemplateProvider(
       formId: formId,
+      versionId: versionId,
     );
   }
 
@@ -490,6 +492,7 @@ class SubmissionVersionFormTemplateFamily
   ) {
     return call(
       formId: provider.formId,
+      versionId: provider.versionId,
     );
   }
 
@@ -521,11 +524,13 @@ class SubmissionVersionFormTemplateProvider
   ///
   /// Copied from [submissionVersionFormTemplate].
   SubmissionVersionFormTemplateProvider({
-    required String formId,
+    String? formId,
+    String? versionId,
   }) : this._internal(
           (ref) => submissionVersionFormTemplate(
             ref as SubmissionVersionFormTemplateRef,
             formId: formId,
+            versionId: versionId,
           ),
           from: submissionVersionFormTemplateProvider,
           name: r'submissionVersionFormTemplateProvider',
@@ -537,6 +542,7 @@ class SubmissionVersionFormTemplateProvider
           allTransitiveDependencies:
               SubmissionVersionFormTemplateFamily._allTransitiveDependencies,
           formId: formId,
+          versionId: versionId,
         );
 
   SubmissionVersionFormTemplateProvider._internal(
@@ -547,9 +553,11 @@ class SubmissionVersionFormTemplateProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.formId,
+    required this.versionId,
   }) : super.internal();
 
-  final String formId;
+  final String? formId;
+  final String? versionId;
 
   @override
   Override overrideWith(
@@ -567,6 +575,7 @@ class SubmissionVersionFormTemplateProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         formId: formId,
+        versionId: versionId,
       ),
     );
   }
@@ -579,13 +588,15 @@ class SubmissionVersionFormTemplateProvider
   @override
   bool operator ==(Object other) {
     return other is SubmissionVersionFormTemplateProvider &&
-        other.formId == formId;
+        other.formId == formId &&
+        other.versionId == versionId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, formId.hashCode);
+    hash = _SystemHash.combine(hash, versionId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -596,7 +607,10 @@ class SubmissionVersionFormTemplateProvider
 mixin SubmissionVersionFormTemplateRef
     on AutoDisposeFutureProviderRef<FormTemplateModel> {
   /// The parameter `formId` of this provider.
-  String get formId;
+  String? get formId;
+
+  /// The parameter `versionId` of this provider.
+  String? get versionId;
 }
 
 class _SubmissionVersionFormTemplateProviderElement
@@ -605,7 +619,11 @@ class _SubmissionVersionFormTemplateProviderElement
   _SubmissionVersionFormTemplateProviderElement(super.provider);
 
   @override
-  String get formId => (origin as SubmissionVersionFormTemplateProvider).formId;
+  String? get formId =>
+      (origin as SubmissionVersionFormTemplateProvider).formId;
+  @override
+  String? get versionId =>
+      (origin as SubmissionVersionFormTemplateProvider).versionId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

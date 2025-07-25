@@ -9,13 +9,13 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
   }
 
   calculationFriendlyValue(FormElementInstance<dynamic> dependency) {
-    if (!dependency.visible) {
-      if (dependency.template.type?.isNumeric == true) return 0;
+    if (dependency.hidden) {
+      if (dependency.template.type!.isNumeric) return 0;
       if (dependency.template.type!.isBoolean) return false;
       if (dependency.template.type! == ValueType.Age) return 0;
       return null;
-    } else if (dependency.template.type?.isNumeric == true &&
-        dependency.value == null) {
+    } else if (dependency.template.type!.isNumeric &&
+        (dependency.value == null || dependency.value is! num)) {
       return 0;
     } else if (dependency.template.type!.isBoolean &&
         dependency.value == null) {
@@ -33,15 +33,16 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
 
   void updateStatus(FormElementState<T> newValue, {bool emitEvent = true}) {
     // if (newValue != _elementState) {
+    logDebug('1.${elementPath ?? 'root'}, updateStatus: emitEvent($emitEvent)');
     _elementState = newValue;
     if (emitEvent) {
-      logDebug('${elementPath ?? 'root'}, changed, --> Notifying subscribers');
       propertiesChangedSubject?.add(newValue);
+      logDebug(
+          '2.${elementPath ?? 'root'}, updateStatus: Notifying subscribers');
       notifySubscribers(emitEvent: emitEvent);
     } else {
-      logDebug('${elementPath ?? 'root'}, not emitting status update');
+      logDebug('_.${elementPath ?? 'root'}: no notifying');
     }
-    // applyStateToControl(newValue, updateParent: true, emitEvent: emitEvent);
   }
 
   void addDependency(FormElementInstance<dynamic> dependency) {
@@ -65,7 +66,8 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
       _dependents.map((dependent) => dependent.name!).toList();
 
   void notifySubscribers({bool emitEvent = true}) {
-    logDebug('${name ?? 'root'}, notifying: ${resolvedDependentsNames}');
+    logDebug(
+        '1.${elementPath ?? 'root'}, notifySubscribers: ${resolvedDependentsNames}');
     _dependents.forEach(
         (s) => s.evaluate(changedDependency: name, emitEvent: emitEvent));
   }

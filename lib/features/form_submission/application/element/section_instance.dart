@@ -30,18 +30,6 @@ class Section extends SectionElement<Map<String, Object?>> {
     });
   }
 
-  // void updateValueAndValidity({
-  //   bool updateParent = true,
-  //   bool emitEvent = true,
-  // }) {
-  //   for (final element in _elements.values) {
-  //     element.updateValueAndValidity(
-  //         updateParent: updateParent, emitEvent: emitEvent);
-  //   }
-  //
-  //   super.updateValueAndValidity(
-  //       updateParent: updateParent, emitEvent: emitEvent);
-  // }
   @override
   Map<String, dynamic> get errors {
     final allErrors = Map<String, dynamic>.of(super.errors);
@@ -127,7 +115,6 @@ class Section extends SectionElement<Map<String, Object?>> {
         emitEvent: emitEvent,
       );
     }
-    //
   }
 
   @override
@@ -152,26 +139,36 @@ class Section extends SectionElement<Map<String, Object?>> {
 
   @override
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
-    _elements.forEach((_, element) {
-      element.markAsHidden(updateParent: true, emitEvent: emitEvent);
-    });
+    logDebug('1.$elementPath Section, markAsHidden');
+    if (hidden) {
+      logDebug('_.$elementPath Section, markAsHidden, return: already hidden');
+      return;
+    }
+    // just hide all children
+    logDebug(
+        '2.$elementPath Section, markAsHidden: mark hidden and hide children');
     super.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+    _elements.forEach((_, element) {
+      element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+    });
   }
 
   @override
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
-    _elements.forEach((_, element) {
-      element.markAsVisible(updateParent: true);
-    });
+    logDebug('1.$elementPath Section, markAsVisible');
+    if (visible) {
+      logDebug(
+          '_.$elementPath Section, markAsVisible, return: already visible');
+      return;
+    }
+    logDebug(
+        '2.$elementPath Section, markAsHidden: mark visible and let children decide');
+    // should let children decide and only mark myself visible, may children decides their visibility
     super.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
-  }
-
-  @override
-  void reset(
-      {Map<String, Object?>? value,
-      bool updateParent = true,
-      bool emitEvent = true}) {
-    updateValue(value, updateParent: updateParent, emitEvent: emitEvent);
+    _elements.forEach((_, element) {
+      element.decideState(
+          emitEvent: emitEvent, updateParent: updateParent);
+    });
   }
 
   @override

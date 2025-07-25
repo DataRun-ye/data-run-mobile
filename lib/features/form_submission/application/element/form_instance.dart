@@ -112,7 +112,7 @@ class FormInstance {
   void updateSubmissionStatus(AssignmentStatus? status) async {
     _assignmentStatus = status;
   }
-
+  
   RepeatItemInstance onAddRepeatedItem(RepeatSection parent) {
     final itemFormGroup = FormElementControlBuilder.createSectionFormGroup(
         formFlatTemplate, parent.template);
@@ -121,9 +121,10 @@ class FormInstance {
 
     final itemInstance = FormElementBuilder.buildRepeatItem(
         form, formFlatTemplate, parent.template);
-    parent..add(itemInstance);
+    parent..add(itemInstance)
     // ..resolveDependencies()
-    // ..evaluate();
+    // ..evaluate()
+    ;
     itemInstance.resolveDependencies();
     itemInstance.evaluate(emitEvent: false);
     // parent.elementControl.markAsDirty(updateParent: false);

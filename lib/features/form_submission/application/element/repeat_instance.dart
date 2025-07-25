@@ -63,31 +63,19 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
       bool updateParent = true,
       bool emitEvent = true}) {
     for (final element in _elements) {
+      // decide my children
       element.evaluate(
           changedDependency: 'Parent RepeatInstance call',
           updateParent: updateParent,
           emitEvent: emitEvent);
     }
 
+    // decide my own status
     super.evaluate(
         changedDependency: changedDependency,
         updateParent: updateParent,
         emitEvent: emitEvent);
   }
-
-  //
-  // void updateValueAndValidity({
-  //   bool updateParent = true,
-  //   bool emitEvent = true,
-  // }) {
-  //   for (final element in _elements) {
-  //     element.updateValueAndValidity(
-  //         updateParent: updateParent, emitEvent: emitEvent);
-  //   }
-  //
-  //   super.updateValueAndValidity(
-  //       updateParent: updateParent, emitEvent: emitEvent);
-  // }
 
   /// Insert a new [element] at the end of the RepeatSection.
   void add(RepeatItemInstance element,
@@ -158,23 +146,6 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
     return removedElement;
   }
 
-  // /// Removes all children elements from the repeatSection.
-  // void clear({bool emitEvent = true, bool updateParent = true}) {
-  //   forEachChild((element) => element.parentSection = null);
-  //   _elements.clear();
-  //
-  //   elementControl.clear(updateParent: updateParent, emitEvent: emitEvent);
-  //   updateValueAndValidity(
-  //     emitEvent: emitEvent,
-  //     updateParent: updateParent,
-  //   );
-  // }
-
-  void reset({List<Map<String, Object?>?>? value}) {
-    // updateValue(value);
-    // elementControl.reset(value: value);
-  }
-
   /// Checks if repeatSection contains a element by a given [name].
   /// The name here must be the string representation of the children index.
   ///
@@ -230,8 +201,6 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
         );
       }
     }
-
-    // updateValueAndValidity(updateParent: updateParent);
   }
 
   @override

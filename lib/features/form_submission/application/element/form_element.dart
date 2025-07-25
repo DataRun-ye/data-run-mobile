@@ -40,8 +40,8 @@ sealed class FormElementInstance<T> {
       : _elementState = elementState,
         _template = template;
 
-  Stream<FormElementState<T>> get propertiesChanged =>
-      (propertiesChangedSubject ??=
+  Stream<FormElementState<T>>
+      get propertiesChanged => (propertiesChangedSubject ??=
               BehaviorSubject<FormElementState<T>>.seeded(_elementState))
           as Stream<FormElementState<T>>;
 
@@ -145,38 +145,43 @@ sealed class FormElementInstance<T> {
   // void validate({bool updateParent = true, bool emitEvent = true}) {}
 
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('${elementPath}, mark as Hidden');
+    logDebug('1.${elementPath}, markAsHidden: ${_getDebugState()}.');
     if (hidden) {
+      logDebug('_.${elementPath}, markAsHidden, return: already hidden.');
       return;
     }
-    updateStatus(_elementState.copyWith(hidden: true, errors: {}),
+    updateStatus(
+        _elementState.copyWith(
+            hidden: true, errors: {}, mandatory: false, warning: ''),
         emitEvent: emitEvent);
     elementControl!.reset(
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
+
+    logDebug('2.${elementPath}, markAsHidden, marked: ${_getDebugState()}.');
 
     // updateValueAndValidity(updateParent: true, emitEvent: false);
     // updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('${elementPath}, mark as visible');
-    // if (template is FieldTemplate && (template as FieldTemplate).mandatory) {
-    //   markAsMandatory(emitEvent: false);
-    // }
-    if (!hidden) {
+    logDebug('1.${elementPath}, markAsVisible: ${_getDebugState()}.');
+    if (visible) {
+      logDebug('_.${elementPath}, markAsVisible, return: already visible.');
       return;
     }
 
-    updateStatus(_elementState.copyWith(hidden: false), emitEvent: emitEvent);
+    updateStatus(
+        _elementState.copyWith(hidden: false, mandatory: _template.mandatory),
+        emitEvent: emitEvent);
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-    // updateValueAndValidity(updateParent: true, emitEvent: false);
-    // updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
+    logDebug('2.${elementPath}, markAsVisible, marked: ${_getDebugState()}.');
   }
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
-    // logDebug('${name}, markAsMandatory');
+    logDebug('1.${elementPath}, markAsMandatory: ${_getDebugState()}.');
     if (mandatory) {
+      logDebug('_.${elementPath}, markAsMandatory, return: already mandatory.');
       return;
     }
     updateStatus(_elementState.copyWith(mandatory: true), emitEvent: emitEvent);
@@ -186,17 +191,26 @@ sealed class FormElementInstance<T> {
       Validators.required
     ];
     elementControl!.setValidators(elementValidators, autoValidate: true);
+    logDebug('2.${elementPath}, markAsMandatory, marked: ${_getDebugState()}.');
   }
 
   void markAsUnMandatory({bool updateParent = true, bool emitEvent = true}) {
+    logDebug('1.${elementPath}, markAsUnMandatory: ${_getDebugState()}.');
     updateStatus(_elementState.copyWith(mandatory: false),
         emitEvent: emitEvent);
+    if (!mandatory) {
+      logDebug(
+          '_.${elementPath}, markAsUnMandatory, return: already un-mandatory.');
+      return;
+    }
     final elementValidators = [
       ...elementControl!.validators,
     ]..remove(Validators.required);
 
     elementControl!.setValidators(elementValidators,
         autoValidate: true, updateParent: updateParent, emitEvent: emitEvent);
+    logDebug(
+        '2.${elementPath}, markAsUnMandatory, marked: ${_getDebugState()}.');
   }
 
   void setErrors(Map<String, dynamic> errors, {bool markAsDirty = true}) {
@@ -217,8 +231,6 @@ sealed class FormElementInstance<T> {
     // }
   }
 
-  void reset({T? value});
-
   static final Set<String> _evaluationStack = {};
 
   List<RuleAction> get effectiveRuleEffects {
@@ -234,18 +246,24 @@ sealed class FormElementInstance<T> {
       {String? changedDependency,
       bool updateParent = true,
       bool emitEvent = true}) {
+    logDebug(
+        '1/4.${elementPath ?? 'root'}, evaluate: due to $changedDependency.');
+    logDebug(
+        '2/4.${elementPath ?? 'root'}, evaluate, start: ${_getDebugState()}, context(${evalContext}).');
+    // if (hidden) {
+    //   logDebug('_.${elementPath}, evaluate, return,no eval: is hidden.');
+    //   return;
+    // }
     if (_isEvaluating) {
+      logDebug('_.${elementPath}, evaluate, return, no eval: _isEvaluating.');
       return;
     }
 
     _isEvaluating = true;
 
-    logDebug(
-        'Evaluating ${elementPath ?? 'root'} due to change in $changedDependency');
-    logDebug('${elementPath ?? 'root'} Context: ${evalContext}');
-
     if (_evaluationStack.contains(name)) {
-      logError('Circular dependency detected on: ${elementPath ?? 'root'}');
+      logError(
+          '_.${elementPath ?? 'root'}, evaluate, error: Circular dependency detected on.');
       return;
     }
 
@@ -254,8 +272,10 @@ sealed class FormElementInstance<T> {
     try {
       // final previousState = elementState;
       for (var ruleAction in elementRuleActions) {
-        logDebug('Expression: ${ruleAction.expression}');
-        logDebug('Evaluation Result: ${ruleAction.evaluate(evalContext)}');
+        logDebug(
+            '3/4.$elementPath, evaluate, expression: ${ruleAction.expression}.');
+        logDebug(
+            '4/4.$elementPath, evaluate, result: ${ruleAction.evaluate(evalContext)}.');
         ruleAction.evaluate(evalContext)
             ? ruleAction.apply(
                 this,
@@ -269,7 +289,7 @@ sealed class FormElementInstance<T> {
               );
       }
     } catch (e) {
-      logError('Error Evaluating: ${elementPath ?? 'root'}');
+      logError('_.${elementPath ?? 'root'}, evaluate, error: $e.');
     } finally {
       _isEvaluating = false;
       _evaluationStack.remove(name); // Remove from stack after evaluation
@@ -277,20 +297,23 @@ sealed class FormElementInstance<T> {
   }
 
   FormElementState<T> _calculateStatus() {
-    if (allElementsHidden()) {
-      return _elementState.copyWith(
-          hidden: true, errors: {}, mandatory: false, warning: '');
-    }
+    logDebug('1/2.$elementPath, _calculateStatus: ${_getDebugState()}.');
+    // if (allElementsHidden()) {
+    //   logDebug('2/2.$elementPath, _calculateStatus, all hidden.');
+    //   return _elementState.copyWith(
+    //       hidden: true, errors: {}, mandatory: false, warning: '');
+    // }
 
     final state = ruleEffectStateFactory.applyRuleEffects(
         elementState: elementState, calcResult: effectiveRuleEffects);
-
-    logDebug(
-        '_calculateStatus: $elementPath, result: ${state.hidden ? 'Hidden' : 'Visible'}');
     return state;
   }
 
+  String _getDebugState([FormElementState<T>? state]) =>
+      'state(${(state ?? _elementState).hidden ? 'Hidden' : 'Visible'}), mandatory($mandatory)';
+
   void _setInitialStatus() {
+    logDebug('1/2.$elementPath, _setInitialStatus: ${_getDebugState()}.');
     if (allElementsHidden()) {
       _elementState = _elementState.copyWith(
         hidden: true,
@@ -304,43 +327,68 @@ sealed class FormElementInstance<T> {
         mandatory: _template.mandatory,
       );
     }
-    logDebug('I am:$elementPath, setting: ${hidden ? 'Hidden' : 'Visible'}');
+    logDebug('2/2.$elementPath, _setInitialStatus: ${_getDebugState()}.');
   }
 
   void _updateAncestors(bool updateParent) {
     if (updateParent) {
-      parentSection?.updateValueAndValidity(updateParent: updateParent);
+      parentSection?.decideState(updateParent: updateParent);
     }
   }
 
-  void updateValueAndValidity({
+  bool hasVisibilityRules() {
+    return effectiveRuleEffects.any((rule) => rule.action.isVisibility);
+  }
+
+  void decideState({
     bool updateParent = true,
     bool emitEvent = true,
   }) {
-    logDebug(
-        'updateValueAndValidity: $elementPath, current: ${hidden ? 'Hidden' : 'Visible'}, updateParent: $updateParent, emitEvent: $emitEvent');
-    _setInitialStatus();
-    if (visible) {
-      _elementState = _calculateStatus();
+    logDebug('1/3.$elementPath, updateValueAndValidity: ${_getDebugState()}.');
+    // _setInitialStatus();
+    if (hasVisibilityRules()) {
+      final state = _calculateStatus();
+      if (state.hidden) {
+        logDebug('3/3.$elementPath, updateValueAndValidity, Hide.');
+        markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+        elementControl!.reset(
+            disabled: true, updateParent: false, emitEvent: false);
+      } else {
+        logDebug('3/3.$elementPath, updateValueAndValidity, Show.');
+        markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+      }
+    } else {
+      markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
     }
-
+    // if (visible) {
+    //   logDebug(
+    //       '2/3.$elementPath, updateValueAndValidity, calculated: ${_getDebugState(state)}.');
+    //   markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+    //   // if (state.hidden) {
+    //   //   logDebug('3/3.$elementPath, updateValueAndValidity, Hide.');
+    //   //   markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+    //   // } else {
+    //   //   logDebug('3/3.$elementPath, updateValueAndValidity, Show.');
+    //   //   markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+    //   // }
+    // }
+    //
+    // logDebug('2.$elementPath, updateValueAndValidity: ${_getDebugState()}.');
+    //
     // if after `_calculateStatus()` it's became hidden
     // (this fix the initial status of an element when loading the form
-    if (hidden) {
-      _elementState = _elementState.copyWith(mandatory: false);
-      elementControl!.reset(disabled: true, emitEvent: emitEvent);
-    } else {
-      // if after `_calculateStatus()` is still visible
-      _elementState = _elementState.copyWith(mandatory: _template.mandatory);
-      elementControl?.markAsEnabled(emitEvent: emitEvent, updateParent: updateParent);
-      // elementControl!.updateValueAndValidity(
-      //   updateParent: updateParent,
-      //   emitEvent: emitEvent,
-      // );
-    }
+    // if (hidden) {
+    //   _elementState = _elementState.copyWith(mandatory: false);
+    //   elementControl!.reset(disabled: true, emitEvent: emitEvent);
+    // } else {
+    //   // if after `_calculateStatus()` is still visible
+    //   _elementState = _elementState.copyWith(mandatory: _template.mandatory);
+    //   elementControl?.markAsEnabled(
+    //       emitEvent: emitEvent, updateParent: updateParent);
+    // }
 
-    updateStatus(_elementState, emitEvent: emitEvent);
-    // _updateAncestors(updateParent);
+    // updateStatus(_elementState, emitEvent: emitEvent);
+    // _updateAncestors(state);
   }
 
   List<String> get dependencies => template.dependencies;
@@ -350,13 +398,12 @@ sealed class FormElementInstance<T> {
 
   void resolveDependencies() {
     if (dependencies.isEmpty) {
-      logDebug('${elementPath ?? 'root'} has no dependencies to resolve.');
+      logDebug(
+          '1/2.${elementPath ?? 'root'}, resolveDependencies: no dependencies to resolve.');
       return;
     }
 
-    logDebug('$elementPath Resolving dependencies', data: {
-      'dependencies': dependencies,
-    });
+    logDebug('2/2.$elementPath, resolveDependencies: $dependencies.');
 
     for (final dependencyName in dependencies) {
       final dependency = findElementInParentSection(dependencyName);
@@ -371,28 +418,24 @@ sealed class FormElementInstance<T> {
         .toList();
 
     if (unresolvedDependencies.isNotEmpty) {
-      logWarning('Could not resolve some dependencies', data: {
-        'element': elementPath ?? 'root',
-        'unresolved_dependencies': unresolvedDependencies,
-      });
+      logWarning(
+          '_.$elementPath, resolveDependencies: Could not resolve some dependencies $unresolvedDependencies.');
     }
 
     if (resolvedDependencies.isNotEmpty) {
-      logDebug('Resolved dependencies', data: {
-        'element': elementPath ?? 'root',
-        'resolved_dependencies': resolvedDependencyNames,
-      });
+      logDebug(
+          '_.$elementPath, resolveDependencies, resolved: $resolvedDependencyNames.');
     }
   }
 
   void dispose() {
     // elementControl?.dispose();
-    logDebug('element: ${elementPath ?? 'root'}, disposeMethod');
+    logDebug('${elementPath ?? 'root'} disposeMethod.');
     if (_resolvedDependencies.isNotEmpty)
       // propertiesChangedSubject?.close();
       _resolvedDependencies.forEach((FormElementInstance<dynamic> d) {
         logDebug(
-            '${elementPath ?? 'root'}, unsubscribing from: ${d.name ?? 'root'}');
+            '${elementPath ?? 'root'}: unsubscribing from ${d.name ?? 'root'}.');
         d._dependents.remove(this);
       });
     _resolvedDependencies.clear();

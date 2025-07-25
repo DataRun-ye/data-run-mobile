@@ -78,11 +78,12 @@ class FieldInstance<T> extends FormElementInstance<T> {
   List<DataOption> get visibleOption => elementState.visibleOptions;
 
   @override
+  // ignore: unnecessary_overrides
   void evaluate(
       {String? changedDependency,
       bool updateParent = true,
       bool emitEvent = true}) {
-    super.evaluate(updateParent: updateParent, emitEvent: emitEvent);
+    super.evaluate(changedDependency: changedDependency, updateParent: updateParent, emitEvent: emitEvent);
     // if (filterExpressionDependencies.isNotEmpty) {
     //   final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
     //   logDebug(
@@ -125,22 +126,23 @@ class CalculatedFieldInstance<T> extends FieldInstance<T> {
       [...template.dependencies, ...template.calculationDependencies];
 
   @override
+  // ignore: unnecessary_overrides
   void evaluate(
       {String? changedDependency,
       bool updateParent = true,
       bool emitEvent = true}) {
-    super.evaluate(updateParent: updateParent, emitEvent: emitEvent);
-    if (calculatedExpression?.expression != null) {
-      final result = calculatedExpression!.evaluate(evalContext);
-      logDebug(
-          'calculated field evaluation: ${name}, expression: ${calculatedExpression?.expression} ');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.copyWith(value: result);
-      logDebug(
-          '$name, calculate Field changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState);
-      elementControl.updateValue(newState.value);
-    }
+    super.evaluate(changedDependency: changedDependency, updateParent: updateParent, emitEvent: emitEvent);
+    // if (calculatedExpression?.expression != null) {
+    //   final result = calculatedExpression!.evaluate(evalContext);
+    //   logDebug(
+    //       'calculated field evaluation: ${name}, expression: ${calculatedExpression?.expression} ');
+    //   final oldState = elementState.copyWith(); // clone
+    //   final newState = elementState.copyWith(value: result);
+    //   logDebug(
+    //       '$name, calculate Field changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
+    //   updateStatus(newState);
+    //   elementControl.updateValue(newState.value);
+    // }
   }
 }
 

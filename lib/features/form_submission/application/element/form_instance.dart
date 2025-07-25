@@ -112,7 +112,7 @@ class FormInstance {
   void updateSubmissionStatus(AssignmentStatus? status) async {
     _assignmentStatus = status;
   }
-  
+
   RepeatItemInstance onAddRepeatedItem(RepeatSection parent) {
     final itemFormGroup = FormElementControlBuilder.createSectionFormGroup(
         formFlatTemplate, parent.template);
@@ -122,9 +122,9 @@ class FormInstance {
     final itemInstance = FormElementBuilder.buildRepeatItem(
         form, formFlatTemplate, parent.template);
     parent..add(itemInstance)
-    // ..resolveDependencies()
-    // ..evaluate()
-    ;
+        // ..resolveDependencies()
+        // ..evaluate()
+        ;
     itemInstance.resolveDependencies();
     itemInstance.evaluate(emitEvent: false);
     // parent.elementControl.markAsDirty(updateParent: false);
@@ -199,6 +199,11 @@ class FormInstance {
     }
   }
 
+  bool hasAnyNestedRepeat(elementPath) {
+    return formFlatTemplate
+        .where(elementPath, (template) => template.repeatable)
+        .isNotEmpty;
+  }
 
   bool _hasFocusableFieldNext(String elementPath) {
     // 3) ask FormInstance for the next visible field’s path

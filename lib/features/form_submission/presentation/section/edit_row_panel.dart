@@ -41,10 +41,10 @@ class EditRowPanel extends ConsumerStatefulWidget {
   final double maxHeight;
 
   @override
-  EditPanelState createState() => EditPanelState();
+  EditRowPanelState createState() => EditRowPanelState();
 }
 
-class EditPanelState extends ConsumerState<EditRowPanel> {
+class EditRowPanelState extends ConsumerState<EditRowPanel> {
   late final ScrollController scrollController;
 
   @override
@@ -96,49 +96,47 @@ class EditPanelState extends ConsumerState<EditRowPanel> {
     }
 
     final cs = Theme.of(context).colorScheme;
-    return Dialog(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: widget.maxHeight, maxWidth: 500),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const SizedBox(height: 10),
-            Text(widget.title ?? S.of(context).edit),
-            const Divider(),
-            const SizedBox(height: 10),
-            Expanded(
-              child: CustomScrollView(
-                slivers: buildSlivers(),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: widget.maxHeight, maxWidth: 500),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const SizedBox(height: 10),
+          Text(widget.title ?? S.of(context).edit),
+          const Divider(),
+          const SizedBox(height: 10),
+          Expanded(
+            child: CustomScrollView(
+              slivers: buildSlivers(),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 4,
+            runSpacing: 4,
+            runAlignment: WrapAlignment.center,
+            alignment: WrapAlignment.spaceBetween,
+            children: <Widget>[
+              ReactiveValidButton(
+                color: cs.primary,
+                onPressed: () =>
+                    widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
+                label: Text(S.of(context).saveAndClose),
+                toolTip: S.of(context).saveAndClose,
+                icon: Icon(MdiIcons.contentSaveCheck),
               ),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              runAlignment: WrapAlignment.center,
-              alignment: WrapAlignment.spaceBetween,
-              children: <Widget>[
-                ReactiveValidButton(
-                  color: cs.primary,
-                  onPressed: () =>
-                      widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
-                  label: Text(S.of(context).saveAndClose),
-                  toolTip: S.of(context).saveAndClose,
-                  icon: Icon(MdiIcons.contentSaveCheck),
-                ),
-                ReactiveValidButton(
-                  label: Text(S.of(context).addNew),
-                  onPressed: () => widget.onSave(
-                      formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
-                  icon: Icon(MdiIcons.contentSaveMove),
-                  color: cs.secondary,
-                  toolTip: S.of(context).addNew,
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
+              ReactiveValidButton(
+                label: Text(S.of(context).addNew),
+                onPressed: () => widget.onSave(
+                    formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
+                icon: Icon(MdiIcons.contentSaveMove),
+                color: cs.secondary,
+                toolTip: S.of(context).addNew,
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+        ],
       ),
     );
   }

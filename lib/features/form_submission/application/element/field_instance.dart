@@ -69,12 +69,6 @@ class FieldInstance<T> extends FormElementInstance<T> {
           void Function(FormElementInstance<dynamic> element) callback) =>
       <FormElementInstance<dynamic>>[];
 
-  @override
-  void reset({T? value}) {
-    updateStatus(elementState.reset(value: value));
-    elementControl.reset(value: template.defaultValue);
-  }
-
   List<DataOption> get visibleOption => elementState.visibleOptions;
 
   @override
@@ -83,7 +77,10 @@ class FieldInstance<T> extends FormElementInstance<T> {
       {String? changedDependency,
       bool updateParent = true,
       bool emitEvent = true}) {
-    super.evaluate(changedDependency: changedDependency, updateParent: updateParent, emitEvent: emitEvent);
+    super.evaluate(
+        changedDependency: changedDependency,
+        updateParent: updateParent,
+        emitEvent: emitEvent);
     // if (filterExpressionDependencies.isNotEmpty) {
     //   final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
     //   logDebug(
@@ -131,7 +128,10 @@ class CalculatedFieldInstance<T> extends FieldInstance<T> {
       {String? changedDependency,
       bool updateParent = true,
       bool emitEvent = true}) {
-    super.evaluate(changedDependency: changedDependency, updateParent: updateParent, emitEvent: emitEvent);
+    super.evaluate(
+        changedDependency: changedDependency,
+        updateParent: updateParent,
+        emitEvent: emitEvent);
     // if (calculatedExpression?.expression != null) {
     //   final result = calculatedExpression!.evaluate(evalContext);
     //   logDebug(

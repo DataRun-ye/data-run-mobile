@@ -69,6 +69,23 @@ class FormTemplateRepository {
         .toList();
   }
 
+  static String _normalizedPath(String path) =>
+      path.endsWith('.') ? path.substring(0, path.length - 1) : path;
+
+  /// Get children of a specific path
+  List<Template> where(String path, bool condition(Template child)) {
+    final normalizedPath = _normalizedPath(path);
+
+    return rootsFlatLookupMap()
+        .values
+        .where((node) =>
+            node.path!.startsWith('$normalizedPath.') &&
+            node.path!.split('.').length ==
+                normalizedPath.split('.').length + 1 &&
+            condition(node))
+        .toList();
+  }
+
   Map<String, Template> rootsFlatLookupMap() {
     if (_rootsFlatCache.isEmpty) {
       _rootsFlatCache.addAll(Map.fromIterable([

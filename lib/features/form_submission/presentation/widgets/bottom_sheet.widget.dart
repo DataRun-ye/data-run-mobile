@@ -49,10 +49,9 @@ class QBottomSheetDialog extends StatelessWidget {
                     errorsBody: (message, fieldsWithIssues) {
                       return fieldsWithIssues.entries
                           .toList()
-                          // .reversed
                           .map((sectionEntry) {
                         final sectionName = sectionEntry.key;
-                        final fieldErrors = sectionEntry.value.reversed;
+                        final fieldErrors = sectionEntry.value;
 
                         return ExpansionTile(
                           initiallyExpanded: true,

@@ -1,6 +1,7 @@
 import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
 import 'package:datarunmobile/features/common_ui_element/info_alert/info_alert_dialog.dart';
 import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet.dart';
+import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart';
 import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart';
 import 'package:datarunmobile/features/home/presentation/settings_view.dart';
 import 'package:datarunmobile/features/login/presentation/login_view.dart';
@@ -18,6 +19,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SettingsView),
     MaterialRoute(page: SyncResourcesView),
     MaterialRoute(page: AssignmentScreen),
+    MaterialRoute(page: EditRowScreen),
     // @stacked-route
   ],
   dependencies: [

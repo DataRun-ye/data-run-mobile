@@ -1,9 +1,11 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart';
+import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_rows_source.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class RepeatTable extends StatefulHookConsumerWidget {
   const RepeatTable({
@@ -168,8 +171,48 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   Future<void> _showEditPanel(BuildContext context, FormInstance formInstance,
       [RepeatItemInstance? repeatItem]) async {
-    bool itemSaved = false;
+    if (true) {
+      bool itemSaved = false;
+      appLocator<NavigationService>().navigateToView(FormMetadataWidget(
+          formMetadata: formInstance.formMetadata,
+          child: ReactiveForm(
+            formGroup: repeatItem!.elementControl,
+            child: Builder(builder: (context) {
+              String title =
+                  '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
 
+
+              return EditRowScreen(
+                title: title,
+                repeatInstance: _repeatInstance,
+                item: repeatItem,
+                onRemoveItem: (item) {
+                  _dataSource.removeItem(item);
+                },
+                onSave: (formGroup, action) {
+                  _repeatInstance.elementControl.markAsTouched();
+                  formInstance.saveFormData();
+                  _dataSource.updateItems(_repeatInstance.elements);
+                  // repeatItem.updateValue(formGroup.value);
+                  if (formGroup.valid) {
+                    itemSaved = true;
+                    _handleSave(context, formInstance, _repeatInstance,
+                        repeatItem, action);
+                  }
+                },
+              );
+            }),
+          )));
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //       builder: (context) => ),
+      // );
+    }
+  }
+
+  Future<void> showEditDialog(BuildContext context, FormInstance formInstance,
+      [RepeatItemInstance? repeatItem]) async {
+    bool itemSaved = false;
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -205,21 +248,23 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
               return ReactiveForm(
                 formGroup: repeatItem!.elementControl,
-                child: EditRowPanel(
-                  title: title,
-                  repeatInstance: _repeatInstance,
-                  item: repeatItem,
-                  onSave: (formGroup, action) {
-                    _repeatInstance.elementControl.markAsTouched();
-                    formInstance.saveFormData();
-                    _dataSource.updateItems(_repeatInstance.elements);
-                    // repeatItem.updateValue(formGroup.value);
-                    if (formGroup.valid) {
-                      itemSaved = true;
-                      _handleSave(context, formInstance, _repeatInstance,
-                          repeatItem, action);
-                    }
-                  },
+                child: Dialog(
+                  child: EditRowPanel(
+                    title: title,
+                    repeatInstance: _repeatInstance,
+                    item: repeatItem,
+                    onSave: (formGroup, action) {
+                      _repeatInstance.elementControl.markAsTouched();
+                      formInstance.saveFormData();
+                      _dataSource.updateItems(_repeatInstance.elements);
+                      // repeatItem.updateValue(formGroup.value);
+                      if (formGroup.valid) {
+                        itemSaved = true;
+                        _handleSave(context, formInstance, _repeatInstance,
+                            repeatItem, action);
+                      }
+                    },
+                  ),
                 ),
               );
             }),

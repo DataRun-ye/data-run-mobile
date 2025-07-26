@@ -10,7 +10,8 @@ import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemUiOverlayStyle;
+import 'package:flutter/services.dart'
+    show SystemUiOverlayStyle, SystemChrome, SystemUiMode;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
@@ -19,6 +20,26 @@ import 'package:timeago/timeago.dart' as timeago;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarColor: Colors.transparent,
+    // to control the icon brightness on the status bar
+    statusBarIconBrightness: Brightness.dark,
+    // For light background content
+    // statusBarIconBrightness: Brightness.light, // For dark background content
+    // to control the icon brightness on the navigation bar
+    systemNavigationBarIconBrightness: Brightness.dark,
+    // For light background content
+    // systemNavigationBarIconBrightness: Brightness.light, // For dark background content
+    // The deprecated setNavigationBarDividerColor corresponds to systemNavigationBarDividerColor
+    // Setting it to transparent or null effectively removes the divider color.
+    systemNavigationBarDividerColor: Colors.transparent,
+  ));
+
+  // Ensures that the app can draw behind the system bars
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
   await configureDependencies();
 
   FlutterError.demangleStackTrace = (StackTrace stack) {

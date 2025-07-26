@@ -49,12 +49,12 @@ class QTextTypeFieldState<T> extends ConsumerState<QTextTypeField<T>> {
 
     return ReactiveTextField<T>(
       controller: _controller,
-      onTapOutside: control.hasFocus
-          ? (event) {
-        control.markAsTouched();
-        control.unfocus();
-      }
-          : null,
+      // onTapOutside: control.hasFocus
+      //     ? (event) {
+      //   control.markAsTouched();
+      //   control.unfocus();
+      // }
+      //     : null,
       formControl: control,
       maxLength: widget.element.maxLength,
       maxLines: widget.element.maxLines,

@@ -17,33 +17,35 @@ class SplashView extends StackedView<StartupViewModel> {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
       backgroundColor: cs.primary,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              S.of(context).datarun,
-              style: TextStyle(
-                  fontSize: 40, fontWeight: FontWeight.w900, color: cs.surface),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(S.of(context).checkingSession,
-                    style: TextStyle(fontSize: 16, color: cs.surfaceDim)),
-                horizontalSpaceSmall,
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.orangeAccent[400]!),
-                    strokeWidth: 6,
-                  ),
-                )
-              ],
-            ),
-          ],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                S.of(context).datarun,
+                style: TextStyle(
+                    fontSize: 40, fontWeight: FontWeight.w900, color: cs.surface),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(S.of(context).checkingSession,
+                      style: TextStyle(fontSize: 16, color: cs.surfaceDim)),
+                  horizontalSpaceSmall,
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.orangeAccent[400]!),
+                      strokeWidth: 6,
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

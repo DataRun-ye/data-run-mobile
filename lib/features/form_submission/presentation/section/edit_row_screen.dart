@@ -113,40 +113,45 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
           child: ReactiveForm(
             formGroup: widget.item.elementControl,
             child: CustomScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               slivers: buildSlivers(),
             ),
           ),
         ),
       ),
       floatingActionButton: formGroup.valid
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisSize: MainAxisSize.min,
-              spacing: 16,
-              children: [
-                FloatingActionButton(
-                  backgroundColor: cs.primary,
-                  heroTag: 'saveAndClose',
-                  onPressed: () async {
-                    widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE);
-                  },
-                  child: Icon(MdiIcons.contentSaveCheck),
-                  tooltip: S.of(context).saveAndClose,
-                ),
-                FloatingActionButton(
-                  backgroundColor: cs.secondary,
-                  onPressed: () async {
-                    widget.onSave(
-                        formGroup, EditActionType.SAVE_AND_ADD_ANOTHER);
-                  },
-                  heroTag: 'addNew',
-                  child: Icon(MdiIcons.plus),
-                  tooltip: S.of(context).addNew,
-                ),
-              ],
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisSize: MainAxisSize.min,
+                spacing: 16,
+                children: [
+                  FloatingActionButton(
+                    backgroundColor: cs.primary,
+                    heroTag: 'saveAndClose',
+                    onPressed: () async {
+                      widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE);
+                    },
+                    child: Icon(MdiIcons.contentSaveCheck),
+                    tooltip: S.of(context).saveAndClose,
+                  ),
+                  FloatingActionButton(
+                    backgroundColor: cs.secondary,
+                    onPressed: () async {
+                      widget.onSave(
+                          formGroup, EditActionType.SAVE_AND_ADD_ANOTHER);
+                    },
+                    heroTag: 'addNew',
+                    child: Icon(MdiIcons.plus),
+                    tooltip: S.of(context).addNew,
+                  ),
+                ],
+              ),
             )
           : null,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -186,13 +191,13 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
                   backgroundColor: cs.error,
                   foregroundColor: cs.onError,
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
                 // icon: Icon(Icons.warning),
                 label: Text(S.of(context).delete),
                 onPressed: () {
                   final RepeatItemInstance? item =
-                  formInstance.onRemoveLastItem(repeatInstance);
+                      formInstance.onRemoveLastItem(repeatInstance);
                   if (item != null) {
                     widget.onRemoveItem?.call(item);
                   }

@@ -29,39 +29,41 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
 
     return Scaffold(
       // appBar: AppBar(title: Text('Sync Status')),
-      body: ColoredBox(
-        color: cs.primary,
-        child: Column(
-          children: [
-            if (global != null) ...[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 12, 8, 16),
-                child: SyncProgressCircularIndicator(
-                  syncProgressInfo: global,
+      body: SafeArea(
+        child: ColoredBox(
+          color: cs.primary,
+          child: Column(
+            children: [
+              if (global != null) ...[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 12, 8, 16),
+                  child: SyncProgressCircularIndicator(
+                    syncProgressInfo: global,
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                style: overrideFocusColor,
-                onPressed: () {
-                  appLocator<NavigationService>().clearStackAndShow(
-                    Routes.homeWrapperPage,
-                  );
-                },
-                child: Text(S.of(context).cancelSyncing),
+                ElevatedButton(
+                  style: overrideFocusColor,
+                  onPressed: () {
+                    appLocator<NavigationService>().clearStackAndShow(
+                      Routes.homeWrapperPage,
+                    );
+                  },
+                  child: Text(S.of(context).cancelSyncing),
+                ),
+              ],
+              // Expanded list of individual resources
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(12),
+                  itemCount: items.length,
+                  itemBuilder: (context, i) => _AnimatedGridSyncCard(
+                    status: items[i],
+                    delay: Duration(milliseconds: 100 * i),
+                  ),
+                ),
               ),
             ],
-            // Expanded list of individual resources
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(12),
-                itemCount: items.length,
-                itemBuilder: (context, i) => _AnimatedGridSyncCard(
-                  status: items[i],
-                  delay: Duration(milliseconds: 100 * i),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

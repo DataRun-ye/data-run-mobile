@@ -32,9 +32,9 @@ class LoginView extends StatelessWidget {
             final cs = Theme.of(context).colorScheme;
             return ReactiveForm(
               formGroup: viewModel.form,
-              child: SafeArea(
-                child: Scaffold(
-                  body: Container(
+              child: Scaffold(
+                body: SafeArea(
+                  child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                           begin: Alignment.topRight,

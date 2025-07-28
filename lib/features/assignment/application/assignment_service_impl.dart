@@ -32,7 +32,7 @@ import 'package:intl/intl.dart';
 /// patient, beneficiary...)]
 /// entity can be enrolled in the same program multiple times — e.g.,
 /// a woman may enroll in "ANC Program" for each pregnancy.
-@injectable
+@Injectable(as: AssignmentService)
 class AssignmentServiceImpl implements AssignmentService {
   final AppDatabase _db = appLocator<DbManager>().db;
 

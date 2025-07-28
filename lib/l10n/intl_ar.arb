@@ -358,7 +358,7 @@
   "requestCancelled": "تم إلغاء الطلب",
   "actionNeedsConfirmation": "تأكيد الطلب",
   "noConnection": "لا يتوفر إنترنت",
-  "noConnectionMessage": "يرجى تفحص خط الإنترنت ثم المحاولة مرة أخرى",
+  "noConnectionMessage": "يرجى التأكد من اتصال بالإنترنت والمحاولة مرة أخرى",
   "generalErrorMessage": "The application has encountered an unknown error, Please try again later.",
   "generalErrorTitle": "حدث خطأ ما",
   "ouLevels": "مستويات إدارية",

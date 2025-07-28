@@ -1,5 +1,6 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
-import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/core/form/tree/element_tree_service.dart';
+import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
@@ -8,8 +9,9 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.dialogs.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/state.dart';
-import 'package:datarunmobile/data/form_template_version_tree_mixin.dart';
+import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
+import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
@@ -28,11 +30,11 @@ class DetailSubmissionsTable extends HookConsumerWidget {
       {super.key,
       required this.assignment,
       required this.formId,
-      required this.index});
+      this.index = 0});
 
   final AssignmentModel assignment;
   final String formId;
-  final int index;
+  final int? index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,6 +49,11 @@ class DetailSubmissionsTable extends HookConsumerWidget {
     final _sortColumnIndex = useState<int?>(null);
     final _sortAscending = useState(true);
     final ScrollController _horizontalController = useScrollController();
+    final cs = Theme.of(context).colorScheme;
+    final metadataStyle = Theme.of(context)
+        .textTheme
+        .bodySmall
+        ?.copyWith(color: Colors.grey.shade700);
 
     final submissions = useState(ref
         .watch(formSubmissionsProvider(formId))
@@ -81,8 +88,8 @@ class DetailSubmissionsTable extends HookConsumerWidget {
             key: ValueKey('${assignment.id}_cold'),
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text('${index + 1}. $title',
-                  style: Theme.of(context).textTheme.titleMedium),
+              // Text('${index != null ? (index! + 1) : ''}. $title',
+              //     style: Theme.of(context).textTheme.titleMedium),
               if (selectedSubmissions.value.isNotEmpty)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -98,9 +105,8 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                             '${S.of(context).syncSubmissions(toSync.length)}'))
                   ],
                 ),
-              SizedBox(
-                height: 8,
-              ),
+
+              const SizedBox(height: 8),
               submissions.value.isNotEmpty
                   ? LayoutBuilder(builder: (context, constraints) {
                       return Scrollbar(
@@ -162,12 +168,9 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                                         decoration: TextDecoration.lineThrough)
                                     : null;
                                 Map<String, dynamic> extractedValues = {};
-                                Map<String, dynamic> totalResources = {};
                                 try {
                                   extractedValues = _extractValues(
                                       submission.formData ?? {}, template);
-                                  totalResources = _sumNumericResources(
-                                      submission.formData ?? {});
                                 } catch (e) {
                                   // log
                                 }
@@ -207,15 +210,43 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                                               // ref.invalidate(assignmentsProvider);
                                             }
                                           : null,
-                                      icon: const Icon(Icons.edit),
+                                      icon: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(Icons.edit),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 3, vertical: 3),
+                                            decoration: BoxDecoration(
+                                              color: cs.surfaceContainerLow,
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Consumer(
+                                              builder: (context, ref, child) {
+                                                final formTemplate = ref.watch(
+                                                    submissionVersionFormTemplateProvider(
+                                                        versionId: submission
+                                                            .templateVersion));
+                                                return AsyncValueWidget(
+                                                    value: formTemplate,
+                                                    valueBuilder:
+                                                        (submissionTemplate) {
+                                                      return Text(
+                                                          'v${submissionTemplate.versionNumber}',
+                                                          style: metadataStyle);
+                                                    });
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                       // label: Text(S.of(context).edit),
                                     )),
                                     ...columnHeaders.map(
                                       (header) => DataCell(
                                         Text(
                                             extractedValues[header.name]
-                                                    ?.toString() ??
-                                                totalResources[header.name]
                                                     ?.toString() ??
                                                 '',
                                             style: textStyle),
@@ -256,9 +287,7 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                       );
                     })
                   : Center(child: Text(S.of(context).noSubmissions)),
-              const SizedBox(height: 20),
-              const Divider(height: 20),
-              const SizedBox(height: 20),
+              // const SizedBox(height: 30),
             ],
           );
         });
@@ -287,48 +316,83 @@ class DetailSubmissionsTable extends HookConsumerWidget {
     Map<String, dynamic> extractedValues = {};
 
     void _extract(Map<String, dynamic> data, Iterable<Template> fields) {
-      fields.forEach((field) {
-        // if (field.name != null) {
-        if (field.repeatable && data.containsKey(field.name)) {
-          _extract(data[field.name], field.children.toList());
-          // extractedValues[field.name!] = data[field.name];
-        } else if (field is SectionTemplate && data.containsKey(field.name)) {
-          _extract(data[field.name], field.children.toList());
-        } else if (field.type == ValueType.Progress &&
-            data.containsKey(field.name)) {
-          final value = ((AssignmentStatus.getType(data[field.name])?.name ??
-                  data[field.name])
-              ?.toString());
-          extractedValues[field.name!] =
-              value != null ? Intl.message(value.toLowerCase()) : '-';
-          // } else if (field.type == ValueType.Team &&
-          //     data.containsKey(field.name)) {
-          //   extractedValues[field.name!] = activityModel.managedTeams
-          //           .firstOrNullWhere((t) => t.id == data[field.name])
-          //           ?.name ??
-          //       data[field.name];
-        } else if (field.type?.isSelectType == true &&
-            formTemplate.optionSets[field.optionSet] != null &&
-            data.containsKey(field.name)) {
-          extractedValues[field.name!] = data[field.name];
-        } else if (field.type?.isDateTime == true) {
-          final value = data[field.name];
-          extractedValues[field.name!] = value != null
-              ? DateHelper.getEffectiveUiFormat(field.type)
-                  .tryParse(data[field.name])
-              : value;
-        } else if (field.name != null) {
-          extractedValues[field.name!] = data[field.name];
+      fields.forEach((Template field) {
+        if (field.name != null) {
+          if (field is SectionTemplate && data.containsKey(field.name)) {
+            if (field.repeatable && data[field.name] is List) {
+              final items = data[field.name]
+                  .map<Map<String, dynamic>>(
+                      (item) => Map<String, dynamic>.of(item))
+                  .toList();
+              _extract(_sumNumericResources(items), field.children);
+            } else {
+              _extract(
+                  data[field.name],
+                  ElementTreeService.getImmediateChildren(
+                      field.path, field.children));
+            }
+          } else if (field.type == ValueType.Progress &&
+              data.containsKey(field.name)) {
+            final value = ((AssignmentStatus.values
+                        .firstOrNullWhere((t) => t.name == data[field.name])
+                        ?.name ??
+                    data[field.name])
+                ?.toString());
+            extractedValues[field.name!] =
+                value != null ? Intl.message(value.toLowerCase()) : '-';
+          }
+          /*else if (field.type == ValueType.Team &&
+              data.containsKey(field.name)) {
+            extractedValues[field.name!] = activityModel.managedTeams
+                    .firstOrNullWhere((t) => t.id == data[field.name])
+                    ?.name ??
+                data[field.name];
+          }*/
+          else if (field.type?.isSelectType == true &&
+              field.optionSet != null &&
+              data.containsKey(field.name)) {
+            final optionMap = formTemplate.optionMap;
+            final String? optionSetName =
+                formTemplate.optionSets[field.optionSet!]?.name;
+            final List<DataOption> options = optionMap[field.optionSet] ?? [];
+            if (field.type == ValueType.SelectOne) {
+              final List<DataOption> selected =
+                  options.where((o) => o.name == data[field.name]).toList();
+              extractedValues[field.name!] = selected
+                  .map((o) => getItemLocalString(o.label, defaultString: ''))
+                  .join(',');
+            } else if (field.type == ValueType.SelectMulti &&
+                data[field.name] is List) {
+              final List<DataOption> selected = options
+                  .where((o) => data[field.name].contains(o.code))
+                  .toList();
+              extractedValues[field.name!] = selected
+                  .map((o) => getItemLocalString(o.label, defaultString: ''))
+                  .join(',');
+            }
+            // final List<DataOption> selected = options
+            //     .where((o) =>
+            //         o.name == data[field.name] || o.code == data[field.name])
+            //     .toList();
+            // extractedValues[field.name!] = selected
+            //     .map((o) => getItemLocalString(o.label, defaultString: ''))
+            //     .join(',');
+          } else if (data.containsKey(field.name)) {
+            extractedValues[field.name!] = data[field.name];
+          }
         }
-        // }
       });
     }
 
-    _extract(formData, formTemplate.rootSection.children);
+    _extract(formData, [
+      ...formTemplate.template.fields.where((f) => f.mainField == true),
+      ...formTemplate.sections
+    ]);
     return extractedValues;
   }
 
-  Map<String, double> _sumNumericResources(Map<String, dynamic> formData) {
+  Map<String, double> _sumNumericResources(
+      List<Map<String, dynamic>> formData) {
     Map<String, double> subTotals = {};
 
     void _sumResources(Map<String, dynamic> data) {
@@ -347,7 +411,11 @@ class DetailSubmissionsTable extends HookConsumerWidget {
       });
     }
 
-    _sumResources(formData);
+    for (var formData in formData) {
+      _sumResources(formData);
+    }
+
+    // _sumResources(formData);
     return subTotals;
   }
 

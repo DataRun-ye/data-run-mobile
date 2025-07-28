@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$USER_HOME$/fvm/versions/3.32.6/packages/flutter_tools/gradle" name="gradle">
+              <build path="$USER_HOME$/fvm/default/packages/flutter_tools/gradle" name="gradle">
                 <projects>
-                  <project path="$USER_HOME$/fvm/versions/3.32.6/packages/flutter_tools/gradle" />
+                  <project path="$USER_HOME$/fvm/default/packages/flutter_tools/gradle" />
                 </projects>
               </build>
             </builds>
@@ -19,7 +20,7 @@
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/fvm/versions/3.32.6/packages/flutter_tools/gradle" />
+            <option value="$USER_HOME$/fvm/default/packages/flutter_tools/gradle" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>

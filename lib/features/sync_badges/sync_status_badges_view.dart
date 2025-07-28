@@ -6,9 +6,13 @@ import 'package:stacked/stacked.dart';
 
 class SyncStatusBadgesView extends StatelessWidget {
   SyncStatusBadgesView(
-      {super.key, required this.id, required this.aggregationLevel});
+      {super.key,
+      required this.id,
+      required this.aggregationLevel,
+      this.assignmentId});
 
   final String id;
+  final String? assignmentId;
   final StatusAggregationLevel aggregationLevel;
 
   @override
@@ -29,8 +33,11 @@ class SyncStatusBadgesView extends StatelessWidget {
                       .toList() ??
                   [],
             ),
-      viewModelBuilder: () =>
-          SyncBadgesViewModel(aggregationLevel: aggregationLevel, id: id),
+      viewModelBuilder: () => SyncBadgesViewModel(
+        aggregationLevel: aggregationLevel,
+        id: id,
+        assignmentId: assignmentId,
+      ),
     );
   }
 }

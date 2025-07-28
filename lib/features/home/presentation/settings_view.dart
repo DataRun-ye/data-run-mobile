@@ -1,7 +1,7 @@
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/about_page.dart';
-import 'package:datarunmobile/features/home/presentation/appearance_tab.dart';
+import 'package:datarunmobile/features/settings/presentation/appearance_tab.dart';
 import 'package:datarunmobile/features/settings/presentation/settings_viewmodel.dart';
 import 'package:datarunmobile/features/settings/presentation/sync_tab_view.dart';
 import 'package:datarunmobile/features/settings/presentation/user_settings_tab_view.dart';

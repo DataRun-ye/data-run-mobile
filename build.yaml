@@ -38,6 +38,7 @@ targets:
           - lib/**/application/**/*.dart
           - lib/**/application/*.dart
           - lib/app/di/*.dart
+          - lib/app/app_routes/*.dart
           - lib/core/*.dart
           - lib/core/**/*.dart
           - lib/data/*.dart

@@ -10,7 +10,7 @@ extension TokenStringExtension on String? {
     if (decodedJwt == null) return false;
 
     final expirationDateTime =
-        DateTime.fromMillisecondsSinceEpoch(decodedJwt.payload['exp'] * 1000);
+    DateTime.fromMillisecondsSinceEpoch(decodedJwt.payload['exp'] * 1000);
 
     return DateTime.now()
         .add(const Duration(milliseconds: 1000)) // Safety margin
@@ -27,7 +27,7 @@ extension TokenStringExtension on String? {
 
     try {
       final expirationDateTime =
-          DateTime.fromMillisecondsSinceEpoch(decodedJwt.payload['exp'] * 1000);
+      DateTime.fromMillisecondsSinceEpoch(decodedJwt.payload['exp'] * 1000);
       return expirationDateTime;
     } catch (e) {
       return null;

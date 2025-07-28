@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 
 class SplashView extends StackedView<StartupViewModel> {
   const SplashView({Key? key}) : super(key: key);
+  static String get path => '/splash';
 
   @override
   Widget builder(

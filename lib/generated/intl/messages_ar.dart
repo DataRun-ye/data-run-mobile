@@ -382,7 +382,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noConnection": MessageLookupByLibrary.simpleMessage("لا يتوفر إنترنت"),
     "noConnectionMessage": MessageLookupByLibrary.simpleMessage(
-      "يرجى تفحص خط الإنترنت ثم المحاولة مرة أخرى",
+      "يرجى التأكد من اتصال بالإنترنت والمحاولة مرة أخرى",
     ),
     "noFormsAvailable": MessageLookupByLibrary.simpleMessage(
       "لا تتوفر استمارات لهذا النشاط",

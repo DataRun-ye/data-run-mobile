@@ -21,24 +21,24 @@ import 'package:timeago/timeago.dart' as timeago;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    systemNavigationBarColor: Colors.transparent,
-    // to control the icon brightness on the status bar
-    statusBarIconBrightness: Brightness.dark,
-    // For light background content
-    // statusBarIconBrightness: Brightness.light, // For dark background content
-    // to control the icon brightness on the navigation bar
-    systemNavigationBarIconBrightness: Brightness.dark,
-    // For light background content
-    // systemNavigationBarIconBrightness: Brightness.light, // For dark background content
-    // The deprecated setNavigationBarDividerColor corresponds to systemNavigationBarDividerColor
-    // Setting it to transparent or null effectively removes the divider color.
-    systemNavigationBarDividerColor: Colors.transparent,
-  ));
-
-  // Ensures that the app can draw behind the system bars
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //   statusBarColor: Colors.transparent,
+  //   systemNavigationBarColor: Colors.transparent,
+  //   // to control the icon brightness on the status bar
+  //   statusBarIconBrightness: Brightness.dark,
+  //   // For light background content
+  //   // statusBarIconBrightness: Brightness.light, // For dark background content
+  //   // to control the icon brightness on the navigation bar
+  //   systemNavigationBarIconBrightness: Brightness.dark,
+  //   // For light background content
+  //   // systemNavigationBarIconBrightness: Brightness.light, // For dark background content
+  //   // The deprecated setNavigationBarDividerColor corresponds to systemNavigationBarDividerColor
+  //   // Setting it to transparent or null effectively removes the divider color.
+  //   systemNavigationBarDividerColor: Colors.transparent,
+  // ));
+  //
+  // // Ensures that the app can draw behind the system bars
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   await configureDependencies();
 

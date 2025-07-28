@@ -5,40 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61684571-c020-4782-b9c6-a3a900c0ff53" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../lib/app/app_routes/app_router.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lib/app/app_routes/auth.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.fvmrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/app/app_routes/main.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/app/app_routes/router.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/app/app_routes/screens/home_wrapper.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/app/app_routes/screens/settings_wrapper.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/features/assignment_detail/presentation/assignment_detail_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/features/assignment_detail/presentation/assignment_detail_viewmodel.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/features/form/application/form_template_service.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/features/form/application/form_template_service_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/features/login/presentation/login_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/features/login/presentation/login_screen_viewmodel.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-night/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-night/styles.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../drun-sdk-reactive" beforeDir="false" afterPath="$PROJECT_DIR$/../drun-sdk-reactive" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../drun-sdk-reactive/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../drun-sdk-reactive/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../drun-sdk-reactive/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../drun-sdk-reactive/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/features/form_submission/presentation/field/code_scanner/barcode_scanner_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/form_submission/presentation/field/code_scanner/barcode_scanner_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/features/form_submission/presentation/field/code_scanner/scanner_button_widgets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/form_submission/presentation/field/code_scanner/scanner_button_widgets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../build.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/app/app_routes/app_router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/app/app_routes/app_router.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/app/di/injection.config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/app/di/injection.config.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/app/stacked/app.router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/app/stacked/app.router.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/auth/token_string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/auth/token_string_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/features/assignment/application/assignment_service_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/assignment/application/assignment_service_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/features/form/application/form_list_item_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/form/application/form_list_item_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/features/home/presentation/appearance_tab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/settings/presentation/appearance_tab.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/features/home/presentation/home_wrapper_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/home/presentation/home_wrapper_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/features/home/presentation/settings_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/home/presentation/settings_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/features/startup/presentation/loading_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/startup/presentation/loading_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/features/startup/presentation/splash_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/features/startup/presentation/splash_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/generated/intl/messages_ar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/intl/messages_ar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/generated/intl/messages_en.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/intl/messages_en.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/generated/l10n.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/generated/l10n.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/l10n/app_localization.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/l10n/app_localization.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/l10n/app_localization_ar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/l10n/app_localization_ar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/l10n/intl_ar.arb" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/l10n/intl_ar.arb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/flutter/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/flutter/generated_plugin_registrant.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/flutter/generated_plugin_registrant.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/flutter/generated_plugins.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/Runner.rc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/flutter_window.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/flutter_window.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/resource.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/resources/app_icon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/runner.exe.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/utils.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/utils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/win32_window.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/runner/win32_window.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,30 +56,30 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="309edgTtM0H52IVUiJqQNGxQvqy" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "develop",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/data_run_mobile_/android",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/data_run_mobile_/android&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="android.app" />
@@ -155,6 +154,7 @@
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="61684571-c020-4782-b9c6-a3a900c0ff53" name="Changes" comment="" />

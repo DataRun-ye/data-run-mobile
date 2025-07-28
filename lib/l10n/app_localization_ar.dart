@@ -1098,7 +1098,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noConnectionMessage =>
-      'يرجى تفحص خط الإنترنت ثم المحاولة مرة أخرى';
+      'يرجى التأكد من اتصال بالإنترنت والمحاولة مرة أخرى';
 
   @override
   String get generalErrorMessage =>

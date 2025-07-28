@@ -15,9 +15,6 @@ class HomeWrapperPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(S.of(context).home),
       ),
-      onDrawerChanged: (isOpen) {
-        // isOpen ? model.checkOnline(isOpen) : model.cancelToken(isOpen);
-      },
       drawer: const AppDrawer(),
       body: const ActivityListView(),
     );

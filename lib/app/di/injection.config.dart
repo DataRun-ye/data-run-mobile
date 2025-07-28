@@ -43,8 +43,14 @@ import 'package:datarunmobile/core/user_session/session_storage.dart' as _i139;
 import 'package:datarunmobile/data/form_template_list_service.dart' as _i760;
 import 'package:datarunmobile/data/form_template_service.dart' as _i991;
 import 'package:datarunmobile/data/option_set_service.dart' as _i158;
+import 'package:datarunmobile/features/assignment/application/assignment_service.dart'
+    as _i935;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
+import 'package:datarunmobile/features/form/application/form_template_service.dart'
+    as _i258;
+import 'package:datarunmobile/features/form/application/form_template_service_impl.dart'
+    as _i489;
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart'
     as _i1058;
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart'
@@ -90,8 +96,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i730.DataValueRepository>(() => _i730.DataValueRepository());
   gh.factory<_i683.ResourceManager>(() => const _i683.ResourceManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
-  gh.factory<_i1027.AssignmentServiceImpl>(
-      () => _i1027.AssignmentServiceImpl());
   gh.factory<_i415.RuleEffectStateFactory>(
       () => _i415.RuleEffectStateFactory());
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
@@ -109,6 +113,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
   gh.factory<_i492.SyncMetadataRepository>(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
+  gh.factory<_i935.AssignmentService>(() => _i1027.AssignmentServiceImpl());
+  gh.factory<_i258.FormTemplateService>(() => _i489.FormTemplateServiceImpl());
   gh.factory<_i658.SyncScheduler>(() => _i658.SyncScheduler(
         metadataRepo: gh<_i492.SyncMetadataRepository>(),
         connectivity: gh<_i658.ConnectivityService>(),

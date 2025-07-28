@@ -1,6 +1,5 @@
-// import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
-//
+import 'package:flutter/material.dart';
+
 // // --- Router Configuration ---
 // final GoRouter router = GoRouter(
 //   initialLocation: '/',
@@ -10,21 +9,13 @@
 //       path: '/',
 //       name: 'splash',
 //       builder: (context, state) => SplashPage(),
-//       routes: [
-//         // 2) Login
-//         GoRoute(
-//           path: 'login',
-//           name: 'login',
-//           builder: (context, state) => LoginPage(),
-//         ),
-//       ],
 //     ),
 //
 //     // 3) Protected App Shell under /home
 //     ShellRoute(
-//       builder: (context, state, child) => AuthGuard(
-//         child: HomeWrapperPage(child: child),
-//       ),
+//       builder: (BuildContext context, GoRouterState state, Widget child) {
+//         return HomeWrapperPage(child: child);
+//       },
 //       routes: [
 //         GoRoute(
 //           path: '/home',
@@ -166,235 +157,160 @@
 //     ),
 //   ],
 // );
-//
-// // --- Bootstrapper Widget ---
-// class FormFlowBootstrapper extends StatefulWidget {
-//   const FormFlowBootstrapper({Key? key, required this.submissionId})
-//       : super(key: key);
-//   final String submissionId;
-//
-//   @override
-//   _FormFlowBootstrapperState createState() => _FormFlowBootstrapperState();
-// }
-//
-// class _FormFlowBootstrapperState extends State<FormFlowBootstrapper> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     _bootstrapFlow();
-//   }
-//
-//   Future<void> _bootstrapFlow() async {
-//     final id = widget.submissionId;
-//     if (id == 'new') {
-//       final draft = await SubmissionRepository.createDraft();
-//       context.replace('/home/forms/${draft.id}/main');
-//     } else {
-//       WidgetsBinding.instance.addPostFrameCallback((_) {
-//         context.replace('/home/forms/$id/main');
-//       });
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(child: CircularProgressIndicator()),
-//     );
-//   }
-// }
-//
-// // --- Placeholder Pages & Wrappers ---
-// class SplashPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) => Scaffold(body: Center(child: Text('Splash')));
-// }
-//
-// class LoginPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) => Scaffold(body: Center(child: Text('Login')));
-// }
-//
-// class AuthGuard extends StatelessWidget {
-//   const AuthGuard({required this.child});
-//
-//   final Widget child;
-//
-//   @override
-//   Widget build(BuildContext c) {
-//     // TODO: check auth, redirect if needed
-//     return child;
-//   }
-// }
-//
-// class HomeWrapperPage extends StatelessWidget {
-//   const HomeWrapperPage({required this.child});
-//
-//   final Widget child;
-//
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//         drawer: AppDrawer(),
-//         body: child,
-//       );
-// }
-//
-// class SettingsWrapperPage extends StatelessWidget {
-//   const SettingsWrapperPage({required this.child});
-//
-//   final Widget child;
-//
-//   @override
-//   Widget build(BuildContext c) => Scaffold(
-//         appBar: AppBar(title: Text('Settings')),
-//         body: child,
-//         bottomNavigationBar: SettingsTabBar(),
-//       );
-// }
-//
-// class AppDrawer extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) =>
-//       Drawer(child: ListView(children: [Text('Menu')]));
-// }
-//
-// class SettingsTabBar extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) => BottomNavigationBar(
-//         items: [
-//           BottomNavigationBarItem(label: 'User', icon: Icon(Icons.person)),
-//           BottomNavigationBarItem(
-//               label: 'Appearance', icon: Icon(Icons.palette)),
-//           BottomNavigationBarItem(label: 'Sync', icon: Icon(Icons.sync)),
-//         ],
-//         onTap: (i) {
-//           final tabs = ['user', 'appearance', 'sync'];
-//           GoRouter.of(c).go('/home/settings/${tabs[i]}');
-//         },
-//       );
-// }
-//
-// class HomePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Dashboard')));
-// }
-//
-// class ProfilePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Profile')));
-// }
-//
-// class SettingsUserPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) => Center(child: Text('User Settings'));
-// }
-//
-// class SettingsAppearancePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) => Center(child: Text('Appearance Settings'));
-// }
-//
-// class SettingsSyncPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) => Center(child: Text('Sync Settings'));
-// }
-//
-// class AssignmentsWrapper extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Assignments List')));
-// }
-//
-// class AssignmentDetailPage extends StatelessWidget {
-//   AssignmentDetailPage({required this.id});
-//
-//   final String id;
-//
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Assignment $id')));
-// }
-//
-// class ActivitiesWrapper extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Activities List')));
-// }
-//
-// class ActivityDetailPage extends StatelessWidget {
-//   ActivityDetailPage({required this.id});
-//
-//   final String id;
-//
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Activity $id')));
-// }
-//
-// class TeamsWrapper extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Teams List')));
-// }
-//
-// class TeamDetailPage extends StatelessWidget {
-//   TeamDetailPage({required this.id});
-//
-//   final String id;
-//
-//   @override
-//   Widget build(BuildContext c) =>
-//       Scaffold(body: Center(child: Text('Team $id')));
-// }
-//
-// class SubmissionHistoryPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//         appBar: AppBar(title: Text('Submission History')),
-//         body: Center(child: Text('History List')),
-//       );
-// }
-//
-// class FormEntryMainPage extends StatelessWidget {
-//   const FormEntryMainPage({Key? key, required this.submissionId})
-//       : super(key: key);
-//   final String submissionId;
-//
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//         appBar: AppBar(title: Text('Form Main - $submissionId')),
-//         body: Center(child: Text('Main Form Entry')),
-//       );
-// }
-//
-// class FormEntryPage extends StatelessWidget {
-//   const FormEntryPage({Key? key, required this.submissionId}) : super(key: key);
-//   final String submissionId;
-//
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//         appBar: AppBar(title: Text('Form Entry - $submissionId')),
-//         body: Center(child: Text('Detailed Form Entry')),
-//       );
-// }
-//
-// /// The not found screen
-// class NotFoundScreen extends StatelessWidget {
-//   /// Constructs a [HomeScreen]
-//   const NotFoundScreen({super.key, required this.uri});
-//
-//   /// The uri that can not be found.
-//   final String uri;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Page Not Found')),
-//       body: Center(
-//         child: Text("Can't find a page for: $uri"),
-//       ),
-//     );
-//   }
-// }
+
+// --- Bootstrapper Widget ---
+class FormFlowBootstrapper extends StatefulWidget {
+  const FormFlowBootstrapper({Key? key, required this.submissionId})
+      : super(key: key);
+  final String submissionId;
+
+  @override
+  _FormFlowBootstrapperState createState() => _FormFlowBootstrapperState();
+}
+
+class _FormFlowBootstrapperState extends State<FormFlowBootstrapper> {
+  @override
+  void initState() {
+    super.initState();
+    _bootstrapFlow();
+  }
+
+  Future<void> _bootstrapFlow() async {
+    // final id = widget.submissionId;
+    //     // if (id == 'new') {
+    //     //   final draft = await SubmissionRepository.createDraft();
+    //     //   context.replace('/home/forms/${draft.id}/main');
+    //     // } else {
+    //     //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     //     context.replace('/home/forms/$id/main');
+    //     //   });
+    //     // }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: CircularProgressIndicator()),
+    );
+  }
+}
+
+// --- Placeholder Pages & Wrappers ---
+class SplashPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) => Scaffold(body: Center(child: Text('Splash')));
+}
+
+class LoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) => Scaffold(body: Center(child: Text('Login')));
+}
+
+class AuthGuard extends StatelessWidget {
+  const AuthGuard({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext c) {
+    // TODO: check auth, redirect if needed
+    return child;
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) =>
+      Scaffold(body: Center(child: Text('Profile')));
+}
+
+class AssignmentsWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) =>
+      Scaffold(body: Center(child: Text('Assignments List')));
+}
+
+class AssignmentDetailPage extends StatelessWidget {
+  AssignmentDetailPage({required this.id});
+
+  final String id;
+
+  @override
+  Widget build(BuildContext c) =>
+      Scaffold(body: Center(child: Text('Assignment $id')));
+}
+
+class ActivitiesWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) =>
+      Scaffold(body: Center(child: Text('Activities List')));
+}
+
+class ActivityDetailPage extends StatelessWidget {
+  ActivityDetailPage({required this.id});
+
+  final String id;
+
+  @override
+  Widget build(BuildContext c) =>
+      Scaffold(body: Center(child: Text('Activity $id')));
+}
+
+class TeamsWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) =>
+      Scaffold(body: Center(child: Text('Teams List')));
+}
+
+class TeamDetailPage extends StatelessWidget {
+  TeamDetailPage({required this.id});
+
+  final String id;
+
+  @override
+  Widget build(BuildContext c) =>
+      Scaffold(body: Center(child: Text('Team $id')));
+}
+
+
+class FormEntryMainPage extends StatelessWidget {
+  const FormEntryMainPage({Key? key, required this.submissionId})
+      : super(key: key);
+  final String submissionId;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: Text('Form Main - $submissionId')),
+    body: Center(child: Text('Main Form Entry')),
+  );
+}
+
+class FormEntryPage extends StatelessWidget {
+  const FormEntryPage({Key? key, required this.submissionId}) : super(key: key);
+  final String submissionId;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: Text('Form Entry - $submissionId')),
+    body: Center(child: Text('Detailed Form Entry')),
+  );
+}
+
+/// The not found screen
+class NotFoundScreen extends StatelessWidget {
+  /// Constructs a [HomeScreen]
+  const NotFoundScreen({super.key, required this.uri});
+
+  /// The uri that can not be found.
+  final String uri;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Page Not Found')),
+      body: Center(
+        child: Text("Can't find a page for: $uri"),
+      ),
+    );
+  }
+}

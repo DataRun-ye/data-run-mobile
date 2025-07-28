@@ -6,7 +6,7 @@ export 'controller.provider.dart';
 export 'form_instance_repository.dart';
 export 'form_integrity_check_notifier.provider.dart';
 export 'form_template_service.dart';
-export 'form_template_version_tree_mixin.dart';
+export 'form_template_repository.dart';
 export 'metadata_submission_update.dart';
 export 'metadata_submission_update.provider.dart';
 export 'option_set_service.dart';

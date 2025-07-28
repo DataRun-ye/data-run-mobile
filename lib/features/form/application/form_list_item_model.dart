@@ -10,10 +10,12 @@ class FormListItemModel extends IdentifiableModel {
     super.code,
     required this.versionNumber,
     required this.versionUid,
+    this.syncStatuses = const [],
   });
 
   final int versionNumber;
   final String versionUid;
+  final List<SubmissionSyncStatusModel> syncStatuses;
 
   @override
   List<Object?> get props => super.props + [versionNumber];

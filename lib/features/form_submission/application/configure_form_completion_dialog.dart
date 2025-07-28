@@ -15,7 +15,7 @@ class ConfigureFormCompletionDialog {
   FormCompletionDialog call(Section rootSection) {
     final FormCompletionButton mainButton = _getMainButton(rootSection);
     final FormCompletionButton secondaryButton =
-        _getSecondaryButton(rootSection);
+    _getSecondaryButton(rootSection);
 
     final DialogContentModel bottomSheetDialogUiModel = DialogContentModel(
         title: rootSection.form.hasErrors
@@ -37,7 +37,7 @@ class ConfigureFormCompletionDialog {
     if (rootSection.form.hasErrors) {
       return FormCompletionButton(
           buttonStyle:
-              DialogButtonStyle.mainButton(text: S.current.reviewFormData),
+          DialogButtonStyle.mainButton(text: S.current.reviewFormData),
           action: FormBottomDialogActionType.CheckFields);
     } else {
       return FormCompletionButton(
@@ -55,7 +55,7 @@ class ConfigureFormCompletionDialog {
     } else {
       return FormCompletionButton(
           buttonStyle:
-              DialogButtonStyle.secondaryButton(text: S.current.notNow),
+          DialogButtonStyle.secondaryButton(text: S.current.notNow),
           action: FormBottomDialogActionType.NotNow);
     }
   }
@@ -66,10 +66,10 @@ class ConfigureFormCompletionDialog {
     // final elementErrors =rootSection.elementState.errors;
     return controlHasErrors
         ? BottomSheetBodyModel.errorsBody(
-            message: S.current.fieldsWithErrorInfo,
-            fieldsWithIssues: _getFieldsWithIssues(rootSection))
+        message: S.current.fieldsWithErrorInfo,
+        fieldsWithIssues: _getFieldsWithIssues(rootSection))
         : BottomSheetBodyModel.messageBody(
-            message: S.current.makeFormFinalOrSaveBody);
+        message: S.current.makeFormFinalOrSaveBody);
   }
 
   Map<String, dynamic> flattenErrorMap(Map<String, dynamic> errorMap,
@@ -101,8 +101,8 @@ class ConfigureFormCompletionDialog {
     // logDebug('formErrorsMap: $formErrors');
     // logDebug('formErrorsMapFlatt: $formErrorsFlatt');
     final Iterable<FieldInstance<dynamic>> fieldsWithErrors =
-        getFormElementIterator<FieldInstance<dynamic>>(rootSection)
-            .where((field) => field.elementControl.hasErrors && field.visible);
+    getFormElementIterator<FieldInstance<dynamic>>(rootSection)
+        .where((field) => field.elementControl.hasErrors && field.visible);
     final fieldsIssues = fieldsWithErrors.map((element) => FieldWithIssue(
         parent: element.parentSection?.label,
         fieldPath: element.elementPath,

@@ -406,5 +406,9 @@
   "syncFailed": "Sync Failed",
   "cancelSyncing": "Cancel Syncing",
   "formPermissions": "Permission",
-  "warning": "Warning"
+  "warning": "Warning",
+  "week": "Week",
+  "selectMonth": "Select Month",
+  "selectWeek": "Select Week",
+  "selectYear": "Select Year"
 }

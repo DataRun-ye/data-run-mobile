@@ -22,8 +22,6 @@ import 'package:rxdart/rxdart.dart';
 
 part 'element_dependency.extension.dart';
 part 'field_instance.dart';
-// part 'field_reference_instance.dart';
-
 part 'gs1_scanned_item.dart';
 part 'repeat_instance.dart';
 part 'repeat_item_instance.dart';

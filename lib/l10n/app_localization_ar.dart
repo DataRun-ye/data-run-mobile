@@ -1134,5 +1134,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get formPermissions => 'صلاحيات وصول';
 
   @override
-  String get warning => 'Warning';
+  String get warning => 'تنبيه';
+
+  @override
+  String get week => 'الإسبوع';
+
+  @override
+  String get selectMonth => 'Select Month';
+
+  @override
+  String get selectWeek => 'Select Week';
+
+  @override
+  String get selectYear => 'Select Year';
 }

@@ -486,12 +486,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectImageForColorExtraction": MessageLookupByLibrary.simpleMessage(
       "حدد صورة لاستخلاص ثيم منها",
     ),
+    "selectMonth": MessageLookupByLibrary.simpleMessage("Select Month"),
     "selectMultiFieldHint": MessageLookupByLibrary.simpleMessage(
       "اختر خيارات متعددة",
     ),
     "selectOneFieldHint": MessageLookupByLibrary.simpleMessage(
       "اختر خيارًا واحدًا",
     ),
+    "selectWeek": MessageLookupByLibrary.simpleMessage("Select Week"),
+    "selectYear": MessageLookupByLibrary.simpleMessage("Select Year"),
     "selected": MessageLookupByLibrary.simpleMessage("عناصر محددة"),
     "send": MessageLookupByLibrary.simpleMessage("إرسال"),
     "sendTimeout": m18,
@@ -592,7 +595,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewDetails": MessageLookupByLibrary.simpleMessage("تفاصيل"),
     "viewErrors": MessageLookupByLibrary.simpleMessage("عرض الأخطاء"),
     "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
-    "warning": MessageLookupByLibrary.simpleMessage("Warning"),
+    "warning": MessageLookupByLibrary.simpleMessage("تنبيه"),
+    "week": MessageLookupByLibrary.simpleMessage("الإسبوع"),
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
     "year": m29,
     "years": MessageLookupByLibrary.simpleMessage("سنوات"),

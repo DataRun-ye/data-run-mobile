@@ -10,8 +10,7 @@ import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'
-    show SystemUiOverlayStyle, SystemChrome, SystemUiMode;
+import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;

@@ -1,4 +1,4 @@
-part of 'form_element.dart';
+part of '../../../form_submission/application/element/form_element.dart';
 
 class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
   RepeatSection({

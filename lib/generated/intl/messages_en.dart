@@ -503,10 +503,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectImageForColorExtraction": MessageLookupByLibrary.simpleMessage(
       "Select Image for Color Extraction",
     ),
+    "selectMonth": MessageLookupByLibrary.simpleMessage("Select Month"),
     "selectMultiFieldHint": MessageLookupByLibrary.simpleMessage(
       "fieldHintText",
     ),
     "selectOneFieldHint": MessageLookupByLibrary.simpleMessage("Select One"),
+    "selectWeek": MessageLookupByLibrary.simpleMessage("Select Week"),
+    "selectYear": MessageLookupByLibrary.simpleMessage("Select Year"),
     "selected": MessageLookupByLibrary.simpleMessage("selected"),
     "send": MessageLookupByLibrary.simpleMessage("Send"),
     "sendTimeout": m18,
@@ -610,6 +613,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("View Errors"),
     "viewList": MessageLookupByLibrary.simpleMessage("View List"),
     "warning": MessageLookupByLibrary.simpleMessage("Warning"),
+    "week": MessageLookupByLibrary.simpleMessage("Week"),
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
     "year": m29,
     "years": MessageLookupByLibrary.simpleMessage("Years"),

@@ -1135,4 +1135,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get warning => 'Warning';
+
+  @override
+  String get week => 'Week';
+
+  @override
+  String get selectMonth => 'Select Month';
+
+  @override
+  String get selectWeek => 'Select Week';
+
+  @override
+  String get selectYear => 'Select Year';
 }

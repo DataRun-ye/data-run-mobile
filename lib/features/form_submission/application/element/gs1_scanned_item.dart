@@ -1,4 +1,4 @@
-part of 'form_element.dart';
+part of '../../../form_submission/application/element/form_element.dart';
 
 class Gs1ScannedItem with EquatableMixin {
   factory Gs1ScannedItem.fromMap(Map<String, dynamic> map) {

@@ -1,4 +1,4 @@
-// import 'package:datarunmobile/data_run/screens/form/field_widgets/reactive_date_time_picker/reactive_date_time_picker.dart';
+// import 'package:datarunmobile/features/form_submission/presentation/field/reactive_date_time_picker/custom_reactive_date_picker.dart';
 // import 'package:flutter/material.dart';
 // import 'package:reactive_forms/reactive_forms.dart';
 //
@@ -6,15 +6,24 @@
 //   runApp(const MyApp());
 // }
 //
-// class MyApp extends StatelessWidget {
+// class MyApp extends StatefulWidget {
 //   const MyApp({super.key});
 //
-//   FormGroup buildForm() => fb.group({
-//         'date': FormControl<DateTime>(value: DateTime.now(), disabled: true),
-//         'time': FormControl<DateTime>(value: DateTime.now()),
-//         'dateTime': FormControl<DateTime>(value: DateTime.now()),
-//         'dateTimeNullable': FormControl<DateTime>(value: null),
-//       });
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
+//
+// class _MyAppState extends State<MyApp> {
+//   FormGroup formGroup = fb.group({
+//     'date': FormControl<String>(
+//         value: DateTime.now().toIso8601String(), disabled: true),
+//     'time': FormControl<String>(value: DateTime.now().toIso8601String()),
+//     'dateTime': FormControl<String>(value: DateTime.now().toIso8601String()),
+//     'month': FormControl<String>(value: DateTime.now().toIso8601String()),
+//     'week': FormControl<String>(value: DateTime.now().toIso8601String()),
+//     'year': FormControl<String>(value: DateTime.now().toIso8601String()),
+//     'dateTimeNullable': FormControl<String>(value: null),
+//   });
 //
 //   @override
 //   Widget build(BuildContext context) {
@@ -32,129 +41,167 @@
 //               horizontal: 20.0,
 //               vertical: 20.0,
 //             ),
-//             child: ReactiveFormBuilder(
-//               form: buildForm,
-//               builder: (context, form, child) {
-//                 return Column(
-//                   children: [
-//                     const SizedBox(height: 8),
-//                     ReactiveDateTimePicker(
-//                       formControlName: 'date',
-//                       decoration: const InputDecoration(
-//                         labelText: 'Date',
-//                         border: OutlineInputBorder(),
-//                         helperText: '',
-//                         suffixIcon: Icon(Icons.calendar_today),
-//                       ),
+//             child: ReactiveForm(
+//               formGroup: formGroup,
+//               child: Column(
+//                 children: [
+//                   const SizedBox(height: 8),
+//                   CustomReactiveDateTimePicker(
+//                     formControlName: 'date',
+//                     decoration: const InputDecoration(
+//                       labelText: 'Date',
+//                       border: OutlineInputBorder(),
+//                       helperText: '',
+//                       suffixIcon: Icon(Icons.calendar_today),
 //                     ),
-//                     const SizedBox(height: 8),
-//                     TextField(
-//                       decoration: const InputDecoration(
-//                         labelText: 'Time',
-//                         border: OutlineInputBorder(),
-//                         helperText: '',
-//                         filled: true,
-//                         fillColor: Colors.green,
-//                         // hoverColor: Colors.yellow,
-//                         suffixIcon: Icon(Icons.watch_later_outlined),
-//                       ),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   TextField(
+//                     decoration: const InputDecoration(
+//                       labelText: 'Time',
+//                       border: OutlineInputBorder(),
+//                       helperText: '',
+//                       filled: true,
+//                       fillColor: Colors.green,
+//                       // hoverColor: Colors.yellow,
+//                       suffixIcon: Icon(Icons.watch_later_outlined),
 //                     ),
-//                     const SizedBox(height: 8),
-//                     ReactiveDateTimePicker(
-//                       formControlName: 'time',
-//                       type: ReactiveDatePickerFieldType.time,
-//                       decoration: const InputDecoration(
-//                         labelText: 'Time',
-//                         border: OutlineInputBorder(),
-//                         helperText: '',
-//                         filled: true,
-//                         fillColor: Colors.green,
-//                         // hoverColor: Colors.yellow,
-//                         suffixIcon: Icon(Icons.watch_later_outlined),
-//                       ),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   CustomReactiveDateTimePicker(
+//                     formControlName: 'time',
+//                     type: ReactiveDatePickerFieldType.time,
+//                     decoration: const InputDecoration(
+//                       labelText: 'Time',
+//                       border: OutlineInputBorder(),
+//                       helperText: '',
+//                       filled: true,
+//                       fillColor: Colors.green,
+//                       // hoverColor: Colors.yellow,
+//                       suffixIcon: Icon(Icons.watch_later_outlined),
 //                     ),
-//                     const SizedBox(height: 8),
-//                     Row(
-//                       children: [
-//                         Expanded(
-//                           child: ReactiveDateTimePicker(
-//                             formControlName: 'dateTime',
-//                             type: ReactiveDatePickerFieldType.dateTime,
-//                             decoration: const InputDecoration(
-//                               labelText: 'Date & Time',
-//                               border: OutlineInputBorder(),
-//                               helperText: '',
-//                               suffixIcon: Icon(Icons.calendar_today),
-//                             ),
-//                             valueBuilder: (_, value) => Text(
-//                               value ?? '',
-//                               overflow: TextOverflow.ellipsis,
-//                               style: Theme.of(context)
-//                                   .textTheme
-//                                   .labelSmall
-//                                   ?.copyWith(color: Colors.blue),
-//                             ),
-//                           ),
-//                         ),
-//                         Expanded(
-//                           child: TextField(
-//                               decoration: const InputDecoration(
+//                   ),
+//                   const SizedBox(height: 8),
+//                   CustomReactiveDateTimePicker(
+//                     formControlName: 'year',
+//                     type: ReactiveDatePickerFieldType.year,
+//                     decoration: const InputDecoration(
+//                       labelText: 'year',
+//                       border: OutlineInputBorder(),
+//                       helperText: '',
+//                       filled: true,
+//                       fillColor: Colors.green,
+//                       suffixIcon: Icon(Icons.calendar_view_month),
+//                     ),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   const SizedBox(height: 8),
+//                   CustomReactiveDateTimePicker(
+//                     formControlName: 'month',
+//                     type: ReactiveDatePickerFieldType.month,
+//                     decoration: const InputDecoration(
+//                       labelText: 'Month',
+//                       border: OutlineInputBorder(),
+//                       helperText: '',
+//                       filled: true,
+//                       fillColor: Colors.green,
+//                       suffixIcon: Icon(Icons.calendar_month),
+//                     ),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   CustomReactiveDateTimePicker(
+//                     formControlName: 'week',
+//                     type: ReactiveDatePickerFieldType.week,
+//                     decoration: const InputDecoration(
+//                       labelText: 'Week',
+//                       border: OutlineInputBorder(),
+//                       helperText: '',
+//                       filled: true,
+//                       fillColor: Colors.green,
+//                       suffixIcon: Icon(Icons.calendar_view_week),
+//                     ),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   Row(
+//                     children: [
+//                       Expanded(
+//                         child: CustomReactiveDateTimePicker(
+//                           formControlName: 'dateTime',
+//                           type: ReactiveDatePickerFieldType.dateTime,
+//                           decoration: const InputDecoration(
 //                             labelText: 'Date & Time',
 //                             border: OutlineInputBorder(),
 //                             helperText: '',
 //                             suffixIcon: Icon(Icons.calendar_today),
-//                           )),
+//                           ),
+//                           valueBuilder: (_, value) => Text(
+//                             value ?? '',
+//                             overflow: TextOverflow.ellipsis,
+//                             style: Theme.of(context)
+//                                 .textTheme
+//                                 .labelSmall
+//                                 ?.copyWith(color: Colors.blue),
+//                           ),
 //                         ),
-//                       ],
-//                     ),
-//                     const SizedBox(height: 8),
-//                     ReactiveDateTimePicker(
-//                       formControlName: 'dateTimeNullable',
-//                       type: ReactiveDatePickerFieldType.dateTime,
-//                       decoration: const InputDecoration(
-//                         labelText: 'Date & Time',
-//                         hintText: 'hintText',
-//                         border: OutlineInputBorder(),
-//                         helperText: 'helperText',
-//                         suffixIcon: Icon(Icons.calendar_today),
 //                       ),
-//                       firstDate: DateTime.now(),
-//                       lastDate: DateTime.now().add(Duration(days: 1)),
-//                     ),
-//                     const SizedBox(height: 8),
-//                     ReactiveDateTimePicker(
-//                       formControlName: 'dateTimeNullable',
-//                       type: ReactiveDatePickerFieldType.date,
-//                       decoration: const InputDecoration(
-//                         labelText: 'Date & Time',
-//                         hintText: 'hintText',
-//                         border: OutlineInputBorder(),
-//                         helperText: 'helperText',
-//                         suffixIcon: Icon(Icons.calendar_today),
+//                       Expanded(
+//                         child: TextField(
+//                             decoration: const InputDecoration(
+//                           labelText: 'Date & Time',
+//                           border: OutlineInputBorder(),
+//                           helperText: '',
+//                           suffixIcon: Icon(Icons.calendar_today),
+//                         )),
 //                       ),
-//                       onTap: (context, value) async {
-//                         return await showDateTimePickerD(context);
-//                       },
+//                     ],
+//                   ),
+//                   const SizedBox(height: 8),
+//                   CustomReactiveDateTimePicker(
+//                     formControlName: 'dateTimeNullable',
+//                     type: ReactiveDatePickerFieldType.dateTime,
+//                     decoration: const InputDecoration(
+//                       labelText: 'Date & Time',
+//                       hintText: 'hintText',
+//                       border: OutlineInputBorder(),
+//                       helperText: 'helperText',
+//                       suffixIcon: Icon(Icons.calendar_today),
 //                     ),
-//                     const SizedBox(height: 16),
-//                     ElevatedButton(
-//                       child: const Text('Sign Up'),
-//                       onPressed: () {
-//                         showTimePicker(
-//                             context: context,
-//                             initialTime:
-//                                 TimeOfDay.fromDateTime(DateTime.now()));
-//                         if (form.valid) {
-//                           // ignore: avoid_print
-//                           print(form.value);
-//                         } else {
-//                           form.markAllAsTouched();
-//                         }
-//                       },
+//                     firstDate: DateTime.now(),
+//                     lastDate: DateTime.now().add(Duration(days: 1)),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   CustomReactiveDateTimePicker(
+//                     formControlName: 'dateTimeNullable',
+//                     type: ReactiveDatePickerFieldType.date,
+//                     decoration: const InputDecoration(
+//                       labelText: 'Date & Time',
+//                       hintText: 'hintText',
+//                       border: OutlineInputBorder(),
+//                       helperText: 'helperText',
+//                       suffixIcon: Icon(Icons.calendar_today),
 //                     ),
-//                   ],
-//                 );
-//               },
+//                     onTap: (context, value) async {
+//                       return (await showDateTimePickerD(context))
+//                           ?.toIso8601String();
+//                     },
+//                   ),
+//                   const SizedBox(height: 16),
+//                   ElevatedButton(
+//                     child: const Text('Sign Up'),
+//                     onPressed: () {
+//                       showTimePicker(
+//                           context: context,
+//                           initialTime: TimeOfDay.fromDateTime(DateTime.now()));
+//                       if (formGroup.valid) {
+//                         // ignore: avoid_print
+//                         print(formGroup.value);
+//                       } else {
+//                         formGroup.markAllAsTouched();
+//                       }
+//                     },
+//                   ),
+//                 ],
+//               ),
 //             ),
 //           ),
 //         ),

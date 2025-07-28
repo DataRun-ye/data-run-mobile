@@ -2766,6 +2766,31 @@ class S {
   String get warning {
     return Intl.message('Warning', name: 'warning', desc: '', args: []);
   }
+
+  /// `Week`
+  String get week {
+    return Intl.message('Week', name: 'week', desc: '', args: []);
+  }
+
+  /// `Select Month`
+  String get selectMonth {
+    return Intl.message(
+      'Select Month',
+      name: 'selectMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Week`
+  String get selectWeek {
+    return Intl.message('Select Week', name: 'selectWeek', desc: '', args: []);
+  }
+
+  /// `Select Year`
+  String get selectYear {
+    return Intl.message('Select Year', name: 'selectYear', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

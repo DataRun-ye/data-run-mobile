@@ -2089,6 +2089,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Warning'**
   String get warning;
+
+  /// No description provided for @week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week;
+
+  /// No description provided for @selectMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Month'**
+  String get selectMonth;
+
+  /// No description provided for @selectWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Week'**
+  String get selectWeek;
+
+  /// No description provided for @selectYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Year'**
+  String get selectYear;
 }
 
 class _AppLocalizationsDelegate

@@ -3,15 +3,13 @@ import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/presentation/field/reactive_date_time_picker/custom_reactive_date_picker.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-
-import 'reactive_date_time_picker/reactive_date_time_picker.dart';
 
 /// A field that can pick Date, Time, or Date+Time, storing the result
 /// in a [FormControl<String>] as an ISO‐8601 string.
@@ -29,123 +27,62 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
     final viewFormat = DateHelper.getEffectiveUiFormat(element.type);
     final control =
         formInstance.form.control(element.elementPath!) as FormControl<String>;
-    return ReactiveDateTimePicker(
+    return CustomReactiveDateTimePicker(
       formControl: control,
       dateFormat: viewFormat,
       textDirection: TextDirection.ltr,
       type: reactiveFieldType,
       validationMessages: validationMessages(),
       decoration: InputDecoration(
-          labelText: element.label,
-          enabled: control.enabled,
-          suffixIcon: Icon(elementIcon),
-          hintText: appLocator<HintProvider>().provideHint(element.type),
+        labelText: element.label,
+        enabled: control.enabled,
+        suffixIcon: Icon(elementIcon),
+        hintText: appLocator<HintProvider>().provideHint(element.type),
       ),
     );
   }
 
-  Future<DateTime?> showDateTimePickerD(
-    BuildContext context, {
-    DateTime? value,
-    DateTime? firstDate,
-    DateTime? lastDate,
-    DateTime? currentDate,
-  }) async {
-    final result = await showDatePicker(
-      context: context,
-      initialDate: value ?? DateTime.now(),
-      firstDate: firstDate ?? DateTime(2000),
-      lastDate: lastDate ?? DateTime(2100),
-    );
-    // await showDatePicker(
-    //   context: context,
-    //   initialDate: value ?? DateTime.now(),
-    //   firstDate: firstDate ?? DateTime(2000),
-    //   lastDate: lastDate ?? DateTime(2100),
-    // );
-    // final result = await _showCalendarDatePicker2Dialog(
-    //   context,
-    //   firstDate: firstDate,
-    //   lastDate: lastDate,
-    //   currentDate: currentDate,
-    //   value: [value],
-    //   calendarType: CalendarDatePicker2Type.single,
-    // );
-
-    return result;
-  }
-
-  // Future<void> _showPicker(BuildContext context,
-  //     ReactiveFormFieldState<String, String> field,
-  //     DateFormat format,
-  //     DateTime first,
-  //     DateTime last,) async {
-  //   DateTime? pickedDate =
-  //   field.value != null ? DateTime.tryParse(field.value!) : null;
-  //   ReactiveDateTimePickerMode mode = dReactiveFieldType;
-  //   if (mode == ReactiveDateTimePickerMode.date ||
-  //       mode == ReactiveDateTimePickerMode.dateTime) {
-  //     final date = await showDatePicker(
-  //       context: context,
-  //       initialDate: pickedDate ?? DateTime.now(),
-  //       firstDate: first,
-  //       lastDate: last,
-  //     );
-  //     if (date == null) return;
-  //     pickedDate = date;
-  //   }
-  //
-  //   TimeOfDay? pickedTime;
-  //   if (mode == ReactiveDateTimePickerMode.time ||
-  //       mode == ReactiveDateTimePickerMode.dateTime) {
-  //     final initial = pickedDate != null
-  //         ? TimeOfDay.fromDateTime(pickedDate)
-  //         : TimeOfDay.now();
-  //     final time = await showTimePicker(
-  //       context: context,
-  //       initialTime: initial,
-  //     );
-  //     if (time == null && mode == ReactiveDateTimePickerMode.time) return;
-  //     pickedTime = time;
-  //   }
-  //
-  //   // build a DateTime or just today's date+time
-  //   DateTime result;
-  //   if (mode == ReactiveDateTimePickerMode.time) {
-  //     final now = DateTime.now();
-  //     result = DateTime(
-  //         now.year, now.month, now.day, pickedTime!.hour, pickedTime.minute);
-  //   } else if (mode == ReactiveDateTimePickerMode.dateTime) {
-  //     result = DateTime(pickedDate!.year, pickedDate.month, pickedDate.day,
-  //         pickedTime!.hour, pickedTime.minute);
-  //   } else {
-  //     result = pickedDate!;
-  //   }
-  //
-  //   // write back as ISO string
-  //   // field.didChange(result.toIso8601String());
-  //   field.didChange(DateHelper.formatUtc(result));
-  // }
-
-  ReactiveDatePickerFieldType get reactiveFieldType => switch (element.type) {
-        ValueType.Date => ReactiveDatePickerFieldType.date,
-        ValueType.DateTime => ReactiveDatePickerFieldType.dateTime,
-        ValueType.Time => ReactiveDatePickerFieldType.time,
-        _ => throw FormElementNotFoundException(element),
+  ReactiveDatePickerFieldType get reactiveFieldType => switch (element) {
+        FieldInstance(:final type) when type == ValueType.Date =>
+          ReactiveDatePickerFieldType.date,
+        FieldInstance(:final type) when type == ValueType.DateTime =>
+          ReactiveDatePickerFieldType.dateTime,
+        FieldInstance(:final type) when type == ValueType.Time =>
+          ReactiveDatePickerFieldType.time,
+        FieldInstance(:final type)
+            when type?.isDateTime == true &&
+                element.template.appearance.contains('month') =>
+          ReactiveDatePickerFieldType.month,
+        FieldInstance(:final type)
+            when type?.isDateTime == true &&
+                element.template.appearance.contains('week') =>
+          ReactiveDatePickerFieldType.week,
+        FieldInstance(:final type)
+            when type?.isDateTime == true &&
+                element.template.appearance.contains('year') =>
+          ReactiveDatePickerFieldType.year,
+        FieldInstance<String>() => throw UnimplementedError(),
       };
 
-  ReactiveDateTimePickerMode get dReactiveFieldType => switch (element.type) {
-        ValueType.Date => ReactiveDateTimePickerMode.date,
-        ValueType.DateTime => ReactiveDateTimePickerMode.dateTime,
-        ValueType.Time => ReactiveDateTimePickerMode.time,
-        _ => throw FormElementNotFoundException(element),
-      };
-
-  IconData get elementIcon => switch (element.type) {
-        ValueType.Date => Icons.calendar_today,
-        ValueType.Time => Icons.access_time,
-        ValueType.DateTime => Icons.event,
-        _ => Icons.event,
+  IconData get elementIcon => switch (element) {
+        FieldInstance(:final type) when type == ValueType.Date =>
+          Icons.calendar_today,
+        FieldInstance(:final type) when type == ValueType.DateTime =>
+          Icons.access_time,
+        FieldInstance(:final type) when type == ValueType.Time => Icons.event,
+        FieldInstance(:final type)
+            when type?.isDateTime == true &&
+                element.template.appearance.contains('month') =>
+          Icons.calendar_month,
+        FieldInstance(:final type)
+            when type?.isDateTime == true &&
+                element.template.appearance.contains('week') =>
+          Icons.calendar_view_week,
+        FieldInstance(:final type)
+            when type?.isDateTime == true &&
+                element.template.appearance.contains('year') =>
+          Icons.calendar_month_outlined,
+        FieldInstance<String>() => throw UnimplementedError(),
       };
 }
 

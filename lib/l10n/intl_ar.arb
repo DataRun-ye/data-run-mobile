@@ -369,5 +369,9 @@
   "finalized": "نهائية",
   "syncFailed": "فشل مزامنة",
   "cancelSyncing": "إيقاف والمزامنة لاحقًا",
-  "warning": "Warning"
+  "warning": "تنبيه",
+  "week": "الإسبوع",
+  "selectMonth": "Select Month",
+  "selectWeek": "Select Week",
+  "selectYear": "Select Year"
 }

@@ -217,6 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "deleteItem": MessageLookupByLibrary.simpleMessage("Delete Item"),
     "deleteRestore": MessageLookupByLibrary.simpleMessage("Delete / Restore"),
+    "demoLogin": MessageLookupByLibrary.simpleMessage("Demo Login"),
     "developer": MessageLookupByLibrary.simpleMessage("Hamza For NMCP Yemen"),
     "developerInfoText": MessageLookupByLibrary.simpleMessage(
       "info@nmcpye.org",
@@ -338,7 +339,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
     "logOut": MessageLookupByLibrary.simpleMessage("Log out?"),
     "logOutAnyway": MessageLookupByLibrary.simpleMessage("LOG OUT ANYWAY"),
-    "login": MessageLookupByLibrary.simpleMessage("Datarun Login"),
+    "login": MessageLookupByLibrary.simpleMessage("Login"),
     "loginUsername": MessageLookupByLibrary.simpleMessage("Login Username"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "logoutNote": MessageLookupByLibrary.simpleMessage(

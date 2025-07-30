@@ -18,7 +18,7 @@
   "appName": "Datarun",
   "showPassword": "أظهر كلمة السر",
   "hidePassword": "اخفاء كلمة السر",
-  "login": "تسجيل دخول النظام",
+  "login": "تسجيل الدخول",
   "syncingConfiguration": "إعدادات المزامنة",
   "configurationReady": "اكتملت تهيئة التطبيق",
   "syncingData": "مزامنة بيانات",
@@ -376,5 +376,6 @@
   "week": "الإسبوع {weekNum}",
   "ofYear": "من عام {year}",
   "created": "Created",
-  "modified": "Modified"
+  "modified": "Modified",
+  "demoLogin": "Demo Login"
 }

@@ -28,7 +28,6 @@ class AssignmentDetailView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
-    // final assignmentModel = ref.watch(assignmentProvider);
     return ViewModelBuilder<AssignmentDetailViewModel>.reactive(
       viewModelBuilder: () => AssignmentDetailViewModel(assignmentId)..run(),
       builder: (context, model, child) {
@@ -141,7 +140,7 @@ class _FormListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formTemplateAsync = ref.watch(
-        submissionVersionFormTemplateProvider(formId: assignmentForm.form));
+        formTemplateProvider(formId: assignmentForm.form));
     final theme = Theme.of(context);
     final metadataStyle =
         theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade700);

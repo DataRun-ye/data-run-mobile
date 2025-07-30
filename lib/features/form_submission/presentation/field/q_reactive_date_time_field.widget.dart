@@ -39,36 +39,60 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
       decoration: InputDecoration(
         labelText: element.label,
         enabled: control.enabled,
-        suffixIcon: Icon(elementIcon),
+        prefixIcon: Icon(elementIcon),
         hintText: appLocator<HintProvider>().provideHint(element.type),
       ),
-      valueBuilder: valueBuilder,
+      valueBuilder: customValueBuilder ? valueBuilder : null,
     );
   }
 
-  Widget valueBuilder(BuildContext context, String? value) {
-    final th = Theme.of(context).textTheme.titleMedium;
+  bool get customValueBuilder => switch (element) {
+        FieldInstance(:final type)
+            when type == ValueType.Date &&
+                (element.template.properties.values.contains('month') ||
+                    element.template.appearance.contains('month')) =>
+          true,
+
+        //
+        FieldInstance(:final type)
+            when type == ValueType.Date &&
+                (element.template.properties.values.contains('week') ||
+                    element.template.appearance.contains('week')) =>
+          true,
+        //
+        FieldInstance(:final type)
+            when type == ValueType.Date &&
+                (element.template.properties.values.contains('year') ||
+                    element.template.appearance.contains('year')) =>
+          true,
+        _ => false,
+      };
+
+  Widget valueBuilder(BuildContext context, String? value, Widget? child) {
     if (value == null || DateTime.tryParse(value) == null) return Text('');
     final date = DateTime.parse(value);
 
     return switch (element) {
       FieldInstance(:final type)
-          when type?.isDateTime == true &&
-              element.template.appearance.contains('month') =>
+          when type == ValueType.Date &&
+              (element.template.properties.values.contains('month') ||
+                  element.template.appearance.contains('month')) =>
         Text(DateFormat.yMMMM().format(date)),
 
       //
       FieldInstance(:final type)
-          when type?.isDateTime == true &&
-              element.template.appearance.contains('week') =>
+          when type == ValueType.Date &&
+              (element.template.properties.values.contains('week') ||
+                  element.template.appearance.contains('week')) =>
         Text(
             '${date.year}, ${S.of(context).week(CustomDatePickers.getWeekNumber(date).toString().padLeft(2, '0'))}'),
       //
       FieldInstance(:final type)
-          when type?.isDateTime == true &&
-              element.template.appearance.contains('year') =>
+          when type == ValueType.Date &&
+              (element.template.properties.values.contains('year') ||
+                  element.template.appearance.contains('year')) =>
         Text(DateFormat.y().format(date)),
-      _ => Text(value),
+      _ => child!,
     };
   }
 

@@ -215,7 +215,7 @@ abstract class AppLocalizations {
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Datarun Login'**
+  /// **'Login'**
   String get login;
 
   /// No description provided for @configurationReady.
@@ -2131,6 +2131,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Modified'**
   String get modified;
+
+  /// No description provided for @demoLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo Login'**
+  String get demoLogin;
 }
 
 class _AppLocalizationsDelegate

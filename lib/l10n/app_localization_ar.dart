@@ -83,7 +83,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get syncingConfiguration => 'إعدادات المزامنة';
 
   @override
-  String get login => 'تسجيل دخول النظام';
+  String get login => 'تسجيل الدخول';
 
   @override
   String get configurationReady => 'اكتملت تهيئة التطبيق';
@@ -1160,4 +1160,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get modified => 'Modified';
+
+  @override
+  String get demoLogin => 'Demo Login';
 }

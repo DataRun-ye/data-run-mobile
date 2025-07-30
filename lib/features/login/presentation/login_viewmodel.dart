@@ -41,4 +41,30 @@ class LoginViewModel extends BaseViewModel {
       DExceptionReporter.instance.report(e, showToUser: true);
     }
   }
+
+  Future<void> demoLogin() async {
+    FormControl<String> usernameControl =
+        form.control('username') as FormControl<String>;
+
+    FormControl<String> passwordControl =
+        form.control('password') as FormControl<String>;
+
+    usernameControl.updateValue('test1234');
+    passwordControl.updateValue('test1234');
+
+    form.markAsDisabled();
+    try {
+      final userDetails = await _authManager.login(
+          username: usernameControl.value!, password: passwordControl.value!);
+      _navigationService.replaceWithSyncResourcesView();
+    } catch (e, s) {
+      form.markAsEnabled();
+      usernameControl.updateValue(null);
+      passwordControl.updateValue(null);
+      usernameControl.markAsEnabled();
+      passwordControl.markAsEnabled();
+      logError('couldn\'t login', stackTrace: s);
+      DExceptionReporter.instance.report(e, showToUser: true);
+    }
+  }
 }

@@ -169,9 +169,9 @@ class ReactiveDateTimePicker
                       TimeOfDay? time;
                       field.control.focus();
                       field.control.updateValueAndValidity();
-                      final fValue = field.control.value;
+                      final raw = field.control.value;
                       final initialDate = _getInitialDate(
-                        fValue,
+                        raw,
                         effectiveLastDate,
                       );
 

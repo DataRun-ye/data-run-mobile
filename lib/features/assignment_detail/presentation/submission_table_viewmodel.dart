@@ -55,7 +55,7 @@ class DetailSubmissionsViewModel extends BaseViewModel {
 
   void setPageSize(int pageSize) async {
     this.pageSize = pageSize;
-    await _loadPage(_formId!, _assignmentId!, page: 0);
+    await _loadPage(_formId!, _assignmentId, page: 0);
   }
 
   Future<void> _loadPage(
@@ -107,7 +107,7 @@ class DetailSubmissionsViewModel extends BaseViewModel {
     final newPage = rowIndex ~/ pageSize;
     if (newPage != currentPage && submissions.length <= rowIndex) {
       // pass in formId and assignmentId as stored or via params
-      await _loadPage(_formId!, _assignmentId!, page: newPage);
+      await _loadPage(_formId!, _assignmentId, page: newPage);
     }
   }
 
@@ -134,7 +134,7 @@ class DetailSubmissionsViewModel extends BaseViewModel {
   Future<void> delete(String id) async {
     await db.dataInstancesDao.deleteById(id);
     // reload current page
-    await _loadPage(_formId!, _assignmentId!, page: currentPage);
+    await _loadPage(_formId!, _assignmentId, page: currentPage);
   }
 
   // Internal to store params for reload

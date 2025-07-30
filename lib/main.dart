@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:d_sdk/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
@@ -121,8 +122,6 @@ class App extends ConsumerWidget {
           base: ThemeData.dark(useMaterial3: useMaterial3),
           platform: Theme.of(context).platform,
           brightness: Brightness.dark),
-      // localizationsDelegates: localizationsDelegates,
-      // supportedLocales: supportedLocales,
       locale: resolveLocale(status: authManager.status, languageCode: language),
       // Setup internationalization
       localizationsDelegates: localizationsDelegates,
@@ -137,31 +136,36 @@ class App extends ConsumerWidget {
         if (authManager.status == AuthStatus.authenticated) {
           // preference take precedence over api user's local
 
-          userLocale = language != 'NA'
-              ? Locale(language, language == 'en' ? 'US' : '')
-              : appLocator<LocaleService>().currentLocale;
-          if (userLocale != null) {
-            // If the user has a specific locale set, use that
-            // timeago.setDefaultLocale('en');
-            timeago.setLocaleMessages(
-                userLocale.languageCode,
-                switch (language) {
-                  'ar' => timeago.ArMessages(),
-                  'en' => timeago.EnMessages(),
-                  _ => timeago.EnMessages(),
-                });
-            return userLocale;
-          }
-        }
-        // Otherwise, use the device locale or default to English
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale?.languageCode) {
-            return supportedLocale;
-          }
+          userLocale = appLocator<LocaleService>().currentLocale;
+
+          // If the user has a specific locale set, use that
+          // timeago.setDefaultLocale('en');
+          timeago.setLocaleMessages(
+              userLocale!.languageCode,
+              switch (language) {
+                'ar' => timeago.ArMessages(),
+                'en' => timeago.EnMessages(),
+                _ => timeago.EnMessages(),
+              });
+          return userLocale;
         }
 
-        // Fallback to the first supported locale (e.g., en)
-        return supportedLocales.first;
+        if (language != 'NA') {
+          return Locale(language, language == 'en' ? 'US' : '');
+        } else {
+          return Locale(AppEnvironment.defaultLocale,
+              AppEnvironment.defaultLocale == 'en' ? 'US' : '');
+        }
+
+        // // Otherwise, use the device locale or default to English
+        // for (var supportedLocale in supportedLocales) {
+        //   if (supportedLocale.languageCode == locale?.languageCode) {
+        //     return supportedLocale;
+        //   }
+        // }
+        //
+        // // Fallback to the first supported locale (e.g., en)
+        // return supportedLocales.first;
       },
       // stacked
       onGenerateRoute: StackedRouter().onGenerateRoute,

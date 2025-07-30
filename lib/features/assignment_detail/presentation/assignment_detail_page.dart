@@ -6,6 +6,7 @@ import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/form_display.dart';
+import 'package:datarunmobile/features/assignment/presentation/assignments_table/form_prefix_version_badge.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/team_display.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/assignment_detail/presentation/details_submissions_table.dart';
@@ -62,7 +63,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                   shrinkWrap: true,
                   separatorBuilder: (_, __) => const Divider(
                     height: 0,
-                    // thickness: 0.5,
+                    thickness: 0.2,
                     indent: 16,
                     endIndent: 16,
                   ),
@@ -71,10 +72,11 @@ class AssignmentDetailPage extends ConsumerWidget {
                     final form = assignment.availableForms[index].first;
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: _EagerInitialization(
                         child: ExpansionTile(
-                          collapsedBackgroundColor: cs.surfaceContainerHigh,
+                          leading: FormPrefixVersionBadge(form: form.form),
+                          collapsedBackgroundColor: cs.surfaceContainer,
                           dense: true,
                           title: FormDisplay(form: form.form),
                           visualDensity: VisualDensity.standard,
@@ -194,8 +196,8 @@ class _FormListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formTemplateAsync = ref.watch(
-        submissionVersionFormTemplateProvider(formId: assignmentForm.form));
+    final formTemplateAsync =
+        ref.watch(formTemplateProvider(formId: assignmentForm.form));
     final theme = Theme.of(context);
     final metadataStyle =
         theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade700);

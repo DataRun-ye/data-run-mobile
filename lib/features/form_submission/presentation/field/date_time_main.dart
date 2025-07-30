@@ -154,7 +154,7 @@ class _MyAppState extends State<MyApp> {
                             helperText: '',
                             suffixIcon: Icon(Icons.calendar_today),
                           ),
-                          valueBuilder: (_, value) => Text(
+                          valueBuilder: (_, value, child) => Text(
                             value ?? '',
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)

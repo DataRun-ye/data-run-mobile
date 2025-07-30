@@ -239,9 +239,9 @@ class S {
     );
   }
 
-  /// `Datarun Login`
+  /// `Login`
   String get login {
-    return Intl.message('Datarun Login', name: 'login', desc: '', args: []);
+    return Intl.message('Login', name: 'login', desc: '', args: []);
   }
 
   /// `Configuration Ready`
@@ -2810,6 +2810,11 @@ class S {
   /// `Modified`
   String get modified {
     return Intl.message('Modified', name: 'modified', desc: '', args: []);
+  }
+
+  /// `Demo Login`
+  String get demoLogin {
+    return Intl.message('Demo Login', name: 'demoLogin', desc: '', args: []);
   }
 }
 

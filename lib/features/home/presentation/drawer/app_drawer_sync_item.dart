@@ -54,7 +54,7 @@ class DrawerSyncItem extends ConsumerWidget {
               }
             : null,
       ),
-      isLoadingBuilder: () => ListTile(
+      loadingBuilder: () => ListTile(
         isThreeLine: true,
         style: ListTileStyle.drawer,
         leading: const Icon(Icons.sync),

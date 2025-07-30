@@ -19,7 +19,7 @@
   "showPassword": "Show Password",
   "hidePassword": "Hide Password",
   "syncingConfiguration": "Syncing Configuration",
-  "login": "Datarun Login",
+  "login": "Login",
   "configurationReady": "Configuration Ready",
   "syncingData": "Syncing Data",
   "syncingEvents": "Syncing Events",
@@ -413,5 +413,6 @@
   "week": "Week {weekNum}",
   "ofYear": "Of {year}",
   "created": "Created",
-  "modified": "Modified"
+  "modified": "Modified",
+  "demoLogin": "Demo Login"
 }

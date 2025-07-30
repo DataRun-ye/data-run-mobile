@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class LoginViewSubmitButton extends ConsumerWidget {
-  const LoginViewSubmitButton({
+class DemoLoginSubmitButton extends ConsumerWidget {
+  const DemoLoginSubmitButton({
     super.key,
     this.onPressed,
     required this.label,
@@ -27,7 +27,7 @@ class LoginViewSubmitButton extends ConsumerWidget {
         child: isOnline
             ? Text(label)
             : Text(S.of(context).noConnection),
-        onPressed: isOnline && formIsValid ? onPressed : null,
+        onPressed: isOnline && form.enabled ? onPressed : null,
       ),
     );
   }

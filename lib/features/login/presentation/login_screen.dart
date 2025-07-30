@@ -109,11 +109,20 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 24),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: LoginViewSubmitButton(
-                                    onPressed: () => viewModel.userLogin(),
-                                  ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: LoginViewSubmitButton(
+                                        onPressed: () => viewModel.userLogin(),
+                                        label: S.of(context).login,
+                                      ),
+                                    ),
+                                    LoginViewSubmitButton(
+                                      onPressed: () => viewModel.demoLogin(),
+                                      label: S.of(context).demoLogin,
+                                    )
+                                  ],
                                 ),
                               ],
                             ),

@@ -1,7 +1,6 @@
 import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/data/form_template_list_service.dart';
-import 'package:datarunmobile/data/form_template_service.dart';
 import 'package:flutter/material.dart';
 
 class FormTemplatePickerBottomSheet extends StatelessWidget {

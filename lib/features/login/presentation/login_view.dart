@@ -1,5 +1,7 @@
 import 'package:d_sdk/core/user_session/user_session.dart';
+import 'package:d_sdk/di/app_environment.dart';
 import 'package:datarunmobile/data/password_visibility.provider.dart';
+import 'package:datarunmobile/features/login/presentation/demo_login_submit_button.dart';
 import 'package:datarunmobile/features/login/presentation/login_view_header.dart';
 import 'package:datarunmobile/features/login/presentation/login_view_submit_button.dart';
 import 'package:datarunmobile/features/login/presentation/login_viewmodel.dart';
@@ -109,12 +111,21 @@ class LoginView extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 24),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: LoginViewSubmitButton(
-                                    onPressed: () => viewModel.userLogin(),
-                                  ),
-                                ),
+                                Wrap(
+                                  spacing: 8,
+                                  runSpacing: 8,
+                                  children: <Widget>[
+                                    LoginViewSubmitButton(
+                                      onPressed: () => viewModel.userLogin(),
+                                      label: S.of(context).login,
+                                    ),
+                                    if (AppEnvironment.isDev)
+                                      DemoLoginSubmitButton(
+                                        onPressed: () => viewModel.demoLogin(),
+                                        label: S.of(context).demoLogin,
+                                      ),
+                                  ],
+                                )
                               ],
                             ),
                           ),

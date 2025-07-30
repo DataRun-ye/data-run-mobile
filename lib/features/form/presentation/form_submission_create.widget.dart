@@ -134,8 +134,8 @@ class _FormListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formTemplateAsync = ref
-        .watch(submissionVersionFormTemplateProvider(formId: permission.form));
+    final formTemplateAsync =
+        ref.watch(formTemplateProvider(formId: permission.form));
     final theme = Theme.of(context);
     final metadataStyle =
         theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade700);

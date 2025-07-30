@@ -218,6 +218,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "deleteItem": MessageLookupByLibrary.simpleMessage("حذف العنصر"),
     "deleteRestore": MessageLookupByLibrary.simpleMessage("حذف/استعادة"),
+    "demoLogin": MessageLookupByLibrary.simpleMessage("Demo Login"),
     "developer": MessageLookupByLibrary.simpleMessage(
       "البرنامج الوطني لمكافحة الملاريا",
     ),
@@ -335,7 +336,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "loading": MessageLookupByLibrary.simpleMessage("تحميل ..."),
     "logOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج؟"),
     "logOutAnyway": MessageLookupByLibrary.simpleMessage("نأكيد تسجيل الخروج"),
-    "login": MessageLookupByLibrary.simpleMessage("تسجيل دخول النظام"),
+    "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "loginUsername": MessageLookupByLibrary.simpleMessage("حساب تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
     "logoutNote": MessageLookupByLibrary.simpleMessage(

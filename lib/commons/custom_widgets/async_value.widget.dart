@@ -8,7 +8,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
       {super.key,
       required this.value,
       required this.valueBuilder,
-      this.isLoadingBuilder,
+      this.loadingBuilder,
       this.errorBuilder});
 
   // input async value
@@ -16,7 +16,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
 
   // output builder function
   final Widget Function(T) valueBuilder;
-  final Widget Function()? isLoadingBuilder;
+  final Widget Function()? loadingBuilder;
   final Widget Function(Object? error, StackTrace? st)? errorBuilder;
 
   @override
@@ -28,8 +28,8 @@ class AsyncValueWidget<T> extends StatelessWidget {
             : getErrorWidget(error, stackTrace),
       AsyncValue(valueOrNull: final valueOrNull?) =>
         valueBuilder.call(valueOrNull),
-      AsyncValue() => isLoadingBuilder != null
-          ? isLoadingBuilder!.call()
+      AsyncValue() => loadingBuilder != null
+          ? loadingBuilder!.call()
           : Center(child: const CircularProgressIndicator()),
     };
   }

@@ -83,7 +83,167 @@ class DetailSubmissionsTable extends HookConsumerWidget {
           }).toList();
           final title = getItemLocalString(template.template.label,
               defaultString: template.template.name);
+          final table = LayoutBuilder(builder: (context, constraints) {
+            return Scrollbar(
+              interactive: true,
+              controller: _horizontalController,
+              child: SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: const EdgeInsets.only(bottom: 24),
+                scrollDirection: Axis.horizontal,
+                controller: _horizontalController,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                  child: DataTable(
+                    key: ValueKey('${assignment}_submissions_table'),
+                    sortAscending: _sortAscending.value,
+                    sortColumnIndex: _sortColumnIndex.value,
+                    columns: <DataColumn>[
+                      DataColumn(
+                        label: Text(S.of(context).status),
+                        onSort: (columnIndex, ascending) {
+                          _sort<String>(
+                              (d) => d.syncState.name, columnIndex, ascending);
+                        },
+                      ),
+                      DataColumn(label: Text(S.of(context).edit)),
+                      ...columnHeaders.map((header) => DataColumn(
+                          label: Text(getItemLocalString(header.label.unlock,
+                              defaultString: header.name)))),
+                      DataColumn(
+                        label: Text(S.of(context).createdDate),
+                        onSort: (columnIndex, ascending) {
+                          _sort<DateTime>(
+                              (d) => d.createdDate ?? DateTime.now(),
+                              columnIndex,
+                              ascending);
+                        },
+                      ),
+                      DataColumn(
+                        label: Text(S.of(context).lastmodifiedDate),
+                        onSort: (columnIndex, ascending) {
+                          _sort<DateTime>(
+                              (d) => d.lastModifiedDate ?? DateTime.now(),
+                              columnIndex,
+                              ascending);
+                        },
+                      ),
+                      DataColumn(label: Text(S.of(context).deleteRestore)),
+                    ],
+                    rows: submissions.value.map((submission) {
+                      final deleted = (submission.deleted);
+                      final textStyle = deleted
+                          ? const TextStyle(
+                              decoration: TextDecoration.lineThrough)
+                          : null;
+                      Map<String, dynamic> extractedValues = {};
+                      try {
+                        extractedValues =
+                            _extractValues(submission.formData ?? {}, template);
+                      } catch (e) {
+                        // log
+                      }
 
+                      return DataRow(
+                        color: deleted
+                            ? WidgetStateProperty.all(Colors.grey[700])
+                            : null,
+                        selected:
+                            selectedSubmissions.value.contains(submission),
+                        onSelectChanged: (selected) {
+                          if (selected == true) {
+                            selectedSubmissions.value =
+                                selectedSubmissions.value.add(submission);
+                          } else {
+                            selectedSubmissions.value =
+                                selectedSubmissions.value.remove(submission);
+                          }
+                        },
+                        cells: <DataCell>[
+                          DataCell(GestureDetector(
+                            onTap: submission.syncState.isSyncFailed
+                                ? () => buildShowDialog(context, submission)
+                                : null,
+                            child: StatusIcon(syncState: submission.syncState),
+                          )),
+                          DataCell(IconButton(
+                            onPressed: !deleted
+                                ? () async {
+                                    goToDataEntryForm(
+                                        context, assignment, submission);
+                                    // ref.invalidate(assignmentsProvider);
+                                  }
+                                : null,
+                            icon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.edit),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 3, vertical: 3),
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceContainerLow,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Consumer(
+                                    builder: (context, ref, child) {
+                                      final formTemplate = ref.watch(
+                                          formTemplateProvider(
+                                              versionId:
+                                                  submission.templateVersion));
+                                      return AsyncValueWidget(
+                                          value: formTemplate,
+                                          valueBuilder: (submissionTemplate) {
+                                            return Text(
+                                                'v${submissionTemplate.versionNumber}',
+                                                style: metadataStyle);
+                                          });
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                            // label: Text(S.of(context).edit),
+                          )),
+                          ...columnHeaders.map(
+                            (header) => DataCell(
+                              Text(
+                                  extractedValues[header.name]?.toString() ??
+                                      '',
+                                  style: textStyle),
+                            ),
+                          ),
+                          DataCell(Text(_formatDate(submission.createdDate),
+                              style: textStyle)),
+                          DataCell(Text(
+                              _formatDate(submission.lastModifiedDate),
+                              style: textStyle)),
+                          DataCell(IconButton(
+                            icon: Icon(
+                                deleted
+                                    ? Icons.settings_backup_restore
+                                    : Icons.delete,
+                                size: 20),
+                            onPressed: () => _confirmDelete(
+                                context,
+                                submission.id,
+                                deleted
+                                    ? S.of(context).restoreItem
+                                    : S.of(context).deleteConfirmationMessage,
+                                ref),
+                            tooltip: deleted
+                                ? S.of(context).restoreItem
+                                : S.of(context).deleteItem,
+                          )),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            );
+          });
           return Column(
             key: ValueKey('${assignment.id}_cold'),
             mainAxisAlignment: MainAxisAlignment.start,
@@ -108,184 +268,7 @@ class DetailSubmissionsTable extends HookConsumerWidget {
 
               const SizedBox(height: 8),
               submissions.value.isNotEmpty
-                  ? LayoutBuilder(builder: (context, constraints) {
-                      return Scrollbar(
-                        interactive: true,
-                        controller: _horizontalController,
-                        child: SingleChildScrollView(
-                          keyboardDismissBehavior:
-                              ScrollViewKeyboardDismissBehavior.onDrag,
-                          padding: const EdgeInsets.only(bottom: 24),
-                          scrollDirection: Axis.horizontal,
-                          controller: _horizontalController,
-                          child: ConstrainedBox(
-                            constraints:
-                                BoxConstraints(minWidth: constraints.maxWidth),
-                            child: DataTable(
-                              key: ValueKey('${assignment}_submissions_table'),
-                              sortAscending: _sortAscending.value,
-                              sortColumnIndex: _sortColumnIndex.value,
-                              columns: <DataColumn>[
-                                DataColumn(
-                                  label: Text(S.of(context).status),
-                                  onSort: (columnIndex, ascending) {
-                                    _sort<String>((d) => d.syncState.name,
-                                        columnIndex, ascending);
-                                  },
-                                ),
-                                DataColumn(label: Text(S.of(context).edit)),
-                                ...columnHeaders.map((header) => DataColumn(
-                                    label: Text(getItemLocalString(
-                                        header.label.unlock,
-                                        defaultString: header.name)))),
-                                DataColumn(
-                                  label: Text(S.of(context).createdDate),
-                                  onSort: (columnIndex, ascending) {
-                                    _sort<DateTime>(
-                                        (d) => d.createdDate ?? DateTime.now(),
-                                        columnIndex,
-                                        ascending);
-                                  },
-                                ),
-                                DataColumn(
-                                  label: Text(S.of(context).lastmodifiedDate),
-                                  onSort: (columnIndex, ascending) {
-                                    _sort<DateTime>(
-                                        (d) =>
-                                            d.lastModifiedDate ??
-                                            DateTime.now(),
-                                        columnIndex,
-                                        ascending);
-                                  },
-                                ),
-                                DataColumn(
-                                    label: Text(S.of(context).deleteRestore)),
-                              ],
-                              rows: submissions.value.map((submission) {
-                                final deleted = (submission.deleted);
-                                final textStyle = deleted
-                                    ? const TextStyle(
-                                        decoration: TextDecoration.lineThrough)
-                                    : null;
-                                Map<String, dynamic> extractedValues = {};
-                                try {
-                                  extractedValues = _extractValues(
-                                      submission.formData ?? {}, template);
-                                } catch (e) {
-                                  // log
-                                }
-
-                                return DataRow(
-                                  color: deleted
-                                      ? WidgetStateProperty.all(
-                                          Colors.grey[700])
-                                      : null,
-                                  selected: selectedSubmissions.value
-                                      .contains(submission),
-                                  onSelectChanged: (selected) {
-                                    if (selected == true) {
-                                      selectedSubmissions.value =
-                                          selectedSubmissions.value
-                                              .add(submission);
-                                    } else {
-                                      selectedSubmissions.value =
-                                          selectedSubmissions.value
-                                              .remove(submission);
-                                    }
-                                  },
-                                  cells: <DataCell>[
-                                    DataCell(GestureDetector(
-                                      onTap: submission.syncState.isSyncFailed
-                                          ? () => buildShowDialog(
-                                              context, submission)
-                                          : null,
-                                      child: StatusIcon(
-                                          syncState: submission.syncState),
-                                    )),
-                                    DataCell(IconButton(
-                                      onPressed: !deleted
-                                          ? () async {
-                                              goToDataEntryForm(context,
-                                                  assignment, submission);
-                                              // ref.invalidate(assignmentsProvider);
-                                            }
-                                          : null,
-                                      icon: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Icon(Icons.edit),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 3, vertical: 3),
-                                            decoration: BoxDecoration(
-                                              color: cs.surfaceContainerLow,
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Consumer(
-                                              builder: (context, ref, child) {
-                                                final formTemplate = ref.watch(
-                                                    submissionVersionFormTemplateProvider(
-                                                        versionId: submission
-                                                            .templateVersion));
-                                                return AsyncValueWidget(
-                                                    value: formTemplate,
-                                                    valueBuilder:
-                                                        (submissionTemplate) {
-                                                      return Text(
-                                                          'v${submissionTemplate.versionNumber}',
-                                                          style: metadataStyle);
-                                                    });
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      // label: Text(S.of(context).edit),
-                                    )),
-                                    ...columnHeaders.map(
-                                      (header) => DataCell(
-                                        Text(
-                                            extractedValues[header.name]
-                                                    ?.toString() ??
-                                                '',
-                                            style: textStyle),
-                                      ),
-                                    ),
-                                    DataCell(Text(
-                                        _formatDate(submission.createdDate),
-                                        style: textStyle)),
-                                    DataCell(Text(
-                                        _formatDate(
-                                            submission.lastModifiedDate),
-                                        style: textStyle)),
-                                    DataCell(IconButton(
-                                      icon: Icon(
-                                          deleted
-                                              ? Icons.settings_backup_restore
-                                              : Icons.delete,
-                                          size: 20),
-                                      onPressed: () => _confirmDelete(
-                                          context,
-                                          submission.id,
-                                          deleted
-                                              ? S.of(context).restoreItem
-                                              : S
-                                                  .of(context)
-                                                  .deleteConfirmationMessage,
-                                          ref),
-                                      tooltip: deleted
-                                          ? S.of(context).restoreItem
-                                          : S.of(context).deleteItem,
-                                    )),
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      );
-                    })
+                  ? table
                   : Center(child: Text(S.of(context).noSubmissions)),
               // const SizedBox(height: 30),
             ],

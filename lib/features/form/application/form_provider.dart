@@ -46,7 +46,7 @@ Future<DataOptionSet?> optionSet(Ref ref, {required String id}) async {
 /// look for the latest version of the form template or the form template
 /// that matches the version
 @riverpod
-Future<FormTemplateModel> submissionVersionFormTemplate(Ref ref,
+Future<FormTemplateModel> formTemplate(Ref ref,
     {String? formId, String? versionId}) async {
   final form = await appLocator<FormTemplateListService>()
       .getTemplateByVersionOrLatest(templateId: formId, versionId: versionId);

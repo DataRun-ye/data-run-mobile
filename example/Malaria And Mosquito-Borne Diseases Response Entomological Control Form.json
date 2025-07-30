@@ -1,0 +1,377 @@
+{
+  "uid": "yoPNCr8OR1O",
+  "versionUid": "K1nzIWashGG",
+  "versionNumber": 7,
+  "name": "Malaria And Mosquito-Borne Diseases Emergency Response Entomological Control Form",
+  "deleted": false,
+  "label": {
+    "ar": "استمارة المكافحة الحشرية خلال الاستجابة لطوارئ الملاريا الامراض المنقولة بالبعوض",
+    "en": "Malaria And Mosquito-Borne Diseases Emergency Response Entomological Control Form"
+  },
+  "sections": [
+    {
+      "parent": "mainsection",
+      "name": "breedingsources",
+      "label": {
+        "en": "breedingsources",
+        "ar": "مصادر التوالد"
+      },
+      "rules": [],
+      "order": 15,
+      "repeatable": true,
+      "id": "breedingsources"
+    },
+    {
+      "name": "mainsection",
+      "label": {
+        "en": "mainsection",
+        "ar": "بيانات المكان"
+      },
+      "rules": [],
+      "order": 1,
+      "repeatable": false,
+      "id": "mainsection"
+    }
+  ],
+  "fields": [
+    {
+      "parent": "mainsection",
+      "name": "visitdate",
+      "code": "visitdate",
+      "label": {
+        "en": "Visit Date",
+        "ar": "تاريخ الزيارة"
+      },
+      "rules": [],
+      "order": 2,
+      "id": "LyIGccZ5mna",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "workdays",
+      "code": "workdays",
+      "description": "Day of work for the campaign.",
+      "label": {
+        "en": "Work Day",
+        "ar": "يوم العمل"
+      },
+      "rules": [],
+      "order": 3,
+      "id": "igKGDeRLe8p",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "LT0LMYKsxhO",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "serialNumber",
+      "code": "serialNumber",
+      "label": {
+        "en": "serialNumber",
+        "ar": "الرقم التسلسلي"
+      },
+      "rules": [],
+      "order": 4,
+      "id": "w8VQRZmmz82",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "householdname",
+      "code": "householdname",
+      "description": "Name of the household head.",
+      "label": {
+        "en": "Household Name",
+        "ar": "اسم صاحب موقع التوالد/ اسم صاحب المنزل"
+      },
+      "rules": [],
+      "order": 5,
+      "id": "MMbryffxoh5",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "breeding_habitat_description",
+      "code": "de_breeding_habitat_description",
+      "label": {
+        "en": "breeding_habitat_description",
+        "ar": "وصف المصادر"
+      },
+      "rules": [],
+      "order": 20,
+      "id": "N0diYDRBT3n",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "indoor_lsm_yesno",
+      "code": "de_indoor_lsm_yesno",
+      "label": {
+        "en": "indoor_lsm_yesno",
+        "ar": "المصدر داخل منزل"
+      },
+      "rules": [],
+      "order": 21,
+      "id": "ZyMmmkPOoSz",
+      "type": "YesNo",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "breeding_habitat_type",
+      "code": "de_breeding_habitat_type",
+      "description": "نوع موطن التوالد اكتب رقم النوع بحسب التحديد أسفل الاستمارة",
+      "label": {
+        "en": "breeding_habitat_type",
+        "ar": "نوع موطن التوالد"
+      },
+      "rules": [],
+      "order": 22,
+      "id": "mUu9BZx3QpC",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "okB4N6tZJZO",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "breeding_habitats_count",
+      "code": "de_breeding_habitats_count",
+      "label": {
+        "en": "breeding_habitats_count",
+        "ar": "عدد مصادر التوالد"
+      },
+      "rules": [],
+      "order": 23,
+      "id": "zqnPYStRoev",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "breeding_habitat_length_meter",
+      "code": "de_breeding_habitat_length_meter",
+      "description": "ابعاد مصادر التوالد بالمترالطول",
+      "label": {
+        "en": "breeding_habitat_length_meter",
+        "ar": "الطول"
+      },
+      "rules": [],
+      "order": 24,
+      "id": "CMoSkPtSkbI",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "Ibg6HCoAwYi",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "breeding_habitat_width_meter",
+      "code": "de_breeding_habitat_width_meter",
+      "label": {
+        "en": "breeding_habitat_width_meter",
+        "ar": "العرض"
+      },
+      "rules": [],
+      "order": 25,
+      "id": "YQ7O6kmCkpU",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "vok7utSwpeV",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "breeding_habitat_depth_meter",
+      "code": "de_breeding_habitat_depth_meter",
+      "label": {
+        "en": "breeding_habitat_depth_meter",
+        "ar": "العمق"
+      },
+      "rules": [],
+      "order": 26,
+      "id": "JMz4fKKPnpP",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "IHvQYidIc5O",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "Larval_stage_presence",
+      "code": "de_Larval_stage_presence",
+      "label": {
+        "en": "Larval_stage_presence",
+        "ar": "الطوراليرقي"
+      },
+      "rules": [],
+      "order": 27,
+      "id": "Q7u6K10eslq",
+      "type": "YesNo",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "lsm_type",
+      "code": "de_lsm_type",
+      "description": "lsm emergency breeding habitats larval",
+      "label": {
+        "en": "lsm_type",
+        "ar": "التدخل"
+      },
+      "rules": [],
+      "order": 28,
+      "id": "CGHp9VdFdqc",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "cJzUUQ2x0cY",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "fogging_yesno",
+      "code": "de_fogging_yesno",
+      "label": {
+        "en": "fogging_yesno",
+        "ar": "رش ضبابي"
+      },
+      "rules": [],
+      "order": 29,
+      "id": "sx0OOG1H3So",
+      "type": "YesNo",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "irs_yesno",
+      "code": "de_irs_yesno",
+      "label": {
+        "en": "irs_yesno",
+        "ar": "رش متبقي الأثر"
+      },
+      "rules": [],
+      "order": 30,
+      "id": "piv8Ff6rosl",
+      "type": "YesNo",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "other_breeding_habitat",
+      "code": "de_other_breeding_habitat",
+      "description": "lsm other_breeding_habitat",
+      "label": {
+        "en": "other_breeding_habitat",
+        "ar": "اخرى"
+      },
+      "rules": [],
+      "order": 31,
+      "id": "jJ4vaBhbQHp",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "growth_regulator_grams",
+      "code": "de_growth_regulator_grams",
+      "description": "lsm larval growth_regulator_grams",
+      "label": {
+        "en": "growth_regulator_grams",
+        "ar": "مثبط اليرقات (جم)"
+      },
+      "rules": [],
+      "order": 32,
+      "id": "fgt3GSmSxAl",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "breedingsources",
+      "name": "temphos_ml",
+      "code": "de_temphos_ml",
+      "description": "lsm larviciding temphos_ml",
+      "label": {
+        "en": "temphos_ml",
+        "ar": "تيمفوس (مل)"
+      },
+      "rules": [],
+      "order": 33,
+      "id": "G1m7BOobaK2",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "id": "680178dab1a23123b0af6075"
+}

@@ -1,0 +1,373 @@
+{
+  "uid": "KcsA3KETRbY",
+  "versionUid": "ynLLaryHyXw",
+  "versionNumber": 15,
+  "name": "Malaria Case Registration and Management (تسجيل وتدبير حالة ملاريا)",
+  "description": "Register and manage malaria cases through a guided, rule-driven form, capturing patient demographics, clinical test outcomes, and recommended treatments.",
+  "deleted": false,
+  "label": {
+    "ar": "تسجيل وتدبير حالة ملاريا",
+    "en": "Malaria Case Registration and Management"
+  },
+  "sections": [
+    {
+      "name": "mcase",
+      "label": {
+        "en": "mcase",
+        "ar": "بيانات الحالة"
+      },
+      "rules": [],
+      "order": 100,
+      "repeatable": false,
+      "id": "mcase"
+    },
+    {
+      "name": "cm",
+      "label": {
+        "en": "cm",
+        "ar": "تدبير الحالة"
+      },
+      "rules": [
+        {
+          "expression": "#{testResult} != 'negative'",
+          "action": "Show"
+        }
+      ],
+      "order": 300,
+      "repeatable": false,
+      "id": "cm"
+    },
+    {
+      "name": "testDetails",
+      "description": "Test Details",
+      "label": {
+        "en": "Test Details",
+        "ar": "معلومات الفحص"
+      },
+      "rules": [
+        {
+          "expression": "#{is_test_preformed} == 'yes'",
+          "action": "Show"
+        }
+      ],
+      "order": 200,
+      "repeatable": false,
+      "id": "testDetails"
+    }
+  ],
+  "fields": [
+    {
+      "parent": "mcase",
+      "name": "name",
+      "code": "name",
+      "description": "Name of the patient",
+      "label": {
+        "en": "Patient name",
+        "ar": "اسم المريض"
+      },
+      "rules": [],
+      "order": 102,
+      "id": "YtBEZsXvD5A",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mcase",
+      "name": "visitDate",
+      "code": "visitdate",
+      "label": {
+        "en": "Visit Date",
+        "ar": "تاريخ الزيارة"
+      },
+      "rules": [],
+      "order": 101,
+      "id": "LyIGccZ5mna",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mcase",
+      "name": "age",
+      "code": "age",
+      "description": "Age in Years and (months for age less than 1 year)",
+      "label": {
+        "en": "Age",
+        "ar": "العمر"
+      },
+      "rules": [
+        {
+          "expression": "#{age} <= 0 || #{age} > 100",
+          "action": "Error",
+          "message": {
+            "ar": "العمر كبير جدا تأكد",
+            "en": "Age is greater than normal"
+          }
+        }
+      ],
+      "order": 103,
+      "id": "oFGuq5BgGSr",
+      "type": "Age",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "constraint": "#{age} <= 0 || #{age} > 100",
+      "constraintMessage": {
+        "ar": "العمر كبير جدا تأكد",
+        "en": "Age is greater than normal"
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mcase",
+      "name": "gender",
+      "code": "gender",
+      "label": {
+        "en": "Gender",
+        "ar": "الجنس"
+      },
+      "rules": [],
+      "order": 104,
+      "id": "eCw9HcbcnW7",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "Bu2LhXFDicp",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mcase",
+      "name": "pregnant",
+      "code": "pregnant",
+      "label": {
+        "en": "Is pregnant?",
+        "ar": "هل هي حامل؟"
+      },
+      "rules": [
+        {
+          "expression": "#{gender} == 'FEMALE' && #{age} >= 14",
+          "action": "Show"
+        }
+      ],
+      "order": 105,
+      "id": "GnRrt4WUKFh",
+      "type": "Boolean",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mcase",
+      "name": "is_test_preformed",
+      "code": "is_test_preformed",
+      "description": "test performed",
+      "label": {
+        "en": "is test performed?",
+        "ar": "هل تم فحص الحالة؟"
+      },
+      "rules": [],
+      "order": 106,
+      "id": "GQbku0J0BTA",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "testDetails",
+      "name": "testResult",
+      "code": "testresult",
+      "label": {
+        "en": "Test Result",
+        "ar": "نتيجة الفحص"
+      },
+      "rules": [
+        {
+          "expression": "#{is_test_preformed} == 'yes'",
+          "action": "Show"
+        }
+      ],
+      "order": 201,
+      "id": "sivCZKkCZrL",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "ue98fTGAZQ7",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "testDetails",
+      "name": "detectionType",
+      "code": "detectiontype",
+      "label": {
+        "en": "Detection Type",
+        "ar": "نوع الاكتشاف"
+      },
+      "rules": [
+        {
+          "expression": "#{testResult} != 'negative'",
+          "action": "Show"
+        }
+      ],
+      "order": 202,
+      "id": "IlTNbwXcnLI",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "FtwwG67U6Oj",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "testDetails",
+      "name": "severity",
+      "code": "severity",
+      "label": {
+        "en": "Severity",
+        "ar": "تصنيف الحالة"
+      },
+      "rules": [
+        {
+          "expression": "#{testResult} != 'negative'",
+          "action": "Show"
+        }
+      ],
+      "order": 203,
+      "id": "OCB4yi1EAPO",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "RieZO0vRBtG",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "cm",
+      "name": "treatment",
+      "code": "treatment",
+      "label": {
+        "en": "Treatment",
+        "ar": "تدبير الحالة"
+      },
+      "rules": [
+        {
+          "expression": "#{chv_cm_type} == 'treatment' || #{chv_cm_type}=='referral_with_first_dose'",
+          "action": "Show"
+        }
+      ],
+      "order": 303,
+      "id": "P0QGT7z5FYG",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "lsURbzwRd53",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "name": "comment",
+      "code": "comment",
+      "label": {
+        "en": "Comments",
+        "ar": "ملاحظات وتعليقات"
+      },
+      "rules": [],
+      "order": 305,
+      "id": "cjY0oSUx6YI",
+      "type": "LongText",
+      "mandatory": false,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "cm",
+      "name": "prescribed_quantity",
+      "code": "prescribed_quantity",
+      "label": {
+        "en": "prescribed_quantity",
+        "ar": "الكمية"
+      },
+      "rules": [
+        {
+          "expression": "#{treatment} != 'stockout' && (\n   (#{age} > 3 && #{treatment} == 'act20') ||\n   (#{age} > 8 && #{treatment} == 'act40') ||\n   (#{age} > 13 && #{treatment} == 'act60')\n)",
+          "action": "Show"
+        }
+      ],
+      "order": 304,
+      "id": "up4yxPAuqGK",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "cm",
+      "name": "chv_cm_type",
+      "code": "chv_cm_type",
+      "description": "chv case management",
+      "label": {
+        "en": "chv_cm_type",
+        "ar": "تدبير الخالة"
+      },
+      "rules": [],
+      "order": 301,
+      "id": "taC04crzyJT",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "Je4AQG81rZZ",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "cm",
+      "name": "other_chv_cm_type",
+      "code": "other_chv_cm_type",
+      "description": "chv cm",
+      "label": {
+        "en": "other_chv_cm_type",
+        "ar": "التدابير الاخرى"
+      },
+      "rules": [
+        {
+          "expression": "#{chv_cm_type} == 'other_cm'",
+          "action": "Show"
+        }
+      ],
+      "order": 302,
+      "id": "DqX1CAKZeDd",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "id": "679bc1e43dc68955704145d9"
+}

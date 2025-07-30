@@ -1,0 +1,761 @@
+{
+  "uid": "RtnmK39VXTY",
+  "versionUid": "cS9tXJ661Lw",
+  "versionNumber": 1,
+  "name": "استمارة الاشراف الميداني - مشرف المخزن",
+  "description": "استمارة لمتابعة إشراف مشرفي المخزن خلال الحملة.",
+  "deleted": false,
+  "label": {
+    "ar": "استمارة الاشراف الميداني - مشرف المخزن",
+    "en": "Field Supervision Form - Warehouse Supervisor"
+  },
+  "sections": [
+    {
+      "name": "Section",
+      "label": {
+        "en": "Main Section",
+        "ar": "البيانات الاساسية"
+      },
+      "rules": [],
+      "order": 0,
+      "repeatable": false,
+      "id": "Section"
+    },
+    {
+      "name": "householdData",
+      "description": "بيانات المنزل التي يتم إشرافها.",
+      "label": {
+        "en": "Household Data",
+        "ar": "بيانات المنازل التي تم زيارتها"
+      },
+      "rules": [],
+      "order": 4,
+      "repeatable": false,
+      "id": "householdData"
+    },
+    {
+      "parent": "householdData",
+      "name": "houseInfo_1",
+      "description": "House One Data",
+      "label": {
+        "en": "House One",
+        "ar": "(المنزل الاول)"
+      },
+      "rules": [],
+      "order": 5,
+      "repeatable": false,
+      "id": "houseInfo_1"
+    },
+    {
+      "parent": "houseInfo_1",
+      "name": "visitedHousesInfo_houseOne",
+      "label": {
+        "en": "Visit Data",
+        "ar": "البيانات بحسب الزيارة"
+      },
+      "rules": [],
+      "order": 8,
+      "repeatable": false,
+      "id": "visitedHousesInfo_houseOne"
+    },
+    {
+      "parent": "houseInfo_1",
+      "name": "dataByTeamRecord_houseOne",
+      "label": {
+        "en": "Data by team record",
+        "ar": "البيانات حسب سجل الفريق"
+      },
+      "rules": [],
+      "order": 11,
+      "repeatable": false,
+      "id": "dataByTeamRecord_houseOne"
+    },
+    {
+      "parent": "householdData",
+      "name": "houseInfo_2",
+      "description": "بيانات المنزل التي يتم إشرافها.",
+      "label": {
+        "en": "Household Two",
+        "ar": "المنزل الثاني"
+      },
+      "rules": [],
+      "order": 12,
+      "repeatable": false,
+      "id": "houseInfo_2"
+    },
+    {
+      "parent": "houseInfo_2",
+      "name": "visitedHousesInfo_houseTwo",
+      "label": {
+        "en": "Visit Data",
+        "ar": "البيانات بحسب الزيارة"
+      },
+      "rules": [],
+      "order": 2,
+      "repeatable": false,
+      "id": "visitedHousesInfo_houseTwo"
+    },
+    {
+      "parent": "houseInfo_2",
+      "name": "dataByTeamRecord_houseTwo",
+      "description": "رقم المنزل أو رقم الكرت.",
+      "label": {
+        "en": "Data by team record",
+        "ar": "البيانات بحسب سجلات الفريق"
+      },
+      "rules": [],
+      "order": 3,
+      "repeatable": false,
+      "id": "dataByTeamRecord_houseTwo"
+    },
+    {
+      "parent": "householdData",
+      "name": "houseInfo_3",
+      "description": "بيانات المنزل التي يتم إشرافها.",
+      "label": {
+        "en": "Household Three",
+        "ar": "المنزل الثالث"
+      },
+      "rules": [],
+      "order": 14,
+      "repeatable": false,
+      "id": "houseInfo_3"
+    },
+    {
+      "parent": "houseInfo_3",
+      "name": "visitedHousesInfo_houseThree",
+      "label": {
+        "en": "Visit Data",
+        "ar": "البيانات بحسب الزيارة"
+      },
+      "rules": [],
+      "order": 17,
+      "repeatable": false,
+      "id": "visitedHousesInfo_houseThree"
+    },
+    {
+      "parent": "houseInfo_3",
+      "name": "dataByTeamRecord_houseThree",
+      "label": {
+        "en": "Data by team record",
+        "ar": "البيانات بحسب سجلات الفريق"
+      },
+      "rules": [],
+      "order": 20,
+      "repeatable": false,
+      "id": "dataByTeamRecord_houseThree"
+    },
+    {
+      "name": "teamPerformance",
+      "description": "أداء الفريق أثناء المراجعة.",
+      "label": {
+        "en": "Team Performance",
+        "ar": "المشاهدات الميدانية"
+      },
+      "rules": [],
+      "order": 23,
+      "repeatable": false,
+      "id": "teamPerformance"
+    }
+  ],
+  "fields": [
+    {
+      "parent": "Section",
+      "name": "visitedTeam",
+      "code": "visitedteam",
+      "label": {
+        "en": "Team Number",
+        "ar": "الفريق"
+      },
+      "rules": [],
+      "order": 1,
+      "id": "j3Tuya8JUuD",
+      "type": "Team",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "Section",
+      "name": "workday",
+      "code": "workday",
+      "label": {
+        "en": "Visit day",
+        "ar": "يوم الزيارة"
+      },
+      "rules": [],
+      "order": 2,
+      "id": "VQTpnEDHEkF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "LT0LMYKsxhO",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "Section",
+      "name": "visitDate",
+      "code": "visitdate",
+      "description": "تاريخ الزيارة.",
+      "label": {
+        "en": "Visit Date",
+        "ar": "تاريخ الزيارة"
+      },
+      "rules": [],
+      "order": 3,
+      "id": "LyIGccZ5mna",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "houseInfo_1",
+      "name": "householdNumber_houseOne",
+      "code": "householdnumber_houseone",
+      "description": "رقم المنزل أو رقم الكرت.",
+      "label": {
+        "en": "Household Number",
+        "ar": "رقم المنزل (على جدار المنزل)"
+      },
+      "rules": [],
+      "order": 6,
+      "id": "Ru3IZQu95hv",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "houseInfo_1",
+      "name": "houseHoldName_houseOne",
+      "code": "householdname_houseone",
+      "description": "اسم صاحب المنزل.",
+      "label": {
+        "en": "Household Name",
+        "ar": "اسم صاحب المنزل"
+      },
+      "rules": [],
+      "order": 7,
+      "id": "P1ZjRI1mhlO",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "visitedHousesInfo_houseOne",
+      "name": "population_actual_1",
+      "code": "population_actual_1",
+      "description": "إجمالي عدد السكان في المنزل.",
+      "label": {
+        "en": "House Population",
+        "ar": "عدد السكان في المنزل"
+      },
+      "rules": [],
+      "order": 9,
+      "id": "AWEnCZPThhr",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "visitedHousesInfo_houseOne",
+      "name": "itns_actual_1",
+      "code": "itns_actual_1",
+      "label": {
+        "en": "Nets Received",
+        "ar": "عدد الناموسيات المستلمة"
+      },
+      "rules": [],
+      "order": 10,
+      "id": "ReUqrgQClfQ",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dataByTeamRecord_houseOne",
+      "name": "population_team_1",
+      "code": "population_team_1",
+      "description": "إجمالي عدد السكان في المنزل.",
+      "label": {
+        "en": "House Population",
+        "ar": "عدد السكان حسب الفريق"
+      },
+      "rules": [],
+      "order": 12,
+      "id": "ojk1YdnwXqk",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dataByTeamRecord_houseOne",
+      "name": "itns_team_1",
+      "code": "itns_team_1",
+      "description": "عدد الناموسيات الموزعة للمنزل.",
+      "label": {
+        "en": "Nets Distributed",
+        "ar": "الناموسيات حسب سجل الفريق"
+      },
+      "rules": [],
+      "order": 13,
+      "id": "BQkeEivnhRO",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "houseInfo_2",
+      "name": "householdNumber_houseTwo",
+      "code": "householdnumber_housetwo",
+      "description": "رقم المنزل أو رقم الكرت.",
+      "label": {
+        "en": "Household Number",
+        "ar": "رقم المنزل (على جدار المنزل)"
+      },
+      "rules": [],
+      "order": 0,
+      "id": "F5ZdyQ96YZ1",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "houseInfo_2",
+      "name": "houseHoldName_houseTwo",
+      "code": "householdname_housetwo",
+      "description": "اسم صاحب المنزل.",
+      "label": {
+        "en": "Household Name",
+        "ar": "اسم صاحب المنزل"
+      },
+      "rules": [],
+      "order": 1,
+      "id": "k3fLQjjEhHp",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "visitedHousesInfo_houseTwo",
+      "name": "population_actual_2",
+      "code": "population_actual_2",
+      "description": "إجمالي عدد السكان في المنزل.",
+      "label": {
+        "en": "House Population",
+        "ar": "السكان"
+      },
+      "rules": [],
+      "order": 0,
+      "id": "GXu3TfJl912",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "visitedHousesInfo_houseTwo",
+      "name": "itns_actual_2",
+      "code": "itns_actual_2",
+      "description": "عدد الناموسيات المستلمة من قبل المنزل.",
+      "label": {
+        "en": "Nets Received",
+        "ar": "الناموسيات"
+      },
+      "rules": [],
+      "order": 1,
+      "id": "AWY4OxqdYbL",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dataByTeamRecord_houseTwo",
+      "name": "population_team_2",
+      "code": "population_team_2",
+      "description": "إجمالي عدد السكان في المنزل.",
+      "label": {
+        "en": "House Population",
+        "ar": "السكان"
+      },
+      "rules": [],
+      "order": 0,
+      "id": "HHCAtq2G4p6",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dataByTeamRecord_houseTwo",
+      "name": "itns_team_2",
+      "code": "itns_team_2",
+      "description": "عدد الناموسيات الموزعة للمنزل.",
+      "label": {
+        "en": "Nets Distributed",
+        "ar": "الناموسيات"
+      },
+      "rules": [],
+      "order": 1,
+      "id": "PNWZhKrxyUm",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "houseInfo_3",
+      "name": "householdNumber_houseThree",
+      "code": "householdnumber_housethree",
+      "description": "رقم المنزل أو رقم الكرت.",
+      "label": {
+        "en": "Household Number",
+        "ar": "رقم المنزل (على جدار المنزل)"
+      },
+      "rules": [],
+      "order": 15,
+      "id": "Rq4a3vPzILX",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "houseInfo_3",
+      "name": "houseHoldName_houseThree",
+      "code": "householdname_housethree",
+      "description": "اسم صاحب المنزل.",
+      "label": {
+        "en": "Household Name",
+        "ar": "اسم صاحب المنزل"
+      },
+      "rules": [],
+      "order": 16,
+      "id": "aWWPQPPM4HF",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "visitedHousesInfo_houseThree",
+      "name": "population_actual_3",
+      "code": "population_actual_3",
+      "description": "إجمالي عدد السكان في المنزل.",
+      "label": {
+        "en": "House Population",
+        "ar": "السكان"
+      },
+      "rules": [],
+      "order": 18,
+      "id": "ZAtbtcfJNJQ",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "visitedHousesInfo_houseThree",
+      "name": "itns_actual_3",
+      "code": "itns_actual_3",
+      "description": "عدد الناموسيات المستلمة من قبل المنزل.",
+      "label": {
+        "en": "Nets Received",
+        "ar": "الناموسيات"
+      },
+      "rules": [],
+      "order": 19,
+      "id": "MgZNLFuzBUH",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dataByTeamRecord_houseThree",
+      "name": "population_team_3",
+      "code": "population_team_3",
+      "description": "إجمالي عدد السكان في المنزل.",
+      "label": {
+        "en": "House Population",
+        "ar": "عدد السكان في المنزل"
+      },
+      "rules": [],
+      "order": 21,
+      "id": "TkkgSpWHdFf",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dataByTeamRecord_houseThree",
+      "name": "itns_team_3",
+      "code": "itns_team_3",
+      "description": "عدد الناموسيات الموزعة للمنزل.",
+      "label": {
+        "en": "Nets Distributed",
+        "ar": "عدد الناموسيات المصروفة"
+      },
+      "rules": [],
+      "order": 22,
+      "id": "pGdcqJVQpw4",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "supervisorPresence",
+      "code": "supervisorpresence",
+      "description": "هل كان المشرف حاضراً أثناء الزيارة؟",
+      "label": {
+        "en": "Supervisor",
+        "ar": "ملازمة قائد الفريق للمسجل"
+      },
+      "rules": [],
+      "order": 24,
+      "id": "zBLkHLynQjQ",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "distributorAwareness",
+      "code": "distributorawareness",
+      "description": "هل كان الموزع يقدم التوعية أثناء الزيارة؟",
+      "label": {
+        "en": "Distributor Awareness",
+        "ar": "الموزع يقوم بالتوعية"
+      },
+      "rules": [],
+      "order": 25,
+      "id": "KgY9aaiOIzw",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "distributorNetOpening",
+      "code": "distributornetopening",
+      "description": "هل كان الموزع يفتح أغلفة الناموسية قبل التوزيع؟",
+      "label": {
+        "en": "Distributor Net Opening",
+        "ar": "الموزع يقوم بقطع غلاف الناموسية قبل تسليمها"
+      },
+      "rules": [],
+      "order": 26,
+      "id": "iW3BQpIjbtl",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "voucherUsage",
+      "code": "voucherusage",
+      "description": "هل تم استخدام القسيمة للتوزيع؟",
+      "label": {
+        "en": "Voucher Usage",
+        "ar": "التزام الفريق باستخدام الكوبونات"
+      },
+      "rules": [],
+      "order": 27,
+      "id": "GDAUwOXsVEO",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "householdNumberingCompliance",
+      "code": "householdnumberingcompliance",
+      "description": "التزام الفريق بترقيم المنازل",
+      "label": {
+        "en": "Household Numbering Compliance",
+        "ar": "التزام الفريق بترقيم المنازل"
+      },
+      "rules": [],
+      "order": 28,
+      "id": "KfctoiXveTD",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "fingerprintCompliance",
+      "code": "fingerprintcompliance",
+      "description": "التزام الفريق بالبصمة للسكان",
+      "label": {
+        "en": "Fingerprint Compliance",
+        "ar": "التزام الفريق بالبصمة للسكان"
+      },
+      "rules": [],
+      "order": 29,
+      "id": "mjRjgggSpfC",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "distributionFromHouseToHouse",
+      "code": "distributionfromhousetohouse",
+      "description": "التزام الفريق بالتوزيع من منزل الى منزل",
+      "label": {
+        "en": "Distribution From House to House",
+        "ar": "التزام الفريق بالتوزيع من منزل الى منزل"
+      },
+      "rules": [],
+      "order": 30,
+      "id": "OMF57hJnCTM",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "teamBehaviorWithPopulation",
+      "code": "teambehaviorwithpopulation",
+      "description": "سلوك الفريق مع السكان جيد",
+      "label": {
+        "en": "Team Behavior with Population",
+        "ar": "سلوك الفريق مع السكان جيد"
+      },
+      "rules": [],
+      "order": 31,
+      "id": "qAODE0tb3MH",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "teamLeaderInteraction",
+      "code": "teamleaderinteraction",
+      "description": "تعامل قائد الفريق مع زملائه جيد",
+      "label": {
+        "en": "Team Leader Interaction",
+        "ar": "تعامل قائد الفريق مع زملائه جيد"
+      },
+      "rules": [],
+      "order": 32,
+      "id": "Vo3KLuQT1gs",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "teamPerformance",
+      "name": "teamLeaderLeadership",
+      "code": "teamleaderleadership",
+      "description": "هل شخصية قائد الفريق قيادية",
+      "label": {
+        "en": "Team Leader Leadership",
+        "ar": "هل شخصية قائد الفريق قيادية"
+      },
+      "rules": [],
+      "order": 33,
+      "id": "roxc3fBLFgT",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "id": "67980f71cd00b263b8a139ec"
+}

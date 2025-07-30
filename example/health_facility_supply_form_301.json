@@ -1,0 +1,424 @@
+{
+  "uid": "M3fdtzBSpn8",
+  "versionUid": "lincMbb2KKw",
+  "versionNumber": 5,
+  "name": "health_facility_supply_301",
+  "deleted": false,
+  "label": {
+    "ar": "استمارة الامداد للمرافق الصحية",
+    "en": "health_facility_supply_301"
+  },
+  "fields": [
+    {
+      "parent": "supply",
+      "name": "month_name",
+      "code": "month_name",
+      "label": {
+        "en": "month_name",
+        "ar": "الشهر"
+      },
+      "rules": [],
+      "order": 201,
+      "id": "T7QqiTeFdHF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "NN8fDdIJmCn",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "amd",
+      "code": "amd",
+      "label": {
+        "en": "amd",
+        "ar": "الصنف"
+      },
+      "rules": [],
+      "order": 203,
+      "id": "pHjMRAL4glF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "sYiS5D2qeG8",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "available_quantity",
+      "code": "available_quantity",
+      "label": {
+        "en": "available_quantity",
+        "ar": "متوفر"
+      },
+      "rules": [],
+      "order": 204,
+      "id": "gFdPiymvk1m",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "expired_quantity",
+      "code": "expired_quantity",
+      "label": {
+        "en": "expired_quantity",
+        "ar": "منتهي"
+      },
+      "rules": [],
+      "order": 205,
+      "id": "c9zG4B2k7LY",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "received_quantity",
+      "code": "received_quantity",
+      "label": {
+        "en": "received_quantity",
+        "ar": "مستلم"
+      },
+      "rules": [],
+      "order": 206,
+      "id": "MhCDftArY4c",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "consumed_quantity",
+      "code": "consumed_quantity",
+      "label": {
+        "en": "consumed_quantity",
+        "ar": "مستهلك"
+      },
+      "rules": [],
+      "order": 207,
+      "id": "IALEZP4BTGO",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "redistributed_quantity",
+      "code": "redistributed_quantity",
+      "label": {
+        "en": "redistributed_quantity",
+        "ar": "الكمية المعاد توزيعها"
+      },
+      "rules": [],
+      "order": 208,
+      "id": "rtntGY93Fpn",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "stockout_days",
+      "code": "stockout_days",
+      "label": {
+        "en": "stockout_days",
+        "ar": "أيام نفاد المخزون"
+      },
+      "rules": [],
+      "order": 209,
+      "id": "DFfECZdsEZd",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "other_supply_team",
+      "code": "other_supply_team",
+      "label": {
+        "en": "other_supply_team",
+        "ar": "أخرى: حدّد"
+      },
+      "rules": [],
+      "order": 103,
+      "id": "i9hAW7ftKf8",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "contact_name",
+      "code": "contact_name",
+      "label": {
+        "en": "contact_name",
+        "ar": "اسم مشئول المرفق"
+      },
+      "rules": [],
+      "order": 103,
+      "id": "ztV4iHHaNzF",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "mobile_phone",
+      "code": "mobile_phone",
+      "label": {
+        "en": "mobile_phone",
+        "ar": "رقم الهاتف"
+      },
+      "rules": [],
+      "order": 104,
+      "id": "dzs71rsLPrt",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "visit_date_time",
+      "code": "visit_date_time",
+      "label": {
+        "en": "visit_date_time",
+        "ar": "تاريخ الزيارة"
+      },
+      "rules": [],
+      "order": 105,
+      "id": "VGDPKkWXuGv",
+      "type": "DateTime",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "supply",
+      "name": "supply_date",
+      "code": "supply_date",
+      "label": {
+        "en": "supply_date",
+        "ar": "الشهر"
+      },
+      "rules": [],
+      "order": 203,
+      "id": "txcMwZYfQ3p",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "supply_team_type",
+      "code": "supply_team_type",
+      "label": {
+        "en": "supply_team_type",
+        "ar": "فريق الامداد"
+      },
+      "rules": [],
+      "order": 101,
+      "id": "iJxDpRqeutI",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "wYvCVAA4GCC",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "externalSupply",
+      "name": "supply_months",
+      "code": "supply_months",
+      "label": {
+        "en": "supply_months",
+        "ar": "شهر / شهور التمويل"
+      },
+      "rules": [],
+      "order": 404,
+      "id": "OLKkdLMQdeo",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "NN8fDdIJmCn",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "externalSupply",
+      "name": "external_supply_permanence",
+      "code": "external_supply_permanence",
+      "label": {
+        "en": "external_supply_permanence",
+        "ar": "حالة التمويل"
+      },
+      "rules": [],
+      "order": 405,
+      "id": "ru7FXAjaMZ7",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "uwiCPGjARGA",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainsection",
+      "name": "registers_available_other",
+      "code": "registers_available_other",
+      "label": {
+        "en": "registers_available_other",
+        "ar": "أخرى: حدّد"
+      },
+      "rules": [],
+      "order": 106,
+      "id": "dzrKYyAS5nZ",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "posters",
+      "name": "other_registers_posters_delivered",
+      "code": "other_registers_posters_delivered",
+      "label": {
+        "en": "other_registers_posters_delivered",
+        "ar": "أخرى: حدّد"
+      },
+      "rules": [],
+      "order": 302,
+      "id": "y5bWzS1jGg4",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "externalSupply",
+      "name": "supplier",
+      "code": "supplier",
+      "label": {
+        "en": "supplier",
+        "ar": "اسم الجهة"
+      },
+      "rules": [],
+      "order": 401,
+      "id": "i0tHvDfQ7EI",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "externalSupply",
+      "name": "quantity_supplied_external",
+      "code": "quantity_supplied_external",
+      "label": {
+        "en": "quantity supplied by external authority",
+        "ar": "الكمية"
+      },
+      "rules": [],
+      "order": 403,
+      "id": "mxkCDf87THC",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "name": "externalSupply",
+      "label": {
+        "en": "externalSupply",
+        "ar": "طرف آخر قام بتوفير الأدوية"
+      },
+      "rules": [],
+      "order": 400,
+      "repeatable": true,
+      "id": "externalSupply"
+    },
+    {
+      "name": "posters",
+      "label": {
+        "en": "posters"
+      },
+      "rules": [],
+      "order": 300,
+      "repeatable": false,
+      "id": "posters"
+    },
+    {
+      "name": "supply",
+      "label": {
+        "en": "supply",
+        "ar": "الامداد"
+      },
+      "rules": [],
+      "order": 200,
+      "repeatable": true,
+      "id": "supply"
+    },
+    {
+      "name": "mainsection",
+      "label": {
+        "en": "mainsection",
+        "ar": ""
+      },
+      "rules": [],
+      "order": 100,
+      "repeatable": false,
+      "id": "mainsection"
+    }
+  ],
+  "id": "01JZM1NGBVMJEAS356KHBP9HCK"
+}

@@ -1,0 +1,275 @@
+{
+  "uid": "YLcsWJlB7uy",
+  "versionUid": "NUVxNr9gQUk",
+  "versionNumber": 2,
+  "name": "emergency_investigation_and_response_lab_202",
+  "deleted": false,
+  "label": {
+    "ar": "التقصي والاستجابة الطارئة-المخبري",
+    "en": "Emergency Investigation and Response -Lab 202"
+  },
+  "fields": [
+    {
+      "parent": "main",
+      "name": "emergency_team_type",
+      "code": "emergency_team_type",
+      "label": {
+        "en": "emergency_team_type",
+        "ar": "فريق التدخل الطارئ"
+      },
+      "rules": [],
+      "order": 101,
+      "id": "YSRmNhpN1ry",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "pb6PTAOtcZ5",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "other",
+      "code": "other",
+      "label": {
+        "en": "other",
+        "ar": "أخرى"
+      },
+      "rules": [],
+      "order": 102,
+      "id": "scxTYkhsvwp",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "NotificationNumber",
+      "code": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "label": {
+        "en": "NotificationNumber",
+        "ar": "رقم البلاغ الطارئ"
+      },
+      "rules": [],
+      "order": 103,
+      "id": "wZIDLQtSHL2",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "visitdate",
+      "code": "visitdate",
+      "label": {
+        "en": "visitdate",
+        "ar": "تاريخ الاستجابة"
+      },
+      "rules": [],
+      "order": 104,
+      "id": "LyIGccZ5mna",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "serialNumber",
+      "code": "serialNumber",
+      "label": {
+        "en": "serialNumber",
+        "ar": "الرقم التسلسلي"
+      },
+      "rules": [],
+      "order": 201,
+      "id": "w8VQRZmmz82",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "PatientId",
+      "code": "PatientId",
+      "description": "cpes Patient Id",
+      "label": {
+        "en": "PatientId",
+        "ar": "رقم المريض"
+      },
+      "rules": [],
+      "order": 202,
+      "id": "hiBiDozHei7",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "PatientName",
+      "code": "PatientName",
+      "description": "cpes Patient Name",
+      "label": {
+        "en": "PatientName",
+        "ar": "اسم المريض"
+      },
+      "rules": [],
+      "order": 203,
+      "id": "KBmP3fPjrLG",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "is_test_preformed",
+      "code": "is_test_preformed",
+      "description": "test performed",
+      "label": {
+        "en": "is_test_preformed",
+        "ar": "تم عمل فحوصات"
+      },
+      "rules": [],
+      "order": 204,
+      "id": "GQbku0J0BTA",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "investigations",
+      "name": "lab_test_type",
+      "code": "de_lab_test",
+      "description": "test performed, rdt dengue malaria , microscopy, other test or none in mass treatment",
+      "label": {
+        "en": "lab_test_type",
+        "ar": "نوع الفحص"
+      },
+      "rules": [],
+      "order": 301,
+      "id": "BqErQ3xrUex",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "PiGAyROTsAB",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "investigations",
+      "name": "test_result",
+      "code": "de_test_result",
+      "description": "test result, positve or negative",
+      "label": {
+        "en": "test_result",
+        "ar": "نتيجة الفحص"
+      },
+      "rules": [],
+      "order": 302,
+      "id": "jLX69mxv8JJ",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "tQjriOFVC2T",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "investigations",
+      "name": "other_lab_test_type",
+      "code": "other_lab_test_type",
+      "label": {
+        "en": "other_lab_test_type",
+        "ar": "نوع الفحص الاخر"
+      },
+      "rules": [],
+      "order": 304,
+      "id": "IiDjTXKA9cY",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "investigations",
+      "name": "other_lab_test_result",
+      "code": "other_lab_test_result",
+      "label": {
+        "en": "other_lab_test_result",
+        "ar": "نتيجة الفحص الاخر"
+      },
+      "rules": [],
+      "order": 305,
+      "id": "rxRO7xoeHq7",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "name": "patients",
+      "label": {
+        "en": "patients",
+        "ar": "الحالات"
+      },
+      "rules": [],
+      "order": 200,
+      "repeatable": true,
+      "id": "patients"
+    },
+    {
+      "parent": "patients",
+      "name": "investigations",
+      "label": {
+        "en": "investigations",
+        "ar": "الفحوصات"
+      },
+      "rules": [],
+      "order": 300,
+      "repeatable": true,
+      "id": "investigations"
+    },
+    {
+      "name": "main",
+      "label": {
+        "en": "main"
+      },
+      "rules": [],
+      "order": 100,
+      "repeatable": false,
+      "id": "main"
+    }
+  ],
+  "id": "01JZTERV9JJDV8SF3P931KF5DT"
+}

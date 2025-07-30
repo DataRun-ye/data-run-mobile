@@ -1,0 +1,258 @@
+{
+  "uid": "UYBPOIfCU0a",
+  "versionUid": "D6ZMov1ar90",
+  "versionNumber": 6,
+  "name": "facility_stock_reporting_801",
+  "deleted": false,
+  "label": {
+    "ar": "التقرير الشهري للمرافق الصحية",
+    "en": "facility_stock_reporting"
+  },
+  "fields": [
+    {
+      "parent": "main",
+      "name": "month",
+      "code": "month",
+      "description": "Month",
+      "label": {
+        "en": "month",
+        "ar": "الشهر"
+      },
+      "rules": [
+        {
+          "expression": "#{month} > now()",
+          "action": "Error",
+          "message": {
+            "ar": "لا يمكن ان يكون اكبر من التاريخ الحالي",
+            "en": "can not be greater than today"
+          }
+        }
+      ],
+      "order": 101,
+      "id": "SRtvqGkBWEd",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{month} > now()",
+        "validationMessage": {
+          "ar": "لا يمكن ان يكون اكبر من التاريخ الحالي",
+          "en": "can not be greater than today"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "amd",
+      "code": "amd",
+      "label": {
+        "en": "amd",
+        "ar": "الصنف"
+      },
+      "rules": [],
+      "order": 201,
+      "id": "pHjMRAL4glF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "sYiS5D2qeG8",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "received_quantity",
+      "code": "received_quantity",
+      "label": {
+        "en": "received_quantity",
+        "ar": "مستلم"
+      },
+      "rules": [],
+      "order": 203,
+      "id": "MhCDftArY4c",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "consumed_quantity",
+      "code": "consumed_quantity",
+      "label": {
+        "en": "consumed_quantity",
+        "ar": "مستهلك"
+      },
+      "rules": [],
+      "order": 204,
+      "id": "IALEZP4BTGO",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "redistributed_quantity",
+      "code": "redistributed_quantity",
+      "label": {
+        "en": "redistributed_quantity",
+        "ar": "الكمية المعاد توزيعها"
+      },
+      "rules": [],
+      "order": 205,
+      "id": "rtntGY93Fpn",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "expired_quantity",
+      "code": "expired_quantity",
+      "label": {
+        "en": "expired_quantity",
+        "ar": "منتهي"
+      },
+      "rules": [
+        {
+          "expression": "#{expired_quantity} > 0",
+          "action": "Warning"
+        }
+      ],
+      "order": 206,
+      "id": "c9zG4B2k7LY",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "stockout_days",
+      "code": "stockout_days",
+      "label": {
+        "en": "stockout_days",
+        "ar": "أيام نفاد المخزون"
+      },
+      "rules": [
+        {
+          "expression": "#{stockout_days} > 30",
+          "action": "Error",
+          "message": {
+            "ar": "لا يمكن ان تكون فترة النغاذ اكبر من 30 يوما",
+            "en": "less than equal 30 days"
+          }
+        }
+      ],
+      "order": 207,
+      "id": "DFfECZdsEZd",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{stockout_days} > 30",
+        "validationMessage": {
+          "ar": "لا يمكن ان تكون فترة النغاذ اكبر من 30 يوما",
+          "en": "less than equal 30 days"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "comment",
+      "code": "comment",
+      "label": {
+        "en": "comment",
+        "ar": "ملاحظات"
+      },
+      "rules": [],
+      "order": 208,
+      "id": "cjY0oSUx6YI",
+      "type": "LongText",
+      "mandatory": false,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "month_name",
+      "code": "month_name",
+      "label": {
+        "en": "month_name",
+        "ar": "الشهر"
+      },
+      "rules": [],
+      "order": 102,
+      "id": "T7QqiTeFdHF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "NN8fDdIJmCn",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "stocks",
+      "name": "opening_balance",
+      "code": "opening_balance",
+      "label": {
+        "en": "opening_balance",
+        "ar": "الرضيد بداية الشهر"
+      },
+      "rules": [],
+      "order": 202,
+      "id": "vFB17omqEA1",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "name": "main",
+      "label": {
+        "en": "main",
+        "ar": "الشهر"
+      },
+      "rules": [],
+      "order": 100,
+      "repeatable": false,
+      "id": "main"
+    },
+    {
+      "name": "stocks",
+      "label": {
+        "en": "stocks",
+        "ar": "حركة المخزون"
+      },
+      "rules": [],
+      "order": 200,
+      "repeatable": true,
+      "id": "stocks"
+    }
+  ],
+  "id": "01K0M8KJENDHP0VJTDEQQ8YCQW"
+}

@@ -1,0 +1,435 @@
+{
+  "uid": "ck2pHW93sk2",
+  "versionUid": "JTQq1IGmPnC",
+  "versionNumber": 1,
+  "name": "emergency_investigation_and_response_physician_201",
+  "deleted": false,
+  "label": {
+    "ar": "التقصي والاستجابة الطارئة-الطبيب",
+    "en": "Emergency Investigation and Response -Physician 201"
+  },
+  "fields": [
+    {
+      "parent": "main",
+      "name": "emergency_team_type",
+      "code": "emergency_team_type",
+      "label": {
+        "en": "emergency_team_type",
+        "ar": "فريق التدخل الطارئ"
+      },
+      "rules": [],
+      "order": 101,
+      "id": "YSRmNhpN1ry",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "pb6PTAOtcZ5",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "others",
+      "code": "others",
+      "description": "Other",
+      "label": {
+        "en": "otherteam",
+        "ar": "فريق اخر"
+      },
+      "rules": [],
+      "order": 102,
+      "id": "irvOz2MYtbZ",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "NotificationNumber",
+      "code": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "label": {
+        "en": "NotificationNumber",
+        "ar": "رقم البلاغ"
+      },
+      "rules": [],
+      "order": 103,
+      "id": "wZIDLQtSHL2",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "visitdate",
+      "code": "visitdate",
+      "label": {
+        "en": "visitdate",
+        "ar": "تاريخ الاستجابة"
+      },
+      "rules": [],
+      "order": 104,
+      "id": "LyIGccZ5mna",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "serialNumber",
+      "code": "serialNumber",
+      "label": {
+        "en": "serialNumber",
+        "ar": "الرقم التسلسلي"
+      },
+      "rules": [],
+      "order": 201,
+      "id": "w8VQRZmmz82",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "PatientName",
+      "code": "PatientName",
+      "description": "cpes Patient Name",
+      "label": {
+        "en": "PatientName",
+        "ar": "اسم المريض"
+      },
+      "rules": [],
+      "order": 202,
+      "id": "KBmP3fPjrLG",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "age",
+      "code": "age",
+      "description": "Age in Years and (months for age less than 1 year)",
+      "label": {
+        "en": "age",
+        "ar": "العمر"
+      },
+      "rules": [],
+      "order": 203,
+      "id": "oFGuq5BgGSr",
+      "type": "Age",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "gender",
+      "code": "gender",
+      "label": {
+        "en": "gender",
+        "ar": "الجنس"
+      },
+      "rules": [],
+      "order": 204,
+      "id": "eCw9HcbcnW7",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "Bu2LhXFDicp",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "ispregnant",
+      "code": "de_ispregnant",
+      "label": {
+        "en": "ispregnant",
+        "ar": "حامل"
+      },
+      "rules": [],
+      "order": 205,
+      "id": "FjfKSsEWAYf",
+      "type": "YesNo",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "pregnancy_month",
+      "code": "pregnancy_month",
+      "description": "cpes pregnancy_month",
+      "label": {
+        "en": "pregnancy_month",
+        "ar": "شهر الحمل"
+      },
+      "rules": [],
+      "order": 206,
+      "id": "aEjEOwZ9Mk0",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "symptoms",
+      "code": "symptoms",
+      "label": {
+        "en": "symptoms",
+        "ar": "الاهراض والعلامات"
+      },
+      "rules": [],
+      "order": 207,
+      "id": "idBpaL0SQXe",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "jGslJIFiVl9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "lab_test",
+      "code": "lab_test",
+      "label": {
+        "en": "lab_test",
+        "ar": "الفحوصات المطلوبة"
+      },
+      "rules": [],
+      "order": 208,
+      "id": "GzyNDOGyNUW",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "AxpBXSCqnDa",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "diagnosed_disease_type",
+      "code": "de_diagnosed_disease_type",
+      "label": {
+        "en": "diagnosed_disease_typ",
+        "ar": "التشخيص"
+      },
+      "rules": [],
+      "order": 209,
+      "id": "UiM4N3o8OiG",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "AjpOXeUAqnQ",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "patients",
+      "name": "other_diagnosed_disease_name",
+      "code": "de_other_diagnosed_disease_name",
+      "label": {
+        "en": "other_diagnosed_disease_name",
+        "ar": "مرض اخر"
+      },
+      "rules": [],
+      "order": 210,
+      "id": "MYZOyP37ilc",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "medicines",
+      "name": "amd",
+      "code": "amd",
+      "label": {
+        "en": "amd",
+        "ar": "الصنف"
+      },
+      "rules": [],
+      "order": 301,
+      "id": "pHjMRAL4glF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "sYiS5D2qeG8",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "medicines",
+      "name": "druguom",
+      "code": "de_druguom",
+      "label": {
+        "en": "druguom",
+        "ar": "وحدة القياس"
+      },
+      "rules": [],
+      "order": 303,
+      "id": "gjkfAEM4bwc",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "k4ZN0nvhrxq",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "medicines",
+      "name": "prescribeddrug",
+      "code": "de_prescribeddrug",
+      "label": {
+        "en": "prescribeddrug",
+        "ar": " 2الصنف"
+      },
+      "rules": [],
+      "order": 302,
+      "id": "jnm46N3THhf",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "PVg1vCjoxfV",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "medicines",
+      "name": "prescribed_quantity",
+      "code": "prescribed_quantity",
+      "label": {
+        "en": "prescribed_quantity",
+        "ar": "الكمية"
+      },
+      "rules": [],
+      "order": 204,
+      "id": "up4yxPAuqGK",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "referrals",
+      "name": "cm_measures",
+      "code": "de_cm_measures",
+      "label": {
+        "en": "cm_measures",
+        "ar": "التدابير"
+      },
+      "rules": [],
+      "order": 301,
+      "id": "W5QDhN3qanw",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "vcYOprXCzar",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "referrals",
+      "name": "referral_type",
+      "code": "de_referral_type",
+      "description": "referral_type, emergent through the team or autoreferral",
+      "label": {
+        "en": "referral_type",
+        "ar": "إحالة"
+      },
+      "rules": [],
+      "order": 302,
+      "id": "BOGECC3MSLb",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "PnCIWkhM47L",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "name": "medicines",
+      "label": {
+        "en": "medicines",
+        "ar": "الادوية"
+      },
+      "rules": [],
+      "order": 300,
+      "repeatable": true,
+      "id": "medicines"
+    },
+    {
+      "name": "patients",
+      "label": {
+        "en": "patients",
+        "ar": "الحالة"
+      },
+      "rules": [],
+      "order": 200,
+      "repeatable": false,
+      "id": "patients"
+    },
+    {
+      "name": "referrals",
+      "label": {
+        "en": "referrals",
+        "ar": "الاحالة"
+      },
+      "rules": [],
+      "order": 400,
+      "repeatable": false,
+      "id": "referrals"
+    },
+    {
+      "name": "main",
+      "label": {
+        "en": "main"
+      },
+      "rules": [],
+      "order": 100,
+      "repeatable": false,
+      "id": "main"
+    }
+  ],
+  "id": "01JZTCZ564VH5YR3ZGATEZ6SP9"
+}

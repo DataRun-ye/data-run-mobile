@@ -1,0 +1,863 @@
+{
+  "uid": "ONIaOpzoYAe",
+  "versionUid": "kyyTUWGBa1u",
+  "versionNumber": 53,
+  "name": "IndoorEntomologicalSurveillance101",
+  "deleted": false,
+  "label": {
+    "ar": "استمارة الترصد الحشري داخل المباني",
+    "en": "Indoor entomological surveillance 101"
+  },
+  "fields": [
+    {
+      "parent": "main",
+      "name": "ExecutionDate",
+      "code": "ExecutionDate",
+      "label": {
+        "en": "Execution Date",
+        "ar": "التاريخ"
+      },
+      "rules": [],
+      "order": 101,
+      "id": "nyafDxFcteD",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "EntomologicalSurveillanceType",
+      "code": "EntomologicalSurveillanceType",
+      "description": "Indoor entomological surveillance",
+      "label": {
+        "en": "EntomologicalSurveillanceType",
+        "ar": "نوع الترصد"
+      },
+      "rules": [],
+      "order": 102,
+      "id": "xju7KJcqQ4D",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "qFBG6dSJURm",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "FixedStationName",
+      "code": "FixedStationName",
+      "description": "Indoor entomological surveillance",
+      "label": {
+        "en": "FixedStationName",
+        "ar": "إسم المحطة الثابتة"
+      },
+      "rules": [
+        {
+          "expression": "#{EntomologicalSurveillanceType} == 'FixedStations'",
+          "action": "Show"
+        }
+      ],
+      "order": 103,
+      "id": "CFZDyFE3bhS",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "NotificationNumber",
+      "code": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "label": {
+        "en": "NotificationNumber",
+        "ar": "رقم البلاغ"
+      },
+      "rules": [
+        {
+          "expression": "#{EntomologicalSurveillanceType} == 'Emergency'",
+          "action": "Show"
+        }
+      ],
+      "order": 104,
+      "id": "wZIDLQtSHL2",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "TemperatureIndoor",
+      "code": "TemperatureIndoor",
+      "label": {
+        "en": "TemperatureIndoor",
+        "ar": "درجة الحرارة الداخلية"
+      },
+      "rules": [
+        {
+          "expression": "#{TemperatureIndoor} < -10 || #{TemperatureIndoor} > 70",
+          "action": "Error",
+          "message": {
+            "ar": "يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية",
+            "en": "between -10 and 70 dc"
+          }
+        }
+      ],
+      "order": 105,
+      "id": "mDaC20BdvDM",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{TemperatureIndoor} < -10 || #{TemperatureIndoor} > 70",
+        "validationMessage": {
+          "ar": "يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية",
+          "en": "between -10 and 70 dc"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "TemperatureOutdoor",
+      "code": "TemperatureOutdoor",
+      "label": {
+        "en": "TemperatureOutdoor",
+        "ar": "درجة الحرارة الخارجية"
+      },
+      "rules": [
+        {
+          "expression": "#{TemperatureOutdoor} < -10 || #{TemperatureOutdoor} > 70",
+          "action": "Error",
+          "message": {
+            "ar": "يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية",
+            "en": "between -10 and 70 dc"
+          }
+        }
+      ],
+      "order": 106,
+      "id": "Q1CP33YzwJC",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{TemperatureOutdoor} < -10 || #{TemperatureOutdoor} > 70",
+        "validationMessage": {
+          "ar": "يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية",
+          "en": "between -10 and 70 dc"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "HumidityIndoor",
+      "code": "HumidityIndoor",
+      "label": {
+        "en": "HumidityIndoor",
+        "ar": "الرطوبة الداخلية"
+      },
+      "rules": [
+        {
+          "expression": "#{HumidityIndoor} < 0 || #{HumidityIndoor} > 100",
+          "action": "Error",
+          "message": {
+            "ar": "يجب ان تكون الرطوبة النسبية بين 0 و% 100",
+            "en": "between 0 and 100%"
+          }
+        }
+      ],
+      "order": 107,
+      "id": "yZ4qbZ5Mkk4",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{HumidityIndoor} < 0 || #{HumidityIndoor} > 100",
+        "validationMessage": {
+          "ar": "يجب ان تكون الرطوبة النسبية بين 0 و% 100",
+          "en": "between 0 and 100%"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "HumidityOutdoor",
+      "code": "HumidityOutdoor",
+      "label": {
+        "en": "HumidityOutdoor",
+        "ar": "الرطوبة الخارجية"
+      },
+      "rules": [
+        {
+          "expression": "#{HumidityOutdoor} < 0 || #{HumidityOutdoor} > 100",
+          "action": "Error",
+          "message": {
+            "ar": "يجب ان تكون الرطوبة النسبية بين 0 و% 100",
+            "en": "between 0 and 100%"
+          }
+        }
+      ],
+      "order": 108,
+      "id": "RT54a2XNmdN",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{HumidityOutdoor} < 0 || #{HumidityOutdoor} > 100",
+        "validationMessage": {
+          "ar": "يجب ان تكون الرطوبة النسبية بين 0 و% 100",
+          "en": "between 0 and 100%"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "WeatherStatus",
+      "code": "WeatherStatus",
+      "label": {
+        "en": "WeatherStatus",
+        "ar": "حالة الطقس"
+      },
+      "rules": [],
+      "order": 109,
+      "id": "DoQqgm3bwqT",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "ILADGng0Qv4",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "Indoor_Surveillance_Type",
+      "code": "Indoor_Surveillance_Type",
+      "label": {
+        "en": "Indoor_Surveillance_Type",
+        "ar": "نوع الترصد"
+      },
+      "rules": [],
+      "order": 211,
+      "id": "eMD6f4zy1Nu",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "fI4Lebq3aH5",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adult",
+      "name": "MosquitoCollectionMethod",
+      "code": "MosquitoCollectionMethod",
+      "label": {
+        "en": "MosquitoCollectionMethod",
+        "ar": "طريقة الجمع (للبعوض البالغ)"
+      },
+      "rules": [
+        {
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show"
+        }
+      ],
+      "order": 303,
+      "id": "rVsGDgWPyPH",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "xCtgK5yavq3",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "BuildingNumber",
+      "code": "BuildingNumber",
+      "label": {
+        "en": "BuildingNumber",
+        "ar": "رقم المبنى"
+      },
+      "rules": [],
+      "order": 203,
+      "id": "jIMbVzxsQf9",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "BuildingType",
+      "code": "BuildingType",
+      "label": {
+        "en": "BuildingType",
+        "ar": "نوع المبنى"
+      },
+      "rules": [],
+      "order": 204,
+      "id": "UvA1u3cSLFQ",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "YpY0vSHWume",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "BuildingOwner",
+      "code": "BuildingOwner",
+      "label": {
+        "en": "BuildingOwner",
+        "ar": "اسم صاحب المبنى"
+      },
+      "rules": [],
+      "order": 205,
+      "id": "X2eA5Ysiljn",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "OtherBuildingType",
+      "code": "OtherBuildingType",
+      "label": {
+        "en": "OtherBuildingType",
+        "ar": "أخرى (حدد)"
+      },
+      "rules": [
+        {
+          "expression": "#{BuildingType} == 'OtherBuildingType'",
+          "action": "Show"
+        }
+      ],
+      "order": 206,
+      "id": "v99GuUSB30B",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "RoomsNumber",
+      "code": "RoomsNumber",
+      "label": {
+        "en": "RoomsNumber",
+        "ar": "عدد الغرف"
+      },
+      "rules": [],
+      "order": 207,
+      "id": "VN0x80Igi2b",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adult",
+      "name": "MosquitoRestingPlace",
+      "code": "MosquitoRestingPlace",
+      "label": {
+        "en": "MosquitoRestingPlace",
+        "ar": "مكان الراحة"
+      },
+      "rules": [
+        {
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show"
+        }
+      ],
+      "order": 302,
+      "id": "k2eDaaIArf0",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "aUXPRIolyEW",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "NumberOfPeopleSlept",
+      "code": "NumberOfPeopleSlept",
+      "label": {
+        "en": "NumberOfPeopleSlept",
+        "ar": "عدد الاشخاص الذين ناموا"
+      },
+      "rules": [],
+      "order": 209,
+      "id": "LAl3HvMRAPl",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "locations",
+      "name": "AnimalShelterPresence",
+      "code": "AnimalShelterPresence",
+      "label": {
+        "en": "AnimalShelterPresence",
+        "ar": "وجود ملجأ حيواني"
+      },
+      "rules": [],
+      "order": 210,
+      "id": "ik0NdzlkgC8",
+      "type": "YesNo",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "habitats",
+      "name": "IndoorHabitatType",
+      "code": "IndoorHabitatType",
+      "label": {
+        "en": "IndoorHabitatType",
+        "ar": "نوع المصدر داخل المبنى"
+      },
+      "rules": [],
+      "order": 601,
+      "id": "ZUI8rNs5NVV",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "aZuza8ag7Mg",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "habitats",
+      "name": "OtherIndoorHabitat",
+      "code": "OtherIndoorHabitat",
+      "label": {
+        "en": "OtherIndoorHabitat",
+        "ar": "أخرى حدد"
+      },
+      "rules": [
+        {
+          "expression": "#{IndoorHabitatType} == 'OtherIndoorBreedingHabitat'",
+          "action": "Show"
+        }
+      ],
+      "order": 602,
+      "id": "mlQq0DNTbKM",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "habitats",
+      "name": "HabitatsExplored",
+      "code": "HabitatsExplored",
+      "label": {
+        "en": "HabitatsExplored",
+        "ar": "عدد المصادر المستكشفة"
+      },
+      "rules": [],
+      "order": 603,
+      "id": "EO0ANA5AFjA",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "habitats",
+      "name": "HabitatsPositive",
+      "code": "HabitatsPositive",
+      "label": {
+        "en": "HabitatsPositive",
+        "ar": "عدد المصادر الإيجابية"
+      },
+      "rules": [
+        {
+          "expression": "#{HabitatsExplored} > 0",
+          "action": "Show"
+        },
+        {
+          "expression": "#{HabitatsExplored} > 0 &&  ( #{HabitatsExplored} < #{HabitatsPositive} )",
+          "action": "Error",
+          "message": {
+            "ar": "الايجابية اكثر من المستكشفة",
+            "en": "greater than explored"
+          }
+        }
+      ],
+      "order": 604,
+      "id": "XTwzBe9TLnd",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{HabitatsExplored} > 0 &&  ( #{HabitatsExplored} < #{HabitatsPositive} )",
+        "validationMessage": {
+          "ar": "الايجابية اكثر من المستكشفة",
+          "en": "greater than explored"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "habitats",
+      "name": "sample_collected",
+      "code": "sample_collected",
+      "label": {
+        "en": "sample_collected",
+        "ar": "تم جمع عينة"
+      },
+      "rules": [
+        {
+          "expression": "#{HabitatsPositive} > 0",
+          "action": "Show"
+        }
+      ],
+      "order": 605,
+      "id": "AOQdFL9zbBa",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adult",
+      "name": "AdultMosquitoCollectionTime",
+      "code": "AdultMosquitoCollectionTime",
+      "label": {
+        "en": "Adult Mosquito Collection Time",
+        "ar": "وقت جمع البعوض"
+      },
+      "rules": [
+        {
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show"
+        }
+      ],
+      "order": 304,
+      "id": "Ft6SgVi7RY1",
+      "type": "Time",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "NumberOfMosquitoesCollected",
+      "code": "NumberOfMosquitoesCollected",
+      "label": {
+        "en": "NumberOfMosquitoesCollected",
+        "ar": "عدد البعوض الذي تم جمعة"
+      },
+      "rules": [
+        {
+          "expression": "#{adult_mosquito_present} == 'yes'",
+          "action": "Show"
+        }
+      ],
+      "order": 404,
+      "id": "UqTcr7l61gG",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "FeedMosquitoesNumber",
+      "code": "FeedMosquitoesNumber",
+      "label": {
+        "en": "FeedMosquitoesNumber",
+        "ar": "عدد البعوض المتغذية"
+      },
+      "rules": [
+        {
+          "expression": "#{NumberOfMosquitoesCollected} > 0",
+          "action": "Show"
+        }
+      ],
+      "order": 405,
+      "id": "bqIFs4pwqBB",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "GravidMosquitosNumber",
+      "code": "GravidMosquitosNumber",
+      "label": {
+        "en": "GravidMosquitosNumber",
+        "ar": "عدد البعوض الحبلى"
+      },
+      "rules": [
+        {
+          "expression": "#{NumberOfMosquitoesCollected} > 0",
+          "action": "Show"
+        },
+        {
+          "expression": "#{NumberOfMosquitoesCollected} > 0  && #{NumberOfMosquitoesCollected} < #{FeedMosquitoesNumber} + #{GravidMosquitosNumber}",
+          "action": "Error",
+          "message": {
+            "ar": "المتغذية+الحبلى اكبر من عدد البعوض الذي تم جمعه",
+            "en": "gravid + feed > mosquitos collected"
+          }
+        }
+      ],
+      "order": 406,
+      "id": "O8ab6PUFslK",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{NumberOfMosquitoesCollected} > 0  && #{NumberOfMosquitoesCollected} < #{FeedMosquitoesNumber} + #{GravidMosquitosNumber}",
+        "validationMessage": {
+          "ar": "المتغذية+الحبلى اكبر من عدد البعوض الذي تم جمعه",
+          "en": "gravid + feed > mosquitos collected"
+        }
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "AdultMosquitoSpecies",
+      "code": "AdultMosquitoSpecies",
+      "label": {
+        "en": "AdultMosquitoSpecies",
+        "ar": "نوع البعوض"
+      },
+      "rules": [
+        {
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show"
+        }
+      ],
+      "order": 401,
+      "id": "NxCDVpmf0Dd",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "z9VYq4N0OUF",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "OtherAdultMosquitoSpecies",
+      "code": "OtherAdultMosquitoSpecies",
+      "label": {
+        "en": "OtherAdultMosquitoSpecies",
+        "ar": "نوع البعوض الاخر"
+      },
+      "rules": [
+        {
+          "expression": "#{AdultMosquitoSpecies} == 'OtherSpecies'",
+          "action": "Show"
+        }
+      ],
+      "order": 402,
+      "id": "q2E5KPZvZsm",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "adult",
+      "name": "adult_mosquito_present",
+      "code": "adult_mosquito_present",
+      "label": {
+        "en": "adult_mosquito_present",
+        "ar": "وجود بعوض بالغ"
+      },
+      "rules": [],
+      "order": 301,
+      "id": "fkL9MDNpDnF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "zK7EdFCwpx9",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "habitats",
+      "name": "MultiLarvalMosquitoSpecies",
+      "code": "MultiLarvalMosquitoSpecies",
+      "label": {
+        "en": "MultiLarvalMosquitoSpecies",
+        "ar": "انواع البعوض"
+      },
+      "rules": [
+        {
+          "expression": "#{sample_collected} == 'yes'",
+          "action": "Show"
+        }
+      ],
+      "order": 606,
+      "id": "uk30nxRGEkq",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "m9RlHply57i",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "parent": "larval",
+      "name": "habitats",
+      "label": {
+        "en": "habitats",
+        "ar": "المصادر"
+      },
+      "rules": [
+        {
+          "expression": "#{Indoor_Surveillance_Type} == 'Larval' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+          "action": "Show"
+        }
+      ],
+      "order": 600,
+      "repeatable": true,
+      "id": "habitats"
+    },
+    {
+      "name": "larval",
+      "label": {
+        "en": "larval",
+        "ar": "يرقي"
+      },
+      "rules": [
+        {
+          "expression": "#{Indoor_Surveillance_Type} == 'Larval' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+          "action": "Show"
+        }
+      ],
+      "order": 500,
+      "repeatable": false,
+      "id": "larval"
+    },
+    {
+      "name": "locations",
+      "label": {
+        "en": "locations",
+        "ar": "المواقع"
+      },
+      "rules": [],
+      "order": 200,
+      "repeatable": false,
+      "id": "locations"
+    },
+    {
+      "name": "main",
+      "label": {
+        "en": "main",
+        "ar": "بيانات عامة"
+      },
+      "rules": [],
+      "order": 100,
+      "repeatable": false,
+      "id": "main"
+    },
+    {
+      "parent": "adult",
+      "name": "adultClassification",
+      "label": {
+        "en": "adultClassification",
+        "ar": "تصنيف البالغ"
+      },
+      "rules": [
+        {
+          "expression": "#{adult_mosquito_present} == 'yes'",
+          "action": "Show"
+        }
+      ],
+      "order": 400,
+      "repeatable": true,
+      "id": "adultClassification"
+    },
+    {
+      "name": "adult",
+      "label": {
+        "en": "adult",
+        "ar": "بالغ"
+      },
+      "rules": [
+        {
+          "expression": "#{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+          "action": "Show"
+        }
+      ],
+      "order": 300,
+      "repeatable": false,
+      "id": "adult"
+    }
+  ],
+  "id": "6858940581b5cd39baf87ff2"
+}

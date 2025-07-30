@@ -1,0 +1,842 @@
+{
+  "uid": "LaGeMmmCEtH",
+  "versionUid": "kDCFq8kXSHt",
+  "versionNumber": 7,
+  "name": "iccm_chv_supporting_supervision_501",
+  "deleted": false,
+  "label": {
+    "ar": "الإشراف الداعم لمتطوعات صحة المجتمع 1",
+    "en": "iccm_chv_supporting_supervision_501"
+  },
+  "fields": [
+    {
+      "parent": "main",
+      "name": "iccm_supervision_team_type",
+      "code": "iccm_supervision_team_type",
+      "description": "iccm supervision team type chv",
+      "label": {
+        "en": "iccm_supervision_team_type",
+        "ar": "فريق الاشراف"
+      },
+      "rules": [],
+      "order": 102,
+      "id": "kbHsG2u2n8K",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "UDX20myLcFQ",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "other_iccm_supervision_team",
+      "code": "other_iccm_supervision_team",
+      "label": {
+        "en": "other_iccm_supervision_team",
+        "ar": "فريق اخر"
+      },
+      "rules": [
+        {
+          "expression": "#{iccm_supervision_team_type} == 'other_iccm_supervision_team'",
+          "action": "Show"
+        }
+      ],
+      "order": 103,
+      "id": "CD2wK8Tzwgy",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "DateAndTime",
+      "code": "DateAndTime",
+      "label": {
+        "en": "DateAndTime",
+        "ar": "الوقت والتاريخ"
+      },
+      "rules": [],
+      "order": 101,
+      "id": "E0mkcxV1MAU",
+      "type": "DateTime",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "ChvResidentialVillage",
+      "code": "ChvResidentialVillage",
+      "description": "Chv Residential Village iccm supervision",
+      "label": {
+        "en": "ChvResidentialVillage",
+        "ar": "القرية / المحلة التي تسكن فيها المتطوعة"
+      },
+      "rules": [],
+      "order": 104,
+      "id": "iDQIYxg2Er8",
+      "type": "OrganisationUnit",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "chv_name",
+      "code": "chv_name",
+      "label": {
+        "en": "chv_name",
+        "ar": "اسم المتطوعة"
+      },
+      "rules": [],
+      "order": 105,
+      "id": "YZjCBLMSrCe",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "chv_id",
+      "code": "chv_id",
+      "label": {
+        "en": "chv_id",
+        "ar": "كود المتطوعة"
+      },
+      "rules": [],
+      "order": 106,
+      "id": "tl7GFA8JsIT",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "chv_phone",
+      "code": "chv_phone",
+      "label": {
+        "en": "chv_phone",
+        "ar": "رقم الهاتف"
+      },
+      "rules": [],
+      "order": 107,
+      "id": "QJad4RBGgkM",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "chv_education_level",
+      "code": "chv_education_level",
+      "label": {
+        "en": "chv_education_level",
+        "ar": "المستوى التعليمي للمتطوعة"
+      },
+      "rules": [],
+      "order": 108,
+      "id": "M8aPaJfXGcm",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "ZVRQtwgB08z",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "other_chv_education_level",
+      "code": "other_chv_education_level",
+      "label": {
+        "en": "other_chv_education_level",
+        "ar": "اخر"
+      },
+      "rules": [
+        {
+          "expression": "#{chv_education_level} == 'other'",
+          "action": "Show"
+        }
+      ],
+      "order": 109,
+      "id": "ixo5YQgMbQo",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "villages",
+      "name": "village",
+      "code": "village",
+      "description": "Location.",
+      "label": {
+        "en": "village",
+        "ar": "القرية او المحلة"
+      },
+      "rules": [],
+      "order": 201,
+      "id": "nn75KuaMHzp",
+      "type": "OrganisationUnit",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "knowledge_sample_collection",
+      "code": "knowledge_sample_collection",
+      "description": "chv iccm supervision knowledge_sample_collection",
+      "label": {
+        "en": "knowledge_sample_collection",
+        "ar": "اخذ عينة الدم بالطريقة الصحيحة ووضعها بالكمية المحددة في الفتحة المناسبة"
+      },
+      "rules": [],
+      "order": 301,
+      "id": "T1bVMBl4r6t",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "knowledge_rdt_buffer_application",
+      "code": "knowledge_rdt_buffer_application",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_rdt_buffer_application",
+        "ar": "وضع عدد قطرات المحلول المعادل المحددة في الفتحة المناسبة"
+      },
+      "rules": [],
+      "order": 302,
+      "id": "jyOqdkk4naf",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "knowledge_rdt_result_read_timing",
+      "code": "knowledge_rdt_result_read_timing",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_rdt_result_read_timing",
+        "ar": "احتساب الوقت المحدد لقراءة نتيجة الفحص السريع"
+      },
+      "rules": [],
+      "order": 303,
+      "id": "sciAIMjgYp8",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "knowledge_read_rdt_result",
+      "code": "knowledge_read_rdt_result",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_read_rdt_result",
+        "ar": "قراءة نتائج الفحص السريع بشكل صحيح (استخدام كرت تقييم قراءة نتائج الفحص)"
+      },
+      "rules": [],
+      "order": 304,
+      "id": "IwQNoixcYiY",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "knowledge_safety_protection_procedures",
+      "code": "knowledge_safety_protection_procedures",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_safety_protection_procedures",
+        "ar": "تنفذ إجراءات السلامة والامان"
+      },
+      "rules": [],
+      "order": 305,
+      "id": "lW1TrqoDtGr",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "practice_sample_collection",
+      "code": "practice_sample_collection",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_sample_collection",
+        "ar": "اخذ عينة الدم بالطريقة الصحيحة ووضعها بالكمية المحددة في الفتحة المناسبة"
+      },
+      "rules": [],
+      "order": 306,
+      "id": "CIpSXY4sGmS",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "practice_rdt_buffer_application",
+      "code": "practice_rdt_buffer_application",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_rdt_buffer_application",
+        "ar": "وضع عدد قطرات المحلول المعادل المحددة في الفتحة المناسبة"
+      },
+      "rules": [],
+      "order": 307,
+      "id": "DnEZfhC6JZJ",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "practice_rdt_result_read_timing",
+      "code": "practice_rdt_result_read_timing",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_rdt_result_read_timing",
+        "ar": "احتساب الوقت المحدد لقراءة نتيجة الفحص السريع"
+      },
+      "rules": [],
+      "order": 308,
+      "id": "kyOoF3OCTwg",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "practice_read_rdt_result",
+      "code": "practice_read_rdt_result",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_read_rdt_result",
+        "ar": "قراءة نتائج الفحص السريع بشكل صحيح (استخدام كرت تقييم قراءة نتائج الفحص)"
+      },
+      "rules": [],
+      "order": 309,
+      "id": "QQwapzOEqag",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "rdt",
+      "name": "practice_safety_protection_procedures",
+      "code": "practice_safety_protection_procedures",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_safety_protection_procedures",
+        "ar": "تنفذ إجراءات السلامة والامان"
+      },
+      "rules": [],
+      "order": 310,
+      "id": "DotwZCygFPz",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "knowledge_malaria_signs_symptoms",
+      "code": "knowledge_malaria_signs_symptoms",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_malaria_signs_symptoms",
+        "ar": "اعراض  وعلامات مرض الملاريا البسيطة و الوخيمة"
+      },
+      "rules": [],
+      "order": 401,
+      "id": "pbBVct5K29F",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "knowledge_antimalaria_giving",
+      "code": "knowledge_antimalaria_giving",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_antimalaria_giving",
+        "ar": "إعطاء المريض جرعة دواء الملاريا بحسب الوزن والعمر"
+      },
+      "rules": [],
+      "order": 402,
+      "id": "Lbt2BcA6bQb",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "knowledge_severe_malaria_referral",
+      "code": "knowledge_severe_malaria_referral",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_severe_malaria_referral",
+        "ar": "إجراءات الإحالة لمرضى الملاريا الوخيمة"
+      },
+      "rules": [],
+      "order": 403,
+      "id": "iPiUTEwqJre",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "knowledge_dealing_with_pv_malaria",
+      "code": "knowledge_dealing_with_pv_malaria",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_dealing_with_pv_malaria",
+        "ar": "كيفية التعامل مع حالات الملاريا النشطة PV"
+      },
+      "rules": [],
+      "order": 404,
+      "id": "Vgg56Chdpxl",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "knowledge_pregnant_and_childern_treatment",
+      "code": "knowledge_pregnant_and_childern_treatment",
+      "description": "chv iccm",
+      "label": {
+        "en": "knowledge_pregnant_and_childern_treatment",
+        "ar": "اجراءات التعامل مع مرضى الملاريا (الحوامل والأطفال دون الخامسة)"
+      },
+      "rules": [],
+      "order": 405,
+      "id": "JrqWhJivFx5",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "VKMsbXQ3wHH",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "practice_malaria_signs_symptoms",
+      "code": "practice_malaria_signs_symptoms",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_malaria_signs_symptoms",
+        "ar": "تطبيق إجراءات المعالجة والإحالة لمريض الملاريا الوخيمة"
+      },
+      "rules": [],
+      "order": 406,
+      "id": "IEby77UCjoO",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "practice_antimalaria_giving",
+      "code": "practice_antimalaria_giving",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_antimalaria_giving",
+        "ar": "معالجة مرضى الملاريا البسيطة باستخدام جرعة الدواء تتناسب مع الوزن والعمر"
+      },
+      "rules": [],
+      "order": 407,
+      "id": "V913PXQyhIR",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "practice_pv_malaria_treatment",
+      "code": "practice_pv_malaria_treatment",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_pv_malaria_treatment",
+        "ar": "معالجة حالات الملاريا النشطة"
+      },
+      "rules": [],
+      "order": 408,
+      "id": "zKkajA8ajAZ",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "practice_pregnant_and_childern_treatment",
+      "code": "practice_pregnant_and_childern_treatment",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_pregnant_and_childern_treatment",
+        "ar": "معالجة واحالة مرضى الملاريا (الحوامل والأطفال دون الخامسة)"
+      },
+      "rules": [],
+      "order": 409,
+      "id": "qB5RWR1nJbw",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "treatment",
+      "name": "practice_first_dose_giving",
+      "code": "practice_first_dose_giving",
+      "description": "chv iccm",
+      "label": {
+        "en": "practice_first_dose_giving",
+        "ar": "تعطي الجرعة الأولى من الدواء المضاد للملاريا تحت الأشراف المباشر وتحدد مواعيد اخذ الجرعات التالية"
+      },
+      "rules": [],
+      "order": 410,
+      "id": "NsQlgsAQbxT",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "training",
+      "name": "other_chv_training",
+      "code": "other_chv_training",
+      "label": {
+        "en": "other_chv_training",
+        "ar": "أخرى"
+      },
+      "rules": [],
+      "order": 603,
+      "id": "y2flCigadIO",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "notes",
+      "name": "chv_supervisor_notes",
+      "code": "chv_supervisor_notes",
+      "label": {
+        "en": "chv_supervisor_notes",
+        "ar": "ملاحظات خاصة بالمشرف"
+      },
+      "rules": [],
+      "order": 701,
+      "id": "vvDm51bfeMr",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "training",
+      "name": "rdt_chv_training",
+      "code": "rdt_chv_training",
+      "label": {
+        "en": "rdt_chv_training",
+        "ar": "إجراءات أخذ العينة والفحص"
+      },
+      "rules": [],
+      "order": 601,
+      "id": "yKguPB5GJoO",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "Zgxbu0vQIuz",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "training",
+      "name": "treatment_chv_training",
+      "code": "treatment_chv_training",
+      "label": {
+        "en": "treatment_chv_training",
+        "ar": "إجراءات المعالجة والإحالة"
+      },
+      "rules": [],
+      "order": 602,
+      "id": "zgaw5AsCjjv",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "fiCc6fQxP2A",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "recording",
+      "name": "past_peroid_records_keeping",
+      "code": "past_peroid_records_keeping",
+      "description": "chv practice iccm supervision",
+      "label": {
+        "en": "past_peroid_records_keeping",
+        "ar": "الاحتفاظ بتقارير الفترات الماضية (لفترة التطوع )"
+      },
+      "rules": [],
+      "order": 501,
+      "id": "sYaCQlc7O5o",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "recording",
+      "name": "correctly_recording _data",
+      "code": "correctly_recording _data",
+      "description": "chv practice iccm  supervision",
+      "label": {
+        "en": "correctly_recording _data",
+        "ar": "تدوين البيانات بالشكل الصحيح وفي المكان المناسب في سجل المتطوعة اليومي الخاص بتدبير حالات الملاريا"
+      },
+      "rules": [],
+      "order": 502,
+      "id": "M81IS1YMTTS",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "recording",
+      "name": "correctly_implement_field_visits_awareness_sessions_plan",
+      "code": "correctly_implement_field_visits_awareness_sessions_plan",
+      "description": "chv practice iccm supervision",
+      "label": {
+        "en": "correctly_implement_field_visits_awareness_sessions_plan",
+        "ar": "تنفذ خطة الزيارات الميدانية وجلسات التوعية بطريقة صحيحة"
+      },
+      "rules": [],
+      "order": 503,
+      "id": "OLdDCwS0l3K",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "recording",
+      "name": "household_survey_register_available_and_complete",
+      "code": "household_survey_register_available_and_complete",
+      "description": "chv practice iccm supervision",
+      "label": {
+        "en": "household_survey_register_available_and_complete",
+        "ar": "سجل مسح الاسر في الزمام للمتطوعة متوفر ومكتمل"
+      },
+      "rules": [],
+      "order": 504,
+      "id": "lJw1A8wwQ0h",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "hvoE33sBe97",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "name": "rdt",
+      "label": {
+        "en": "rdt",
+        "ar": "تقييم معارف وتطبيق إجراء الفحص السريع للملاريا"
+      },
+      "rules": [],
+      "order": 300,
+      "repeatable": false,
+      "id": "rdt"
+    },
+    {
+      "name": "notes",
+      "label": {
+        "en": "notes",
+        "ar": "ملاحظات خاصة بالمشرف"
+      },
+      "rules": [],
+      "order": 700,
+      "repeatable": false,
+      "id": "notes"
+    },
+    {
+      "name": "villages",
+      "label": {
+        "en": "villages",
+        "ar": "القرى والمحلات التي تغطيها المتطوعة"
+      },
+      "rules": [],
+      "order": 200,
+      "repeatable": true,
+      "id": "villages"
+    },
+    {
+      "name": "recording",
+      "label": {
+        "en": "recording",
+        "ar": "تقييم التسجيل وتدوين البيانات"
+      },
+      "rules": [],
+      "order": 500,
+      "repeatable": false,
+      "id": "recording"
+    },
+    {
+      "name": "training",
+      "label": {
+        "en": "training",
+        "ar": "تحديد المهارات التي قمت بتدريب المتطوعة عليها"
+      },
+      "rules": [],
+      "order": 600,
+      "repeatable": false,
+      "id": "training"
+    },
+    {
+      "name": "main",
+      "label": {
+        "en": "main",
+        "ar": "بيانات عامة"
+      },
+      "rules": [],
+      "order": 100,
+      "repeatable": false,
+      "id": "main"
+    },
+    {
+      "name": "treatment",
+      "label": {
+        "en": "treatment",
+        "ar": "تقييم معارف وتطبيق  إجراءات المعالجة"
+      },
+      "rules": [],
+      "order": 400,
+      "repeatable": false,
+      "id": "treatment"
+    }
+  ],
+  "id": "01K0JH71FWW1DV5GTDR488H3BP"
+}

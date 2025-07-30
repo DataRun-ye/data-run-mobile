@@ -1,0 +1,183 @@
+{
+  "uid": "A3Ao5Dsxyac",
+  "versionUid": "LCyPYA7Pgz4",
+  "versionNumber": 1,
+  "name": "استمارة حركة الناموسيات-مشرف المخزن",
+  "deleted": false,
+  "label": {
+    "ar": "حركة الناموسيات-مشرف المخزن",
+    "en": "WH ITNs Issue Form - WH keeper"
+  },
+  "fields": [
+    {
+      "parent": "mainSection",
+      "name": "workday",
+      "code": "workday",
+      "label": {
+        "en": "workday",
+        "ar": "اليوم"
+      },
+      "rules": [],
+      "order": 1,
+      "id": "VQTpnEDHEkF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "LT0LMYKsxhO",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "mainSection",
+      "name": "transactionDate",
+      "code": "transactiondate",
+      "label": {
+        "en": "transaction Date",
+        "ar": "التاريخ"
+      },
+      "rules": [],
+      "order": 2,
+      "id": "QWDjRlFPiJU",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dtsitnsledger",
+      "name": "transaction",
+      "code": "transaction",
+      "label": {
+        "en": "transaction",
+        "ar": "نوع الحركة"
+      },
+      "rules": [],
+      "order": 4,
+      "id": "nBrTFasTuWS",
+      "type": "SelectOne",
+      "defaultValue": "out",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "Oxwc5ctCsOm",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dtsitnsledger",
+      "name": "from_to",
+      "code": "from_to",
+      "label": {
+        "en": "Source/Destination",
+        "ar": "طرف الحركة"
+      },
+      "rules": [
+        {
+          "expression": "#{transaction} == 'OUT' || #{transaction} == 'IN'",
+          "action": "Show"
+        }
+      ],
+      "order": 5,
+      "id": "scJBI5kLDyQ",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "N40EowctAaL",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dtsitnsledger",
+      "name": "team",
+      "code": "team",
+      "label": {
+        "en": "Team",
+        "ar": "حدد الفريق"
+      },
+      "rules": [
+        {
+          "expression": "(#{transaction} == 'OUT' || #{transaction} == 'IN') && #{from_to} == 'team'",
+          "action": "Show"
+        }
+      ],
+      "order": 6,
+      "id": "oYxzWmMcIpr",
+      "type": "Team",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dtsitnsledger",
+      "name": "otherSideInfo",
+      "code": "othersideinfo",
+      "label": {
+        "en": "fromToName",
+        "ar": "معلومات الطرف  الآخر"
+      },
+      "rules": [
+        {
+          "expression": "(#{transaction} == 'OUT' || #{transaction} == 'IN') && #{from_to} == 'other'",
+          "action": "Show"
+        }
+      ],
+      "order": 7,
+      "id": "iahXZa85b18",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "dtsitnsledger",
+      "name": "itns",
+      "code": "itns",
+      "label": {
+        "en": "Quantity",
+        "ar": "الكمية بالحبة - ناموسية"
+      },
+      "rules": [],
+      "order": 9,
+      "id": "vZLHmltcf4M",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "name": "mainSection",
+      "label": {
+        "en": "mainSection",
+        "ar": "بيانات الاساسية"
+      },
+      "rules": [],
+      "order": 0,
+      "repeatable": false,
+      "id": "mainSection"
+    },
+    {
+      "name": "dtsitnsledger",
+      "label": {
+        "en": "dtsitnsledger",
+        "ar": "بيانات الحركة"
+      },
+      "rules": [],
+      "order": 3,
+      "repeatable": true,
+      "id": "dtsitnsledger"
+    }
+  ],
+  "id": "67980f72cd00b263b8a13a26"
+}

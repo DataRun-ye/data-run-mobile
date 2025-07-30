@@ -1,0 +1,564 @@
+{
+  "uid": "MI8KQFsxGFc",
+  "versionUid": "ys2a06ekFXJ",
+  "versionNumber": 41,
+  "name": "Malaria and Mosquito-Borne Disease Emergency Investigation and Response Form",
+  "deleted": false,
+  "label": {
+    "ar": "استمارة التقصي والاستجابة لطوارئ اوبئة الملاريا والامراض المنقولة بالبعوض",
+    "en": "Malaria and Mosquito-Borne Diseases Investigation and Response Form"
+  },
+  "sections": [
+    {
+      "name": "case",
+      "label": {
+        "en": "case",
+        "ar": "بيانات الحالة"
+      },
+      "rules": [],
+      "order": 2,
+      "repeatable": false,
+      "id": "case"
+    },
+    {
+      "name": "refeeral",
+      "label": {
+        "en": "refeeral",
+        "ar": "الاحالة"
+      },
+      "rules": [],
+      "order": 7,
+      "repeatable": false,
+      "id": "refeeral"
+    },
+    {
+      "name": "medicines",
+      "label": {
+        "en": "medicines",
+        "ar": "الادوية"
+      },
+      "rules": [],
+      "order": 6,
+      "repeatable": true,
+      "id": "medicines"
+    },
+    {
+      "name": "notes",
+      "label": {
+        "en": "notes",
+        "ar": "ملاحظات"
+      },
+      "rules": [],
+      "order": 8,
+      "repeatable": false,
+      "id": "notes"
+    },
+    {
+      "name": "measures",
+      "label": {
+        "en": "measures",
+        "ar": "التدابير"
+      },
+      "rules": [],
+      "order": 5,
+      "repeatable": false,
+      "id": "measures"
+    },
+    {
+      "name": "disease",
+      "label": {
+        "en": "disease",
+        "ar": "المرض المشخص"
+      },
+      "rules": [],
+      "order": 4,
+      "repeatable": false,
+      "id": "disease"
+    },
+    {
+      "name": "main",
+      "label": {
+        "en": "main",
+        "ar": "بيانات عامه"
+      },
+      "rules": [],
+      "order": 1,
+      "repeatable": false,
+      "id": "main"
+    },
+    {
+      "name": "labtest",
+      "label": {
+        "en": "labtest",
+        "ar": "الفحوصات"
+      },
+      "rules": [],
+      "order": 3,
+      "repeatable": true,
+      "id": "labtest"
+    }
+  ],
+  "fields": [
+    {
+      "parent": "main",
+      "name": "visitdate",
+      "code": "visitdate",
+      "label": {
+        "en": "Visit Date",
+        "ar": "تاريخ الزيارة"
+      },
+      "rules": [],
+      "order": 2,
+      "id": "LyIGccZ5mna",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "serialNumber",
+      "code": "serialNumber",
+      "label": {
+        "en": "serialNumber",
+        "ar": "الرقم التسلسلي"
+      },
+      "rules": [],
+      "order": 3,
+      "id": "w8VQRZmmz82",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "PatientName",
+      "code": "PatientName",
+      "description": "cpes Patient Name",
+      "label": {
+        "en": "PatientName",
+        "ar": "اسم المريض رباعياً"
+      },
+      "rules": [],
+      "order": 4,
+      "id": "KBmP3fPjrLG",
+      "type": "FullName",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "age_in_years",
+      "code": "age_in_years",
+      "description": "cpes age_in_years",
+      "label": {
+        "en": "age_in_years",
+        "ar": "العمر بالسنة"
+      },
+      "rules": [],
+      "order": 5,
+      "id": "hDyuZdoIO37",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "age_in_months",
+      "code": "age_in_months",
+      "description": "cpes age_in_months",
+      "label": {
+        "en": "age_in_months",
+        "ar": "العمر بالشهر"
+      },
+      "rules": [
+        {
+          "expression": "#{age_in_months} > 11",
+          "action": "Error",
+          "message": {
+            "ar": "العمر يالشهر لا يزيد عن 11",
+            "en": "age in months must be less than 12"
+          }
+        }
+      ],
+      "order": 6,
+      "id": "emsFu8oSjFa",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{age_in_months} < 12",
+        "validationMessage": {
+          "en": "Field with error, check"
+        }
+      },
+      "constraint": "#{age_in_months} < 12",
+      "constraintMessage": {
+        "en": "Field with error, check"
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "gender",
+      "code": "gender",
+      "label": {
+        "en": "Gender",
+        "ar": "الجنس"
+      },
+      "rules": [],
+      "order": 7,
+      "id": "eCw9HcbcnW7",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "Bu2LhXFDicp",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "ispregnant",
+      "code": "de_ispregnant",
+      "label": {
+        "en": "ispregnant",
+        "ar": "حامل"
+      },
+      "rules": [
+        {
+          "expression": "(#{gender} == 'FEMALE') && (#{age_in_years} > 13 && #{age_in_years} < 55)",
+          "action": "Show"
+        }
+      ],
+      "order": 8,
+      "id": "FjfKSsEWAYf",
+      "type": "YesNo",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "pregnancy_month",
+      "code": "pregnancy_month",
+      "description": "cpes pregnancy_month",
+      "label": {
+        "en": "pregnancy_month",
+        "ar": "شهر الحمل"
+      },
+      "rules": [
+        {
+          "expression": "#{ispregnant} == 'yes'",
+          "action": "Show"
+        },
+        {
+          "expression": "#{pregnancy_month} > 9",
+          "action": "Error",
+          "message": {
+            "ar": "شهر الحمل لا يزيد عن 9",
+            "en": "pregnancy month must be less than 10"
+          }
+        }
+      ],
+      "order": 9,
+      "id": "aEjEOwZ9Mk0",
+      "type": "IntegerPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "validationRule": {
+        "expression": "#{pregnancy_month} > 9",
+        "validationMessage": {
+          "en": "Field with error, check"
+        }
+      },
+      "constraint": "#{pregnancy_month} > 9",
+      "constraintMessage": {
+        "en": "Field with error, check"
+      },
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "case",
+      "name": "hemoglobin",
+      "code": "hemoglobin",
+      "description": "cpes hemoglobin(g/dl)",
+      "label": {
+        "en": "hemoglobin(g/dl)",
+        "ar": "hemoglobin(g/dl)"
+      },
+      "rules": [],
+      "order": 10,
+      "id": "UCqRDm5SJ3k",
+      "type": "Number",
+      "mandatory": false,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "disease",
+      "name": "diagnosed_disease_type",
+      "code": "de_diagnosed_disease_type",
+      "label": {
+        "en": "diagnosed_disease_type",
+        "ar": "نوع المرض المُشخَّص"
+      },
+      "rules": [],
+      "order": 13,
+      "id": "UiM4N3o8OiG",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "AjpOXeUAqnQ",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "measures",
+      "name": "cm_measures",
+      "code": "de_cm_measures",
+      "label": {
+        "en": "cm_measures",
+        "ar": "التدابير المتخذه"
+      },
+      "rules": [],
+      "order": 24,
+      "id": "W5QDhN3qanw",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "vcYOprXCzar",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "refeeral",
+      "name": "referral_type",
+      "code": "de_referral_type",
+      "description": "referral_type, emergent through the team or autoreferral",
+      "label": {
+        "en": "referral_type",
+        "ar": "نوع الإحالة"
+      },
+      "rules": [
+        {
+          "expression": "#{cm_measures} == 'refferal' || #{cm_measures} =='treatmentandrefferal'",
+          "action": "Show"
+        }
+      ],
+      "order": 85,
+      "id": "BOGECC3MSLb",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "PnCIWkhM47L",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "notes",
+      "name": "comment",
+      "code": "comment",
+      "label": {
+        "en": "Comments",
+        "ar": "ملاحظات وتعليقات"
+      },
+      "rules": [],
+      "order": 90,
+      "id": "cjY0oSUx6YI",
+      "type": "LongText",
+      "mandatory": false,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "labtest",
+      "name": "lab_test_type",
+      "code": "de_lab_test",
+      "description": "test performed, rdt dengue malaria , microscopy, other test or none in mass treatment",
+      "label": {
+        "en": "lab_test_type",
+        "ar": "نوع الفحص"
+      },
+      "rules": [],
+      "order": 31,
+      "id": "BqErQ3xrUex",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "PiGAyROTsAB",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "labtest",
+      "name": "test_result",
+      "code": "de_test_result",
+      "description": "test result, positve or negative",
+      "label": {
+        "en": "test_result",
+        "ar": "نتيجة الفحص"
+      },
+      "rules": [
+        {
+          "expression": "#{lab_test_type} != 'none'",
+          "action": "Show"
+        }
+      ],
+      "order": 32,
+      "id": "jLX69mxv8JJ",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "tQjriOFVC2T",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "labtest",
+      "name": "positive_result_type",
+      "code": "de_positive_result_type",
+      "description": "positive_result_type, malaria (pf, pv, pan, po,pm), dengue (ns1, IgG, IgM)",
+      "label": {
+        "en": "positive_result_type",
+        "ar": "نوع النتيجة الإيجابية"
+      },
+      "rules": [
+        {
+          "expression": "#{lab_test_type} != 'none' && #{test_result} == 'positive'",
+          "action": "Show"
+        }
+      ],
+      "order": 33,
+      "id": "ywxDNy8F6BY",
+      "type": "SelectMulti",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "FNki0zFPleV",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "disease",
+      "name": "other_diagnosed_disease_name",
+      "code": "de_other_diagnosed_disease_name",
+      "label": {
+        "en": "other_diagnosed_disease_name",
+        "ar": "اسم المرض المُشخَّص الآخر"
+      },
+      "rules": [
+        {
+          "expression": "#{diagnosed_disease_type} == 'other'",
+          "action": "Show"
+        }
+      ],
+      "order": 14,
+      "id": "MYZOyP37ilc",
+      "type": "Text",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "medicines",
+      "name": "prescribeddrug",
+      "code": "de_prescribeddrug",
+      "label": {
+        "en": "prescribeddrug",
+        "ar": "الصنف"
+      },
+      "rules": [
+        {
+          "expression": "#{cm_measures} == 'treatment' || #{cm_measures} == 'treatmentandrefferal'",
+          "action": "Show"
+        }
+      ],
+      "order": 38,
+      "id": "jnm46N3THhf",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "PVg1vCjoxfV",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "medicines",
+      "name": "druguom",
+      "code": "de_druguom",
+      "label": {
+        "en": "druguom",
+        "ar": "وحدة القياس"
+      },
+      "rules": [
+        {
+          "expression": "#{cm_measures} == 'treatment' || #{cm_measures} == 'treatmentandrefferal'",
+          "action": "Show"
+        }
+      ],
+      "order": 39,
+      "id": "gjkfAEM4bwc",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "k4ZN0nvhrxq",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "medicines",
+      "name": "quantity",
+      "code": "quantity",
+      "label": {
+        "en": "Quantity",
+        "ar": "الكمية"
+      },
+      "rules": [
+        {
+          "expression": "#{cm_measures} == 'treatment' || #{cm_measures} == 'treatmentandrefferal'",
+          "action": "Show"
+        }
+      ],
+      "order": 40,
+      "id": "Jck63XyG19y",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "id": "67cca3469d89cf7e8213fb11"
+}

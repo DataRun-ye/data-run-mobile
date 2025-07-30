@@ -1,0 +1,323 @@
+{
+  "uid": "QIMwgBqVsqW",
+  "versionUid": "sYUS6aaZrQU",
+  "versionNumber": 3,
+  "name": "larval source management supervision",
+  "description": "Supervision form for LSM activities, tracking visit dates, team performance, habitat management, village coverage, and campaign progress.",
+  "deleted": false,
+  "label": {
+    "ar": "استمارة الاشراف للمكافحة اليرقية",
+    "en": "larval source management supervision"
+  },
+  "fields": [
+    {
+      "parent": "main",
+      "name": "visitdate",
+      "code": "visitdate",
+      "label": {
+        "en": "Visit Date",
+        "ar": "تاريخ الزيارة"
+      },
+      "rules": [],
+      "order": 2,
+      "id": "LyIGccZ5mna",
+      "type": "Date",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "main",
+      "name": "workdays",
+      "code": "workdays",
+      "description": "Day of work for the campaign.",
+      "label": {
+        "en": "Work Day",
+        "ar": "يوم العمل"
+      },
+      "rules": [],
+      "order": 3,
+      "id": "igKGDeRLe8p",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "LT0LMYKsxhO",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "team",
+      "code": "team",
+      "label": {
+        "en": "Team",
+        "ar": "حدد الفريق"
+      },
+      "rules": [],
+      "order": 5,
+      "id": "oYxzWmMcIpr",
+      "type": "Team",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "temporarily_managed_habitats",
+      "code": "temporarily_managed_habitats",
+      "description": "lsm",
+      "label": {
+        "en": "Temporarily Managed Habitats",
+        "ar": "عدد مصادر البعوض التي تم التخلص منها مؤقتاً"
+      },
+      "rules": [],
+      "order": 6,
+      "id": "vOyBPCVqdfr",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "permanently_managed_habitats",
+      "code": "permanently_managed_habitats",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Permanently Managed Habitats",
+        "ar": "عدد مصادر البعوض التي تم التخلص منها بشكل دائم"
+      },
+      "rules": [],
+      "order": 7,
+      "id": "GMWW4EBq6jg",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "cumulative_covered_villages",
+      "code": "cumulative_covered_villages",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Cumulative Covered Villages",
+        "ar": "عدد القرى التي تم تغطيته (تراكمي)"
+      },
+      "rules": [],
+      "order": 8,
+      "id": "l7vyp3YjwOr",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "cumulative_remaining_villages",
+      "code": "cumulative_remaining_villages",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Cumulative Remaining Villages",
+        "ar": "عدد القرى المتبقية (تراكمي)"
+      },
+      "rules": [],
+      "order": 9,
+      "id": "vMK2jzoJBzr",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "cumulative_performance_ratio",
+      "code": "cumulative_performance_ratio",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Cumulative Performance Ratio",
+        "ar": "نسبة الإنجاز % (تراكمي)"
+      },
+      "rules": [],
+      "order": 10,
+      "id": "oLqaKGHTRw4",
+      "type": "Number",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "total_tires_collected",
+      "code": "total_tires_collected",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Total Tires Collected",
+        "ar": "إجمالي الإطارات التي تم جمعها عبر الفريق"
+      },
+      "rules": [],
+      "order": 11,
+      "id": "H5lEmsMmubX",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "community_initiative_teams",
+      "code": "community_initiative_teams",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Community Initiative Teams",
+        "ar": "عدد فرق المبادرات المجتمعية المساندة للفريق"
+      },
+      "rules": [],
+      "order": 12,
+      "id": "gsisZXN2WPG",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "community_initiative_teams_members",
+      "code": "community_initiative_teams_members",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Community Initiative Teams Members",
+        "ar": "إجمالي أفراد فرق المبادرات"
+      },
+      "rules": [],
+      "order": 13,
+      "id": "iBdgXF8t4R8",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "initiatively_managed_habitats",
+      "code": "initiatively_managed_habitats",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Initiatively Managed Habitats",
+        "ar": "عدد المصادر التي تم التخلص منها عن طريق المبادرات"
+      },
+      "rules": [],
+      "order": 14,
+      "id": "uB2D8DpDpXU",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "local_authorities_managed_habitats",
+      "code": "local_authorities_managed_habitats",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Local Authorities Managed Habitats",
+        "ar": "عدد المصادر تم التخلص منها عبر المكاتب التنفيذية للسلطات المحلية في المديرية"
+      },
+      "rules": [],
+      "order": 15,
+      "id": "NFcboekq4nJ",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "official_initiative_parties",
+      "code": "official_initiative_parties",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Official Initiative Parties",
+        "ar": "حدد الجهات الرسمية / المجتمعية المساندة للفريق في التخلص من مصادر توالد البعوض"
+      },
+      "rules": [],
+      "order": 16,
+      "id": "LyK1TEyKmkl",
+      "type": "LongText",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "details",
+      "name": "habitats_requiring_heavy_equipment",
+      "code": "habitats_requiring_heavy_equipment",
+      "description": "lsm supervision",
+      "label": {
+        "en": "Habitats Requiring Heavy Equipment",
+        "ar": "عدد المصادر التي تحتاج إلى معدات ثقيلة لم يتم التخلص منها"
+      },
+      "rules": [],
+      "order": 17,
+      "id": "qBeuAiAByvw",
+      "type": "IntegerZeroOrPositive",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "sections": [
+    {
+      "name": "details",
+      "label": {
+        "en": "details",
+        "ar": "التفاصيل"
+      },
+      "rules": [],
+      "order": 4,
+      "repeatable": true,
+      "id": "details"
+    },
+    {
+      "name": "main",
+      "label": {
+        "en": "main",
+        "ar": "اليوم والتاريخ"
+      },
+      "rules": [],
+      "order": 1,
+      "repeatable": false,
+      "id": "main"
+    }
+  ],
+  "id": "68098dbcadf35978311762f7"
+}

@@ -1,0 +1,115 @@
+{
+  "uid": "oHpNiSgUOT4",
+  "versionUid": "ls6v8GMCiQl",
+  "versionNumber": 2,
+  "name": "ITNs WH Receipt - Team Leader",
+  "deleted": false,
+  "label": {
+    "ar": "حركة الناموسيات اليومي - قائد الفريق",
+    "en": "ITNs WH Receipt - Team Leader"
+  },
+  "sections": [
+    {
+      "name": "mainSection",
+      "label": {
+        "en": "mainSection",
+        "ar": "بيانات أساسية"
+      },
+      "rules": [],
+      "order": 1,
+      "repeatable": false,
+      "id": "mainSection"
+    },
+    {
+      "name": "transactions",
+      "label": {
+        "en": "transactions",
+        "ar": "قراءات الباركود"
+      },
+      "rules": [],
+      "order": 2,
+      "repeatable": true,
+      "id": "transactions"
+    }
+  ],
+  "fields": [
+    {
+      "parent": "mainSection",
+      "name": "workday",
+      "code": "workday",
+      "description": "Day of work for the campaign.",
+      "label": {
+        "en": "workday",
+        "ar": "اليوم"
+      },
+      "rules": [],
+      "order": 1,
+      "id": "VQTpnEDHEkF",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": true,
+      "readOnly": false,
+      "optionSet": "LT0LMYKsxhO",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "transactions",
+      "name": "uom",
+      "code": "uom",
+      "label": {
+        "en": "uom",
+        "ar": "الكمية"
+      },
+      "rules": [],
+      "order": 2,
+      "id": "n1HrKKWrrdI",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "zq0f82tw797",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "transactions",
+      "name": "barcode",
+      "code": "barcode",
+      "label": {
+        "en": "barcode",
+        "ar": "الباركود"
+      },
+      "rules": [],
+      "order": 1,
+      "id": "HUiJ4fqybHj",
+      "type": "ScannedCode",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "gs1Enabled": false,
+      "valueTypeRendering": "BAR_CODE",
+      "aggregationType": "DEFAULT"
+    },
+    {
+      "parent": "transactions",
+      "name": "transactiontype",
+      "code": "transactiontype",
+      "label": {
+        "en": "transactiontype",
+        "ar": "نوع الحركة"
+      },
+      "rules": [],
+      "order": 3,
+      "id": "CbysoiFqxwH",
+      "type": "SelectOne",
+      "mandatory": true,
+      "mainField": false,
+      "readOnly": false,
+      "optionSet": "Oxwc5ctCsOm",
+      "valueTypeRendering": "DEFAULT",
+      "aggregationType": "DEFAULT"
+    }
+  ],
+  "id": "67980f6ccd00b263b8a1399a"
+}

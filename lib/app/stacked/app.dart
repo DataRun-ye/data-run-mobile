@@ -22,7 +22,6 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SettingsView),
     MaterialRoute(page: SyncResourcesView),
     MaterialRoute(page: AssignmentScreen),
-    MaterialRoute(page: AssignmentDetailView),
     MaterialRoute(page: AssignmentDetailPage),
     MaterialRoute(page: EditRowScreen),
     MaterialRoute(page: SubmissionHistoryScreen),

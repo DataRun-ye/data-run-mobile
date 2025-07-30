@@ -27,7 +27,7 @@ final formSubmissionRepositoryProvider =
 typedef FormSubmissionRepositoryRef
     = AutoDisposeProviderRef<FormSubmissionRepository>;
 String _$submissionEditStatusHash() =>
-    r'491fb1cc9862b4063d3b37135ff1d8502f12effc';
+    r'02d9349aaea6e5b425324fcafea9817097b43533';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -61,10 +61,10 @@ class SubmissionEditStatusFamily extends Family<AsyncValue<bool>> {
 
   /// See also [submissionEditStatus].
   SubmissionEditStatusProvider call({
-    required FormMetadata formMetadata,
+    required String submissionId,
   }) {
     return SubmissionEditStatusProvider(
-      formMetadata: formMetadata,
+      submissionId: submissionId,
     );
   }
 
@@ -73,7 +73,7 @@ class SubmissionEditStatusFamily extends Family<AsyncValue<bool>> {
     covariant SubmissionEditStatusProvider provider,
   ) {
     return call(
-      formMetadata: provider.formMetadata,
+      submissionId: provider.submissionId,
     );
   }
 
@@ -96,11 +96,11 @@ class SubmissionEditStatusFamily extends Family<AsyncValue<bool>> {
 class SubmissionEditStatusProvider extends AutoDisposeFutureProvider<bool> {
   /// See also [submissionEditStatus].
   SubmissionEditStatusProvider({
-    required FormMetadata formMetadata,
+    required String submissionId,
   }) : this._internal(
           (ref) => submissionEditStatus(
             ref as SubmissionEditStatusRef,
-            formMetadata: formMetadata,
+            submissionId: submissionId,
           ),
           from: submissionEditStatusProvider,
           name: r'submissionEditStatusProvider',
@@ -111,7 +111,7 @@ class SubmissionEditStatusProvider extends AutoDisposeFutureProvider<bool> {
           dependencies: SubmissionEditStatusFamily._dependencies,
           allTransitiveDependencies:
               SubmissionEditStatusFamily._allTransitiveDependencies,
-          formMetadata: formMetadata,
+          submissionId: submissionId,
         );
 
   SubmissionEditStatusProvider._internal(
@@ -121,10 +121,10 @@ class SubmissionEditStatusProvider extends AutoDisposeFutureProvider<bool> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.formMetadata,
+    required this.submissionId,
   }) : super.internal();
 
-  final FormMetadata formMetadata;
+  final String submissionId;
 
   @override
   Override overrideWith(
@@ -139,7 +139,7 @@ class SubmissionEditStatusProvider extends AutoDisposeFutureProvider<bool> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        formMetadata: formMetadata,
+        submissionId: submissionId,
       ),
     );
   }
@@ -152,13 +152,13 @@ class SubmissionEditStatusProvider extends AutoDisposeFutureProvider<bool> {
   @override
   bool operator ==(Object other) {
     return other is SubmissionEditStatusProvider &&
-        other.formMetadata == formMetadata;
+        other.submissionId == submissionId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, formMetadata.hashCode);
+    hash = _SystemHash.combine(hash, submissionId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -167,8 +167,8 @@ class SubmissionEditStatusProvider extends AutoDisposeFutureProvider<bool> {
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin SubmissionEditStatusRef on AutoDisposeFutureProviderRef<bool> {
-  /// The parameter `formMetadata` of this provider.
-  FormMetadata get formMetadata;
+  /// The parameter `submissionId` of this provider.
+  String get submissionId;
 }
 
 class _SubmissionEditStatusProviderElement
@@ -177,8 +177,8 @@ class _SubmissionEditStatusProviderElement
   _SubmissionEditStatusProviderElement(super.provider);
 
   @override
-  FormMetadata get formMetadata =>
-      (origin as SubmissionEditStatusProvider).formMetadata;
+  String get submissionId =>
+      (origin as SubmissionEditStatusProvider).submissionId;
 }
 
 String _$formSubmissionsHash() => r'5480ac4cc116eb8a7442729b67fa3f92adac3706';

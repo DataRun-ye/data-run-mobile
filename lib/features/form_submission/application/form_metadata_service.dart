@@ -53,10 +53,11 @@ class FormMetadataService {
           initialValue ?? _deviceInfoService?.model(),
         AttributeType.form =>
           initialValue ?? formMetadata.formId.split('_').first,
-        AttributeType.team => formMetadata.assignmentModel.team.id,
-        AttributeType.activity =>
-          initialValue ?? formMetadata.assignmentModel.activity?.id,
-        AttributeType.version => initialValue ?? formMetadata.formId,
+        // AttributeType.team => formMetadata.assignmentModel.team.id,
+        // AttributeType.activity =>
+        //   initialValue ?? formMetadata.assignmentModel.activity?.id,
+        AttributeType.version => initialValue ?? formMetadata.versionUid,
+        _ => initialValue,
       };
 
   Future<Map<String, Object?>> formAttributesControls(initialValue) async {

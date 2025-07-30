@@ -2767,11 +2767,6 @@ class S {
     return Intl.message('Warning', name: 'warning', desc: '', args: []);
   }
 
-  /// `Week`
-  String get week {
-    return Intl.message('Week', name: 'week', desc: '', args: []);
-  }
-
   /// `Select Month`
   String get selectMonth {
     return Intl.message(
@@ -2790,6 +2785,31 @@ class S {
   /// `Select Year`
   String get selectYear {
     return Intl.message('Select Year', name: 'selectYear', desc: '', args: []);
+  }
+
+  /// `Week {weekNum}`
+  String week(Object weekNum) {
+    return Intl.message(
+      'Week $weekNum',
+      name: 'week',
+      desc: '',
+      args: [weekNum],
+    );
+  }
+
+  /// `Of {year}`
+  String ofYear(Object year) {
+    return Intl.message('Of $year', name: 'ofYear', desc: '', args: [year]);
+  }
+
+  /// `Created`
+  String get created {
+    return Intl.message('Created', name: 'created', desc: '', args: []);
+  }
+
+  /// `Modified`
+  String get modified {
+    return Intl.message('Modified', name: 'modified', desc: '', args: []);
   }
 }
 

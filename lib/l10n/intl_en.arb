@@ -407,8 +407,11 @@
   "cancelSyncing": "Cancel Syncing",
   "formPermissions": "Permission",
   "warning": "Warning",
-  "week": "Week",
   "selectMonth": "Select Month",
   "selectWeek": "Select Week",
-  "selectYear": "Select Year"
+  "selectYear": "Select Year",
+  "week": "Week {weekNum}",
+  "ofYear": "Of {year}",
+  "created": "Created",
+  "modified": "Modified"
 }

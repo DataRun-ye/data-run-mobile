@@ -1,15 +1,14 @@
 import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
-import 'package:datarunmobile/generated/l10n.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -66,8 +65,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(S.of(context).confirm),
-          content: Text(
-              S.of(context).confirmationWarning),
+          content: Text(S.of(context).confirmationWarning),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
@@ -91,9 +89,9 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
           .requireValue;
 
       formInstance.updateSubmissionStatus(AssignmentStatus.getType(status));
-      ref.read(assignmentsProvider.notifier).updateAssignmentStatus(
-          AssignmentStatus.getType(status),
-          formInstance.formMetadata.assignmentModel.id);
+      // ref.read(assignmentsProvider.notifier).updateAssignmentStatus(
+      //     AssignmentStatus.getType(status),
+      //     formInstance.formMetadata.assignmentModel.id);
     }
   }
 }

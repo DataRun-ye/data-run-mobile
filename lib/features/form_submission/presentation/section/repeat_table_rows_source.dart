@@ -148,14 +148,6 @@ class RepeatTableDataSource extends DataTableSource {
               valueType: field.template.type,
               value: field.value,
             )
-            // Text(activityModel
-            //     .call()
-            //     .managedTeams
-            //     .where((t) => t.id == field.value)
-            //     .firstOrNull
-            //     ?.name ??
-            //     field.value ??
-            //     ''),
           ],
         );
         break;

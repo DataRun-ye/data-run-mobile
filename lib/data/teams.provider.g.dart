@@ -296,7 +296,7 @@ class _TeamsProviderElement
   String? get activity => (origin as TeamsProvider).activity;
 }
 
-String _$managedTeamsHash() => r'e7c649c9ed73df9ec8ca1e5a93012aa757b81e32';
+String _$managedTeamsHash() => r'c0a5f287963ee04bfff4bee467ee5a32358cc2e8';
 
 /// See also [managedTeams].
 @ProviderFor(managedTeams)
@@ -311,10 +311,12 @@ class ManagedTeamsFamily extends Family<AsyncValue<List<IdentifiableModel>>> {
   ManagedTeamsProvider call({
     String? team,
     String? activity,
+    String? assignmentId,
   }) {
     return ManagedTeamsProvider(
       team: team,
       activity: activity,
+      assignmentId: assignmentId,
     );
   }
 
@@ -325,6 +327,7 @@ class ManagedTeamsFamily extends Family<AsyncValue<List<IdentifiableModel>>> {
     return call(
       team: provider.team,
       activity: provider.activity,
+      assignmentId: provider.assignmentId,
     );
   }
 
@@ -350,11 +353,13 @@ class ManagedTeamsProvider
   ManagedTeamsProvider({
     String? team,
     String? activity,
+    String? assignmentId,
   }) : this._internal(
           (ref) => managedTeams(
             ref as ManagedTeamsRef,
             team: team,
             activity: activity,
+            assignmentId: assignmentId,
           ),
           from: managedTeamsProvider,
           name: r'managedTeamsProvider',
@@ -367,6 +372,7 @@ class ManagedTeamsProvider
               ManagedTeamsFamily._allTransitiveDependencies,
           team: team,
           activity: activity,
+          assignmentId: assignmentId,
         );
 
   ManagedTeamsProvider._internal(
@@ -378,10 +384,12 @@ class ManagedTeamsProvider
     required super.from,
     required this.team,
     required this.activity,
+    required this.assignmentId,
   }) : super.internal();
 
   final String? team;
   final String? activity;
+  final String? assignmentId;
 
   @override
   Override overrideWith(
@@ -398,6 +406,7 @@ class ManagedTeamsProvider
         debugGetCreateSourceHash: null,
         team: team,
         activity: activity,
+        assignmentId: assignmentId,
       ),
     );
   }
@@ -411,7 +420,8 @@ class ManagedTeamsProvider
   bool operator ==(Object other) {
     return other is ManagedTeamsProvider &&
         other.team == team &&
-        other.activity == activity;
+        other.activity == activity &&
+        other.assignmentId == assignmentId;
   }
 
   @override
@@ -419,6 +429,7 @@ class ManagedTeamsProvider
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, team.hashCode);
     hash = _SystemHash.combine(hash, activity.hashCode);
+    hash = _SystemHash.combine(hash, assignmentId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -432,6 +443,9 @@ mixin ManagedTeamsRef on AutoDisposeFutureProviderRef<List<IdentifiableModel>> {
 
   /// The parameter `activity` of this provider.
   String? get activity;
+
+  /// The parameter `assignmentId` of this provider.
+  String? get assignmentId;
 }
 
 class _ManagedTeamsProviderElement
@@ -443,6 +457,8 @@ class _ManagedTeamsProviderElement
   String? get team => (origin as ManagedTeamsProvider).team;
   @override
   String? get activity => (origin as ManagedTeamsProvider).activity;
+  @override
+  String? get assignmentId => (origin as ManagedTeamsProvider).assignmentId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

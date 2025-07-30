@@ -55,15 +55,25 @@ Future<List<IdentifiableModel>> teams(Ref ref, {String? activity}) async {
 }
 
 @riverpod
-Future<List<IdentifiableModel>> managedTeams(Ref ref,
-    {String? team, String? activity}) async {
+Future<List<IdentifiableModel>> managedTeams(
+  Ref ref, {
+  String? team,
+  String? activity,
+  String? assignmentId,
+}) async {
   var query = DSdk.db.managers.managedTeams;
-
-  if (team.isNotNullOrEmpty) {
-    query.filter((f) => f.managedBy.id(team));
-  }
-  if (activity.isNotNullOrEmpty) {
-    query.filter((f) => f.activity.id(activity));
+  if (assignmentId.isNotNullOrEmpty) {
+    final Assignment assignment = await DSdk.db.managers.assignments
+        .filter((f) => f.id(assignmentId))
+        .getSingle();
+    query = query..filter((f) => f.managedBy.id(assignment.team));
+  } else {
+    if (team.isNotNullOrEmpty) {
+      query = query..filter((f) => f.managedBy.id(team));
+    }
+    if (activity.isNotNullOrEmpty) {
+      query = query..filter((f) => f.activity.id(activity));
+    }
   }
   return query
       .map((t) => IdentifiableModel(

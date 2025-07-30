@@ -1137,14 +1137,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get warning => 'تنبيه';
 
   @override
-  String get week => 'الإسبوع';
+  String get selectMonth => 'اختر الشهر';
 
   @override
-  String get selectMonth => 'Select Month';
+  String get selectWeek => 'اختر الإسبوع';
 
   @override
-  String get selectWeek => 'Select Week';
+  String get selectYear => 'اختر السنة';
 
   @override
-  String get selectYear => 'Select Year';
+  String week(Object weekNum) {
+    return 'الإسبوع $weekNum';
+  }
+
+  @override
+  String ofYear(Object year) {
+    return 'من عام $year';
+  }
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get modified => 'Modified';
 }

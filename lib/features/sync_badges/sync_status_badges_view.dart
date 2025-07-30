@@ -25,7 +25,7 @@ class SyncStatusBadgesView extends StatelessWidget {
           : Wrap(
               spacing: 2,
               runSpacing: 2,
-              alignment: WrapAlignment.end,
+              // alignment: WrapAlignment.end,
               children: model.data
                       ?.where((e) => e.count > 0)
                       .map<Widget>((e) => _SyncStatusBadge(

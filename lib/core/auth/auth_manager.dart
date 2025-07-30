@@ -24,8 +24,8 @@ import 'package:stacked_services/stacked_services.dart';
 
 enum AuthStatus {
   unknown, // Initial state, checking authentication
-  unauthenticated, // User is not logged in
-  authenticated, // User is logged in
+  unauthenticated,
+  authenticated,
 }
 
 /// A service to manage user authentication and session-specific dependencies.
@@ -123,13 +123,6 @@ class AuthManager extends ChangeNotifier {
       await appLocator.popScopesTill(sessionUserId);
       logDebug('Previous user session scope popped: $sessionUserId');
     }
-
-    // Push new scope for the active user
-    // appLocator.pushNewScope(scopeName: sessionUserId);
-    // driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
-    // appLocator.registerSingleton<UserSession>(userSession,
-    //     instanceName: 'activeUser');
-    // registerUserDatabase(sessionUserId);
     await appLocator.pushNewScopeAsync(
       scopeName: sessionUserId,
       init: (getIt) async {
@@ -194,56 +187,6 @@ class AuthManager extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-// void registerUserDatabase(String userId) {
-//   // Ensure you're inside the user's scope when this is called.
-//   // This makes sure a fresh connection is made for each user/session.
-//   if (appLocator.isRegistered<AppDatabase>()) {
-//     // This case should ideally not happen if scopes are managed correctly,
-//     // but is a safeguard. You should usually pop the scope first.
-//     appLocator.unregister<AppDatabase>(); // Unregister previous if any
-//   }
-//
-//   appLocator.registerSingleton<AppDatabase>( // Often singleton within its scope
-//       AppDatabase(executor: Platform.createDatabaseConnection(userId), userId: userId),
-//       dispose: (db) async {
-//         await db.close(); // Close the DB when scope is popped
-//         logDebug('AppDatabase for user $userId closed and disposed.');
-//       }
-//   );
-//
-//   // appLocator.registerFactory<AppDatabase>(
-//   //       () => AppDatabase(executor: Platform.createDatabaseConnection(userId), userId: userId),
-//   //   // Dispose function for the database when its scope is popped
-//   //   // dispose: (db) async {
-//   //   //   await db.close(); // Crucial: Closes the underlying QueryExecutor
-//   //   //   print('AppDatabase for user $userId closed and disposed.');
-//   //   // },
-//   // );
-// }
-  /// Allows switching the active user from a list of previously logged-in users.
-// Future<void> switchUser(UserSession userSession) async {
-//   if (_activeUserId == userSession) return; // Already active
-//   if (await _tokenStorage.getTokens(userSession.username) ==
-//       {'accessToken': null, 'refreshToken': null}) {
-//     debugPrint('Cannot switch to user $userSession: no tokens found.');
-//     return;
-//   }
-//
-//   _status = AuthStatus.unknown;
-//   notifyListeners();
-//
-//   try {
-//     await _restoreSession(
-//         userSession); // Restore and activate the new user's session
-//   } catch (e) {
-//     debugPrint('Failed to switch user to $userSession: $e');
-//     // Fallback to unauthenticated or previous user state if switch fails
-//     _status = AuthStatus.unauthenticated;
-//   } finally {
-//     notifyListeners();
-//   }
-// }
 }
 
 Future<UserSession> initializeApp() async {

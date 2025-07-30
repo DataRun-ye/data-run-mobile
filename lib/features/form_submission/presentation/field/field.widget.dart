@@ -49,7 +49,7 @@ class FieldWidget extends HookConsumerWidget {
     }
 
     return SliverPadding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(right: 16.0, left: 16, top: 12, bottom: 12),
       sliver: MultiSliver(children: [
         SliverToBoxAdapter(
           child: FieldFactory.fromType(element),
@@ -65,9 +65,6 @@ class FieldWidget extends HookConsumerWidget {
                   : null,
         )
       ]),
-      // sliver: SliverToBoxAdapter(
-      //   child: FieldFactory.fromType(element),
-      // ),
     );
   }
 }

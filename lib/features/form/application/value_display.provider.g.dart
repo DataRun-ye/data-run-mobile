@@ -6,7 +6,7 @@ part of 'value_display.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$valueDisplayHash() => r'08806d78c6871c33c60c6501ae244aefd892d16c';
+String _$valueDisplayHash() => r'337250606bace1c877149a70ffb3984f96cea02f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -41,7 +41,7 @@ class ValueDisplayFamily extends Family<AsyncValue<String?>> {
   /// See also [valueDisplay].
   ValueDisplayProvider call({
     required ValueType valueType,
-    String? value,
+    dynamic value,
   }) {
     return ValueDisplayProvider(
       valueType: valueType,
@@ -79,7 +79,7 @@ class ValueDisplayProvider extends AutoDisposeFutureProvider<String?> {
   /// See also [valueDisplay].
   ValueDisplayProvider({
     required ValueType valueType,
-    String? value,
+    dynamic value,
   }) : this._internal(
           (ref) => valueDisplay(
             ref as ValueDisplayRef,
@@ -111,7 +111,7 @@ class ValueDisplayProvider extends AutoDisposeFutureProvider<String?> {
   }) : super.internal();
 
   final ValueType valueType;
-  final String? value;
+  final dynamic value;
 
   @override
   Override overrideWith(
@@ -161,7 +161,7 @@ mixin ValueDisplayRef on AutoDisposeFutureProviderRef<String?> {
   ValueType get valueType;
 
   /// The parameter `value` of this provider.
-  String? get value;
+  dynamic get value;
 }
 
 class _ValueDisplayProviderElement
@@ -171,7 +171,7 @@ class _ValueDisplayProviderElement
   @override
   ValueType get valueType => (origin as ValueDisplayProvider).valueType;
   @override
-  String? get value => (origin as ValueDisplayProvider).value;
+  dynamic get value => (origin as ValueDisplayProvider).value;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

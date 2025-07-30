@@ -403,7 +403,8 @@
 //                   // Monday
 //                   selectedPeriodStartColor: Colors.green,
 //                   selectedPeriodLastColor: Colors.green,
-//                   selectedPeriodMiddleColor: Colors.lightGreen.withOpacity(0.5),
+//                   selectedPeriodMiddleColor:
+//                       Colors.lightGreen.withValues(alpha: 0.5),
 //                 );
 //                 if (picked != null && picked != _selectedWeekStart) {
 //                   setState(() {

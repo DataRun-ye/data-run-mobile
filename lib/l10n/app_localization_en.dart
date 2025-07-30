@@ -1137,9 +1137,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get warning => 'Warning';
 
   @override
-  String get week => 'Week';
-
-  @override
   String get selectMonth => 'Select Month';
 
   @override
@@ -1147,4 +1144,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectYear => 'Select Year';
+
+  @override
+  String week(Object weekNum) {
+    return 'Week $weekNum';
+  }
+
+  @override
+  String ofYear(Object year) {
+    return 'Of $year';
+  }
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get modified => 'Modified';
 }

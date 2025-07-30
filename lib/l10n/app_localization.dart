@@ -2090,12 +2090,6 @@ abstract class AppLocalizations {
   /// **'Warning'**
   String get warning;
 
-  /// No description provided for @week.
-  ///
-  /// In en, this message translates to:
-  /// **'Week'**
-  String get week;
-
   /// No description provided for @selectMonth.
   ///
   /// In en, this message translates to:
@@ -2113,6 +2107,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Year'**
   String get selectYear;
+
+  /// No description provided for @week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {weekNum}'**
+  String week(Object weekNum);
+
+  /// No description provided for @ofYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Of {year}'**
+  String ofYear(Object year);
+
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// No description provided for @modified.
+  ///
+  /// In en, this message translates to:
+  /// **'Modified'**
+  String get modified;
 }
 
 class _AppLocalizationsDelegate

@@ -16,7 +16,7 @@ class FormTemplateModel extends IdentifiableModel {
       required this.fields,
       required this.sections})
       : this.elementTree =
-            _buildTree(fieldsAndSections: [...fields, ...sections]);
+            buildTree(fieldsAndSections: [...fields, ...sections]);
 
   final String versionUid;
   final int versionNumber;
@@ -25,7 +25,7 @@ class FormTemplateModel extends IdentifiableModel {
 
   final BuiltList<Template> elementTree;
 
-  static BuiltList<Template> _buildTree(
+  static BuiltList<Template> buildTree(
       {required Iterable<Template> fieldsAndSections}) {
     // a lookup of all nodes by their id:
     final IMap<String, Template> lookup = IMap.fromIterable(fieldsAndSections,

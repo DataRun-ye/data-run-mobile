@@ -72,11 +72,12 @@ Future<FormInstance> formInstance(Ref ref,
       template: formFlatTemplate.rootSection, elements: elements, form: form)
     ..resolveDependencies()
     // ..updateValueAndValidity(emitEvent: false);
-    ..evaluate(emitEvent: false/*, updateParent: false*/);
+    ..evaluate(emitEvent: false /*, updateParent: false*/);
   final attributeMap =
       await formMetadataService.formAttributesControls(initialFormValue);
-  final bool submissionEditStatus = await ref
-      .watch(submissionEditStatusProvider(formMetadata: formMetadata).future);
+  final bool submissionEditStatus = await ref.watch(
+      submissionEditStatusProvider(submissionId: formMetadata.submission!)
+          .future);
 
   return FormInstance(ref,
       entryStarted: submission.startEntryTime.toLocal(),

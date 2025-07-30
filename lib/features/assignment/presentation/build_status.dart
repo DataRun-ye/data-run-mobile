@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-Widget buildStatusBadge(AssignmentStatus status) {
+Widget buildStatusBadge(AssignmentStatus status,
+    [double? size, ValueKey<dynamic>? key]) {
   IconData statusIcon;
   Color badgeColor;
 
@@ -52,14 +53,19 @@ Widget buildStatusBadge(AssignmentStatus status) {
   // );
 
   return Tooltip(
+    key: key,
     message: Intl.message(status.name.toLowerCase()),
     child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
       decoration: BoxDecoration(
         color: badgeColor,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(statusIcon, color: Colors.white),
+      child: Icon(
+        statusIcon,
+        color: Colors.white,
+        size: size,
+      ),
     ),
   );
 }
@@ -84,17 +90,16 @@ Color? statusColor(AssignmentStatus? status) {
 
 Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
     DataInstance submission) async {
-
   await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => FormMetadataWidget(
-            formMetadata: FormMetadata(
-              assignmentModel: assignment,
-              versionUid: submission.templateVersion,
-              formId: submission.formTemplate,
-              submission: submission.id,
-            ),
-            child: const FormSubmissionScreen(currentPageIndex: 1),
-          )));
+                formMetadata: FormMetadata(
+                  assignmentId: submission.assignment!,
+                  versionUid: submission.templateVersion,
+                  formId: submission.formTemplate,
+                  submission: submission.id,
+                ),
+                child: const FormSubmissionScreen(currentPageIndex: 1),
+              )));
 }

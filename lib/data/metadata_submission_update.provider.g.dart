@@ -168,7 +168,7 @@ class _MetadataSubmissionRepositoryProviderElement
 }
 
 String _$systemMetadataSubmissionsHash() =>
-    r'bfcc3ef9e485c374394cb66f4f760aba5c2c1d9c';
+    r'd615c07e057ee7c88d5313f56cf19054ce486a47';
 
 /// See also [systemMetadataSubmissions].
 @ProviderFor(systemMetadataSubmissions)
@@ -183,12 +183,10 @@ class SystemMetadataSubmissionsFamily
   /// See also [systemMetadataSubmissions].
   SystemMetadataSubmissionsProvider call({
     required String query,
-    String? orgUnit,
     required String submissionId,
   }) {
     return SystemMetadataSubmissionsProvider(
       query: query,
-      orgUnit: orgUnit,
       submissionId: submissionId,
     );
   }
@@ -199,7 +197,6 @@ class SystemMetadataSubmissionsFamily
   ) {
     return call(
       query: provider.query,
-      orgUnit: provider.orgUnit,
       submissionId: provider.submissionId,
     );
   }
@@ -225,13 +222,11 @@ class SystemMetadataSubmissionsProvider
   /// See also [systemMetadataSubmissions].
   SystemMetadataSubmissionsProvider({
     required String query,
-    String? orgUnit,
     required String submissionId,
   }) : this._internal(
           (ref) => systemMetadataSubmissions(
             ref as SystemMetadataSubmissionsRef,
             query: query,
-            orgUnit: orgUnit,
             submissionId: submissionId,
           ),
           from: systemMetadataSubmissionsProvider,
@@ -244,7 +239,6 @@ class SystemMetadataSubmissionsProvider
           allTransitiveDependencies:
               SystemMetadataSubmissionsFamily._allTransitiveDependencies,
           query: query,
-          orgUnit: orgUnit,
           submissionId: submissionId,
         );
 
@@ -256,12 +250,10 @@ class SystemMetadataSubmissionsProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.query,
-    required this.orgUnit,
     required this.submissionId,
   }) : super.internal();
 
   final String query;
-  final String? orgUnit;
   final String submissionId;
 
   @override
@@ -280,7 +272,6 @@ class SystemMetadataSubmissionsProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         query: query,
-        orgUnit: orgUnit,
         submissionId: submissionId,
       ),
     );
@@ -296,7 +287,6 @@ class SystemMetadataSubmissionsProvider
   bool operator ==(Object other) {
     return other is SystemMetadataSubmissionsProvider &&
         other.query == query &&
-        other.orgUnit == orgUnit &&
         other.submissionId == submissionId;
   }
 
@@ -304,7 +294,6 @@ class SystemMetadataSubmissionsProvider
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, query.hashCode);
-    hash = _SystemHash.combine(hash, orgUnit.hashCode);
     hash = _SystemHash.combine(hash, submissionId.hashCode);
 
     return _SystemHash.finish(hash);
@@ -318,9 +307,6 @@ mixin SystemMetadataSubmissionsRef
   /// The parameter `query` of this provider.
   String get query;
 
-  /// The parameter `orgUnit` of this provider.
-  String? get orgUnit;
-
   /// The parameter `submissionId` of this provider.
   String get submissionId;
 }
@@ -332,8 +318,6 @@ class _SystemMetadataSubmissionsProviderElement
 
   @override
   String get query => (origin as SystemMetadataSubmissionsProvider).query;
-  @override
-  String? get orgUnit => (origin as SystemMetadataSubmissionsProvider).orgUnit;
   @override
   String get submissionId =>
       (origin as SystemMetadataSubmissionsProvider).submissionId;

@@ -36,6 +36,9 @@ class FormDisplay extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.document_scanner_outlined, size: size),
+                  SizedBox(
+                    width: 2,
+                  ),
                   Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 3, vertical: 3),

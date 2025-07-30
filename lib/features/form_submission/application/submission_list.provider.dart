@@ -107,16 +107,21 @@ class FormSubmissions extends _$FormSubmissions {
 
 @riverpod
 Future<bool> submissionEditStatus(Ref ref,
-    {required FormMetadata formMetadata}) async {
+    {required String submissionId}) async {
   final db = DSdk.db;
-  final s = await db.managers.dataInstances
-      .filter((f) => f.id(formMetadata.submission))
+
+  final submission = await db.managers.dataInstances
+      .filter((f) => f.id(submissionId))
       .getSingleOrNull();
-  final isSynced = s?.syncState.isSynced == true;
+
+  if (submission == null) return false;
+
+  final isSynced = submission.syncState.isSynced == true;
+
   final assignmentForm = await db.managers.assignmentForms
       .filter((f) =>
-          f.assignment.id(formMetadata.assignmentModel.id) &
-          f.form.id(formMetadata.formId))
+          f.assignment.id(submission.assignment) &
+          f.form.id(submission.formTemplate))
       .getSingleOrNull();
   if (assignmentForm == null) return false;
   final editable = assignmentForm.canEditSubmissions == true || !isSynced;

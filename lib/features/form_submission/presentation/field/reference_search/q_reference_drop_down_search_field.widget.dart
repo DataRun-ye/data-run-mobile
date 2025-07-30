@@ -59,7 +59,6 @@ class QReferenceDropDownSearchFieldState
 
     final listValuesAsync = ref.watch(systemMetadataSubmissionsProvider(
         query: '',
-        orgUnit: formInstance.formMetadata.assignmentModel.orgUnit.id,
         submissionId: formInstance.submissionUid!));
 
     return AsyncValueWidget(

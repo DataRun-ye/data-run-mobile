@@ -370,8 +370,11 @@
   "syncFailed": "فشل مزامنة",
   "cancelSyncing": "إيقاف والمزامنة لاحقًا",
   "warning": "تنبيه",
-  "week": "الإسبوع",
-  "selectMonth": "Select Month",
-  "selectWeek": "Select Week",
-  "selectYear": "Select Year"
+  "selectMonth": "اختر الشهر",
+  "selectWeek": "اختر الإسبوع",
+  "selectYear": "اختر السنة",
+  "week": "الإسبوع {weekNum}",
+  "ofYear": "من عام {year}",
+  "created": "Created",
+  "modified": "Modified"
 }

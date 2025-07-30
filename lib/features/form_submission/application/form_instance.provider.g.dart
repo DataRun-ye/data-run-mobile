@@ -300,7 +300,7 @@ class _FormFlatTemplateProviderElement
       (origin as FormFlatTemplateProvider).formMetadata;
 }
 
-String _$formInstanceHash() => r'7f30973fd0926e4a7653d6ca0d24542163a82423';
+String _$formInstanceHash() => r'f847762239cf5d3d6ffecf09d9b95dd0cb2070fe';
 
 /// See also [formInstance].
 @ProviderFor(formInstance)

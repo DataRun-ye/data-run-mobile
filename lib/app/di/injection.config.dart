@@ -11,6 +11,7 @@
 import 'package:d_sdk/core/auth/token_storage.dart' as _i765;
 import 'package:d_sdk/core/http/http_client.dart' as _i8;
 import 'package:d_sdk/core/secure_storage/storage_service.dart' as _i537;
+import 'package:d_sdk/datasource/util/submission_aggregator.dart' as _i224;
 import 'package:datarunmobile/app/di/sdk_module.dart' as _i567;
 import 'package:datarunmobile/app/di/third_party_services.module.dart' as _i427;
 import 'package:datarunmobile/core/auth/auth_api.dart' as _i64;
@@ -41,16 +42,19 @@ import 'package:datarunmobile/core/sync/sync_scheduler.dart' as _i658;
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart' as _i602;
 import 'package:datarunmobile/core/user_session/session_storage.dart' as _i139;
 import 'package:datarunmobile/data/form_template_list_service.dart' as _i760;
-import 'package:datarunmobile/data/form_template_service.dart' as _i991;
 import 'package:datarunmobile/data/option_set_service.dart' as _i158;
 import 'package:datarunmobile/features/assignment/application/assignment_service.dart'
     as _i935;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
+import 'package:datarunmobile/features/assignment_detail/application/detail_submissions_table_service.dart'
+    as _i803;
 import 'package:datarunmobile/features/form/application/form_template_service.dart'
     as _i258;
 import 'package:datarunmobile/features/form/application/form_template_service_impl.dart'
     as _i489;
+import 'package:datarunmobile/features/form/application/map_value_to_display.dart'
+    as _i244;
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart'
     as _i1058;
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart'
@@ -121,6 +125,12 @@ Future<_i174.GetIt> setupGlobalDependencies(
       ));
   gh.factory<_i602.SyncManager>(
       () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
+  gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(
+        resources: gh<_i683.ResourceManager>(),
+        repository: gh<_i730.DataValueRepository>(),
+      ));
+  gh.factory<_i224.SubmissionAggregator>(
+      () => _i803.DetailSubmissionsTableService());
   gh.factory<_i148.SyncExecutor>(() =>
       _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
@@ -137,8 +147,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
         formMetadata: formMetadata,
       ));
   gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
-      optionSetService: gh<_i158.OptionSetService>()));
-  gh.factory<_i991.FormTemplateService>(() => _i991.FormTemplateService(
       optionSetService: gh<_i158.OptionSetService>()));
   gh.factoryParam<_i756.FormInstanceServiceImpl, String, dynamic>((
     formId,

@@ -10,28 +10,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'form_provider.g.dart';
 
-// @riverpod
-// Future<List<FormListItemModel>> assignmentFormSelectionItems(
-//     Ref ref, String assignment) async {
-//   final templates =
-//       await appLocator<FormTemplateListService>().fetchByAssignment(assignment);
-//   return templates
-//       .map((t) => FormListItemModel(
-//             id: t.id,
-//             name: t.name,
-//             description: t.description,
-//             label: t.label,
-//             versionNumber: t.versionNumber,
-//             versionUid: t.versionUid,
-//           ))
-//       .toList();
-// }
-
 @riverpod
 Future<List<FormListItemModel>> formListItems(
     Ref ref, FormListFilter filter) async {
   final templates =
-      await appLocator<FormTemplateService>().fetchByFilter(filter);
+      await appLocator<FormTemplateListService>().fetchByFilter(filter);
   return templates
       .map((t) => FormListItemModel(
             id: t.id,

@@ -36,21 +36,3 @@ extension StringNullExtension on String? {
 
   int toInt({int? radix}) => int.parse(this!, radix: radix);
 }
-//
-// extension StringExtension on String {
-//   String format(List args, {String needleRegex = '%s'}) {
-//     final RegExp exp = RegExp(needleRegex);
-//
-//     // Iterable<RegExpMatch> matches = exp.allMatches(this);
-//     // assert(
-//     //     l.length == matches.length,
-//     //     'StringExtension.format: number of string '
-//     //     'args not match number of %s in the string');
-//
-//     int i = -1;
-//     return replaceAllMapped(exp, (Match match) {
-//       i = i + 1;
-//       return '${args[i]}';
-//     });
-//   }
-// }

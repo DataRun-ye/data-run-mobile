@@ -42,9 +42,9 @@ class CustomDatePickers {
   }) async {
     DateTime _selectedDate = selectedDate ?? DateTime.now();
     final DateTime _firstDate =
-        firstDate ?? DateTime.now().subtract(const Duration(days: 365 * 5));
+        firstDate ?? DateTime.now().subtract(const Duration(days: 365 * 7));
     final DateTime _lastDate =
-        lastDate ?? DateTime.now().add(const Duration(days: 365 * 5));
+        lastDate ?? DateTime.now().add(const Duration(days: 365 * 7));
 
     return await showDialog<DateTime>(
       context: context,
@@ -53,7 +53,6 @@ class CustomDatePickers {
           title: Text(S.of(context).selectMonth),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              // Apply custom styles or use default theme colors
               DatePickerStyles styles = DatePickerStyles(
                 selectedDateStyle: Theme.of(context)
                     .textTheme
@@ -145,15 +144,6 @@ class CustomDatePickers {
           title: Text(S.of(context).selectWeek),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              // // Initialize _selectedPeriod based on _selectedDate for initial display
-              // // We need to ensure the _selectedPeriod reflects the week of _selectedDate
-              // // The WeekPicker itself will highlight the correct week.
-              // // Here we just create a period for the display text.
-              // int effectiveFirstDayOfWeekIndex = firstDayOfWeekIndex ?? 1; // Default to Monday
-              // DateTime initialWeekStart = _selectedDate.subtract(
-              //     Duration(days: (_selectedDate.weekday - effectiveFirstDayOfWeekIndex + 7) % 7));
-              // DatePeriod _selectedPeriod = DatePeriod(initialWeekStart, initialWeekStart.add(const Duration(days: 6)));
-
               DatePickerRangeStyles styles = DatePickerRangeStyles(
                 firstDayOfWeekIndex: effectiveFirstDayOfWeekIndex,
                 selectedPeriodLastDecoration: BoxDecoration(
@@ -193,8 +183,8 @@ class CustomDatePickers {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        '${_selectedPeriod.start.year}, ${S.of(context).week} ${getWeekNumber(_selectedPeriod.start)}',
-                        style: Theme.of(context).textTheme.titleMedium,
+                        '${S.of(context).week(getWeekNumber(_selectedPeriod.start))} ${S.of(context).ofYear(_selectedPeriod.start.year)}',
+                        style: Theme.of(context).textTheme.titleLarge,
                         textAlign: TextAlign.center,
                       ),
                     ),

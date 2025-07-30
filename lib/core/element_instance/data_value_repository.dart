@@ -3,6 +3,7 @@ import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 @injectable
 class DataValueRepository {
@@ -102,16 +103,31 @@ class DataValueRepository {
   }
 
   Future<String?> getTeamById(String teamUid) async {
-    final Team? team =
-        await db.managers.teams.filter((f) => f.id(teamUid)).getSingleOrNull();
-    return team?.code;
+    final String? team = await db.managers.teams
+        .filter((f) => f.id(teamUid))
+        .map((t) => '${Intl.message('team')} ${t.code}')
+        .getSingleOrNull();
+
+    return team;
   }
 
   Future<String?> getOptionById(String optionUid) async {
     final DataOption? dataOption = await db.managers.dataOptions
-        .filter((f) => f.id(optionUid))
+        .filter((f) => f.id(optionUid) | f.code(optionUid) | f.name(optionUid))
         .getSingleOrNull();
     return getItemLocalString(dataOption?.label,
         defaultString: dataOption?.code ?? dataOption?.name);
+  }
+
+  Future<String> getOptionsByIds(List<String> optionUids) async {
+    final List<DataOption> dataOption = await db.managers.dataOptions
+        .filter((f) =>
+            f.id.isIn(optionUids) |
+            f.code.isIn(optionUids) |
+            f.name.isIn(optionUids))
+        .get();
+    return dataOption
+        .map((o) => getItemLocalString(o.label, defaultString: o.name))
+        .join(', ');
   }
 }

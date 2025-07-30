@@ -18,10 +18,18 @@ Future<MetadataSubmission?> metadataSubmissionRepository(
 @riverpod
 Future<List<MetadataSubmissionUpdate>> systemMetadataSubmissions(Ref ref,
     {required String query,
-    String? orgUnit,
     required String submissionId}) async {
-  final metadataSubmission =
-      await ref.watch(metadataSubmissionRepositoryProvider(orgUnit).future);
+  final submission = await DSdk.db.managers.dataInstances
+      .filter((f) => f.id(submissionId))
+      .withReferences((prefetch) => prefetch(assignment: true))
+      .getSingleOrNull();
+
+  final $$DataInstancesTableReferences? dd = submission?.$2;
+
+  final Assignment? assignment = dd?.assignment?.prefetchedData?.first;
+
+  final metadataSubmission = await ref
+      .watch(metadataSubmissionRepositoryProvider(assignment?.orgUnit).future);
 
   if (metadataSubmission == null) {
     return [];
@@ -34,12 +42,5 @@ Future<List<MetadataSubmissionUpdate>> systemMetadataSubmissions(Ref ref,
       metadataSubmission: metadataSubmission.metadataSchema,
       resourceType: metadataSubmission.resourceType);
 
-  return allItems /*.where((item) {
-    final lowerQuery = query.toLowerCase();
-    return item.formData['householdName'].toLowerCase().contains(lowerQuery) ||
-        item.formData['householdHeadSerialNumber']
-            .toString()
-            .contains(lowerQuery);
-  }).toList()*/
-      ;
+  return allItems;
 }

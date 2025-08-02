@@ -152,7 +152,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget>
         title: Text(
             '${_rawCode != null ? S.of(context).acceptCode : S.of(context).scanBarcode}'),
       ),
-      body: _buildScannerOrPreview(),
+      body: SafeArea(child: _buildScannerOrPreview()),
     );
   }
 

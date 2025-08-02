@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:d_sdk/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
@@ -11,7 +10,8 @@ import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemUiOverlayStyle;
+import 'package:flutter/services.dart'
+    show SystemUiOverlayStyle, SystemChrome, SystemUiMode;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
@@ -21,24 +21,15 @@ import 'package:timeago/timeago.dart' as timeago;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //   statusBarColor: Colors.transparent,
-  //   systemNavigationBarColor: Colors.transparent,
-  //   // to control the icon brightness on the status bar
-  //   statusBarIconBrightness: Brightness.dark,
-  //   // For light background content
-  //   // statusBarIconBrightness: Brightness.light, // For dark background content
-  //   // to control the icon brightness on the navigation bar
-  //   systemNavigationBarIconBrightness: Brightness.dark,
-  //   // For light background content
-  //   // systemNavigationBarIconBrightness: Brightness.light, // For dark background content
-  //   // The deprecated setNavigationBarDividerColor corresponds to systemNavigationBarDividerColor
-  //   // Setting it to transparent or null effectively removes the divider color.
-  //   systemNavigationBarDividerColor: Colors.transparent,
-  // ));
-  //
-  // // Ensures that the app can draw behind the system bars
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarDividerColor: Colors.transparent,
+  ));
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   await configureDependencies();
 
@@ -98,8 +89,6 @@ class App extends ConsumerWidget {
     final seed = ref.watch(preferenceNotifierProvider(Preference.colorSeed));
     final mode = ref.watch(preferenceNotifierProvider(Preference.themeMode));
     final colorSeed = ColorSeed.values[seed];
-    final useMaterial3 =
-        ref.watch(preferenceNotifierProvider(Preference.useMaterial3));
     final themeMode = ThemeMode.values[mode];
 
     final cs = ColorScheme.fromSeed(
@@ -115,57 +104,47 @@ class App extends ConsumerWidget {
       themeMode: themeMode,
       theme: buildTheme(
           colorSeed: colorSeed,
-          base: ThemeData.light(useMaterial3: useMaterial3),
+          base: ThemeData.light(useMaterial3: true),
           platform: Theme.of(context).platform),
       darkTheme: buildTheme(
           colorSeed: colorSeed,
-          base: ThemeData.dark(useMaterial3: useMaterial3),
+          base: ThemeData.dark(useMaterial3: true),
           platform: Theme.of(context).platform,
           brightness: Brightness.dark),
       locale: resolveLocale(status: authManager.status, languageCode: language),
-      // Setup internationalization
       localizationsDelegates: localizationsDelegates,
       supportedLocales: supportedLocales,
-      // Dynamically set locale based on the LocaleService (if authenticated)
       localeResolutionCallback:
           (Locale? locale, Iterable<Locale> supportedLocales) {
-        // Locale locale = Locale(language, language == 'en' ? 'en_US' : '');
-
-        late final Locale? userLocale;
+        Locale? userLocale;
 
         if (authManager.status == AuthStatus.authenticated) {
           // preference take precedence over api user's local
-
-          userLocale = appLocator<LocaleService>().currentLocale;
-
-          // If the user has a specific locale set, use that
-          // timeago.setDefaultLocale('en');
-          timeago.setLocaleMessages(
-              userLocale!.languageCode,
-              switch (language) {
-                'ar' => timeago.ArMessages(),
-                'en' => timeago.EnMessages(),
-                _ => timeago.EnMessages(),
-              });
-          return userLocale;
+          userLocale = language != 'NA'
+              ? Locale(language, language == 'en' ? '' : '')
+              : appLocator<LocaleService>().currentLocale;
         }
 
-        if (language != 'NA') {
-          return Locale(language, language == 'en' ? 'US' : '');
-        } else {
-          return Locale(AppEnvironment.defaultLocale,
-              AppEnvironment.defaultLocale == 'en' ? 'US' : '');
+        if (userLocale == null) {
+          // Otherwise, use the device locale or default to English
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale?.languageCode) {
+              userLocale = supportedLocale;
+            }
+          }
+
+          // Fallback to the first supported locale (e.g., en)
+          userLocale = supportedLocales.first;
         }
 
-        // // Otherwise, use the device locale or default to English
-        // for (var supportedLocale in supportedLocales) {
-        //   if (supportedLocale.languageCode == locale?.languageCode) {
-        //     return supportedLocale;
-        //   }
-        // }
-        //
-        // // Fallback to the first supported locale (e.g., en)
-        // return supportedLocales.first;
+        timeago.setLocaleMessages(
+            userLocale.languageCode,
+            switch (language) {
+              'ar' => timeago.ArMessages(),
+              'en' => timeago.EnMessages(),
+              _ => timeago.EnMessages(),
+            });
+        return userLocale;
       },
       // stacked
       onGenerateRoute: StackedRouter().onGenerateRoute,
@@ -174,19 +153,12 @@ class App extends ConsumerWidget {
       ],
       //
       initialRoute: Routes.splashView,
-      // home: switch (authManager.status) {
-      //   AuthStatus.unknown =>
-      //     const SplashView(), // Show splash while checking auth
-      //   AuthStatus.unauthenticated =>
-      //     const LoginView(), // Show login if not authenticated
-      //   AuthStatus.authenticated => HomeWrapperPage(),
-      // },
     );
   }
 
   final supportedLocales = const <Locale>[
-    Locale('ar', ''),
     Locale('en', 'en_us'),
+    Locale('ar', ''),
   ];
 
   final localizationsDelegates = const <LocalizationsDelegate<dynamic>>[
@@ -196,24 +168,24 @@ class App extends ConsumerWidget {
     GlobalWidgetsLocalizations.delegate,
   ];
 
-  Locale resolveLocale(
+  Locale? resolveLocale(
       {required AuthStatus status, required String languageCode}) {
-    Locale? userLocale =
-        Locale(languageCode, languageCode == 'en' ? 'en_US' : '');
-
+    Locale? userLocale;
     if (status == AuthStatus.authenticated &&
         appLocator.isRegistered<LocaleService>()) {
       // preference take precedence over api user's local
-      userLocale = appLocator<LocaleService>().currentLocale ?? userLocale;
+      userLocale = languageCode != 'NA'
+          ? Locale(languageCode, languageCode == 'en' ? 'en_US' : '')
+          : appLocator<LocaleService>().currentLocale ?? userLocale;
+      timeago.setLocaleMessages(
+          userLocale!.languageCode,
+          switch (userLocale.languageCode) {
+            'ar' => timeago.ArMessages(),
+            'en' => timeago.EnMessages(),
+            _ => timeago.EnMessages(),
+          });
     }
 
-    timeago.setLocaleMessages(
-        userLocale.languageCode,
-        switch (userLocale.languageCode) {
-          'ar' => timeago.ArMessages(),
-          'en' => timeago.EnMessages(),
-          _ => timeago.EnMessages(),
-        });
     return userLocale;
   }
 
@@ -361,11 +333,12 @@ class App extends ConsumerWidget {
       chipTheme: base.chipTheme.copyWith(
         secondarySelectedColor: cs.primaryFixedDim,
         checkmarkColor: DColors.Orange600,
-        elevation: 3,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        elevation: 2,
+        pressElevation: 2,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: cs.outline.withValues(alpha: .6)),
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(color: cs.outline.withValues(alpha: .3)),
         ),
         // labelPadding: const EdgeInsets.symmetric(horizontal: 8),
       ),

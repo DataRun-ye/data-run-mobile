@@ -31,7 +31,7 @@ class FormPrefixVersionBadge extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(child: Icon(Icons.document_scanner_outlined,
-              color: cs.primaryContainer,)),
+              color: cs.secondaryContainer)),
             SizedBox(
               width: 3,
             ),

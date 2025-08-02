@@ -1,10 +1,11 @@
 import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/collections.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/data/form_template_list_service.dart';
 import 'package:datarunmobile/features/form/application/form_list_filter.dart';
 import 'package:datarunmobile/features/form/application/form_list_item_model.dart';
-import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -25,6 +26,13 @@ Future<List<FormListItemModel>> formListItems(
             versionUid: t.versionUid,
           ))
       .toList();
+}
+
+@riverpod
+Future<List<Pair<AssignmentForm, bool>>> availableUserFormTemplates(Ref ref,
+    {String? assignmentId}) async {
+  return appLocator<FormTemplateListService>()
+      .userAvailableForms(assignment: assignmentId);
 }
 
 @riverpod

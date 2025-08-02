@@ -1,136 +1,118 @@
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/commons/custom_widgets/expandable_text.dart';
+import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/features/form/application/form_provider.dart';
-import 'package:datarunmobile/features/form/application/form_template_model.dart';
-import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class FormSubmissionCreate extends ConsumerStatefulWidget {
+class FormSubmissionCreate extends HookConsumerWidget {
   const FormSubmissionCreate(
-      {super.key, required this.assignment, required this.onNewFormCreated});
+      {super.key, this.assignmentId, required this.onTap});
 
-  final AssignmentModel assignment;
-  final Function(DataInstance submissionId) onNewFormCreated;
+  final Function(String templateId) onTap;
 
-  @override
-  FormSubmissionCreateState createState() => FormSubmissionCreateState();
-}
-
-class FormSubmissionCreateState extends ConsumerState<FormSubmissionCreate> {
-  Future<DataInstance> _createEntity(
-      BuildContext context, FormTemplateModel formTemplate) async {
-    final submissionInitialRepository =
-        ref.read(formSubmissionsProvider(formTemplate.id).notifier);
-
-    final submission = await submissionInitialRepository.createNewSubmission(
-      assignmentId: widget.assignment.id,
-      form: formTemplate.id,
-      formVersion: formTemplate.versionUid,
-      team: widget.assignment.team.id,
-    );
-    return submission;
-  }
-
-  Future<void> createAndPopupWithResult(
-      BuildContext context, FormTemplateModel formTemplate) async {
-    DataInstance? createdSubmission;
-    try {
-      createdSubmission = await _createEntity(context, formTemplate);
-      widget.onNewFormCreated.call(createdSubmission);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${S.of(context).errorOpeningNewForm}: $e')),
-      );
-    }
-  }
+  final String? assignmentId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
-    final List<Pair<AssignmentForm, bool>> userForms =
-        widget.assignment.userForms;
-    final List<Pair<AssignmentForm, bool>> availableLocally =
-        widget.assignment.availableForms;
-    return FractionallySizedBox(
-      heightFactor: 0.7,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    // final List<Pair<AssignmentForm, bool>> userForms =
+    //     assignment.userForms;
+    // final List<Pair<AssignmentForm, bool>> availableLocally =
+    //     assignment.availableForms;
+    final availableFormsAsync =
+        ref.watch(userAvailableFormsProvider(assignment: assignmentId));
+    final isEnabled = useState(true);
+
+    return AsyncValueWidget(
+      value: availableFormsAsync,
+      valueBuilder: (List<Pair<AssignmentForm, bool>> userForms) {
+        final List<Pair<AssignmentForm, bool>> availableLocally =
+            userForms.where((form) => form.second).toList();
+        final cs = Theme.of(context).colorScheme;
+
+        return FractionallySizedBox(
+          heightFactor: 0.7,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.document_scanner, size: 30),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: Text(
-                    S.of(context).selectForm,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        )
-                        .copyWith(color: cs.onSurfaceVariant),
-                  ),
-                ),
-                const SizedBox(width: 8.0),
-                Text(
-                  availableLocally.length == userForms.length
-                      ? '(${S.of(context).form(availableLocally.length)})'
-                      : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: cs.onSurfaceVariant,
+                Row(
+                  children: [
+                    Icon(Icons.document_scanner, size: 30),
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                      child: Text(
+                        S.of(context).selectForm,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            )
+                            .copyWith(color: cs.onSurfaceVariant),
                       ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    Text(
+                      availableLocally.length == userForms.length
+                          ? '(${S.of(context).form(availableLocally.length)})'
+                          : '(${availableLocally.length}/${S.of(context).form(userForms.length)})',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: cs.onSurfaceVariant,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      separatorBuilder: (_, __) => const Divider(
+                        height: 4,
+                        thickness: 0.5,
+                        indent: 16,
+                        endIndent: 16,
+                      ),
+                      itemCount: availableLocally.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final form = availableLocally[index].first;
+                        return _FormListItem(
+                            index: index,
+                            permission: form,
+                            onTap: (templateId) {
+                              onTap(templateId);
+                            });
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 20.0),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  separatorBuilder: (_, __) => const Divider(
-                    height: 4,
-                    thickness: 0.5,
-                    indent: 16,
-                    endIndent: 16,
-                  ),
-                  itemCount: availableLocally.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final form = availableLocally[index].first;
-                    return _FormListItem(
-                      index: index,
-                      permission: form,
-                      onTap: (FormTemplateModel formTemplate) =>
-                          createAndPopupWithResult(context, formTemplate),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
 
 class _FormListItem extends ConsumerWidget {
   const _FormListItem(
-      {required this.index, required this.permission, required this.onTap});
+      {required this.index, required this.permission, this.onTap});
 
   final int index;
   final AssignmentForm permission;
-  final void Function(FormTemplateModel) onTap;
+  final void Function(String templateId)? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -177,7 +159,9 @@ class _FormListItem extends ConsumerWidget {
                 )
               : null,
           enableFeedback: true,
-          onTap: () => onTap(formTemplate),
+          onTap: () {
+            onTap?.call(formTemplate.id);
+          },
           trailing: const Icon(Icons.chevron_right),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),

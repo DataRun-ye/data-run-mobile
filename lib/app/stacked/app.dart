@@ -1,8 +1,9 @@
-import 'package:datarunmobile/app/app_routes/app_router.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/assignment_detail_view.dart';
+import 'package:datarunmobile/features/assignment_detail/presentation/data_instance_table_screen.dart';
 import 'package:datarunmobile/features/common_ui_element/info_alert/info_alert_dialog.dart';
 import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet.dart';
+import 'package:datarunmobile/features/form_submission/presentation/form_flow_bootstrapper.dart';
+import 'package:datarunmobile/features/form_submission/presentation/form_submission_screen.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart';
 import 'package:datarunmobile/features/form_submission/presentation/submission_history_screen.dart';
 import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart';
@@ -22,9 +23,11 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SettingsView),
     MaterialRoute(page: SyncResourcesView),
     MaterialRoute(page: AssignmentScreen),
-    MaterialRoute(page: AssignmentDetailPage),
     MaterialRoute(page: EditRowScreen),
     MaterialRoute(page: SubmissionHistoryScreen),
+    MaterialRoute(page: FormSubmissionScreen),
+    MaterialRoute(page: FormFlowBootstrapper),
+    MaterialRoute(page: DataInstanceTableScreen),
     // @stacked-route
   ],
   dependencies: [

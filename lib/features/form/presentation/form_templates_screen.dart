@@ -18,54 +18,56 @@ class FormTemplatesScreen extends ConsumerWidget {
     final formList = ref.watch(formListItemsProvider(filters));
     return Scaffold(
       appBar: AppBar(title: const Text('Submissions')),
-      body: AsyncValueWidget(
-        value: formList,
-        valueBuilder: (List<FormListItemModel> items) {
-          return ListView.builder(
-            padding: const EdgeInsets.all(12),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final formItem = items[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Slidable(
-                  key: ValueKey(formItem.id),
-                  startActionPane: ActionPane(
-                    motion: const DrawerMotion(),
-                    extentRatio: 0.5,
-                    children: [
-                      SlidableAction(
-                        onPressed: (_) => onMarkFinal(context, formItem),
-                        icon: Icons.check_circle,
-                        label: 'Mark Final',
-                        backgroundColor: Colors.indigo,
-                      ),
-                      SlidableAction(
-                        onPressed: (_) => onSubmit(context, formItem),
-                        icon: Icons.cloud_upload,
-                        label: 'Submit',
-                        backgroundColor: Colors.teal,
-                      ),
-                    ],
+      body: SafeArea(
+        child: AsyncValueWidget(
+          value: formList,
+          valueBuilder: (List<FormListItemModel> items) {
+            return ListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final formItem = items[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Slidable(
+                    key: ValueKey(formItem.id),
+                    startActionPane: ActionPane(
+                      motion: const DrawerMotion(),
+                      extentRatio: 0.5,
+                      children: [
+                        SlidableAction(
+                          onPressed: (_) => onMarkFinal(context, formItem),
+                          icon: Icons.check_circle,
+                          label: 'Mark Final',
+                          backgroundColor: Colors.indigo,
+                        ),
+                        SlidableAction(
+                          onPressed: (_) => onSubmit(context, formItem),
+                          icon: Icons.cloud_upload,
+                          label: 'Submit',
+                          backgroundColor: Colors.teal,
+                        ),
+                      ],
+                    ),
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      extentRatio: 0.25,
+                      children: [
+                        SlidableAction(
+                          onPressed: (_) => onDelete(context, formItem),
+                          icon: Icons.delete,
+                          label: 'Delete',
+                          backgroundColor: Colors.red.shade400,
+                        ),
+                      ],
+                    ),
+                    child: SubmissionCard(formItem: formItem),
                   ),
-                  endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    extentRatio: 0.25,
-                    children: [
-                      SlidableAction(
-                        onPressed: (_) => onDelete(context, formItem),
-                        icon: Icons.delete,
-                        label: 'Delete',
-                        backgroundColor: Colors.red.shade400,
-                      ),
-                    ],
-                  ),
-                  child: SubmissionCard(formItem: formItem),
-                ),
-              );
-            },
-          );
-        },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

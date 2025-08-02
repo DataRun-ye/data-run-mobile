@@ -1,9 +1,4 @@
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_submission_screen.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -88,18 +83,23 @@ Color? statusColor(AssignmentStatus? status) {
   }
 }
 
-Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
-    DataInstance submission) async {
-  await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => FormMetadataWidget(
-                formMetadata: FormMetadata(
-                  assignmentId: submission.assignment!,
-                  versionUid: submission.templateVersion,
-                  formId: submission.formTemplate,
-                  submission: submission.id,
-                ),
-                child: const FormSubmissionScreen(currentPageIndex: 1),
-              )));
-}
+// Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
+//     DataInstance submission) async {
+//   appLocator<NavigationService>().navigateToFormSubmissionScreen(
+//     currentPageIndex: 1,
+//     submissionId: submission.id,
+//     formId: submission.formTemplate,
+//     versionId: submission.templateVersion,
+//     assignmentId: assignment.id,
+//   );
+//   // await Navigator.push(
+//   //     context,
+//   //     MaterialPageRoute(
+//   //         builder: (context) => FormSubmissionScreen(
+//   //               currentPageIndex: 1,
+//   //               submissionId: submission.id,
+//   //               formId: submission.formTemplate,
+//   //               versionId: submission.templateVersion,
+//   //               assignmentId: assignment.id,
+//   //             )));
+// }

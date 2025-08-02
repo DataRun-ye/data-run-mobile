@@ -20,13 +20,15 @@ class FormShell extends ConsumerWidget {
     //   value: asyncTemplate, valueBuilder: (List<FormListItemModel> forms) {
     //
     // },);
-    return asyncTemplate.when(
-      loading: () => const Scaffold(
-          body: SafeArea(child: Center(child: CircularProgressIndicator()))),
-      error: (e, st) => Scaffold(
-        body: Center(child: Text('Error loading form: \$e')),
+    return Scaffold(
+      body: SafeArea(
+        child: asyncTemplate.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, st) =>
+              const Center(child: Text('Error loading form: \$e')),
+          data: (_) => child,
+        ),
       ),
-      data: (_) => child,
     );
   }
 }

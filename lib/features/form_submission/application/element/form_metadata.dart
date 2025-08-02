@@ -2,40 +2,24 @@ import 'package:equatable/equatable.dart';
 
 class FormMetadata with EquatableMixin {
   const FormMetadata({
-    // required this.formId,
-    // required this.formLabel,
-    // required this.activity,
-    // required this.assignmentModel,
-    required this.assignmentId,
+    this.assignmentId,
     required this.formId,
     required this.versionUid,
-    // required this.version,
-    // this.isNew = true,
-    // this.version,
     this.submission,
   });
 
-  // final AssignmentModel assignmentModel;
-  final String assignmentId;
+  final String? assignmentId;
 
-  // final bool isNew;
   final String formId;
 
-// final bool isNew;
   final String versionUid;
 
-  // final int version;
   final String? submission;
 
   FormMetadata copyWith({
     String? formId,
     String? versionUid,
-    // String? formLabel,
-    // String? activity,
-    // AssignmentForm? assignmentForm,
-    // AssignmentModel? assignmentModel,
     String? assignmentId,
-    // int? version,
     String? submission,
   }) {
     return FormMetadata(

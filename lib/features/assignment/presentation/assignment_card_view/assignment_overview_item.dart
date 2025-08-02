@@ -65,7 +65,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
                     onPressed: assignment.availableForms.isNotEmpty
                         ? () async {
                             await showFormSelectionBottomSheet(
-                                context, assignment);
+                                context, assignment.id);
                           }
                         : null,
                     // enableFeedback: true,

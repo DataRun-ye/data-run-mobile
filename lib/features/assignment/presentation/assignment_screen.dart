@@ -94,26 +94,28 @@ class AssignmentScreen extends HookConsumerWidget {
           // )
         ],
       ),
-      body: Column(
-        children: [
-          const ActiveFiltersWidget(),
-          Expanded(
-            child: ref.watch(
-                    filterQueryProvider.select((value) => value.isCardView))
-                ? AssignmentsCardView(
-                    key: const ValueKey('cardView'),
-                    scope: EntityScope.Assigned,
-                    onViewDetails: (assignment) =>
-                        _navigateToDetails(context, assignment),
-                  )
-                : AssignmentTableView(
-                    key: const ValueKey('tableView'),
-                    scope: EntityScope.Assigned,
-                    onViewDetails: (assignment) =>
-                        _navigateToDetails(context, assignment),
-                  ),
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const ActiveFiltersWidget(),
+            Expanded(
+              child: ref.watch(
+                      filterQueryProvider.select((value) => value.isCardView))
+                  ? AssignmentsCardView(
+                      key: const ValueKey('cardView'),
+                      scope: EntityScope.Assigned,
+                      onViewDetails: (assignment) =>
+                          _navigateToDetails(context, assignment),
+                    )
+                  : AssignmentTableView(
+                      key: const ValueKey('tableView'),
+                      scope: EntityScope.Assigned,
+                      onViewDetails: (assignment) =>
+                          _navigateToDetails(context, assignment),
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }

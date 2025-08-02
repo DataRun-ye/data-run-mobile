@@ -39,60 +39,63 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m8(error) => "واجهت قاعدة البيانات خطأ: ${error}.";
 
-  static String m9(error) => "لم يتم العثور على نقطة المورد: ${error}.";
+  static String m9(count) =>
+      "${Intl.plural(count, zero: 'No Elements selected', one: '1 حذف', two: '2 حذف عنصرين', other: '${count} حذف المحدد')}";
 
-  static String m10(error) => "ممنوع: ${error}.";
+  static String m10(error) => "لم يتم العثور على نقطة المورد: ${error}.";
 
-  static String m11(count) =>
+  static String m11(error) => "ممنوع: ${error}.";
+
+  static String m12(count) =>
       "${Intl.plural(count, zero: 'لا تتوفر استمارات لهذا العنصر', one: 'تتوفر استمارة واحدة', two: 'تتوفر استمارتان', other: 'تتوفر ${count} استمارات')}";
 
-  static String m12(error) => "بيانات غير صالحة: ${error}.";
+  static String m13(error) => "بيانات غير صالحة: ${error}.";
 
-  static String m13(error) => "الحد الأقصى للطول المسموح به هو ${error}.";
+  static String m14(error) => "الحد الأقصى للطول المسموح به هو ${error}.";
 
-  static String m14(count) =>
+  static String m15(count) =>
       "${Intl.plural(count, zero: ' ', one: 'شهر', two: 'شهران', few: '${count} أشهر', other: '${count} شهر')}";
 
-  static String m15(error) => "لم يتم العثور على قاعدة بيانات نشطة: ${error}.";
+  static String m16(error) => "لم يتم العثور على قاعدة بيانات نشطة: ${error}.";
 
-  static String m16(error) =>
+  static String m17(error) =>
       "لم يتمكن من مزامنة معلومات المستخدم من السيرفر: ${error}.";
 
-  static String m17(year) => "من عام ${year}";
-
-  static String m18(error) =>
-      "الإتصال بالسيرفر يستغرق وقتًا طويلًا، حاول مرة أخرى: ${error}";
+  static String m18(year) => "من عام ${year}";
 
   static String m19(error) =>
       "الإتصال بالسيرفر يستغرق وقتًا طويلًا، حاول مرة أخرى: ${error}";
 
-  static String m20(error) => "خطأ في الخادم: ${error}.";
+  static String m20(error) =>
+      "الإتصال بالسيرفر يستغرق وقتًا طويلًا، حاول مرة أخرى: ${error}";
 
-  static String m21(error) => "انتهت صلاحية الجلسة: ${error}.";
+  static String m21(error) => "خطأ في الخادم: ${error}.";
 
-  static String m22(error) =>
-      "حدث خطأ أثناء محاولة الإرسال، حاول مرة أخرى:\n ${error}";
+  static String m22(error) => "انتهت صلاحية الجلسة: ${error}.";
 
   static String m23(error) =>
+      "حدث خطأ أثناء محاولة الإرسال، حاول مرة أخرى:\n ${error}";
+
+  static String m24(error) =>
       "حدث خطأ أثناء مزامنة البيانات: ${error}. يرجى المحاولة مرة أخرى.";
 
-  static String m24(count) =>
+  static String m25(count) =>
       "${Intl.plural(count, zero: 'لا تتوفر استمارات نهائية للمزامنة', one: 'استمارة 1 للمزامنة', two: 'استمارتان للمزامنة', other: '${count} استمارات للمزامنة')}";
 
-  static String m25(error) => "خطأ عند محاولة الوصول لملفات التخزين: ${error}";
+  static String m26(error) => "خطأ عند محاولة الوصول لملفات التخزين: ${error}";
 
-  static String m26(error) => "وصول غير مصرح به إلى نقطة المورد: ${error}.";
+  static String m27(error) => "وصول غير مصرح به إلى نقطة المورد: ${error}.";
 
-  static String m27(error) =>
+  static String m28(error) =>
       "حدث خطأ غير متوقع: ${error}. يرجى المحاولة مرة أخرى.";
 
-  static String m28(error) => "يجب أن تكون القيمة أكبر من أو تساوي ${error}.";
+  static String m29(error) => "يجب أن تكون القيمة أكبر من أو تساوي ${error}.";
 
-  static String m29(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
+  static String m30(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
 
-  static String m30(weekNum) => "الإسبوع ${weekNum}";
+  static String m31(weekNum) => "الإسبوع ${weekNum}";
 
-  static String m31(count) =>
+  static String m32(count) =>
       "${Intl.plural(count, zero: '', one: 'سنة', two: 'سنتان', few: '${count} سنوات', other: '${count} سنة')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -111,8 +114,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "activities": MessageLookupByLibrary.simpleMessage("الأنشطة"),
     "activity": MessageLookupByLibrary.simpleMessage("النشاط"),
+    "addAnItem": MessageLookupByLibrary.simpleMessage("Add an Item"),
     "addNew": MessageLookupByLibrary.simpleMessage("جديد"),
     "ageFieldHint": MessageLookupByLibrary.simpleMessage("أدخل العمر"),
+    "all": MessageLookupByLibrary.simpleMessage("All"),
     "allSubmissions": MessageLookupByLibrary.simpleMessage("كل المرسلات"),
     "allocatedResources": MessageLookupByLibrary.simpleMessage(
       "الموارد المخصصة",
@@ -218,6 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "deleteItem": MessageLookupByLibrary.simpleMessage("حذف العنصر"),
     "deleteRestore": MessageLookupByLibrary.simpleMessage("حذف/استعادة"),
+    "deleteSelected": m9,
     "demoLogin": MessageLookupByLibrary.simpleMessage("Demo Login"),
     "developer": MessageLookupByLibrary.simpleMessage(
       "البرنامج الوطني لمكافحة الملاريا",
@@ -236,6 +242,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "done": MessageLookupByLibrary.simpleMessage("اكتمل"),
     "downloaded": MessageLookupByLibrary.simpleMessage("حفظ"),
     "draft": MessageLookupByLibrary.simpleMessage("مسودة"),
+    "draftDataInstance": MessageLookupByLibrary.simpleMessage(
+      "Draft Data Instance",
+    ),
     "dueDate": MessageLookupByLibrary.simpleMessage("تاريخ الاستحقاق"),
     "dueDay": MessageLookupByLibrary.simpleMessage("يوم الاستحقاق"),
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
@@ -245,7 +254,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "empty": MessageLookupByLibrary.simpleMessage("فارغ"),
     "endDate": MessageLookupByLibrary.simpleMessage("تاريخ الانتهاء"),
-    "endPointNotFound": m9,
+    "endPointNotFound": m10,
     "enterAValidNumber": MessageLookupByLibrary.simpleMessage(
       "يرجى إدخال رقم صالح.",
     ),
@@ -279,8 +288,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "finalData": MessageLookupByLibrary.simpleMessage("بيانات نهائية"),
     "finalized": MessageLookupByLibrary.simpleMessage("نهائية"),
     "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
-    "forbidden": m10,
-    "form": m11,
+    "forbidden": m11,
+    "form": m12,
     "formContainsSomeErrors": MessageLookupByLibrary.simpleMessage(
       " يوجد أخطاء في بعض الحقول",
     ),
@@ -306,6 +315,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "households": MessageLookupByLibrary.simpleMessage("منازل"),
     "imageFieldHint": MessageLookupByLibrary.simpleMessage("اختر صورة"),
     "in_progress": MessageLookupByLibrary.simpleMessage("قيد التنفيذ"),
+    "initializingDataInstance": MessageLookupByLibrary.simpleMessage(
+      "Initializing Data Instance",
+    ),
     "integerFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل عددًا صحيحًا",
     ),
@@ -315,7 +327,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "internetIsConnected": MessageLookupByLibrary.simpleMessage(
       "متصل بالإنترنت",
     ),
-    "invalidData": m12,
+    "invalidData": m13,
     "invalidScannedCode": MessageLookupByLibrary.simpleMessage(
       "باركود غير صالح!",
     ),
@@ -355,12 +367,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "حقول مكتملة، هل تبريد تعيين هذه البيانات كنهائية وجاهزة للإرسال؟",
     ),
     "materialVersion": MessageLookupByLibrary.simpleMessage("Material Version"),
-    "maximumAllowedLengthIsError": m13,
+    "maximumAllowedLengthIsError": m14,
     "merged": MessageLookupByLibrary.simpleMessage("مدمج"),
     "middleName": MessageLookupByLibrary.simpleMessage("الاسم الأوسط"),
     "mobile": MessageLookupByLibrary.simpleMessage("رقم الموبايل"),
     "modified": MessageLookupByLibrary.simpleMessage("Modified"),
-    "month": m14,
+    "month": m15,
     "monthly": MessageLookupByLibrary.simpleMessage("شهري"),
     "months": MessageLookupByLibrary.simpleMessage("أشهر"),
     "negativeIntegerFieldHint": MessageLookupByLibrary.simpleMessage(
@@ -377,7 +389,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "البرنامج الوطني لمكافحة الملاريا",
     ),
     "no": MessageLookupByLibrary.simpleMessage("لا"),
-    "noActiveDatabaseFound": m15,
+    "noActiveDatabaseFound": m16,
     "noActivitiesYet": MessageLookupByLibrary.simpleMessage(
       "لا توجد أنشطة حتى الآن",
     ),
@@ -399,7 +411,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noSubmissions": MessageLookupByLibrary.simpleMessage("لا توجد بيانات"),
     "noSyncYet": MessageLookupByLibrary.simpleMessage("لم يحدث بعد"),
     "noSyncsYet": MessageLookupByLibrary.simpleMessage("لم تتم أي مزامنة بعد"),
-    "noUserDetailsFetchedFromServer": m16,
+    "noUserDetailsFetchedFromServer": m17,
     "notNow": MessageLookupByLibrary.simpleMessage("ليس الآن"),
     "not_started": MessageLookupByLibrary.simpleMessage("لم يبدأ"),
     "notifications": MessageLookupByLibrary.simpleMessage("تنبيهات"),
@@ -410,7 +422,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "objectAccessDenied": MessageLookupByLibrary.simpleMessage(
       "الوصول مرفوض لهذا الكائن",
     ),
-    "ofYear": m17,
+    "ofYear": m18,
     "ok": MessageLookupByLibrary.simpleMessage("موافق"),
     "oneLetterFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل حرفًا واحدًا",
@@ -458,7 +470,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "progressFieldHint": MessageLookupByLibrary.simpleMessage("أدخل تقدمًا"),
     "projects": MessageLookupByLibrary.simpleMessage("المشاريع"),
     "reassigned": MessageLookupByLibrary.simpleMessage("إعادة تعيين فريق آخر"),
-    "receiveTimeout": m18,
+    "receiveTimeout": m19,
     "referenceFieldHint": MessageLookupByLibrary.simpleMessage("اختر مرجعًا"),
     "reported": MessageLookupByLibrary.simpleMessage("مرسل"),
     "reportedResources": MessageLookupByLibrary.simpleMessage("موارد المرسلة"),
@@ -505,11 +517,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectYear": MessageLookupByLibrary.simpleMessage("اختر السنة"),
     "selected": MessageLookupByLibrary.simpleMessage("عناصر محددة"),
     "send": MessageLookupByLibrary.simpleMessage("إرسال"),
-    "sendTimeout": m19,
+    "sendTimeout": m20,
     "serial": MessageLookupByLibrary.simpleMessage("التسلسلي"),
-    "serverError": m20,
+    "serverError": m21,
     "serverUrl": MessageLookupByLibrary.simpleMessage("رابط السيرفر"),
-    "sessionExpired": m21,
+    "sessionExpired": m22,
     "settings": MessageLookupByLibrary.simpleMessage("إعدادات"),
     "showLess": MessageLookupByLibrary.simpleMessage("عرض أقل"),
     "showMore": MessageLookupByLibrary.simpleMessage("عرض المزيد"),
@@ -521,10 +533,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "startingSync": MessageLookupByLibrary.simpleMessage("بدء التحديث"),
     "status": MessageLookupByLibrary.simpleMessage("الحالة"),
     "submissionDataEntry": MessageLookupByLibrary.simpleMessage("بيانات"),
-    "submissionError": m22,
+    "submissionError": m23,
     "submissionInitialData": MessageLookupByLibrary.simpleMessage("الرئيسة"),
     "successCount": MessageLookupByLibrary.simpleMessage("عدد النجاحات"),
-    "syncError": m23,
+    "syncError": m24,
     "syncErrors": MessageLookupByLibrary.simpleMessage("أخطاء المزامنة"),
     "syncFailed": MessageLookupByLibrary.simpleMessage("فشل مزامنة"),
     "syncFormData": MessageLookupByLibrary.simpleMessage(
@@ -538,7 +550,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "مزامنة إعدادات المستخدم",
     ),
     "syncSettings": MessageLookupByLibrary.simpleMessage("التحديث التلقائي"),
-    "syncSubmissions": m24,
+    "syncSubmissions": m25,
     "syncSummaryLoadError": MessageLookupByLibrary.simpleMessage(
       "خطأ في تحميل ملخص المزامنة",
     ),
@@ -549,7 +561,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "syncingData": MessageLookupByLibrary.simpleMessage("مزامنة بيانات"),
     "syncingEvents": MessageLookupByLibrary.simpleMessage("مزامنة الإستمارات"),
-    "systemFilesAccessError": m25,
+    "systemFilesAccessError": m26,
     "team": MessageLookupByLibrary.simpleMessage("الفريق"),
     "teamFieldHint": MessageLookupByLibrary.simpleMessage("اختر فريقًا"),
     "teams": MessageLookupByLibrary.simpleMessage("الفرق"),
@@ -568,9 +580,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "تحويل بين قائمة/جدول",
     ),
     "trueOnlyFieldHint": MessageLookupByLibrary.simpleMessage("قيمة صحيحة فقط"),
-    "unauthorizedAccessToEndPoint": m26,
+    "unauthorizedAccessToEndPoint": m27,
     "undo": MessageLookupByLibrary.simpleMessage("تراجع"),
-    "unexpected": m27,
+    "unexpected": m28,
     "unitIntervalFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل قيمة بين 0 و1",
     ),
@@ -594,8 +606,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "يرجى تصحيح الأخطاء في النموذج قبل المتابعة.",
     ),
     "validationErrorMessage": MessageLookupByLibrary.simpleMessage("خطأ تحقق"),
-    "valueMustBeGreaterThanOrEqualToError": m28,
-    "valueMustBeLessThanOrEqualToError": m29,
+    "valueMustBeGreaterThanOrEqualToError": m29,
+    "valueMustBeLessThanOrEqualToError": m30,
     "version": MessageLookupByLibrary.simpleMessage("الإصدار"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "افتح لاستعرض الاستمارات المتاحة",
@@ -604,9 +616,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("عرض الأخطاء"),
     "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
     "warning": MessageLookupByLibrary.simpleMessage("تنبيه"),
-    "week": m30,
+    "week": m31,
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
-    "year": m31,
+    "year": m32,
     "years": MessageLookupByLibrary.simpleMessage("سنوات"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("أشهر/سنوات"),
     "yes": MessageLookupByLibrary.simpleMessage("نعم"),

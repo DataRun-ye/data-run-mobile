@@ -1,6 +1,5 @@
 //GENERATED BARREL FILE
 export 'app_about_info.provider.dart';
-export 'code_generator.dart';
 export 'completion_dialog_config.provider.dart';
 export 'controller.provider.dart';
 export 'form_instance_repository.dart';

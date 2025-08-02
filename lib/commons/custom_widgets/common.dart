@@ -20,9 +20,11 @@ class AppScaffold extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
-        body: CustomScrollView(
-          slivers: slivers,
-          reverse: reverse,
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: slivers,
+            reverse: reverse,
+          ),
         ),
         floatingActionButton: const _FloatingActionButton(),
       ),

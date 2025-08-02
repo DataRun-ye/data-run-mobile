@@ -2,10 +2,9 @@ import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';
@@ -18,10 +17,12 @@ class QReactiveMultiSelectSearchField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
+
     return ReactiveDropdownSearchMultiSelection<String, String>(
       formControl: formInstance.form.control(element.elementPath!)
           as FormControl<List<String>>,

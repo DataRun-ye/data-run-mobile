@@ -161,6 +161,146 @@ class _FormListItemsProviderElement
   FormListFilter get filter => (origin as FormListItemsProvider).filter;
 }
 
+String _$availableUserFormTemplatesHash() =>
+    r'dec7515c5cb3d95e5373a3762ceef19c64f434ea';
+
+/// See also [availableUserFormTemplates].
+@ProviderFor(availableUserFormTemplates)
+const availableUserFormTemplatesProvider = AvailableUserFormTemplatesFamily();
+
+/// See also [availableUserFormTemplates].
+class AvailableUserFormTemplatesFamily
+    extends Family<AsyncValue<List<Pair<AssignmentForm, bool>>>> {
+  /// See also [availableUserFormTemplates].
+  const AvailableUserFormTemplatesFamily();
+
+  /// See also [availableUserFormTemplates].
+  AvailableUserFormTemplatesProvider call({
+    String? assignmentId,
+  }) {
+    return AvailableUserFormTemplatesProvider(
+      assignmentId: assignmentId,
+    );
+  }
+
+  @override
+  AvailableUserFormTemplatesProvider getProviderOverride(
+    covariant AvailableUserFormTemplatesProvider provider,
+  ) {
+    return call(
+      assignmentId: provider.assignmentId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'availableUserFormTemplatesProvider';
+}
+
+/// See also [availableUserFormTemplates].
+class AvailableUserFormTemplatesProvider
+    extends AutoDisposeFutureProvider<List<Pair<AssignmentForm, bool>>> {
+  /// See also [availableUserFormTemplates].
+  AvailableUserFormTemplatesProvider({
+    String? assignmentId,
+  }) : this._internal(
+          (ref) => availableUserFormTemplates(
+            ref as AvailableUserFormTemplatesRef,
+            assignmentId: assignmentId,
+          ),
+          from: availableUserFormTemplatesProvider,
+          name: r'availableUserFormTemplatesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$availableUserFormTemplatesHash,
+          dependencies: AvailableUserFormTemplatesFamily._dependencies,
+          allTransitiveDependencies:
+              AvailableUserFormTemplatesFamily._allTransitiveDependencies,
+          assignmentId: assignmentId,
+        );
+
+  AvailableUserFormTemplatesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.assignmentId,
+  }) : super.internal();
+
+  final String? assignmentId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Pair<AssignmentForm, bool>>> Function(
+            AvailableUserFormTemplatesRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: AvailableUserFormTemplatesProvider._internal(
+        (ref) => create(ref as AvailableUserFormTemplatesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        assignmentId: assignmentId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<Pair<AssignmentForm, bool>>>
+      createElement() {
+    return _AvailableUserFormTemplatesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AvailableUserFormTemplatesProvider &&
+        other.assignmentId == assignmentId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, assignmentId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin AvailableUserFormTemplatesRef
+    on AutoDisposeFutureProviderRef<List<Pair<AssignmentForm, bool>>> {
+  /// The parameter `assignmentId` of this provider.
+  String? get assignmentId;
+}
+
+class _AvailableUserFormTemplatesProviderElement
+    extends AutoDisposeFutureProviderElement<List<Pair<AssignmentForm, bool>>>
+    with AvailableUserFormTemplatesRef {
+  _AvailableUserFormTemplatesProviderElement(super.provider);
+
+  @override
+  String? get assignmentId =>
+      (origin as AvailableUserFormTemplatesProvider).assignmentId;
+}
+
 String _$formTemplateOptionsHash() =>
     r'c2dcd45978303d0c00a6ee9d80cf5d2b49c0272d';
 

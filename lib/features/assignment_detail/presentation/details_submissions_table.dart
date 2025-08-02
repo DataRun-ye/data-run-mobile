@@ -2,17 +2,16 @@ import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/tree/element_tree_service.dart';
 import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.dialogs.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/core/common/state.dart';
-import 'package:datarunmobile/data/form_template_repository.dart';
-import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
+import 'package:datarunmobile/features/assignment_detail/application/submissions_table_service.dart';
+import 'package:datarunmobile/features/assignment_detail/presentation/widgets/action_cell.dart';
 import 'package:datarunmobile/features/form/application/form_provider.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/status_icon.dart';
@@ -27,13 +26,9 @@ import 'package:stacked_services/stacked_services.dart';
 
 class DetailSubmissionsTable extends HookConsumerWidget {
   const DetailSubmissionsTable(
-      {super.key,
-      required this.assignment,
-      required this.formId,
-      this.index = 0});
+      {super.key, required this.assignmentForm, this.index = 0});
 
-  final AssignmentModel assignment;
-  final String formId;
+  final AssignmentForm assignmentForm;
   final int? index;
 
   @override
@@ -45,7 +40,9 @@ class DetailSubmissionsTable extends HookConsumerWidget {
             SubmissionListUtil.getSyncStatus(s) == SyncStatus.ERROR)
         .map((s) => s.id)
         .toList();
-    final formAsync = ref.watch(latestFormTemplateProvider(formId: formId));
+    final formAsync =
+        ref.watch(formTemplateProvider(formId: assignmentForm.form));
+
     final _sortColumnIndex = useState<int?>(null);
     final _sortAscending = useState(true);
     final ScrollController _horizontalController = useScrollController();
@@ -56,9 +53,9 @@ class DetailSubmissionsTable extends HookConsumerWidget {
         ?.copyWith(color: Colors.grey.shade700);
 
     final submissions = useState(ref
-        .watch(formSubmissionsProvider(formId))
+        .watch(formSubmissionsProvider(assignmentForm.form))
         .requireValue
-        .where((s) => s.assignment == assignment.id)
+        .where((s) => s.assignment == assignmentForm.assignment)
         .toList());
 
     void _sort<T>(Comparable<T> Function(DataInstance d) getField,
@@ -76,13 +73,13 @@ class DetailSubmissionsTable extends HookConsumerWidget {
 
     return AsyncValueWidget(
         value: formAsync,
-        valueBuilder: (FormTemplateRepository template) {
-          final columnHeaders = template.template.fields.where((entry) {
+        valueBuilder: (template) {
+          final columnHeaders = template.fields.where((entry) {
             final field = entry;
             return field.mainField;
           }).toList();
-          final title = getItemLocalString(template.template.label,
-              defaultString: template.template.name);
+          final title =
+              getItemLocalString(template.label, defaultString: template.name);
           final table = LayoutBuilder(builder: (context, constraints) {
             return Scrollbar(
               interactive: true,
@@ -96,7 +93,6 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minWidth: constraints.maxWidth),
                   child: DataTable(
-                    key: ValueKey('${assignment}_submissions_table'),
                     sortAscending: _sortAscending.value,
                     sortColumnIndex: _sortColumnIndex.value,
                     columns: <DataColumn>[
@@ -167,14 +163,7 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                                 : null,
                             child: StatusIcon(syncState: submission.syncState),
                           )),
-                          DataCell(IconButton(
-                            onPressed: !deleted
-                                ? () async {
-                                    goToDataEntryForm(
-                                        context, assignment, submission);
-                                    // ref.invalidate(assignmentsProvider);
-                                  }
-                                : null,
+                          DataCell(ActionCell(
                             icon: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -204,7 +193,19 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                                 )
                               ],
                             ),
-                            // label: Text(S.of(context).edit),
+                            onPressed: !deleted
+                                ? () async {
+                                    appLocator<NavigationService>()
+                                        .navigateToFormFlowBootstrapper(
+                                      formId: submission.formTemplate,
+                                      versionId: submission.templateVersion,
+                                      assignmentId: submission.assignment,
+                                      submissionId: submission.id,
+                                    );
+                                    // _goToDataEntryForm(context, submission);
+                                    // ref.invalidate(assignmentsProvider);
+                                  }
+                                : null,
                           )),
                           ...columnHeaders.map(
                             (header) => DataCell(
@@ -219,19 +220,25 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                           DataCell(Text(
                               _formatDate(submission.lastModifiedDate),
                               style: textStyle)),
-                          DataCell(IconButton(
+                          DataCell(ActionCell(
                             icon: Icon(
                                 deleted
                                     ? Icons.settings_backup_restore
                                     : Icons.delete,
                                 size: 20),
-                            onPressed: () => _confirmDelete(
-                                context,
-                                submission.id,
-                                deleted
-                                    ? S.of(context).restoreItem
-                                    : S.of(context).deleteConfirmationMessage,
-                                ref),
+                            onPressed: () => appLocator<ConfirmationService>()
+                                .confirmAndExecute(
+                                    context: context,
+                                    title: S.of(context).confirm,
+                                    body: deleted
+                                        ? S.of(context).restoreItem
+                                        : S
+                                            .of(context)
+                                            .deleteConfirmationMessage,
+                                    confirmLabel:
+                                        S.of(context).deleteConfirmationMessage,
+                                    action: () => _deleteAndShowUndoSnack(
+                                        context, submission.id, ref)),
                             tooltip: deleted
                                 ? S.of(context).restoreItem
                                 : S.of(context).deleteItem,
@@ -245,7 +252,6 @@ class DetailSubmissionsTable extends HookConsumerWidget {
             );
           });
           return Column(
-            key: ValueKey('${assignment.id}_cold'),
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               // Text('${index != null ? (index! + 1) : ''}. $title',
@@ -276,6 +282,17 @@ class DetailSubmissionsTable extends HookConsumerWidget {
         });
   }
 
+  // Future<void> _goToDataEntryForm(
+  //     BuildContext context, DataInstance submission) async {
+  //   await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => FormSubmissionScreen(
+  //                 currentPageIndex: 1,
+  //                 submissionId: submission.id,
+  //               )));
+  // }
+
   Future<dynamic> buildShowDialog(
       BuildContext context, DataInstance submission) {
     return showDialog(
@@ -295,7 +312,7 @@ class DetailSubmissionsTable extends HookConsumerWidget {
   }
 
   Map<String, dynamic> _extractValues(
-      Map<String, dynamic> formData, FormTemplateRepository formTemplate) {
+      Map<String, dynamic> formData, FormTemplateModel formTemplate) {
     Map<String, dynamic> extractedValues = {};
 
     void _extract(Map<String, dynamic> data, Iterable<Template> fields) {
@@ -334,32 +351,32 @@ class DetailSubmissionsTable extends HookConsumerWidget {
           else if (field.type?.isSelectType == true &&
               field.optionSet != null &&
               data.containsKey(field.name)) {
-            final optionMap = formTemplate.optionMap;
-            final String? optionSetName =
-                formTemplate.optionSets[field.optionSet!]?.name;
-            final List<DataOption> options = optionMap[field.optionSet] ?? [];
-            if (field.type == ValueType.SelectOne) {
-              final List<DataOption> selected =
-                  options.where((o) => o.name == data[field.name]).toList();
-              extractedValues[field.name!] = selected
-                  .map((o) => getItemLocalString(o.label, defaultString: ''))
-                  .join(',');
-            } else if (field.type == ValueType.SelectMulti &&
-                data[field.name] is List) {
-              final List<DataOption> selected = options
-                  .where((o) => data[field.name].contains(o.code))
-                  .toList();
-              extractedValues[field.name!] = selected
-                  .map((o) => getItemLocalString(o.label, defaultString: ''))
-                  .join(',');
-            }
-            // final List<DataOption> selected = options
-            //     .where((o) =>
-            //         o.name == data[field.name] || o.code == data[field.name])
-            //     .toList();
-            // extractedValues[field.name!] = selected
-            //     .map((o) => getItemLocalString(o.label, defaultString: ''))
-            //     .join(',');
+            // final optionMap = formTemplate.optionMap;
+            // final String? optionSetName =
+            //     formTemplate.optionSets[field.optionSet!]?.name;
+            // final List<DataOption> options = optionMap[field.optionSet] ?? [];
+            // if (field.type == ValueType.SelectOne) {
+            //   final List<DataOption> selected =
+            //   options.where((o) => o.name == data[field.name]).toList();
+            //   extractedValues[field.name!] = selected
+            //       .map((o) => getItemLocalString(o.label, defaultString: ''))
+            //       .join(',');
+            // } else if (field.type == ValueType.SelectMulti &&
+            //     data[field.name] is List) {
+            //   final List<DataOption> selected = options
+            //       .where((o) => data[field.name].contains(o.code))
+            //       .toList();
+            //   extractedValues[field.name!] = selected
+            //       .map((o) => getItemLocalString(o.label, defaultString: ''))
+            //       .join(',');
+            // }
+            // // final List<DataOption> selected = options
+            // //     .where((o) =>
+            // //         o.name == data[field.name] || o.code == data[field.name])
+            // //     .toList();
+            // // extractedValues[field.name!] = selected
+            // //     .map((o) => getItemLocalString(o.label, defaultString: ''))
+            // //     .join(',');
           } else if (data.containsKey(field.name)) {
             extractedValues[field.name!] = data[field.name];
           }
@@ -368,7 +385,7 @@ class DetailSubmissionsTable extends HookConsumerWidget {
     }
 
     _extract(formData, [
-      ...formTemplate.template.fields.where((f) => f.mainField == true),
+      ...formTemplate.fields.where((f) => f.mainField == true),
       ...formTemplate.sections
     ]);
     return extractedValues;
@@ -412,7 +429,7 @@ class DetailSubmissionsTable extends HookConsumerWidget {
           syncEntity: (ids) async {
             if (ids != null) {
               await ref
-                  .read(formSubmissionsProvider(formId).notifier)
+                  .read(formSubmissionsProvider(assignmentForm.form).notifier)
                   .syncEntities(ids);
               await appLocator<NavigationService>().back();
             }
@@ -435,6 +452,13 @@ class DetailSubmissionsTable extends HookConsumerWidget {
   Future<void> _confirmDelete(
       BuildContext context, String id, String message, WidgetRef ref) async {
     final confirmed = await showDialog<bool>(
+      // _confirmDelete(
+      //     context,
+      //     submission.id,
+      //     deleted
+      //         ? S.of(context).restoreItem
+      //         : S.of(context).deleteConfirmationMessage,
+      //     ref)
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -457,15 +481,15 @@ class DetailSubmissionsTable extends HookConsumerWidget {
     );
 
     if (confirmed == true) {
-      _showUndoSnackBar(context, id, ref);
+      _deleteAndShowUndoSnack(context, id, ref);
     }
   }
 
-  void _showUndoSnackBar(
+  void _deleteAndShowUndoSnack(
       BuildContext context, String toDeleteId, WidgetRef ref) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final listSubmissionsNotifier =
-        ref.read(formSubmissionsProvider(formId).notifier);
+        ref.read(formSubmissionsProvider(assignmentForm.form).notifier);
     listSubmissionsNotifier.deleteSubmission([toDeleteId]);
     scaffoldMessenger.showSnackBar(
       SnackBar(
@@ -473,7 +497,8 @@ class DetailSubmissionsTable extends HookConsumerWidget {
         action: SnackBarAction(
           label: S.of(context).undo,
           onPressed: () {
-            listSubmissionsNotifier.deleteSubmission([toDeleteId]);
+            appLocator<SubmissionsTableService>().deleteInstance(toDeleteId);
+            // listSubmissionsNotifier.deleteSubmission([toDeleteId]);
           },
         ),
       ),

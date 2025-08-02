@@ -26,8 +26,7 @@ final formSubmissionRepositoryProvider =
 // ignore: unused_element
 typedef FormSubmissionRepositoryRef
     = AutoDisposeProviderRef<FormSubmissionRepository>;
-String _$submissionEditStatusHash() =>
-    r'02d9349aaea6e5b425324fcafea9817097b43533';
+String _$dataInstanceHash() => r'70a423b295b3df9f3128fded4d9db234ff8146fd';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -49,6 +48,138 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+/// See also [dataInstance].
+@ProviderFor(dataInstance)
+const dataInstanceProvider = DataInstanceFamily();
+
+/// See also [dataInstance].
+class DataInstanceFamily extends Family<AsyncValue<DataInstance>> {
+  /// See also [dataInstance].
+  const DataInstanceFamily();
+
+  /// See also [dataInstance].
+  DataInstanceProvider call({
+    required String id,
+  }) {
+    return DataInstanceProvider(
+      id: id,
+    );
+  }
+
+  @override
+  DataInstanceProvider getProviderOverride(
+    covariant DataInstanceProvider provider,
+  ) {
+    return call(
+      id: provider.id,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'dataInstanceProvider';
+}
+
+/// See also [dataInstance].
+class DataInstanceProvider extends AutoDisposeFutureProvider<DataInstance> {
+  /// See also [dataInstance].
+  DataInstanceProvider({
+    required String id,
+  }) : this._internal(
+          (ref) => dataInstance(
+            ref as DataInstanceRef,
+            id: id,
+          ),
+          from: dataInstanceProvider,
+          name: r'dataInstanceProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$dataInstanceHash,
+          dependencies: DataInstanceFamily._dependencies,
+          allTransitiveDependencies:
+              DataInstanceFamily._allTransitiveDependencies,
+          id: id,
+        );
+
+  DataInstanceProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final String id;
+
+  @override
+  Override overrideWith(
+    FutureOr<DataInstance> Function(DataInstanceRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: DataInstanceProvider._internal(
+        (ref) => create(ref as DataInstanceRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<DataInstance> createElement() {
+    return _DataInstanceProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is DataInstanceProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin DataInstanceRef on AutoDisposeFutureProviderRef<DataInstance> {
+  /// The parameter `id` of this provider.
+  String get id;
+}
+
+class _DataInstanceProviderElement
+    extends AutoDisposeFutureProviderElement<DataInstance>
+    with DataInstanceRef {
+  _DataInstanceProviderElement(super.provider);
+
+  @override
+  String get id => (origin as DataInstanceProvider).id;
+}
+
+String _$submissionEditStatusHash() =>
+    r'02d9349aaea6e5b425324fcafea9817097b43533';
 
 /// See also [submissionEditStatus].
 @ProviderFor(submissionEditStatus)
@@ -181,7 +312,7 @@ class _SubmissionEditStatusProviderElement
       (origin as SubmissionEditStatusProvider).submissionId;
 }
 
-String _$formSubmissionsHash() => r'5480ac4cc116eb8a7442729b67fa3f92adac3706';
+String _$formSubmissionsHash() => r'a7e0cddd7442048939cddb3dc3f2fe0471af98c5';
 
 abstract class _$FormSubmissions
     extends BuildlessAutoDisposeAsyncNotifier<IList<DataInstance>> {

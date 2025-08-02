@@ -16,7 +16,7 @@ class HomeWrapperPage extends StatelessWidget {
         title: Text(S.of(context).home),
       ),
       drawer: const AppDrawer(),
-      body: const ActivityListView(),
+      body: SafeArea(child: const ActivityListView()),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/code_scanner/barcode_scanner_widget.dart';
-import 'package:datarunmobile/data/code_generator.dart';
+import 'package:d_sdk/core/code_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 

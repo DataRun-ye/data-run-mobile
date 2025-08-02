@@ -6,9 +6,8 @@ import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.dialogs.dart';
+import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';
-import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
-import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/status_icon.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/submission_sync_dialog.widget.dart';
@@ -34,7 +33,7 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final submissionAsync =
-    ref.watch(formSubmissionsProvider(template.template.id));
+        ref.watch(formSubmissionsProvider(template.template.id));
     if (submissionAsync.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -45,7 +44,7 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
 
     // Prepare column headers
     final columnHeaders =
-    template.template.fields.where((f) => f.mainField).toList();
+        template.template.fields.where((f) => f.mainField).toList();
     final totalColumns = 2 +
         columnHeaders.length +
         3; // status, edit + data cols + created, modified, delete
@@ -115,8 +114,8 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
                     tail == 0
                         ? 'Created'
                         : tail == 1
-                        ? 'Modified'
-                        : 'Delete',
+                            ? 'Modified'
+                            : 'Delete',
                   ),
                 );
               }
@@ -147,15 +146,20 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
                 onPressed: submission.deleted
                     ? null
                     : () async {
-                  goToDataEntryForm(
-                      context, ref.read(assignmentProvider), submission);
-                });
+                        appLocator<NavigationService>()
+                            .navigateToFormFlowBootstrapper(
+                                formId: submission.formTemplate,
+                                versionId: submission.templateVersion,
+                                assignmentId: submission.assignment);
+                        // goToDataEntryForm(
+                        //     context, ref.read(assignmentProvider), submission);
+                      });
             break;
           default:
             final dataCol = col - 2;
             if (dataCol < columnHeaders.length) {
               final values =
-              _extractValues(submission.formData ?? {}, template);
+                  _extractValues(submission.formData ?? {}, template);
               final text =
                   values[columnHeaders[dataCol].name]?.toString() ?? '';
               cellContent = Text(text);
@@ -360,17 +364,17 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-            title: Text(S.of(context).errorSubmittingForm),
-            content: Text(S
-                .of(context)
-                .submissionError(submission.lastSyncMessage ?? '')),
-            actions: <Widget>[
-              TextButton(
-                  child: Text(S.of(context).ok),
-                  onPressed: () {
-                    appLocator<NavigationService>().back();
-                  })
-            ]));
+                title: Text(S.of(context).errorSubmittingForm),
+                content: Text(S
+                    .of(context)
+                    .submissionError(submission.lastSyncMessage ?? '')),
+                actions: <Widget>[
+                  TextButton(
+                      child: Text(S.of(context).ok),
+                      onPressed: () {
+                        appLocator<NavigationService>().back();
+                      })
+                ]));
   }
 
   Map<String, dynamic> _extractValues(
@@ -396,12 +400,12 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
           } else if (field.type == ValueType.Progress &&
               data.containsKey(field.name)) {
             final value = ((AssignmentStatus.values
-                .firstOrNullWhere((t) => t.name == data[field.name])
-                ?.name ??
-                data[field.name])
+                        .firstOrNullWhere((t) => t.name == data[field.name])
+                        ?.name ??
+                    data[field.name])
                 ?.toString());
             extractedValues[field.name!] =
-            value != null ? Intl.message(value.toLowerCase()) : '-';
+                value != null ? Intl.message(value.toLowerCase()) : '-';
           }
           /*else if (field.type == ValueType.Team &&
               data.containsKey(field.name)) {
@@ -420,7 +424,7 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
             final List<DataOption> options = optionMap[optionSetName] ?? [];
             final List<DataOption> option = options
                 .where((o) =>
-            o.name == data[field.name] || o.code == data[field.name])
+                    o.name == data[field.name] || o.code == data[field.name])
                 .toList();
             extractedValues[field.name!] = option
                 .map((o) => getItemLocalString(o.label, defaultString: ''))
@@ -491,7 +495,7 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
       variant: DialogType.infoAlert,
       title: Intl.message('Test version'),
       description:
-      'This is a Version for testing, uploading to server is not permitted',
+          'This is a Version for testing, uploading to server is not permitted',
     );
   }
 
@@ -528,7 +532,7 @@ class SubmissionsHistoryTable extends HookConsumerWidget {
       BuildContext context, String toDeleteId, WidgetRef ref) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final listSubmissionsNotifier =
-    ref.read(formSubmissionsProvider(template.template.id).notifier);
+        ref.read(formSubmissionsProvider(template.template.id).notifier);
     listSubmissionsNotifier.deleteSubmission([toDeleteId]);
     scaffoldMessenger.showSnackBar(
       SnackBar(

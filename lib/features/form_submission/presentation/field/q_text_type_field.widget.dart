@@ -2,8 +2,7 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -19,6 +18,7 @@ class QTextTypeField<T> extends StatefulHookConsumerWidget {
 
 class QTextTypeFieldState<T> extends ConsumerState<QTextTypeField<T>> {
   final _controller = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -40,10 +40,12 @@ class QTextTypeFieldState<T> extends ConsumerState<QTextTypeField<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final formInstance = ref
-        .watch(
-        formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(
+    //     formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
+
     final elementPath = widget.element.elementPath!;
     final control = formInstance.form.control(elementPath) as FormControl<T>;
 
@@ -51,26 +53,26 @@ class QTextTypeFieldState<T> extends ConsumerState<QTextTypeField<T>> {
       controller: widget.element.template.type.isNumeric ? _controller : null,
       onTapOutside: control.hasFocus
           ? (event) {
-        control.markAsTouched();
-        control.unfocus();
-      }
+              control.markAsTouched();
+              control.unfocus();
+            }
           : null,
       formControl: control,
       maxLength: widget.element.maxLength,
       maxLines: widget.element.maxLines,
       textInputAction: formInstance.fieldInputAction(elementPath),
       keyboardType: widget.element.inputType,
-      textAlign:
-          widget.element.template.type.isNumeric ? TextAlign.end : TextAlign.start,
+      textAlign: widget.element.template.type.isNumeric
+          ? TextAlign.end
+          : TextAlign.start,
       validationMessages: validationMessages(),
       decoration: InputDecoration(
           errorMaxLines: 2,
           enabled: control.enabled,
           labelText: widget.element.label,
-          hintText: appLocator<HintProvider>().provideHint(
-              widget.element.type)),
+          hintText:
+              appLocator<HintProvider>().provideHint(widget.element.type)),
       onSubmitted: (control) => formInstance.moveToNextElement(elementPath),
     );
   }
 }
-

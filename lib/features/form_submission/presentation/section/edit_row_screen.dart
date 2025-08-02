@@ -1,9 +1,8 @@
+import 'package:d_sdk/core/code_generator.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_sliver.dart';
@@ -55,10 +54,10 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
   @override
   Widget build(BuildContext context) {
     final formGroup = ReactiveForm.of(context);
-    final FormInstance formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final FormInstance formInstance = ref
+    //     .watch(formInstanceProvider(submissionId: widget.submissionId))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
 
     if (formGroup is! FormGroup) {
       throw FormControlParentNotFoundException(widget);
@@ -91,30 +90,33 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
       appBar: AppBar(
         title: Text(widget.title ?? S.of(context).edit),
       ),
-      body: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (bool didPop, result) async {
-          if (didPop) {
-            return;
-          }
+      body: SafeArea(
+        child: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (bool didPop, result) async {
+            if (didPop) {
+              return;
+            }
 
-          final bool shouldPop = await _onTryToClose(
-            context,
-            formInstance,
-            widget.repeatInstance,
-            widget.item,
-          );
-          if (context.mounted && shouldPop) {
-            Navigator.pop(context);
-          }
-        },
-        child: FormMetadataWidget(
-          formMetadata: formInstance.formMetadata,
-          child: ReactiveForm(
-            formGroup: widget.item.elementControl,
-            child: CustomScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              slivers: buildSlivers(),
+            final bool shouldPop = await _onTryToClose(
+              context,
+              formInstance,
+              widget.repeatInstance,
+              widget.item,
+            );
+            if (context.mounted && shouldPop) {
+              Navigator.pop(context);
+            }
+          },
+          child: FormMetadataWidget(
+            formMetadata: formInstance.formMetadata,
+            child: ReactiveForm(
+              formGroup: widget.item.elementControl,
+              child: CustomScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                slivers: buildSlivers(),
+              ),
             ),
           ),
         ),

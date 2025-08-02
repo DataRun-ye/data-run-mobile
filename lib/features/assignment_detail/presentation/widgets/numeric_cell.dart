@@ -7,9 +7,7 @@ class NumericCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      value ?? '',
-      textAlign: TextAlign.center,
-    );
+    return Text(value ?? '',
+        textAlign: TextAlign.center, overflow: TextOverflow.ellipsis);
   }
 }

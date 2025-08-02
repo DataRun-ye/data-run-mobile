@@ -1,11 +1,11 @@
 import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,10 +19,11 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
 
     final progressStatuses =
         AssignmentStatus.values.where((v) => !v.isNotStarted()).toList();
@@ -38,6 +39,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
         labelText: element.label,
       ),
       onChanged: (control) async {},
+      // chipsPerRow: 2,
     );
   }
 
@@ -51,8 +53,8 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
                   // mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     buildStatusBadge(status),
-                    // const SizedBox(width: 20),
-                    Text(Intl.message(status.name.toLowerCase()))
+                    const SizedBox(width: 20),
+                    Expanded(child: Text(Intl.message(status.name.toLowerCase()), overflow: TextOverflow.ellipsis,))
                   ]),
             ))
         .toList();
@@ -83,10 +85,11 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
     );
 
     if (confirmed == true) {
-      final formInstance = ref
-          .watch(formInstanceProvider(
-              formMetadata: FormMetadataWidget.of(context)))
-          .requireValue;
+      // final formInstance = ref
+      //     .watch(formInstanceProvider(
+      //         formMetadata: FormMetadataWidget.of(context)))
+      //     .requireValue;
+      final formInstance = appLocator<FormInstance>();
 
       formInstance.updateSubmissionStatus(AssignmentStatus.getType(status));
       // ref.read(assignmentsProvider.notifier).updateAssignmentStatus(

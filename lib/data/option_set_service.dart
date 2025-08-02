@@ -1,6 +1,6 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:datarunmobile/features/form/application/form_template_model.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

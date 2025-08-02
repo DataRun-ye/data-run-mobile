@@ -65,7 +65,7 @@ class AssignmentTableView extends HookConsumerWidget {
                       onPressed: assignment.availableForms.isNotEmpty
                           ? () async {
                               await showFormSelectionBottomSheet(
-                                  context, assignment);
+                                  context, assignment.id);
                             }
                           : null,
                       icon: const Icon(Icons.document_scanner),

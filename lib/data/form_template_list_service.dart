@@ -2,12 +2,13 @@ import 'package:built_collection/built_collection.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/collections.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
+import 'package:datarunmobile/commons/extensions/string_extension.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
 import 'package:datarunmobile/features/form/application/form_list_filter.dart';
-import 'package:datarunmobile/features/form/application/form_template_model.dart';
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,14 +19,20 @@ class FormTemplateListService {
   final OptionSetService optionSetService;
 
   Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
-      String assignment) async {
-    List<AssignmentForm> assignmentForms =
-        await _fetchAssignmentForms(assignment);
-    final List<String> userForms = assignmentForms.map((a) => a.form).toList();
+      {String? assignment}) async {
+    List<AssignmentForm> assignmentForms = [];
+    if (assignment.isNotNullOrEmpty) {
+      assignmentForms.addAll(await DSdk.db.managers.assignmentForms
+          .filter((f) => f.assignment.id(assignment))
+          .get());
+    } else {
+      assignmentForms.addAll(await DSdk.db.managers.assignmentForms.get());
+    }
 
+    final userForm = assignmentForms.map((a) => a.form);
     final List<FormTemplate> availableFormTemplates = await DSdk
         .db.managers.formTemplates
-        .filter((f) => f.id.isIn(userForms))
+        .filter((f) => f.id.isIn(userForm))
         .get();
 
     final List<String> availableForms =
@@ -37,6 +44,56 @@ class FormTemplateListService {
 
     return availableAssignedForms;
   }
+
+  // Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
+  //     {String? assignment}) async {
+  //   List<AssignmentForm> assignmentForms = [];
+  //   var query = DSdk.db.managers.assignmentForms;
+  //
+  //   if (assignment.isNotNullOrEmpty) {
+  //     query = query
+  //       ..filter((f) =>
+  //       f.assignment.id(assignment) & f.assignment.disabled.not(true));
+  //   }
+  //
+  //   assignmentForms.addAll(await query.get());
+  //
+  //   final userForm = assignmentForms.map((a) => a.form);
+  //   final List<FormTemplate> availableFormTemplates = await DSdk
+  //       .db.managers.formTemplates
+  //       .filter((f) => f.id.isIn(userForm))
+  //       .get();
+  //
+  //   final List<String> availableForms =
+  //   availableFormTemplates.map((f) => f.id).toList();
+  //
+  //   final availableAssignedForms = assignmentForms
+  //       .map((fp) => Pair(fp, availableForms.contains(fp.form)))
+  //       .toList();
+  //
+  //   return availableAssignedForms;
+  // }
+
+  // Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
+  //     String assignment) async {
+  //   List<AssignmentForm> assignmentForms =
+  //       await _fetchAssignmentForms(assignment);
+  //   final List<String> userForms = assignmentForms.map((a) => a.form).toList();
+  //
+  //   final List<FormTemplate> availableFormTemplates = await DSdk
+  //       .db.managers.formTemplates
+  //       .filter((f) => f.id.isIn(userForms))
+  //       .get();
+  //
+  //   final List<String> availableForms =
+  //       availableFormTemplates.map((f) => f.id).toList();
+  //
+  //   final availableAssignedForms = assignmentForms
+  //       .map((fp) => Pair(fp, availableForms.contains(fp.form)))
+  //       .toList();
+  //
+  //   return availableAssignedForms;
+  // }
 
   Future<List<AssignmentForm>> _fetchAssignmentForms(
       String assignmentId) async {
@@ -77,24 +134,9 @@ class FormTemplateListService {
     final query = db.formTemplateVersionsDao
         .selectFormTemplatesWithRefs(assignmentId: filter.assignment);
 
-    final List<(FormTemplate, FormTemplateVersion)> formTemplateWithRefs =
-        await query.get();
-    // final (templateVersion, refs) = formTemplateWithRefs;
+    final formTemplates = await query.get();
 
-    return formTemplateWithRefs.map((withRef) {
-      final (t, v) = withRef;
-
-      return FormTemplateModel(
-        id: t.id,
-        name: t.name,
-        versionUid: v.id,
-        label: t.label,
-        description: t.description,
-        versionNumber: v.versionNumber,
-        fields: v.fields.build(),
-        sections: v.sections.build(),
-      );
-    }).toList();
+    return formTemplates;
   }
 
   Future<FormTemplateModel> getTemplateByVersionOrLatest(

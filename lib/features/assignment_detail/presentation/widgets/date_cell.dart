@@ -7,6 +7,6 @@ class DateCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(date ?? '');
+    return Text(date ?? '', overflow: TextOverflow.ellipsis);
   }
 }

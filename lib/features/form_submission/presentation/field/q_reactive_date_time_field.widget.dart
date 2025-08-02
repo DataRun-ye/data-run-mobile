@@ -4,10 +4,9 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_date_time_picker/custom_date_pickers.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_date_time_picker/custom_reactive_date_picker.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,10 +22,12 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
+
     final viewFormat = DateHelper.getEffectiveUiFormat(element.type);
     final control =
         formInstance.form.control(element.elementPath!) as FormControl<String>;

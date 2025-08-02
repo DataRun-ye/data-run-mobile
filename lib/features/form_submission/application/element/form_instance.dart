@@ -1,5 +1,5 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
@@ -10,9 +10,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
-import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 // const formUid = 'formDataUid';
@@ -26,19 +24,19 @@ const teamControlName = 'formData';
 const versionControlName = 'formData';
 
 class FormInstance {
-  FormInstance(Ref ref,
+  FormInstance(
       {required this.form,
       required this.formFlatTemplate,
       required this.formMetadata,
       required this.entryStarted,
       required this.fieldKeysRegistery,
+      required this.submissionId,
       // AssignmentStatus? assignmentStatus,
       Map<String, Object?> initialValue = const {},
       required Section rootSection,
       Map<String, FormElementInstance<dynamic>> elements = const {},
       required this.enabled})
-      : _ref = ref,
-        _formSection = rootSection {
+      : _formSection = rootSection {
     var formElementMap = {
       for (var x
           in getFormElementIterator<FormElementInstance<dynamic>>(rootSection)
@@ -55,16 +53,20 @@ class FormInstance {
   Map<String, Object?> _initialValue = {};
   final DateTime entryStarted;
 
+  final String submissionId;
+
   // final Object _formDataUid;
   final FormGroup form;
   final FormTemplateRepository formFlatTemplate;
   final bool enabled;
 
-  final Ref _ref;
+  // final Ref _ref;
   final Map<String, FormElementInstance<dynamic>> _forElementMap = {};
   final Section _formSection;
   AssignmentStatus? _assignmentStatus;
   final FieldContextRegistry fieldKeysRegistery;
+
+  final _db = DSdk.db;
 
   // final FormConfiguration formConfiguration;
 
@@ -73,24 +75,18 @@ class FormInstance {
 
   Section get formSection => _formSection;
 
-  FormSubmissions get formSubmissionList => _ref.read(
-      formSubmissionsProvider(formMetadata.formId.split('_').first).notifier);
+  // FormSubmissions get formSubmissionList => _ref.read(
+  //     formSubmissionsProvider(formMetadata.formId.split('_').first).notifier);
 
   final FormMetadata formMetadata;
 
-  String? get submissionUid => formMetadata.submission;
+  // String? get submissionUid => formMetadata.submission;
 
-  Future<DataInstance> saveFormData() async {
-    final formSubmission =
-        await formSubmissionList.getSubmission(submissionUid!);
-
-    return _saveSubmission(formSubmission!);
-  }
-
-  Future<DataInstance> _saveSubmission(DataInstance formSubmission) async {
-    final formValue = formSection.value;
-    final formErrors = form.errors;
-    logDebug('formValid: ${form.valid},formErrors: ${formErrors.toString()}');
+  Future<void> saveFormData() async {
+    final formSubmission = await _db.dataInstancesDao.getById(submissionId);
+    final Map<String, Object?> formValue = formSection.value;
+    // final formErrors = form.errors;
+    // logDebug('formValid: ${form.valid},formErrors: ${formErrors.toString()}');
     formValue.forEach((key, value) {
       _initialValue.update(
         key,
@@ -100,14 +96,36 @@ class FormInstance {
     });
 
     // formSubmission.status = _assignmentStatus;
-    formSubmission.formData ?? {}
+    final formData = (formSubmission!.formData ?? {})
       ..removeWhere((k, v) => !metadata.contains(k))
       ..addAll(formValue);
 
-    final updatedSubmission =
-        await formSubmissionList.updateSubmission(formSubmission);
-    return updatedSubmission;
+    await _db.dataInstancesDao.updateData(submissionId, data: formData);
+
+    // return updatedSubmission;
   }
+
+  // Future<DataInstance> saveSubmission() async {
+  //   final formValue = formSection.value;
+  //   final formErrors = form.errors;
+  //   logDebug('formValid: ${form.valid},formErrors: ${formErrors.toString()}');
+  //   formValue.forEach((key, value) {
+  //     _initialValue.update(
+  //       key,
+  //       (_) => value,
+  //       ifAbsent: () => value,
+  //     );
+  //   });
+  //
+  //   // formSubmission.status = _assignmentStatus;
+  //   formSubmission.formData ?? {}
+  //     ..removeWhere((k, v) => !metadata.contains(k))
+  //     ..addAll(formValue);
+  //
+  //   final updatedSubmission =
+  //       await formSubmissionList.updateSubmission(formSubmission);
+  //   return updatedSubmission;
+  // }
 
   void updateSubmissionStatus(AssignmentStatus? status) async {
     _assignmentStatus = status;
@@ -156,7 +174,7 @@ class FormInstance {
   }
 
   Future<void> markSubmissionAsFinal() {
-    return formSubmissionList.markSubmissionAsFinal(submissionUid!);
+    return _db.dataInstancesDao.markFinal(submissionId);
   }
 
   TextInputAction fieldInputAction(String elementPath) {

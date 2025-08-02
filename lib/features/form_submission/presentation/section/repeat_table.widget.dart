@@ -1,9 +1,8 @@
+import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_rows_source.dart';
@@ -41,19 +40,23 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   int defaultRowsPerPage = 5;
 
   Future<void> onEdit(int index) async {
-    final formInstance = ref
-        .read(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .read(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
+
     final itemInstance = _dataSource.elements[index];
     await _showEditPanel(context, formInstance, itemInstance);
   }
 
   void onDelete(int index) {
-    final formInstance = ref
-        .read(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .read(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
+
     final removed = formInstance.onRemoveRepeatedItem(index, _repeatInstance);
     _dataSource.removeItem(removed);
     _repeatInstance.elementControl.markAsTouched();
@@ -84,10 +87,11 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   @override
   Widget build(BuildContext context) {
-    final formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
 
     final List<FieldTemplate> tableColumns = useMemoized(() {
       return formInstance.formFlatTemplate
@@ -180,7 +184,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
             child: Builder(builder: (context) {
               String title =
                   '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
-
 
               return EditRowScreen(
                 title: title,

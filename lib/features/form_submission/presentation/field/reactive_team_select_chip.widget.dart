@@ -1,12 +1,12 @@
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/data.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -18,10 +18,11 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
 
     final managedTeamsAsync = ref.watch(
         managedTeamsProvider(team: formInstance.formMetadata.assignmentId));
@@ -39,6 +40,7 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
             validationMessages: validationMessages(),
             selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
             options: _getChipOptions(teams),
+            visualDensity: VisualDensity.comfortable,
             decoration: InputDecoration(
               enabled: element.elementControl.enabled,
               labelText: element.label,

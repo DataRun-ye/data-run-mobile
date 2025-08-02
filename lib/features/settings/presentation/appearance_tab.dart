@@ -13,9 +13,6 @@ class AppearanceTab extends StackedHookView<SettingsViewmodel> {
   Widget builder(BuildContext context, SettingsViewmodel model) {
     return Consumer(
       builder: (context, ref, child) {
-        final useMaterial3 =
-            ref.watch(preferenceNotifierProvider(Preference.useMaterial3));
-
         return ListView(
           children: [
             ListTile(
@@ -29,22 +26,6 @@ class AppearanceTab extends StackedHookView<SettingsViewmodel> {
                       .update(
                           value ? ThemeMode.light.index : ThemeMode.dark.index);
                 },
-              ),
-            ),
-            ListTile(
-              title: Text(S.of(context).materialVersion),
-              trailing: IconButton(
-                icon: useMaterial3
-                    ? const Icon(
-                        Icons.filter_3,
-                      )
-                    : const Icon(
-                        Icons.filter_2,
-                      ),
-                onPressed: () => ref
-                    .read(preferenceNotifierProvider(Preference.useMaterial3)
-                        .notifier)
-                    .update(!useMaterial3),
               ),
             ),
             ListTile(
@@ -105,4 +86,3 @@ class _ColorSeedButton extends ConsumerWidget {
     );
   }
 }
-

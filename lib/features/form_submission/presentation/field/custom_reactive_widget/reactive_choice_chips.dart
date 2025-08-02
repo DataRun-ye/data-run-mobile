@@ -32,12 +32,12 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
     this.padding,
     this.pressElevation,
     this.runAlignment = WrapAlignment.start,
-    this.runSpacing = 2.0,
     this.selectedColor,
     this.selectedShadowColor,
     this.shadowColor,
     this.shape,
-    this.spacing = 2.0,
+    this.spacing = 4.0,
+    this.runSpacing = 4.0,
     this.textDirection,
     this.verticalDirection = VerticalDirection.down,
     this.visualDensity,
@@ -68,6 +68,8 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
               children: <Widget>[
                 for (ReactiveChipOption<T> option in options)
                   ChoiceChip(
+                    clipBehavior: Clip.antiAlias,
+                    // tooltip: ,
                     label: option,
                     shape: shape,
                     selected: field.value == option.value,
@@ -80,10 +82,12 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
                                         title: S
                                             .of(state.context)
                                             .actionNeedsConfirmation,
-                                        body: S
-                                            .of(state.context)
-                                            .confirmationWarning,
-                                        confirmLabel: S.of(state.context).confirm,
+                                        body:
+                                            S
+                                                .of(state.context)
+                                                .confirmationWarning,
+                                        confirmLabel:
+                                            S.of(state.context).confirm,
                                         action: () =>
                                             changeValue(selected, option))
                                 : changeValue(selected, option);
@@ -93,11 +97,11 @@ class ReactiveChoiceChips<T> extends ReactiveFormField<T, T> {
                     selectedColor: selectedColor,
                     disabledColor: disabledColor,
                     backgroundColor: backgroundColor,
-                    shadowColor: shadowColor,
+                    shadowColor: Theme.of(field.context).colorScheme.primary,
                     selectedShadowColor: selectedShadowColor,
                     elevation: elevation,
                     pressElevation: pressElevation,
-                    materialTapTargetSize: materialTapTargetSize,
+                    materialTapTargetSize: MaterialTapTargetSize.padded,
                     labelStyle: labelStyle,
                     labelPadding: labelPadding,
                     padding: padding,

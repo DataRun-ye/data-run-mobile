@@ -2,11 +2,11 @@ import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
-import 'package:datarunmobile/data/completion_dialog_config.provider.dart';
+import 'package:datarunmobile/data/form_template_repository.dart';
+import 'package:datarunmobile/features/form_submission/application/configure_form_completion_dialog.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_entry_view_silver.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_initial_view.widget.dart';
@@ -14,8 +14,6 @@ import 'package:datarunmobile/features/form_submission/presentation/hooks/scroll
 import 'package:datarunmobile/features/form_submission/presentation/widgets/bottom_sheet.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_template_inherit_widget.dart';
-import 'package:datarunmobile/features/form_ui_elements/presentation/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,9 +21,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FormSubmissionScreen extends StatefulHookConsumerWidget {
-  const FormSubmissionScreen({super.key, this.currentPageIndex = 0});
+  const FormSubmissionScreen({
+    super.key,
+    required this.submissionId,
+    required this.formId,
+    required this.versionId,
+    this.assignmentId,
+    this.currentPageIndex = 0,
+  });
 
   final int currentPageIndex;
+  final String? assignmentId;
+  final String submissionId;
+  final String formId;
+  final String versionId;
 
   @override
   FormSubmissionScreenState createState() => FormSubmissionScreenState();
@@ -34,39 +43,41 @@ class FormSubmissionScreen extends StatefulHookConsumerWidget {
 class FormSubmissionScreenState extends ConsumerState<FormSubmissionScreen> {
   @override
   Widget build(BuildContext context) {
-    final FormMetadata formMetadata = FormMetadataWidget.of(context);
+    // final FormMetadata formMetadata = FormMetadataWidget.of(context);
 
-    final AsyncValue<bool> submissionEditStatus = ref.watch(
-        submissionEditStatusProvider(submissionId: formMetadata.submission!));
+    final AsyncValue<bool> submissionEditStatus = ref
+        .watch(submissionEditStatusProvider(submissionId: widget.submissionId));
 
     return AsyncValueWidget(
         value: submissionEditStatus,
         valueBuilder: (canEdit) {
-          final formFlatTemplateAsync =
-              ref.watch(formFlatTemplateProvider(formMetadata: formMetadata));
-
-          return _EagerInitialization(
-            child: AsyncValueWidget(
-                value: formFlatTemplateAsync,
-                valueBuilder: (formFlatTemplate) =>
-                    FormFlatTemplateInheritWidget(
-                      formContainerTemplate: formFlatTemplate,
-                      child: FormTabScreen(
-                        enabled: canEdit,
-                        currentPageIndex: widget.currentPageIndex,
-                      ),
-                    )),
+          return FormMetadataWidget(
+            formMetadata: FormMetadata(
+                assignmentId: widget.assignmentId,
+                formId: widget.formId,
+                submission: widget.submissionId,
+                versionUid: widget.versionId),
+            child: FormTabScreen(
+              enabled: canEdit,
+              currentPageIndex: widget.currentPageIndex,
+              submissionId: widget.submissionId,
+            ),
           );
         });
   }
 }
 
 class FormTabScreen extends StatefulHookConsumerWidget {
-  const FormTabScreen(
-      {super.key, this.currentPageIndex = 0, this.enabled = true});
+  const FormTabScreen({
+    super.key,
+    required this.submissionId,
+    this.currentPageIndex = 0,
+    this.enabled = true,
+  });
 
   final int currentPageIndex;
   final bool enabled;
+  final String submissionId;
 
   @override
   ConsumerState<FormTabScreen> createState() => _SubmissionTabScreenState();
@@ -93,14 +104,17 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     final scrollController =
         useScrollControllerForAnimation(hideFabAnimController);
 
-    final formInstance = ref
-        .watch(formInstanceProvider(formMetadata: formMetadata))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(formInstanceProvider(submissionId: widget.submissionId))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
 
     final _buildBody = <Widget>[
       const FormInitialView(),
-      // FormInstanceEntryView(scrollController: scrollController),
-      FormInstanceEntryViewSliver(scrollController: scrollController),
+      FormInstanceEntryViewSliver(
+        scrollController: scrollController,
+        submissionId: widget.submissionId,
+      ),
     ];
 
     return PopScope(
@@ -115,9 +129,9 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
             title: Text(getItemLocalString(
-                FormFlatTemplateInheritWidget.of(context).template.label,
+                appLocator<FormTemplateRepository>().template.label,
                 defaultString:
-                    FormFlatTemplateInheritWidget.of(context).template.name))),
+                    appLocator<FormTemplateRepository>().template.name))),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) => currentPageIndex.value = index,
           indicatorColor: Colors.amber,
@@ -134,13 +148,15 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
             )
           ],
         ),
-        body: Stack(
-          children: [
-            IndexedStack(
-              index: currentPageIndex.value,
-              children: _buildBody,
-            ),
-          ],
+        body: SafeArea(
+          child: Stack(
+            children: [
+              IndexedStack(
+                index: currentPageIndex.value,
+                children: _buildBody,
+              ),
+            ],
+          ),
         ),
         floatingActionButton: FadeTransition(
           opacity: hideFabAnimController,
@@ -187,15 +203,22 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
 
   /// Save the form
   Future<void> _onSaveForm() async {
-    ref
-        .read(formInstanceProvider(formMetadata: formMetadata))
-        .requireValue
-        .saveFormData();
+    // ref
+    //     .read(formInstanceProvider(submissionId: widget.submissionId))
+    //     .requireValue
+    //     .saveFormData();
+    final formInstance = appLocator<FormInstance>().saveFormData();
   }
 
   Future<void> _showBottomSheet(FormInstance formInstance) async {
-    final bottomSheetUiModel = ref.read(formCompletionBottomSheetProvider(
-        formMetadata: FormMetadataWidget.of(context)));
+    // final formInstance = ref
+    //     .watch(formInstanceProvider(submissionId: widget.submissionId))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
+
+    final configurator = const ConfigureFormCompletionDialog();
+    final bottomSheetUiModel = configurator(formInstance.formSection);
+
     await showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -227,9 +250,13 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     switch (action) {
       case FormBottomDialogActionType.NotNow:
         Navigator.pop(context);
+        await appLocator.popScopesTill(widget.submissionId);
       case FormBottomDialogActionType.MarkAsFinal:
         await _markEntityAsFinal(context);
-        if (context.mounted) Navigator.pop(context);
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+        await appLocator.popScopesTill(widget.submissionId);
         break;
       case FormBottomDialogActionType.CheckFields:
       case null:
@@ -238,28 +265,33 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   }
 
   Future<void> _markEntityAsFinal(BuildContext context) async {
-    return ref
-        .read(formInstanceProvider(formMetadata: formMetadata))
-        .requireValue
-        .markSubmissionAsFinal();
+    final formInstance = appLocator<FormInstance>();
+
+    return formInstance.markSubmissionAsFinal();
   }
 }
 
-class _EagerInitialization extends ConsumerWidget {
-  _EagerInitialization({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formInstance = ref.watch(
-        formInstanceProvider(formMetadata: FormMetadataWidget.of(context)));
-    if (formInstance.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    } else if (formInstance.hasError) {
-      return getErrorWidget(formInstance.error, formInstance.stackTrace);
-    }
-
-    return child;
-  }
-}
+// class _EagerInitialization extends ConsumerWidget {
+//   _EagerInitialization({
+//     required this.submissionId,
+//     required this.child,
+//   });
+//
+//   final Widget child;
+//   final String submissionId;
+//
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     // final formInstance =
+//     //     ref.watch(formInstanceProvider(submissionId: submissionId));
+//     final formInstance = appLocator<FormInstance>();
+//
+//     if (formInstance.isLoading) {
+//       return const Center(child: CircularProgressIndicator());
+//     } else if (formInstance.hasError) {
+//       return getErrorWidget(formInstance.error, formInstance.stackTrace);
+//     }
+//
+//     return child;
+//   }
+// }

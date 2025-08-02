@@ -4,7 +4,7 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/data/form_template_list_service.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
-import 'package:datarunmobile/features/form/application/form_template_model.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormTemplateRepository {

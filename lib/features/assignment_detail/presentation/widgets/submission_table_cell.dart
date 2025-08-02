@@ -46,10 +46,15 @@ class SubmissionTableCell extends StatelessWidget {
         final value = (fieldValue.value?.toString().length ?? 0) > 20
             ? fieldValue.value.toString().substring(0, 20)
             : fieldValue.value?.toString() ?? '';
-        return Text(key: ValueKey(fieldValue.id), value);
+        return Text(
+            key: ValueKey(fieldValue.id),
+            value,
+            overflow: TextOverflow.ellipsis);
       case ValueType.Letter:
         return Text(
-            key: ValueKey(fieldValue.id), fieldValue.value?.toString() ?? '');
+            key: ValueKey(fieldValue.id),
+            fieldValue.value?.toString() ?? '',
+            overflow: TextOverflow.ellipsis);
       case ValueType.Boolean:
       case ValueType.TrueOnly:
         return ValueTypeValueDisplay(
@@ -65,7 +70,8 @@ class SubmissionTableCell extends StatelessWidget {
             appLocator<MapValueToDisplay>().getDateValue(
               fieldValue.valueType,
               fieldValue.value,
-            ));
+            ),
+            overflow: TextOverflow.ellipsis);
       case ValueType.Number:
       case ValueType.UnitInterval:
       case ValueType.Percentage:
@@ -109,9 +115,10 @@ class SubmissionTableCell extends StatelessWidget {
       case ValueType.ScannedCode:
         return fieldValue.value != null
             ? Row(
+                mainAxisSize: MainAxisSize.min,
                 key: ValueKey(fieldValue.id),
                 children: [
-                  Icon(MdiIcons.barcode),
+                  Expanded(child: Icon(MdiIcons.barcode)),
                   const SizedBox(width: 4),
                   Text(fieldValue.value!.toString().substring(0, 10)),
                 ],
@@ -130,7 +137,10 @@ class SubmissionTableCell extends StatelessWidget {
         final value = (fieldValue.value?.toString().length ?? 0) > 20
             ? fieldValue.value.toString().substring(0, 20)
             : fieldValue.value?.toString() ?? '';
-        return Text(key: ValueKey(fieldValue.id), value);
+        return Text(
+            key: ValueKey(fieldValue.id),
+            value,
+            overflow: TextOverflow.ellipsis);
     }
   }
 }

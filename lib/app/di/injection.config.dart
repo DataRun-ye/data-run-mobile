@@ -47,8 +47,8 @@ import 'package:datarunmobile/features/assignment/application/assignment_service
     as _i935;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
-import 'package:datarunmobile/features/assignment_detail/application/detail_submissions_table_service.dart'
-    as _i803;
+import 'package:datarunmobile/features/assignment_detail/application/submissions_table_service.dart'
+    as _i587;
 import 'package:datarunmobile/features/form/application/form_template_service.dart'
     as _i258;
 import 'package:datarunmobile/features/form/application/form_template_service_impl.dart'
@@ -63,6 +63,8 @@ import 'package:datarunmobile/features/form_submission/application/element/rule_
     as _i415;
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart'
     as _i342;
+import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart'
+    as _i34;
 import 'package:datarunmobile/features/form_submission/application/form_instance_service_impl.dart'
     as _i756;
 import 'package:datarunmobile/features/form_submission/application/form_metadata_service.dart'
@@ -123,14 +125,15 @@ Future<_i174.GetIt> setupGlobalDependencies(
         metadataRepo: gh<_i492.SyncMetadataRepository>(),
         connectivity: gh<_i658.ConnectivityService>(),
       ));
+  gh.factory<_i34.FormInstanceService>(() => _i756.FormInstanceServiceImpl());
   gh.factory<_i602.SyncManager>(
       () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
+  gh.factory<_i224.SubmissionListAggregator>(
+      () => _i587.SubmissionsTableService());
   gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(
         resources: gh<_i683.ResourceManager>(),
         repository: gh<_i730.DataValueRepository>(),
       ));
-  gh.factory<_i224.SubmissionAggregator>(
-      () => _i803.DetailSubmissionsTableService());
   gh.factory<_i148.SyncExecutor>(() =>
       _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
@@ -148,11 +151,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       ));
   gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
       optionSetService: gh<_i158.OptionSetService>()));
-  gh.factoryParam<_i756.FormInstanceServiceImpl, String, dynamic>((
-    formId,
-    _,
-  ) =>
-      _i756.FormInstanceServiceImpl(formId: formId));
   gh.factory<_i765.TokenStorage>(
       () => sdkModule.getTokenStorage(gh<_i537.StorageService>()));
   gh.factory<_i324.AuthStorage>(() => _i324.AuthStorage(

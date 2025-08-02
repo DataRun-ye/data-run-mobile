@@ -43,22 +43,24 @@ class SettingsView extends StackedView<SettingsViewmodel> {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            const UserSettingsTabView(),
-            const SyncSettingTabView(),
-            const AppearanceTab(),
-            Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                final appAboutAsync = ref.watch(appAboutInfoProvider);
-                return AsyncValueWidget(
-                  value: appAboutAsync,
-                  valueBuilder: (AppAbout appAbout) =>
-                      AboutPage(appAbout: appAbout),
-                );
-              },
-            ),
-          ],
+        body: SafeArea(
+          child: TabBarView(
+            children: [
+              const UserSettingsTabView(),
+              const SyncSettingTabView(),
+              const AppearanceTab(),
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  final appAboutAsync = ref.watch(appAboutInfoProvider);
+                  return AsyncValueWidget(
+                    value: appAboutAsync,
+                    valueBuilder: (AppAbout appAbout) =>
+                        AboutPage(appAbout: appAbout),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

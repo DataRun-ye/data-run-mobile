@@ -1,12 +1,12 @@
-import 'package:datarunmobile/data/metadata_submission_update.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/data/metadata_submission_update.dart';
 import 'package:datarunmobile/data/metadata_submission_update.provider.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -46,10 +46,11 @@ class QReferenceDropDownSearchFieldState
 
   @override
   Widget build(BuildContext context) {
-    final formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final formInstance = ref
+    //     .watch(
+    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
 
     // final orgUnitElement = formInstance.forElementMap.values
     //     .where((element) => element.type == ValueType.OrganisationUnit)
@@ -58,8 +59,7 @@ class QReferenceDropDownSearchFieldState
     // final ou = formInstance.formMetadata.assignmentModel.entityId;
 
     final listValuesAsync = ref.watch(systemMetadataSubmissionsProvider(
-        query: '',
-        submissionId: formInstance.submissionUid!));
+        query: '', submissionId: formInstance.submissionId));
 
     return AsyncValueWidget(
       value: listValuesAsync,

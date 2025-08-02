@@ -5,7 +5,7 @@ import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:datarunmobile/data/form_template_list_service.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_service.dart';
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
@@ -36,10 +36,13 @@ import 'package:intl/intl.dart';
 class AssignmentServiceImpl implements AssignmentService {
   final AppDatabase _db = appLocator<DbManager>().db;
 
+  FormTemplateListService get formTemplateService =>
+      appLocator<FormTemplateListService>();
+
   @override
   Future<AssignmentModel> fetchById(String assignmentUid) async {
     final List<Pair<AssignmentForm, bool>> userForms =
-        await userAvailableForms(assignment: assignmentUid);
+        await formTemplateService.userAvailableForms(assignment: assignmentUid);
     final assignmentForms =
         userForms.where((uf) => uf.first.assignment == assignmentUid).toList();
 
@@ -160,35 +163,6 @@ class AssignmentServiceImpl implements AssignmentService {
     if (!dataSubmission.isToUpdate) return true;
 
     return formTemplate.canDeleteSubmissions == true;
-  }
-
-  Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
-      {String? assignment}) async {
-    List<AssignmentForm> assignmentForms = [];
-    var query = DSdk.db.managers.assignmentForms;
-
-    if (assignment.isNotNullOrEmpty) {
-      query = query
-        ..filter((f) =>
-            f.assignment.id(assignment) & f.assignment.disabled.not(true));
-    }
-
-    assignmentForms.addAll(await query.get());
-
-    final userForm = assignmentForms.map((a) => a.form);
-    final List<FormTemplate> availableFormTemplates = await DSdk
-        .db.managers.formTemplates
-        .filter((f) => f.id.isIn(userForm))
-        .get();
-
-    final List<String> availableForms =
-        availableFormTemplates.map((f) => f.id).toList();
-
-    final availableAssignedForms = assignmentForms
-        .map((fp) => Pair(fp, availableForms.contains(fp.form)))
-        .toList();
-
-    return availableAssignedForms;
   }
 
   @override

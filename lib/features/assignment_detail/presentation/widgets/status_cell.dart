@@ -1,4 +1,5 @@
 import 'package:d_sdk/database/shared/submission_status.dart';
+import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
 import 'package:flutter/material.dart';
 
 class StatusCell extends StatelessWidget {
@@ -9,5 +10,5 @@ class StatusCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) =>
-      GestureDetector(onTap: onTap, child: Icon(Icons.circle));
+      Center(child: GestureDetector(onTap: onTap, child: buildStatusIcon(syncState)));
 }

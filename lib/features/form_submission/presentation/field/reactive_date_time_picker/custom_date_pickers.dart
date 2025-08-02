@@ -311,109 +311,109 @@ class CustomDatePickers {
     );
   }
 }
-
-// --- Demo Application ---
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Date Picker Dialog Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  DateTime? _selectedMonth;
-  DateTime? _selectedWeekStart;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Date Picker Dialog Demo'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () async {
-                final DateTime? picked =
-                    await CustomDatePickers.showMonthPicker(
-                  context: context,
-                  selectedDate: _selectedMonth,
-                  firstDate:
-                      DateTime.now().subtract(const Duration(days: 365 * 2)),
-                  lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
-                  selectedDateStyleColor: Colors.white,
-                  selectedSingleDateDecorationColor: Colors.deepPurple,
-                );
-                if (picked != null && picked != _selectedMonth) {
-                  setState(() {
-                    _selectedMonth = picked;
-                  });
-                }
-              },
-              child: const Text('Show Month Picker'),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              _selectedMonth == null
-                  ? 'No month selected'
-                  : 'Selected Month: ${_selectedMonth!.month}/${_selectedMonth!.year}',
-              style: const TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () async {
-                final DateTime? picked = await CustomDatePickers.showWeekPicker(
-                  context: context,
-                  selectedDate: _selectedWeekStart,
-                  firstDate: DateTime.now().subtract(const Duration(days: 70)),
-                  lastDate: DateTime.now().add(const Duration(days: 70)),
-                  firstDayOfWeekIndex: 1,
-                  // Monday
-                  selectedPeriodStartColor: Colors.green,
-                  selectedPeriodLastColor: Colors.green,
-                  selectedPeriodMiddleColor:
-                      Colors.lightGreen.withValues(alpha: 0.5),
-                );
-                if (picked != null && picked != _selectedWeekStart) {
-                  setState(() {
-                    _selectedWeekStart = picked;
-                  });
-                }
-              },
-              child: const Text('Show Week Picker'),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              _selectedWeekStart == null
-                  ? 'No week selected'
-                  : 'Selected Week Starts: ${_selectedWeekStart!.toLocal().toString().split(' ')[0]}',
-              style: const TextStyle(fontSize: 18),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//
+// // --- Demo Application ---
+// void main() {
+//   runApp(const MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Date Picker Dialog Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//         visualDensity: VisualDensity.adaptivePlatformDensity,
+//       ),
+//       home: const MyHomePage(),
+//     );
+//   }
+// }
+//
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({super.key});
+//
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+//
+// class _MyHomePageState extends State<MyHomePage> {
+//   DateTime? _selectedMonth;
+//   DateTime? _selectedWeekStart;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Date Picker Dialog Demo'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             ElevatedButton(
+//               onPressed: () async {
+//                 final DateTime? picked =
+//                     await CustomDatePickers.showMonthPicker(
+//                   context: context,
+//                   selectedDate: _selectedMonth,
+//                   firstDate:
+//                       DateTime.now().subtract(const Duration(days: 365 * 2)),
+//                   lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
+//                   selectedDateStyleColor: Colors.white,
+//                   selectedSingleDateDecorationColor: Colors.deepPurple,
+//                 );
+//                 if (picked != null && picked != _selectedMonth) {
+//                   setState(() {
+//                     _selectedMonth = picked;
+//                   });
+//                 }
+//               },
+//               child: const Text('Show Month Picker'),
+//             ),
+//             const SizedBox(height: 20),
+//             Text(
+//               _selectedMonth == null
+//                   ? 'No month selected'
+//                   : 'Selected Month: ${_selectedMonth!.month}/${_selectedMonth!.year}',
+//               style: const TextStyle(fontSize: 18),
+//             ),
+//             const SizedBox(height: 40),
+//             ElevatedButton(
+//               onPressed: () async {
+//                 final DateTime? picked = await CustomDatePickers.showWeekPicker(
+//                   context: context,
+//                   selectedDate: _selectedWeekStart,
+//                   firstDate: DateTime.now().subtract(const Duration(days: 70)),
+//                   lastDate: DateTime.now().add(const Duration(days: 70)),
+//                   firstDayOfWeekIndex: 1,
+//                   // Monday
+//                   selectedPeriodStartColor: Colors.green,
+//                   selectedPeriodLastColor: Colors.green,
+//                   selectedPeriodMiddleColor:
+//                       Colors.lightGreen.withValues(alpha: 0.5),
+//                 );
+//                 if (picked != null && picked != _selectedWeekStart) {
+//                   setState(() {
+//                     _selectedWeekStart = picked;
+//                   });
+//                 }
+//               },
+//               child: const Text('Show Week Picker'),
+//             ),
+//             const SizedBox(height: 20),
+//             Text(
+//               _selectedWeekStart == null
+//                   ? 'No week selected'
+//                   : 'Selected Week Starts: ${_selectedWeekStart!.toLocal().toString().split(' ')[0]}',
+//               style: const TextStyle(fontSize: 18),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

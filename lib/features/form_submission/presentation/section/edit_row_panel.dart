@@ -3,11 +3,9 @@ import 'package:datarunmobile/commons/custom_widgets/reactive_valid_button.dart'
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_sliver.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/section.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,10 +60,10 @@ class EditRowPanelState extends ConsumerState<EditRowPanel> {
   @override
   Widget build(BuildContext context) {
     final formGroup = ReactiveForm.of(context);
-    final FormInstance formInstance = ref
-        .watch(
-            formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-        .requireValue;
+    // final FormInstance formInstance = ref
+    //     .watch(formInstanceProvider(submissionId: widget.submissionId))
+    //     .requireValue;
+    final formInstance = appLocator<FormInstance>();
 
     if (formGroup is! FormGroup) {
       throw FormControlParentNotFoundException(widget);

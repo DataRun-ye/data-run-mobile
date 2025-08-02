@@ -1,3 +1,4 @@
+import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/common/geometry.dart';
 import 'package:d_sdk/core/exception/d_error.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
@@ -5,7 +6,6 @@ import 'package:d_sdk/core/utilities/list_extensions.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data/code_generator.dart';
 import 'package:datarunmobile/features/form_submission/application/form_submission_repository.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -53,7 +53,7 @@ class FormSubmissions extends _$FormSubmissions {
             templateVersion: formVersion,
             assignment: Value(assignmentId),
             syncState: InstanceSyncStatus.draft,
-            team: Value(team),
+            // team: Value(team),
             isToUpdate: false,
             formData: Value(formData)),
         mode: InsertMode.replace);
@@ -102,6 +102,16 @@ class FormSubmissions extends _$FormSubmissions {
     ref.invalidateSelf();
     await future;
   }
+}
+
+@riverpod
+Future<DataInstance> dataInstance(Ref ref, {required String id}) async {
+  final db = DSdk.db;
+
+  final submission =
+      await db.managers.dataInstances.filter((f) => f.id(id)).getSingle();
+
+  return submission;
 }
 
 @riverpod

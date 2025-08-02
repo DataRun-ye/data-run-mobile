@@ -1,5 +1,5 @@
 import 'package:datarunmobile/data/metadata_submission_update.dart';
-import 'package:datarunmobile/data/code_generator.dart';
+import 'package:d_sdk/core/code_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

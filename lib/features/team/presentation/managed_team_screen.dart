@@ -49,31 +49,33 @@ class ManageTeamsScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: filteredTeams.length,
-        itemBuilder: (context, index) {
-          final team = filteredTeams[index];
-          final isExpanded = expandedTeams.contains(team.id);
-
-          return Card(
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text(team.name),
-                  subtitle: Text('Assignments: ${team.assignmentsTotal}'),
-                  trailing: IconButton(
-                    icon: Icon(
-                        isExpanded ? Icons.expand_less : Icons.expand_more),
-                    onPressed: () => ref
-                        .read(expandedTeamsProvider.notifier)
-                        .toggle(team.id),
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: filteredTeams.length,
+          itemBuilder: (context, index) {
+            final team = filteredTeams[index];
+            final isExpanded = expandedTeams.contains(team.id);
+        
+            return Card(
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(team.name),
+                    subtitle: Text('Assignments: ${team.assignmentsTotal}'),
+                    trailing: IconButton(
+                      icon: Icon(
+                          isExpanded ? Icons.expand_less : Icons.expand_more),
+                      onPressed: () => ref
+                          .read(expandedTeamsProvider.notifier)
+                          .toggle(team.id),
+                    ),
                   ),
-                ),
-                if (isExpanded) _buildExpandedDetails(context, team, ref),
-              ],
-            ),
-          );
-        },
+                  if (isExpanded) _buildExpandedDetails(context, team, ref),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

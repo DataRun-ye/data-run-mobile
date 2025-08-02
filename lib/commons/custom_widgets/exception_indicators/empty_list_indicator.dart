@@ -3,10 +3,15 @@ import 'package:flutter/cupertino.dart';
 
 /// Indicates that no items were found.
 class EmptyListIndicator extends StatelessWidget {
+  const EmptyListIndicator({super.key, this.message});
+
+  final String? message;
+
   @override
-  Widget build(BuildContext context) => const ExceptionIndicator(
-        title: 'Too much filtering',
-        message: 'We couldn\'t find any results matching your applied filters.',
+  Widget build(BuildContext context) => ExceptionIndicator(
+        title: 'No Items Found',
+        message:
+            'We couldn\'t find any results${message != null ? ': $message' : ''}',
         // assetName: 'assets/empty-box.png',
       );
 }

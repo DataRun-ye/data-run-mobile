@@ -54,7 +54,7 @@ dependencies:
   stacked_services: ^1.6.0
   two_dimensional_scrollables: ^0.3.7
   timeago: ^3.7.1
-  recursive_tree_flutter: ^1.0.4
+#  recursive_tree_flutter: ^1.0.4
 
 
 dev_dependencies:

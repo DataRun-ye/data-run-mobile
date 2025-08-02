@@ -8,7 +8,7 @@ enum Preference {
   shouldShowWalkthrough('should_show_walkthrough', true),
   language('language', 'NA'),
   // appearance
-  useMaterial3('useMaterial3', true),
+  // useMaterial3('useMaterial3', true),
   themeMode('themeMode', 1),
   colorSeed('colorSeed', 2),
   colorSelectionMethod('colorSelectionMethod', 'colorSeed');

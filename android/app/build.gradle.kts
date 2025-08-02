@@ -18,7 +18,6 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "org.datarun.app"
     compileSdk = flutter.compileSdkVersion
-//    ndkVersion = flutter.ndkVersion
     ndkVersion = "27.0.12077973"
 
     compileOptions {

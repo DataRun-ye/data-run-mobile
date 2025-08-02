@@ -1298,6 +1298,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{No Syncable submissions} =1{1 submission} =2{2 submissions} other{{count} submissions}}'**
   String syncSubmissions(num count);
 
+  /// A plural message
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No Elements selected} =1{1 Delete} =2{2 Delete} other{{count} Delete}}'**
+  String deleteSelected(num count);
+
   /// No description provided for @allSubmissions.
   ///
   /// In en, this message translates to:
@@ -2137,6 +2143,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Demo Login'**
   String get demoLogin;
+
+  /// No description provided for @draftDataInstance.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft Data Instance'**
+  String get draftDataInstance;
+
+  /// No description provided for @initializingDataInstance.
+  ///
+  /// In en, this message translates to:
+  /// **'Initializing Data Instance'**
+  String get initializingDataInstance;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @addAnItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an Item'**
+  String get addAnItem;
 }
 
 class _AppLocalizationsDelegate

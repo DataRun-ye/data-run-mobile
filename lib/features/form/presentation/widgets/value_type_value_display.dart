@@ -18,7 +18,7 @@ class ValueTypeValueDisplay extends ConsumerWidget {
     return AsyncValueWidget(
       value: valueAsync,
       valueBuilder: (String? value) {
-        return Text(value ?? '');
+        return Text(value ?? '', overflow: TextOverflow.ellipsis);
       },
       errorBuilder: (Object? error, StackTrace? st) => Text(
         'E',

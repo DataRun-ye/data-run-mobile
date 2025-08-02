@@ -1652,6 +1652,20 @@ class S {
     );
   }
 
+  /// `{count, plural, =0{No Elements selected} =1{1 Delete} =2{2 Delete} other{{count} Delete}}`
+  String deleteSelected(num count) {
+    return Intl.plural(
+      count,
+      zero: 'No Elements selected',
+      one: '1 Delete',
+      two: '2 Delete',
+      other: '$count Delete',
+      name: 'deleteSelected',
+      desc: 'A plural message',
+      args: [count],
+    );
+  }
+
   /// `All Submissions`
   String get allSubmissions {
     return Intl.message(
@@ -2815,6 +2829,36 @@ class S {
   /// `Demo Login`
   String get demoLogin {
     return Intl.message('Demo Login', name: 'demoLogin', desc: '', args: []);
+  }
+
+  /// `Draft Data Instance`
+  String get draftDataInstance {
+    return Intl.message(
+      'Draft Data Instance',
+      name: 'draftDataInstance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Initializing Data Instance`
+  String get initializingDataInstance {
+    return Intl.message(
+      'Initializing Data Instance',
+      name: 'initializingDataInstance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get all {
+    return Intl.message('All', name: 'all', desc: '', args: []);
+  }
+
+  /// `Add an Item`
+  String get addAnItem {
+    return Intl.message('Add an Item', name: 'addAnItem', desc: '', args: []);
   }
 }
 

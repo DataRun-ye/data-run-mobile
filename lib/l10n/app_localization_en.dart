@@ -698,6 +698,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String deleteSelected(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
+      locale: localeName,
+    );
+    final String countString = countNumberFormat.format(count);
+
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countString Delete',
+      two: '2 Delete',
+      one: '1 Delete',
+      zero: 'No Elements selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get allSubmissions => 'All Submissions';
 
   @override
@@ -1163,4 +1181,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get demoLogin => 'Demo Login';
+
+  @override
+  String get draftDataInstance => 'Draft Data Instance';
+
+  @override
+  String get initializingDataInstance => 'Initializing Data Instance';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get addAnItem => 'Add an Item';
 }

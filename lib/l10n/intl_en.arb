@@ -275,6 +275,16 @@
       }
     }
   },
+  "deleteSelected": "{count, plural, =0{No Elements selected} =1{1 Delete} =2{2 Delete} other{{count} Delete}}",
+  "@deleteSelected": {
+    "description": "A plural message",
+    "placeholders": {
+      "count": {
+        "type": "num",
+        "format": "compact"
+      }
+    }
+  },
   "allSubmissions": "All Submissions",
   "createdDate": "Created Date",
   "lastmodifiedDate": "LastModified Date",
@@ -414,5 +424,9 @@
   "ofYear": "Of {year}",
   "created": "Created",
   "modified": "Modified",
-  "demoLogin": "Demo Login"
+  "demoLogin": "Demo Login",
+  "draftDataInstance": "Draft Data Instance",
+  "initializingDataInstance": "Initializing Data Instance",
+  "all": "All",
+  "addAnItem": "Add an Item"
 }

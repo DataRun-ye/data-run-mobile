@@ -15,7 +15,9 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   d_sdk:
-    path: ./drun-sdk-reactive
+    path: ./packages/drun_sdk
+ # d_sdk:
+ #   path: ./drun-sdk-reactive
   collection: ^1.19.1
   dart_jsonwebtoken: ^3.2.0
   data_table_2: ^2.6.0

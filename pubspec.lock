@@ -241,7 +241,7 @@ packages:
   d_sdk:
     dependency: "direct main"
     description:
-      path: drun-sdk-reactive
+      path: "packages/drun_sdk"
       relative: true
     source: path
     version: "1.0.1"

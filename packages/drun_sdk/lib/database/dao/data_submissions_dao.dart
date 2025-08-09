@@ -59,7 +59,7 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
         .get();
 
     if (submissions.isEmpty) {
-      return ImportSummaryModel.empty(); // adjust to your model
+      return ImportSummaryModel.empty();
     }
 
     // mark as uploading so UI can react
@@ -149,8 +149,8 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
         }
       });
 
+      // or: rethrow if the caller needs to know the upload failed
       return ImportSummaryModel.empty();
-      // optional: rethrow so caller knows the upload failed
     }
   }
 
@@ -164,12 +164,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     required String templateId,
     String? templateVersionId,
   }) async {
-    // final FormTemplateModel? templateModel = await attachedDatabase
-    //     .formTemplateVersionsDao
-    //     .selectFormTemplatesWithRefs(
-    //         assignmentId: assignmentId, versionId: templateVersionId)
-    //     .getSingleOrNull();
-
     final templateModel = await getTemplateByVersionOrLatest(
         templateId: templateId, versionId: templateVersionId);
 

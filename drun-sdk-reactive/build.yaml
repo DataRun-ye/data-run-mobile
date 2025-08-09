@@ -1,0 +1,16 @@
+targets:
+  $default:
+    builders:
+      built_value_generator:
+        enabled: true
+        generate_for:
+          - lib/core/form/element_template/*.dart
+      drift_dev:
+        # These options change how drift generates code
+        options:
+          databases:
+            default: lib/database/database.dart
+          store_date_time_values_as_text: true
+          # Drift analyzes SQL queries at compile-time. For this purpose, it needs to know which sqlite3
+          # features will be available. We depend on `sqlite3_flutter_libs`, which lets us use the latest
+          # version with fts5 enabled.

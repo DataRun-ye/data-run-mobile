@@ -1,0 +1,9 @@
+# include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    - "test/*"
+    - "sample/*"
+# linter:
+#   rules:
+#     use_key_in_widget_constructors: false

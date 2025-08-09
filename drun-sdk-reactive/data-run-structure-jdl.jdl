@@ -1,0 +1,259 @@
+// Define Enums
+enum EntryTypeEnum {
+  DISPENSED
+  RETURNED
+  RECEIVED
+  CLOSINGBALANCE
+  INITIALBALANCE
+}
+
+enum SettlementEnum {
+  RESIDENTS
+  IDPSCAMP
+}
+
+enum SurveyTypeEnum {
+  ACTUALREPORT
+  TESTREPORT
+}
+
+enum PublicLocationType {
+  DISTRICT
+  SUBDISTRICT
+  SUBVILLAGE
+}
+
+// Define Entities
+entity Campaign {
+  campaignCode String required 
+  campaignStartedDate Instant required
+  campaignDays Integer min(0)
+  campaignYear Integer min(0)
+  campaignNote String 
+  enabled Boolean required
+}
+
+entity CampaignType {
+  campaignType String required unique
+  description String
+}
+
+entity MVillagesLocations {
+  ppcCode Long required
+  mappingStatus Integer
+  districtCode Integer required
+  villageUid String
+  subdistrictName String
+  villageName String
+  subvillageName String
+  ppdName String
+  urbanRuralId Integer
+  urbanRural String
+  settlement String
+  pop2004 Double
+  pop2022 Double
+  longitude Double
+  latitude Double
+  ppcCodeGis Long required
+  level PublicLocationType
+}
+
+entity TeamAssignment {
+  phaseNo Integer
+  fieldCode Long
+  districtCode Integer
+  gov String
+  district String
+  subdistrict String
+  village String
+  subvillage String
+  ppdName String
+  dayId Integer
+  population Double
+  itnsPlanned Integer
+  targetType Integer
+  longitude Double
+  latitude Double
+  startDayDate Instant
+}
+
+entity ItnsVillage {
+  submissionUuid String required
+  submissionId Long required
+  deleted Boolean
+  workDayDate Instant
+  surveytype SurveyTypeEnum
+  otherReasonComment String maxlength(2000)
+  reasonNotcomplete String maxlength(2000)
+  settlement SettlementEnum
+  settlementName String maxlength(2000)
+  tlCommenet String  maxlength(2000)
+  timeSpentHours Integer
+  timeSpentMinutes Integer
+  difficulties String maxlength(2000)
+  locationCaptured String
+  locationCaptureTime Instant
+  hoProof String
+  startEntryTime Instant
+  endEntryTime Instant
+  finishedEntryTime Instant
+  hoProofUrl String
+  submissionTime Instant
+  untargetingOtherSpecify String
+  otherVillageName String maxlength(2000)
+  otherVillageCode String maxlength(2000)
+  otherTeamNo Long
+}
+
+entity ItnsVillageHousesDetail {
+  submissionUuid String
+  deleted Boolean
+  houseUuid String required
+  couponid Long
+  hname String
+  male Integer min(0)
+  female Integer min(0)
+  pregnant Integer min(0)
+  population Integer min(0)
+  maleChild Integer min(0)
+  femaleChild Integer min(0)
+  displaced Integer min(0)
+  itns Integer min(0)
+  comment String maxlength(2000)
+}
+
+entity ProgressStatus {
+  progressStatusLabel String
+}
+
+entity ReviewTeam {
+  progressOrname String
+  progressOrUser String
+}
+
+entity Team {
+  teamLeader String
+  teamNo Long required
+  teamNote String
+  teamMobile String
+  teamNoOfTeamWorkers Integer
+  mobility String
+}
+
+entity Warehouse {
+  whName String
+  description String
+  gpsCoordinate String
+  supervisorName String
+  whNo Long required
+  supervisorMobile String
+}
+
+entity WarehouseItem {
+  itemName String
+  itemDescription String
+}
+
+entity WarehouseTransaction {
+  imovUid String
+  transactionDate Integer required
+  phaseNo Integer
+  entryType String required
+  quantity Integer required min(0)
+  notes String maxlength(2000)
+  personName String maxlength(2000)
+  workDayId Integer
+  submissionTime Instant
+  submissionId Long
+  deleted Boolean
+  submissionUuid String
+}
+
+// Define Relationships
+relationship ManyToOne {
+  Campaign { campaignType (campaignType)} to CampaignType
+}
+
+relationship ManyToOne {
+  ItnsVillage { progressStatus (progressStatusLabel)} to ProgressStatus
+}
+
+relationship ManyToOne {
+  ItnsVillage { team (teamNo) required} to Team
+}
+
+relationship ManyToOne {
+  ItnsVillage { assignment(fieldCode) required} to TeamAssignment
+}
+
+//relationship ManyToOne {
+//  ItnsVillage { otherTeam (teamNo)} to Team
+//}
+
+relationship ManyToOne {
+  ItnsVillage { campaign (campaignCode)} to Campaign 
+}
+
+relationship ManyToOne {
+  ItnsVillageHousesDetail { villageData required} to ItnsVillage{houseDetail}
+}
+
+relationship ManyToOne {
+  Team { campaign (campaignCode)} to Campaign 
+}
+
+relationship ManyToOne {
+  Team { operationRoom (progressOrname)} to ReviewTeam 
+}
+
+relationship ManyToOne {
+  Team { warehouse (whName)} to Warehouse 
+}
+
+relationship ManyToOne {
+  Warehouse { campaign (campaignCode)} to Campaign 
+}
+
+relationship ManyToOne {
+  WarehouseTransaction { item (itemName)} to WarehouseItem 
+}
+
+relationship ManyToOne {
+  WarehouseTransaction { sourceWarehouse (whName)} to Warehouse 
+}
+
+relationship ManyToOne {
+  WarehouseTransaction { team (teamNo)} to Team 
+}
+
+relationship ManyToOne {
+  WarehouseTransaction { warehouse (whName) required} to Warehouse 
+}
+
+relationship ManyToOne {
+  WarehouseTransaction { campaign (campaignCode)} to Campaign
+}
+
+relationship ManyToOne {
+  TeamAssignment { campaign (campaignCode)} to Campaign
+}
+
+relationship ManyToOne {
+  TeamAssignment { location (ppcCode)} to MVillagesLocations
+}
+
+relationship ManyToOne {
+  TeamAssignment { team (teamNo)} to Team
+}
+
+relationship ManyToOne {
+  TeamAssignment { warehouse (whName) } to Warehouse
+}
+
+relationship ManyToOne {
+  Team{userInfo(login)} to User with builtInEntity
+}
+
+
+service * with serviceImpl
+paginate TeamAssignment, WarehouseTransaction, ItnsVillageHousesDetail, ItnsVillage, MVillagesLocations with pagination

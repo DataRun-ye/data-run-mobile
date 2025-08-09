@@ -1,0 +1,1 @@
+enum StatusAggregationLevel { assignment, form }

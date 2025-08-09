@@ -6,21 +6,21 @@ import 'package:stacked/stacked.dart';
 class SyncBadgesViewModel
     extends StreamViewModel<List<SubmissionSyncStatusModel>> {
   SyncBadgesViewModel({
-    required this.aggregationLevel,
-    required this.id,
+    this.formId,
     this.assignmentId,
+    this.submissionId,
   });
 
-  final String id;
+  final String? formId;
   final String? assignmentId;
-  final StatusAggregationLevel aggregationLevel;
+  final String? submissionId;
   late final DataInstancesDao submissionsDao = DSdk.db.dataInstancesDao;
 
   @override
   Stream<List<SubmissionSyncStatusModel>> get stream => submissionsDao
       .selectStatusByLevel(
-          id: id,
-          aggregationLevel: aggregationLevel,
+          formId: formId,
+          submissionId: submissionId,
           assignmentId: assignmentId)
       .watch();
 }

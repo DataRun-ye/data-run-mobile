@@ -1,5 +1,4 @@
 import 'package:d_sdk/database/database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form/application/form_list_item_model.dart';
 import 'package:datarunmobile/features/form/application/form_template_service.dart';
@@ -20,8 +19,7 @@ class FormTemplateServiceImpl extends FormTemplateService {
             name: f.name,
             versionNumber: f.versionNumber,
             syncStatuses: await _db.dataInstancesDao
-                .selectStatusByLevel(
-                    id: f.id, aggregationLevel: StatusAggregationLevel.form)
+                .selectStatusByLevel(formId: f.id)
                 .get(),
             versionUid: f.versionUid))
         .get();

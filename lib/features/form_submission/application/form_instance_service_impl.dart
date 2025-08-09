@@ -1,7 +1,9 @@
 import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/domain/filter.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
+import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -10,71 +12,76 @@ class FormInstanceServiceImpl extends FormInstanceService {
   final AppDatabase _db = appLocator<DbManager>().db;
 
   @override
-  Future<List<SubmissionSummary>> fetchByAssignment(String assignmentId) async {
-    final result = _db.dataInstancesDao
-        .selectSubmissions(
-            SubmissionsFilter(formId: '', assignmentId: assignmentId))
-        .get();
-    return result;
-  }
-
-  @override
-  Stream<List<SubmissionSummary>> watchByAssignment(String assignmentId) {
-    final result = _db.dataInstancesDao
-        .selectSubmissions(
-            SubmissionsFilter(assignmentId: assignmentId, formId: 'formId'))
-        .watch()
-        .distinct();
-    return result;
-  }
-
-  @override
-  Future<PagedItems<SubmissionSummary>> fetchByFilter(
-      SubmissionsFilter filter) async {
+  Future<PaginatedResult<SubmissionSummary>> fetchByFilter(
+    SubmissionsFilter templateFilter, {
+    required int page,
+    required int pageSize,
+    Iterable<FilterCondition> filters = const [],
+    String? sortColumn,
+    bool sortAscending = true,
+  }) async {
     final totalCount =
-        await _db.dataInstancesDao.countSubmissions(filter).getSingle();
-    final result = await _db.dataInstancesDao.selectSubmissions(filter).get();
+        await countByFilter(templateFilter, filters: filters).getSingle();
+    //
+    // final result = await _db.dataInstancesDao
+    //     .selectSubmissions(templateFilter,
+    //         filters: filters,
+    //         page: page,
+    //         pageSize: pageSize,
+    //         sortAscending: sortAscending,
+    //         sortColumn: sortColumn)
+    //     .get();
+    final result = await _db.dataInstancesDao
+        .selectable(templateFilter,
+            filters: filters,
+            page: page,
+            pageSize: pageSize,
+            sortAscending: sortAscending,
+            sortColumn: sortColumn)
+        .get();
     final len = result.length;
-
-    return PagedItems(
-        items: result,
-        totalCount: totalCount,
-        page: filter.page,
-        paged: filter.paged,
-        pageSize: filter.pageSize);
+    return PaginatedResult(items: result, totalCount: totalCount);
   }
 
-  Stream<PagedItems<SubmissionSummary>> watchByFilterWithCount(
-      SubmissionsFilter filter) {
-    final totalCountFuture =
-        _db.dataInstancesDao.countSubmissions(filter).watchSingle();
+  @override
+  Selectable<int> countByFilter(
+    SubmissionsFilter templateFilter, {
+    Iterable<FilterCondition> filters = const [],
+  }) {
+    return _db.dataInstancesDao.countSubmissions(
+      templateFilter,
+    );
+  }
 
-    final pagedDataStream =
-        _db.dataInstancesDao.selectSubmissions(filter).watch();
+  Stream<PaginatedResult<SubmissionSummary>> watchByFilterWithCount(
+    SubmissionsFilter templateFilter, {
+    required int page,
+    required int pageSize,
+    Iterable<FilterCondition> filters = const [],
+    String? sortColumn,
+    bool sortAscending = true,
+  }) {
+    final totalCountFuture =
+        _db.dataInstancesDao.countSubmissions(templateFilter).watchSingle();
+
+    final pagedDataStream = _db.dataInstancesDao
+        .selectSubmissions(
+          templateFilter,
+          filters: filters,
+          page: page,
+          pageSize: pageSize,
+          sortAscending: sortAscending,
+          sortColumn: sortColumn,
+        )
+        .watch();
 
     return Rx.forkJoin2(
       pagedDataStream,
       totalCountFuture,
-      (List<SubmissionSummary> submissions, int? totalCount) {
-        return PagedItems(
-            items: submissions,
-            totalCount: totalCount ?? submissions.length,
-            page: filter.page,
-            paged: filter.paged,
-            pageSize: filter.pageSize);
+      (List<SubmissionSummary> submissions, int totalCount) {
+        return PaginatedResult(items: submissions, totalCount: totalCount);
       },
     ).distinct();
-  }
-
-  @override
-  Stream<List<SubmissionSummary>> watchByFilter(SubmissionsFilter? filter) {
-    final Stream<List<SubmissionSummary>> result = _db.dataInstancesDao
-        .selectSubmissions(filter?.copyWith(formId: 'formId') ??
-            SubmissionsFilter(formId: 'formId'))
-        .watch()
-        .distinct();
-
-    return result;
   }
 
   @override
@@ -85,4 +92,14 @@ class FormInstanceServiceImpl extends FormInstanceService {
     if (instance == null) return false;
     return instance.isToUpdate;
   }
+
+// @override
+// Future<int> delete(Iterable<String> instanceUid) async {
+//  return _db.dataInstancesDao.deleteIds(instanceUid);
+// }
+//
+// @override
+// Future<List<DataInstance>> sync(Iterable<String> instanceUid  ) async {
+//   return _db.dataInstancesDao.upload(instanceUid);
+// }
 }

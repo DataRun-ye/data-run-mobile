@@ -198,6 +198,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
       await _saveAndShowBottomSheet(formInstance);
     } else {
       Navigator.pop(context);
+      await appLocator.popScopesTill(widget.submissionId);
     }
   }
 

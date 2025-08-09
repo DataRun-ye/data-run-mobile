@@ -1193,4 +1193,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addAnItem => 'Add an Item';
+
+  @override
+  String get dateRange => 'Date Range';
+
+  @override
+  String get includeDeleted => 'Include deleted';
+
+  @override
+  String get applyFilters => 'Apply Filters';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get lastThreeDays => 'Last 3 Days';
+
+  @override
+  String get thisWeek => 'This Week';
+
+  @override
+  String get thisMonth => 'This Month';
+
+  @override
+  String get lastThreeMonths => 'Last 3 Months';
+
+  @override
+  String get thisYear => 'This Year';
+
+  @override
+  String get allDates => 'All Times';
+
+  @override
+  String get editView => 'Edit/View';
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get userSavedInstances => 'User Saved Instances';
+
+  @override
+  String get openSpeedDial => 'Open Speed Dial';
 }

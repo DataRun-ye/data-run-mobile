@@ -1,5 +1,5 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/form_widget_factory.dart';

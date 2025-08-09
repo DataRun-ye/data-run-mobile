@@ -8,7 +8,7 @@
 import 'package:d_sdk/core/user_session/user_session.dart' as _i14;
 import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart'
     as _i7;
-import 'package:datarunmobile/features/assignment_detail/presentation/data_instance_table_screen.dart'
+import 'package:datarunmobile/features/data_instance/presentation/table_screen.dart'
     as _i12;
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart'
     as _i15;
@@ -59,7 +59,7 @@ class Routes {
 
   static const formFlowBootstrapper = '/form-flow-bootstrapper';
 
-  static const dataInstanceTableScreen = '/data-instance-table-screen';
+  static const tableScreen = '/table-screen';
 
   static const all = <String>{
     homeWrapperPage,
@@ -72,7 +72,7 @@ class Routes {
     submissionHistoryScreen,
     formSubmissionScreen,
     formFlowBootstrapper,
-    dataInstanceTableScreen,
+    tableScreen,
   };
 }
 
@@ -119,8 +119,8 @@ class StackedRouter extends _i1.RouterBase {
       page: _i11.FormFlowBootstrapper,
     ),
     _i1.RouteDef(
-      Routes.dataInstanceTableScreen,
-      page: _i12.DataInstanceTableScreen,
+      Routes.tableScreen,
+      page: _i12.TableScreen,
     ),
   ];
 
@@ -217,15 +217,13 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i12.DataInstanceTableScreen: (data) {
-      final args =
-          data.getArgs<DataInstanceTableScreenArguments>(nullOk: false);
+    _i12.TableScreen: (data) {
+      final args = data.getArgs<TableScreenArguments>(nullOk: false);
       return _i13.MaterialPageRoute<dynamic>(
-        builder: (context) => _i12.DataInstanceTableScreen(
+        builder: (context) => _i12.TableScreen(
             key: args.key,
             formId: args.formId,
-            assignmentId: args.assignment,
-            index: args.index),
+            assignmentId: args.assignmentId),
         settings: data,
       );
     },
@@ -467,42 +465,35 @@ class FormFlowBootstrapperArguments {
   }
 }
 
-class DataInstanceTableScreenArguments {
-  const DataInstanceTableScreenArguments({
+class TableScreenArguments {
+  const TableScreenArguments({
     this.key,
     required this.formId,
-    this.assignment,
-    this.index,
+    this.assignmentId,
   });
 
   final _i13.Key? key;
 
   final String formId;
 
-  final String? assignment;
-
-  final int? index;
+  final String? assignmentId;
 
   @override
   String toString() {
-    return '{"key": "$key", "formId": "$formId", "assignment": "$assignment", "index": "$index"}';
+    return '{"key": "$key", "formId": "$formId", "assignmentId": "$assignmentId"}';
   }
 
   @override
-  bool operator ==(covariant DataInstanceTableScreenArguments other) {
+  bool operator ==(covariant TableScreenArguments other) {
     if (identical(this, other)) return true;
     return other.key == key &&
         other.formId == formId &&
-        other.assignment == assignment &&
-        other.index == index;
+        other.assignmentId == assignmentId;
   }
 
   @override
   int get hashCode {
-    return key.hashCode ^
-        formId.hashCode ^
-        assignment.hashCode ^
-        index.hashCode;
+    return key.hashCode ^ formId.hashCode ^ assignmentId.hashCode;
   }
 }
 
@@ -699,20 +690,19 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToDataInstanceTableScreen({
+  Future<dynamic> navigateToTableScreen({
     _i13.Key? key,
     required String formId,
-    String? assignment,
-    int? index,
+    String? assignmentId,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return navigateTo<dynamic>(Routes.dataInstanceTableScreen,
-        arguments: DataInstanceTableScreenArguments(
-            key: key, formId: formId, assignment: assignment, index: index),
+    return navigateTo<dynamic>(Routes.tableScreen,
+        arguments: TableScreenArguments(
+            key: key, formId: formId, assignmentId: assignmentId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -911,20 +901,19 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithDataInstanceTableScreen({
+  Future<dynamic> replaceWithTableScreen({
     _i13.Key? key,
     required String formId,
-    String? assignment,
-    int? index,
+    String? assignmentId,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return replaceWith<dynamic>(Routes.dataInstanceTableScreen,
-        arguments: DataInstanceTableScreenArguments(
-            key: key, formId: formId, assignment: assignment, index: index),
+    return replaceWith<dynamic>(Routes.tableScreen,
+        arguments: TableScreenArguments(
+            key: key, formId: formId, assignmentId: assignmentId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

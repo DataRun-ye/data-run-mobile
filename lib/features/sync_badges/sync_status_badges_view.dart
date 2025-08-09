@@ -4,16 +4,21 @@ import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class SyncStatusBadgesView extends StatelessWidget {
-  SyncStatusBadgesView(
-      {super.key,
-      required this.id,
-      required this.aggregationLevel,
-      this.assignmentId});
+String ValueOrEmpty(String? value) => value ?? '';
 
-  final String id;
+class SyncStatusBadgesView extends StatelessWidget {
+  SyncStatusBadgesView({
+    super.key,
+    this.formId,
+    this.assignmentId,
+    this.submissionId,
+    this.showCount = true,
+  });
+
+  final String? formId;
   final String? assignmentId;
-  final StatusAggregationLevel aggregationLevel;
+  final String? submissionId;
+  final bool showCount;
 
   @override
   Widget build(BuildContext context) {
@@ -29,33 +34,48 @@ class SyncStatusBadgesView extends StatelessWidget {
               children: model.data
                       ?.where((e) => e.count > 0)
                       .map<Widget>((e) => _SyncStatusBadge(
-                          syncStatus: e.syncState, count: e.count))
+                            submissionId: submissionId,
+                            syncStatus: e.syncState,
+                            count: e.count,
+                            showCount: showCount,
+                          ))
                       .toList() ??
                   [],
             ),
       viewModelBuilder: () => SyncBadgesViewModel(
-        aggregationLevel: aggregationLevel,
-        id: id,
+        formId: formId,
         assignmentId: assignmentId,
+        submissionId: submissionId,
       ),
     );
   }
 }
 
 class _SyncStatusBadge extends StatelessWidget {
-  const _SyncStatusBadge({required this.syncStatus, required this.count});
+  const _SyncStatusBadge({
+    required this.syncStatus,
+    required this.count,
+    this.submissionId,
+    this.showCount = true,
+  });
 
+  final String? submissionId;
   final InstanceSyncStatus syncStatus;
+  final bool showCount;
   final int count;
 
   @override
   Widget build(BuildContext context) {
+    final child = showCount
+        ? Column(children: [
+            StatusIcon(
+                key: ValueKey('${submissionId}_${syncStatus.name}'),
+                syncState: syncStatus),
+            const SizedBox(width: 4),
+            Text('$count', style: Theme.of(context).textTheme.bodyMedium)
+          ])
+        : StatusIcon(syncState: syncStatus);
     return Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 2.0),
-        child: Column(children: [
-          StatusIcon(syncState: syncStatus),
-          const SizedBox(width: 4),
-          Text('$count', style: Theme.of(context).textTheme.bodyMedium)
-        ]));
+        padding: const EdgeInsets.only(left: 8.0, right: 2.0), child: child);
   }
 }

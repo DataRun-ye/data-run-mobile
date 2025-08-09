@@ -8,6 +8,19 @@ const Color kcLightGrey = Color.fromARGB(255, 187, 187, 187);
 const Color kcVeryLightGrey = Color(0xFFE3E3E3);
 const Color kcBackgroundColor = kcDarkGreyColor;
 
+/// **Usage:**
+///
+/// ```dart
+/// final original = Colors.blue;
+/// final darker = darken(original, 0.2); // 20% darker
+/// ```
+Color darken(Color color, [double amount = .1]) {
+  assert(amount >= 0 && amount <= 1);
+  final hsl = HSLColor.fromColor(color);
+  final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+  return hslDark.toColor();
+}
+
 class DColors {
   static const Color Blue50 = Color(0xFFF1F9FF);
   static const Color Blue100 = Color(0xFFE2F2FF);

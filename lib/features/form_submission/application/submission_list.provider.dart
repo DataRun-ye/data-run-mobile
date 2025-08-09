@@ -2,7 +2,7 @@ import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/common/geometry.dart';
 import 'package:d_sdk/core/exception/d_error.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';

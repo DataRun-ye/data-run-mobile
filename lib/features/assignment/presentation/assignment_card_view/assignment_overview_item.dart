@@ -46,8 +46,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SyncStatusBadgesView(
-                  id: assignment.id,
-                  aggregationLevel: StatusAggregationLevel.assignment,
+                  assignmentId: assignment.id,
                 ),
                 _buildActionButtons(context, assignment, ref),
               ],

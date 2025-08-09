@@ -428,5 +428,19 @@
   "draftDataInstance": "Draft Data Instance",
   "initializingDataInstance": "Initializing Data Instance",
   "all": "All",
-  "addAnItem": "Add an Item"
+  "addAnItem": "Add an Item",
+  "dateRange": "Date Range",
+  "includeDeleted": "Include deleted",
+  "applyFilters": "Apply Filters",
+  "today": "Today",
+  "lastThreeDays": "Last 3 Days",
+  "thisWeek": "This Week",
+  "thisMonth": "This Month",
+  "lastThreeMonths": "Last 3 Months",
+  "thisYear": "This Year",
+  "allDates": "All Times",
+  "editView": "Edit/View",
+  "view": "View",
+  "userSavedInstances": "User Saved Instances",
+  "openSpeedDial": "Open Speed Dial"
 }

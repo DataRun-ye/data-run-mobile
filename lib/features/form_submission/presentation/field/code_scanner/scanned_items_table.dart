@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/core/util/date_helper.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';

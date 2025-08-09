@@ -1,7 +1,6 @@
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:d_sdk/database/shared/form_template_model.dart';
-import 'package:d_sdk/database/shared/status_aggregation_level.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
@@ -75,20 +74,15 @@ class AssignmentDetailPage extends ConsumerWidget {
                         leading: FormPrefixVersionBadge(form: form.form),
                         title: FormDisplay(form: form.form),
                         subtitle: SyncStatusBadgesView(
-                            id: form.form,
-                            aggregationLevel: StatusAggregationLevel.form,
-                            assignmentId: form.assignment),
-                        trailing: AnimatedRotation(
-                          turns: 0.5,
-                          duration: const Duration(milliseconds: 300),
-                          child: SvgPicture.asset(
-                              'assets/app/icon_expansion_tile.svg'),
-                        ),
+                            formId: form.form, assignmentId: form.assignment),
+                        trailing: const Icon(Icons.chevron_right),
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
                         onTap: () {
                           appLocator<NavigationService>()
-                              .navigateToDataInstanceTableScreen(
+                              .navigateToTableScreen(
                                   formId: form.form,
-                                  assignment: form.assignment);
+                                  assignmentId: form.assignment);
                         },
                       );
 
@@ -191,9 +185,7 @@ class _FormListItem extends ConsumerWidget {
       leading: FormPrefixVersionBadge(form: assignmentForm.form),
       title: FormDisplay(form: assignmentForm.form),
       subtitle: SyncStatusBadgesView(
-          id: assignmentForm.form,
-          aggregationLevel: StatusAggregationLevel.form,
-          assignmentId: assignmentForm.assignment),
+          formId: assignmentForm.form, assignmentId: assignmentForm.assignment),
       trailing: SvgPicture.asset('assets/app/icon_expansion_tile.svg'),
     );
   }

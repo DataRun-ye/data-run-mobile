@@ -95,7 +95,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
     final List<FieldTemplate> tableColumns = useMemoized(() {
       return formInstance.formFlatTemplate
-          .getChildrenOfType<FieldTemplate>(_repeatInstance.elementPath!)
+          .getChildrenOfType<FieldTemplate>(_repeatInstance.template.path)
         ..sort((a, b) => a.order.compareTo(b.order));
     }, [_repeatInstance.elementPath]);
 
@@ -115,6 +115,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                       final repeatItem =
                           formInstance.onAddRepeatedItem(_repeatInstance);
                       _dataSource.addItem(repeatItem);
+
                       await _showEditPanel(context, formInstance, repeatItem);
                     }
                   : null,
@@ -177,35 +178,37 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       [RepeatItemInstance? repeatItem]) async {
     if (true) {
       bool itemSaved = false;
-      appLocator<NavigationService>().navigateToView(FormMetadataWidget(
-          formMetadata: formInstance.formMetadata,
-          child: ReactiveForm(
-            formGroup: repeatItem!.elementControl,
-            child: Builder(builder: (context) {
-              String title =
-                  '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
+      appLocator<NavigationService>().navigateToView(
+          preventDuplicates: false,
+          FormMetadataWidget(
+              formMetadata: formInstance.formMetadata,
+              child: ReactiveForm(
+                formGroup: repeatItem!.elementControl,
+                child: Builder(builder: (context) {
+                  String title =
+                      '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
 
-              return EditRowScreen(
-                title: title,
-                repeatInstance: _repeatInstance,
-                item: repeatItem,
-                onRemoveItem: (item) {
-                  _dataSource.removeItem(item);
-                },
-                onSave: (formGroup, action) {
-                  _repeatInstance.elementControl.markAsTouched();
-                  formInstance.saveFormData();
-                  _dataSource.updateItems(_repeatInstance.elements);
-                  // repeatItem.updateValue(formGroup.value);
-                  if (formGroup.valid) {
-                    itemSaved = true;
-                    _handleSave(context, formInstance, _repeatInstance,
-                        repeatItem, action);
-                  }
-                },
-              );
-            }),
-          )));
+                  return EditRowScreen(
+                    title: title,
+                    repeatInstance: _repeatInstance,
+                    item: repeatItem,
+                    onRemoveItem: (item) {
+                      _dataSource.removeItem(item);
+                    },
+                    onSave: (formGroup, action) {
+                      _repeatInstance.elementControl.markAsTouched();
+                      formInstance.saveFormData();
+                      _dataSource.updateItems(_repeatInstance.elements);
+                      // repeatItem.updateValue(formGroup.value);
+                      if (formGroup.valid) {
+                        itemSaved = true;
+                        _handleSave(context, formInstance, _repeatInstance,
+                            repeatItem, action);
+                      }
+                    },
+                  );
+                }),
+              )));
       // Navigator.of(context).push(
       //   MaterialPageRoute(
       //       builder: (context) => ),

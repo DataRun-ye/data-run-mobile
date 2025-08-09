@@ -1,7 +1,7 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

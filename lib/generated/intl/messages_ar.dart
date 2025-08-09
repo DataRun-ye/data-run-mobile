@@ -114,10 +114,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "activities": MessageLookupByLibrary.simpleMessage("الأنشطة"),
     "activity": MessageLookupByLibrary.simpleMessage("النشاط"),
-    "addAnItem": MessageLookupByLibrary.simpleMessage("Add an Item"),
+    "addAnItem": MessageLookupByLibrary.simpleMessage("إضافة عنصر"),
     "addNew": MessageLookupByLibrary.simpleMessage("جديد"),
     "ageFieldHint": MessageLookupByLibrary.simpleMessage("أدخل العمر"),
-    "all": MessageLookupByLibrary.simpleMessage("All"),
+    "all": MessageLookupByLibrary.simpleMessage("الكل"),
+    "allDates": MessageLookupByLibrary.simpleMessage("كل الأوقات"),
     "allSubmissions": MessageLookupByLibrary.simpleMessage("كل المرسلات"),
     "allocatedResources": MessageLookupByLibrary.simpleMessage(
       "الموارد المخصصة",
@@ -129,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appVersion": MessageLookupByLibrary.simpleMessage("إصدار التطبيق"),
     "appearance": MessageLookupByLibrary.simpleMessage("المظهر"),
     "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
+    "applyFilters": MessageLookupByLibrary.simpleMessage("تطبيق"),
     "assigned": MessageLookupByLibrary.simpleMessage("مهام"),
     "assignedAssignments": MessageLookupByLibrary.simpleMessage("مهام"),
     "assignedTeam": MessageLookupByLibrary.simpleMessage("فريقك"),
@@ -191,7 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "copyAll": MessageLookupByLibrary.simpleMessage("نسخ الكل"),
     "copyToClipboard": MessageLookupByLibrary.simpleMessage("نسخ للحافظة"),
     "count": MessageLookupByLibrary.simpleMessage("الكمية"),
-    "created": MessageLookupByLibrary.simpleMessage("Created"),
+    "created": MessageLookupByLibrary.simpleMessage("الإنشاء"),
     "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
     "currentOperations": MessageLookupByLibrary.simpleMessage(
       "العملية الحالية:",
@@ -215,6 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "datarun": MessageLookupByLibrary.simpleMessage("DATARUN"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
+    "dateRange": MessageLookupByLibrary.simpleMessage("الوقت"),
     "day": MessageLookupByLibrary.simpleMessage("اليوم"),
     "days": MessageLookupByLibrary.simpleMessage("أيام"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
@@ -242,13 +245,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "done": MessageLookupByLibrary.simpleMessage("اكتمل"),
     "downloaded": MessageLookupByLibrary.simpleMessage("حفظ"),
     "draft": MessageLookupByLibrary.simpleMessage("مسودة"),
-    "draftDataInstance": MessageLookupByLibrary.simpleMessage(
-      "Draft Data Instance",
-    ),
+    "draftDataInstance": MessageLookupByLibrary.simpleMessage("تسويد نسخة"),
     "dueDate": MessageLookupByLibrary.simpleMessage("تاريخ الاستحقاق"),
     "dueDay": MessageLookupByLibrary.simpleMessage("يوم الاستحقاق"),
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "editItem": MessageLookupByLibrary.simpleMessage("تعديل"),
+    "editView": MessageLookupByLibrary.simpleMessage("تعديل/عرض"),
     "emailFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل بريدًا إلكترونيًا",
     ),
@@ -315,8 +317,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "households": MessageLookupByLibrary.simpleMessage("منازل"),
     "imageFieldHint": MessageLookupByLibrary.simpleMessage("اختر صورة"),
     "in_progress": MessageLookupByLibrary.simpleMessage("قيد التنفيذ"),
+    "includeDeleted": MessageLookupByLibrary.simpleMessage("تضمين المحذوف"),
     "initializingDataInstance": MessageLookupByLibrary.simpleMessage(
-      "Initializing Data Instance",
+      "تهيئة النسخة",
     ),
     "integerFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل عددًا صحيحًا",
@@ -342,6 +345,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "lastSyncStatus": MessageLookupByLibrary.simpleMessage(
       "حالة آخر عملية مزامنة",
     ),
+    "lastThreeDays": MessageLookupByLibrary.simpleMessage("آخر 3 أيام"),
+    "lastThreeMonths": MessageLookupByLibrary.simpleMessage("آخر 3 أشهر"),
     "lastmodifiedDate": MessageLookupByLibrary.simpleMessage("تاريخ آخر تعديل"),
     "level": MessageLookupByLibrary.simpleMessage("المستوى"),
     "loadMore": MessageLookupByLibrary.simpleMessage("تحميل المزيد"),
@@ -371,7 +376,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "merged": MessageLookupByLibrary.simpleMessage("مدمج"),
     "middleName": MessageLookupByLibrary.simpleMessage("الاسم الأوسط"),
     "mobile": MessageLookupByLibrary.simpleMessage("رقم الموبايل"),
-    "modified": MessageLookupByLibrary.simpleMessage("Modified"),
+    "modified": MessageLookupByLibrary.simpleMessage("التعديل"),
     "month": m15,
     "monthly": MessageLookupByLibrary.simpleMessage("شهري"),
     "months": MessageLookupByLibrary.simpleMessage("أشهر"),
@@ -431,6 +436,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "open": MessageLookupByLibrary.simpleMessage("فتح"),
     "openNewForm": MessageLookupByLibrary.simpleMessage("استمارة جديدة"),
     "openSettings": MessageLookupByLibrary.simpleMessage("فتح الإعدادات"),
+    "openSpeedDial": MessageLookupByLibrary.simpleMessage("فتح الوصول السريع"),
     "optionSets": MessageLookupByLibrary.simpleMessage("مجموعات الاختيار"),
     "options": MessageLookupByLibrary.simpleMessage("خيارات"),
     "orgUnitDialogTitle": MessageLookupByLibrary.simpleMessage(
@@ -569,9 +575,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "thisFieldIsRequired": MessageLookupByLibrary.simpleMessage(
       "هذا الحقل مطلوب.",
     ),
+    "thisMonth": MessageLookupByLibrary.simpleMessage("هذا الشهر"),
+    "thisWeek": MessageLookupByLibrary.simpleMessage("هذا الإسبوع"),
+    "thisYear": MessageLookupByLibrary.simpleMessage("هذه السنة"),
     "timeFieldHint": MessageLookupByLibrary.simpleMessage("اختر وقتًا"),
     "to_post": MessageLookupByLibrary.simpleMessage("نهائية"),
     "to_update": MessageLookupByLibrary.simpleMessage("مسودة"),
+    "today": MessageLookupByLibrary.simpleMessage("اليوم"),
     "toggleBetweenListAndCardView": MessageLookupByLibrary.simpleMessage(
       "تغيير بين قائمة/جدول",
     ),
@@ -597,6 +607,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "urlFieldHint": MessageLookupByLibrary.simpleMessage("أدخل رابط URL"),
     "user": MessageLookupByLibrary.simpleMessage("مستخدم"),
+    "userSavedInstances": MessageLookupByLibrary.simpleMessage(
+      "مدخلات المستخدم",
+    ),
     "userSettings": MessageLookupByLibrary.simpleMessage("إعدادات المستخدم"),
     "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
     "usernameFieldHint": MessageLookupByLibrary.simpleMessage(
@@ -609,6 +622,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "valueMustBeGreaterThanOrEqualToError": m29,
     "valueMustBeLessThanOrEqualToError": m30,
     "version": MessageLookupByLibrary.simpleMessage("الإصدار"),
+    "view": MessageLookupByLibrary.simpleMessage("استعراض"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "افتح لاستعرض الاستمارات المتاحة",
     ),

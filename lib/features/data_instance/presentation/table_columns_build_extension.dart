@@ -1,8 +1,7 @@
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:datarunmobile/features/assignment_detail/application/table.providers.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/table_widgets/table_header_label.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/table_header_label.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,8 +36,8 @@ mixin TableColumnsBuildExtension {
   DataColumn _getStatusColumn(WidgetRef ref) {
     return DataColumn2(
       label: TableHeaderLabel(label: S.current.status),
-      onSort: (i, asc) =>
-          ref.read(tablePaginationProvider.notifier).sort('syncStatus', i, asc),
+      // onSort: (i, asc) =>
+      //     ref.read(tablePaginationProvider.notifier).sort('syncStatus', i, asc),
       size: ColumnSize.S,
       fixedWidth: 70,
     );
@@ -56,16 +55,16 @@ mixin TableColumnsBuildExtension {
     return [
       DataColumn2(
         label: TableHeaderLabel(label: S.current.created),
-        onSort: (i, asc) => ref
-            .read(tablePaginationProvider.notifier)
-            .sort('createdDate', i, asc),
+        // onSort: (i, asc) => ref
+        //     .read(tablePaginationProvider.notifier)
+        //     .sort('createdDate', i, asc),
         size: ColumnSize.M,
       ),
       DataColumn2(
         label: TableHeaderLabel(label: S.current.modified),
-        onSort: (i, asc) => ref
-            .read(tablePaginationProvider.notifier)
-            .sort('lastModifiedDate', i, asc),
+        // onSort: (i, asc) => ref
+        //     .read(tablePaginationProvider.notifier)
+        //     .sort('lastModifiedDate', i, asc),
         size: ColumnSize.M,
       ),
     ];

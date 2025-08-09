@@ -54,6 +54,9 @@ dependencies:
   stacked_services: ^1.6.0
   two_dimensional_scrollables: ^0.3.7
   timeago: ^3.7.1
+  flutter_speed_dial: ^7.0.0
+  built_collection: ^5.1.1
+  drift: ^2.28.1
 #  recursive_tree_flutter: ^1.0.4
 
 

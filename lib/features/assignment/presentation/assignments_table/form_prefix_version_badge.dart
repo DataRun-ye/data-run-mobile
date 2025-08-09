@@ -30,8 +30,9 @@ class FormPrefixVersionBadge extends ConsumerWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(child: Icon(Icons.document_scanner_outlined,
-              color: cs.secondaryContainer)),
+            Expanded(
+                child: Icon(Icons.document_scanner_outlined,
+                    color: cs.secondaryContainer)),
             SizedBox(
               width: 3,
             ),

@@ -1,5 +1,5 @@
 import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/data_instance_table_screen.dart';
+import 'package:datarunmobile/features/data_instance/presentation/table_screen.dart';
 import 'package:datarunmobile/features/common_ui_element/info_alert/info_alert_dialog.dart';
 import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_flow_bootstrapper.dart';
@@ -27,7 +27,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SubmissionHistoryScreen),
     MaterialRoute(page: FormSubmissionScreen),
     MaterialRoute(page: FormFlowBootstrapper),
-    MaterialRoute(page: DataInstanceTableScreen),
+    // MaterialRoute(page: DataInstanceTableScreen),
+    MaterialRoute(page: TableScreen),
     // @stacked-route
   ],
   dependencies: [

@@ -1,14 +1,15 @@
+import 'package:d_sdk/core/data_instance/field_value.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:d_sdk/datasource/util/field_value.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/widgets/multi_option_cell.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/widgets/numeric_cell.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/widgets/option_cell.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/widgets/team_cell.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/multi_option_cell.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/numeric_cell.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/option_cell.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/team_cell.dart';
 import 'package:datarunmobile/features/form/application/map_value_to_display.dart';
 import 'package:datarunmobile/features/form/presentation/widgets/value_type_value_display.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SubmissionTableCell extends StatelessWidget {
@@ -46,10 +47,13 @@ class SubmissionTableCell extends StatelessWidget {
         final value = (fieldValue.value?.toString().length ?? 0) > 20
             ? fieldValue.value.toString().substring(0, 20)
             : fieldValue.value?.toString() ?? '';
-        return Text(
-            key: ValueKey(fieldValue.id),
-            value,
-            overflow: TextOverflow.ellipsis);
+        return Tooltip(
+          message: value,
+          child: Text(
+              key: ValueKey(fieldValue.id),
+              Intl.message(value),
+              overflow: TextOverflow.ellipsis),
+        );
       case ValueType.Letter:
         return Text(
             key: ValueKey(fieldValue.id),
@@ -57,6 +61,7 @@ class SubmissionTableCell extends StatelessWidget {
             overflow: TextOverflow.ellipsis);
       case ValueType.Boolean:
       case ValueType.TrueOnly:
+      case ValueType.YesNo:
         return ValueTypeValueDisplay(
           key: ValueKey(fieldValue.id),
           valueType: fieldValue.valueType,
@@ -105,12 +110,6 @@ class SubmissionTableCell extends StatelessWidget {
         return OptionCell(
           key: ValueKey(fieldValue.id),
           optionId: fieldValue.value?.toString(),
-        );
-      case ValueType.YesNo:
-        return ValueTypeValueDisplay(
-          key: ValueKey(fieldValue.id),
-          valueType: ValueType.OrganisationUnit,
-          value: fieldValue.value,
         );
       case ValueType.ScannedCode:
         return fieldValue.value != null

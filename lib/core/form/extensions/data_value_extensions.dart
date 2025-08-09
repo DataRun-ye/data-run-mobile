@@ -1,7 +1,7 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:datarunmobile/core/form/extensions/dynamic_value_extensions.dart';
 
 /// EventDataValueExtensions

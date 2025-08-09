@@ -1174,23 +1174,65 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get created => 'Created';
+  String get created => 'الإنشاء';
 
   @override
-  String get modified => 'Modified';
+  String get modified => 'التعديل';
 
   @override
   String get demoLogin => 'Demo Login';
 
   @override
-  String get draftDataInstance => 'Draft Data Instance';
+  String get draftDataInstance => 'تسويد نسخة';
 
   @override
-  String get initializingDataInstance => 'Initializing Data Instance';
+  String get initializingDataInstance => 'تهيئة النسخة';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get addAnItem => 'Add an Item';
+  String get addAnItem => 'إضافة عنصر';
+
+  @override
+  String get dateRange => 'الوقت';
+
+  @override
+  String get includeDeleted => 'تضمين المحذوف';
+
+  @override
+  String get applyFilters => 'تطبيق';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get lastThreeDays => 'آخر 3 أيام';
+
+  @override
+  String get thisWeek => 'هذا الإسبوع';
+
+  @override
+  String get thisMonth => 'هذا الشهر';
+
+  @override
+  String get lastThreeMonths => 'آخر 3 أشهر';
+
+  @override
+  String get thisYear => 'هذه السنة';
+
+  @override
+  String get allDates => 'كل الأوقات';
+
+  @override
+  String get editView => 'تعديل/عرض';
+
+  @override
+  String get view => 'استعراض';
+
+  @override
+  String get userSavedInstances => 'مدخلات المستخدم';
+
+  @override
+  String get openSpeedDial => 'فتح الوصول السريع';
 }

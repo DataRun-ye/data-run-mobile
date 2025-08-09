@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/shared/validation_strategy.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/data/data_entry_repository.dart';

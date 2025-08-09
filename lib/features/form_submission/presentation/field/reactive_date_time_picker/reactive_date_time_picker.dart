@@ -1,5 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/core/util/date_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:reactive_forms/reactive_forms.dart';

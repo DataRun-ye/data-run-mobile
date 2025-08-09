@@ -83,8 +83,7 @@ class AssignmentTableView extends HookConsumerWidget {
                       ))),
                   DataCell(
                     SyncStatusBadgesView(
-                        id: assignment.id,
-                        aggregationLevel: StatusAggregationLevel.assignment),
+                        assignmentId: assignment.id),
                   ),
                   DataCell(OrgUnitDisplay(
                       orgUnit: assignment.orgUnit, highlightText: searchQuery)),

@@ -16,7 +16,8 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class EditRowScreen extends ConsumerStatefulWidget {
   EditRowScreen(
-      {required this.repeatInstance,
+      {
+        required this.repeatInstance,
       required this.item,
       this.title,
       this.onRemoveItem,
@@ -132,7 +133,7 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
                 children: [
                   FloatingActionButton(
                     backgroundColor: cs.primary,
-                    heroTag: 'saveAndClose',
+                    heroTag: '${widget.item.uid}_save',
                     onPressed: () async {
                       widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE);
                     },
@@ -145,7 +146,7 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
                       widget.onSave(
                           formGroup, EditActionType.SAVE_AND_ADD_ANOTHER);
                     },
-                    heroTag: 'addNew',
+                    heroTag: '${widget.item.uid}_addNew',
                     child: Icon(MdiIcons.plus),
                     tooltip: S.of(context).addNew,
                   ),

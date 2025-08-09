@@ -54,8 +54,11 @@ class FormFlowBootstrapperVm extends BaseViewModel {
             await _db.dataInstances.findById(submissionId).getSingle();
       }
 
+      if (appLocator.currentScopeName?.startsWith('template_') == true) {
+        await appLocator.popScope();
+      }
       await appLocator.pushNewScopeAsync(
-          scopeName: dataInstance.id,
+          scopeName: 'template_${dataInstance.id}',
           init: (getIt) async {
             final formFlatTemplate =
                 getIt.registerSingleton<FormTemplateRepository>(

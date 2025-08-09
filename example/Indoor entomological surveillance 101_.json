@@ -1,0 +1,148 @@
+{
+  "uid": "ONIaOpzoYAe",
+  "versionUid": "hc5ycLsyGZg",
+  "versionNumber": 21,
+  "name": "IndoorEntomologicalSurveillance101",
+  "deleted": false,
+  "fields": [
+    {
+      "parent": "survtypesection",
+      "name": "EntomologicalSurveillanceType",
+      "path": "survtypesection.xju7KJcqQ4D",
+      "id": "xju7KJcqQ4D",
+      "type": "SelectOne",
+      "optionSet": "qFBG6dSJURm"
+    },
+    {
+      "parent": "survtypesection",
+      "name": "FixedStationName",
+      "path": "survtypesection.CFZDyFE3bhS",
+      "id": "CFZDyFE3bhS",
+      "type": "Text"
+    },
+    {
+      "parent": "survtypesection",
+      "name": "NotificationNumber",
+      "path": "survtypesection.wZIDLQtSHL2",
+      "id": "wZIDLQtSHL2",
+      "type": "IntegerPositive"
+    },
+    {
+      "parent": "adult",
+      "name": "RoomsNumber",
+      "path": "adult.VN0x80Igi2b",
+      "id": "VN0x80Igi2b",
+      "type": "IntegerPositive"
+    },
+    {
+      "parent": "adult",
+      "name": "MosquitoRestingPlace",
+      "path": "adult.k2eDaaIArf0",
+      "id": "k2eDaaIArf0",
+      "type": "SelectMulti",
+      "optionSet": "aUXPRIolyEW"
+    },
+    {
+      "parent": "AdultLarvalSection",
+      "name": "MosquitoCollectionMethod",
+      "path": "AdultLarvalSection.rVsGDgWPyPH",
+      "id": "rVsGDgWPyPH",
+      "type": "SelectOne",
+      "optionSet": "xCtgK5yavq3"
+    },
+    {
+      "parent": "AdultLarvalSection",
+      "name": "BuildingNumber",
+      "path": "AdultLarvalSection.jIMbVzxsQf9",
+      "id": "jIMbVzxsQf9",
+      "type": "IntegerZeroOrPositive"
+    },
+    {
+      "parent": "AdultLarvalSection",
+      "name": "BuildingType",
+      "path": "AdultLarvalSection.UvA1u3cSLFQ",
+      "id": "UvA1u3cSLFQ",
+      "type": "SelectOne",
+      "optionSet": "YpY0vSHWume"
+    },
+    {
+      "parent": "AdultLarvalSection",
+      "name": "OtherBuildingType",
+      "path": "AdultLarvalSection.v99GuUSB30B",
+      "id": "v99GuUSB30B",
+      "type": "LongText"
+    },
+    {
+      "parent": "AdultLarvalSection",
+      "name": "BuildingOwner",
+      "path": "AdultLarvalSection.X2eA5Ysiljn",
+      "id": "X2eA5Ysiljn",
+      "type": "FullName"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "AdultMosquitoSpecies",
+      "path": "adult.adultClassification.NxCDVpmf0Dd",
+
+      "id": "NxCDVpmf0Dd",
+      "type": "SelectOne",
+      "optionSet": "z9VYq4N0OUF"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "OtherMosquitoSpecies",
+      "path": "adult.adultClassification.k9sIlmPY98g",
+      "id": "k9sIlmPY98g",
+      "type": "Text"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "NumberOfMosquitoesCollected",
+      "path": "adult.adultClassification.UqTcr7l61gG",
+
+      "id": "UqTcr7l61gG",
+      "type": "IntegerPositive"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "FeedMosquitoesNumber",
+      "path": "adult.adultClassification.bqIFs4pwqBB",
+      "id": "bqIFs4pwqBB",
+      "type": "IntegerZeroOrPositive"
+    },
+    {
+      "parent": "adultClassification",
+      "name": "GravidMosquitosNumber",
+      "path": "adult.adultClassification.O8ab6PUFslK",
+      "id": "O8ab6PUFslK",
+      "type": "IntegerZeroOrPositive"
+    }
+  ],
+  "sections": [
+    {
+      "name": "survtypesection",
+      "path": "survtypesection",
+      "repeatable": false,
+      "id": "survtypesection"
+    },
+    {
+      "name": "AdultLarvalSection",
+      "path": "AdultLarvalSection",
+      "repeatable": false,
+      "id": "AdultLarvalSection"
+    },
+    {
+      "parent": "adult",
+      "name": "adultClassification",
+      "path": "adult.adultClassification",
+      "repeatable": true,
+      "id": "adultClassification"
+    },
+    {
+      "name": "adult",
+      "path": "adult",
+      "repeatable": false,
+      "id": "adult"
+    }
+  ]
+}

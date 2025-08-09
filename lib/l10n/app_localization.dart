@@ -2167,6 +2167,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add an Item'**
   String get addAnItem;
+
+  /// No description provided for @dateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get dateRange;
+
+  /// No description provided for @includeDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Include deleted'**
+  String get includeDeleted;
+
+  /// No description provided for @applyFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filters'**
+  String get applyFilters;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @lastThreeDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 3 Days'**
+  String get lastThreeDays;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get thisWeek;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get thisMonth;
+
+  /// No description provided for @lastThreeMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 3 Months'**
+  String get lastThreeMonths;
+
+  /// No description provided for @thisYear.
+  ///
+  /// In en, this message translates to:
+  /// **'This Year'**
+  String get thisYear;
+
+  /// No description provided for @allDates.
+  ///
+  /// In en, this message translates to:
+  /// **'All Times'**
+  String get allDates;
+
+  /// No description provided for @editView.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit/View'**
+  String get editView;
+
+  /// No description provided for @view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
+
+  /// No description provided for @userSavedInstances.
+  ///
+  /// In en, this message translates to:
+  /// **'User Saved Instances'**
+  String get userSavedInstances;
+
+  /// No description provided for @openSpeedDial.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Speed Dial'**
+  String get openSpeedDial;
 }
 
 class _AppLocalizationsDelegate

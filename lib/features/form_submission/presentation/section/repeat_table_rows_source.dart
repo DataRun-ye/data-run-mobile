@@ -1,6 +1,6 @@
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/core/utilities/date_helper.dart';
-import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/core/util/date_helper.dart';
+import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
@@ -66,7 +66,8 @@ class RepeatTableDataSource extends DataTableSource {
 
     final repeatItem = elements[index];
     final Iterable<FieldInstance<dynamic>> rowFields =
-        getFormElementIterator<FieldInstance<dynamic>>(elements[index]);
+        getFormElementIterator<FieldInstance<dynamic>>(elements[index])
+            .where((field) => field.parentSection == repeatItem);
 
     final rowFieldsStates = rowFields.map((field) => field).toList();
 

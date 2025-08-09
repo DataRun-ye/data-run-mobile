@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/core/util/date_helper.dart';
+import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
 import 'package:datarunmobile/core/element_instance/data_value_repository.dart';
 import 'package:datarunmobile/core/resources/resource_manager.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
@@ -31,12 +31,11 @@ class MapValueToDisplay {
       ValueType.Team => value is String && !value.isNullOrEmpty
           ? repository.getTeamById(value)
           : value.toString(),
-      ValueType.SelectOne => value is String && !value.isNullOrEmpty
-          ? repository.getOptionById(value)
-          : value.toString(),
-      ValueType.SelectMulti => value is List && !value.isNotEmpty
-          ? repository.getOptionsByIds(value.cast<String>())
-          : value.toString(),
+      ValueType.SelectOne || ValueType.SelectMulti => value is String
+          ? repository.getOptionsByIds(value.split(','))
+          : (value is List
+              ? repository.getOptionsByIds(value.cast<String>())
+              : value?.toString()),
       _ => value,
     };
   }
@@ -52,6 +51,6 @@ class MapValueToDisplay {
   String getDateValue(ValueType type, Object? value) {
     return value != null && value is String && value.toDate() != null
         ? DateHelper.getEffectiveUiFormat(type).format(value.toDate()!)
-        : '--';
+        : value?.toString() ?? '--';
   }
 }

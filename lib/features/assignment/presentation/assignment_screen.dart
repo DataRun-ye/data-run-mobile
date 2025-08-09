@@ -59,20 +59,6 @@ class AssignmentScreen extends HookConsumerWidget {
                   );
             },
           ),
-          // SizedBox(
-          //   width: 200,
-          //   child: TextFormField(
-          //     focusNode: focusNode,
-          //     controller: controller,
-          //     // initialValue: ref.watch(filterQueryProvider).searchQuery,
-          //     decoration: effectiveDecoration,
-          //     onChanged: (searchQuery) {
-          //       ref.read(filterQueryProvider.notifier).updateSearchQuery(
-          //             searchQuery,
-          //           );
-          //     },
-          //   ),
-          // ),
           IconButton(
             tooltip: S.of(context).toggleBetweenListAndCardView,
             icon: Icon(ref.watch(

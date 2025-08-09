@@ -11,7 +11,6 @@
 import 'package:d_sdk/core/auth/token_storage.dart' as _i765;
 import 'package:d_sdk/core/http/http_client.dart' as _i8;
 import 'package:d_sdk/core/secure_storage/storage_service.dart' as _i537;
-import 'package:d_sdk/datasource/util/submission_aggregator.dart' as _i224;
 import 'package:datarunmobile/app/di/sdk_module.dart' as _i567;
 import 'package:datarunmobile/app/di/third_party_services.module.dart' as _i427;
 import 'package:datarunmobile/core/auth/auth_api.dart' as _i64;
@@ -47,8 +46,12 @@ import 'package:datarunmobile/features/assignment/application/assignment_service
     as _i935;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
-import 'package:datarunmobile/features/assignment_detail/application/submissions_table_service.dart'
-    as _i587;
+import 'package:datarunmobile/features/data_instance/application/table_selection_service.dart'
+    as _i939;
+import 'package:datarunmobile/features/data_instance/data/drift_table_repository.dart'
+    as _i128;
+import 'package:datarunmobile/features/data_instance/data/table_repository.dart'
+    as _i325;
 import 'package:datarunmobile/features/form/application/form_template_service.dart'
     as _i258;
 import 'package:datarunmobile/features/form/application/form_template_service_impl.dart'
@@ -111,6 +114,10 @@ Future<_i174.GetIt> setupGlobalDependencies(
     () => _i28.SyncProgressNotifier(),
     dispose: (i) => i.dispose(),
   );
+  gh.lazySingleton<_i939.TableSelectionRepository>(
+    () => _i939.TableSelectionRepository(),
+    dispose: (i) => i.dispose(),
+  );
   gh.lazySingleton<_i342.FieldContextRegistry>(
       () => _i342.FieldContextRegistry());
   gh.factory<_i775.UserSessionService>(
@@ -128,12 +135,11 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i34.FormInstanceService>(() => _i756.FormInstanceServiceImpl());
   gh.factory<_i602.SyncManager>(
       () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
-  gh.factory<_i224.SubmissionListAggregator>(
-      () => _i587.SubmissionsTableService());
   gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(
         resources: gh<_i683.ResourceManager>(),
         repository: gh<_i730.DataValueRepository>(),
       ));
+  gh.factory<_i325.TableRepository>(() => _i128.DriftTableRepository());
   gh.factory<_i148.SyncExecutor>(() =>
       _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());

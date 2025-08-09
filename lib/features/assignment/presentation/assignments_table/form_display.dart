@@ -9,14 +9,10 @@ class FormDisplay extends ConsumerWidget {
     super.key,
     this.form,
     this.version,
-    this.row = false,
-    this.size = 25,
   });
 
   final String? form;
   final String? version;
-  final bool row;
-  final double size;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,6 +1,6 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
-import 'package:d_sdk/core/form/tree/element_tree_service.dart';
-import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/core/form/template_util/element_tree_service.dart';
+import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/value_type.dart';

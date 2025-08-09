@@ -1,6 +1,6 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
-import 'package:d_sdk/core/form/tree/element_tree_service.dart';
-import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/core/form/template_util/element_tree_service.dart';
+import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/app/di/injection.dart';
@@ -9,8 +9,7 @@ import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/core/common/state.dart';
-import 'package:datarunmobile/features/assignment_detail/application/submissions_table_service.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/widgets/action_cell.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/action_cell.dart';
 import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list_util.dart';
@@ -161,7 +160,10 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                             onTap: submission.syncState.isSyncFailed
                                 ? () => buildShowDialog(context, submission)
                                 : null,
-                            child: StatusIcon(syncState: submission.syncState),
+                            child: StatusIcon(
+                                key: ValueKey(
+                                    '${submission}_${submission.syncState}'),
+                                syncState: submission.syncState),
                           )),
                           DataCell(ActionCell(
                             icon: Row(
@@ -340,43 +342,9 @@ class DetailSubmissionsTable extends HookConsumerWidget {
                 ?.toString());
             extractedValues[field.name!] =
                 value != null ? Intl.message(value.toLowerCase()) : '-';
-          }
-          /*else if (field.type == ValueType.Team &&
-              data.containsKey(field.name)) {
-            extractedValues[field.name!] = activityModel.managedTeams
-                    .firstOrNullWhere((t) => t.id == data[field.name])
-                    ?.name ??
-                data[field.name];
-          }*/
-          else if (field.type?.isSelectType == true &&
+          } else if (field.type?.isSelectType == true &&
               field.optionSet != null &&
               data.containsKey(field.name)) {
-            // final optionMap = formTemplate.optionMap;
-            // final String? optionSetName =
-            //     formTemplate.optionSets[field.optionSet!]?.name;
-            // final List<DataOption> options = optionMap[field.optionSet] ?? [];
-            // if (field.type == ValueType.SelectOne) {
-            //   final List<DataOption> selected =
-            //   options.where((o) => o.name == data[field.name]).toList();
-            //   extractedValues[field.name!] = selected
-            //       .map((o) => getItemLocalString(o.label, defaultString: ''))
-            //       .join(',');
-            // } else if (field.type == ValueType.SelectMulti &&
-            //     data[field.name] is List) {
-            //   final List<DataOption> selected = options
-            //       .where((o) => data[field.name].contains(o.code))
-            //       .toList();
-            //   extractedValues[field.name!] = selected
-            //       .map((o) => getItemLocalString(o.label, defaultString: ''))
-            //       .join(',');
-            // }
-            // // final List<DataOption> selected = options
-            // //     .where((o) =>
-            // //         o.name == data[field.name] || o.code == data[field.name])
-            // //     .toList();
-            // // extractedValues[field.name!] = selected
-            // //     .map((o) => getItemLocalString(o.label, defaultString: ''))
-            // //     .join(',');
           } else if (data.containsKey(field.name)) {
             extractedValues[field.name!] = data[field.name];
           }
@@ -452,13 +420,6 @@ class DetailSubmissionsTable extends HookConsumerWidget {
   Future<void> _confirmDelete(
       BuildContext context, String id, String message, WidgetRef ref) async {
     final confirmed = await showDialog<bool>(
-      // _confirmDelete(
-      //     context,
-      //     submission.id,
-      //     deleted
-      //         ? S.of(context).restoreItem
-      //         : S.of(context).deleteConfirmationMessage,
-      //     ref)
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -488,16 +449,13 @@ class DetailSubmissionsTable extends HookConsumerWidget {
   void _deleteAndShowUndoSnack(
       BuildContext context, String toDeleteId, WidgetRef ref) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final listSubmissionsNotifier =
-        ref.read(formSubmissionsProvider(assignmentForm.form).notifier);
-    listSubmissionsNotifier.deleteSubmission([toDeleteId]);
     scaffoldMessenger.showSnackBar(
       SnackBar(
         content: Text(S.of(context).itemRemoved),
         action: SnackBarAction(
           label: S.of(context).undo,
           onPressed: () {
-            appLocator<SubmissionsTableService>().deleteInstance(toDeleteId);
+            // appLocator<DataInstanceDataService>().deleteIds([toDeleteId]);
             // listSubmissionsNotifier.deleteSubmission([toDeleteId]);
           },
         ),

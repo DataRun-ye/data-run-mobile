@@ -2860,6 +2860,106 @@ class S {
   String get addAnItem {
     return Intl.message('Add an Item', name: 'addAnItem', desc: '', args: []);
   }
+
+  /// `Date Range`
+  String get dateRange {
+    return Intl.message('Date Range', name: 'dateRange', desc: '', args: []);
+  }
+
+  /// `Include deleted`
+  String get includeDeleted {
+    return Intl.message(
+      'Include deleted',
+      name: 'includeDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply Filters`
+  String get applyFilters {
+    return Intl.message(
+      'Apply Filters',
+      name: 'applyFilters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today`
+  String get today {
+    return Intl.message('Today', name: 'today', desc: '', args: []);
+  }
+
+  /// `Last 3 Days`
+  String get lastThreeDays {
+    return Intl.message(
+      'Last 3 Days',
+      name: 'lastThreeDays',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Week`
+  String get thisWeek {
+    return Intl.message('This Week', name: 'thisWeek', desc: '', args: []);
+  }
+
+  /// `This Month`
+  String get thisMonth {
+    return Intl.message('This Month', name: 'thisMonth', desc: '', args: []);
+  }
+
+  /// `Last 3 Months`
+  String get lastThreeMonths {
+    return Intl.message(
+      'Last 3 Months',
+      name: 'lastThreeMonths',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Year`
+  String get thisYear {
+    return Intl.message('This Year', name: 'thisYear', desc: '', args: []);
+  }
+
+  /// `All Times`
+  String get allDates {
+    return Intl.message('All Times', name: 'allDates', desc: '', args: []);
+  }
+
+  /// `Edit/View`
+  String get editView {
+    return Intl.message('Edit/View', name: 'editView', desc: '', args: []);
+  }
+
+  /// `View`
+  String get view {
+    return Intl.message('View', name: 'view', desc: '', args: []);
+  }
+
+  /// `User Saved Instances`
+  String get userSavedInstances {
+    return Intl.message(
+      'User Saved Instances',
+      name: 'userSavedInstances',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open Speed Dial`
+  String get openSpeedDial {
+    return Intl.message(
+      'Open Speed Dial',
+      name: 'openSpeedDial',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

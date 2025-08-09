@@ -3,7 +3,7 @@ import 'package:d_sdk/core/exception/no_cached_authenticated_user.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/user/cache_keys.dart';
 import 'package:d_sdk/core/user_session/user_session.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:datarunmobile/core/user_session/session_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,4 +1,3 @@
-import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/form/application/form_list_filter.dart';
 import 'package:datarunmobile/features/form/application/form_list_item_model.dart';
@@ -131,8 +130,7 @@ class SubmissionCard extends StatelessWidget {
             const SizedBox(height: 8),
 
             SyncStatusBadgesView(
-              aggregationLevel: StatusAggregationLevel.form,
-              id: formItem.id,
+              formId: formItem.id,
             ),
             // Metadata Row
             // Wrap(

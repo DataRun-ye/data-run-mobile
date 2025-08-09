@@ -4,7 +4,7 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/dao/dao.dart';
 import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 

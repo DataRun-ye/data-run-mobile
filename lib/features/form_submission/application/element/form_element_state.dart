@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/utilities/list_extensions.dart';
+import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

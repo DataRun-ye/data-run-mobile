@@ -1,7 +1,7 @@
 import 'package:d_sdk/core/exception/exception.dart';
 import 'package:d_sdk/core/common/standard_extensions.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
-import 'package:datarunmobile/commons/extensions/string_extension.dart';
+import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:datarunmobile/core/form/data/validation_service.dart';
 import 'package:multiple_result/multiple_result.dart';
 

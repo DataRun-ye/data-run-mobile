@@ -1,7 +1,7 @@
-import 'package:d_sdk/core/utilities/date_helper.dart';
+import 'package:d_sdk/core/util/date_helper.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/table_widgets/edit_action_icon_cell.dart';
-import 'package:datarunmobile/features/assignment_detail/presentation/table_widgets/table_widgets.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/edit_action_icon_cell.dart';
+import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/table_widgets.dart';
 import 'package:flutter/material.dart';
 
 typedef OnRowSelected = void Function(String itemId, bool? selected);
@@ -25,6 +25,7 @@ class PaginatedTableSource extends DataTableSource {
   final Function(String submission)? onSelectedItem;
   final bool Function(String submission)? isSelected;
   final WidgetStateProperty<Color?>? disabledCellColor;
+
   List<String> _selectedItems = [];
 
   int get _selectedCount => _selectedItems.length;
@@ -64,21 +65,9 @@ class PaginatedTableSource extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
-    //     if (index >= vm.submissions.length) {
-//       // If the user scrolls to a page that hasn't been fetched yet,
-//       // we need to trigger a new fetch.
-//       // The `PaginatedDataTable` handles this by calling `getRow`
-//       // with a new index.
-//       int page = index ~/ vm.rowsPerPage;
-//       _fetchData(page, vm.rowsPerPage);
-//       return null; // Return null while loading
-//     }
     final local = index - _offset;
-    // int page = index ~/ _pageSize;
     if (local < 0 || local >= _data.length) {
-      // int page = index ~/ _pageSize;
-      // _fetchData(page, vm.rowsPerPage);
-      return null; // Return null while loading
+      return null;
     }
     final item = _data[local];
     return DataRow.byIndex(

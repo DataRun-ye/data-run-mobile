@@ -115,6 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addNew": MessageLookupByLibrary.simpleMessage("Add New"),
     "ageFieldHint": MessageLookupByLibrary.simpleMessage("Enter an Age"),
     "all": MessageLookupByLibrary.simpleMessage("All"),
+    "allDates": MessageLookupByLibrary.simpleMessage("All Times"),
     "allSubmissions": MessageLookupByLibrary.simpleMessage("All Submissions"),
     "allocatedResources": MessageLookupByLibrary.simpleMessage(
       "Allocated Resources",
@@ -126,6 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appVersion": MessageLookupByLibrary.simpleMessage("App Version"),
     "appearance": MessageLookupByLibrary.simpleMessage("Appearance"),
     "apply": MessageLookupByLibrary.simpleMessage("Apply"),
+    "applyFilters": MessageLookupByLibrary.simpleMessage("Apply Filters"),
     "assigned": MessageLookupByLibrary.simpleMessage("Assigned"),
     "assignedAssignments": MessageLookupByLibrary.simpleMessage("Assignments"),
     "assignedTeam": MessageLookupByLibrary.simpleMessage("Team"),
@@ -214,6 +216,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "datarun": MessageLookupByLibrary.simpleMessage("DATARUN"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("DOB"),
+    "dateRange": MessageLookupByLibrary.simpleMessage("Date Range"),
     "day": MessageLookupByLibrary.simpleMessage("Day"),
     "days": MessageLookupByLibrary.simpleMessage("Days"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
@@ -246,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dueDay": MessageLookupByLibrary.simpleMessage("dueDay"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
+    "editView": MessageLookupByLibrary.simpleMessage("Edit/View"),
     "emailFieldHint": MessageLookupByLibrary.simpleMessage("Enter An Email"),
     "empty": MessageLookupByLibrary.simpleMessage("Empty"),
     "endDate": MessageLookupByLibrary.simpleMessage("End Date"),
@@ -318,6 +322,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "households": MessageLookupByLibrary.simpleMessage("Households"),
     "imageFieldHint": MessageLookupByLibrary.simpleMessage("Select an Image"),
     "in_progress": MessageLookupByLibrary.simpleMessage("In Progress"),
+    "includeDeleted": MessageLookupByLibrary.simpleMessage("Include deleted"),
     "initializingDataInstance": MessageLookupByLibrary.simpleMessage(
       "Initializing Data Instance",
     ),
@@ -343,6 +348,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
     "lastSync": MessageLookupByLibrary.simpleMessage("Last sync time"),
     "lastSyncStatus": MessageLookupByLibrary.simpleMessage("last sync status"),
+    "lastThreeDays": MessageLookupByLibrary.simpleMessage("Last 3 Days"),
+    "lastThreeMonths": MessageLookupByLibrary.simpleMessage("Last 3 Months"),
     "lastmodifiedDate": MessageLookupByLibrary.simpleMessage(
       "LastModified Date",
     ),
@@ -432,6 +439,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "open": MessageLookupByLibrary.simpleMessage("Open"),
     "openNewForm": MessageLookupByLibrary.simpleMessage("New"),
     "openSettings": MessageLookupByLibrary.simpleMessage("Open settings"),
+    "openSpeedDial": MessageLookupByLibrary.simpleMessage("Open Speed Dial"),
     "optionSets": MessageLookupByLibrary.simpleMessage("Option Sets"),
     "options": MessageLookupByLibrary.simpleMessage("Options"),
     "orgUnitDialogTitle": MessageLookupByLibrary.simpleMessage(
@@ -582,9 +590,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "thisFieldIsRequired": MessageLookupByLibrary.simpleMessage(
       "This field is required.",
     ),
+    "thisMonth": MessageLookupByLibrary.simpleMessage("This Month"),
+    "thisWeek": MessageLookupByLibrary.simpleMessage("This Week"),
+    "thisYear": MessageLookupByLibrary.simpleMessage("This Year"),
     "timeFieldHint": MessageLookupByLibrary.simpleMessage("Select a Time"),
     "to_post": MessageLookupByLibrary.simpleMessage("Last Sync"),
     "to_update": MessageLookupByLibrary.simpleMessage("Last Sync"),
+    "today": MessageLookupByLibrary.simpleMessage("Today"),
     "toggleBetweenListAndCardView": MessageLookupByLibrary.simpleMessage(
       "Toggle between List and Card view",
     ),
@@ -612,6 +624,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "urlFieldHint": MessageLookupByLibrary.simpleMessage("Enter a URL"),
     "user": MessageLookupByLibrary.simpleMessage("user"),
+    "userSavedInstances": MessageLookupByLibrary.simpleMessage(
+      "User Saved Instances",
+    ),
     "userSettings": MessageLookupByLibrary.simpleMessage("User Settings"),
     "username": MessageLookupByLibrary.simpleMessage("Username"),
     "usernameFieldHint": MessageLookupByLibrary.simpleMessage(
@@ -626,6 +641,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "valueMustBeGreaterThanOrEqualToError": m29,
     "valueMustBeLessThanOrEqualToError": m30,
     "version": MessageLookupByLibrary.simpleMessage("Version"),
+    "view": MessageLookupByLibrary.simpleMessage("View"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
       "Expand to View Available Forms",
     ),

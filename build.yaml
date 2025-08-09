@@ -28,6 +28,7 @@ targets:
         enabled: true
         generate_for:
           - lib/**/application/**.dart
+          - lib/**/data/**.dart
           - lib/core/*.provider.dart
           - lib/core/**/*.provider.dart
           - lib/data/*.provider.dart
@@ -37,6 +38,7 @@ targets:
         generate_for:
           - lib/**/application/**/*.dart
           - lib/**/application/*.dart
+          - lib/**/data/**.dart
           - lib/app/di/*.dart
           - lib/app/app_routes/*.dart
           - lib/core/*.dart

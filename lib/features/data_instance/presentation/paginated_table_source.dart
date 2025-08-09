@@ -40,13 +40,11 @@ class PaginatedTableSource extends DataTableSource {
   }) {
     _data = pageData;
     _totalRowCount = total;
-    // _currentPage = currentPage;
-    // _pageSize = pageSize;
     _offset = offset;
     notifyListeners();
   }
 
-  /// A helper to update your backing data and notify the table
+  /// A helper to update backing data and notify the table
   void updateSelectedItems({required List<String> ids}) {
     _selectedItems = ids;
     notifyListeners();
@@ -73,7 +71,6 @@ class PaginatedTableSource extends DataTableSource {
     return DataRow.byIndex(
       color:
           item.deleted && disabledCellColor != null ? disabledCellColor : null,
-      // index: index,
       index: item.id.hashCode,
       selected: isSelected?.call(item.id) ?? false,
       onSelectChanged: (selected) => onSelectedItem?.call(item.id),

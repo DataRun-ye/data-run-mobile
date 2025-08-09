@@ -51,7 +51,6 @@ class FilterBar extends ConsumerWidget {
       ));
     }
 
-    // Include Deleted Chip
     if (filter.includeDeleted) {
       filterChips.add(Chip(
         label: Text(S.of(context).includeDeleted),

@@ -6,8 +6,6 @@ class FilterBadge extends StatelessWidget {
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
-    // if (count == 0) return const SizedBox.shrink();
-    // Show number of active filters from ViewModel
     return InkWell(
       onTap: onTap,
       child: Stack(

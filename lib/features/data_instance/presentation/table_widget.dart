@@ -52,7 +52,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
   @override
   void initState() {
     super.initState();
-    logDebug('1.**********************        initState');
+    // logDebug('1.**********************        initState');
     _paginator = PaginatorController();
     _source = PaginatedTableSource(
       disabledCellColor: widget.disabledCellColor,
@@ -132,7 +132,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
   }
 
   Future<void> _onPageOrSizeChanged() async {
-    logDebug('Real page/size change detected → fetching');
+    // logDebug('Real page/size change detected → fetching');
 
     final firstRow = _lastFirstRow!;
     final pageSize = _lastPageSize!;
@@ -206,7 +206,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
 
   @override
   void dispose() {
-    logDebug('4.**********************        dispose');
+    // logDebug('4.**********************        dispose');
     _paginator.removeListener(_onPageOrSizeChanged);
     _paginator.dispose();
     _source.dispose();
@@ -224,7 +224,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
       source: _source,
       columns: columns,
       rowsPerPage: 5,
-      availableRowsPerPage: const [5, 10, 20, 30, 50],
+      availableRowsPerPage: const [10, 20, 30, 60],
       showFirstLastButtons: true,
       onRowsPerPageChanged: (newSize) {
         if (newSize != null) {

@@ -215,7 +215,6 @@ class App extends ConsumerWidget {
         style: TextButton.styleFrom(
           foregroundColor: cs.primary,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          // textStyle: Typography.material2021().bodyMedium,
         ),
       ),
       tabBarTheme: base.tabBarTheme.copyWith(

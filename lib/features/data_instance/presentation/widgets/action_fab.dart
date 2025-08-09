@@ -29,12 +29,7 @@ class ActionFAB extends ConsumerWidget {
             ref.watch(selectedFinalizedItemProvider);
         return AnimatedSwitcher(
           duration: Duration(milliseconds: 300),
-          // transitionBuilder: (child, animation) => RotationTransition(
-          //   turns: animation,
-          //   child: child,
-          // ),
           transitionBuilder: (child, anim) {
-            // You can tweak this: scale, fade, slide, etc.
             return ScaleTransition(
               scale: anim,
               child: child,
@@ -72,28 +67,10 @@ class ActionFAB extends ConsumerWidget {
                       childMargin:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       buttonSize: const Size(56.0, 56.0),
-
-                      /// Transition Builder between label and activeLabel, defaults to FadeTransition.
-                      // labelTransitionBuilder: (widget, animation) => ScaleTransition(scale: animation,child: widget),
-                      /// The below button size defaults to 56 itself, its the SpeedDial childrens size
                       childrenButtonSize: const Size(56.0, 56.0),
-                      // visible: visible,
                       direction: direction,
-                      // : (value) => ref.read(selectedItemsProvider.notifier).clear(),
-                      /// If true user is forced to close dial manually
                       closeManually: true,
-                      // mini: true,
-
-                      /// If false, backgroundOverlay will not be rendered.
                       renderOverlay: false,
-                      // overlayColor: Colors.black,
-                      onOpen: () {
-                        debugPrint('OPENING DIAL');
-                      },
-                      // onClose: () {
-                      //   debugPrint('DIAL CLOSED');
-                      //   ref.read(selectedItemsProvider.notifier).clear();
-                      // },
                       children: [
                         SpeedDialChild(
                           child: finalizedItems.isNotEmpty

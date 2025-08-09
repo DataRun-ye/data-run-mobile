@@ -101,6 +101,6 @@ class ActivityListViewModel extends BaseViewModel {
 
   Future<void> runFuture() async {
     await runBusyFuture(_fetch());
-    logDebug(activities.toString());
+    // logDebug(activities.toString());
   }
 }

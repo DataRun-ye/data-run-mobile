@@ -237,7 +237,6 @@ class App extends ConsumerWidget {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        // alignLabelWithHint: true,
         fillColor: isDark ? cs.surfaceContainerHighest : cs.surface,
         errorStyle: TextStyle(
             color: SurfaceColors.Error,
@@ -270,7 +269,6 @@ class App extends ConsumerWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          // textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       dividerTheme: DividerThemeData(
@@ -328,7 +326,6 @@ class App extends ConsumerWidget {
         }),
       ),
       textTheme: _buildShrineTextTheme(base.textTheme),
-      // 1️⃣ Global ChipTheme (applies to basic Chip/ActionChip/InputChip)
       chipTheme: base.chipTheme.copyWith(
         secondarySelectedColor: cs.primaryFixedDim,
         checkmarkColor: DColors.Orange600,
@@ -344,7 +341,6 @@ class App extends ConsumerWidget {
       splashColor: cs.primary.withValues(alpha: 0.08),
       // highlightColor: cs.primary.withValues(alpha:0.1),
       //
-      // 2️⃣ FilterChip (for “multi‑select” filters)
       // filterChipTheme: FilterChipThemeData(
       //   selectedColor: cs.primary.withValues(alpha:0.16),
       //   checkmarkColor: cs.primary,

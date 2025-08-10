@@ -9,10 +9,12 @@ class FormDisplay extends ConsumerWidget {
     super.key,
     this.form,
     this.version,
+    this.prefix,
   });
 
   final String? form;
   final String? version;
+  final String? prefix;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,12 +23,13 @@ class FormDisplay extends ConsumerWidget {
     return AsyncValueWidget(
       value: formAsync,
       valueBuilder: (template) {
+        final label =
+            '${prefix != null ? prefix : ''} ${getItemLocalString(template.label, defaultString: template.name)}';
         return Tooltip(
           triggerMode: TooltipTriggerMode.tap,
-          message:
-              getItemLocalString(template.label, defaultString: template.name),
+          message: label,
           child: Text(
-            getItemLocalString(template.label, defaultString: template.name),
+            label,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyMedium,
           ),

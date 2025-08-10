@@ -15,7 +15,7 @@ class NoConnectionIndicator extends StatelessWidget {
   Widget build(BuildContext context) => ExceptionIndicator(
         title: S.of(context).noConnection,
         message: S.of(context).noConnectionMessage,
-        assetName: 'assets/app/offline.svg',
+        // assetName: 'assets/app/offline.svg',
         onTryAgain: onTryAgain,
       );
 }

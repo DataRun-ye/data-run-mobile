@@ -40,18 +40,21 @@ class AssignmentTableView extends HookConsumerWidget {
 
   Widget _buildTable(BuildContext context,
       Map<String, AssignmentModel> assignments, String searchQuery) {
+    final cols = <DataColumn>[
+      DataColumn2(label: Text(S.current.openNewForm), size: ColumnSize.S),
+      DataColumn2(label: Text(S.current.synced), size: ColumnSize.M),
+      DataColumn2(label: Text(S.current.entity), size: ColumnSize.L),
+      DataColumn2(label: Text(S.current.team), size: ColumnSize.S),
+    ];
+    final minTableWidth = (cols.length * 170.0);
+
     return DataTable2(
-      minWidth: 800,
+      minWidth: minTableWidth,
       isVerticalScrollBarVisible: true,
       isHorizontalScrollBarVisible: true,
       showBottomBorder: true,
       showCheckboxColumn: false,
-      columns: <DataColumn>[
-        DataColumn2(label: Text(S.current.openNewForm), size: ColumnSize.S),
-        DataColumn2(label: Text(S.current.synced), size: ColumnSize.S),
-        DataColumn2(label: Text(S.current.entity), size: ColumnSize.L),
-        DataColumn2(label: Text(S.current.team), size: ColumnSize.S),
-      ],
+      columns: cols,
       rows: assignments.values
           .map((assignment) => DataRow(
                 // color: WidgetStateProperty.resolveWith<Color?>(

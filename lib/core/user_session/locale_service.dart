@@ -1,5 +1,6 @@
 // services/locale_service.dart
 import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:d_sdk/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// A service to manage the current locale for the authenticated user.
 /// This service will be registered within the GetIt user session scope.
 class LocaleService extends ChangeNotifier {
-  LocaleService(Locale? initialLocale) {
-    _currentLocale = initialLocale;
+  LocaleService({Locale? initialLocale}) {
+    _currentLocale = initialLocale ?? Locale(AppEnvironment.defaultLocale);
     logDebug('LocaleService initialized with: $_currentLocale');
   }
 

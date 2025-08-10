@@ -11,6 +11,8 @@ Widget buildStatusIcon(InstanceSyncStatus? status, [double size = 18.0]) {
       return Icon(Icons.edit_note, color: Colors.grey[500], size: size);
     case InstanceSyncStatus.syncFailed:
       return Icon(Icons.error, color: Colors.red, size: size);
+    case InstanceSyncStatus.uploading:
+      return Icon(Icons.sync, color: Colors.grey[500], size: 20);
     default:
       return Icon(Icons.all_inclusive, size: size);
   }

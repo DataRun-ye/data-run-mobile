@@ -2251,6 +2251,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open Speed Dial'**
   String get openSpeedDial;
+
+  /// No description provided for @noItemsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Items Found'**
+  String get noItemsFound;
+
+  /// No description provided for @confirmDeleteItemsSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items will be deleted, are you sure?'**
+  String confirmDeleteItemsSelected(Object count);
+
+  /// No description provided for @fixedTableColumns.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed ِActions Columns'**
+  String get fixedTableColumns;
+
+  /// No description provided for @tableAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Table Appearance'**
+  String get tableAppearance;
+
+  /// No description provided for @tableControl.
+  ///
+  /// In en, this message translates to:
+  /// **'Table Control'**
+  String get tableControl;
+
+  /// No description provided for @compactTable.
+  ///
+  /// In en, this message translates to:
+  /// **'Compact table'**
+  String get compactTable;
+
+  /// No description provided for @hideSyncedRows.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide synced rows'**
+  String get hideSyncedRows;
 }
 
 class _AppLocalizationsDelegate

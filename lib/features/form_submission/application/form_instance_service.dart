@@ -14,8 +14,10 @@ abstract class FormInstanceService {
     bool sortAscending = true,
   });
 
-  Selectable<int> countByFilter(SubmissionsFilter templateFilter,
-      {Iterable<FilterCondition> filters});
+  Selectable<int> countByFilter(
+    SubmissionsFilter templateFilter, {
+    Iterable<FilterCondition> filters,
+  });
 
   Stream<PaginatedResult<SubmissionSummary>> watchByFilterWithCount(
     SubmissionsFilter templateFilter, {

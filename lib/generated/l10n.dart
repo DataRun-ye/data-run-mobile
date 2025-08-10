@@ -2960,6 +2960,76 @@ class S {
       args: [],
     );
   }
+
+  /// `No Items Found`
+  String get noItemsFound {
+    return Intl.message(
+      'No Items Found',
+      name: 'noItemsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} items will be deleted, are you sure?`
+  String confirmDeleteItemsSelected(Object count) {
+    return Intl.message(
+      '$count items will be deleted, are you sure?',
+      name: 'confirmDeleteItemsSelected',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Fixed ِActions Columns`
+  String get fixedTableColumns {
+    return Intl.message(
+      'Fixed ِActions Columns',
+      name: 'fixedTableColumns',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Table Appearance`
+  String get tableAppearance {
+    return Intl.message(
+      'Table Appearance',
+      name: 'tableAppearance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Table Control`
+  String get tableControl {
+    return Intl.message(
+      'Table Control',
+      name: 'tableControl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compact table`
+  String get compactTable {
+    return Intl.message(
+      'Compact table',
+      name: 'compactTable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hide synced rows`
+  String get hideSyncedRows {
+    return Intl.message(
+      'Hide synced rows',
+      name: 'hideSyncedRows',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

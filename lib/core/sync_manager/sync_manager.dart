@@ -11,7 +11,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable()
+@injectable
 class SyncManager extends Disposable {
   SyncManager(ConnectivityService connectivityService)
       : _remoteDataSourcesMap = IMap.fromIterable(

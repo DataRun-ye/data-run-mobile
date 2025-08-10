@@ -1,6 +1,4 @@
-import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
@@ -8,13 +6,11 @@ import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/form_display.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/form_prefix_version_badge.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/team_display.dart';
-import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/features/form/presentation/form_submission_create.widget.dart';
 import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class AssignmentDetailPage extends ConsumerWidget {
@@ -72,17 +68,18 @@ class AssignmentDetailPage extends ConsumerWidget {
 
                       return ListTile(
                         leading: FormPrefixVersionBadge(form: form.form),
-                        title: FormDisplay(form: form.form),
+                        title: FormDisplay(
+                          form: form.form,
+                          prefix: '${index + 1}. ',
+                        ),
                         subtitle: SyncStatusBadgesView(
                             formId: form.form, assignmentId: form.assignment),
                         trailing: const Icon(Icons.chevron_right),
-                        contentPadding:
-                        const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 6.0, horizontal: 6.0),
                         onTap: () {
-                          appLocator<NavigationService>()
-                              .navigateToTableScreen(
-                                  formId: form.form,
-                                  assignmentId: form.assignment);
+                          appLocator<NavigationService>().navigateToTableScreen(
+                              formId: form.form, assignmentId: form.assignment);
                         },
                       );
 
@@ -162,31 +159,5 @@ Future<void> showFormSelectionBottomSheet(
       ),
     );
     return;
-  }
-}
-
-class _FormListItem extends ConsumerWidget {
-  const _FormListItem(
-      {required this.index, required this.assignmentForm, required this.onTap});
-
-  final int index;
-  final AssignmentForm assignmentForm;
-  final void Function(FormTemplateModel) onTap;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formTemplateAsync =
-        ref.watch(formTemplateProvider(formId: assignmentForm.form));
-    final theme = Theme.of(context);
-    final metadataStyle =
-        theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade700);
-    final cs = Theme.of(context).colorScheme;
-    return ListTile(
-      leading: FormPrefixVersionBadge(form: assignmentForm.form),
-      title: FormDisplay(form: assignmentForm.form),
-      subtitle: SyncStatusBadgesView(
-          formId: assignmentForm.form, assignmentId: assignmentForm.assignment),
-      trailing: SvgPicture.asset('assets/app/icon_expansion_tile.svg'),
-    );
   }
 }

@@ -156,7 +156,7 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.Date:
       case ValueType.DateTime:
       case ValueType.Time:
-        final viewFormat = DateHelper.getEffectiveUiFormat(field.type);
+        final viewFormat = DateHelper.getEffectiveUiFormat(field.type, 'en_US');
         final pickedValue = DateTime.tryParse(field.value ?? '');
         final value =
             pickedValue != null ? viewFormat.format(pickedValue) : null;

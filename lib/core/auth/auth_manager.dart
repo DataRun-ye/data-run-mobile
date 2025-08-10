@@ -150,8 +150,10 @@ class AuthManager extends ChangeNotifier {
     _status = AuthStatus.authenticated;
 
     // Register user-specific dependencies in the new scope
-    appLocator.registerLazySingleton<LocaleService>(
-      () => LocaleService(Locale(userSession.langKey ?? 'en', 'en_US')),
+    appLocator.registerSingleton<LocaleService>(
+      LocaleService()
+        ..setLocale(Locale(
+            userSession.langKey ?? AppEnvironment.defaultLocale, 'en_US')),
     );
   }
 

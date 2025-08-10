@@ -54,11 +54,11 @@ class FormFlowBootstrapperVm extends BaseViewModel {
             await _db.dataInstances.findById(submissionId).getSingle();
       }
 
-      if (appLocator.currentScopeName?.startsWith('template_') == true) {
-        await appLocator.popScope();
+      if (appLocator.currentScopeName == dataInstance.id) {
+        await appLocator.dropScope(dataInstance.id);
       }
       await appLocator.pushNewScopeAsync(
-          scopeName: 'template_${dataInstance.id}',
+          scopeName: dataInstance.id,
           init: (getIt) async {
             final formFlatTemplate =
                 getIt.registerSingleton<FormTemplateRepository>(
@@ -77,9 +77,9 @@ class FormFlowBootstrapperVm extends BaseViewModel {
         currentPageIndex: assignmentId != null ? 1 : 0,
       );
     } catch (e) {
-      final scopeName = formId ?? dataInstance?.formTemplate;
-      if (scopeName != null) {
-        await appLocator.popScopesTill(scopeName);
+      if (dataInstance?.id != null &&
+          appLocator.currentScopeName == dataInstance!.id) {
+        await appLocator.dropScope(dataInstance.id);
       }
       setError(e);
       rethrow;

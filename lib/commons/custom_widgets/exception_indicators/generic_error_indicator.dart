@@ -15,7 +15,7 @@ class GenericErrorIndicator extends StatelessWidget {
   Widget build(BuildContext context) => ExceptionIndicator(
         title: S.of(context).generalErrorTitle,
         message: '${S.of(context).generalErrorMessage}\n',
-        assetName: 'assets/app/confused-face.png',
+        // assetName: 'assets/app/confused-face.png',
         onTryAgain: onTryAgain,
       );
 }

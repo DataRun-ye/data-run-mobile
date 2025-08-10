@@ -251,13 +251,17 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     switch (action) {
       case FormBottomDialogActionType.NotNow:
         Navigator.pop(context);
-        await appLocator.popScopesTill(widget.submissionId);
+        if (appLocator.currentScopeName == widget.submissionId) {
+          await appLocator.dropScope(widget.submissionId);
+        }
       case FormBottomDialogActionType.MarkAsFinal:
         await _markEntityAsFinal(context);
         if (context.mounted) {
           Navigator.pop(context);
         }
-        await appLocator.popScopesTill(widget.submissionId);
+        if (appLocator.currentScopeName == widget.submissionId) {
+          await appLocator.dropScope(widget.submissionId);
+        }
         break;
       case FormBottomDialogActionType.CheckFields:
       case null:

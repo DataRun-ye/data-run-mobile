@@ -1235,4 +1235,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get openSpeedDial => 'فتح الوصول السريع';
+
+  @override
+  String get noItemsFound => 'لا يوجد أي عنصر';
+
+  @override
+  String confirmDeleteItemsSelected(Object count) {
+    return 'سيتم حذف $count عنصر، هل أنت متأكد؟';
+  }
+
+  @override
+  String get fixedTableColumns => 'تثبيت أعمدة التفاعل';
+
+  @override
+  String get tableAppearance => 'مظهر الجدول';
+
+  @override
+  String get tableControl => 'إعدادات جدول';
+
+  @override
+  String get compactTable => 'جدول مضموم';
+
+  @override
+  String get hideSyncedRows => 'إخفاء دائم للمزامن';
 }

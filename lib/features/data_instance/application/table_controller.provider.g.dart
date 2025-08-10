@@ -6,7 +6,7 @@ part of 'table_controller.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tableControllerHash() => r'846467c79ba6e02dd8eb92169d9e1dd560d5e9a7';
+String _$tableControllerHash() => r'3133d13bc53d843441f3bb67b775493ba6cb88e6';
 
 /// See also [TableController].
 @ProviderFor(TableController)

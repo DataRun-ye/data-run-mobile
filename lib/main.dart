@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:d_sdk/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
@@ -20,6 +21,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -30,8 +32,6 @@ Future<void> main() async {
   ));
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-  await configureDependencies();
 
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) {
@@ -78,13 +78,6 @@ class App extends ConsumerWidget {
     final authManager = ref.watch(authNotifierProvider);
     final language =
         ref.watch(preferenceNotifierProvider(Preference.language)) as String;
-    // timeago.setLocaleMessages(
-    //     language,
-    //     switch (language) {
-    //       'ar' => timeago.ArMessages(),
-    //       'en' => timeago.EnMessages(),
-    //       _ => timeago.EnMessages(),
-    //     });
 
     final seed = ref.watch(preferenceNotifierProvider(Preference.colorSeed));
     final mode = ref.watch(preferenceNotifierProvider(Preference.themeMode));
@@ -134,7 +127,7 @@ class App extends ConsumerWidget {
           }
 
           // Fallback to the first supported locale (e.g., en)
-          userLocale = supportedLocales.first;
+          userLocale = Locale(AppEnvironment.defaultLocale);
         }
 
         timeago.setLocaleMessages(
@@ -157,8 +150,8 @@ class App extends ConsumerWidget {
   }
 
   final supportedLocales = const <Locale>[
-    Locale('en', 'en_us'),
-    Locale('ar', ''),
+    Locale('en'),
+    Locale('ar'),
   ];
 
   final localizationsDelegates = const <LocalizationsDelegate<dynamic>>[

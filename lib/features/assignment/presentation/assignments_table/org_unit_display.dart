@@ -22,14 +22,7 @@ class OrgUnitDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (orgUnit != null) {
-      return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HighlightedByValueLabel('${orgUnit!.code}', highlightText),
-            HighlightedByValueLabel('${orgUnit!.name}', highlightText)
-          ]);
+      return HighlightedByValueLabel('${orgUnit!.code}-${orgUnit!.name}', highlightText);
     }
 
     final displayValueAsync = ref.watch(

@@ -22,13 +22,9 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final formInstance = ref
-    //     .watch(
-    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-    //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
-    final viewFormat = DateHelper.getEffectiveUiFormat(element.type);
+    final viewFormat = DateHelper.getEffectiveUiFormat(element.type, 'en_US');
     final control =
         formInstance.form.control(element.elementPath!) as FormControl<String>;
     return CustomReactiveDateTimePicker(

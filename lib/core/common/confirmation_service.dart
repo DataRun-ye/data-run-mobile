@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:datarunmobile/commons/custom_widgets/expandable_text.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -35,7 +36,12 @@ Future<bool> withConfirmation({
         context: context,
         builder: (_) => AlertDialog(
           title: Text(title),
-          content: Text(body),
+          content: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
+            child: SingleChildScrollView(
+              child: ExpandableText(text: body, trimLines: 3),
+            ),
+          ),
           actions: [
             TextButton(
                 onPressed: () => Navigator.of(context).pop(false),

@@ -451,9 +451,9 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
       if (filterModel.assignmentId != null)
         FilterCondition.equals(
             dataInstances.assignment, filterModel.assignmentId!),
-      if (filterModel.syncState != null)
-        FilterCondition.equals(
-            dataInstances.syncState, filterModel.syncState!.name),
+      if (filterModel.syncStates.isNotEmpty)
+        FilterCondition.inList(dataInstances.syncState,
+            filterModel.syncStates.map((s) => s.name).toList()),
       if (!filterModel.includeDeleted)
         FilterCondition.equals(dataInstances.deleted, false),
       if (filterModel.dateFilterBand != null)
@@ -599,11 +599,10 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     //     ),
     //   ]);
     // } else {
-    //   query.orderBy([
-    //     OrderingTerm(
-    //         expression: db.dataInstances.createdDate, mode: OrderingMode.desc),
-    //     OrderingTerm(expression: db.dataInstances.id)
-    //   ]);
+    query.orderBy([
+      OrderingTerm(
+          expression: db.dataInstances.createdDate, mode: OrderingMode.desc)
+    ]);
     // }
 
     if (paged) {
@@ -637,10 +636,11 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
           createdDate: submission.createdDate,
           lastModifiedDate: submission.lastModifiedDate,
           lastSyncMessage: submission.lastSyncMessage,
-          dataMap: (submission.formData ?? {}).lock,
+          // dataMap: (submission.formData ?? {}).lock,
           deleted: submission.deleted,
           formData: FormDataUtil.extractTemplateValue(
-                  submission.formData ?? {}, formVersion.fields)
+                  submission.formData ?? {}, formVersion.fields,
+                  createdAt: submission.createdDate)
               .lock);
     });
   }
@@ -654,9 +654,10 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
           filter & dataInstances.assignment.equals(filterModel.assignmentId!);
     }
 
-    if (filterModel.syncState != null) {
-      filter =
-          filter & dataInstances.syncState.equals(filterModel.syncState!.name);
+    if (filterModel.syncStates.isNotEmpty) {
+      filter = filter &
+          dataInstances.syncState
+              .isIn(filterModel.syncStates.map((s) => s.name));
     }
 
     if (filterModel.dateFilterBand != null) {

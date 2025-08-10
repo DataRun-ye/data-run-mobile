@@ -17,7 +17,7 @@ class SubmissionsFilter with EquatableMixin {
 
   //
   final String? searchTerm;
-  final InstanceSyncStatus? syncState;
+  final Set<InstanceSyncStatus> syncStates;
   final bool includeDeleted;
   final DateFilterBand? dateFilterBand;
 
@@ -27,26 +27,15 @@ class SubmissionsFilter with EquatableMixin {
     this.searchTerm,
     this.includeDeleted = false,
     this.dateFilterBand,
-    this.syncState,
+    this.syncStates = const {},
   });
-
-  SubmissionsFilter toggleSyncStatus(InstanceSyncStatus? status) {
-    return SubmissionsFilter(
-      formId: formId,
-      assignmentId: assignmentId,
-      searchTerm: searchTerm,
-      dateFilterBand: dateFilterBand,
-      includeDeleted: includeDeleted,
-      syncState: status,
-    );
-  }
 
   SubmissionsFilter toggleDateBand(DateFilterBand? band) {
     return SubmissionsFilter(
       formId: formId,
       assignmentId: assignmentId,
       searchTerm: searchTerm,
-      syncState: syncState,
+      syncStates: syncStates,
       dateFilterBand: band,
       includeDeleted: includeDeleted,
     );
@@ -54,7 +43,7 @@ class SubmissionsFilter with EquatableMixin {
 
   int get filterCount {
     final filters = [
-      syncState != null ? 1 : 0,
+      syncStates.isNotEmpty ? 1 : 0,
       dateFilterBand != null ? 1 : 0,
       includeDeleted ? 1 : 0,
     ];
@@ -65,7 +54,7 @@ class SubmissionsFilter with EquatableMixin {
     String? formId,
     String? assignmentId,
     String? searchTerm,
-    InstanceSyncStatus? syncState,
+    Set<InstanceSyncStatus>? syncStates,
     DateFilterBand? dateFilterBand,
     bool? includeDeleted,
   }) {
@@ -73,7 +62,7 @@ class SubmissionsFilter with EquatableMixin {
       formId: formId ?? this.formId,
       assignmentId: assignmentId ?? this.assignmentId,
       searchTerm: searchTerm ?? this.searchTerm,
-      syncState: syncState ?? this.syncState,
+      syncStates: syncStates ?? this.syncStates,
       includeDeleted: includeDeleted ?? this.includeDeleted,
       dateFilterBand: dateFilterBand ?? this.dateFilterBand,
     );
@@ -84,7 +73,7 @@ class SubmissionsFilter with EquatableMixin {
         formId,
         assignmentId,
         searchTerm,
-        syncState,
+        syncStates,
         dateFilterBand,
         includeDeleted,
       ];

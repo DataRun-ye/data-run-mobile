@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
@@ -31,6 +32,7 @@ Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(Ref ref,
 
   final availableAssignedForms = assignmentForms
       .map((fp) => Pair(fp, availableForms.contains(fp.form)))
+      .sorted((a, b) => a.first.form.compareTo(b.first.form))
       .toList();
 
   return availableAssignedForms;

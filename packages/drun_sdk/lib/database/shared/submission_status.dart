@@ -5,7 +5,12 @@ enum InstanceSyncStatus {
   syncFailed, // Tried to sync but failed
   uploading;
 
+  static List<InstanceSyncStatus> get filterIcons =>
+      [draft, finalized, synced, syncFailed];
+
   bool get isToSync => toSyncStatuses.contains(this);
+
+  bool get isFilterIcon => filterIcons.contains(this);
 
   bool get isSynced => synced == this;
 

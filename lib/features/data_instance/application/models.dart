@@ -179,3 +179,42 @@ class TableState with EquatableMixin {
     return validSubmissions.map((s) => s.id).toSet();
   }
 }
+
+class TableAppearance with EquatableMixin {
+  const TableAppearance({
+    this.compact = false,
+    this.fixedActionColumns = false,
+    this.hideSynced = false,
+  });
+
+  final bool compact;
+  final fixedActionColumns;
+  final hideSynced;
+
+  TableAppearance toggleCompact(bool? value) {
+    return copyWith(compact: value ?? !compact);
+  }
+
+  TableAppearance toggleFixedActionColumns(bool? value) {
+    return copyWith(fixedActionColumns: value ?? !fixedActionColumns);
+  }
+
+  TableAppearance toggleHideSynced(bool? value) {
+    return copyWith(hideSynced: value ?? !hideSynced);
+  }
+
+  TableAppearance copyWith({
+    bool? compact,
+    bool? fixedActionColumns,
+    bool? hideSynced,
+  }) {
+    return TableAppearance(
+      compact: compact ?? this.compact,
+      fixedActionColumns: fixedActionColumns ?? this.fixedActionColumns,
+      hideSynced: hideSynced ?? this.hideSynced,
+    );
+  }
+
+  @override
+  List<Object?> get props => [compact, fixedActionColumns, hideSynced];
+}

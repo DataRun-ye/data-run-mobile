@@ -1,5 +1,4 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
-import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
@@ -81,6 +80,9 @@ class TableScreen extends ConsumerWidget {
               );
             },
           ),
+          SizedBox(
+            height: 24,
+          ),
         ],
       ),
       floatingActionButton: ActionFAB(
@@ -92,14 +94,15 @@ class TableScreen extends ConsumerWidget {
           appLocator<ConfirmationService>().confirmAndExecute(
               context: context,
               title: S.of(context).confirm,
-              body: S.of(context).deleteConfirmationMessage,
+              body: S.of(context).confirmDeleteItemsSelected(
+                  ref.read(selectedItemsProvider).length),
               confirmLabel: S.of(context).delete,
               action: () => ref
                   .read(tableControllerProvider.notifier)
                   .deleteSelectedItems());
         },
         onBulkSync: () {
-          logDebug('onSync');
+          // logDebug('onSync');
           ref
               .read(tableControllerProvider.notifier)
               .syncSelectedFinalizedItems();

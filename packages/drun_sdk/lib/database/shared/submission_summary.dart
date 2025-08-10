@@ -1,7 +1,7 @@
+import 'package:d_sdk/core/data_instance/field_value.dart';
 import 'package:d_sdk/core/data_instance/form_data_util.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/shared/shared.dart';
-import 'package:d_sdk/core/data_instance/field_value.dart';
 import 'package:drift/drift.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -133,7 +133,8 @@ class SubmissionSummary with EquatableMixin {
         deleted: submission.deleted,
         lastSyncMessage: submission.lastSyncMessage,
         formData: FormDataUtil.extractTemplateValue(
-                submission.formData ?? {}, formVersion.fields)
+                submission.formData ?? {}, formVersion.fields,
+                createdAt: submission.createdDate)
             .lock);
   }
 }

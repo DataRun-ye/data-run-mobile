@@ -511,14 +511,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.8.0"
-  flutter_svg:
-    dependency: "direct main"
-    description:
-      name: flutter_svg
-      sha256: cd57f7969b4679317c17af6fd16ee233c1e60a82ed209d8a475c54fd6fd6f845
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -554,7 +546,7 @@ packages:
     source: hosted
     version: "4.0.0"
   get:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get
       sha256: c79eeb4339f1f3deffd9ec912f8a923834bec55f7b49c9e882b8fef2c139d425
@@ -577,14 +569,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
-  go_router:
-    dependency: "direct main"
-    description:
-      name: go_router
-      sha256: "8b1f37dfaf6e958c6b872322db06f946509433bec3de753c3491a42ae9ec2b48"
-      url: "https://pub.dev"
-    source: hosted
-    version: "16.1.0"
   graphs:
     dependency: transitive
     description:
@@ -721,14 +705,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  loading_indicator:
-    dependency: "direct main"
-    description:
-      name: loading_indicator
-      sha256: a101ffb2aa3e646137d7810bfa90b50525dd3f72c01235b6df7491cf6af6f284
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.1"
   logger:
     dependency: transitive
     description:
@@ -857,14 +833,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  path_parsing:
-    dependency: transitive
-    description:
-      name: path_parsing
-      sha256: "883402936929eac138ee0a45da5b0f2c80f89913e6dc3bf77eb65b84b409c6ca"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   path_provider:
     dependency: transitive
     description:
@@ -1214,14 +1182,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.6.1"
-  stacked_hooks:
-    dependency: "direct main"
-    description:
-      name: stacked_hooks
-      sha256: ba2b0d777c69d4d38e5c08edbacc4dfe68eac94672447d067c2edc86fff9ed25
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.4"
   stacked_services:
     dependency: "direct main"
     description:
@@ -1310,14 +1270,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  two_dimensional_scrollables:
-    dependency: "direct main"
-    description:
-      name: two_dimensional_scrollables
-      sha256: "0f77ecb96596f2f82eec2b0a8e60d9305c58315557da9fa3b610c7dbf5ded621"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.7"
   typed_data:
     dependency: transitive
     description:
@@ -1350,30 +1302,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
-  vector_graphics:
-    dependency: transitive
-    description:
-      name: vector_graphics
-      sha256: a4f059dc26fc8295b5921376600a194c4ec7d55e72f2fe4c7d2831e103d461e6
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.19"
-  vector_graphics_codec:
-    dependency: transitive
-    description:
-      name: vector_graphics_codec
-      sha256: "99fd9fbd34d9f9a32efd7b6a6aae14125d8237b10403b422a6a6dfeac2806146"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.13"
-  vector_graphics_compiler:
-    dependency: transitive
-    description:
-      name: vector_graphics_compiler
-      sha256: "557a315b7d2a6dbb0aaaff84d857967ce6bdc96a63dc6ee2a57ce5a6ee5d3331"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.17"
   vector_math:
     dependency: transitive
     description:

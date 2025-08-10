@@ -15,11 +15,11 @@ class DateHelper {
 
   static const String TIME_FORMAT = 'HH:mm';
 
-  static DateFormat getEffectiveUiFormat(ValueType? valueType) =>
+  static DateFormat getEffectiveUiFormat(ValueType? valueType, [String? locale]) =>
       switch (valueType) {
-        ValueType.Date => DateFormat(DateHelper.UI_DATE_FORMAT, 'en_US'),
-        ValueType.Time => DateFormat(DateHelper.TIME_FORMAT, 'en_US'),
-        _ => DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION, 'en_US')
+        ValueType.Date => DateFormat(DateHelper.UI_DATE_FORMAT, locale),
+        ValueType.Time => DateFormat(DateHelper.TIME_FORMAT, locale),
+        _ => DateFormat(DateHelper.DATE_TIME_FORMAT_EXPRESSION, locale)
       };
 
   static DateFormat databaseDateFormat() {

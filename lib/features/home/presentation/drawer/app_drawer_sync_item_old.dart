@@ -6,17 +6,17 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:stacked_hooks/stacked_hooks.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class DrawerSyncItem extends StackedHookView<AppDrawerViewModel> {
+class DrawerSyncItem extends ViewModelWidget<AppDrawerViewModel> {
   const DrawerSyncItem({
     super.key,
   }) : super(reactive: true);
 
   @override
-  Widget builder(BuildContext context, AppDrawerViewModel model) {
+  Widget build(BuildContext context, AppDrawerViewModel model) {
     final syncMetadataRepo = appLocator<SyncMetadataRepository>();
     final lastSyncTime = syncMetadataRepo.lastSyncTime;
     String lastSynced = lastSyncTime != null
@@ -53,9 +53,9 @@ class DrawerSyncItem extends StackedHookView<AppDrawerViewModel> {
           : Icon(MdiIcons.webOff, color: Colors.grey),
       onTap: isOnline
           ? () {
-        appLocator<NavigationService>().back();
-        appLocator<NavigationService>().replaceWithSyncResourcesView();
-      }
+              appLocator<NavigationService>().back();
+              appLocator<NavigationService>().replaceWithSyncResourcesView();
+            }
           : null,
     );
   }

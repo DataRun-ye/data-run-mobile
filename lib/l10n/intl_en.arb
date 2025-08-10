@@ -442,5 +442,12 @@
   "editView": "Edit/View",
   "view": "View",
   "userSavedInstances": "User Saved Instances",
-  "openSpeedDial": "Open Speed Dial"
+  "openSpeedDial": "Open Speed Dial",
+  "noItemsFound": "No Items Found",
+  "confirmDeleteItemsSelected": "{count} items will be deleted, are you sure?",
+  "fixedTableColumns": "Fixed ِActions Columns",
+  "tableAppearance": "Table Appearance",
+  "tableControl": "Table Control",
+  "compactTable": "Compact table",
+  "hideSyncedRows": "Hide synced rows"
 }

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/shared.dart';
@@ -34,8 +35,9 @@ class Assignments extends _$Assignments {
         await ref.watch(userAvailableFormsProvider().future);
 
     final assignmentModels = assignments.map((assignment) {
-      final assignmentForms = userForms
+      final List<Pair<AssignmentForm, bool>> assignmentForms = userForms
           .where((uf) => uf.first.assignment == assignment.id)
+          .sorted((a, b) => a.first.form.compareTo(b.first.form))
           .toList();
       return assignment.copyWith(userForms: assignmentForms);
     }).toList();

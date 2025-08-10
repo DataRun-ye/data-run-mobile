@@ -1,4 +1,3 @@
-import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/domain/filter.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -12,6 +11,7 @@ import 'package:datarunmobile/features/data_instance/presentation/table_columns_
 import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -69,7 +69,8 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
         appLocator<ConfirmationService>().confirmAndExecute(
             context: context,
             title: S.current.syncFailed,
-            body: '${S.current.syncErrors}: ${item.lastSyncMessage?.contains('Timeout') == true ? S.current.networkTimeout : item.lastSyncMessage}',
+            body:
+                '${S.current.syncErrors}: ${item.lastSyncMessage?.toLowerCase().contains('Timeout') == true ? S.current.networkTimeout : item.lastSyncMessage}',
             confirmLabel: S.current.ok,
             action: () {});
       },
@@ -85,15 +86,15 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
         dataInstanceFilterProvider(
             formId: widget.templateModel.id,
             assignmentId: widget.assignmentId), (_, __) async {
-      logDebug('**********************        _filters Listener');
+      // logDebug('**********************        _filters Listener');
       if (_paginator.isAttached) _paginator.goToFirstPage();
       await _onPageOrSizeChanged();
     });
 
     ref.listenManual<ISet<String>>(selectedItemsProvider, (prev, next) {
       final updateSelectedItems = prev != next;
-      logDebug(
-          'SelectedItems Listener, source, update selectedIds? $updateSelectedItems');
+      // logDebug(
+      //     'SelectedItems Listener, source, update selectedIds? $updateSelectedItems');
       if (prev != next) {
         _updateSelectedItems();
       }
@@ -106,11 +107,11 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
                 assignmentId: widget.assignmentId)), (prev, next) {
       next.whenData((count) {
         final currentTotal = ref.read(tablePaginationProvider).totalItems;
-        logDebug(
-            'totalItemsStream listener, pagination update total (current, new): ($currentTotal, $count)');
+        // _onPageOrSizeChanged();
         _onPageOrSizeChanged1();
       });
     });
+
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   logDebug('**********************        _PostFrameCallback');
     //   if (_paginator.isAttached) _maybeLoadPage();
@@ -118,7 +119,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
   }
 
   void _maybeLoadPage() {
-    logDebug('**********************        _maybeLoadPage');
+    // logDebug('**********************        _maybeLoadPage');
     final firstRow = _paginator.currentRowIndex;
     final pageSize = _paginator.rowsPerPage;
 
@@ -215,17 +216,20 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
 
   @override
   Widget build(BuildContext context) {
-    final columns = buildColumns(widget.templateModel, ref);
-    final minTableWidth = (columns.length * 150.0);
+    final tableAppearance = ref.watch(tableAppearanceControllerProvider);
+    final cs = Theme.of(context).colorScheme;
+    final columns = buildColumns(widget.templateModel, ref, tableAppearance);
+    final compact = tableAppearance.compact;
+    final minTableWidth = (columns.length * (compact ? 100.0 : 130.0));
 
     return PaginatedDataTable2(
+      dragStartBehavior: DragStartBehavior.down,
       header: widget.header,
       controller: _paginator,
       source: _source,
       columns: columns,
-      rowsPerPage: 5,
+      rowsPerPage: 10,
       availableRowsPerPage: const [10, 20, 30, 60],
-      showFirstLastButtons: true,
       onRowsPerPageChanged: (newSize) {
         if (newSize != null) {
           setState(() {
@@ -236,12 +240,17 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
         }
       },
       fixedTopRows: 1,
-      fixedLeftColumns: 1,
+      fixedLeftColumns:
+          ref.watch(tableAppearanceControllerProvider).fixedActionColumns
+              ? 3
+              : 0,
+      fixedCornerColor: cs.primaryContainer.withValues(alpha: 0.7),
+      fixedColumnsColor: cs.surfaceContainer,
       showCheckboxColumn: true,
       minWidth: minTableWidth,
-      columnSpacing: 12,
-      horizontalMargin: 12,
-      dataRowHeight: 60,
+      columnSpacing: compact ? 8 : 12,
+      horizontalMargin: compact ? 8 : 16,
+      dataRowHeight: compact ? 40 : 55,
       wrapInCard: false,
       renderEmptyRowsInTheEnd: false,
     );
@@ -255,17 +264,11 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
     final loadData = prev?.currentPage != next?.currentPage ||
         prev?.pageSize != next?.pageSize ||
         prev?.totalItems != next?.totalItems;
-    logDebug(
-        '2.**********************        didUpdateWidget, load data? $loadData');
+    // logDebug(
+    //     '2.**********************        didUpdateWidget, load data? $loadData');
     // if (loadData) {
     //   _pagination = next;
     //   _loadPage();
     // }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    logDebug('3.**********************        didChangeDependencies');
   }
 }

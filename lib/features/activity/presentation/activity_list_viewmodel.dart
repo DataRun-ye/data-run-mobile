@@ -1,4 +1,3 @@
-import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/dao/dao.dart';

@@ -12,7 +12,7 @@ Widget getErrorWidget(Object? error, StackTrace? stackTrace) {
       child: ExceptionIndicator(
     title: S.current.generalErrorTitle,
     message: '${message}\n',
-    assetName: 'assets/app/confused-face.svg',
+    // assetName: 'assets/app/confused-face.svg',
   ));
 }
 
@@ -25,6 +25,6 @@ Widget getErrorWidget2(Object? error, StackTrace? stackTrace) {
       child: ExceptionIndicator(
     title: S.current.generalErrorTitle,
     message: '${message}\n',
-    assetName: 'assets/app/confused-face.png',
+    // assetName: 'assets/app/confused-face.png',
   ));
 }

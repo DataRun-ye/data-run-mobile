@@ -25,7 +25,24 @@ class DataInstanceFilter extends _$DataInstanceFilter {
   }
 
   void toggleSyncStatus(InstanceSyncStatus? status) {
-    state = state.toggleSyncStatus(status);
+    if (status == null) {
+      // clear all selected statuses
+      state = state.copyWith(syncStates: {});
+      return;
+    }
+
+    final newSet = {...state.syncStates};
+    if (newSet.contains(status)) {
+      newSet.remove(status);
+    } else {
+      newSet.add(status);
+    }
+
+    state = state.copyWith(syncStates: newSet);
+  }
+
+  void clearSyncStates() {
+    state = state.copyWith(syncStates: {});
   }
 
   void toggleDateBand(DateFilterBand? band) {
@@ -193,4 +210,24 @@ Future<ISet<String>> selectedFinalizedItem(Ref ref) async {
   final syncableIds =
       await appLocator<TableRepository>().getSyncableIds(selectedIds);
   return ISet(syncableIds);
+}
+
+@riverpod
+class TableAppearanceController extends _$TableAppearanceController {
+  @override
+  TableAppearance build() {
+    return TableAppearance();
+  }
+
+  void toggleCompact(bool? value) {
+    state = state.toggleCompact(value);
+  }
+
+  void toggleFixedActionColumns(bool? value) {
+    state = state.toggleFixedActionColumns(value);
+  }
+
+  void toggleHideSynced(bool? value) {
+    state = state.toggleHideSynced(value);
+  }
 }

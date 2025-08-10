@@ -405,5 +405,12 @@
   "editView": "تعديل/عرض",
   "view": "استعراض",
   "userSavedInstances": "مدخلات المستخدم",
-  "openSpeedDial": "فتح الوصول السريع"
+  "openSpeedDial": "فتح الوصول السريع",
+  "noItemsFound": "لا يوجد أي عنصر",
+  "confirmDeleteItemsSelected": "سيتم حذف {count} عنصر، هل أنت متأكد؟",
+  "fixedTableColumns": "تثبيت أعمدة التفاعل",
+  "tableAppearance": "مظهر الجدول",
+  "tableControl": "إعدادات جدول",
+  "compactTable": "جدول مضموم",
+  "hideSyncedRows": "إخفاء دائم للمزامن"
 }

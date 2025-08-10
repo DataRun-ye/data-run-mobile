@@ -20,8 +20,10 @@ class FormInstanceServiceImpl extends FormInstanceService {
     String? sortColumn,
     bool sortAscending = true,
   }) async {
-    final totalCount =
-        await countByFilter(templateFilter, filters: filters).getSingle();
+    final totalCount = await countByFilter(
+      templateFilter,
+      filters: filters,
+    ).getSingle();
     //
     // final result = await _db.dataInstancesDao
     //     .selectSubmissions(templateFilter,

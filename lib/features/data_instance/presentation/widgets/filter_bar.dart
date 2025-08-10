@@ -22,18 +22,20 @@ class FilterBar extends ConsumerWidget {
         dataInstanceFilterProvider(formId: formId, assignmentId: assignmentId));
     final List<Widget> filterChips = [];
 
-    if (filter.syncState != null) {
-      filterChips.add(Chip(
-        label: buildStatusIcon(filter.syncState, 20),
-        deleteIcon: const Icon(Icons.close),
-        onDeleted: () {
-          ref
-              .read(dataInstanceFilterProvider(
-                      formId: formId, assignmentId: assignmentId)
-                  .notifier)
-              .toggleSyncStatus(null);
-        },
-      ));
+    if (filter.syncStates.isNotEmpty) {
+      filter.syncStates.map((status) {
+        return filterChips.add(Chip(
+          label: buildStatusIcon(status, 20),
+          deleteIcon: const Icon(Icons.close),
+          onDeleted: () {
+            ref
+                .read(dataInstanceFilterProvider(
+                        formId: formId, assignmentId: assignmentId)
+                    .notifier)
+                .toggleSyncStatus(null);
+          },
+        ));
+      });
     }
 
     // Date Range Chip

@@ -1,4 +1,3 @@
-import 'package:d_sdk/core/util/date_helper.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/edit_action_icon_cell.dart';
 import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/table_widgets.dart';
@@ -111,14 +110,8 @@ class PaginatedTableSource extends DataTableSource {
 
   List<DataCell> _getDateCells(SubmissionSummary d) {
     return [
-      DataCell(DateCell(
-          date: d.createdDate != null
-              ? DateHelper.formatForUi(d.createdDate!, includeTime: true)
-              : null)),
-      DataCell(DateCell(
-          date: d.lastModifiedDate != null
-              ? DateHelper.formatForUi(d.lastModifiedDate!, includeTime: true)
-              : null)),
+      DataCell(DateCell(date: d.createdDate?.toLocal())),
+      DataCell(DateCell(date: d.lastModifiedDate?.toLocal())),
     ];
   }
 }

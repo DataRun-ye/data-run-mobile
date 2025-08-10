@@ -7,13 +7,13 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:stacked_hooks/stacked_hooks.dart';
+import 'package:stacked/stacked.dart';
 
-class UserSettingsTabView extends StackedHookView<SettingsViewmodel> {
+class UserSettingsTabView extends ViewModelWidget<SettingsViewmodel> {
   const UserSettingsTabView({super.key}) : super(reactive: true);
 
   @override
-  Widget builder(BuildContext context, SettingsViewmodel model) {
+  Widget build(BuildContext context, SettingsViewmodel model) {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final currentAuthUser = appLocator<AuthManager>().activeUserSession;

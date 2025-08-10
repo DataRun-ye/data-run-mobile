@@ -53,8 +53,6 @@ final result = FormDataAggregator.aggregate(rawValue, 'median');
 1. **Change Detection:** How do we invalidate cached path results when a source field updates?
 2. **Memoization Strategy:** LRU cache per form/path? TTL?
 
-## 3. Instance paginated table view:
-
 ## 11/15/2024
 
 - I plan to enhance the current structure of form elements (@FormElementInstance and its subclasses:

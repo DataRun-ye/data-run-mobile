@@ -40,9 +40,13 @@ class HighlightedByValueLabel extends ConsumerWidget {
       spans.add(TextSpan(
         text: text.substring(match.start, match.end),
         style: style != null
-            ? style?.merge(
-                TextStyle(backgroundColor: Theme.of(context).primaryColorLight))
-            : TextStyle(backgroundColor: Theme.of(context).primaryColorLight),
+            ? style?.merge(TextStyle(
+                backgroundColor: Theme.of(context).primaryColorLight,
+                overflow: TextOverflow.ellipsis))
+            : TextStyle(
+                backgroundColor: Theme.of(context).primaryColorLight,
+                overflow: TextOverflow.ellipsis,
+              ),
       ));
       start = match.end;
     }
@@ -54,6 +58,7 @@ class HighlightedByValueLabel extends ConsumerWidget {
     return RichText(
       text:
           TextSpan(style: DefaultTextStyle.of(context).style, children: spans),
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

@@ -1235,4 +1235,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openSpeedDial => 'Open Speed Dial';
+
+  @override
+  String get noItemsFound => 'No Items Found';
+
+  @override
+  String confirmDeleteItemsSelected(Object count) {
+    return '$count items will be deleted, are you sure?';
+  }
+
+  @override
+  String get fixedTableColumns => 'Fixed ِActions Columns';
+
+  @override
+  String get tableAppearance => 'Table Appearance';
+
+  @override
+  String get tableControl => 'Table Control';
+
+  @override
+  String get compactTable => 'Compact table';
+
+  @override
+  String get hideSyncedRows => 'Hide synced rows';
 }

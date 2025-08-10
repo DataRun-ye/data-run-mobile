@@ -65,18 +65,27 @@ class SubmissionTableCell extends StatelessWidget {
         return ValueTypeValueDisplay(
           key: ValueKey(fieldValue.id),
           valueType: fieldValue.valueType,
-          value: fieldValue.value,
+          value: fieldValue.value.toString(),
         );
       case ValueType.Date:
       case ValueType.DateTime:
       case ValueType.Time:
-        return Text(
-            key: ValueKey(fieldValue.id),
-            appLocator<MapValueToDisplay>().getDateValue(
-              fieldValue.valueType,
-              fieldValue.value,
-            ),
-            overflow: TextOverflow.ellipsis);
+        final formatedValue =
+            appLocator<MapValueToDisplay>().getFormatedValue(fieldValue);
+        return Tooltip(
+          message: formatedValue,
+          child: Text(
+              key: ValueKey(fieldValue.id),
+              formatedValue,
+              overflow: TextOverflow.ellipsis),
+        );
+      case ValueType.Age:
+        return NumericCell(
+          key: ValueKey(fieldValue.id),
+          value: appLocator<MapValueToDisplay>().getAgeValue(
+              fieldValue.value.toString(),
+              referenceDate: fieldValue.createdAt),
+        );
       case ValueType.Number:
       case ValueType.UnitInterval:
       case ValueType.Percentage:
@@ -84,7 +93,6 @@ class SubmissionTableCell extends StatelessWidget {
       case ValueType.IntegerPositive:
       case ValueType.IntegerNegative:
       case ValueType.IntegerZeroOrPositive:
-      case ValueType.Age:
         return NumericCell(
           key: ValueKey(fieldValue.id),
           value: fieldValue.value?.toString(),
@@ -133,8 +141,8 @@ class SubmissionTableCell extends StatelessWidget {
       case ValueType.Image:
       case ValueType.GeoJson:
       case ValueType.Calculated:
-        final value = (fieldValue.value?.toString().length ?? 0) > 20
-            ? fieldValue.value.toString().substring(0, 20)
+        final value = (fieldValue.value?.toString().length ?? 0) > 100
+            ? fieldValue.value.toString().trim().substring(0, 100)
             : fieldValue.value?.toString() ?? '';
         return Text(
             key: ValueKey(fieldValue.id),

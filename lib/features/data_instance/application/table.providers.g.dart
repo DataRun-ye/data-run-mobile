@@ -498,7 +498,7 @@ final tablePaginationProvider =
 );
 
 typedef _$TablePagination = AutoDisposeNotifier<Pagination>;
-String _$selectedItemsHash() => r'b4aff8df2a5fa2a8ddc7321607e5673403146f45';
+String _$selectedItemsHash() => r'c160887e2af4eb7f57ca168ce4018b32cd3bbc0a';
 
 /// See also [SelectedItems].
 @ProviderFor(SelectedItems)
@@ -514,5 +514,22 @@ final selectedItemsProvider =
 );
 
 typedef _$SelectedItems = AutoDisposeNotifier<ISet<String>>;
+String _$tableAppearanceControllerHash() =>
+    r'99621c216e39e344e44677a73bf08b8d5bfb7f60';
+
+/// See also [TableAppearanceController].
+@ProviderFor(TableAppearanceController)
+final tableAppearanceControllerProvider = AutoDisposeNotifierProvider<
+    TableAppearanceController, TableAppearance>.internal(
+  TableAppearanceController.new,
+  name: r'tableAppearanceControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$tableAppearanceControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TableAppearanceController = AutoDisposeNotifier<TableAppearance>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

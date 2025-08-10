@@ -56,6 +56,7 @@ class _StatusIconState extends State<StatusIcon>
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     final parsed = widget.syncState;
     final tooltip = parsed?.name.toLowerCase() ?? '-';
 
@@ -64,7 +65,8 @@ class _StatusIconState extends State<StatusIcon>
       child: Builder(builder: (_) {
         switch (parsed) {
           case InstanceSyncStatus.synced:
-            return const Icon(Icons.cloud_done, color: Colors.green, size: 20);
+            return Icon(Icons.cloud_done, color: Colors.green, size: 20);
+          // return Icon(Icons.sync, color:  cs.primaryContainer, size: 20);
           case InstanceSyncStatus.finalized:
             return const Icon(Icons.cloud_upload, color: Colors.grey, size: 20);
           case InstanceSyncStatus.draft:
@@ -74,7 +76,8 @@ class _StatusIconState extends State<StatusIcon>
           case InstanceSyncStatus.uploading:
             return RotationTransition(
               turns: _controller,
-              child: Icon(Icons.sync, color: Colors.orange[700], size: 20),
+              child: Icon(Icons.sync,
+                  color: cs.primaryContainer, size: 20),
             );
           default:
             return const SizedBox.shrink();

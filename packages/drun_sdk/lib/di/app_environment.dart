@@ -6,7 +6,7 @@ abstract class AppEnvironment {
     defaultValue: 'https://api.nmcpye.org',
   );
   static const defaultLocale =
-      String.fromEnvironment('default_locale', defaultValue: 'en');
+      String.fromEnvironment('default_locale', defaultValue: 'ar');
 
   static const isDev = envLabel == 'dev';
 

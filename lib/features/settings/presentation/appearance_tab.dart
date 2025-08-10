@@ -4,13 +4,13 @@ import 'package:datarunmobile/features/settings/presentation/settings_viewmodel.
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:stacked_hooks/stacked_hooks.dart';
+import 'package:stacked/stacked.dart';
 
-class AppearanceTab extends StackedHookView<SettingsViewmodel> {
+class AppearanceTab extends ViewModelWidget<SettingsViewmodel> {
   const AppearanceTab({super.key}) : super(reactive: false);
 
   @override
-  Widget builder(BuildContext context, SettingsViewmodel model) {
+  Widget build(BuildContext context, SettingsViewmodel model) {
     return Consumer(
       builder: (context, ref, child) {
         return ListView(

@@ -1,13 +1,12 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
-import 'package:d_sdk/core/data_instance/form_data_aggregator.dart';
-import 'package:d_sdk/core/form/template_util/element_tree_service.dart';
 import 'package:d_sdk/core/data_instance/field_value.dart';
+import 'package:d_sdk/core/data_instance/form_data_aggregator.dart';
+import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/template_util/element_tree_service.dart';
 
 class FormDataUtil {
   static Map<String, FieldValue> extractTemplateValue(
-    Map<String, dynamic> data,
-    Iterable<Template> fields,
-  ) {
+      Map<String, dynamic> data, Iterable<Template> fields,
+      {DateTime? createdAt}) {
     Map<String, FieldValue> formValues = {};
 
     for (final template in fields) {
@@ -20,8 +19,11 @@ class FormDataUtil {
       formValues[template.path!] = FieldValue(
           id: template.id,
           name: template.name!,
+          properties: template.properties.unlock,
           valueType: template.type!,
-          value: aggregationValue);
+          appearance: (template as FieldTemplate).appearance,
+          value: aggregationValue,
+          createdAt: createdAt);
     }
 
     return formValues;

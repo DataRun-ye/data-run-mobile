@@ -21,10 +21,6 @@ class FormSubmissionCreate extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
-    // final List<Pair<AssignmentForm, bool>> userForms =
-    //     assignment.userForms;
-    // final List<Pair<AssignmentForm, bool>> availableLocally =
-    //     assignment.availableForms;
     final availableFormsAsync =
         ref.watch(userAvailableFormsProvider(assignment: assignmentId));
     final isEnabled = useState(true);

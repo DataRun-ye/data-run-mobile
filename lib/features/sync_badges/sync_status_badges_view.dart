@@ -25,6 +25,8 @@ class SyncStatusBadgesView extends StatelessWidget {
     return ViewModelBuilder<SyncBadgesViewModel>.reactive(
       builder: (context, model, child) => model.isBusy
           ? const Center(
+              heightFactor: 3,
+              widthFactor: 3,
               child: CircularProgressIndicator(),
             )
           : Wrap(

@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_MOSSTAAFA_data_run_mobile_1734651195852-pr-trigger-input-set
+  identifier: Build_MOSSTAAFA_data_run_mobile_1734651195852prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_MOSSTAAFA_data_run_mobile_1734651195852
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>

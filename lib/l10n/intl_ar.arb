@@ -412,5 +412,8 @@
   "tableAppearance": "مظهر الجدول",
   "tableControl": "إعدادات جدول",
   "compactTable": "جدول مضموم",
-  "hideSyncedRows": "إخفاء دائم للمزامن"
+  "hideSyncedRows": "إخفاء دائم للمزامن",
+  "fullNameIsRequired": "مطلوب إدخال إسم رُباعي صحيح.",
+  "pleaseUseLettersOnly": "مسموح إدخال حروف فقط",
+  "pleaseEnterAtLeastFourNameParts": "ادخل الإسم الرباعي على الأقل"
 }

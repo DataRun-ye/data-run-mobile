@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
 import 'package:datarunmobile/data/model/dialog_button_style.data.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';

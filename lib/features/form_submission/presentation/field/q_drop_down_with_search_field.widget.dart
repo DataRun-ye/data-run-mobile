@@ -2,7 +2,7 @@ import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -60,7 +60,7 @@ class NameToLabelValueAccessor
   @override
   String? modelToViewValue(List<String> items, String? modelValue) {
     return options
-        .where((option) => option.name == modelValue)
+        .where((option) => option.code == modelValue || option.name == modelValue)
         .map((option) =>
             getItemLocalString(option.label, defaultString: option.name))
         .firstOrNull;
@@ -72,7 +72,7 @@ class NameToLabelValueAccessor
         .where((option) =>
             getItemLocalString(option.label, defaultString: option.name) ==
             viewValue)
-        .map((option) => option.name)
+        .map((option) => option.code)
         .firstOrNull;
   }
 }

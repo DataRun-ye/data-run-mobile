@@ -2293,6 +2293,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hide synced rows'**
   String get hideSyncedRows;
+
+  /// No description provided for @fullNameIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A valid Full name is required.'**
+  String get fullNameIsRequired;
+
+  /// No description provided for @pleaseUseLettersOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'please use letters only'**
+  String get pleaseUseLettersOnly;
+
+  /// No description provided for @pleaseEnterAtLeastFourNameParts.
+  ///
+  /// In en, this message translates to:
+  /// **'please enter at least four name parts'**
+  String get pleaseEnterAtLeastFourNameParts;
 }
 
 class _AppLocalizationsDelegate

@@ -313,6 +313,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fullNameFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل الاسم الكامل",
     ),
+    "fullNameIsRequired": MessageLookupByLibrary.simpleMessage(
+      "مطلوب إدخال إسم رُباعي صحيح.",
+    ),
     "generalErrorMessage": MessageLookupByLibrary.simpleMessage(
       "The application has encountered an unknown error, Please try again later.",
     ),
@@ -477,6 +480,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "pleaseEnterAValidEmailAddress": MessageLookupByLibrary.simpleMessage(
       "يرجى إدخال عنوان بريد إلكتروني صالح.",
+    ),
+    "pleaseEnterAtLeastFourNameParts": MessageLookupByLibrary.simpleMessage(
+      "ادخل الإسم الرباعي على الأقل",
+    ),
+    "pleaseUseLettersOnly": MessageLookupByLibrary.simpleMessage(
+      "مسموح إدخال حروف فقط",
     ),
     "population": MessageLookupByLibrary.simpleMessage("سكان"),
     "positiveIntegerFieldHint": MessageLookupByLibrary.simpleMessage(

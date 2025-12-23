@@ -77,7 +77,7 @@ class FieldFactory {
             element: element as FieldInstance<String>);
       case ValueType.SelectOne:
         if ((element.choiceFilter?.options ?? element.visibleOption).length <=
-            6) {
+            8) {
           return QReactiveSingleSelectField(
               element: element as FieldInstance<String>);
         } else {

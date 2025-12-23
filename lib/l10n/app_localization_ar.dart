@@ -1258,4 +1258,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get hideSyncedRows => 'إخفاء دائم للمزامن';
+
+  @override
+  String get fullNameIsRequired => 'مطلوب إدخال إسم رُباعي صحيح.';
+
+  @override
+  String get pleaseUseLettersOnly => 'مسموح إدخال حروف فقط';
+
+  @override
+  String get pleaseEnterAtLeastFourNameParts => 'ادخل الإسم الرباعي على الأقل';
 }

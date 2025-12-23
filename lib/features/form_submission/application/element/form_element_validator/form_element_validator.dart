@@ -1,5 +1,6 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/full_name_validator.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -10,8 +11,11 @@ class FieldValidators {
   static List<Validator<dynamic>> getValidators(FieldTemplate element) {
     Set<Validator<dynamic>> validators = Set();
 
+    // if (element.type == ValueType.FullName)
+    //   validators.add(Validators.pattern(ArReg1));
     if (element.type == ValueType.FullName)
-      validators.add(Validators.pattern(ArReg1));
+      validators.add(const ArEnFullNameValidator());
+
     if (element.mandatory) validators.add(Validators.required);
     if (element.type == ValueType.Email) validators.add(Validators.email);
     if (element.type.isInteger) validators.add(Validators.number());
@@ -58,6 +62,13 @@ class FieldValidators {
 }
 
 Map<String, ValidationMessageFunction> validationMessages() => {
+      // 'pattern': (error) => S.current.fullNameIsRequired,
+      'fullName': (error) {
+        if (error == 'invalidCharacters') return S.current.pleaseUseLettersOnly;
+        if (error == 'tooFewParts')
+          return S.current.pleaseEnterAtLeastFourNameParts;
+        return S.current.fullNameIsRequired;
+      },
       'required': (error) => S.current.thisFieldIsRequired,
       'email': (error) => S.current.pleaseEnterAValidEmailAddress,
       'number': (error) => S.current.enterAValidNumber,

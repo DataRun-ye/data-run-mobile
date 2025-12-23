@@ -3030,6 +3030,36 @@ class S {
       args: [],
     );
   }
+
+  /// `A valid Full name is required.`
+  String get fullNameIsRequired {
+    return Intl.message(
+      'A valid Full name is required.',
+      name: 'fullNameIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please use letters only`
+  String get pleaseUseLettersOnly {
+    return Intl.message(
+      'please use letters only',
+      name: 'pleaseUseLettersOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter at least four name parts`
+  String get pleaseEnterAtLeastFourNameParts {
+    return Intl.message(
+      'please enter at least four name parts',
+      name: 'pleaseEnterAtLeastFourNameParts',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

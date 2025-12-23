@@ -7229,7 +7229,7 @@ class $RepeatInstancesTable extends RepeatInstances
   static const VerificationMeta _templatePathMeta =
       const VerificationMeta('templatePath');
   @override
-  late final GeneratedColumn<String> templatePath = GeneratedColumn<String>(
+  late final GeneratedColumn<String> repeatPath = GeneratedColumn<String>(
       'template_path', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _submissionMeta =
@@ -7260,7 +7260,7 @@ class $RepeatInstancesTable extends RepeatInstances
         id,
         lastModifiedDate,
         createdDate,
-        templatePath,
+        repeatPath,
         submission,
         parent,
         repeatIndex
@@ -7295,7 +7295,7 @@ class $RepeatInstancesTable extends RepeatInstances
     if (data.containsKey('template_path')) {
       context.handle(
           _templatePathMeta,
-          templatePath.isAcceptableOrUnknown(
+          repeatPath.isAcceptableOrUnknown(
               data['template_path']!, _templatePathMeta));
     } else if (isInserting) {
       context.missing(_templatePathMeta);
@@ -16789,7 +16789,7 @@ class $$RepeatInstancesTableFilterComposer
       column: $table.createdDate, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get templatePath => $composableBuilder(
-      column: $table.templatePath, builder: (column) => ColumnFilters(column));
+      column: $table.repeatPath, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get repeatIndex => $composableBuilder(
       column: $table.repeatIndex, builder: (column) => ColumnFilters(column));
@@ -16855,7 +16855,7 @@ class $$RepeatInstancesTableOrderingComposer
       column: $table.createdDate, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get templatePath => $composableBuilder(
-      column: $table.templatePath,
+      column: $table.repeatPath,
       builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<int> get repeatIndex => $composableBuilder(
@@ -16921,7 +16921,7 @@ class $$RepeatInstancesTableAnnotationComposer
       column: $table.createdDate, builder: (column) => column);
 
   GeneratedColumn<String> get templatePath => $composableBuilder(
-      column: $table.templatePath, builder: (column) => column);
+      column: $table.repeatPath, builder: (column) => column);
 
   GeneratedColumn<int> get repeatIndex => $composableBuilder(
       column: $table.repeatIndex, builder: (column) => column);

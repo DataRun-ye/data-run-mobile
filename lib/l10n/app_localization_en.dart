@@ -1258,4 +1258,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hideSyncedRows => 'Hide synced rows';
+
+  @override
+  String get fullNameIsRequired => 'A valid Full name is required.';
+
+  @override
+  String get pleaseUseLettersOnly => 'please use letters only';
+
+  @override
+  String get pleaseEnterAtLeastFourNameParts =>
+      'please enter at least four name parts';
 }

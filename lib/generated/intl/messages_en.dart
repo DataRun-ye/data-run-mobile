@@ -316,6 +316,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fullNameFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter a full name",
     ),
+    "fullNameIsRequired": MessageLookupByLibrary.simpleMessage(
+      "A valid Full name is required.",
+    ),
     "generalErrorMessage": MessageLookupByLibrary.simpleMessage(
       "The application has encountered an unknown error.\'             \'Please try again later.",
     ),
@@ -482,6 +485,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "pleaseEnterAValidEmailAddress": MessageLookupByLibrary.simpleMessage(
       "enter a valid email address.",
+    ),
+    "pleaseEnterAtLeastFourNameParts": MessageLookupByLibrary.simpleMessage(
+      "please enter at least four name parts",
+    ),
+    "pleaseUseLettersOnly": MessageLookupByLibrary.simpleMessage(
+      "please use letters only",
     ),
     "population": MessageLookupByLibrary.simpleMessage("Population"),
     "positiveIntegerFieldHint": MessageLookupByLibrary.simpleMessage(

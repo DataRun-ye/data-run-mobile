@@ -3,7 +3,7 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -61,7 +61,9 @@ class NameToLabelValueAccessor
   @override
   List<String>? modelToViewValue(List<String> items, List<String>? modelValue) {
     return options
-        .where((option) => (modelValue?.contains(option.name) ?? false))
+        .where((option) =>
+            (modelValue?.contains(option.code) == true) ||
+            (modelValue?.contains(option.name) ?? false))
         .map((option) =>
             getItemLocalString(option.label, defaultString: option.name))
         .toList();
@@ -74,7 +76,7 @@ class NameToLabelValueAccessor
             modelValue?.contains(
                 getItemLocalString(option.label, defaultString: option.name)) ==
             true)
-        .map((option) => option.name)
+        .map((option) => option.code)
         .toList();
   }
 }

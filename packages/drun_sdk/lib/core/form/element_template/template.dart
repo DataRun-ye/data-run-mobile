@@ -43,6 +43,9 @@ abstract class Template with EquatableMixin, TreeElement {
   //<editor-fold desc="Leaf field Templates properties">
   String? get optionSet => null;
 
+  bool get showInSummary => false;
+
+  @Deprecated('Use showInSummary instead')
   bool get mainField => false;
 
   ValueType? get type => null;

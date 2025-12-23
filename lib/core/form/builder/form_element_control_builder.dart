@@ -2,7 +2,7 @@ import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FormElementControlBuilder {

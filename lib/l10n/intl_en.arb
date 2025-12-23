@@ -449,5 +449,8 @@
   "tableAppearance": "Table Appearance",
   "tableControl": "Table Control",
   "compactTable": "Compact table",
-  "hideSyncedRows": "Hide synced rows"
+  "hideSyncedRows": "Hide synced rows",
+  "fullNameIsRequired": "A valid Full name is required.",
+  "pleaseUseLettersOnly": "please use letters only",
+  "pleaseEnterAtLeastFourNameParts": "please enter at least four name parts"
 }

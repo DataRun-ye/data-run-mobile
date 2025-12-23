@@ -27,7 +27,11 @@ class FieldTemplate extends Template {
   final String? optionSet;
   final bool mandatory;
   final bool readOnly;
+
+  @Deprecated('Use showInSummary instead')
   final bool mainField;
+
+  final bool showInSummary;
   final String? choiceFilter;
   final dynamic defaultValue;
 
@@ -65,6 +69,7 @@ class FieldTemplate extends Template {
     this.parent,
     this.mandatory = false,
     this.mainField = false,
+    this.showInSummary = false,
     this.readOnly = false,
     this.order = 0,
     this.listName,
@@ -185,6 +190,7 @@ class FieldTemplate extends Template {
       order: json['order'] ?? 0,
       mandatory: json['mandatory'] ?? false,
       mainField: json['mainField'] ?? false,
+      // showInSummary: json['showInSummary'] ?? false,
       readOnly: json['readOnly'] ?? false,
       gs1Enabled: json['gs1Enabled'] ?? false,
       listName: json['listName'],
@@ -224,6 +230,7 @@ class FieldTemplate extends Template {
       'mandatory': mandatory,
       'readOnly': readOnly,
       'mainField': mainField,
+      'showInSummary': showInSummary,
       'listName': listName,
       'optionSet': optionSet,
       'choiceFilter': choiceFilter,

@@ -1,7 +1,7 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -40,10 +40,6 @@ class QTextTypeFieldState<T> extends ConsumerState<QTextTypeField<T>> {
 
   @override
   Widget build(BuildContext context) {
-    // final formInstance = ref
-    //     .watch(
-    //     formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-    //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
     final elementPath = widget.element.elementPath!;

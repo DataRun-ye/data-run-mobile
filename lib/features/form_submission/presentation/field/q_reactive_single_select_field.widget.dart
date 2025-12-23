@@ -2,7 +2,7 @@ import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_element_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
@@ -93,7 +93,7 @@ class QReactiveSingleSelectField extends ConsumerWidget {
       List<DataOption> options, double consistentWidth) {
     return options
         .map((DataOption option) => ReactiveChipOption<String>(
-              value: option.name,
+              value: option.code,
               child: SizedBox(
                 width: consistentWidth - 20, // Use the calculated consistent width
                 child: Text(

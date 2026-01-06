@@ -3060,6 +3060,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Add new item`
+  String get addNewItem {
+    return Intl.message('Add new item', name: 'addNewItem', desc: '', args: []);
+  }
+
+  /// `Hidden Speed Dial Issue (change direction)`
+  String get hiddenSpeedDialIssueChangeDirection {
+    return Intl.message(
+      'Hidden Speed Dial Issue (change direction)',
+      name: 'hiddenSpeedDialIssueChangeDirection',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormTemplateModel extends IdentifiableModel {
@@ -11,19 +12,23 @@ class FormTemplateModel extends IdentifiableModel {
       super.label,
       super.description,
       super.properties,
+      this.disabled = false,
       required this.versionUid,
       required this.versionNumber,
       required this.fields,
-      required this.sections})
+      required this.sections,
+      required this.options})
       : this.elementTree =
             buildTree(fieldsAndSections: [...fields, ...sections]);
 
   final String versionUid;
   final int versionNumber;
+  final bool disabled;
   final BuiltList<Template> fields;
   final BuiltList<Template> sections;
 
   final BuiltList<Template> elementTree;
+  final BuiltList<FormOption> options;
 
   static BuiltList<Template> buildTree(
       {required Iterable<Template> fieldsAndSections}) {

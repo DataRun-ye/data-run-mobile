@@ -5479,8 +5479,14 @@ class $FormTemplateVersionsTable extends FormTemplateVersions
           .withConverter<List<Template>>(
               $FormTemplateVersionsTable.$convertersections);
   @override
+  late final GeneratedColumnWithTypeConverter<List<FormOption>?, String>
+      options = GeneratedColumn<String>('options', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<List<FormOption>?>(
+              $FormTemplateVersionsTable.$converteroptions);
+  @override
   List<GeneratedColumn> get $columns =>
-      [id, template, versionNumber, fields, sections];
+      [id, template, versionNumber, fields, sections, options];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5532,6 +5538,9 @@ class $FormTemplateVersionsTable extends FormTemplateVersions
       sections: $FormTemplateVersionsTable.$convertersections.fromSql(
           attachedDatabase.typeMapping
               .read(DriftSqlType.string, data['${effectivePrefix}sections'])!),
+      options: $FormTemplateVersionsTable.$converteroptions.fromSql(
+          attachedDatabase.typeMapping
+              .read(DriftSqlType.string, data['${effectivePrefix}options'])),
     );
   }
 
@@ -5544,6 +5553,8 @@ class $FormTemplateVersionsTable extends FormTemplateVersions
       const TemplateListConverter();
   static TypeConverter<List<Template>, String> $convertersections =
       const TemplateListConverter();
+  static TypeConverter<List<FormOption>?, String?> $converteroptions =
+      const FormOptionListConverter();
 }
 
 class FormTemplateVersion extends DataClass
@@ -5553,12 +5564,14 @@ class FormTemplateVersion extends DataClass
   final int versionNumber;
   final List<Template> fields;
   final List<Template> sections;
+  final List<FormOption>? options;
   const FormTemplateVersion(
       {required this.id,
       required this.template,
       required this.versionNumber,
       required this.fields,
-      required this.sections});
+      required this.sections,
+      this.options});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -5573,6 +5586,10 @@ class FormTemplateVersion extends DataClass
       map['sections'] = Variable<String>(
           $FormTemplateVersionsTable.$convertersections.toSql(sections));
     }
+    if (!nullToAbsent || options != null) {
+      map['options'] = Variable<String>(
+          $FormTemplateVersionsTable.$converteroptions.toSql(options));
+    }
     return map;
   }
 
@@ -5583,6 +5600,9 @@ class FormTemplateVersion extends DataClass
       versionNumber: Value(versionNumber),
       fields: Value(fields),
       sections: Value(sections),
+      options: options == null && nullToAbsent
+          ? const Value.absent()
+          : Value(options),
     );
   }
 
@@ -5595,6 +5615,7 @@ class FormTemplateVersion extends DataClass
       versionNumber: serializer.fromJson<int>(json['versionNumber']),
       fields: serializer.fromJson<List<Template>>(json['fields']),
       sections: serializer.fromJson<List<Template>>(json['sections']),
+      options: serializer.fromJson<List<FormOption>?>(json['options']),
     );
   }
   @override
@@ -5606,6 +5627,7 @@ class FormTemplateVersion extends DataClass
       'versionNumber': serializer.toJson<int>(versionNumber),
       'fields': serializer.toJson<List<Template>>(fields),
       'sections': serializer.toJson<List<Template>>(sections),
+      'options': serializer.toJson<List<FormOption>?>(options),
     };
   }
 
@@ -5614,13 +5636,15 @@ class FormTemplateVersion extends DataClass
           String? template,
           int? versionNumber,
           List<Template>? fields,
-          List<Template>? sections}) =>
+          List<Template>? sections,
+          Value<List<FormOption>?> options = const Value.absent()}) =>
       FormTemplateVersion(
         id: id ?? this.id,
         template: template ?? this.template,
         versionNumber: versionNumber ?? this.versionNumber,
         fields: fields ?? this.fields,
         sections: sections ?? this.sections,
+        options: options.present ? options.value : this.options,
       );
   FormTemplateVersion copyWithCompanion(FormTemplateVersionsCompanion data) {
     return FormTemplateVersion(
@@ -5631,6 +5655,7 @@ class FormTemplateVersion extends DataClass
           : this.versionNumber,
       fields: data.fields.present ? data.fields.value : this.fields,
       sections: data.sections.present ? data.sections.value : this.sections,
+      options: data.options.present ? data.options.value : this.options,
     );
   }
 
@@ -5641,14 +5666,15 @@ class FormTemplateVersion extends DataClass
           ..write('template: $template, ')
           ..write('versionNumber: $versionNumber, ')
           ..write('fields: $fields, ')
-          ..write('sections: $sections')
+          ..write('sections: $sections, ')
+          ..write('options: $options')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, template, versionNumber, fields, sections);
+      Object.hash(id, template, versionNumber, fields, sections, options);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -5657,7 +5683,8 @@ class FormTemplateVersion extends DataClass
           other.template == this.template &&
           other.versionNumber == this.versionNumber &&
           other.fields == this.fields &&
-          other.sections == this.sections);
+          other.sections == this.sections &&
+          other.options == this.options);
 }
 
 class FormTemplateVersionsCompanion
@@ -5667,6 +5694,7 @@ class FormTemplateVersionsCompanion
   final Value<int> versionNumber;
   final Value<List<Template>> fields;
   final Value<List<Template>> sections;
+  final Value<List<FormOption>?> options;
   final Value<int> rowid;
   const FormTemplateVersionsCompanion({
     this.id = const Value.absent(),
@@ -5674,6 +5702,7 @@ class FormTemplateVersionsCompanion
     this.versionNumber = const Value.absent(),
     this.fields = const Value.absent(),
     this.sections = const Value.absent(),
+    this.options = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   FormTemplateVersionsCompanion.insert({
@@ -5682,6 +5711,7 @@ class FormTemplateVersionsCompanion
     required int versionNumber,
     required List<Template> fields,
     required List<Template> sections,
+    this.options = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         template = Value(template),
@@ -5694,6 +5724,7 @@ class FormTemplateVersionsCompanion
     Expression<int>? versionNumber,
     Expression<String>? fields,
     Expression<String>? sections,
+    Expression<String>? options,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -5702,6 +5733,7 @@ class FormTemplateVersionsCompanion
       if (versionNumber != null) 'version_number': versionNumber,
       if (fields != null) 'fields': fields,
       if (sections != null) 'sections': sections,
+      if (options != null) 'options': options,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -5712,6 +5744,7 @@ class FormTemplateVersionsCompanion
       Value<int>? versionNumber,
       Value<List<Template>>? fields,
       Value<List<Template>>? sections,
+      Value<List<FormOption>?>? options,
       Value<int>? rowid}) {
     return FormTemplateVersionsCompanion(
       id: id ?? this.id,
@@ -5719,6 +5752,7 @@ class FormTemplateVersionsCompanion
       versionNumber: versionNumber ?? this.versionNumber,
       fields: fields ?? this.fields,
       sections: sections ?? this.sections,
+      options: options ?? this.options,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -5743,6 +5777,10 @@ class FormTemplateVersionsCompanion
       map['sections'] = Variable<String>(
           $FormTemplateVersionsTable.$convertersections.toSql(sections.value));
     }
+    if (options.present) {
+      map['options'] = Variable<String>(
+          $FormTemplateVersionsTable.$converteroptions.toSql(options.value));
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -5757,6 +5795,7 @@ class FormTemplateVersionsCompanion
           ..write('versionNumber: $versionNumber, ')
           ..write('fields: $fields, ')
           ..write('sections: $sections, ')
+          ..write('options: $options, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -7209,7 +7248,9 @@ class $RepeatInstancesTable extends RepeatInstances
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
       'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: Constant(Ulid().toCanonical()));
   static const VerificationMeta _lastModifiedDateMeta =
       const VerificationMeta('lastModifiedDate');
   @override
@@ -7226,12 +7267,6 @@ class $RepeatInstancesTable extends RepeatInstances
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _templatePathMeta =
-      const VerificationMeta('templatePath');
-  @override
-  late final GeneratedColumn<String> repeatPath = GeneratedColumn<String>(
-      'template_path', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _submissionMeta =
       const VerificationMeta('submission');
   @override
@@ -7249,21 +7284,38 @@ class $RepeatInstancesTable extends RepeatInstances
       requiredDuringInsert: false,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES repeat_instances (id)'));
+  static const VerificationMeta _templatePathMeta =
+      const VerificationMeta('templatePath');
+  @override
+  late final GeneratedColumn<String> templatePath = GeneratedColumn<String>(
+      'template_path', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _repeatIndexMeta =
       const VerificationMeta('repeatIndex');
   @override
   late final GeneratedColumn<int> repeatIndex = GeneratedColumn<int>(
       'repeat_index', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _deletedMeta =
+      const VerificationMeta('deleted');
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+      'deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
+      defaultValue: Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
         id,
         lastModifiedDate,
         createdDate,
-        repeatPath,
         submission,
         parent,
-        repeatIndex
+        templatePath,
+        repeatIndex,
+        deleted
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -7277,8 +7329,6 @@ class $RepeatInstancesTable extends RepeatInstances
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('last_modified_date')) {
       context.handle(
@@ -7292,14 +7342,6 @@ class $RepeatInstancesTable extends RepeatInstances
           createdDate.isAcceptableOrUnknown(
               data['created_date']!, _createdDateMeta));
     }
-    if (data.containsKey('template_path')) {
-      context.handle(
-          _templatePathMeta,
-          repeatPath.isAcceptableOrUnknown(
-              data['template_path']!, _templatePathMeta));
-    } else if (isInserting) {
-      context.missing(_templatePathMeta);
-    }
     if (data.containsKey('submission')) {
       context.handle(
           _submissionMeta,
@@ -7312,6 +7354,14 @@ class $RepeatInstancesTable extends RepeatInstances
       context.handle(_parentMeta,
           parent.isAcceptableOrUnknown(data['parent']!, _parentMeta));
     }
+    if (data.containsKey('template_path')) {
+      context.handle(
+          _templatePathMeta,
+          templatePath.isAcceptableOrUnknown(
+              data['template_path']!, _templatePathMeta));
+    } else if (isInserting) {
+      context.missing(_templatePathMeta);
+    }
     if (data.containsKey('repeat_index')) {
       context.handle(
           _repeatIndexMeta,
@@ -7319,6 +7369,10 @@ class $RepeatInstancesTable extends RepeatInstances
               data['repeat_index']!, _repeatIndexMeta));
     } else if (isInserting) {
       context.missing(_repeatIndexMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(_deletedMeta,
+          deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta));
     }
     return context;
   }
@@ -7335,14 +7389,16 @@ class $RepeatInstancesTable extends RepeatInstances
           DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
       createdDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      templatePath: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}template_path'])!,
       submission: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}submission'])!,
       parent: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}parent']),
+      templatePath: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}template_path'])!,
       repeatIndex: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}repeat_index'])!,
+      deleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}deleted'])!,
     );
   }
 
@@ -7356,24 +7412,26 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
   final String id;
   final DateTime? lastModifiedDate;
   final DateTime? createdDate;
-
-  /// Path of the Repeat in the FormTemplate (non-null)
-  final String templatePath;
   final String submission;
 
   /// reference to nearest parent RepeatInstance (nullable)
   final String? parent;
 
+  /// Path of the Repeat in the FormTemplate (non-null)
+  final String templatePath;
+
   /// Repeat index for order and identity (non-null)
   final int repeatIndex;
+  final bool deleted;
   const RepeatInstance(
       {required this.id,
       this.lastModifiedDate,
       this.createdDate,
-      required this.templatePath,
       required this.submission,
       this.parent,
-      required this.repeatIndex});
+      required this.templatePath,
+      required this.repeatIndex,
+      required this.deleted});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -7384,12 +7442,13 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
     if (!nullToAbsent || createdDate != null) {
       map['created_date'] = Variable<DateTime>(createdDate);
     }
-    map['template_path'] = Variable<String>(templatePath);
     map['submission'] = Variable<String>(submission);
     if (!nullToAbsent || parent != null) {
       map['parent'] = Variable<String>(parent);
     }
+    map['template_path'] = Variable<String>(templatePath);
     map['repeat_index'] = Variable<int>(repeatIndex);
+    map['deleted'] = Variable<bool>(deleted);
     return map;
   }
 
@@ -7402,11 +7461,12 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
       createdDate: createdDate == null && nullToAbsent
           ? const Value.absent()
           : Value(createdDate),
-      templatePath: Value(templatePath),
       submission: Value(submission),
       parent:
           parent == null && nullToAbsent ? const Value.absent() : Value(parent),
+      templatePath: Value(templatePath),
       repeatIndex: Value(repeatIndex),
+      deleted: Value(deleted),
     );
   }
 
@@ -7418,10 +7478,11 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
       lastModifiedDate:
           serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      templatePath: serializer.fromJson<String>(json['templatePath']),
       submission: serializer.fromJson<String>(json['submission']),
       parent: serializer.fromJson<String?>(json['parent']),
+      templatePath: serializer.fromJson<String>(json['templatePath']),
       repeatIndex: serializer.fromJson<int>(json['repeatIndex']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
     );
   }
   @override
@@ -7431,10 +7492,11 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
       'id': serializer.toJson<String>(id),
       'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
       'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'templatePath': serializer.toJson<String>(templatePath),
       'submission': serializer.toJson<String>(submission),
       'parent': serializer.toJson<String?>(parent),
+      'templatePath': serializer.toJson<String>(templatePath),
       'repeatIndex': serializer.toJson<int>(repeatIndex),
+      'deleted': serializer.toJson<bool>(deleted),
     };
   }
 
@@ -7442,20 +7504,22 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
           {String? id,
           Value<DateTime?> lastModifiedDate = const Value.absent(),
           Value<DateTime?> createdDate = const Value.absent(),
-          String? templatePath,
           String? submission,
           Value<String?> parent = const Value.absent(),
-          int? repeatIndex}) =>
+          String? templatePath,
+          int? repeatIndex,
+          bool? deleted}) =>
       RepeatInstance(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
             ? lastModifiedDate.value
             : this.lastModifiedDate,
         createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        templatePath: templatePath ?? this.templatePath,
         submission: submission ?? this.submission,
         parent: parent.present ? parent.value : this.parent,
+        templatePath: templatePath ?? this.templatePath,
         repeatIndex: repeatIndex ?? this.repeatIndex,
+        deleted: deleted ?? this.deleted,
       );
   RepeatInstance copyWithCompanion(RepeatInstancesCompanion data) {
     return RepeatInstance(
@@ -7465,14 +7529,15 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
           : this.lastModifiedDate,
       createdDate:
           data.createdDate.present ? data.createdDate.value : this.createdDate,
-      templatePath: data.templatePath.present
-          ? data.templatePath.value
-          : this.templatePath,
       submission:
           data.submission.present ? data.submission.value : this.submission,
       parent: data.parent.present ? data.parent.value : this.parent,
+      templatePath: data.templatePath.present
+          ? data.templatePath.value
+          : this.templatePath,
       repeatIndex:
           data.repeatIndex.present ? data.repeatIndex.value : this.repeatIndex,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
     );
   }
 
@@ -7482,17 +7547,18 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
           ..write('id: $id, ')
           ..write('lastModifiedDate: $lastModifiedDate, ')
           ..write('createdDate: $createdDate, ')
-          ..write('templatePath: $templatePath, ')
           ..write('submission: $submission, ')
           ..write('parent: $parent, ')
-          ..write('repeatIndex: $repeatIndex')
+          ..write('templatePath: $templatePath, ')
+          ..write('repeatIndex: $repeatIndex, ')
+          ..write('deleted: $deleted')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, lastModifiedDate, createdDate,
-      templatePath, submission, parent, repeatIndex);
+  int get hashCode => Object.hash(id, lastModifiedDate, createdDate, submission,
+      parent, templatePath, repeatIndex, deleted);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -7500,62 +7566,67 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
           other.id == this.id &&
           other.lastModifiedDate == this.lastModifiedDate &&
           other.createdDate == this.createdDate &&
-          other.templatePath == this.templatePath &&
           other.submission == this.submission &&
           other.parent == this.parent &&
-          other.repeatIndex == this.repeatIndex);
+          other.templatePath == this.templatePath &&
+          other.repeatIndex == this.repeatIndex &&
+          other.deleted == this.deleted);
 }
 
 class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
   final Value<String> id;
   final Value<DateTime?> lastModifiedDate;
   final Value<DateTime?> createdDate;
-  final Value<String> templatePath;
   final Value<String> submission;
   final Value<String?> parent;
+  final Value<String> templatePath;
   final Value<int> repeatIndex;
+  final Value<bool> deleted;
   final Value<int> rowid;
   const RepeatInstancesCompanion({
     this.id = const Value.absent(),
     this.lastModifiedDate = const Value.absent(),
     this.createdDate = const Value.absent(),
-    this.templatePath = const Value.absent(),
     this.submission = const Value.absent(),
     this.parent = const Value.absent(),
+    this.templatePath = const Value.absent(),
     this.repeatIndex = const Value.absent(),
+    this.deleted = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   RepeatInstancesCompanion.insert({
-    required String id,
+    this.id = const Value.absent(),
     this.lastModifiedDate = const Value.absent(),
     this.createdDate = const Value.absent(),
-    required String templatePath,
     required String submission,
     this.parent = const Value.absent(),
+    required String templatePath,
     required int repeatIndex,
+    this.deleted = const Value.absent(),
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
+  })  : submission = Value(submission),
         templatePath = Value(templatePath),
-        submission = Value(submission),
         repeatIndex = Value(repeatIndex);
   static Insertable<RepeatInstance> custom({
     Expression<String>? id,
     Expression<DateTime>? lastModifiedDate,
     Expression<DateTime>? createdDate,
-    Expression<String>? templatePath,
     Expression<String>? submission,
     Expression<String>? parent,
+    Expression<String>? templatePath,
     Expression<int>? repeatIndex,
+    Expression<bool>? deleted,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
       if (createdDate != null) 'created_date': createdDate,
-      if (templatePath != null) 'template_path': templatePath,
       if (submission != null) 'submission': submission,
       if (parent != null) 'parent': parent,
+      if (templatePath != null) 'template_path': templatePath,
       if (repeatIndex != null) 'repeat_index': repeatIndex,
+      if (deleted != null) 'deleted': deleted,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -7564,19 +7635,21 @@ class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
       {Value<String>? id,
       Value<DateTime?>? lastModifiedDate,
       Value<DateTime?>? createdDate,
-      Value<String>? templatePath,
       Value<String>? submission,
       Value<String?>? parent,
+      Value<String>? templatePath,
       Value<int>? repeatIndex,
+      Value<bool>? deleted,
       Value<int>? rowid}) {
     return RepeatInstancesCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
       createdDate: createdDate ?? this.createdDate,
-      templatePath: templatePath ?? this.templatePath,
       submission: submission ?? this.submission,
       parent: parent ?? this.parent,
+      templatePath: templatePath ?? this.templatePath,
       repeatIndex: repeatIndex ?? this.repeatIndex,
+      deleted: deleted ?? this.deleted,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -7593,17 +7666,20 @@ class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
     if (createdDate.present) {
       map['created_date'] = Variable<DateTime>(createdDate.value);
     }
-    if (templatePath.present) {
-      map['template_path'] = Variable<String>(templatePath.value);
-    }
     if (submission.present) {
       map['submission'] = Variable<String>(submission.value);
     }
     if (parent.present) {
       map['parent'] = Variable<String>(parent.value);
     }
+    if (templatePath.present) {
+      map['template_path'] = Variable<String>(templatePath.value);
+    }
     if (repeatIndex.present) {
       map['repeat_index'] = Variable<int>(repeatIndex.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -7617,10 +7693,11 @@ class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
           ..write('id: $id, ')
           ..write('lastModifiedDate: $lastModifiedDate, ')
           ..write('createdDate: $createdDate, ')
-          ..write('templatePath: $templatePath, ')
           ..write('submission: $submission, ')
           ..write('parent: $parent, ')
+          ..write('templatePath: $templatePath, ')
           ..write('repeatIndex: $repeatIndex, ')
+          ..write('deleted: $deleted, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -7686,6 +7763,12 @@ class $DataOptionSetsTable extends DataOptionSets
   late final GeneratedColumn<String> code = GeneratedColumn<String>(
       'code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _deletedAtMeta =
+      const VerificationMeta('deletedAt');
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+      'deleted_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -7695,7 +7778,8 @@ class $DataOptionSetsTable extends DataOptionSets
         label,
         translations,
         name,
-        code
+        code,
+        deletedAt
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -7740,6 +7824,10 @@ class $DataOptionSetsTable extends DataOptionSets
       context.handle(
           _codeMeta, code.isAcceptableOrUnknown(data['code']!, _codeMeta));
     }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta,
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
     return context;
   }
 
@@ -7767,6 +7855,8 @@ class $DataOptionSetsTable extends DataOptionSets
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       code: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}code']),
+      deletedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
     );
   }
 
@@ -7790,6 +7880,7 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
   final List<Translation> translations;
   final String name;
   final String? code;
+  final DateTime? deletedAt;
   const DataOptionSet(
       {required this.id,
       this.lastModifiedDate,
@@ -7798,7 +7889,8 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
       this.label,
       required this.translations,
       required this.name,
-      this.code});
+      this.code,
+      this.deletedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -7824,6 +7916,9 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
     if (!nullToAbsent || code != null) {
       map['code'] = Variable<String>(code);
     }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
     return map;
   }
 
@@ -7844,6 +7939,9 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
       translations: Value(translations),
       name: Value(name),
       code: code == null && nullToAbsent ? const Value.absent() : Value(code),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
     );
   }
 
@@ -7861,6 +7959,7 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
           serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String?>(json['code']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
     );
   }
   @override
@@ -7875,6 +7974,7 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
       'translations': serializer.toJson<List<Translation>>(translations),
       'name': serializer.toJson<String>(name),
       'code': serializer.toJson<String?>(code),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
     };
   }
 
@@ -7886,7 +7986,8 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
           Value<Map<String, dynamic>?> label = const Value.absent(),
           List<Translation>? translations,
           String? name,
-          Value<String?> code = const Value.absent()}) =>
+          Value<String?> code = const Value.absent(),
+          Value<DateTime?> deletedAt = const Value.absent()}) =>
       DataOptionSet(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -7898,6 +7999,7 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
         translations: translations ?? this.translations,
         name: name ?? this.name,
         code: code.present ? code.value : this.code,
+        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
       );
   DataOptionSet copyWithCompanion(DataOptionSetsCompanion data) {
     return DataOptionSet(
@@ -7915,6 +8017,7 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
           : this.translations,
       name: data.name.present ? data.name.value : this.name,
       code: data.code.present ? data.code.value : this.code,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
     );
   }
 
@@ -7928,14 +8031,15 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
           ..write('label: $label, ')
           ..write('translations: $translations, ')
           ..write('name: $name, ')
-          ..write('code: $code')
+          ..write('code: $code, ')
+          ..write('deletedAt: $deletedAt')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, lastModifiedDate, createdDate,
-      displayName, label, translations, name, code);
+      displayName, label, translations, name, code, deletedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -7947,7 +8051,8 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
           other.label == this.label &&
           other.translations == this.translations &&
           other.name == this.name &&
-          other.code == this.code);
+          other.code == this.code &&
+          other.deletedAt == this.deletedAt);
 }
 
 class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
@@ -7959,6 +8064,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
   final Value<List<Translation>> translations;
   final Value<String> name;
   final Value<String?> code;
+  final Value<DateTime?> deletedAt;
   final Value<int> rowid;
   const DataOptionSetsCompanion({
     this.id = const Value.absent(),
@@ -7969,6 +8075,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
     this.translations = const Value.absent(),
     this.name = const Value.absent(),
     this.code = const Value.absent(),
+    this.deletedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   DataOptionSetsCompanion.insert({
@@ -7980,6 +8087,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
     this.translations = const Value.absent(),
     required String name,
     this.code = const Value.absent(),
+    this.deletedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         name = Value(name);
@@ -7992,6 +8100,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
     Expression<String>? translations,
     Expression<String>? name,
     Expression<String>? code,
+    Expression<DateTime>? deletedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -8003,6 +8112,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
       if (translations != null) 'translations': translations,
       if (name != null) 'name': name,
       if (code != null) 'code': code,
+      if (deletedAt != null) 'deleted_at': deletedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -8016,6 +8126,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
       Value<List<Translation>>? translations,
       Value<String>? name,
       Value<String?>? code,
+      Value<DateTime?>? deletedAt,
       Value<int>? rowid}) {
     return DataOptionSetsCompanion(
       id: id ?? this.id,
@@ -8026,6 +8137,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
       translations: translations ?? this.translations,
       name: name ?? this.name,
       code: code ?? this.code,
+      deletedAt: deletedAt ?? this.deletedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -8060,6 +8172,9 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
     if (code.present) {
       map['code'] = Variable<String>(code.value);
     }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -8077,6 +8192,7 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
           ..write('translations: $translations, ')
           ..write('name: $name, ')
           ..write('code: $code, ')
+          ..write('deletedAt: $deletedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -9460,6 +9576,12 @@ class $DataOptionsTable extends DataOptions
       type: DriftSqlType.int,
       requiredDuringInsert: false,
       clientDefault: () => 0);
+  static const VerificationMeta _deletedAtMeta =
+      const VerificationMeta('deletedAt');
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+      'deleted_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -9471,7 +9593,8 @@ class $DataOptionsTable extends DataOptions
         name,
         code,
         optionSet,
-        order
+        order,
+        deletedAt
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -9528,6 +9651,10 @@ class $DataOptionsTable extends DataOptions
       context.handle(
           _orderMeta, order.isAcceptableOrUnknown(data['order']!, _orderMeta));
     }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta,
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
     return context;
   }
 
@@ -9564,6 +9691,8 @@ class $DataOptionsTable extends DataOptions
           .read(DriftSqlType.string, data['${effectivePrefix}option_set'])!,
       order: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}order'])!,
+      deletedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
     );
   }
 
@@ -9589,6 +9718,7 @@ class DataOption extends DataClass implements Insertable<DataOption> {
   final String code;
   final String optionSet;
   final int order;
+  final DateTime? deletedAt;
   const DataOption(
       {required this.id,
       this.lastModifiedDate,
@@ -9599,7 +9729,8 @@ class DataOption extends DataClass implements Insertable<DataOption> {
       required this.name,
       required this.code,
       required this.optionSet,
-      required this.order});
+      required this.order,
+      this.deletedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -9625,6 +9756,9 @@ class DataOption extends DataClass implements Insertable<DataOption> {
     map['code'] = Variable<String>(code);
     map['option_set'] = Variable<String>(optionSet);
     map['order'] = Variable<int>(order);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
     return map;
   }
 
@@ -9647,6 +9781,9 @@ class DataOption extends DataClass implements Insertable<DataOption> {
       code: Value(code),
       optionSet: Value(optionSet),
       order: Value(order),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
     );
   }
 
@@ -9666,6 +9803,7 @@ class DataOption extends DataClass implements Insertable<DataOption> {
       code: serializer.fromJson<String>(json['code']),
       optionSet: serializer.fromJson<String>(json['optionSet']),
       order: serializer.fromJson<int>(json['order']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
     );
   }
   @override
@@ -9682,6 +9820,7 @@ class DataOption extends DataClass implements Insertable<DataOption> {
       'code': serializer.toJson<String>(code),
       'optionSet': serializer.toJson<String>(optionSet),
       'order': serializer.toJson<int>(order),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
     };
   }
 
@@ -9695,7 +9834,8 @@ class DataOption extends DataClass implements Insertable<DataOption> {
           String? name,
           String? code,
           String? optionSet,
-          int? order}) =>
+          int? order,
+          Value<DateTime?> deletedAt = const Value.absent()}) =>
       DataOption(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -9709,6 +9849,7 @@ class DataOption extends DataClass implements Insertable<DataOption> {
         code: code ?? this.code,
         optionSet: optionSet ?? this.optionSet,
         order: order ?? this.order,
+        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
       );
   DataOption copyWithCompanion(DataOptionsCompanion data) {
     return DataOption(
@@ -9728,6 +9869,7 @@ class DataOption extends DataClass implements Insertable<DataOption> {
       code: data.code.present ? data.code.value : this.code,
       optionSet: data.optionSet.present ? data.optionSet.value : this.optionSet,
       order: data.order.present ? data.order.value : this.order,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
     );
   }
 
@@ -9743,14 +9885,25 @@ class DataOption extends DataClass implements Insertable<DataOption> {
           ..write('name: $name, ')
           ..write('code: $code, ')
           ..write('optionSet: $optionSet, ')
-          ..write('order: $order')
+          ..write('order: $order, ')
+          ..write('deletedAt: $deletedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, lastModifiedDate, createdDate,
-      displayName, label, translations, name, code, optionSet, order);
+  int get hashCode => Object.hash(
+      id,
+      lastModifiedDate,
+      createdDate,
+      displayName,
+      label,
+      translations,
+      name,
+      code,
+      optionSet,
+      order,
+      deletedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -9764,7 +9917,8 @@ class DataOption extends DataClass implements Insertable<DataOption> {
           other.name == this.name &&
           other.code == this.code &&
           other.optionSet == this.optionSet &&
-          other.order == this.order);
+          other.order == this.order &&
+          other.deletedAt == this.deletedAt);
 }
 
 class DataOptionsCompanion extends UpdateCompanion<DataOption> {
@@ -9778,6 +9932,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
   final Value<String> code;
   final Value<String> optionSet;
   final Value<int> order;
+  final Value<DateTime?> deletedAt;
   final Value<int> rowid;
   const DataOptionsCompanion({
     this.id = const Value.absent(),
@@ -9790,6 +9945,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
     this.code = const Value.absent(),
     this.optionSet = const Value.absent(),
     this.order = const Value.absent(),
+    this.deletedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   DataOptionsCompanion.insert({
@@ -9803,6 +9959,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
     required String code,
     required String optionSet,
     this.order = const Value.absent(),
+    this.deletedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         name = Value(name),
@@ -9819,6 +9976,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
     Expression<String>? code,
     Expression<String>? optionSet,
     Expression<int>? order,
+    Expression<DateTime>? deletedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -9832,6 +9990,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
       if (code != null) 'code': code,
       if (optionSet != null) 'option_set': optionSet,
       if (order != null) 'order': order,
+      if (deletedAt != null) 'deleted_at': deletedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -9847,6 +10006,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
       Value<String>? code,
       Value<String>? optionSet,
       Value<int>? order,
+      Value<DateTime?>? deletedAt,
       Value<int>? rowid}) {
     return DataOptionsCompanion(
       id: id ?? this.id,
@@ -9859,6 +10019,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
       code: code ?? this.code,
       optionSet: optionSet ?? this.optionSet,
       order: order ?? this.order,
+      deletedAt: deletedAt ?? this.deletedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -9898,6 +10059,9 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
     if (order.present) {
       map['order'] = Variable<int>(order.value);
     }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -9917,6 +10081,7 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
           ..write('code: $code, ')
           ..write('optionSet: $optionSet, ')
           ..write('order: $order, ')
+          ..write('deletedAt: $deletedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -15295,6 +15460,7 @@ typedef $$FormTemplateVersionsTableCreateCompanionBuilder
   required int versionNumber,
   required List<Template> fields,
   required List<Template> sections,
+  Value<List<FormOption>?> options,
   Value<int> rowid,
 });
 typedef $$FormTemplateVersionsTableUpdateCompanionBuilder
@@ -15304,6 +15470,7 @@ typedef $$FormTemplateVersionsTableUpdateCompanionBuilder
   Value<int> versionNumber,
   Value<List<Template>> fields,
   Value<List<Template>> sections,
+  Value<List<FormOption>?> options,
   Value<int> rowid,
 });
 
@@ -15370,6 +15537,11 @@ class $$FormTemplateVersionsTableFilterComposer
           column: $table.sections,
           builder: (column) => ColumnWithTypeConverterFilters(column));
 
+  ColumnWithTypeConverterFilters<List<FormOption>?, List<FormOption>, String>
+      get options => $composableBuilder(
+          column: $table.options,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
   $$FormTemplatesTableFilterComposer get template {
     final $$FormTemplatesTableFilterComposer composer = $composerBuilder(
         composer: this,
@@ -15434,6 +15606,9 @@ class $$FormTemplateVersionsTableOrderingComposer
   ColumnOrderings<String> get sections => $composableBuilder(
       column: $table.sections, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<String> get options => $composableBuilder(
+      column: $table.options, builder: (column) => ColumnOrderings(column));
+
   $$FormTemplatesTableOrderingComposer get template {
     final $$FormTemplatesTableOrderingComposer composer = $composerBuilder(
         composer: this,
@@ -15475,6 +15650,9 @@ class $$FormTemplateVersionsTableAnnotationComposer
 
   GeneratedColumnWithTypeConverter<List<Template>, String> get sections =>
       $composableBuilder(column: $table.sections, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<FormOption>?, String> get options =>
+      $composableBuilder(column: $table.options, builder: (column) => column);
 
   $$FormTemplatesTableAnnotationComposer get template {
     final $$FormTemplatesTableAnnotationComposer composer = $composerBuilder(
@@ -15549,6 +15727,7 @@ class $$FormTemplateVersionsTableTableManager extends RootTableManager<
             Value<int> versionNumber = const Value.absent(),
             Value<List<Template>> fields = const Value.absent(),
             Value<List<Template>> sections = const Value.absent(),
+            Value<List<FormOption>?> options = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               FormTemplateVersionsCompanion(
@@ -15557,6 +15736,7 @@ class $$FormTemplateVersionsTableTableManager extends RootTableManager<
             versionNumber: versionNumber,
             fields: fields,
             sections: sections,
+            options: options,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -15565,6 +15745,7 @@ class $$FormTemplateVersionsTableTableManager extends RootTableManager<
             required int versionNumber,
             required List<Template> fields,
             required List<Template> sections,
+            Value<List<FormOption>?> options = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               FormTemplateVersionsCompanion.insert(
@@ -15573,6 +15754,7 @@ class $$FormTemplateVersionsTableTableManager extends RootTableManager<
             versionNumber: versionNumber,
             fields: fields,
             sections: sections,
+            options: options,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
@@ -16711,13 +16893,14 @@ typedef $$DataInstancesTableProcessedTableManager = ProcessedTableManager<
         bool instanceValues})>;
 typedef $$RepeatInstancesTableCreateCompanionBuilder = RepeatInstancesCompanion
     Function({
-  required String id,
+  Value<String> id,
   Value<DateTime?> lastModifiedDate,
   Value<DateTime?> createdDate,
-  required String templatePath,
   required String submission,
   Value<String?> parent,
+  required String templatePath,
   required int repeatIndex,
+  Value<bool> deleted,
   Value<int> rowid,
 });
 typedef $$RepeatInstancesTableUpdateCompanionBuilder = RepeatInstancesCompanion
@@ -16725,10 +16908,11 @@ typedef $$RepeatInstancesTableUpdateCompanionBuilder = RepeatInstancesCompanion
   Value<String> id,
   Value<DateTime?> lastModifiedDate,
   Value<DateTime?> createdDate,
-  Value<String> templatePath,
   Value<String> submission,
   Value<String?> parent,
+  Value<String> templatePath,
   Value<int> repeatIndex,
+  Value<bool> deleted,
   Value<int> rowid,
 });
 
@@ -16789,10 +16973,13 @@ class $$RepeatInstancesTableFilterComposer
       column: $table.createdDate, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get templatePath => $composableBuilder(
-      column: $table.repeatPath, builder: (column) => ColumnFilters(column));
+      column: $table.templatePath, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get repeatIndex => $composableBuilder(
       column: $table.repeatIndex, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+      column: $table.deleted, builder: (column) => ColumnFilters(column));
 
   $$DataInstancesTableFilterComposer get submission {
     final $$DataInstancesTableFilterComposer composer = $composerBuilder(
@@ -16855,11 +17042,14 @@ class $$RepeatInstancesTableOrderingComposer
       column: $table.createdDate, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get templatePath => $composableBuilder(
-      column: $table.repeatPath,
+      column: $table.templatePath,
       builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<int> get repeatIndex => $composableBuilder(
       column: $table.repeatIndex, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+      column: $table.deleted, builder: (column) => ColumnOrderings(column));
 
   $$DataInstancesTableOrderingComposer get submission {
     final $$DataInstancesTableOrderingComposer composer = $composerBuilder(
@@ -16921,10 +17111,13 @@ class $$RepeatInstancesTableAnnotationComposer
       column: $table.createdDate, builder: (column) => column);
 
   GeneratedColumn<String> get templatePath => $composableBuilder(
-      column: $table.repeatPath, builder: (column) => column);
+      column: $table.templatePath, builder: (column) => column);
 
   GeneratedColumn<int> get repeatIndex => $composableBuilder(
       column: $table.repeatIndex, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
 
   $$DataInstancesTableAnnotationComposer get submission {
     final $$DataInstancesTableAnnotationComposer composer = $composerBuilder(
@@ -16994,40 +17187,44 @@ class $$RepeatInstancesTableTableManager extends RootTableManager<
             Value<String> id = const Value.absent(),
             Value<DateTime?> lastModifiedDate = const Value.absent(),
             Value<DateTime?> createdDate = const Value.absent(),
-            Value<String> templatePath = const Value.absent(),
             Value<String> submission = const Value.absent(),
             Value<String?> parent = const Value.absent(),
+            Value<String> templatePath = const Value.absent(),
             Value<int> repeatIndex = const Value.absent(),
+            Value<bool> deleted = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               RepeatInstancesCompanion(
             id: id,
             lastModifiedDate: lastModifiedDate,
             createdDate: createdDate,
-            templatePath: templatePath,
             submission: submission,
             parent: parent,
+            templatePath: templatePath,
             repeatIndex: repeatIndex,
+            deleted: deleted,
             rowid: rowid,
           ),
           createCompanionCallback: ({
-            required String id,
+            Value<String> id = const Value.absent(),
             Value<DateTime?> lastModifiedDate = const Value.absent(),
             Value<DateTime?> createdDate = const Value.absent(),
-            required String templatePath,
             required String submission,
             Value<String?> parent = const Value.absent(),
+            required String templatePath,
             required int repeatIndex,
+            Value<bool> deleted = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               RepeatInstancesCompanion.insert(
             id: id,
             lastModifiedDate: lastModifiedDate,
             createdDate: createdDate,
-            templatePath: templatePath,
             submission: submission,
             parent: parent,
+            templatePath: templatePath,
             repeatIndex: repeatIndex,
+            deleted: deleted,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
@@ -17107,6 +17304,7 @@ typedef $$DataOptionSetsTableCreateCompanionBuilder = DataOptionSetsCompanion
   Value<List<Translation>> translations,
   required String name,
   Value<String?> code,
+  Value<DateTime?> deletedAt,
   Value<int> rowid,
 });
 typedef $$DataOptionSetsTableUpdateCompanionBuilder = DataOptionSetsCompanion
@@ -17119,6 +17317,7 @@ typedef $$DataOptionSetsTableUpdateCompanionBuilder = DataOptionSetsCompanion
   Value<List<Translation>> translations,
   Value<String> name,
   Value<String?> code,
+  Value<DateTime?> deletedAt,
   Value<int> rowid,
 });
 
@@ -17197,6 +17396,9 @@ class $$DataOptionSetsTableFilterComposer
   ColumnFilters<String> get code => $composableBuilder(
       column: $table.code, builder: (column) => ColumnFilters(column));
 
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
+
   Expression<bool> dataElementsRefs(
       Expression<bool> Function($$DataElementsTableFilterComposer f) f) {
     final $$DataElementsTableFilterComposer composer = $composerBuilder(
@@ -17274,6 +17476,9 @@ class $$DataOptionSetsTableOrderingComposer
 
   ColumnOrderings<String> get code => $composableBuilder(
       column: $table.code, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
 }
 
 class $$DataOptionSetsTableAnnotationComposer
@@ -17309,6 +17514,9 @@ class $$DataOptionSetsTableAnnotationComposer
 
   GeneratedColumn<String> get code =>
       $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
 
   Expression<T> dataElementsRefs<T extends Object>(
       Expression<T> Function($$DataElementsTableAnnotationComposer a) f) {
@@ -17385,6 +17593,7 @@ class $$DataOptionSetsTableTableManager extends RootTableManager<
             Value<List<Translation>> translations = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<String?> code = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               DataOptionSetsCompanion(
@@ -17396,6 +17605,7 @@ class $$DataOptionSetsTableTableManager extends RootTableManager<
             translations: translations,
             name: name,
             code: code,
+            deletedAt: deletedAt,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -17407,6 +17617,7 @@ class $$DataOptionSetsTableTableManager extends RootTableManager<
             Value<List<Translation>> translations = const Value.absent(),
             required String name,
             Value<String?> code = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               DataOptionSetsCompanion.insert(
@@ -17418,6 +17629,7 @@ class $$DataOptionSetsTableTableManager extends RootTableManager<
             translations: translations,
             name: name,
             code: code,
+            deletedAt: deletedAt,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
@@ -18426,6 +18638,7 @@ typedef $$DataOptionsTableCreateCompanionBuilder = DataOptionsCompanion
   required String code,
   required String optionSet,
   Value<int> order,
+  Value<DateTime?> deletedAt,
   Value<int> rowid,
 });
 typedef $$DataOptionsTableUpdateCompanionBuilder = DataOptionsCompanion
@@ -18440,6 +18653,7 @@ typedef $$DataOptionsTableUpdateCompanionBuilder = DataOptionsCompanion
   Value<String> code,
   Value<String> optionSet,
   Value<int> order,
+  Value<DateTime?> deletedAt,
   Value<int> rowid,
 });
 
@@ -18505,6 +18719,9 @@ class $$DataOptionsTableFilterComposer
   ColumnFilters<int> get order => $composableBuilder(
       column: $table.order, builder: (column) => ColumnFilters(column));
 
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
+
   $$DataOptionSetsTableFilterComposer get optionSet {
     final $$DataOptionSetsTableFilterComposer composer = $composerBuilder(
         composer: this,
@@ -18564,6 +18781,9 @@ class $$DataOptionsTableOrderingComposer
   ColumnOrderings<int> get order => $composableBuilder(
       column: $table.order, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
+
   $$DataOptionSetsTableOrderingComposer get optionSet {
     final $$DataOptionSetsTableOrderingComposer composer = $composerBuilder(
         composer: this,
@@ -18622,6 +18842,9 @@ class $$DataOptionsTableAnnotationComposer
   GeneratedColumn<int> get order =>
       $composableBuilder(column: $table.order, builder: (column) => column);
 
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
   $$DataOptionSetsTableAnnotationComposer get optionSet {
     final $$DataOptionSetsTableAnnotationComposer composer = $composerBuilder(
         composer: this,
@@ -18676,6 +18899,7 @@ class $$DataOptionsTableTableManager extends RootTableManager<
             Value<String> code = const Value.absent(),
             Value<String> optionSet = const Value.absent(),
             Value<int> order = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               DataOptionsCompanion(
@@ -18689,6 +18913,7 @@ class $$DataOptionsTableTableManager extends RootTableManager<
             code: code,
             optionSet: optionSet,
             order: order,
+            deletedAt: deletedAt,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -18702,6 +18927,7 @@ class $$DataOptionsTableTableManager extends RootTableManager<
             required String code,
             required String optionSet,
             Value<int> order = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               DataOptionsCompanion.insert(
@@ -18715,6 +18941,7 @@ class $$DataOptionsTableTableManager extends RootTableManager<
             code: code,
             optionSet: optionSet,
             order: order,
+            deletedAt: deletedAt,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0

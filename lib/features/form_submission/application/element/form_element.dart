@@ -7,6 +7,7 @@ import 'package:d_sdk/core/form/rule/choice_filter.dart';
 import 'package:d_sdk/core/form/rule/rule_parse_extension.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';

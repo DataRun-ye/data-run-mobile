@@ -17,7 +17,7 @@ class ActivityListView extends StackedView<ActivityListViewModel> {
     if (model.isBusy) {
       return const Center(child: CircularProgressIndicator());
     }
-    final list = model.activities;
+    final list = model.activities.where((a) => !a.disabled).toList();
     if (list.isEmpty) {
       return Center(child: Text(S.of(context).noActivitiesYet));
     }

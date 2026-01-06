@@ -33,7 +33,7 @@ class FormTemplateVersionsDao extends DatabaseAccessor<AppDatabase>
   }) {
     // Aliases
     final ftv = alias(formTemplateVersions, 'ftv');
-    final af  = alias(attachedDatabase.assignmentForms, 'a');
+    final af = alias(attachedDatabase.assignmentForms, 'a');
 
     // Build subquery for (template, maxVersionNumber)
     final lvNums = alias(formTemplateVersions, 'lv_nums');
@@ -52,15 +52,14 @@ class FormTemplateVersionsDao extends DatabaseAccessor<AppDatabase>
         innerJoin(
           ftv,
           ftv.template.equalsExp(formTemplates.id) &
-          ftv.versionNumber.equalsExp(
-            latestSub.ref(lvNums.versionNumber.max()),
-          ),
+              ftv.versionNumber.equalsExp(
+                latestSub.ref(lvNums.versionNumber.max()),
+              ),
         ),
       ] else ...[
         innerJoin(
           ftv,
-          ftv.template.equalsExp(formTemplates.id) &
-          ftv.id.equals(versionId),
+          ftv.template.equalsExp(formTemplates.id) & ftv.id.equals(versionId),
         ),
       ],
 
@@ -80,85 +79,85 @@ class FormTemplateVersionsDao extends DatabaseAccessor<AppDatabase>
       query.where(af.assignment.equals(assignmentId));
     }
 
-    return query
-        .map((row) {
+    return query.map((row) {
       final tmpl = row.readTable(formTemplates);
-      final ver  = row.readTable(ftv);
+      final ver = row.readTable(ftv);
       return (tmpl, ver);
-    })
-        .map((tuple) {
+    }).map((tuple) {
       final (t, v) = tuple;
       return FormTemplateModel(
-        id:            t.id,
-        name:          t.name,
-        versionUid:    v.id,
-        label:         t.label,
-        description:   t.description,
+        id: t.id,
+        disabled: t.disabled ?? false,
+        name: t.name,
+        versionUid: v.id,
+        label: t.label,
+        description: t.description,
         versionNumber: v.versionNumber,
-        fields:        v.fields.build(),
-        sections:      v.sections.build(),
+        fields: v.fields.build(),
+        sections: v.sections.build(),
+        options: (v.options ?? []).build(),
       );
     });
   }
 
 // Selectable<FormTemplateModel> selectFormTemplatesWithRefs(
-  //     {String? assignmentId, String? versionId}) {
-  //   // Alias the version table for the aggregation subquery
-  //   final latestVersionsNumbers = alias(formTemplateVersions, 'lv_nums');
-  //
-  //   // Build a select-only query to get max(versionNumber) per template
-  //   final versionMaxQuery = selectOnly(latestVersionsNumbers)
-  //     ..addColumns([
-  //       latestVersionsNumbers.template, // template FK
-  //       latestVersionsNumbers.versionNumber.max(), // max versionNumber
-  //     ])
-  //     ..groupBy([
-  //       latestVersionsNumbers.template
-  //     ]); // group by template FK :contentReference[oaicite:4]{index=4}
-  //
-  //   // Wrap it as a subquery named 'lv'
-  //   final latestVersionsSub = Subquery(versionMaxQuery, 'lv');
-  //
-  //   // Alias the version table again to join for details
-  //   final ftv = alias(formTemplateVersions, 'ftv');
-  //   final af = alias(attachedDatabase.assignmentForms, 'a');
-  //
-  //   // Perform the join: FormTemplate ↔ detailed version ↔ max-version subquery
-  //   final query = select(formTemplates).join([
-  //     innerJoin(
-  //       ftv,
-  //       ftv.template.equalsExp(formTemplates.id) // match on template ID
-  //           &
-  //           ftv.versionNumber.equalsExp(latestVersionsSub
-  //               .ref(latestVersionsNumbers.versionNumber.max())),
-  //     ),
-  //     innerJoin(formTemplates, af.form.equalsExp(formTemplates.id),
-  //         useColumns: false),
-  //   ]);
-  //
-  //   if (assignmentId != null) {
-  //     query.where(af.assignment.equals(assignmentId));
-  //   }
-  //
-  //   return query.map((row) {
-  //     final tmpl = row.readTable(formTemplates);
-  //     final ver = row.readTable(ftv);
-  //     return (tmpl, ver);
-  //   }).map((withRef) {
-  //     final (t, v) = withRef;
-  //
-  //     return FormTemplateModel(
-  //       id: t.id,
-  //       name: t.name,
-  //       versionUid: v.id,
-  //       label: t.label,
-  //       description: t.description,
-  //       versionNumber: v.versionNumber,
-  //       fields: v.fields.build(),
-  //       sections: v.sections.build(),
-  //     );
-  //   });
-  // }
+//     {String? assignmentId, String? versionId}) {
+//   // Alias the version table for the aggregation subquery
+//   final latestVersionsNumbers = alias(formTemplateVersions, 'lv_nums');
+//
+//   // Build a select-only query to get max(versionNumber) per template
+//   final versionMaxQuery = selectOnly(latestVersionsNumbers)
+//     ..addColumns([
+//       latestVersionsNumbers.template, // template FK
+//       latestVersionsNumbers.versionNumber.max(), // max versionNumber
+//     ])
+//     ..groupBy([
+//       latestVersionsNumbers.template
+//     ]); // group by template FK :contentReference[oaicite:4]{index=4}
+//
+//   // Wrap it as a subquery named 'lv'
+//   final latestVersionsSub = Subquery(versionMaxQuery, 'lv');
+//
+//   // Alias the version table again to join for details
+//   final ftv = alias(formTemplateVersions, 'ftv');
+//   final af = alias(attachedDatabase.assignmentForms, 'a');
+//
+//   // Perform the join: FormTemplate ↔ detailed version ↔ max-version subquery
+//   final query = select(formTemplates).join([
+//     innerJoin(
+//       ftv,
+//       ftv.template.equalsExp(formTemplates.id) // match on template ID
+//           &
+//           ftv.versionNumber.equalsExp(latestVersionsSub
+//               .ref(latestVersionsNumbers.versionNumber.max())),
+//     ),
+//     innerJoin(formTemplates, af.form.equalsExp(formTemplates.id),
+//         useColumns: false),
+//   ]);
+//
+//   if (assignmentId != null) {
+//     query.where(af.assignment.equals(assignmentId));
+//   }
+//
+//   return query.map((row) {
+//     final tmpl = row.readTable(formTemplates);
+//     final ver = row.readTable(ftv);
+//     return (tmpl, ver);
+//   }).map((withRef) {
+//     final (t, v) = withRef;
+//
+//     return FormTemplateModel(
+//       id: t.id,
+//       name: t.name,
+//       versionUid: v.id,
+//       label: t.label,
+//       description: t.description,
+//       versionNumber: v.versionNumber,
+//       fields: v.fields.build(),
+//       sections: v.sections.build(),
+//     );
+//   });
+// }
 
 // Future<List<(FormTemplate, FormTemplateVersion)>>
 //     selectFormTemplatesWithRefs() async {

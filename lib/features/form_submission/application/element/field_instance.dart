@@ -26,11 +26,11 @@ class FieldInstance<T> extends FormElementInstance<T> {
 
   List<String> get filterDependencies => [...template.filterDependencies];
 
-  // List<String> get filterExpressionDependencies => [
-  //       ...?choiceFilter?.options
-  //           .expand((o) => o.filterExpressionDependencies)
-  //           .toSet()
-  //     ];
+  List<String> get filterExpressionDependencies => [
+        ...?choiceFilter?.options
+            .expand((o) => o.filterExpressionDependencies)
+            .toSet()
+      ];
 
   List<String> get dependencies => [
         ...template.dependencies,
@@ -69,7 +69,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
           void Function(FormElementInstance<dynamic> element) callback) =>
       <FormElementInstance<dynamic>>[];
 
-  List<DataOption> get visibleOption => elementState.visibleOptions;
+  List<FormOption> get visibleOption => elementState.visibleOptions;
 
   @override
   // ignore: unnecessary_overrides
@@ -81,31 +81,31 @@ class FieldInstance<T> extends FormElementInstance<T> {
         changedDependency: changedDependency,
         updateParent: updateParent,
         emitEvent: emitEvent);
-    // if (filterExpressionDependencies.isNotEmpty) {
-    //   final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
-    //   logDebug(
-    //       'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-    //   logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-    //   final oldState = elementState.copyWith(); // clone
-    //   final newState = elementState.resetValueFromVisibleOptions(
-    //       visibleOptions: visibleOptionsUpdate);
-    //   logDebug(
-    //       '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-    //   updateStatus(newState /* notify: oldState.value != newState.value*/);
-    //   elementControl.updateValue(newState.value);
-    // } else if (choiceFilter?.expression != null) {
-    //   final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
-    //   logDebug(
-    //       'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-    //   logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-    //   final oldState = elementState.copyWith(); // clone
-    //   final newState = elementState.resetValueFromVisibleOptions(
-    //       visibleOptions: visibleOptionsUpdate);
-    //   logDebug(
-    //       '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-    //   updateStatus(newState /* notify: oldState.value != newState.value*/);
-    //   elementControl.updateValue(newState.value);
-    // }
+    if (filterExpressionDependencies.isNotEmpty) {
+      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
+      logDebug(
+          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
+      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
+      final oldState = elementState.copyWith(); // clone
+      final newState = elementState.resetValueFromVisibleOptions(
+          visibleOptions: visibleOptionsUpdate);
+      logDebug(
+          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
+      updateStatus(newState /* notify: oldState.value != newState.value*/);
+      elementControl.updateValue(newState.value);
+    } else if (choiceFilter?.expression != null) {
+      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
+      logDebug(
+          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
+      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
+      final oldState = elementState.copyWith(); // clone
+      final newState = elementState.resetValueFromVisibleOptions(
+          visibleOptions: visibleOptionsUpdate);
+      logDebug(
+          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
+      updateStatus(newState /* notify: oldState.value != newState.value*/);
+      elementControl.updateValue(newState.value);
+    }
   }
 }
 

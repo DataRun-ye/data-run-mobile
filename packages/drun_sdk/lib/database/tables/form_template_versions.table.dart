@@ -17,6 +17,8 @@ class FormTemplateVersions extends Table {
 
   TextColumn get sections => text().map(const TemplateListConverter())();
 
+  TextColumn get options => text().nullable().map(const FormOptionListConverter())();
+
   @override
   Set<Column<Object>> get primaryKey => {id};
 }

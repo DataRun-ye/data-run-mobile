@@ -185,36 +185,15 @@ class TableAppearance with EquatableMixin {
     this.compact = false,
     this.fixedActionColumns = false,
     this.hideSynced = false,
+    this.upwardDirectionOfSpeedDial = false,
   });
 
   final bool compact;
-  final fixedActionColumns;
-  final hideSynced;
-
-  TableAppearance toggleCompact(bool? value) {
-    return copyWith(compact: value ?? !compact);
-  }
-
-  TableAppearance toggleFixedActionColumns(bool? value) {
-    return copyWith(fixedActionColumns: value ?? !fixedActionColumns);
-  }
-
-  TableAppearance toggleHideSynced(bool? value) {
-    return copyWith(hideSynced: value ?? !hideSynced);
-  }
-
-  TableAppearance copyWith({
-    bool? compact,
-    bool? fixedActionColumns,
-    bool? hideSynced,
-  }) {
-    return TableAppearance(
-      compact: compact ?? this.compact,
-      fixedActionColumns: fixedActionColumns ?? this.fixedActionColumns,
-      hideSynced: hideSynced ?? this.hideSynced,
-    );
-  }
+  final bool fixedActionColumns;
+  final bool hideSynced;
+  final bool upwardDirectionOfSpeedDial;
 
   @override
-  List<Object?> get props => [compact, fixedActionColumns, hideSynced];
+  List<Object?> get props =>
+      [compact, fixedActionColumns, upwardDirectionOfSpeedDial, hideSynced];
 }

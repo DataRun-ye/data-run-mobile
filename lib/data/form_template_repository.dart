@@ -1,6 +1,7 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/tree_element.dart';
 import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/data/form_template_list_service.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
@@ -32,7 +33,7 @@ class FormTemplateRepository {
   // final FormTemplate _formTemplate;
   // final FormTemplateVersion _formTemplateVersion;
   final FormTemplateModel _formTemplateModel;
-  final Map<String, List<DataOption>> optionMap;
+  final Map<String, List<FormOption>> optionMap;
   final Map<String, DataOptionSet> optionSets;
   SectionTemplate? _root;
   final Map<String, Template> _rootsFlatCache = {};

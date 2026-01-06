@@ -50,6 +50,7 @@
       "parent": "main",
       "name": "NotificationNumber",
       "code": "NotificationNumber",
+      "choiceFilter": "wh_category == #{wh_category}",
       "description": "Indoor entomological surveillance",
       "label": {
         "en": "NotificationNumber",
@@ -271,5 +272,22 @@
       "id": "main"
     }
   ],
-  "id": "01JZTERV9JJDV8SF3P931KF5DT"
+  "options": [
+    {
+      "uid": "uom1-uid",
+      "properties": {
+        "wh_category": "ACT80",
+        "wh_category": "ACT80"
+      }
+    },
+    {
+      "uid": "uom1-uid",
+      "wh_category": "ACT80"
+    },
+    {
+      "uid": "uom1-uid",
+      "wh_category": "ACT80"
+    }
+  ],
+  "id",: "01JZTERV9JJDV8SF3P931KF5DT"
 }

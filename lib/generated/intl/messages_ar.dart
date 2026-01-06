@@ -118,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "activity": MessageLookupByLibrary.simpleMessage("النشاط"),
     "addAnItem": MessageLookupByLibrary.simpleMessage("إضافة عنصر"),
     "addNew": MessageLookupByLibrary.simpleMessage("جديد"),
+    "addNewItem": MessageLookupByLibrary.simpleMessage("إضافة عنصر جديد"),
     "ageFieldHint": MessageLookupByLibrary.simpleMessage("أدخل العمر"),
     "all": MessageLookupByLibrary.simpleMessage("الكل"),
     "allDates": MessageLookupByLibrary.simpleMessage("كل الأوقات"),
@@ -322,6 +323,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalErrorTitle": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
     "genericError": MessageLookupByLibrary.simpleMessage("خطأ غير محدد"),
     "gtin": MessageLookupByLibrary.simpleMessage("الرقم التجاري"),
+    "hiddenSpeedDialIssueChangeDirection": MessageLookupByLibrary.simpleMessage(
+      "زر الإرسال مخفي (تغيير اتجاه)",
+    ),
     "hidePassword": MessageLookupByLibrary.simpleMessage("اخفاء كلمة السر"),
     "hideSyncedRows": MessageLookupByLibrary.simpleMessage(
       "إخفاء دائم للمزامن",

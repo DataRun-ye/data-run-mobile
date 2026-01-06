@@ -28,10 +28,12 @@ extension DataInstancesDaoExpressionExtension on DataInstancesDao {
       name: formTemplate.name,
       versionUid: templateVersion.id,
       label: formTemplate.label,
+      disabled: formTemplate.disabled ?? false,
       description: formTemplate.description,
       versionNumber: templateVersion.versionNumber,
       fields: templateVersion.fields.build(),
       sections: templateVersion.sections.build(),
+      options: (templateVersion.options ?? []).build()
     );
   }
 

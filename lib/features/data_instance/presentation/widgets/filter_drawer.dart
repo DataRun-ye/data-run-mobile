@@ -113,6 +113,22 @@ class FilterDrawer extends ConsumerWidget {
                       controlAffinity: ListTileControlAffinity.leading,
                       visualDensity: VisualDensity.compact,
                     ),
+                    const Divider(height: 1),
+                    CheckboxListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      dense: true,
+                      title: Text(S.of(context).hiddenSpeedDialIssueChangeDirection),
+                      value: tableAppearance.upwardDirectionOfSpeedDial,
+                      onChanged: (value) {
+                        ref
+                            .read(tableAppearanceControllerProvider.notifier)
+                            .toggleDirectionOfSpeedDial(value);
+                        Navigator.pop(context);
+                      },
+                      controlAffinity: ListTileControlAffinity.leading,
+                      visualDensity: VisualDensity.compact,
+                    ),
                   ],
                 ),
               ),

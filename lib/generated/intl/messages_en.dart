@@ -115,6 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "activity": MessageLookupByLibrary.simpleMessage("Activity"),
     "addAnItem": MessageLookupByLibrary.simpleMessage("Add an Item"),
     "addNew": MessageLookupByLibrary.simpleMessage("Add New"),
+    "addNewItem": MessageLookupByLibrary.simpleMessage("Add new item"),
     "ageFieldHint": MessageLookupByLibrary.simpleMessage("Enter an Age"),
     "all": MessageLookupByLibrary.simpleMessage("All"),
     "allDates": MessageLookupByLibrary.simpleMessage("All Times"),
@@ -327,6 +328,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "genericError": MessageLookupByLibrary.simpleMessage("Generic Error"),
     "gtin": MessageLookupByLibrary.simpleMessage("GTIN"),
+    "hiddenSpeedDialIssueChangeDirection": MessageLookupByLibrary.simpleMessage(
+      "Hidden Speed Dial Issue (change direction)",
+    ),
     "hidePassword": MessageLookupByLibrary.simpleMessage("Hide Password"),
     "hideSyncedRows": MessageLookupByLibrary.simpleMessage("Hide synced rows"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),

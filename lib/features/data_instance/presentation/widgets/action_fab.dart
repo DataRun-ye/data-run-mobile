@@ -1,27 +1,37 @@
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class ActionFAB extends ConsumerWidget {
   const ActionFAB(
       {super.key,
       required this.onAddNew,
       required this.onDelete,
-      required this.onBulkSync});
+      required this.onBulkSync,
+      this.openCloseDial});
 
   final VoidCallback? onAddNew;
   final VoidCallback? onDelete;
   final VoidCallback? onBulkSync;
+  final ValueNotifier<bool>? openCloseDial; // NEW
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
-    final direction = Intl.getCurrentLocale() == 'ar'
-        ? SpeedDialDirection.left
-        : SpeedDialDirection.right;
+    final bool upwardDirectionOfSpeedDial = ref.watch(
+            preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial))
+        as bool;
+
+    final direction = upwardDirectionOfSpeedDial
+        ? SpeedDialDirection.up
+        : Localizations.localeOf(context).languageCode == 'ar'
+            ? SpeedDialDirection.left
+            : SpeedDialDirection.right;
+
     return Consumer(
       builder: (context, ref, child) {
         final selectedItems = ref.watch(selectedItemsProvider);
@@ -39,6 +49,7 @@ class ActionFAB extends ConsumerWidget {
               ? FloatingActionButton(
                   heroTag: 'add_speed-dial-hero-tag',
                   key: ValueKey('add'),
+                  tooltip: S.of(context).addNewItem,
                   onPressed: onAddNew,
                   child: Icon(Icons.add),
                   backgroundColor: cs.primary,
@@ -56,6 +67,7 @@ class ActionFAB extends ConsumerWidget {
                       key: ValueKey('${finalizedItems.isNotEmpty}-speed-dial'),
                       isOpenOnStart: true,
                       closeDialOnPop: true,
+                      openCloseDial: openCloseDial,
                       heroTag: 'speed-dial-hero-tag',
                       animatedIcon: AnimatedIcons.menu_close,
                       overlayOpacity: 0.0,

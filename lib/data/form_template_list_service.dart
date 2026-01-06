@@ -3,6 +3,7 @@ import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/collections.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
@@ -10,6 +11,7 @@ import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
 import 'package:datarunmobile/features/form/application/form_list_filter.dart';
 import 'package:drift/drift.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -129,6 +131,26 @@ class FormTemplateListService {
     return assignmentFormTemplates;
   }
 
+  Future<List<FormOption>> mergeOptions(List<FormOption> formOptions) async {
+    final optionIdsMap = IMap.fromIterable(formOptions,
+        keyMapper: (o) => o.id, valueMapper: (o) => o);
+
+    final List<FormOption> options = [];
+
+    if (optionIdsMap.isNotEmpty) {
+      final mergedOptions = (await DSdk.db.managers.dataOptions
+              .filter((f) => f.id.isIn(optionIdsMap.keys))
+              .get())
+          .map((o) => optionIdsMap.get(o.id)?.fromDataOption(o))
+          .whereType<FormOption>()
+          .toList();
+
+      return mergedOptions;
+    }
+
+    return [];
+  }
+
   Future<List<FormTemplateModel>> fetchByFilter(FormListFilter filter) async {
     final db = appLocator<DbManager>().db;
     final query = db.formTemplateVersionsDao
@@ -150,9 +172,11 @@ class FormTemplateListService {
           .withReferences((prefetch) => prefetch(template: true));
 
       if (versionId != null) {
-        query = query.filter((f) => f.id(versionId));
+        query = query.filter((f) =>
+            f.id(versionId));
       } else {
-        query = query.filter((f) => f.template.id(templateId));
+        query = query.filter((f) =>
+            f.template.id(templateId));
       }
 
       final List<(FormTemplateVersion, $$FormTemplateVersionsTableReferences)>
@@ -165,12 +189,14 @@ class FormTemplateListService {
       return FormTemplateModel(
         id: formTemplate.id,
         name: formTemplate.name,
+        disabled: formTemplate.disabled ?? false,
         versionUid: templateVersion.id,
         label: formTemplate.label,
         description: formTemplate.description,
         versionNumber: templateVersion.versionNumber,
         fields: templateVersion.fields.build(),
         sections: templateVersion.sections.build(),
+        options: (await mergeOptions(templateVersion.options ?? [])).build(),
       );
     } catch (e) {
       DExceptionReporter.instance.report(e, showToUser: true);

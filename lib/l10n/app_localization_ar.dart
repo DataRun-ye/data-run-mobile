@@ -1267,4 +1267,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pleaseEnterAtLeastFourNameParts => 'ادخل الإسم الرباعي على الأقل';
+
+  @override
+  String get addNewItem => 'إضافة عنصر جديد';
+
+  @override
+  String get hiddenSpeedDialIssueChangeDirection =>
+      'زر الإرسال مخفي (تغيير اتجاه)';
 }

@@ -64,7 +64,7 @@ class DataFormTemplateDatasource
   @override
   FormTemplate fromApiJson(Map<String, dynamic> data,
       {ValueSerializer? serializer}) {
-    final bool disabled = data['disabled'] == true;
+    final bool disabled = (data['disabled'] ?? data['deleted']) == true;
     return FormTemplate.fromJson({
       ...data,
       'disabled': disabled,

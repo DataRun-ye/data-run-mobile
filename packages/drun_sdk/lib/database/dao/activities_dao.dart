@@ -109,6 +109,7 @@ class ActivitiesDao extends DatabaseAccessor<AppDatabase>
       return ActivityModel(
         id: ac.id,
         assignedAssignments: assignedAssignments,
+        disabled: ac.disabled ?? false,
         name: ac.name,
       );
     });

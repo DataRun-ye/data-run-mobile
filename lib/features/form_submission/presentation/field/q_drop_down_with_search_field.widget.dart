@@ -1,5 +1,5 @@
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
@@ -20,7 +20,7 @@ class QDropDownWithSearchField extends HookConsumerWidget {
   }
 
   getAutoComplete(
-      List<DataOption> options, BuildContext context, WidgetRef ref) {
+      List<FormOption> options, BuildContext context, WidgetRef ref) {
     // final formInstance = ref
     //     .watch(
     //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
@@ -55,12 +55,13 @@ class NameToLabelValueAccessor
     extends DropDownSearchValueAccessor<String, String> {
   NameToLabelValueAccessor(this.options);
 
-  final List<DataOption> options;
+  final List<FormOption> options;
 
   @override
   String? modelToViewValue(List<String> items, String? modelValue) {
     return options
-        .where((option) => option.code == modelValue || option.name == modelValue)
+        .where(
+            (option) => option.code == modelValue || option.name == modelValue)
         .map((option) =>
             getItemLocalString(option.label, defaultString: option.name))
         .firstOrNull;

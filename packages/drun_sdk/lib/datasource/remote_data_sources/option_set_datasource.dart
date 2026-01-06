@@ -27,6 +27,7 @@ class OptionSetDatasource
           final json = {
             ...t.value as Map<String, dynamic>,
             'optionSet': item['uid']!,
+            'deletedAt': item['deletedAt'] ?? t.value['deletedAt'],
             'order': t.key + 1,
             'dirty': false,
             'isToUpdate': true,

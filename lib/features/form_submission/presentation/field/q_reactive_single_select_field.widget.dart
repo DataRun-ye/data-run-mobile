@@ -1,5 +1,6 @@
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
@@ -90,9 +91,9 @@ class QReactiveSingleSelectField extends ConsumerWidget {
   }
 
   List<ReactiveChipOption<String>> _getChipOptions(
-      List<DataOption> options, double consistentWidth) {
+      List<FormOption> options, double consistentWidth) {
     return options
-        .map((DataOption option) => ReactiveChipOption<String>(
+        .map((FormOption option) => ReactiveChipOption<String>(
               value: option.code,
               child: SizedBox(
                 width: consistentWidth - 20, // Use the calculated consistent width

@@ -1,6 +1,7 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/shared/shared.dart';
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/data_instance/application/models.dart';
 import 'package:datarunmobile/features/data_instance/data/table_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
@@ -216,18 +217,42 @@ Future<ISet<String>> selectedFinalizedItem(Ref ref) async {
 class TableAppearanceController extends _$TableAppearanceController {
   @override
   TableAppearance build() {
-    return TableAppearance();
+    final compactTableView =
+        ref.watch(preferenceNotifierProvider(Preference.compactTableView)) ??
+            false;
+    final upwardDirectionOfSpeedDial = ref.watch(preferenceNotifierProvider(
+            Preference.upwardDirectionOfSpeedDial)) ??
+        false;
+    final fixedActionColumns =
+        ref.watch(preferenceNotifierProvider(Preference.fixedActionColumns))
+            as bool;
+
+    return TableAppearance(
+        fixedActionColumns: fixedActionColumns,
+        compact: compactTableView,
+        upwardDirectionOfSpeedDial: upwardDirectionOfSpeedDial);
   }
 
   void toggleCompact(bool? value) {
-    state = state.toggleCompact(value);
+    // it will invalidate and update this notifier
+    ref
+        .read(preferenceNotifierProvider(Preference.compactTableView).notifier)
+        .update(value ?? false);
+  }
+
+  void toggleDirectionOfSpeedDial(bool? value) {
+    // it will invalidate and update this notifier
+    ref
+        .read(preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial)
+            .notifier)
+        .update(value ?? false);
   }
 
   void toggleFixedActionColumns(bool? value) {
-    state = state.toggleFixedActionColumns(value);
-  }
-
-  void toggleHideSynced(bool? value) {
-    state = state.toggleHideSynced(value);
+    // it will invalidate and update this notifier
+    ref
+        .read(preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial)
+            .notifier)
+        .update(value ?? false);
   }
 }

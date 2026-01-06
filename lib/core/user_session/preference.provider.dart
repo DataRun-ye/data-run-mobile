@@ -4,6 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'preference.provider.g.dart';
 
+enum DirectionOfSpeedDial {
+  Up,
+  Normal,
+}
+
 enum Preference {
   shouldShowWalkthrough('should_show_walkthrough', true),
   language('language', 'NA'),
@@ -11,7 +16,10 @@ enum Preference {
   // useMaterial3('useMaterial3', true),
   themeMode('themeMode', 1),
   colorSeed('colorSeed', 2),
-  colorSelectionMethod('colorSelectionMethod', 'colorSeed');
+  colorSelectionMethod('colorSelectionMethod', 'colorSeed'),
+  fixedActionColumns('fixedActionColumns', false),
+  compactTableView('compactTableView', false),
+  upwardDirectionOfSpeedDial('upwardDirectionOfSpeedDial', false);
 
   const Preference(this.key, this.defaultValue);
 

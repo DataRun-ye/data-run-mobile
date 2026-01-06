@@ -1268,4 +1268,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pleaseEnterAtLeastFourNameParts =>
       'please enter at least four name parts';
+
+  @override
+  String get addNewItem => 'Add new item';
+
+  @override
+  String get hiddenSpeedDialIssueChangeDirection =>
+      'Hidden Speed Dial Issue (change direction)';
 }

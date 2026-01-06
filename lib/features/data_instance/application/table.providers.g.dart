@@ -311,7 +311,7 @@ final selectedFinalizedItemProvider =
 // ignore: unused_element
 typedef SelectedFinalizedItemRef = AutoDisposeFutureProviderRef<ISet<String>>;
 String _$dataInstanceFilterHash() =>
-    r'aaa8e11aacb0a55bb5c9084589c5aaa3db8a761e';
+    r'091d5bb718eadfe76b6933abd7b1fca6c21c5d8e';
 
 abstract class _$DataInstanceFilter
     extends BuildlessAutoDisposeNotifier<SubmissionsFilter> {
@@ -515,7 +515,7 @@ final selectedItemsProvider =
 
 typedef _$SelectedItems = AutoDisposeNotifier<ISet<String>>;
 String _$tableAppearanceControllerHash() =>
-    r'99621c216e39e344e44677a73bf08b8d5bfb7f60';
+    r'95057ae626c649fa928b138bf0bc6569b4069238';
 
 /// See also [TableAppearanceController].
 @ProviderFor(TableAppearanceController)

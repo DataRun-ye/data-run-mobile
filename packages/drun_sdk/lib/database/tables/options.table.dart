@@ -17,6 +17,8 @@ class DataOptions extends Table with BaseTableMixin, IdentifiableMixin {
   @override
   Set<Column<Object>> get primaryKey => {id};
 
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+
   @override
   List<Set<Column>> get uniqueKeys => [
         {optionSet, id},

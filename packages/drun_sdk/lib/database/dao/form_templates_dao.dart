@@ -131,12 +131,14 @@ class FormTemplatesDao extends DatabaseAccessor<AppDatabase>
       return FormTemplateModel(
         id: t.id,
         name: t.name,
+        disabled: t.disabled ?? false,
         versionUid: v.id,
         label: t.label,
         description: t.description,
         versionNumber: v.versionNumber,
         fields: v.fields.build(),
         sections: v.sections.build(),
+        options: (v.options ?? []).build(),
       );
     });
   }

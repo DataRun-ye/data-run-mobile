@@ -35,20 +35,20 @@ Future<List<Pair<AssignmentForm, bool>>> availableUserFormTemplates(Ref ref,
       .userAvailableForms(assignment: assignmentId);
 }
 
-@riverpod
-Future<Map<String, List<DataOption>>> formTemplateOptions(Ref ref,
-    {required String formId, String? versionId}) async {
-  final FormTemplateModel formTemplate =
-      await appLocator<FormTemplateListService>().getTemplateByVersionOrLatest(
-          templateId: formId, versionId: versionId);
+// @riverpod
+// Future<Map<String, List<DataOption>>> formTemplateOptions(Ref ref,
+//     {required String formId, String? versionId}) async {
+//   final FormTemplateModel formTemplate =
+//       await appLocator<FormTemplateListService>().getTemplateByVersionOrLatest(
+//           templateId: formId, versionId: versionId);
+//
+//   return appLocator<OptionSetService>().getOptions(formTemplate);
+// }
 
-  return appLocator<OptionSetService>().getOptions(formTemplate);
-}
-
-@riverpod
-Future<DataOptionSet?> optionSet(Ref ref, {required String id}) async {
-  return appLocator<OptionSetService>().getOptionSet(id);
-}
+// @riverpod
+// Future<DataOptionSet?> optionSet(Ref ref, {required String id}) async {
+//   return appLocator<OptionSetService>().getOptionSet(id);
+// }
 
 /// form id could be on the format of formId-version or formId
 /// look for the latest version of the form template or the form template

@@ -1,5 +1,5 @@
 import 'package:d_sdk/core/util/list_extensions.dart';
-import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -82,7 +82,7 @@ class FieldElementState<T> extends FormElementState<T> {
   });
 
   final T? value;
-  final List<DataOption> visibleOptions;
+  final List<FormOption> visibleOptions;
 
   // Map<String, dynamic>? validationErrors() {
   //   final error = <String, dynamic>{};
@@ -103,7 +103,7 @@ class FieldElementState<T> extends FormElementState<T> {
       String? warning,
       Map<String, dynamic>? errors,
       T? value,
-      List<DataOption>? visibleOptions}) {
+      List<FormOption>? visibleOptions}) {
     return FieldElementState<T>(
       hidden: hidden ?? this.hidden,
       mandatory: mandatory ?? this.mandatory,
@@ -128,7 +128,7 @@ class FieldElementState<T> extends FormElementState<T> {
   }
 
   FieldElementState<T> resetValueFromVisibleOptions(
-      {required List<DataOption> visibleOptions}) {
+      {required List<FormOption> visibleOptions}) {
     if (!const DeepCollectionEquality.unordered()
         .equals(this.visibleOptions, visibleOptions)) {
       if (T is List<String>) {

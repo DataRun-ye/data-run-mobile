@@ -415,5 +415,7 @@
   "hideSyncedRows": "إخفاء دائم للمزامن",
   "fullNameIsRequired": "مطلوب إدخال إسم رُباعي صحيح.",
   "pleaseUseLettersOnly": "مسموح إدخال حروف فقط",
-  "pleaseEnterAtLeastFourNameParts": "ادخل الإسم الرباعي على الأقل"
+  "pleaseEnterAtLeastFourNameParts": "ادخل الإسم الرباعي على الأقل",
+  "addNewItem": "إضافة عنصر جديد",
+  "hiddenSpeedDialIssueChangeDirection": "زر الإرسال مخفي (تغيير اتجاه)"
 }

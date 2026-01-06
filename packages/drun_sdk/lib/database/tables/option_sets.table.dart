@@ -7,4 +7,6 @@ class DataOptionSets extends Table with BaseTableMixin, IdentifiableMixin {
   TextColumn get name => text()();
 
   TextColumn get code => text().nullable()();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
 }

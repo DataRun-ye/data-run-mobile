@@ -14,10 +14,12 @@ import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/features/sync_badges/sync_status_badges_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class TableScreen extends ConsumerWidget {
+class TableScreen extends HookConsumerWidget {
   const TableScreen({
     super.key,
     required this.formId,
@@ -29,6 +31,7 @@ class TableScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final _isDialOpen = useValueNotifier(false);
     final cs = Theme.of(context).colorScheme;
     final filter = ref.watch(dataInstanceFilterProvider(
       formId: formId,
@@ -47,7 +50,8 @@ class TableScreen extends ConsumerWidget {
         children: [
           Consumer(
             builder: (context, ref, child) {
-              final formAsync = ref.watch(formTemplateProvider(formId: formId));
+              final formAsync =
+                  ref.watch(formTemplateProvider(formId: formId));
               final filters = ref.watch(dataInstanceFilterProvider(
                 formId: formId,
                 assignmentId: assignmentId,
@@ -86,6 +90,7 @@ class TableScreen extends ConsumerWidget {
         ],
       ),
       floatingActionButton: ActionFAB(
+        // openCloseDial: _isDialOpen,
         onAddNew: () {
           appLocator<NavigationService>().navigateToFormFlowBootstrapper(
               formId: formId, assignmentId: assignmentId);

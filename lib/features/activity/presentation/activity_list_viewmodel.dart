@@ -54,7 +54,7 @@ class ActivityListViewModel extends BaseViewModel {
 
     final List<Activity> userEnabledActivities = await DSdk
         .db.managers.activities
-        .filter((f) => f.disabled.not(true))
+        // .filter((f) => f.disabled.not(true))
         .get();
 
     final List<ActivityModel> userActivities = [];
@@ -87,6 +87,7 @@ class ActivityListViewModel extends BaseViewModel {
         ActivityModel(
           assignedTeam: activityAssignedTeam,
           id: activity.id,
+          disabled: activity.disabled ?? false,
           name: activity.name,
           managedAssignments: managedAssignments.length,
           assignedAssignments: assignedAssignment.length,

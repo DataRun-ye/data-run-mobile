@@ -8,6 +8,7 @@ class ActivityModel extends IdentifiableModel with EquatableMixin {
     required super.name,
     super.label,
     super.properties,
+    this.disabled = false,
     this.managedTeams = const [],
     this.assignedAssignments = 0,
     this.managedAssignments = 0,
@@ -21,6 +22,7 @@ class ActivityModel extends IdentifiableModel with EquatableMixin {
   final IdentifiableModel? assignedTeam;
   final DateTime? startDate;
   final DateTime? endDate;
+  final bool disabled;
   final int assignedAssignments;
   final int managedAssignments;
 
@@ -38,6 +40,7 @@ class ActivityModel extends IdentifiableModel with EquatableMixin {
     IdentifiableModel? assignedTeam,
     DateTime? startDate,
     DateTime? endDate,
+    bool? disabled,
     int? assignedAssignments,
     int? managedAssignments,
   }) {
@@ -46,6 +49,7 @@ class ActivityModel extends IdentifiableModel with EquatableMixin {
       code: code ?? this.code,
       name: name ?? this.name,
       label: label ?? this.label,
+      disabled: disabled ?? this.disabled,
       properties: properties ?? this.properties,
       managedTeams: managedTeams ?? this.managedTeams,
       assignedTeam: assignedTeam ?? this.assignedTeam,

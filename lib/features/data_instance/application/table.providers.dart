@@ -218,14 +218,12 @@ class TableAppearanceController extends _$TableAppearanceController {
   @override
   TableAppearance build() {
     final compactTableView =
-        ref.watch(preferenceNotifierProvider(Preference.compactTableView)) ??
-            false;
+        ref.watch(preferenceNotifierProvider(Preference.compactTableView));
     final upwardDirectionOfSpeedDial = ref.watch(preferenceNotifierProvider(
             Preference.upwardDirectionOfSpeedDial)) ??
         false;
     final fixedActionColumns =
-        ref.watch(preferenceNotifierProvider(Preference.fixedActionColumns))
-            as bool;
+        ref.watch(preferenceNotifierProvider(Preference.fixedActionColumns));
 
     return TableAppearance(
         fixedActionColumns: fixedActionColumns,
@@ -245,14 +243,14 @@ class TableAppearanceController extends _$TableAppearanceController {
     ref
         .read(preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial)
             .notifier)
-        .update(value ?? false);
+        .update(value);
   }
 
   void toggleFixedActionColumns(bool? value) {
     // it will invalidate and update this notifier
     ref
-        .read(preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial)
-            .notifier)
-        .update(value ?? false);
+        .read(
+            preferenceNotifierProvider(Preference.fixedActionColumns).notifier)
+        .update(value);
   }
 }

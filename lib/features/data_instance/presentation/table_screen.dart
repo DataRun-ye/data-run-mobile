@@ -105,7 +105,6 @@ class TableScreen extends HookConsumerWidget {
                   .deleteSelectedItems());
         },
         onBulkSync: () {
-          // logDebug('onSync');
           ref
               .read(tableControllerProvider.notifier)
               .syncSelectedFinalizedItems();

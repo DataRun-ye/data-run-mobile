@@ -119,6 +119,7 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
         if (extra.isNotEmpty) {
           logger(message: 'persisting extra');
           await db.batch((b) {
+            b.deleteAll(extra.first.table);
             for (var ci in extra) {
               b.insertAllOnConflictUpdate(ci.table, [ci.entity]);
             }

@@ -243,7 +243,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get version => 'الإصدار';
 
   @override
-  String get clear => 'تصفية';
+  String get clear => 'إلغاء تطبيق عوامل التصفية';
 
   @override
   String get accept => 'قبول';
@@ -756,7 +756,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toggleBetweenListAndCardView => 'تغيير بين قائمة/جدول';
 
   @override
-  String get filters => 'تصفية البيانات';
+  String get filters => 'عوامل التصفية';
 
   @override
   String get reset => 'تفريغ';
@@ -1248,7 +1248,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get fixedTableColumns => 'تثبيت أعمدة التفاعل';
 
   @override
-  String get tableAppearance => 'مظهر الجدول';
+  String get tableAppearance => 'المظهر';
 
   @override
   String get tableControl => 'إعدادات جدول';
@@ -1272,6 +1272,5 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addNewItem => 'إضافة عنصر جديد';
 
   @override
-  String get hiddenSpeedDialIssueChangeDirection =>
-      'زر الإرسال مخفي (تغيير اتجاه)';
+  String get hiddenSpeedDialIssueChangeDirection => 'انبثاق عمودي للأزرار';
 }

@@ -26,9 +26,14 @@ class ActionFAB extends ConsumerWidget {
             preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial))
         as bool;
 
+    // final direction = upwardDirectionOfSpeedDial
+    //     ? SpeedDialDirection.up
+    //     : Localizations.localeOf(context).languageCode == 'ar'
+    //         ? SpeedDialDirection.left
+    //         : SpeedDialDirection.right;
     final direction = upwardDirectionOfSpeedDial
         ? SpeedDialDirection.up
-        : Localizations.localeOf(context).languageCode == 'ar'
+        : Directionality.of(context) == TextDirection.rtl
             ? SpeedDialDirection.left
             : SpeedDialDirection.right;
 

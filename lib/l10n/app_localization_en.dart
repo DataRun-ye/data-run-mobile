@@ -1273,6 +1273,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addNewItem => 'Add new item';
 
   @override
-  String get hiddenSpeedDialIssueChangeDirection =>
-      'Hidden Speed Dial Issue (change direction)';
+  String get hiddenSpeedDialIssueChangeDirection => 'Vertical Speed Dial';
 }

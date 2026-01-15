@@ -1,3 +1,4 @@
+import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/converters/custom_serializer.dart';
@@ -22,24 +23,31 @@ class OptionSetDatasource
 
     for (final item in raw) {
       final extraItemsJson = item['options'] as List? ?? [];
-      if (!extraItemsJson.isNullOrEmpty) {
-        final extraItems = extraItemsJson.asMap().entries.map((t) {
-          final json = {
-            ...t.value as Map<String, dynamic>,
-            'optionSet': item['uid']!,
-            'deletedAt': item['deletedAt'] ?? t.value['deletedAt'],
-            'order': t.key + 1,
-            'dirty': false,
-            'isToUpdate': true,
-            'label': t.value['label'] ?? <String, dynamic>{},
-            'translations': (t.value['translations'] as List?) ?? [],
-          };
-          return DataOption.fromJson(json, serializer: CustomSerializer());
-        });
+      logDebug("optionSet:${item['uid']}");
+      try {
+        if (!extraItemsJson.isNullOrEmpty) {
+          final extraItems = extraItemsJson.asMap().entries.map((t) {
+            final json = {
+              ...t.value as Map<String, dynamic>,
+              'optionSet': item['uid']!,
+              'deletedAt': item['deletedAt'] ?? t.value['deletedAt'],
+              'order': t.key + 1,
+              'dirty': false,
+              'isToUpdate': true,
+              'label': t.value['label'] ?? <String, dynamic>{},
+              'translations': (t.value['translations'] as List?) ?? [],
+            };
+            return DataOption.fromJson(json, serializer: CustomSerializer());
+          });
 
-        for (var m in extraItems) {
-          inserts.add(CompanionInsert(db.dataOptions, m));
+          for (var m in extraItems) {
+            inserts.add(CompanionInsert(db.dataOptions, m));
+          }
         }
+      } catch (e, s) {
+        logError("error extracting extra of optionSet:${item['uid']}",
+            source: e, stackTrace: s);
+        rethrow;
       }
     }
     return inserts;

@@ -329,7 +329,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "genericError": MessageLookupByLibrary.simpleMessage("Generic Error"),
     "gtin": MessageLookupByLibrary.simpleMessage("GTIN"),
     "hiddenSpeedDialIssueChangeDirection": MessageLookupByLibrary.simpleMessage(
-      "Hidden Speed Dial Issue (change direction)",
+      "Vertical Speed Dial",
     ),
     "hidePassword": MessageLookupByLibrary.simpleMessage("Hide Password"),
     "hideSyncedRows": MessageLookupByLibrary.simpleMessage("Hide synced rows"),

@@ -3066,10 +3066,10 @@ class S {
     return Intl.message('Add new item', name: 'addNewItem', desc: '', args: []);
   }
 
-  /// `Hidden Speed Dial Issue (change direction)`
+  /// `Vertical Speed Dial`
   String get hiddenSpeedDialIssueChangeDirection {
     return Intl.message(
-      'Hidden Speed Dial Issue (change direction)',
+      'Vertical Speed Dial',
       name: 'hiddenSpeedDialIssueChangeDirection',
       desc: '',
       args: [],

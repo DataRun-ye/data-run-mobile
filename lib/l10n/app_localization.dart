@@ -2321,7 +2321,7 @@ abstract class AppLocalizations {
   /// No description provided for @hiddenSpeedDialIssueChangeDirection.
   ///
   /// In en, this message translates to:
-  /// **'Hidden Speed Dial Issue (change direction)'**
+  /// **'Vertical Speed Dial'**
   String get hiddenSpeedDialIssueChangeDirection;
 }
 

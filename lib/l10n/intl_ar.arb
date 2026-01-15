@@ -83,7 +83,7 @@
     }
   },
   "version": "الإصدار",
-  "clear": "تصفية",
+  "clear": "إلغاء تطبيق عوامل التصفية",
   "accept": "قبول",
   "level": "المستوى",
   "orgUnitHelpText": "اختر اسم المكان",
@@ -260,7 +260,7 @@
   "to_update": "مسودة",
   "synced": "مزامنة",
   "toggleBetweenListAndCardView": "تغيير بين قائمة/جدول",
-  "filters": "تصفية البيانات",
+  "filters": "عوامل التصفية",
   "reset": "تفريغ",
   "apply": "تطبيق",
   "teams": "الفرق",
@@ -409,7 +409,7 @@
   "noItemsFound": "لا يوجد أي عنصر",
   "confirmDeleteItemsSelected": "سيتم حذف {count} عنصر، هل أنت متأكد؟",
   "fixedTableColumns": "تثبيت أعمدة التفاعل",
-  "tableAppearance": "مظهر الجدول",
+  "tableAppearance": "المظهر",
   "tableControl": "إعدادات جدول",
   "compactTable": "جدول مضموم",
   "hideSyncedRows": "إخفاء دائم للمزامن",
@@ -417,5 +417,5 @@
   "pleaseUseLettersOnly": "مسموح إدخال حروف فقط",
   "pleaseEnterAtLeastFourNameParts": "ادخل الإسم الرباعي على الأقل",
   "addNewItem": "إضافة عنصر جديد",
-  "hiddenSpeedDialIssueChangeDirection": "زر الإرسال مخفي (تغيير اتجاه)"
+  "hiddenSpeedDialIssueChangeDirection": "انبثاق عمودي للأزرار"
 }

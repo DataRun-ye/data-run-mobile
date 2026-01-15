@@ -31,7 +31,7 @@ class FilterDrawer extends ConsumerWidget {
     final tableAppearance = ref.watch(tableAppearanceControllerProvider);
 
     final drawerWidth =
-        math.min(360.0, MediaQuery.of(context).size.width * 0.85);
+        math.min(290.0, MediaQuery.of(context).size.width * 0.85);
 
     return Drawer(
       width: drawerWidth,
@@ -67,13 +67,13 @@ class FilterDrawer extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-
+              const SizedBox(height: 12),
               // --- TABLE APPEARANCE moved to top ---
               Text(S.of(context).tableAppearance,
+                  textAlign: TextAlign.center,
                   style: theme.textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
 
               Card(
                 elevation: 0,
@@ -92,7 +92,7 @@ class FilterDrawer extends ConsumerWidget {
                         ref
                             .read(tableAppearanceControllerProvider.notifier)
                             .toggleFixedActionColumns(value);
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       },
                       controlAffinity: ListTileControlAffinity.leading,
                       visualDensity: VisualDensity.compact,
@@ -108,7 +108,7 @@ class FilterDrawer extends ConsumerWidget {
                         ref
                             .read(tableAppearanceControllerProvider.notifier)
                             .toggleCompact(value);
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       },
                       controlAffinity: ListTileControlAffinity.leading,
                       visualDensity: VisualDensity.compact,
@@ -124,7 +124,7 @@ class FilterDrawer extends ConsumerWidget {
                         ref
                             .read(tableAppearanceControllerProvider.notifier)
                             .toggleDirectionOfSpeedDial(value);
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       },
                       controlAffinity: ListTileControlAffinity.leading,
                       visualDensity: VisualDensity.compact,
@@ -133,15 +133,34 @@ class FilterDrawer extends ConsumerWidget {
                 ),
               ),
 
-              const SizedBox(height: 14),
               const SizedBox(height: 12),
               Divider(color: theme.dividerColor),
               const SizedBox(height: 12),
 
               Text(S.of(context).filters,
+                  textAlign: TextAlign.center,
                   style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 10),
+                      ?.copyWith(fontWeight: FontWeight.w600, )),
+              const SizedBox(height: 16),
+              Card(
+                elevation: 0,
+                color: null,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+                  child: Column(
+                    children: [
+                      _buildDateRangeDropdown(context, filter, ref),
+                      // const SizedBox(height: 12),
+                      // _buildIncludeDeletedCheckbox(context, filter, ref),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 12),
               Card(
                 elevation: 0,
                 color: colorScheme.surfaceContainerHigh,
@@ -149,7 +168,7 @@ class FilterDrawer extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -162,26 +181,26 @@ class FilterDrawer extends ConsumerWidget {
                         runSpacing: 8,
                         children: InstanceSyncStatus.values
                             .where((v) =>
-                                v.isFilterIcon &&
-                                // hide the Synced chip when hideSynced is enabled
-                                !(tableAppearance.hideSynced &&
-                                    v.name.toLowerCase() == 'synced'))
+                        v.isFilterIcon &&
+                            // hide the Synced chip when hideSynced is enabled
+                            !(tableAppearance.hideSynced &&
+                                v.name.toLowerCase() == 'synced'))
                             .map((status) {
                           final isSelected = filter.syncStates.contains(status);
                           return FilterChip(
                             showCheckmark: false,
                             materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                            MaterialTapTargetSize.shrinkWrap,
                             tooltip: Intl.message(status.name),
                             labelPadding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
+                                horizontal: 5, vertical: 8),
                             label: buildStatusIcon(status),
                             selected: isSelected,
                             selectedColor: Colors.orange[200],
                             backgroundColor: colorScheme.surface,
                             side: isSelected
                                 ? BorderSide(
-                                    color: colorScheme.primary, width: 1)
+                                color: colorScheme.primary, width: 1)
                                 : BorderSide(color: colorScheme.outline),
                             labelStyle: theme.textTheme.bodySmall?.copyWith(
                                 color: isSelected
@@ -191,12 +210,11 @@ class FilterDrawer extends ConsumerWidget {
                               // toggle membership in the set
                               ref
                                   .read(dataInstanceFilterProvider(
-                                          formId: formId,
-                                          assignmentId: assignmentId)
-                                      .notifier)
+                                  formId: formId,
+                                  assignmentId: assignmentId)
+                                  .notifier)
                                   .toggleSyncStatus(status);
-                              // keep behaviour of closing drawer after selection (if you want multi-select without closing remove this)
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
                             },
                           );
                         }).toList(),
@@ -205,39 +223,22 @@ class FilterDrawer extends ConsumerWidget {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 14),
-
-              Card(
-                elevation: 0,
-                color: null,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
-                  child: Column(
-                    children: [
-                      _buildDateRangeDropdown(context, filter, ref),
-                      const SizedBox(height: 12),
-                      _buildIncludeDeletedCheckbox(context, filter, ref),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
+              const SizedBox(height: 12),
+              Divider(color: theme.dividerColor),
+              const SizedBox(height: 12),
               // Actions
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: ref
-                        .read(dataInstanceFilterProvider(
-                                formId: formId, assignmentId: assignmentId)
-                            .notifier)
-                        .clear,
+                    onPressed: () {
+                      ref
+                          .read(dataInstanceFilterProvider(
+                          formId: formId, assignmentId: assignmentId)
+                          .notifier)
+                          .clear();
+                      Navigator.pop(context);
+                    },
                     style: TextButton.styleFrom(
                       foregroundColor: colorScheme.primary,
                       textStyle: theme.textTheme.labelLarge,
@@ -279,7 +280,7 @@ class FilterDrawer extends ConsumerWidget {
                     formId: formId, assignmentId: assignmentId)
                 .notifier)
             .toggleDateBand(value);
-        Navigator.pop(context);
+        // Navigator.pop(context);
       },
     );
   }

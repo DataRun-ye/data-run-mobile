@@ -15,7 +15,7 @@ enum Preference {
   // appearance
   // useMaterial3('useMaterial3', true),
   themeMode('themeMode', 1),
-  colorSeed('colorSeed', 2),
+  colorSeed('colorSeed', 5),
   colorSelectionMethod('colorSelectionMethod', 'colorSeed'),
   fixedActionColumns('fixedActionColumns', false),
   compactTableView('compactTableView', false),

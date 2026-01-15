@@ -165,7 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkingSession": MessageLookupByLibrary.simpleMessage(
       "ضبط جلسة المستخدم...",
     ),
-    "clear": MessageLookupByLibrary.simpleMessage("تصفية"),
+    "clear": MessageLookupByLibrary.simpleMessage("إلغاء تطبيق عوامل التصفية"),
     "clearAll": MessageLookupByLibrary.simpleMessage("تفريق الكل"),
     "clearFilters": MessageLookupByLibrary.simpleMessage("إلغا التصفية"),
     "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
@@ -291,7 +291,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "قم بالرجوع ومراجعة الإخطاء أو (ليس الآن) للحفظ والمراجعة في وقت لاحق! لن يتسنى لك تعيين الاستمارة كنهائية وإرسالها إلا بعد تصحيح الأخطاء: ",
     ),
     "fileResourceFieldHint": MessageLookupByLibrary.simpleMessage("اختر ملفًا"),
-    "filters": MessageLookupByLibrary.simpleMessage("تصفية البيانات"),
+    "filters": MessageLookupByLibrary.simpleMessage("عوامل التصفية"),
     "finalData": MessageLookupByLibrary.simpleMessage("بيانات نهائية"),
     "finalized": MessageLookupByLibrary.simpleMessage("نهائية"),
     "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
@@ -324,7 +324,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "genericError": MessageLookupByLibrary.simpleMessage("خطأ غير محدد"),
     "gtin": MessageLookupByLibrary.simpleMessage("الرقم التجاري"),
     "hiddenSpeedDialIssueChangeDirection": MessageLookupByLibrary.simpleMessage(
-      "زر الإرسال مخفي (تغيير اتجاه)",
+      "انبثاق عمودي للأزرار",
     ),
     "hidePassword": MessageLookupByLibrary.simpleMessage("اخفاء كلمة السر"),
     "hideSyncedRows": MessageLookupByLibrary.simpleMessage(
@@ -592,7 +592,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "syncingData": MessageLookupByLibrary.simpleMessage("مزامنة بيانات"),
     "syncingEvents": MessageLookupByLibrary.simpleMessage("مزامنة الإستمارات"),
     "systemFilesAccessError": m27,
-    "tableAppearance": MessageLookupByLibrary.simpleMessage("مظهر الجدول"),
+    "tableAppearance": MessageLookupByLibrary.simpleMessage("المظهر"),
     "tableControl": MessageLookupByLibrary.simpleMessage("إعدادات جدول"),
     "team": MessageLookupByLibrary.simpleMessage("الفريق"),
     "teamFieldHint": MessageLookupByLibrary.simpleMessage("اختر فريقًا"),

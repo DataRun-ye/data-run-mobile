@@ -14,15 +14,15 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -30,7 +30,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _usernameMeta =
-      const VerificationMeta('username');
+  const VerificationMeta('username');
   @override
   late final GeneratedColumn<String> username = GeneratedColumn<String>(
       'username', aliasedName, false,
@@ -38,13 +38,13 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
   static const VerificationMeta _firstNameMeta =
-      const VerificationMeta('firstName');
+  const VerificationMeta('firstName');
   @override
   late final GeneratedColumn<String> firstName = GeneratedColumn<String>(
       'first_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _lastNameMeta =
-      const VerificationMeta('lastName');
+  const VerificationMeta('lastName');
   @override
   late final GeneratedColumn<String> lastName = GeneratedColumn<String>(
       'last_name', aliasedName, true,
@@ -60,7 +60,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       'email', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _langKeyMeta =
-      const VerificationMeta('langKey');
+  const VerificationMeta('langKey');
   @override
   late final GeneratedColumn<String> langKey = GeneratedColumn<String>(
       'lang_key', aliasedName, true,
@@ -68,28 +68,28 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       requiredDuringInsert: false,
       clientDefault: () => 'ar');
   static const VerificationMeta _activatedMeta =
-      const VerificationMeta('activated');
+  const VerificationMeta('activated');
   @override
   late final GeneratedColumn<bool> activated = GeneratedColumn<bool>(
       'activated', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("activated" IN (0, 1))'),
+      GeneratedColumn.constraintIsAlways('CHECK ("activated" IN (0, 1))'),
       clientDefault: () => false);
   static const VerificationMeta _imageUrlMeta =
-      const VerificationMeta('imageUrl');
+  const VerificationMeta('imageUrl');
   @override
   late final GeneratedColumn<String> imageUrl = GeneratedColumn<String>(
       'image_url', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
-      authorities = GeneratedColumn<String>('authorities', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($UsersTable.$converterauthorities);
+  authorities = GeneratedColumn<String>('authorities', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<String>>($UsersTable.$converterauthorities);
   static const VerificationMeta _submissionCountMeta =
-      const VerificationMeta('submissionCount');
+  const VerificationMeta('submissionCount');
   @override
   late final GeneratedColumn<int> submissionCount = GeneratedColumn<int>(
       'submission_count', aliasedName, true,
@@ -97,7 +97,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       requiredDuringInsert: false,
       clientDefault: () => 0);
   static const VerificationMeta _assignmentCountMeta =
-      const VerificationMeta('assignmentCount');
+  const VerificationMeta('assignmentCount');
   @override
   late final GeneratedColumn<int> assignmentCount = GeneratedColumn<int>(
       'assignment_count', aliasedName, true,
@@ -105,7 +105,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       requiredDuringInsert: false,
       clientDefault: () => 0);
   static const VerificationMeta _orgUnitCountMeta =
-      const VerificationMeta('orgUnitCount');
+  const VerificationMeta('orgUnitCount');
   @override
   late final GeneratedColumn<int> orgUnitCount = GeneratedColumn<int>(
       'org_unit_count', aliasedName, true,
@@ -114,57 +114,57 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       clientDefault: () => 0);
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
-      activityUIDs = GeneratedColumn<String>(
-              'activity_u_i_ds', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($UsersTable.$converteractivityUIDs);
+  activityUIDs = GeneratedColumn<String>(
+      'activity_u_i_ds', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<String>>($UsersTable.$converteractivityUIDs);
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
-      userTeamsUIDs = GeneratedColumn<String>(
-              'user_teams_u_i_ds', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($UsersTable.$converteruserTeamsUIDs);
+  userTeamsUIDs = GeneratedColumn<String>(
+      'user_teams_u_i_ds', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<String>>($UsersTable.$converteruserTeamsUIDs);
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
-      managedTeamsUIDs = GeneratedColumn<String>(
-              'managed_teams_u_i_ds', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($UsersTable.$convertermanagedTeamsUIDs);
+  managedTeamsUIDs = GeneratedColumn<String>(
+      'managed_teams_u_i_ds', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<String>>($UsersTable.$convertermanagedTeamsUIDs);
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
-      userGroupsUIDs = GeneratedColumn<String>(
-              'user_groups_u_i_ds', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($UsersTable.$converteruserGroupsUIDs);
+  userGroupsUIDs = GeneratedColumn<String>(
+      'user_groups_u_i_ds', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<String>>($UsersTable.$converteruserGroupsUIDs);
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
-      userFormsUIDs = GeneratedColumn<String>(
-              'user_forms_u_i_ds', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($UsersTable.$converteruserFormsUIDs);
+  userFormsUIDs = GeneratedColumn<String>(
+      'user_forms_u_i_ds', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<String>>($UsersTable.$converteruserFormsUIDs);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        username,
-        firstName,
-        lastName,
-        mobile,
-        email,
-        langKey,
-        activated,
-        imageUrl,
-        authorities,
-        submissionCount,
-        assignmentCount,
-        orgUnitCount,
-        activityUIDs,
-        userTeamsUIDs,
-        managedTeamsUIDs,
-        userGroupsUIDs,
-        userFormsUIDs
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    username,
+    firstName,
+    lastName,
+    mobile,
+    email,
+    langKey,
+    activated,
+    imageUrl,
+    authorities,
+    submissionCount,
+    assignmentCount,
+    orgUnitCount,
+    activityUIDs,
+    userTeamsUIDs,
+    managedTeamsUIDs,
+    userGroupsUIDs,
+    userFormsUIDs
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -308,17 +308,17 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   }
 
   static TypeConverter<List<String>, String> $converterauthorities =
-      const ListConverter<String>();
+  const ListConverter<String>();
   static TypeConverter<List<String>, String> $converteractivityUIDs =
-      const ListConverter<String>();
+  const ListConverter<String>();
   static TypeConverter<List<String>, String> $converteruserTeamsUIDs =
-      const ListConverter<String>();
+  const ListConverter<String>();
   static TypeConverter<List<String>, String> $convertermanagedTeamsUIDs =
-      const ListConverter<String>();
+  const ListConverter<String>();
   static TypeConverter<List<String>, String> $converteruserGroupsUIDs =
-      const ListConverter<String>();
+  const ListConverter<String>();
   static TypeConverter<List<String>, String> $converteruserFormsUIDs =
-      const ListConverter<String>();
+  const ListConverter<String>();
 }
 
 class User extends DataClass implements Insertable<User> {
@@ -344,25 +344,25 @@ class User extends DataClass implements Insertable<User> {
   final List<String> userFormsUIDs;
   const User(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.username,
-      this.firstName,
-      this.lastName,
-      this.mobile,
-      this.email,
-      this.langKey,
-      required this.activated,
-      this.imageUrl,
-      required this.authorities,
-      this.submissionCount,
-      this.assignmentCount,
-      this.orgUnitCount,
-      required this.activityUIDs,
-      required this.userTeamsUIDs,
-      required this.managedTeamsUIDs,
-      required this.userGroupsUIDs,
-      required this.userFormsUIDs});
+        this.lastModifiedDate,
+        this.createdDate,
+        required this.username,
+        this.firstName,
+        this.lastName,
+        this.mobile,
+        this.email,
+        this.langKey,
+        required this.activated,
+        this.imageUrl,
+        required this.authorities,
+        this.submissionCount,
+        this.assignmentCount,
+        this.orgUnitCount,
+        required this.activityUIDs,
+        required this.userTeamsUIDs,
+        required this.managedTeamsUIDs,
+        required this.userGroupsUIDs,
+        required this.userFormsUIDs});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -446,9 +446,9 @@ class User extends DataClass implements Insertable<User> {
           ? const Value.absent()
           : Value(lastName),
       mobile:
-          mobile == null && nullToAbsent ? const Value.absent() : Value(mobile),
+      mobile == null && nullToAbsent ? const Value.absent() : Value(mobile),
       email:
-          email == null && nullToAbsent ? const Value.absent() : Value(email),
+      email == null && nullToAbsent ? const Value.absent() : Value(email),
       langKey: langKey == null && nullToAbsent
           ? const Value.absent()
           : Value(langKey),
@@ -480,7 +480,7 @@ class User extends DataClass implements Insertable<User> {
     return User(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       username: serializer.fromJson<String>(json['username']),
       firstName: serializer.fromJson<String?>(json['firstName']),
@@ -497,7 +497,7 @@ class User extends DataClass implements Insertable<User> {
       activityUIDs: serializer.fromJson<List<String>>(json['activityUIDs']),
       userTeamsUIDs: serializer.fromJson<List<String>>(json['userTeamsUIDs']),
       managedTeamsUIDs:
-          serializer.fromJson<List<String>>(json['managedTeamsUIDs']),
+      serializer.fromJson<List<String>>(json['managedTeamsUIDs']),
       userGroupsUIDs: serializer.fromJson<List<String>>(json['userGroupsUIDs']),
       userFormsUIDs: serializer.fromJson<List<String>>(json['userFormsUIDs']),
     );
@@ -530,26 +530,26 @@ class User extends DataClass implements Insertable<User> {
   }
 
   User copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          String? username,
-          Value<String?> firstName = const Value.absent(),
-          Value<String?> lastName = const Value.absent(),
-          Value<String?> mobile = const Value.absent(),
-          Value<String?> email = const Value.absent(),
-          Value<String?> langKey = const Value.absent(),
-          bool? activated,
-          Value<String?> imageUrl = const Value.absent(),
-          List<String>? authorities,
-          Value<int?> submissionCount = const Value.absent(),
-          Value<int?> assignmentCount = const Value.absent(),
-          Value<int?> orgUnitCount = const Value.absent(),
-          List<String>? activityUIDs,
-          List<String>? userTeamsUIDs,
-          List<String>? managedTeamsUIDs,
-          List<String>? userGroupsUIDs,
-          List<String>? userFormsUIDs}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        String? username,
+        Value<String?> firstName = const Value.absent(),
+        Value<String?> lastName = const Value.absent(),
+        Value<String?> mobile = const Value.absent(),
+        Value<String?> email = const Value.absent(),
+        Value<String?> langKey = const Value.absent(),
+        bool? activated,
+        Value<String?> imageUrl = const Value.absent(),
+        List<String>? authorities,
+        Value<int?> submissionCount = const Value.absent(),
+        Value<int?> assignmentCount = const Value.absent(),
+        Value<int?> orgUnitCount = const Value.absent(),
+        List<String>? activityUIDs,
+        List<String>? userTeamsUIDs,
+        List<String>? managedTeamsUIDs,
+        List<String>? userGroupsUIDs,
+        List<String>? userFormsUIDs}) =>
       User(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -572,7 +572,7 @@ class User extends DataClass implements Insertable<User> {
             ? assignmentCount.value
             : this.assignmentCount,
         orgUnitCount:
-            orgUnitCount.present ? orgUnitCount.value : this.orgUnitCount,
+        orgUnitCount.present ? orgUnitCount.value : this.orgUnitCount,
         activityUIDs: activityUIDs ?? this.activityUIDs,
         userTeamsUIDs: userTeamsUIDs ?? this.userTeamsUIDs,
         managedTeamsUIDs: managedTeamsUIDs ?? this.managedTeamsUIDs,
@@ -586,7 +586,7 @@ class User extends DataClass implements Insertable<User> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       username: data.username.present ? data.username.value : this.username,
       firstName: data.firstName.present ? data.firstName.value : this.firstName,
       lastName: data.lastName.present ? data.lastName.value : this.lastName,
@@ -596,7 +596,7 @@ class User extends DataClass implements Insertable<User> {
       activated: data.activated.present ? data.activated.value : this.activated,
       imageUrl: data.imageUrl.present ? data.imageUrl.value : this.imageUrl,
       authorities:
-          data.authorities.present ? data.authorities.value : this.authorities,
+      data.authorities.present ? data.authorities.value : this.authorities,
       submissionCount: data.submissionCount.present
           ? data.submissionCount.value
           : this.submissionCount,
@@ -627,27 +627,27 @@ class User extends DataClass implements Insertable<User> {
   @override
   String toString() {
     return (StringBuffer('User(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('username: $username, ')
-          ..write('firstName: $firstName, ')
-          ..write('lastName: $lastName, ')
-          ..write('mobile: $mobile, ')
-          ..write('email: $email, ')
-          ..write('langKey: $langKey, ')
-          ..write('activated: $activated, ')
-          ..write('imageUrl: $imageUrl, ')
-          ..write('authorities: $authorities, ')
-          ..write('submissionCount: $submissionCount, ')
-          ..write('assignmentCount: $assignmentCount, ')
-          ..write('orgUnitCount: $orgUnitCount, ')
-          ..write('activityUIDs: $activityUIDs, ')
-          ..write('userTeamsUIDs: $userTeamsUIDs, ')
-          ..write('managedTeamsUIDs: $managedTeamsUIDs, ')
-          ..write('userGroupsUIDs: $userGroupsUIDs, ')
-          ..write('userFormsUIDs: $userFormsUIDs')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('username: $username, ')
+      ..write('firstName: $firstName, ')
+      ..write('lastName: $lastName, ')
+      ..write('mobile: $mobile, ')
+      ..write('email: $email, ')
+      ..write('langKey: $langKey, ')
+      ..write('activated: $activated, ')
+      ..write('imageUrl: $imageUrl, ')
+      ..write('authorities: $authorities, ')
+      ..write('submissionCount: $submissionCount, ')
+      ..write('assignmentCount: $assignmentCount, ')
+      ..write('orgUnitCount: $orgUnitCount, ')
+      ..write('activityUIDs: $activityUIDs, ')
+      ..write('userTeamsUIDs: $userTeamsUIDs, ')
+      ..write('managedTeamsUIDs: $managedTeamsUIDs, ')
+      ..write('userGroupsUIDs: $userGroupsUIDs, ')
+      ..write('userFormsUIDs: $userFormsUIDs')
+      ..write(')'))
         .toString();
   }
 
@@ -676,27 +676,27 @@ class User extends DataClass implements Insertable<User> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is User &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.username == this.username &&
-          other.firstName == this.firstName &&
-          other.lastName == this.lastName &&
-          other.mobile == this.mobile &&
-          other.email == this.email &&
-          other.langKey == this.langKey &&
-          other.activated == this.activated &&
-          other.imageUrl == this.imageUrl &&
-          other.authorities == this.authorities &&
-          other.submissionCount == this.submissionCount &&
-          other.assignmentCount == this.assignmentCount &&
-          other.orgUnitCount == this.orgUnitCount &&
-          other.activityUIDs == this.activityUIDs &&
-          other.userTeamsUIDs == this.userTeamsUIDs &&
-          other.managedTeamsUIDs == this.managedTeamsUIDs &&
-          other.userGroupsUIDs == this.userGroupsUIDs &&
-          other.userFormsUIDs == this.userFormsUIDs);
+          (other is User &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.username == this.username &&
+              other.firstName == this.firstName &&
+              other.lastName == this.lastName &&
+              other.mobile == this.mobile &&
+              other.email == this.email &&
+              other.langKey == this.langKey &&
+              other.activated == this.activated &&
+              other.imageUrl == this.imageUrl &&
+              other.authorities == this.authorities &&
+              other.submissionCount == this.submissionCount &&
+              other.assignmentCount == this.assignmentCount &&
+              other.orgUnitCount == this.orgUnitCount &&
+              other.activityUIDs == this.activityUIDs &&
+              other.userTeamsUIDs == this.userTeamsUIDs &&
+              other.managedTeamsUIDs == this.managedTeamsUIDs &&
+              other.userGroupsUIDs == this.userGroupsUIDs &&
+              other.userFormsUIDs == this.userFormsUIDs);
 }
 
 class UsersCompanion extends UpdateCompanion<User> {
@@ -824,26 +824,26 @@ class UsersCompanion extends UpdateCompanion<User> {
 
   UsersCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String>? username,
-      Value<String?>? firstName,
-      Value<String?>? lastName,
-      Value<String?>? mobile,
-      Value<String?>? email,
-      Value<String?>? langKey,
-      Value<bool>? activated,
-      Value<String?>? imageUrl,
-      Value<List<String>>? authorities,
-      Value<int?>? submissionCount,
-      Value<int?>? assignmentCount,
-      Value<int?>? orgUnitCount,
-      Value<List<String>>? activityUIDs,
-      Value<List<String>>? userTeamsUIDs,
-      Value<List<String>>? managedTeamsUIDs,
-      Value<List<String>>? userGroupsUIDs,
-      Value<List<String>>? userFormsUIDs,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String>? username,
+        Value<String?>? firstName,
+        Value<String?>? lastName,
+        Value<String?>? mobile,
+        Value<String?>? email,
+        Value<String?>? langKey,
+        Value<bool>? activated,
+        Value<String?>? imageUrl,
+        Value<List<String>>? authorities,
+        Value<int?>? submissionCount,
+        Value<int?>? assignmentCount,
+        Value<int?>? orgUnitCount,
+        Value<List<String>>? activityUIDs,
+        Value<List<String>>? userTeamsUIDs,
+        Value<List<String>>? managedTeamsUIDs,
+        Value<List<String>>? userGroupsUIDs,
+        Value<List<String>>? userFormsUIDs,
+        Value<int>? rowid}) {
     return UsersCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -947,28 +947,28 @@ class UsersCompanion extends UpdateCompanion<User> {
   @override
   String toString() {
     return (StringBuffer('UsersCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('username: $username, ')
-          ..write('firstName: $firstName, ')
-          ..write('lastName: $lastName, ')
-          ..write('mobile: $mobile, ')
-          ..write('email: $email, ')
-          ..write('langKey: $langKey, ')
-          ..write('activated: $activated, ')
-          ..write('imageUrl: $imageUrl, ')
-          ..write('authorities: $authorities, ')
-          ..write('submissionCount: $submissionCount, ')
-          ..write('assignmentCount: $assignmentCount, ')
-          ..write('orgUnitCount: $orgUnitCount, ')
-          ..write('activityUIDs: $activityUIDs, ')
-          ..write('userTeamsUIDs: $userTeamsUIDs, ')
-          ..write('managedTeamsUIDs: $managedTeamsUIDs, ')
-          ..write('userGroupsUIDs: $userGroupsUIDs, ')
-          ..write('userFormsUIDs: $userFormsUIDs, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('username: $username, ')
+      ..write('firstName: $firstName, ')
+      ..write('lastName: $lastName, ')
+      ..write('mobile: $mobile, ')
+      ..write('email: $email, ')
+      ..write('langKey: $langKey, ')
+      ..write('activated: $activated, ')
+      ..write('imageUrl: $imageUrl, ')
+      ..write('authorities: $authorities, ')
+      ..write('submissionCount: $submissionCount, ')
+      ..write('assignmentCount: $assignmentCount, ')
+      ..write('orgUnitCount: $orgUnitCount, ')
+      ..write('activityUIDs: $activityUIDs, ')
+      ..write('userTeamsUIDs: $userTeamsUIDs, ')
+      ..write('managedTeamsUIDs: $managedTeamsUIDs, ')
+      ..write('userGroupsUIDs: $userGroupsUIDs, ')
+      ..write('userFormsUIDs: $userFormsUIDs, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -984,15 +984,15 @@ class $OrgUnitsTable extends OrgUnits with TableInfo<$OrgUnitsTable, OrgUnit> {
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -1000,26 +1000,26 @@ class $OrgUnitsTable extends OrgUnits with TableInfo<$OrgUnitsTable, OrgUnit> {
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _displayNameMeta =
-      const VerificationMeta('displayName');
+  const VerificationMeta('displayName');
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>($OrgUnitsTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>($OrgUnitsTable.$converterlabel);
   @override
   late final GeneratedColumnWithTypeConverter<List<Translation>, String>
-      translations = GeneratedColumn<String>('translations', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '[]')
-          .withConverter<List<Translation>>(
-              $OrgUnitsTable.$convertertranslations);
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $OrgUnitsTable.$convertertranslations);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -1047,21 +1047,21 @@ class $OrgUnitsTable extends OrgUnits with TableInfo<$OrgUnitsTable, OrgUnit> {
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES org_units (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES org_units (id)'));
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        displayName,
-        label,
-        translations,
-        name,
-        code,
-        path,
-        level,
-        parent
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    name,
+    code,
+    path,
+    level,
+    parent
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1162,9 +1162,9 @@ class $OrgUnitsTable extends OrgUnits with TableInfo<$OrgUnitsTable, OrgUnit> {
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static TypeConverter<List<Translation>, String> $convertertranslations =
-      const TranslationConverter();
+  const TranslationConverter();
 }
 
 class OrgUnit extends DataClass implements Insertable<OrgUnit> {
@@ -1183,16 +1183,16 @@ class OrgUnit extends DataClass implements Insertable<OrgUnit> {
   final String? parent;
   const OrgUnit(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.displayName,
-      this.label,
-      required this.translations,
-      required this.name,
-      this.code,
-      required this.path,
-      required this.level,
-      this.parent});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.name,
+        this.code,
+        required this.path,
+        required this.level,
+        this.parent});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1239,14 +1239,14 @@ class OrgUnit extends DataClass implements Insertable<OrgUnit> {
           ? const Value.absent()
           : Value(displayName),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       translations: Value(translations),
       name: Value(name),
       code: code == null && nullToAbsent ? const Value.absent() : Value(code),
       path: Value(path),
       level: Value(level),
       parent:
-          parent == null && nullToAbsent ? const Value.absent() : Value(parent),
+      parent == null && nullToAbsent ? const Value.absent() : Value(parent),
     );
   }
 
@@ -1256,12 +1256,12 @@ class OrgUnit extends DataClass implements Insertable<OrgUnit> {
     return OrgUnit(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
       translations:
-          serializer.fromJson<List<Translation>>(json['translations']),
+      serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String?>(json['code']),
       path: serializer.fromJson<String>(json['path']),
@@ -1288,17 +1288,17 @@ class OrgUnit extends DataClass implements Insertable<OrgUnit> {
   }
 
   OrgUnit copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> displayName = const Value.absent(),
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          List<Translation>? translations,
-          String? name,
-          Value<String?> code = const Value.absent(),
-          String? path,
-          int? level,
-          Value<String?> parent = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        String? path,
+        int? level,
+        Value<String?> parent = const Value.absent()}) =>
       OrgUnit(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -1321,9 +1321,9 @@ class OrgUnit extends DataClass implements Insertable<OrgUnit> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
+      data.displayName.present ? data.displayName.value : this.displayName,
       label: data.label.present ? data.label.value : this.label,
       translations: data.translations.present
           ? data.translations.value
@@ -1339,18 +1339,18 @@ class OrgUnit extends DataClass implements Insertable<OrgUnit> {
   @override
   String toString() {
     return (StringBuffer('OrgUnit(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('path: $path, ')
-          ..write('level: $level, ')
-          ..write('parent: $parent')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('path: $path, ')
+      ..write('level: $level, ')
+      ..write('parent: $parent')
+      ..write(')'))
         .toString();
   }
 
@@ -1360,18 +1360,18 @@ class OrgUnit extends DataClass implements Insertable<OrgUnit> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is OrgUnit &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.displayName == this.displayName &&
-          other.label == this.label &&
-          other.translations == this.translations &&
-          other.name == this.name &&
-          other.code == this.code &&
-          other.path == this.path &&
-          other.level == this.level &&
-          other.parent == this.parent);
+          (other is OrgUnit &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.path == this.path &&
+              other.level == this.level &&
+              other.parent == this.parent);
 }
 
 class OrgUnitsCompanion extends UpdateCompanion<OrgUnit> {
@@ -1450,17 +1450,17 @@ class OrgUnitsCompanion extends UpdateCompanion<OrgUnit> {
 
   OrgUnitsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? displayName,
-      Value<Map<String, dynamic>?>? label,
-      Value<List<Translation>>? translations,
-      Value<String>? name,
-      Value<String?>? code,
-      Value<String>? path,
-      Value<int>? level,
-      Value<String?>? parent,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<String>? path,
+        Value<int>? level,
+        Value<String?>? parent,
+        Value<int>? rowid}) {
     return OrgUnitsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -1524,19 +1524,19 @@ class OrgUnitsCompanion extends UpdateCompanion<OrgUnit> {
   @override
   String toString() {
     return (StringBuffer('OrgUnitsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('path: $path, ')
-          ..write('level: $level, ')
-          ..write('parent: $parent, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('path: $path, ')
+      ..write('level: $level, ')
+      ..write('parent: $parent, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -1552,15 +1552,15 @@ class $OuLevelsTable extends OuLevels with TableInfo<$OuLevelsTable, OuLevel> {
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -1568,26 +1568,26 @@ class $OuLevelsTable extends OuLevels with TableInfo<$OuLevelsTable, OuLevel> {
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _displayNameMeta =
-      const VerificationMeta('displayName');
+  const VerificationMeta('displayName');
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>($OuLevelsTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>($OuLevelsTable.$converterlabel);
   @override
   late final GeneratedColumnWithTypeConverter<List<Translation>, String>
-      translations = GeneratedColumn<String>('translations', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '[]')
-          .withConverter<List<Translation>>(
-              $OuLevelsTable.$convertertranslations);
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $OuLevelsTable.$convertertranslations);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -1604,24 +1604,24 @@ class $OuLevelsTable extends OuLevels with TableInfo<$OuLevelsTable, OuLevel> {
       'level', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _offlineLevelsMeta =
-      const VerificationMeta('offlineLevels');
+  const VerificationMeta('offlineLevels');
   @override
   late final GeneratedColumn<int> offlineLevels = GeneratedColumn<int>(
       'offline_levels', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        displayName,
-        label,
-        translations,
-        name,
-        code,
-        level,
-        offlineLevels
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    name,
+    code,
+    level,
+    offlineLevels
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1716,9 +1716,9 @@ class $OuLevelsTable extends OuLevels with TableInfo<$OuLevelsTable, OuLevel> {
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static TypeConverter<List<Translation>, String> $convertertranslations =
-      const TranslationConverter();
+  const TranslationConverter();
 }
 
 class OuLevel extends DataClass implements Insertable<OuLevel> {
@@ -1734,15 +1734,15 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
   final int? offlineLevels;
   const OuLevel(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.displayName,
-      this.label,
-      required this.translations,
-      required this.name,
-      this.code,
-      required this.level,
-      this.offlineLevels});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.name,
+        this.code,
+        required this.level,
+        this.offlineLevels});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1788,7 +1788,7 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
           ? const Value.absent()
           : Value(displayName),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       translations: Value(translations),
       name: Value(name),
       code: code == null && nullToAbsent ? const Value.absent() : Value(code),
@@ -1805,12 +1805,12 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
     return OuLevel(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
       translations:
-          serializer.fromJson<List<Translation>>(json['translations']),
+      serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String?>(json['code']),
       level: serializer.fromJson<int>(json['level']),
@@ -1835,16 +1835,16 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
   }
 
   OuLevel copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> displayName = const Value.absent(),
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          List<Translation>? translations,
-          String? name,
-          Value<String?> code = const Value.absent(),
-          int? level,
-          Value<int?> offlineLevels = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        int? level,
+        Value<int?> offlineLevels = const Value.absent()}) =>
       OuLevel(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -1858,7 +1858,7 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
         code: code.present ? code.value : this.code,
         level: level ?? this.level,
         offlineLevels:
-            offlineLevels.present ? offlineLevels.value : this.offlineLevels,
+        offlineLevels.present ? offlineLevels.value : this.offlineLevels,
       );
   OuLevel copyWithCompanion(OuLevelsCompanion data) {
     return OuLevel(
@@ -1867,9 +1867,9 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
+      data.displayName.present ? data.displayName.value : this.displayName,
       label: data.label.present ? data.label.value : this.label,
       translations: data.translations.present
           ? data.translations.value
@@ -1886,17 +1886,17 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
   @override
   String toString() {
     return (StringBuffer('OuLevel(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('level: $level, ')
-          ..write('offlineLevels: $offlineLevels')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('level: $level, ')
+      ..write('offlineLevels: $offlineLevels')
+      ..write(')'))
         .toString();
   }
 
@@ -1906,17 +1906,17 @@ class OuLevel extends DataClass implements Insertable<OuLevel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is OuLevel &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.displayName == this.displayName &&
-          other.label == this.label &&
-          other.translations == this.translations &&
-          other.name == this.name &&
-          other.code == this.code &&
-          other.level == this.level &&
-          other.offlineLevels == this.offlineLevels);
+          (other is OuLevel &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.level == this.level &&
+              other.offlineLevels == this.offlineLevels);
 }
 
 class OuLevelsCompanion extends UpdateCompanion<OuLevel> {
@@ -1989,16 +1989,16 @@ class OuLevelsCompanion extends UpdateCompanion<OuLevel> {
 
   OuLevelsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? displayName,
-      Value<Map<String, dynamic>?>? label,
-      Value<List<Translation>>? translations,
-      Value<String>? name,
-      Value<String?>? code,
-      Value<int>? level,
-      Value<int?>? offlineLevels,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<int>? level,
+        Value<int?>? offlineLevels,
+        Value<int>? rowid}) {
     return OuLevelsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -2058,18 +2058,18 @@ class OuLevelsCompanion extends UpdateCompanion<OuLevel> {
   @override
   String toString() {
     return (StringBuffer('OuLevelsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('level: $level, ')
-          ..write('offlineLevels: $offlineLevels, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('level: $level, ')
+      ..write('offlineLevels: $offlineLevels, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -2085,15 +2085,15 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -2101,26 +2101,26 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _displayNameMeta =
-      const VerificationMeta('displayName');
+  const VerificationMeta('displayName');
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>($ProjectsTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>($ProjectsTable.$converterlabel);
   @override
   late final GeneratedColumnWithTypeConverter<List<Translation>, String>
-      translations = GeneratedColumn<String>('translations', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '[]')
-          .withConverter<List<Translation>>(
-              $ProjectsTable.$convertertranslations);
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $ProjectsTable.$convertertranslations);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -2132,26 +2132,26 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
       'code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _disabledMeta =
-      const VerificationMeta('disabled');
+  const VerificationMeta('disabled');
   @override
   late final GeneratedColumn<bool> disabled = GeneratedColumn<bool>(
       'disabled', aliasedName, true,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
+      GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        displayName,
-        label,
-        translations,
-        name,
-        code,
-        disabled
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    name,
+    code,
+    disabled
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2236,9 +2236,9 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static TypeConverter<List<Translation>, String> $convertertranslations =
-      const TranslationConverter();
+  const TranslationConverter();
 }
 
 class Project extends DataClass implements Insertable<Project> {
@@ -2253,14 +2253,14 @@ class Project extends DataClass implements Insertable<Project> {
   final bool? disabled;
   const Project(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.displayName,
-      this.label,
-      required this.translations,
-      required this.name,
-      this.code,
-      this.disabled});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.name,
+        this.code,
+        this.disabled});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2305,7 +2305,7 @@ class Project extends DataClass implements Insertable<Project> {
           ? const Value.absent()
           : Value(displayName),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       translations: Value(translations),
       name: Value(name),
       code: code == null && nullToAbsent ? const Value.absent() : Value(code),
@@ -2321,12 +2321,12 @@ class Project extends DataClass implements Insertable<Project> {
     return Project(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
       translations:
-          serializer.fromJson<List<Translation>>(json['translations']),
+      serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String?>(json['code']),
       disabled: serializer.fromJson<bool?>(json['disabled']),
@@ -2349,15 +2349,15 @@ class Project extends DataClass implements Insertable<Project> {
   }
 
   Project copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> displayName = const Value.absent(),
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          List<Translation>? translations,
-          String? name,
-          Value<String?> code = const Value.absent(),
-          Value<bool?> disabled = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        Value<bool?> disabled = const Value.absent()}) =>
       Project(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -2378,9 +2378,9 @@ class Project extends DataClass implements Insertable<Project> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
+      data.displayName.present ? data.displayName.value : this.displayName,
       label: data.label.present ? data.label.value : this.label,
       translations: data.translations.present
           ? data.translations.value
@@ -2394,16 +2394,16 @@ class Project extends DataClass implements Insertable<Project> {
   @override
   String toString() {
     return (StringBuffer('Project(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('disabled: $disabled')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('disabled: $disabled')
+      ..write(')'))
         .toString();
   }
 
@@ -2413,16 +2413,16 @@ class Project extends DataClass implements Insertable<Project> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Project &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.displayName == this.displayName &&
-          other.label == this.label &&
-          other.translations == this.translations &&
-          other.name == this.name &&
-          other.code == this.code &&
-          other.disabled == this.disabled);
+          (other is Project &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.disabled == this.disabled);
 }
 
 class ProjectsCompanion extends UpdateCompanion<Project> {
@@ -2489,15 +2489,15 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
 
   ProjectsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? displayName,
-      Value<Map<String, dynamic>?>? label,
-      Value<List<Translation>>? translations,
-      Value<String>? name,
-      Value<String?>? code,
-      Value<bool?>? disabled,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<bool?>? disabled,
+        Value<int>? rowid}) {
     return ProjectsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -2553,17 +2553,17 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
   @override
   String toString() {
     return (StringBuffer('ProjectsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('disabled: $disabled, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('disabled: $disabled, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -2580,15 +2580,15 @@ class $ActivitiesTable extends Activities
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -2596,27 +2596,27 @@ class $ActivitiesTable extends Activities
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _displayNameMeta =
-      const VerificationMeta('displayName');
+  const VerificationMeta('displayName');
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>(
-              $ActivitiesTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>(
+      $ActivitiesTable.$converterlabel);
   @override
   late final GeneratedColumnWithTypeConverter<List<Translation>, String>
-      translations = GeneratedColumn<String>('translations', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '[]')
-          .withConverter<List<Translation>>(
-              $ActivitiesTable.$convertertranslations);
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $ActivitiesTable.$convertertranslations);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -2628,57 +2628,57 @@ class $ActivitiesTable extends Activities
       'code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _projectMeta =
-      const VerificationMeta('project');
+  const VerificationMeta('project');
   @override
   late final GeneratedColumn<String> project = GeneratedColumn<String>(
       'project', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES projects (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES projects (id)'));
   static const VerificationMeta _disabledMeta =
-      const VerificationMeta('disabled');
+  const VerificationMeta('disabled');
   @override
   late final GeneratedColumn<bool> disabled = GeneratedColumn<bool>(
       'disabled', aliasedName, true,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
+      GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
   static const VerificationMeta _startDateMeta =
-      const VerificationMeta('startDate');
+  const VerificationMeta('startDate');
   @override
   late final GeneratedColumn<DateTime> startDate = GeneratedColumn<DateTime>(
       'start_date', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _endDateMeta =
-      const VerificationMeta('endDate');
+  const VerificationMeta('endDate');
   @override
   late final GeneratedColumn<DateTime> endDate = GeneratedColumn<DateTime>(
       'end_date', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
+  const VerificationMeta('description');
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        displayName,
-        label,
-        translations,
-        name,
-        code,
-        project,
-        disabled,
-        startDate,
-        endDate,
-        description
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    name,
+    code,
+    project,
+    disabled,
+    startDate,
+    endDate,
+    description
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2792,9 +2792,9 @@ class $ActivitiesTable extends Activities
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static TypeConverter<List<Translation>, String> $convertertranslations =
-      const TranslationConverter();
+  const TranslationConverter();
 }
 
 class Activity extends DataClass implements Insertable<Activity> {
@@ -2813,18 +2813,18 @@ class Activity extends DataClass implements Insertable<Activity> {
   final String? description;
   const Activity(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.displayName,
-      this.label,
-      required this.translations,
-      required this.name,
-      this.code,
-      required this.project,
-      this.disabled,
-      this.startDate,
-      this.endDate,
-      this.description});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.name,
+        this.code,
+        required this.project,
+        this.disabled,
+        this.startDate,
+        this.endDate,
+        this.description});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2879,7 +2879,7 @@ class Activity extends DataClass implements Insertable<Activity> {
           ? const Value.absent()
           : Value(displayName),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       translations: Value(translations),
       name: Value(name),
       code: code == null && nullToAbsent ? const Value.absent() : Value(code),
@@ -2905,12 +2905,12 @@ class Activity extends DataClass implements Insertable<Activity> {
     return Activity(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
       translations:
-          serializer.fromJson<List<Translation>>(json['translations']),
+      serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String?>(json['code']),
       project: serializer.fromJson<String>(json['project']),
@@ -2941,19 +2941,19 @@ class Activity extends DataClass implements Insertable<Activity> {
   }
 
   Activity copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> displayName = const Value.absent(),
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          List<Translation>? translations,
-          String? name,
-          Value<String?> code = const Value.absent(),
-          String? project,
-          Value<bool?> disabled = const Value.absent(),
-          Value<DateTime?> startDate = const Value.absent(),
-          Value<DateTime?> endDate = const Value.absent(),
-          Value<String?> description = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        String? project,
+        Value<bool?> disabled = const Value.absent(),
+        Value<DateTime?> startDate = const Value.absent(),
+        Value<DateTime?> endDate = const Value.absent(),
+        Value<String?> description = const Value.absent()}) =>
       Activity(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -2978,9 +2978,9 @@ class Activity extends DataClass implements Insertable<Activity> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
+      data.displayName.present ? data.displayName.value : this.displayName,
       label: data.label.present ? data.label.value : this.label,
       translations: data.translations.present
           ? data.translations.value
@@ -2992,27 +2992,27 @@ class Activity extends DataClass implements Insertable<Activity> {
       startDate: data.startDate.present ? data.startDate.value : this.startDate,
       endDate: data.endDate.present ? data.endDate.value : this.endDate,
       description:
-          data.description.present ? data.description.value : this.description,
+      data.description.present ? data.description.value : this.description,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('Activity(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('project: $project, ')
-          ..write('disabled: $disabled, ')
-          ..write('startDate: $startDate, ')
-          ..write('endDate: $endDate, ')
-          ..write('description: $description')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('project: $project, ')
+      ..write('disabled: $disabled, ')
+      ..write('startDate: $startDate, ')
+      ..write('endDate: $endDate, ')
+      ..write('description: $description')
+      ..write(')'))
         .toString();
   }
 
@@ -3034,20 +3034,20 @@ class Activity extends DataClass implements Insertable<Activity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Activity &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.displayName == this.displayName &&
-          other.label == this.label &&
-          other.translations == this.translations &&
-          other.name == this.name &&
-          other.code == this.code &&
-          other.project == this.project &&
-          other.disabled == this.disabled &&
-          other.startDate == this.startDate &&
-          other.endDate == this.endDate &&
-          other.description == this.description);
+          (other is Activity &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.project == this.project &&
+              other.disabled == this.disabled &&
+              other.startDate == this.startDate &&
+              other.endDate == this.endDate &&
+              other.description == this.description);
 }
 
 class ActivitiesCompanion extends UpdateCompanion<Activity> {
@@ -3135,19 +3135,19 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
 
   ActivitiesCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? displayName,
-      Value<Map<String, dynamic>?>? label,
-      Value<List<Translation>>? translations,
-      Value<String>? name,
-      Value<String?>? code,
-      Value<String>? project,
-      Value<bool?>? disabled,
-      Value<DateTime?>? startDate,
-      Value<DateTime?>? endDate,
-      Value<String?>? description,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<String>? project,
+        Value<bool?>? disabled,
+        Value<DateTime?>? startDate,
+        Value<DateTime?>? endDate,
+        Value<String?>? description,
+        Value<int>? rowid}) {
     return ActivitiesCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -3219,21 +3219,21 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
   @override
   String toString() {
     return (StringBuffer('ActivitiesCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('project: $project, ')
-          ..write('disabled: $disabled, ')
-          ..write('startDate: $startDate, ')
-          ..write('endDate: $endDate, ')
-          ..write('description: $description, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('project: $project, ')
+      ..write('disabled: $disabled, ')
+      ..write('startDate: $startDate, ')
+      ..write('endDate: $endDate, ')
+      ..write('description: $description, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -3249,15 +3249,15 @@ class $TeamsTable extends Teams with TableInfo<$TeamsTable, Team> {
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -3270,23 +3270,23 @@ class $TeamsTable extends Teams with TableInfo<$TeamsTable, Team> {
       'code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _disabledMeta =
-      const VerificationMeta('disabled');
+  const VerificationMeta('disabled');
   @override
   late final GeneratedColumn<bool> disabled = GeneratedColumn<bool>(
       'disabled', aliasedName, true,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
+      GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
   static const VerificationMeta _activityMeta =
-      const VerificationMeta('activity');
+  const VerificationMeta('activity');
   @override
   late final GeneratedColumn<String> activity = GeneratedColumn<String>(
       'activity', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES activities (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES activities (id)'));
   @override
   List<GeneratedColumn> get $columns =>
       [id, lastModifiedDate, createdDate, code, disabled, activity];
@@ -3370,11 +3370,11 @@ class Team extends DataClass implements Insertable<Team> {
   final String activity;
   const Team(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.code,
-      this.disabled,
-      required this.activity});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.code,
+        this.disabled,
+        required this.activity});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -3418,7 +3418,7 @@ class Team extends DataClass implements Insertable<Team> {
     return Team(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       code: serializer.fromJson<String?>(json['code']),
       disabled: serializer.fromJson<bool?>(json['disabled']),
@@ -3439,12 +3439,12 @@ class Team extends DataClass implements Insertable<Team> {
   }
 
   Team copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> code = const Value.absent(),
-          Value<bool?> disabled = const Value.absent(),
-          String? activity}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> code = const Value.absent(),
+        Value<bool?> disabled = const Value.absent(),
+        String? activity}) =>
       Team(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -3462,7 +3462,7 @@ class Team extends DataClass implements Insertable<Team> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       code: data.code.present ? data.code.value : this.code,
       disabled: data.disabled.present ? data.disabled.value : this.disabled,
       activity: data.activity.present ? data.activity.value : this.activity,
@@ -3472,13 +3472,13 @@ class Team extends DataClass implements Insertable<Team> {
   @override
   String toString() {
     return (StringBuffer('Team(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('code: $code, ')
-          ..write('disabled: $disabled, ')
-          ..write('activity: $activity')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('code: $code, ')
+      ..write('disabled: $disabled, ')
+      ..write('activity: $activity')
+      ..write(')'))
         .toString();
   }
 
@@ -3488,13 +3488,13 @@ class Team extends DataClass implements Insertable<Team> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Team &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.code == this.code &&
-          other.disabled == this.disabled &&
-          other.activity == this.activity);
+          (other is Team &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.code == this.code &&
+              other.disabled == this.disabled &&
+              other.activity == this.activity);
 }
 
 class TeamsCompanion extends UpdateCompanion<Team> {
@@ -3546,12 +3546,12 @@ class TeamsCompanion extends UpdateCompanion<Team> {
 
   TeamsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? code,
-      Value<bool?>? disabled,
-      Value<String>? activity,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? code,
+        Value<bool?>? disabled,
+        Value<String>? activity,
+        Value<int>? rowid}) {
     return TeamsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -3593,14 +3593,14 @@ class TeamsCompanion extends UpdateCompanion<Team> {
   @override
   String toString() {
     return (StringBuffer('TeamsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('code: $code, ')
-          ..write('disabled: $disabled, ')
-          ..write('activity: $activity, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('code: $code, ')
+      ..write('disabled: $disabled, ')
+      ..write('activity: $activity, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -3617,15 +3617,15 @@ class $ManagedTeamsTable extends ManagedTeams
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -3638,23 +3638,23 @@ class $ManagedTeamsTable extends ManagedTeams
       'code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _activityMeta =
-      const VerificationMeta('activity');
+  const VerificationMeta('activity');
   @override
   late final GeneratedColumn<String> activity = GeneratedColumn<String>(
       'activity', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES activities (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES activities (id)'));
   static const VerificationMeta _managedByMeta =
-      const VerificationMeta('managedBy');
+  const VerificationMeta('managedBy');
   @override
   late final GeneratedColumn<String> managedBy = GeneratedColumn<String>(
       'managed_by', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES teams (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES teams (id)'));
   @override
   List<GeneratedColumn> get $columns =>
       [id, lastModifiedDate, createdDate, code, activity, managedBy];
@@ -3740,11 +3740,11 @@ class ManagedTeam extends DataClass implements Insertable<ManagedTeam> {
   final String managedBy;
   const ManagedTeam(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.code,
-      required this.activity,
-      required this.managedBy});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.code,
+        required this.activity,
+        required this.managedBy});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -3784,7 +3784,7 @@ class ManagedTeam extends DataClass implements Insertable<ManagedTeam> {
     return ManagedTeam(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       code: serializer.fromJson<String?>(json['code']),
       activity: serializer.fromJson<String>(json['activity']),
@@ -3805,12 +3805,12 @@ class ManagedTeam extends DataClass implements Insertable<ManagedTeam> {
   }
 
   ManagedTeam copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> code = const Value.absent(),
-          String? activity,
-          String? managedBy}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> code = const Value.absent(),
+        String? activity,
+        String? managedBy}) =>
       ManagedTeam(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -3828,7 +3828,7 @@ class ManagedTeam extends DataClass implements Insertable<ManagedTeam> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       code: data.code.present ? data.code.value : this.code,
       activity: data.activity.present ? data.activity.value : this.activity,
       managedBy: data.managedBy.present ? data.managedBy.value : this.managedBy,
@@ -3838,13 +3838,13 @@ class ManagedTeam extends DataClass implements Insertable<ManagedTeam> {
   @override
   String toString() {
     return (StringBuffer('ManagedTeam(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('code: $code, ')
-          ..write('activity: $activity, ')
-          ..write('managedBy: $managedBy')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('code: $code, ')
+      ..write('activity: $activity, ')
+      ..write('managedBy: $managedBy')
+      ..write(')'))
         .toString();
   }
 
@@ -3854,13 +3854,13 @@ class ManagedTeam extends DataClass implements Insertable<ManagedTeam> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ManagedTeam &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.code == this.code &&
-          other.activity == this.activity &&
-          other.managedBy == this.managedBy);
+          (other is ManagedTeam &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.code == this.code &&
+              other.activity == this.activity &&
+              other.managedBy == this.managedBy);
 }
 
 class ManagedTeamsCompanion extends UpdateCompanion<ManagedTeam> {
@@ -3913,12 +3913,12 @@ class ManagedTeamsCompanion extends UpdateCompanion<ManagedTeam> {
 
   ManagedTeamsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? code,
-      Value<String>? activity,
-      Value<String>? managedBy,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? code,
+        Value<String>? activity,
+        Value<String>? managedBy,
+        Value<int>? rowid}) {
     return ManagedTeamsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -3960,14 +3960,14 @@ class ManagedTeamsCompanion extends UpdateCompanion<ManagedTeam> {
   @override
   String toString() {
     return (StringBuffer('ManagedTeamsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('code: $code, ')
-          ..write('activity: $activity, ')
-          ..write('managedBy: $managedBy, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('code: $code, ')
+      ..write('activity: $activity, ')
+      ..write('managedBy: $managedBy, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -3984,15 +3984,15 @@ class $AssignmentsTable extends Assignments
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -4000,14 +4000,14 @@ class $AssignmentsTable extends Assignments
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _activityMeta =
-      const VerificationMeta('activity');
+  const VerificationMeta('activity');
   @override
   late final GeneratedColumn<String> activity = GeneratedColumn<String>(
       'activity', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES activities (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES activities (id)'));
   static const VerificationMeta _teamMeta = const VerificationMeta('team');
   @override
   late final GeneratedColumn<String> team = GeneratedColumn<String>(
@@ -4015,70 +4015,70 @@ class $AssignmentsTable extends Assignments
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES teams (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES teams (id)'));
   static const VerificationMeta _orgUnitMeta =
-      const VerificationMeta('orgUnit');
+  const VerificationMeta('orgUnit');
   @override
   late final GeneratedColumn<String> orgUnit = GeneratedColumn<String>(
       'org_unit', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES org_units (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES org_units (id)'));
   static const VerificationMeta _instanceDateMeta =
-      const VerificationMeta('instanceDate');
+  const VerificationMeta('instanceDate');
   @override
   late final GeneratedColumn<DateTime> instanceDate = GeneratedColumn<DateTime>(
       'instance_date', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<InstanceSyncStatus, String>
-      syncState = GeneratedColumn<String>('sync_state', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<InstanceSyncStatus>(
-              $AssignmentsTable.$convertersyncState);
+  syncState = GeneratedColumn<String>('sync_state', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<InstanceSyncStatus>(
+      $AssignmentsTable.$convertersyncState);
   @override
   late final GeneratedColumnWithTypeConverter<AssignmentStatus?, String>
-      status = GeneratedColumn<String>('status', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<AssignmentStatus?>(
-              $AssignmentsTable.$converterstatusn);
+  status = GeneratedColumn<String>('status', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<AssignmentStatus?>(
+      $AssignmentsTable.$converterstatusn);
   static const VerificationMeta _completedDateMeta =
-      const VerificationMeta('completedDate');
+  const VerificationMeta('completedDate');
   @override
   late final GeneratedColumn<DateTime> completedDate =
-      GeneratedColumn<DateTime>('completed_date', aliasedName, true,
-          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  GeneratedColumn<DateTime>('completed_date', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _updatedAtClientMeta =
-      const VerificationMeta('updatedAtClient');
+  const VerificationMeta('updatedAtClient');
   @override
   late final GeneratedColumn<DateTime> updatedAtClient =
-      GeneratedColumn<DateTime>('updated_at_client', aliasedName, true,
-          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  GeneratedColumn<DateTime>('updated_at_client', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _disabledMeta =
-      const VerificationMeta('disabled');
+  const VerificationMeta('disabled');
   @override
   late final GeneratedColumn<bool> disabled = GeneratedColumn<bool>(
       'disabled', aliasedName, true,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
+      GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        activity,
-        team,
-        orgUnit,
-        instanceDate,
-        syncState,
-        status,
-        completedDate,
-        updatedAtClient,
-        disabled
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    activity,
+    team,
+    orgUnit,
+    instanceDate,
+    syncState,
+    status,
+    completedDate,
+    updatedAtClient,
+    disabled
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -4190,11 +4190,11 @@ class $AssignmentsTable extends Assignments
   }
 
   static JsonTypeConverter2<InstanceSyncStatus, String, String>
-      $convertersyncState = const EnumNameConverter(InstanceSyncStatus.values);
+  $convertersyncState = const EnumNameConverter(InstanceSyncStatus.values);
   static JsonTypeConverter2<AssignmentStatus, String, String> $converterstatus =
-      const EnumNameConverter(AssignmentStatus.values);
+  const EnumNameConverter(AssignmentStatus.values);
   static JsonTypeConverter2<AssignmentStatus?, String?, String?>
-      $converterstatusn = JsonTypeConverter2.asNullable($converterstatus);
+  $converterstatusn = JsonTypeConverter2.asNullable($converterstatus);
 }
 
 class Assignment extends DataClass implements Insertable<Assignment> {
@@ -4212,17 +4212,17 @@ class Assignment extends DataClass implements Insertable<Assignment> {
   final bool? disabled;
   const Assignment(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.activity,
-      required this.team,
-      required this.orgUnit,
-      this.instanceDate,
-      required this.syncState,
-      this.status,
-      this.completedDate,
-      this.updatedAtClient,
-      this.disabled});
+        this.lastModifiedDate,
+        this.createdDate,
+        required this.activity,
+        required this.team,
+        required this.orgUnit,
+        this.instanceDate,
+        required this.syncState,
+        this.status,
+        this.completedDate,
+        this.updatedAtClient,
+        this.disabled});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -4276,7 +4276,7 @@ class Assignment extends DataClass implements Insertable<Assignment> {
           : Value(instanceDate),
       syncState: Value(syncState),
       status:
-          status == null && nullToAbsent ? const Value.absent() : Value(status),
+      status == null && nullToAbsent ? const Value.absent() : Value(status),
       completedDate: completedDate == null && nullToAbsent
           ? const Value.absent()
           : Value(completedDate),
@@ -4295,7 +4295,7 @@ class Assignment extends DataClass implements Insertable<Assignment> {
     return Assignment(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       activity: serializer.fromJson<String>(json['activity']),
       team: serializer.fromJson<String>(json['team']),
@@ -4332,18 +4332,18 @@ class Assignment extends DataClass implements Insertable<Assignment> {
   }
 
   Assignment copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          String? activity,
-          String? team,
-          String? orgUnit,
-          Value<DateTime?> instanceDate = const Value.absent(),
-          InstanceSyncStatus? syncState,
-          Value<AssignmentStatus?> status = const Value.absent(),
-          Value<DateTime?> completedDate = const Value.absent(),
-          Value<DateTime?> updatedAtClient = const Value.absent(),
-          Value<bool?> disabled = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        String? activity,
+        String? team,
+        String? orgUnit,
+        Value<DateTime?> instanceDate = const Value.absent(),
+        InstanceSyncStatus? syncState,
+        Value<AssignmentStatus?> status = const Value.absent(),
+        Value<DateTime?> completedDate = const Value.absent(),
+        Value<DateTime?> updatedAtClient = const Value.absent(),
+        Value<bool?> disabled = const Value.absent()}) =>
       Assignment(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -4354,11 +4354,11 @@ class Assignment extends DataClass implements Insertable<Assignment> {
         team: team ?? this.team,
         orgUnit: orgUnit ?? this.orgUnit,
         instanceDate:
-            instanceDate.present ? instanceDate.value : this.instanceDate,
+        instanceDate.present ? instanceDate.value : this.instanceDate,
         syncState: syncState ?? this.syncState,
         status: status.present ? status.value : this.status,
         completedDate:
-            completedDate.present ? completedDate.value : this.completedDate,
+        completedDate.present ? completedDate.value : this.completedDate,
         updatedAtClient: updatedAtClient.present
             ? updatedAtClient.value
             : this.updatedAtClient,
@@ -4371,7 +4371,7 @@ class Assignment extends DataClass implements Insertable<Assignment> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       activity: data.activity.present ? data.activity.value : this.activity,
       team: data.team.present ? data.team.value : this.team,
       orgUnit: data.orgUnit.present ? data.orgUnit.value : this.orgUnit,
@@ -4393,19 +4393,19 @@ class Assignment extends DataClass implements Insertable<Assignment> {
   @override
   String toString() {
     return (StringBuffer('Assignment(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('activity: $activity, ')
-          ..write('team: $team, ')
-          ..write('orgUnit: $orgUnit, ')
-          ..write('instanceDate: $instanceDate, ')
-          ..write('syncState: $syncState, ')
-          ..write('status: $status, ')
-          ..write('completedDate: $completedDate, ')
-          ..write('updatedAtClient: $updatedAtClient, ')
-          ..write('disabled: $disabled')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('activity: $activity, ')
+      ..write('team: $team, ')
+      ..write('orgUnit: $orgUnit, ')
+      ..write('instanceDate: $instanceDate, ')
+      ..write('syncState: $syncState, ')
+      ..write('status: $status, ')
+      ..write('completedDate: $completedDate, ')
+      ..write('updatedAtClient: $updatedAtClient, ')
+      ..write('disabled: $disabled')
+      ..write(')'))
         .toString();
   }
 
@@ -4426,19 +4426,19 @@ class Assignment extends DataClass implements Insertable<Assignment> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Assignment &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.activity == this.activity &&
-          other.team == this.team &&
-          other.orgUnit == this.orgUnit &&
-          other.instanceDate == this.instanceDate &&
-          other.syncState == this.syncState &&
-          other.status == this.status &&
-          other.completedDate == this.completedDate &&
-          other.updatedAtClient == this.updatedAtClient &&
-          other.disabled == this.disabled);
+          (other is Assignment &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.activity == this.activity &&
+              other.team == this.team &&
+              other.orgUnit == this.orgUnit &&
+              other.instanceDate == this.instanceDate &&
+              other.syncState == this.syncState &&
+              other.status == this.status &&
+              other.completedDate == this.completedDate &&
+              other.updatedAtClient == this.updatedAtClient &&
+              other.disabled == this.disabled);
 }
 
 class AssignmentsCompanion extends UpdateCompanion<Assignment> {
@@ -4523,18 +4523,18 @@ class AssignmentsCompanion extends UpdateCompanion<Assignment> {
 
   AssignmentsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String>? activity,
-      Value<String>? team,
-      Value<String>? orgUnit,
-      Value<DateTime?>? instanceDate,
-      Value<InstanceSyncStatus>? syncState,
-      Value<AssignmentStatus?>? status,
-      Value<DateTime?>? completedDate,
-      Value<DateTime?>? updatedAtClient,
-      Value<bool?>? disabled,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String>? activity,
+        Value<String>? team,
+        Value<String>? orgUnit,
+        Value<DateTime?>? instanceDate,
+        Value<InstanceSyncStatus>? syncState,
+        Value<AssignmentStatus?>? status,
+        Value<DateTime?>? completedDate,
+        Value<DateTime?>? updatedAtClient,
+        Value<bool?>? disabled,
+        Value<int>? rowid}) {
     return AssignmentsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -4602,20 +4602,20 @@ class AssignmentsCompanion extends UpdateCompanion<Assignment> {
   @override
   String toString() {
     return (StringBuffer('AssignmentsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('activity: $activity, ')
-          ..write('team: $team, ')
-          ..write('orgUnit: $orgUnit, ')
-          ..write('instanceDate: $instanceDate, ')
-          ..write('syncState: $syncState, ')
-          ..write('status: $status, ')
-          ..write('completedDate: $completedDate, ')
-          ..write('updatedAtClient: $updatedAtClient, ')
-          ..write('disabled: $disabled, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('activity: $activity, ')
+      ..write('team: $team, ')
+      ..write('orgUnit: $orgUnit, ')
+      ..write('instanceDate: $instanceDate, ')
+      ..write('syncState: $syncState, ')
+      ..write('status: $status, ')
+      ..write('completedDate: $completedDate, ')
+      ..write('updatedAtClient: $updatedAtClient, ')
+      ..write('disabled: $disabled, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -4632,13 +4632,13 @@ class $FormTemplatesTable extends FormTemplates
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _versionUidMeta =
-      const VerificationMeta('versionUid');
+  const VerificationMeta('versionUid');
   @override
   late final GeneratedColumn<String> versionUid = GeneratedColumn<String>(
       'version_uid', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _versionNumberMeta =
-      const VerificationMeta('versionNumber');
+  const VerificationMeta('versionNumber');
   @override
   late final GeneratedColumn<int> versionNumber = GeneratedColumn<int>(
       'version_number', aliasedName, false,
@@ -4650,27 +4650,27 @@ class $FormTemplatesTable extends FormTemplates
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>(
-              $FormTemplatesTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>(
+      $FormTemplatesTable.$converterlabel);
   static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
+  const VerificationMeta('description');
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _disabledMeta =
-      const VerificationMeta('disabled');
+  const VerificationMeta('disabled');
   @override
   late final GeneratedColumn<bool> disabled = GeneratedColumn<bool>(
       'disabled', aliasedName, true,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
+      GeneratedColumn.constraintIsAlways('CHECK ("disabled" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns =>
       [id, versionUid, versionNumber, name, label, description, disabled];
@@ -4754,7 +4754,7 @@ class $FormTemplatesTable extends FormTemplates
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
 }
 
 class FormTemplate extends DataClass implements Insertable<FormTemplate> {
@@ -4771,12 +4771,12 @@ class FormTemplate extends DataClass implements Insertable<FormTemplate> {
   final bool? disabled;
   const FormTemplate(
       {required this.id,
-      required this.versionUid,
-      required this.versionNumber,
-      required this.name,
-      this.label,
-      this.description,
-      this.disabled});
+        required this.versionUid,
+        required this.versionNumber,
+        required this.name,
+        this.label,
+        this.description,
+        this.disabled});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -4804,7 +4804,7 @@ class FormTemplate extends DataClass implements Insertable<FormTemplate> {
       versionNumber: Value(versionNumber),
       name: Value(name),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       description: description == null && nullToAbsent
           ? const Value.absent()
           : Value(description),
@@ -4842,13 +4842,13 @@ class FormTemplate extends DataClass implements Insertable<FormTemplate> {
   }
 
   FormTemplate copyWith(
-          {String? id,
-          String? versionUid,
-          int? versionNumber,
-          String? name,
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          Value<String?> description = const Value.absent(),
-          Value<bool?> disabled = const Value.absent()}) =>
+      {String? id,
+        String? versionUid,
+        int? versionNumber,
+        String? name,
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        Value<String?> description = const Value.absent(),
+        Value<bool?> disabled = const Value.absent()}) =>
       FormTemplate(
         id: id ?? this.id,
         versionUid: versionUid ?? this.versionUid,
@@ -4862,14 +4862,14 @@ class FormTemplate extends DataClass implements Insertable<FormTemplate> {
     return FormTemplate(
       id: data.id.present ? data.id.value : this.id,
       versionUid:
-          data.versionUid.present ? data.versionUid.value : this.versionUid,
+      data.versionUid.present ? data.versionUid.value : this.versionUid,
       versionNumber: data.versionNumber.present
           ? data.versionNumber.value
           : this.versionNumber,
       name: data.name.present ? data.name.value : this.name,
       label: data.label.present ? data.label.value : this.label,
       description:
-          data.description.present ? data.description.value : this.description,
+      data.description.present ? data.description.value : this.description,
       disabled: data.disabled.present ? data.disabled.value : this.disabled,
     );
   }
@@ -4877,14 +4877,14 @@ class FormTemplate extends DataClass implements Insertable<FormTemplate> {
   @override
   String toString() {
     return (StringBuffer('FormTemplate(')
-          ..write('id: $id, ')
-          ..write('versionUid: $versionUid, ')
-          ..write('versionNumber: $versionNumber, ')
-          ..write('name: $name, ')
-          ..write('label: $label, ')
-          ..write('description: $description, ')
-          ..write('disabled: $disabled')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('versionUid: $versionUid, ')
+      ..write('versionNumber: $versionNumber, ')
+      ..write('name: $name, ')
+      ..write('label: $label, ')
+      ..write('description: $description, ')
+      ..write('disabled: $disabled')
+      ..write(')'))
         .toString();
   }
 
@@ -4894,14 +4894,14 @@ class FormTemplate extends DataClass implements Insertable<FormTemplate> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FormTemplate &&
-          other.id == this.id &&
-          other.versionUid == this.versionUid &&
-          other.versionNumber == this.versionNumber &&
-          other.name == this.name &&
-          other.label == this.label &&
-          other.description == this.description &&
-          other.disabled == this.disabled);
+          (other is FormTemplate &&
+              other.id == this.id &&
+              other.versionUid == this.versionUid &&
+              other.versionNumber == this.versionNumber &&
+              other.name == this.name &&
+              other.label == this.label &&
+              other.description == this.description &&
+              other.disabled == this.disabled);
 }
 
 class FormTemplatesCompanion extends UpdateCompanion<FormTemplate> {
@@ -4960,13 +4960,13 @@ class FormTemplatesCompanion extends UpdateCompanion<FormTemplate> {
 
   FormTemplatesCompanion copyWith(
       {Value<String>? id,
-      Value<String>? versionUid,
-      Value<int>? versionNumber,
-      Value<String>? name,
-      Value<Map<String, dynamic>?>? label,
-      Value<String?>? description,
-      Value<bool?>? disabled,
-      Value<int>? rowid}) {
+        Value<String>? versionUid,
+        Value<int>? versionNumber,
+        Value<String>? name,
+        Value<Map<String, dynamic>?>? label,
+        Value<String?>? description,
+        Value<bool?>? disabled,
+        Value<int>? rowid}) {
     return FormTemplatesCompanion(
       id: id ?? this.id,
       versionUid: versionUid ?? this.versionUid,
@@ -5013,15 +5013,15 @@ class FormTemplatesCompanion extends UpdateCompanion<FormTemplate> {
   @override
   String toString() {
     return (StringBuffer('FormTemplatesCompanion(')
-          ..write('id: $id, ')
-          ..write('versionUid: $versionUid, ')
-          ..write('versionNumber: $versionNumber, ')
-          ..write('name: $name, ')
-          ..write('label: $label, ')
-          ..write('description: $description, ')
-          ..write('disabled: $disabled, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('versionUid: $versionUid, ')
+      ..write('versionNumber: $versionNumber, ')
+      ..write('name: $name, ')
+      ..write('label: $label, ')
+      ..write('description: $description, ')
+      ..write('disabled: $disabled, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -5033,7 +5033,7 @@ class $AssignmentFormsTable extends AssignmentForms
   final String? _alias;
   $AssignmentFormsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _assignmentMeta =
-      const VerificationMeta('assignment');
+  const VerificationMeta('assignment');
   @override
   late final GeneratedColumn<String> assignment = GeneratedColumn<String>(
       'assignment', aliasedName, false,
@@ -5048,9 +5048,9 @@ class $AssignmentFormsTable extends AssignmentForms
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
   static const VerificationMeta _canAddSubmissionsMeta =
-      const VerificationMeta('canAddSubmissions');
+  const VerificationMeta('canAddSubmissions');
   @override
   late final GeneratedColumn<bool> canAddSubmissions = GeneratedColumn<bool>(
       'can_add_submissions', aliasedName, true,
@@ -5060,7 +5060,7 @@ class $AssignmentFormsTable extends AssignmentForms
           'CHECK ("can_add_submissions" IN (0, 1))'),
       clientDefault: () => false);
   static const VerificationMeta _canViewSubmissionsMeta =
-      const VerificationMeta('canViewSubmissions');
+  const VerificationMeta('canViewSubmissions');
   @override
   late final GeneratedColumn<bool> canViewSubmissions = GeneratedColumn<bool>(
       'can_view_submissions', aliasedName, true,
@@ -5070,7 +5070,7 @@ class $AssignmentFormsTable extends AssignmentForms
           'CHECK ("can_view_submissions" IN (0, 1))'),
       clientDefault: () => false);
   static const VerificationMeta _canEditSubmissionsMeta =
-      const VerificationMeta('canEditSubmissions');
+  const VerificationMeta('canEditSubmissions');
   @override
   late final GeneratedColumn<bool> canEditSubmissions = GeneratedColumn<bool>(
       'can_edit_submissions', aliasedName, true,
@@ -5080,7 +5080,7 @@ class $AssignmentFormsTable extends AssignmentForms
           'CHECK ("can_edit_submissions" IN (0, 1))'),
       clientDefault: () => false);
   static const VerificationMeta _canDeleteSubmissionsMeta =
-      const VerificationMeta('canDeleteSubmissions');
+  const VerificationMeta('canDeleteSubmissions');
   @override
   late final GeneratedColumn<bool> canDeleteSubmissions = GeneratedColumn<bool>(
       'can_delete_submissions', aliasedName, true,
@@ -5091,13 +5091,13 @@ class $AssignmentFormsTable extends AssignmentForms
       clientDefault: () => false);
   @override
   List<GeneratedColumn> get $columns => [
-        assignment,
-        form,
-        canAddSubmissions,
-        canViewSubmissions,
-        canEditSubmissions,
-        canDeleteSubmissions
-      ];
+    assignment,
+    form,
+    canAddSubmissions,
+    canViewSubmissions,
+    canEditSubmissions,
+    canDeleteSubmissions
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5185,11 +5185,11 @@ class AssignmentForm extends DataClass implements Insertable<AssignmentForm> {
   final bool? canDeleteSubmissions;
   const AssignmentForm(
       {required this.assignment,
-      required this.form,
-      this.canAddSubmissions,
-      this.canViewSubmissions,
-      this.canEditSubmissions,
-      this.canDeleteSubmissions});
+        required this.form,
+        this.canAddSubmissions,
+        this.canViewSubmissions,
+        this.canEditSubmissions,
+        this.canDeleteSubmissions});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -5237,11 +5237,11 @@ class AssignmentForm extends DataClass implements Insertable<AssignmentForm> {
       form: serializer.fromJson<String>(json['form']),
       canAddSubmissions: serializer.fromJson<bool?>(json['canAddSubmissions']),
       canViewSubmissions:
-          serializer.fromJson<bool?>(json['canViewSubmissions']),
+      serializer.fromJson<bool?>(json['canViewSubmissions']),
       canEditSubmissions:
-          serializer.fromJson<bool?>(json['canEditSubmissions']),
+      serializer.fromJson<bool?>(json['canEditSubmissions']),
       canDeleteSubmissions:
-          serializer.fromJson<bool?>(json['canDeleteSubmissions']),
+      serializer.fromJson<bool?>(json['canDeleteSubmissions']),
     );
   }
   @override
@@ -5258,12 +5258,12 @@ class AssignmentForm extends DataClass implements Insertable<AssignmentForm> {
   }
 
   AssignmentForm copyWith(
-          {String? assignment,
-          String? form,
-          Value<bool?> canAddSubmissions = const Value.absent(),
-          Value<bool?> canViewSubmissions = const Value.absent(),
-          Value<bool?> canEditSubmissions = const Value.absent(),
-          Value<bool?> canDeleteSubmissions = const Value.absent()}) =>
+      {String? assignment,
+        String? form,
+        Value<bool?> canAddSubmissions = const Value.absent(),
+        Value<bool?> canViewSubmissions = const Value.absent(),
+        Value<bool?> canEditSubmissions = const Value.absent(),
+        Value<bool?> canDeleteSubmissions = const Value.absent()}) =>
       AssignmentForm(
         assignment: assignment ?? this.assignment,
         form: form ?? this.form,
@@ -5283,7 +5283,7 @@ class AssignmentForm extends DataClass implements Insertable<AssignmentForm> {
   AssignmentForm copyWithCompanion(AssignmentFormsCompanion data) {
     return AssignmentForm(
       assignment:
-          data.assignment.present ? data.assignment.value : this.assignment,
+      data.assignment.present ? data.assignment.value : this.assignment,
       form: data.form.present ? data.form.value : this.form,
       canAddSubmissions: data.canAddSubmissions.present
           ? data.canAddSubmissions.value
@@ -5303,13 +5303,13 @@ class AssignmentForm extends DataClass implements Insertable<AssignmentForm> {
   @override
   String toString() {
     return (StringBuffer('AssignmentForm(')
-          ..write('assignment: $assignment, ')
-          ..write('form: $form, ')
-          ..write('canAddSubmissions: $canAddSubmissions, ')
-          ..write('canViewSubmissions: $canViewSubmissions, ')
-          ..write('canEditSubmissions: $canEditSubmissions, ')
-          ..write('canDeleteSubmissions: $canDeleteSubmissions')
-          ..write(')'))
+      ..write('assignment: $assignment, ')
+      ..write('form: $form, ')
+      ..write('canAddSubmissions: $canAddSubmissions, ')
+      ..write('canViewSubmissions: $canViewSubmissions, ')
+      ..write('canEditSubmissions: $canEditSubmissions, ')
+      ..write('canDeleteSubmissions: $canDeleteSubmissions')
+      ..write(')'))
         .toString();
   }
 
@@ -5319,13 +5319,13 @@ class AssignmentForm extends DataClass implements Insertable<AssignmentForm> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AssignmentForm &&
-          other.assignment == this.assignment &&
-          other.form == this.form &&
-          other.canAddSubmissions == this.canAddSubmissions &&
-          other.canViewSubmissions == this.canViewSubmissions &&
-          other.canEditSubmissions == this.canEditSubmissions &&
-          other.canDeleteSubmissions == this.canDeleteSubmissions);
+          (other is AssignmentForm &&
+              other.assignment == this.assignment &&
+              other.form == this.form &&
+              other.canAddSubmissions == this.canAddSubmissions &&
+              other.canViewSubmissions == this.canViewSubmissions &&
+              other.canEditSubmissions == this.canEditSubmissions &&
+              other.canDeleteSubmissions == this.canDeleteSubmissions);
 }
 
 class AssignmentFormsCompanion extends UpdateCompanion<AssignmentForm> {
@@ -5380,12 +5380,12 @@ class AssignmentFormsCompanion extends UpdateCompanion<AssignmentForm> {
 
   AssignmentFormsCompanion copyWith(
       {Value<String>? assignment,
-      Value<String>? form,
-      Value<bool?>? canAddSubmissions,
-      Value<bool?>? canViewSubmissions,
-      Value<bool?>? canEditSubmissions,
-      Value<bool?>? canDeleteSubmissions,
-      Value<int>? rowid}) {
+        Value<String>? form,
+        Value<bool?>? canAddSubmissions,
+        Value<bool?>? canViewSubmissions,
+        Value<bool?>? canEditSubmissions,
+        Value<bool?>? canDeleteSubmissions,
+        Value<int>? rowid}) {
     return AssignmentFormsCompanion(
       assignment: assignment ?? this.assignment,
       form: form ?? this.form,
@@ -5428,14 +5428,14 @@ class AssignmentFormsCompanion extends UpdateCompanion<AssignmentForm> {
   @override
   String toString() {
     return (StringBuffer('AssignmentFormsCompanion(')
-          ..write('assignment: $assignment, ')
-          ..write('form: $form, ')
-          ..write('canAddSubmissions: $canAddSubmissions, ')
-          ..write('canViewSubmissions: $canViewSubmissions, ')
-          ..write('canEditSubmissions: $canEditSubmissions, ')
-          ..write('canDeleteSubmissions: $canDeleteSubmissions, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('assignment: $assignment, ')
+      ..write('form: $form, ')
+      ..write('canAddSubmissions: $canAddSubmissions, ')
+      ..write('canViewSubmissions: $canViewSubmissions, ')
+      ..write('canEditSubmissions: $canEditSubmissions, ')
+      ..write('canDeleteSubmissions: $canDeleteSubmissions, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -5452,38 +5452,38 @@ class $FormTemplateVersionsTable extends FormTemplateVersions
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _templateMeta =
-      const VerificationMeta('template');
+  const VerificationMeta('template');
   @override
   late final GeneratedColumn<String> template = GeneratedColumn<String>(
       'template', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
   static const VerificationMeta _versionNumberMeta =
-      const VerificationMeta('versionNumber');
+  const VerificationMeta('versionNumber');
   @override
   late final GeneratedColumn<int> versionNumber = GeneratedColumn<int>(
       'version_number', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
   @override
   late final GeneratedColumnWithTypeConverter<List<Template>, String> fields =
-      GeneratedColumn<String>('fields', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<Template>>(
-              $FormTemplateVersionsTable.$converterfields);
+  GeneratedColumn<String>('fields', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<Template>>(
+      $FormTemplateVersionsTable.$converterfields);
   @override
   late final GeneratedColumnWithTypeConverter<List<Template>, String> sections =
-      GeneratedColumn<String>('sections', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<Template>>(
-              $FormTemplateVersionsTable.$convertersections);
+  GeneratedColumn<String>('sections', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<Template>>(
+      $FormTemplateVersionsTable.$convertersections);
   @override
   late final GeneratedColumnWithTypeConverter<List<FormOption>?, String>
-      options = GeneratedColumn<String>('options', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<List<FormOption>?>(
-              $FormTemplateVersionsTable.$converteroptions);
+  options = GeneratedColumn<String>('options', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<List<FormOption>?>(
+      $FormTemplateVersionsTable.$converteroptions);
   @override
   List<GeneratedColumn> get $columns =>
       [id, template, versionNumber, fields, sections, options];
@@ -5550,11 +5550,11 @@ class $FormTemplateVersionsTable extends FormTemplateVersions
   }
 
   static TypeConverter<List<Template>, String> $converterfields =
-      const TemplateListConverter();
+  const TemplateListConverter();
   static TypeConverter<List<Template>, String> $convertersections =
-      const TemplateListConverter();
+  const TemplateListConverter();
   static TypeConverter<List<FormOption>?, String?> $converteroptions =
-      const FormOptionListConverter();
+  const FormOptionListConverter();
 }
 
 class FormTemplateVersion extends DataClass
@@ -5567,11 +5567,11 @@ class FormTemplateVersion extends DataClass
   final List<FormOption>? options;
   const FormTemplateVersion(
       {required this.id,
-      required this.template,
-      required this.versionNumber,
-      required this.fields,
-      required this.sections,
-      this.options});
+        required this.template,
+        required this.versionNumber,
+        required this.fields,
+        required this.sections,
+        this.options});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -5632,12 +5632,12 @@ class FormTemplateVersion extends DataClass
   }
 
   FormTemplateVersion copyWith(
-          {String? id,
-          String? template,
-          int? versionNumber,
-          List<Template>? fields,
-          List<Template>? sections,
-          Value<List<FormOption>?> options = const Value.absent()}) =>
+      {String? id,
+        String? template,
+        int? versionNumber,
+        List<Template>? fields,
+        List<Template>? sections,
+        Value<List<FormOption>?> options = const Value.absent()}) =>
       FormTemplateVersion(
         id: id ?? this.id,
         template: template ?? this.template,
@@ -5662,13 +5662,13 @@ class FormTemplateVersion extends DataClass
   @override
   String toString() {
     return (StringBuffer('FormTemplateVersion(')
-          ..write('id: $id, ')
-          ..write('template: $template, ')
-          ..write('versionNumber: $versionNumber, ')
-          ..write('fields: $fields, ')
-          ..write('sections: $sections, ')
-          ..write('options: $options')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('template: $template, ')
+      ..write('versionNumber: $versionNumber, ')
+      ..write('fields: $fields, ')
+      ..write('sections: $sections, ')
+      ..write('options: $options')
+      ..write(')'))
         .toString();
   }
 
@@ -5678,13 +5678,13 @@ class FormTemplateVersion extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FormTemplateVersion &&
-          other.id == this.id &&
-          other.template == this.template &&
-          other.versionNumber == this.versionNumber &&
-          other.fields == this.fields &&
-          other.sections == this.sections &&
-          other.options == this.options);
+          (other is FormTemplateVersion &&
+              other.id == this.id &&
+              other.template == this.template &&
+              other.versionNumber == this.versionNumber &&
+              other.fields == this.fields &&
+              other.sections == this.sections &&
+              other.options == this.options);
 }
 
 class FormTemplateVersionsCompanion
@@ -5740,12 +5740,12 @@ class FormTemplateVersionsCompanion
 
   FormTemplateVersionsCompanion copyWith(
       {Value<String>? id,
-      Value<String>? template,
-      Value<int>? versionNumber,
-      Value<List<Template>>? fields,
-      Value<List<Template>>? sections,
-      Value<List<FormOption>?>? options,
-      Value<int>? rowid}) {
+        Value<String>? template,
+        Value<int>? versionNumber,
+        Value<List<Template>>? fields,
+        Value<List<Template>>? sections,
+        Value<List<FormOption>?>? options,
+        Value<int>? rowid}) {
     return FormTemplateVersionsCompanion(
       id: id ?? this.id,
       template: template ?? this.template,
@@ -5790,614 +5790,14 @@ class FormTemplateVersionsCompanion
   @override
   String toString() {
     return (StringBuffer('FormTemplateVersionsCompanion(')
-          ..write('id: $id, ')
-          ..write('template: $template, ')
-          ..write('versionNumber: $versionNumber, ')
-          ..write('fields: $fields, ')
-          ..write('sections: $sections, ')
-          ..write('options: $options, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $MetadataSubmissionsTable extends MetadataSubmissions
-    with TableInfo<$MetadataSubmissionsTable, MetadataSubmission> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MetadataSubmissionsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
-  @override
-  late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
-  @override
-  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, true,
-      type: DriftSqlType.dateTime,
-      requiredDuringInsert: false,
-      clientDefault: () => DateTime.now().toUtc());
-  @override
-  late final GeneratedColumnWithTypeConverter<MetadataResourceType, String>
-      resourceType = GeneratedColumn<String>(
-              'resource_type', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<MetadataResourceType>(
-              $MetadataSubmissionsTable.$converterresourceType);
-  static const VerificationMeta _metadataSchemaMeta =
-      const VerificationMeta('metadataSchema');
-  @override
-  late final GeneratedColumn<String> metadataSchema = GeneratedColumn<String>(
-      'metadata_schema', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _serialNumberMeta =
-      const VerificationMeta('serialNumber');
-  @override
-  late final GeneratedColumn<int> serialNumber = GeneratedColumn<int>(
-      'serial_number', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _versionMeta =
-      const VerificationMeta('version');
-  @override
-  late final GeneratedColumn<int> version = GeneratedColumn<int>(
-      'version', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _resourceIdMeta =
-      const VerificationMeta('resourceId');
-  @override
-  late final GeneratedColumn<String> resourceId = GeneratedColumn<String>(
-      'resource_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  @override
-  late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      formData = GeneratedColumn<String>('form_data', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<Map<String, dynamic>?>(
-              $MetadataSubmissionsTable.$converterformData);
-  static const VerificationMeta _createdByMeta =
-      const VerificationMeta('createdBy');
-  @override
-  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
-      'created_by', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _lastModifiedByMeta =
-      const VerificationMeta('lastModifiedBy');
-  @override
-  late final GeneratedColumn<String> lastModifiedBy = GeneratedColumn<String>(
-      'last_modified_by', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        resourceType,
-        metadataSchema,
-        serialNumber,
-        version,
-        resourceId,
-        formData,
-        createdBy,
-        lastModifiedBy
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'metadata_submissions';
-  @override
-  VerificationContext validateIntegrity(Insertable<MetadataSubmission> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('last_modified_date')) {
-      context.handle(
-          _lastModifiedDateMeta,
-          lastModifiedDate.isAcceptableOrUnknown(
-              data['last_modified_date']!, _lastModifiedDateMeta));
-    }
-    if (data.containsKey('created_date')) {
-      context.handle(
-          _createdDateMeta,
-          createdDate.isAcceptableOrUnknown(
-              data['created_date']!, _createdDateMeta));
-    }
-    if (data.containsKey('metadata_schema')) {
-      context.handle(
-          _metadataSchemaMeta,
-          metadataSchema.isAcceptableOrUnknown(
-              data['metadata_schema']!, _metadataSchemaMeta));
-    } else if (isInserting) {
-      context.missing(_metadataSchemaMeta);
-    }
-    if (data.containsKey('serial_number')) {
-      context.handle(
-          _serialNumberMeta,
-          serialNumber.isAcceptableOrUnknown(
-              data['serial_number']!, _serialNumberMeta));
-    } else if (isInserting) {
-      context.missing(_serialNumberMeta);
-    }
-    if (data.containsKey('version')) {
-      context.handle(_versionMeta,
-          version.isAcceptableOrUnknown(data['version']!, _versionMeta));
-    } else if (isInserting) {
-      context.missing(_versionMeta);
-    }
-    if (data.containsKey('resource_id')) {
-      context.handle(
-          _resourceIdMeta,
-          resourceId.isAcceptableOrUnknown(
-              data['resource_id']!, _resourceIdMeta));
-    } else if (isInserting) {
-      context.missing(_resourceIdMeta);
-    }
-    if (data.containsKey('created_by')) {
-      context.handle(_createdByMeta,
-          createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta));
-    }
-    if (data.containsKey('last_modified_by')) {
-      context.handle(
-          _lastModifiedByMeta,
-          lastModifiedBy.isAcceptableOrUnknown(
-              data['last_modified_by']!, _lastModifiedByMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  MetadataSubmission map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MetadataSubmission(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      lastModifiedDate: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
-      createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      resourceType: $MetadataSubmissionsTable.$converterresourceType.fromSql(
-          attachedDatabase.typeMapping.read(
-              DriftSqlType.string, data['${effectivePrefix}resource_type'])!),
-      metadataSchema: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}metadata_schema'])!,
-      serialNumber: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}serial_number'])!,
-      version: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}version'])!,
-      resourceId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}resource_id'])!,
-      formData: $MetadataSubmissionsTable.$converterformData.fromSql(
-          attachedDatabase.typeMapping
-              .read(DriftSqlType.string, data['${effectivePrefix}form_data'])),
-      createdBy: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}created_by']),
-      lastModifiedBy: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}last_modified_by']),
-    );
-  }
-
-  @override
-  $MetadataSubmissionsTable createAlias(String alias) {
-    return $MetadataSubmissionsTable(attachedDatabase, alias);
-  }
-
-  static JsonTypeConverter2<MetadataResourceType, String, String>
-      $converterresourceType =
-      const EnumNameConverter(MetadataResourceType.values);
-  static TypeConverter<Map<String, dynamic>?, String?> $converterformData =
-      const NullAwareMapConverter();
-}
-
-class MetadataSubmission extends DataClass
-    implements Insertable<MetadataSubmission> {
-  final String id;
-  final DateTime? lastModifiedDate;
-  final DateTime? createdDate;
-  final MetadataResourceType resourceType;
-  final String metadataSchema;
-  final int serialNumber;
-  final int version;
-  final String resourceId;
-  final Map<String, dynamic>? formData;
-  final String? createdBy;
-  final String? lastModifiedBy;
-  const MetadataSubmission(
-      {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.resourceType,
-      required this.metadataSchema,
-      required this.serialNumber,
-      required this.version,
-      required this.resourceId,
-      this.formData,
-      this.createdBy,
-      this.lastModifiedBy});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    if (!nullToAbsent || lastModifiedDate != null) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate);
-    }
-    if (!nullToAbsent || createdDate != null) {
-      map['created_date'] = Variable<DateTime>(createdDate);
-    }
-    {
-      map['resource_type'] = Variable<String>(
-          $MetadataSubmissionsTable.$converterresourceType.toSql(resourceType));
-    }
-    map['metadata_schema'] = Variable<String>(metadataSchema);
-    map['serial_number'] = Variable<int>(serialNumber);
-    map['version'] = Variable<int>(version);
-    map['resource_id'] = Variable<String>(resourceId);
-    if (!nullToAbsent || formData != null) {
-      map['form_data'] = Variable<String>(
-          $MetadataSubmissionsTable.$converterformData.toSql(formData));
-    }
-    if (!nullToAbsent || createdBy != null) {
-      map['created_by'] = Variable<String>(createdBy);
-    }
-    if (!nullToAbsent || lastModifiedBy != null) {
-      map['last_modified_by'] = Variable<String>(lastModifiedBy);
-    }
-    return map;
-  }
-
-  MetadataSubmissionsCompanion toCompanion(bool nullToAbsent) {
-    return MetadataSubmissionsCompanion(
-      id: Value(id),
-      lastModifiedDate: lastModifiedDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastModifiedDate),
-      createdDate: createdDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdDate),
-      resourceType: Value(resourceType),
-      metadataSchema: Value(metadataSchema),
-      serialNumber: Value(serialNumber),
-      version: Value(version),
-      resourceId: Value(resourceId),
-      formData: formData == null && nullToAbsent
-          ? const Value.absent()
-          : Value(formData),
-      createdBy: createdBy == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdBy),
-      lastModifiedBy: lastModifiedBy == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastModifiedBy),
-    );
-  }
-
-  factory MetadataSubmission.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MetadataSubmission(
-      id: serializer.fromJson<String>(json['id']),
-      lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
-      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      resourceType: $MetadataSubmissionsTable.$converterresourceType
-          .fromJson(serializer.fromJson<String>(json['resourceType'])),
-      metadataSchema: serializer.fromJson<String>(json['metadataSchema']),
-      serialNumber: serializer.fromJson<int>(json['serialNumber']),
-      version: serializer.fromJson<int>(json['version']),
-      resourceId: serializer.fromJson<String>(json['resourceId']),
-      formData: serializer.fromJson<Map<String, dynamic>?>(json['formData']),
-      createdBy: serializer.fromJson<String?>(json['createdBy']),
-      lastModifiedBy: serializer.fromJson<String?>(json['lastModifiedBy']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
-      'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'resourceType': serializer.toJson<String>($MetadataSubmissionsTable
-          .$converterresourceType
-          .toJson(resourceType)),
-      'metadataSchema': serializer.toJson<String>(metadataSchema),
-      'serialNumber': serializer.toJson<int>(serialNumber),
-      'version': serializer.toJson<int>(version),
-      'resourceId': serializer.toJson<String>(resourceId),
-      'formData': serializer.toJson<Map<String, dynamic>?>(formData),
-      'createdBy': serializer.toJson<String?>(createdBy),
-      'lastModifiedBy': serializer.toJson<String?>(lastModifiedBy),
-    };
-  }
-
-  MetadataSubmission copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          MetadataResourceType? resourceType,
-          String? metadataSchema,
-          int? serialNumber,
-          int? version,
-          String? resourceId,
-          Value<Map<String, dynamic>?> formData = const Value.absent(),
-          Value<String?> createdBy = const Value.absent(),
-          Value<String?> lastModifiedBy = const Value.absent()}) =>
-      MetadataSubmission(
-        id: id ?? this.id,
-        lastModifiedDate: lastModifiedDate.present
-            ? lastModifiedDate.value
-            : this.lastModifiedDate,
-        createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        resourceType: resourceType ?? this.resourceType,
-        metadataSchema: metadataSchema ?? this.metadataSchema,
-        serialNumber: serialNumber ?? this.serialNumber,
-        version: version ?? this.version,
-        resourceId: resourceId ?? this.resourceId,
-        formData: formData.present ? formData.value : this.formData,
-        createdBy: createdBy.present ? createdBy.value : this.createdBy,
-        lastModifiedBy:
-            lastModifiedBy.present ? lastModifiedBy.value : this.lastModifiedBy,
-      );
-  MetadataSubmission copyWithCompanion(MetadataSubmissionsCompanion data) {
-    return MetadataSubmission(
-      id: data.id.present ? data.id.value : this.id,
-      lastModifiedDate: data.lastModifiedDate.present
-          ? data.lastModifiedDate.value
-          : this.lastModifiedDate,
-      createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
-      resourceType: data.resourceType.present
-          ? data.resourceType.value
-          : this.resourceType,
-      metadataSchema: data.metadataSchema.present
-          ? data.metadataSchema.value
-          : this.metadataSchema,
-      serialNumber: data.serialNumber.present
-          ? data.serialNumber.value
-          : this.serialNumber,
-      version: data.version.present ? data.version.value : this.version,
-      resourceId:
-          data.resourceId.present ? data.resourceId.value : this.resourceId,
-      formData: data.formData.present ? data.formData.value : this.formData,
-      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
-      lastModifiedBy: data.lastModifiedBy.present
-          ? data.lastModifiedBy.value
-          : this.lastModifiedBy,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MetadataSubmission(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('resourceType: $resourceType, ')
-          ..write('metadataSchema: $metadataSchema, ')
-          ..write('serialNumber: $serialNumber, ')
-          ..write('version: $version, ')
-          ..write('resourceId: $resourceId, ')
-          ..write('formData: $formData, ')
-          ..write('createdBy: $createdBy, ')
-          ..write('lastModifiedBy: $lastModifiedBy')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      id,
-      lastModifiedDate,
-      createdDate,
-      resourceType,
-      metadataSchema,
-      serialNumber,
-      version,
-      resourceId,
-      formData,
-      createdBy,
-      lastModifiedBy);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MetadataSubmission &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.resourceType == this.resourceType &&
-          other.metadataSchema == this.metadataSchema &&
-          other.serialNumber == this.serialNumber &&
-          other.version == this.version &&
-          other.resourceId == this.resourceId &&
-          other.formData == this.formData &&
-          other.createdBy == this.createdBy &&
-          other.lastModifiedBy == this.lastModifiedBy);
-}
-
-class MetadataSubmissionsCompanion extends UpdateCompanion<MetadataSubmission> {
-  final Value<String> id;
-  final Value<DateTime?> lastModifiedDate;
-  final Value<DateTime?> createdDate;
-  final Value<MetadataResourceType> resourceType;
-  final Value<String> metadataSchema;
-  final Value<int> serialNumber;
-  final Value<int> version;
-  final Value<String> resourceId;
-  final Value<Map<String, dynamic>?> formData;
-  final Value<String?> createdBy;
-  final Value<String?> lastModifiedBy;
-  final Value<int> rowid;
-  const MetadataSubmissionsCompanion({
-    this.id = const Value.absent(),
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    this.resourceType = const Value.absent(),
-    this.metadataSchema = const Value.absent(),
-    this.serialNumber = const Value.absent(),
-    this.version = const Value.absent(),
-    this.resourceId = const Value.absent(),
-    this.formData = const Value.absent(),
-    this.createdBy = const Value.absent(),
-    this.lastModifiedBy = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  MetadataSubmissionsCompanion.insert({
-    required String id,
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    required MetadataResourceType resourceType,
-    required String metadataSchema,
-    required int serialNumber,
-    required int version,
-    required String resourceId,
-    this.formData = const Value.absent(),
-    this.createdBy = const Value.absent(),
-    this.lastModifiedBy = const Value.absent(),
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        resourceType = Value(resourceType),
-        metadataSchema = Value(metadataSchema),
-        serialNumber = Value(serialNumber),
-        version = Value(version),
-        resourceId = Value(resourceId);
-  static Insertable<MetadataSubmission> custom({
-    Expression<String>? id,
-    Expression<DateTime>? lastModifiedDate,
-    Expression<DateTime>? createdDate,
-    Expression<String>? resourceType,
-    Expression<String>? metadataSchema,
-    Expression<int>? serialNumber,
-    Expression<int>? version,
-    Expression<String>? resourceId,
-    Expression<String>? formData,
-    Expression<String>? createdBy,
-    Expression<String>? lastModifiedBy,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
-      if (createdDate != null) 'created_date': createdDate,
-      if (resourceType != null) 'resource_type': resourceType,
-      if (metadataSchema != null) 'metadata_schema': metadataSchema,
-      if (serialNumber != null) 'serial_number': serialNumber,
-      if (version != null) 'version': version,
-      if (resourceId != null) 'resource_id': resourceId,
-      if (formData != null) 'form_data': formData,
-      if (createdBy != null) 'created_by': createdBy,
-      if (lastModifiedBy != null) 'last_modified_by': lastModifiedBy,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  MetadataSubmissionsCompanion copyWith(
-      {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<MetadataResourceType>? resourceType,
-      Value<String>? metadataSchema,
-      Value<int>? serialNumber,
-      Value<int>? version,
-      Value<String>? resourceId,
-      Value<Map<String, dynamic>?>? formData,
-      Value<String?>? createdBy,
-      Value<String?>? lastModifiedBy,
-      Value<int>? rowid}) {
-    return MetadataSubmissionsCompanion(
-      id: id ?? this.id,
-      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
-      createdDate: createdDate ?? this.createdDate,
-      resourceType: resourceType ?? this.resourceType,
-      metadataSchema: metadataSchema ?? this.metadataSchema,
-      serialNumber: serialNumber ?? this.serialNumber,
-      version: version ?? this.version,
-      resourceId: resourceId ?? this.resourceId,
-      formData: formData ?? this.formData,
-      createdBy: createdBy ?? this.createdBy,
-      lastModifiedBy: lastModifiedBy ?? this.lastModifiedBy,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (lastModifiedDate.present) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate.value);
-    }
-    if (createdDate.present) {
-      map['created_date'] = Variable<DateTime>(createdDate.value);
-    }
-    if (resourceType.present) {
-      map['resource_type'] = Variable<String>($MetadataSubmissionsTable
-          .$converterresourceType
-          .toSql(resourceType.value));
-    }
-    if (metadataSchema.present) {
-      map['metadata_schema'] = Variable<String>(metadataSchema.value);
-    }
-    if (serialNumber.present) {
-      map['serial_number'] = Variable<int>(serialNumber.value);
-    }
-    if (version.present) {
-      map['version'] = Variable<int>(version.value);
-    }
-    if (resourceId.present) {
-      map['resource_id'] = Variable<String>(resourceId.value);
-    }
-    if (formData.present) {
-      map['form_data'] = Variable<String>(
-          $MetadataSubmissionsTable.$converterformData.toSql(formData.value));
-    }
-    if (createdBy.present) {
-      map['created_by'] = Variable<String>(createdBy.value);
-    }
-    if (lastModifiedBy.present) {
-      map['last_modified_by'] = Variable<String>(lastModifiedBy.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MetadataSubmissionsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('resourceType: $resourceType, ')
-          ..write('metadataSchema: $metadataSchema, ')
-          ..write('serialNumber: $serialNumber, ')
-          ..write('version: $version, ')
-          ..write('resourceId: $resourceId, ')
-          ..write('formData: $formData, ')
-          ..write('createdBy: $createdBy, ')
-          ..write('lastModifiedBy: $lastModifiedBy, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('template: $template, ')
+      ..write('versionNumber: $versionNumber, ')
+      ..write('fields: $fields, ')
+      ..write('sections: $sections, ')
+      ..write('options: $options, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -6414,15 +5814,15 @@ class $DataInstancesTable extends DataInstances
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -6430,32 +5830,32 @@ class $DataInstancesTable extends DataInstances
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _deletedMeta =
-      const VerificationMeta('deleted');
+  const VerificationMeta('deleted');
   @override
   late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
       'deleted', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
+      GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
       clientDefault: () => false);
   static const VerificationMeta _deletedAtMeta =
-      const VerificationMeta('deletedAt');
+  const VerificationMeta('deletedAt');
   @override
   late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
       'deleted_at', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _formTemplateMeta =
-      const VerificationMeta('formTemplate');
+  const VerificationMeta('formTemplate');
   @override
   late final GeneratedColumn<String> formTemplate = GeneratedColumn<String>(
       'form_template', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
   static const VerificationMeta _templateVersionMeta =
-      const VerificationMeta('templateVersion');
+  const VerificationMeta('templateVersion');
   @override
   late final GeneratedColumn<String> templateVersion = GeneratedColumn<String>(
       'template_version', aliasedName, false,
@@ -6464,60 +5864,60 @@ class $DataInstancesTable extends DataInstances
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES form_template_versions (id)'));
   static const VerificationMeta _assignmentMeta =
-      const VerificationMeta('assignment');
+  const VerificationMeta('assignment');
   @override
   late final GeneratedColumn<String> assignment = GeneratedColumn<String>(
       'assignment', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES assignments (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES assignments (id)'));
   static const VerificationMeta _startEntryTimeMeta =
-      const VerificationMeta('startEntryTime');
+  const VerificationMeta('startEntryTime');
   @override
   late final GeneratedColumn<DateTime> startEntryTime =
-      GeneratedColumn<DateTime>('start_entry_time', aliasedName, false,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('start_entry_time', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _finishedEntryTimeMeta =
-      const VerificationMeta('finishedEntryTime');
+  const VerificationMeta('finishedEntryTime');
   @override
   late final GeneratedColumn<DateTime> finishedEntryTime =
-      GeneratedColumn<DateTime>('finished_entry_time', aliasedName, true,
-          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  GeneratedColumn<DateTime>('finished_entry_time', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      formData = GeneratedColumn<String>('form_data', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<Map<String, dynamic>?>(
-              $DataInstancesTable.$converterformData);
+  formData = GeneratedColumn<String>('form_data', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<Map<String, dynamic>?>(
+      $DataInstancesTable.$converterformData);
   static const VerificationMeta _updatedAtClientMeta =
-      const VerificationMeta('updatedAtClient');
+  const VerificationMeta('updatedAtClient');
   @override
   late final GeneratedColumn<DateTime> updatedAtClient =
-      GeneratedColumn<DateTime>('updated_at_client', aliasedName, true,
-          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  GeneratedColumn<DateTime>('updated_at_client', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<InstanceSyncStatus, String>
-      syncState = GeneratedColumn<String>('sync_state', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<InstanceSyncStatus>(
-              $DataInstancesTable.$convertersyncState);
+  syncState = GeneratedColumn<String>('sync_state', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<InstanceSyncStatus>(
+      $DataInstancesTable.$convertersyncState);
   static const VerificationMeta _lastSyncDateMeta =
-      const VerificationMeta('lastSyncDate');
+  const VerificationMeta('lastSyncDate');
   @override
   late final GeneratedColumn<DateTime> lastSyncDate = GeneratedColumn<DateTime>(
       'last_sync_date', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _lastSyncMessageMeta =
-      const VerificationMeta('lastSyncMessage');
+  const VerificationMeta('lastSyncMessage');
   @override
   late final GeneratedColumn<String> lastSyncMessage = GeneratedColumn<String>(
       'last_sync_message', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _isToUpdateMeta =
-      const VerificationMeta('isToUpdate');
+  const VerificationMeta('isToUpdate');
   @override
   late final GeneratedColumn<bool> isToUpdate = GeneratedColumn<bool>(
       'is_to_update', aliasedName, false,
@@ -6527,23 +5927,23 @@ class $DataInstancesTable extends DataInstances
           'CHECK ("is_to_update" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        deleted,
-        deletedAt,
-        formTemplate,
-        templateVersion,
-        assignment,
-        startEntryTime,
-        finishedEntryTime,
-        formData,
-        updatedAtClient,
-        syncState,
-        lastSyncDate,
-        lastSyncMessage,
-        isToUpdate
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    deleted,
+    deletedAt,
+    formTemplate,
+    templateVersion,
+    assignment,
+    startEntryTime,
+    finishedEntryTime,
+    formData,
+    updatedAtClient,
+    syncState,
+    lastSyncDate,
+    lastSyncMessage,
+    isToUpdate
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -6691,9 +6091,9 @@ class $DataInstancesTable extends DataInstances
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterformData =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static JsonTypeConverter2<InstanceSyncStatus, String, String>
-      $convertersyncState = const EnumNameConverter(InstanceSyncStatus.values);
+  $convertersyncState = const EnumNameConverter(InstanceSyncStatus.values);
 }
 
 class DataInstance extends DataClass implements Insertable<DataInstance> {
@@ -6721,21 +6121,21 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
   final bool isToUpdate;
   const DataInstance(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.deleted,
-      this.deletedAt,
-      required this.formTemplate,
-      required this.templateVersion,
-      this.assignment,
-      required this.startEntryTime,
-      this.finishedEntryTime,
-      this.formData,
-      this.updatedAtClient,
-      required this.syncState,
-      this.lastSyncDate,
-      this.lastSyncMessage,
-      required this.isToUpdate});
+        this.lastModifiedDate,
+        this.createdDate,
+        required this.deleted,
+        this.deletedAt,
+        required this.formTemplate,
+        required this.templateVersion,
+        this.assignment,
+        required this.startEntryTime,
+        this.finishedEntryTime,
+        this.formData,
+        this.updatedAtClient,
+        required this.syncState,
+        this.lastSyncDate,
+        this.lastSyncMessage,
+        required this.isToUpdate});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -6825,7 +6225,7 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
     return DataInstance(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       deleted: serializer.fromJson<bool>(json['deleted']),
       deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
@@ -6834,7 +6234,7 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
       assignment: serializer.fromJson<String?>(json['assignment']),
       startEntryTime: serializer.fromJson<DateTime>(json['startEntryTime']),
       finishedEntryTime:
-          serializer.fromJson<DateTime?>(json['finishedEntryTime']),
+      serializer.fromJson<DateTime?>(json['finishedEntryTime']),
       formData: serializer.fromJson<Map<String, dynamic>?>(json['formData']),
       updatedAtClient: serializer.fromJson<DateTime?>(json['updatedAtClient']),
       syncState: $DataInstancesTable.$convertersyncState
@@ -6869,22 +6269,22 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
   }
 
   DataInstance copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          bool? deleted,
-          Value<DateTime?> deletedAt = const Value.absent(),
-          String? formTemplate,
-          String? templateVersion,
-          Value<String?> assignment = const Value.absent(),
-          DateTime? startEntryTime,
-          Value<DateTime?> finishedEntryTime = const Value.absent(),
-          Value<Map<String, dynamic>?> formData = const Value.absent(),
-          Value<DateTime?> updatedAtClient = const Value.absent(),
-          InstanceSyncStatus? syncState,
-          Value<DateTime?> lastSyncDate = const Value.absent(),
-          Value<String?> lastSyncMessage = const Value.absent(),
-          bool? isToUpdate}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        bool? deleted,
+        Value<DateTime?> deletedAt = const Value.absent(),
+        String? formTemplate,
+        String? templateVersion,
+        Value<String?> assignment = const Value.absent(),
+        DateTime? startEntryTime,
+        Value<DateTime?> finishedEntryTime = const Value.absent(),
+        Value<Map<String, dynamic>?> formData = const Value.absent(),
+        Value<DateTime?> updatedAtClient = const Value.absent(),
+        InstanceSyncStatus? syncState,
+        Value<DateTime?> lastSyncDate = const Value.absent(),
+        Value<String?> lastSyncMessage = const Value.absent(),
+        bool? isToUpdate}) =>
       DataInstance(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -6906,7 +6306,7 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
             : this.updatedAtClient,
         syncState: syncState ?? this.syncState,
         lastSyncDate:
-            lastSyncDate.present ? lastSyncDate.value : this.lastSyncDate,
+        lastSyncDate.present ? lastSyncDate.value : this.lastSyncDate,
         lastSyncMessage: lastSyncMessage.present
             ? lastSyncMessage.value
             : this.lastSyncMessage,
@@ -6919,7 +6319,7 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       deleted: data.deleted.present ? data.deleted.value : this.deleted,
       deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
       formTemplate: data.formTemplate.present
@@ -6929,7 +6329,7 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
           ? data.templateVersion.value
           : this.templateVersion,
       assignment:
-          data.assignment.present ? data.assignment.value : this.assignment,
+      data.assignment.present ? data.assignment.value : this.assignment,
       startEntryTime: data.startEntryTime.present
           ? data.startEntryTime.value
           : this.startEntryTime,
@@ -6948,30 +6348,30 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
           ? data.lastSyncMessage.value
           : this.lastSyncMessage,
       isToUpdate:
-          data.isToUpdate.present ? data.isToUpdate.value : this.isToUpdate,
+      data.isToUpdate.present ? data.isToUpdate.value : this.isToUpdate,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('DataInstance(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('deleted: $deleted, ')
-          ..write('deletedAt: $deletedAt, ')
-          ..write('formTemplate: $formTemplate, ')
-          ..write('templateVersion: $templateVersion, ')
-          ..write('assignment: $assignment, ')
-          ..write('startEntryTime: $startEntryTime, ')
-          ..write('finishedEntryTime: $finishedEntryTime, ')
-          ..write('formData: $formData, ')
-          ..write('updatedAtClient: $updatedAtClient, ')
-          ..write('syncState: $syncState, ')
-          ..write('lastSyncDate: $lastSyncDate, ')
-          ..write('lastSyncMessage: $lastSyncMessage, ')
-          ..write('isToUpdate: $isToUpdate')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('deleted: $deleted, ')
+      ..write('deletedAt: $deletedAt, ')
+      ..write('formTemplate: $formTemplate, ')
+      ..write('templateVersion: $templateVersion, ')
+      ..write('assignment: $assignment, ')
+      ..write('startEntryTime: $startEntryTime, ')
+      ..write('finishedEntryTime: $finishedEntryTime, ')
+      ..write('formData: $formData, ')
+      ..write('updatedAtClient: $updatedAtClient, ')
+      ..write('syncState: $syncState, ')
+      ..write('lastSyncDate: $lastSyncDate, ')
+      ..write('lastSyncMessage: $lastSyncMessage, ')
+      ..write('isToUpdate: $isToUpdate')
+      ..write(')'))
         .toString();
   }
 
@@ -6996,23 +6396,23 @@ class DataInstance extends DataClass implements Insertable<DataInstance> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is DataInstance &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.deleted == this.deleted &&
-          other.deletedAt == this.deletedAt &&
-          other.formTemplate == this.formTemplate &&
-          other.templateVersion == this.templateVersion &&
-          other.assignment == this.assignment &&
-          other.startEntryTime == this.startEntryTime &&
-          other.finishedEntryTime == this.finishedEntryTime &&
-          other.formData == this.formData &&
-          other.updatedAtClient == this.updatedAtClient &&
-          other.syncState == this.syncState &&
-          other.lastSyncDate == this.lastSyncDate &&
-          other.lastSyncMessage == this.lastSyncMessage &&
-          other.isToUpdate == this.isToUpdate);
+          (other is DataInstance &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.deleted == this.deleted &&
+              other.deletedAt == this.deletedAt &&
+              other.formTemplate == this.formTemplate &&
+              other.templateVersion == this.templateVersion &&
+              other.assignment == this.assignment &&
+              other.startEntryTime == this.startEntryTime &&
+              other.finishedEntryTime == this.finishedEntryTime &&
+              other.formData == this.formData &&
+              other.updatedAtClient == this.updatedAtClient &&
+              other.syncState == this.syncState &&
+              other.lastSyncDate == this.lastSyncDate &&
+              other.lastSyncMessage == this.lastSyncMessage &&
+              other.isToUpdate == this.isToUpdate);
 }
 
 class DataInstancesCompanion extends UpdateCompanion<DataInstance> {
@@ -7117,22 +6517,22 @@ class DataInstancesCompanion extends UpdateCompanion<DataInstance> {
 
   DataInstancesCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<bool>? deleted,
-      Value<DateTime?>? deletedAt,
-      Value<String>? formTemplate,
-      Value<String>? templateVersion,
-      Value<String?>? assignment,
-      Value<DateTime>? startEntryTime,
-      Value<DateTime?>? finishedEntryTime,
-      Value<Map<String, dynamic>?>? formData,
-      Value<DateTime?>? updatedAtClient,
-      Value<InstanceSyncStatus>? syncState,
-      Value<DateTime?>? lastSyncDate,
-      Value<String?>? lastSyncMessage,
-      Value<bool>? isToUpdate,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<bool>? deleted,
+        Value<DateTime?>? deletedAt,
+        Value<String>? formTemplate,
+        Value<String>? templateVersion,
+        Value<String?>? assignment,
+        Value<DateTime>? startEntryTime,
+        Value<DateTime?>? finishedEntryTime,
+        Value<Map<String, dynamic>?>? formData,
+        Value<DateTime?>? updatedAtClient,
+        Value<InstanceSyncStatus>? syncState,
+        Value<DateTime?>? lastSyncDate,
+        Value<String?>? lastSyncMessage,
+        Value<bool>? isToUpdate,
+        Value<int>? rowid}) {
     return DataInstancesCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -7216,24 +6616,24 @@ class DataInstancesCompanion extends UpdateCompanion<DataInstance> {
   @override
   String toString() {
     return (StringBuffer('DataInstancesCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('deleted: $deleted, ')
-          ..write('deletedAt: $deletedAt, ')
-          ..write('formTemplate: $formTemplate, ')
-          ..write('templateVersion: $templateVersion, ')
-          ..write('assignment: $assignment, ')
-          ..write('startEntryTime: $startEntryTime, ')
-          ..write('finishedEntryTime: $finishedEntryTime, ')
-          ..write('formData: $formData, ')
-          ..write('updatedAtClient: $updatedAtClient, ')
-          ..write('syncState: $syncState, ')
-          ..write('lastSyncDate: $lastSyncDate, ')
-          ..write('lastSyncMessage: $lastSyncMessage, ')
-          ..write('isToUpdate: $isToUpdate, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('deleted: $deleted, ')
+      ..write('deletedAt: $deletedAt, ')
+      ..write('formTemplate: $formTemplate, ')
+      ..write('templateVersion: $templateVersion, ')
+      ..write('assignment: $assignment, ')
+      ..write('startEntryTime: $startEntryTime, ')
+      ..write('finishedEntryTime: $finishedEntryTime, ')
+      ..write('formData: $formData, ')
+      ..write('updatedAtClient: $updatedAtClient, ')
+      ..write('syncState: $syncState, ')
+      ..write('lastSyncDate: $lastSyncDate, ')
+      ..write('lastSyncMessage: $lastSyncMessage, ')
+      ..write('isToUpdate: $isToUpdate, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -7252,15 +6652,15 @@ class $RepeatInstancesTable extends RepeatInstances
       requiredDuringInsert: false,
       defaultValue: Constant(Ulid().toCanonical()));
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -7268,14 +6668,14 @@ class $RepeatInstancesTable extends RepeatInstances
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _submissionMeta =
-      const VerificationMeta('submission');
+  const VerificationMeta('submission');
   @override
   late final GeneratedColumn<String> submission = GeneratedColumn<String>(
       'submission', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES data_instances (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES data_instances (id)'));
   static const VerificationMeta _parentMeta = const VerificationMeta('parent');
   @override
   late final GeneratedColumn<String> parent = GeneratedColumn<String>(
@@ -7285,38 +6685,38 @@ class $RepeatInstancesTable extends RepeatInstances
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES repeat_instances (id)'));
   static const VerificationMeta _templatePathMeta =
-      const VerificationMeta('templatePath');
+  const VerificationMeta('templatePath');
   @override
   late final GeneratedColumn<String> templatePath = GeneratedColumn<String>(
       'template_path', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _repeatIndexMeta =
-      const VerificationMeta('repeatIndex');
+  const VerificationMeta('repeatIndex');
   @override
   late final GeneratedColumn<int> repeatIndex = GeneratedColumn<int>(
       'repeat_index', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _deletedMeta =
-      const VerificationMeta('deleted');
+  const VerificationMeta('deleted');
   @override
   late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
       'deleted', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
+      GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
       defaultValue: Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        submission,
-        parent,
-        templatePath,
-        repeatIndex,
-        deleted
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    submission,
+    parent,
+    templatePath,
+    repeatIndex,
+    deleted
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -7425,13 +6825,13 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
   final bool deleted;
   const RepeatInstance(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.submission,
-      this.parent,
-      required this.templatePath,
-      required this.repeatIndex,
-      required this.deleted});
+        this.lastModifiedDate,
+        this.createdDate,
+        required this.submission,
+        this.parent,
+        required this.templatePath,
+        required this.repeatIndex,
+        required this.deleted});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -7463,7 +6863,7 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
           : Value(createdDate),
       submission: Value(submission),
       parent:
-          parent == null && nullToAbsent ? const Value.absent() : Value(parent),
+      parent == null && nullToAbsent ? const Value.absent() : Value(parent),
       templatePath: Value(templatePath),
       repeatIndex: Value(repeatIndex),
       deleted: Value(deleted),
@@ -7476,7 +6876,7 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
     return RepeatInstance(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       submission: serializer.fromJson<String>(json['submission']),
       parent: serializer.fromJson<String?>(json['parent']),
@@ -7501,14 +6901,14 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
   }
 
   RepeatInstance copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          String? submission,
-          Value<String?> parent = const Value.absent(),
-          String? templatePath,
-          int? repeatIndex,
-          bool? deleted}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        String? submission,
+        Value<String?> parent = const Value.absent(),
+        String? templatePath,
+        int? repeatIndex,
+        bool? deleted}) =>
       RepeatInstance(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -7528,15 +6928,15 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       submission:
-          data.submission.present ? data.submission.value : this.submission,
+      data.submission.present ? data.submission.value : this.submission,
       parent: data.parent.present ? data.parent.value : this.parent,
       templatePath: data.templatePath.present
           ? data.templatePath.value
           : this.templatePath,
       repeatIndex:
-          data.repeatIndex.present ? data.repeatIndex.value : this.repeatIndex,
+      data.repeatIndex.present ? data.repeatIndex.value : this.repeatIndex,
       deleted: data.deleted.present ? data.deleted.value : this.deleted,
     );
   }
@@ -7544,15 +6944,15 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
   @override
   String toString() {
     return (StringBuffer('RepeatInstance(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('submission: $submission, ')
-          ..write('parent: $parent, ')
-          ..write('templatePath: $templatePath, ')
-          ..write('repeatIndex: $repeatIndex, ')
-          ..write('deleted: $deleted')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('submission: $submission, ')
+      ..write('parent: $parent, ')
+      ..write('templatePath: $templatePath, ')
+      ..write('repeatIndex: $repeatIndex, ')
+      ..write('deleted: $deleted')
+      ..write(')'))
         .toString();
   }
 
@@ -7562,15 +6962,15 @@ class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is RepeatInstance &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.submission == this.submission &&
-          other.parent == this.parent &&
-          other.templatePath == this.templatePath &&
-          other.repeatIndex == this.repeatIndex &&
-          other.deleted == this.deleted);
+          (other is RepeatInstance &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.submission == this.submission &&
+              other.parent == this.parent &&
+              other.templatePath == this.templatePath &&
+              other.repeatIndex == this.repeatIndex &&
+              other.deleted == this.deleted);
 }
 
 class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
@@ -7633,14 +7033,14 @@ class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
 
   RepeatInstancesCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String>? submission,
-      Value<String?>? parent,
-      Value<String>? templatePath,
-      Value<int>? repeatIndex,
-      Value<bool>? deleted,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String>? submission,
+        Value<String?>? parent,
+        Value<String>? templatePath,
+        Value<int>? repeatIndex,
+        Value<bool>? deleted,
+        Value<int>? rowid}) {
     return RepeatInstancesCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -7690,16 +7090,16 @@ class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
   @override
   String toString() {
     return (StringBuffer('RepeatInstancesCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('submission: $submission, ')
-          ..write('parent: $parent, ')
-          ..write('templatePath: $templatePath, ')
-          ..write('repeatIndex: $repeatIndex, ')
-          ..write('deleted: $deleted, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('submission: $submission, ')
+      ..write('parent: $parent, ')
+      ..write('templatePath: $templatePath, ')
+      ..write('repeatIndex: $repeatIndex, ')
+      ..write('deleted: $deleted, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -7716,15 +7116,15 @@ class $DataOptionSetsTable extends DataOptionSets
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -7732,27 +7132,27 @@ class $DataOptionSetsTable extends DataOptionSets
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _displayNameMeta =
-      const VerificationMeta('displayName');
+  const VerificationMeta('displayName');
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>(
-              $DataOptionSetsTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>(
+      $DataOptionSetsTable.$converterlabel);
   @override
   late final GeneratedColumnWithTypeConverter<List<Translation>, String>
-      translations = GeneratedColumn<String>('translations', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '[]')
-          .withConverter<List<Translation>>(
-              $DataOptionSetsTable.$convertertranslations);
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $DataOptionSetsTable.$convertertranslations);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -7764,23 +7164,23 @@ class $DataOptionSetsTable extends DataOptionSets
       'code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _deletedAtMeta =
-      const VerificationMeta('deletedAt');
+  const VerificationMeta('deletedAt');
   @override
   late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
       'deleted_at', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        displayName,
-        label,
-        translations,
-        name,
-        code,
-        deletedAt
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    name,
+    code,
+    deletedAt
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -7866,9 +7266,9 @@ class $DataOptionSetsTable extends DataOptionSets
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static TypeConverter<List<Translation>, String> $convertertranslations =
-      const TranslationConverter();
+  const TranslationConverter();
 }
 
 class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
@@ -7883,14 +7283,14 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
   final DateTime? deletedAt;
   const DataOptionSet(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.displayName,
-      this.label,
-      required this.translations,
-      required this.name,
-      this.code,
-      this.deletedAt});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.name,
+        this.code,
+        this.deletedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -7935,7 +7335,7 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
           ? const Value.absent()
           : Value(displayName),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       translations: Value(translations),
       name: Value(name),
       code: code == null && nullToAbsent ? const Value.absent() : Value(code),
@@ -7951,12 +7351,12 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
     return DataOptionSet(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
       translations:
-          serializer.fromJson<List<Translation>>(json['translations']),
+      serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String?>(json['code']),
       deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
@@ -7979,15 +7379,15 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
   }
 
   DataOptionSet copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> displayName = const Value.absent(),
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          List<Translation>? translations,
-          String? name,
-          Value<String?> code = const Value.absent(),
-          Value<DateTime?> deletedAt = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        Value<DateTime?> deletedAt = const Value.absent()}) =>
       DataOptionSet(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -8008,9 +7408,9 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
+      data.displayName.present ? data.displayName.value : this.displayName,
       label: data.label.present ? data.label.value : this.label,
       translations: data.translations.present
           ? data.translations.value
@@ -8024,16 +7424,16 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
   @override
   String toString() {
     return (StringBuffer('DataOptionSet(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('deletedAt: $deletedAt')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('deletedAt: $deletedAt')
+      ..write(')'))
         .toString();
   }
 
@@ -8043,16 +7443,16 @@ class DataOptionSet extends DataClass implements Insertable<DataOptionSet> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is DataOptionSet &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.displayName == this.displayName &&
-          other.label == this.label &&
-          other.translations == this.translations &&
-          other.name == this.name &&
-          other.code == this.code &&
-          other.deletedAt == this.deletedAt);
+          (other is DataOptionSet &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.deletedAt == this.deletedAt);
 }
 
 class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
@@ -8119,15 +7519,15 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
 
   DataOptionSetsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? displayName,
-      Value<Map<String, dynamic>?>? label,
-      Value<List<Translation>>? translations,
-      Value<String>? name,
-      Value<String?>? code,
-      Value<DateTime?>? deletedAt,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<DateTime?>? deletedAt,
+        Value<int>? rowid}) {
     return DataOptionSetsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -8184,17 +7584,17 @@ class DataOptionSetsCompanion extends UpdateCompanion<DataOptionSet> {
   @override
   String toString() {
     return (StringBuffer('DataOptionSetsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('deletedAt: $deletedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('deletedAt: $deletedAt, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -8211,15 +7611,15 @@ class $DataElementsTable extends DataElements
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -8227,27 +7627,27 @@ class $DataElementsTable extends DataElements
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _displayNameMeta =
-      const VerificationMeta('displayName');
+  const VerificationMeta('displayName');
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>(
-              $DataElementsTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>(
+      $DataElementsTable.$converterlabel);
   @override
   late final GeneratedColumnWithTypeConverter<List<Translation>, String>
-      translations = GeneratedColumn<String>('translations', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '[]')
-          .withConverter<List<Translation>>(
-              $DataElementsTable.$convertertranslations);
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $DataElementsTable.$convertertranslations);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -8259,18 +7659,18 @@ class $DataElementsTable extends DataElements
       'code', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
+  const VerificationMeta('description');
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<ValueType, String> type =
-      GeneratedColumn<String>('type', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<ValueType>($DataElementsTable.$convertertype);
+  GeneratedColumn<String>('type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<ValueType>($DataElementsTable.$convertertype);
   static const VerificationMeta _optionSetMeta =
-      const VerificationMeta('optionSet');
+  const VerificationMeta('optionSet');
   @override
   late final GeneratedColumn<String> optionSet = GeneratedColumn<String>(
       'option_set', aliasedName, true,
@@ -8279,29 +7679,29 @@ class $DataElementsTable extends DataElements
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES data_option_sets (id)'));
   static const VerificationMeta _mandatoryMeta =
-      const VerificationMeta('mandatory');
+  const VerificationMeta('mandatory');
   @override
   late final GeneratedColumn<bool> mandatory = GeneratedColumn<bool>(
       'mandatory', aliasedName, true,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("mandatory" IN (0, 1))'));
+      GeneratedColumn.constraintIsAlways('CHECK ("mandatory" IN (0, 1))'));
   static const VerificationMeta _defaultValueMeta =
-      const VerificationMeta('defaultValue');
+  const VerificationMeta('defaultValue');
   @override
   late final GeneratedColumn<String> defaultValue = GeneratedColumn<String>(
       'default_value', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<ScannedCodeProperties?, String>
-      scannedCodeProperties = GeneratedColumn<String>(
-              'scanned_code_properties', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<ScannedCodeProperties?>(
-              $DataElementsTable.$converterscannedCodeProperties);
+  scannedCodeProperties = GeneratedColumn<String>(
+      'scanned_code_properties', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<ScannedCodeProperties?>(
+      $DataElementsTable.$converterscannedCodeProperties);
   static const VerificationMeta _gs1EnabledMeta =
-      const VerificationMeta('gs1Enabled');
+  const VerificationMeta('gs1Enabled');
   @override
   late final GeneratedColumn<bool> gs1Enabled = GeneratedColumn<bool>(
       'gs1_enabled', aliasedName, true,
@@ -8311,36 +7711,36 @@ class $DataElementsTable extends DataElements
           'CHECK ("gs1_enabled" IN (0, 1))'));
   @override
   late final GeneratedColumnWithTypeConverter<MetadataResourceType?, String>
-      resourceType = GeneratedColumn<String>('resource_type', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<MetadataResourceType?>(
-              $DataElementsTable.$converterresourceTypen);
+  resourceType = GeneratedColumn<String>('resource_type', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<MetadataResourceType?>(
+      $DataElementsTable.$converterresourceTypen);
   static const VerificationMeta _resourceMetadataSchemaMeta =
-      const VerificationMeta('resourceMetadataSchema');
+  const VerificationMeta('resourceMetadataSchema');
   @override
   late final GeneratedColumn<String> resourceMetadataSchema =
-      GeneratedColumn<String>('resource_metadata_schema', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+  GeneratedColumn<String>('resource_metadata_schema', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        displayName,
-        label,
-        translations,
-        name,
-        code,
-        description,
-        type,
-        optionSet,
-        mandatory,
-        defaultValue,
-        scannedCodeProperties,
-        gs1Enabled,
-        resourceType,
-        resourceMetadataSchema
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    name,
+    code,
+    description,
+    type,
+    optionSet,
+    mandatory,
+    defaultValue,
+    scannedCodeProperties,
+    gs1Enabled,
+    resourceType,
+    resourceMetadataSchema
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -8456,7 +7856,7 @@ class $DataElementsTable extends DataElements
           .read(DriftSqlType.string, data['${effectivePrefix}default_value']),
       scannedCodeProperties: $DataElementsTable.$converterscannedCodeProperties
           .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
-              data['${effectivePrefix}scanned_code_properties'])),
+          data['${effectivePrefix}scanned_code_properties'])),
       gs1Enabled: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}gs1_enabled']),
       resourceType: $DataElementsTable.$converterresourceTypen.fromSql(
@@ -8474,20 +7874,20 @@ class $DataElementsTable extends DataElements
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static TypeConverter<List<Translation>, String> $convertertranslations =
-      const TranslationConverter();
+  const TranslationConverter();
   static JsonTypeConverter2<ValueType, String, String> $convertertype =
-      const EnumNameConverter(ValueType.values);
+  const EnumNameConverter(ValueType.values);
   static JsonTypeConverter2<ScannedCodeProperties?, String?,
-          Map<String, Object?>?> $converterscannedCodeProperties =
-      const ScannedCodePropertiesConverter();
+      Map<String, Object?>?> $converterscannedCodeProperties =
+  const ScannedCodePropertiesConverter();
   static JsonTypeConverter2<MetadataResourceType, String, String>
-      $converterresourceType =
-      const EnumNameConverter(MetadataResourceType.values);
+  $converterresourceType =
+  const EnumNameConverter(MetadataResourceType.values);
   static JsonTypeConverter2<MetadataResourceType?, String?, String?>
-      $converterresourceTypen =
-      JsonTypeConverter2.asNullable($converterresourceType);
+  $converterresourceTypen =
+  JsonTypeConverter2.asNullable($converterresourceType);
 }
 
 class DataElement extends DataClass implements Insertable<DataElement> {
@@ -8510,22 +7910,22 @@ class DataElement extends DataClass implements Insertable<DataElement> {
   final String? resourceMetadataSchema;
   const DataElement(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.displayName,
-      this.label,
-      required this.translations,
-      required this.name,
-      this.code,
-      this.description,
-      required this.type,
-      this.optionSet,
-      this.mandatory,
-      this.defaultValue,
-      this.scannedCodeProperties,
-      this.gs1Enabled,
-      this.resourceType,
-      this.resourceMetadataSchema});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.name,
+        this.code,
+        this.description,
+        required this.type,
+        this.optionSet,
+        this.mandatory,
+        this.defaultValue,
+        this.scannedCodeProperties,
+        this.gs1Enabled,
+        this.resourceType,
+        this.resourceMetadataSchema});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -8599,7 +7999,7 @@ class DataElement extends DataClass implements Insertable<DataElement> {
           ? const Value.absent()
           : Value(displayName),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       translations: Value(translations),
       name: Value(name),
       code: code == null && nullToAbsent ? const Value.absent() : Value(code),
@@ -8637,12 +8037,12 @@ class DataElement extends DataClass implements Insertable<DataElement> {
     return DataElement(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
       translations:
-          serializer.fromJson<List<Translation>>(json['translations']),
+      serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String?>(json['code']),
       description: serializer.fromJson<String?>(json['description']),
@@ -8653,12 +8053,12 @@ class DataElement extends DataClass implements Insertable<DataElement> {
       defaultValue: serializer.fromJson<String?>(json['defaultValue']),
       scannedCodeProperties: $DataElementsTable.$converterscannedCodeProperties
           .fromJson(serializer
-              .fromJson<Map<String, Object?>?>(json['scannedCodeProperties'])),
+          .fromJson<Map<String, Object?>?>(json['scannedCodeProperties'])),
       gs1Enabled: serializer.fromJson<bool?>(json['gs1Enabled']),
       resourceType: $DataElementsTable.$converterresourceTypen
           .fromJson(serializer.fromJson<String?>(json['resourceType'])),
       resourceMetadataSchema:
-          serializer.fromJson<String?>(json['resourceMetadataSchema']),
+      serializer.fromJson<String?>(json['resourceMetadataSchema']),
     );
   }
   @override
@@ -8686,29 +8086,29 @@ class DataElement extends DataClass implements Insertable<DataElement> {
       'resourceType': serializer.toJson<String?>(
           $DataElementsTable.$converterresourceTypen.toJson(resourceType)),
       'resourceMetadataSchema':
-          serializer.toJson<String?>(resourceMetadataSchema),
+      serializer.toJson<String?>(resourceMetadataSchema),
     };
   }
 
   DataElement copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> displayName = const Value.absent(),
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          List<Translation>? translations,
-          String? name,
-          Value<String?> code = const Value.absent(),
-          Value<String?> description = const Value.absent(),
-          ValueType? type,
-          Value<String?> optionSet = const Value.absent(),
-          Value<bool?> mandatory = const Value.absent(),
-          Value<String?> defaultValue = const Value.absent(),
-          Value<ScannedCodeProperties?> scannedCodeProperties =
-              const Value.absent(),
-          Value<bool?> gs1Enabled = const Value.absent(),
-          Value<MetadataResourceType?> resourceType = const Value.absent(),
-          Value<String?> resourceMetadataSchema = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        Value<String?> description = const Value.absent(),
+        ValueType? type,
+        Value<String?> optionSet = const Value.absent(),
+        Value<bool?> mandatory = const Value.absent(),
+        Value<String?> defaultValue = const Value.absent(),
+        Value<ScannedCodeProperties?> scannedCodeProperties =
+        const Value.absent(),
+        Value<bool?> gs1Enabled = const Value.absent(),
+        Value<MetadataResourceType?> resourceType = const Value.absent(),
+        Value<String?> resourceMetadataSchema = const Value.absent()}) =>
       DataElement(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -8725,13 +8125,13 @@ class DataElement extends DataClass implements Insertable<DataElement> {
         optionSet: optionSet.present ? optionSet.value : this.optionSet,
         mandatory: mandatory.present ? mandatory.value : this.mandatory,
         defaultValue:
-            defaultValue.present ? defaultValue.value : this.defaultValue,
+        defaultValue.present ? defaultValue.value : this.defaultValue,
         scannedCodeProperties: scannedCodeProperties.present
             ? scannedCodeProperties.value
             : this.scannedCodeProperties,
         gs1Enabled: gs1Enabled.present ? gs1Enabled.value : this.gs1Enabled,
         resourceType:
-            resourceType.present ? resourceType.value : this.resourceType,
+        resourceType.present ? resourceType.value : this.resourceType,
         resourceMetadataSchema: resourceMetadataSchema.present
             ? resourceMetadataSchema.value
             : this.resourceMetadataSchema,
@@ -8743,9 +8143,9 @@ class DataElement extends DataClass implements Insertable<DataElement> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
+      data.displayName.present ? data.displayName.value : this.displayName,
       label: data.label.present ? data.label.value : this.label,
       translations: data.translations.present
           ? data.translations.value
@@ -8753,7 +8153,7 @@ class DataElement extends DataClass implements Insertable<DataElement> {
       name: data.name.present ? data.name.value : this.name,
       code: data.code.present ? data.code.value : this.code,
       description:
-          data.description.present ? data.description.value : this.description,
+      data.description.present ? data.description.value : this.description,
       type: data.type.present ? data.type.value : this.type,
       optionSet: data.optionSet.present ? data.optionSet.value : this.optionSet,
       mandatory: data.mandatory.present ? data.mandatory.value : this.mandatory,
@@ -8764,7 +8164,7 @@ class DataElement extends DataClass implements Insertable<DataElement> {
           ? data.scannedCodeProperties.value
           : this.scannedCodeProperties,
       gs1Enabled:
-          data.gs1Enabled.present ? data.gs1Enabled.value : this.gs1Enabled,
+      data.gs1Enabled.present ? data.gs1Enabled.value : this.gs1Enabled,
       resourceType: data.resourceType.present
           ? data.resourceType.value
           : this.resourceType,
@@ -8777,24 +8177,24 @@ class DataElement extends DataClass implements Insertable<DataElement> {
   @override
   String toString() {
     return (StringBuffer('DataElement(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('description: $description, ')
-          ..write('type: $type, ')
-          ..write('optionSet: $optionSet, ')
-          ..write('mandatory: $mandatory, ')
-          ..write('defaultValue: $defaultValue, ')
-          ..write('scannedCodeProperties: $scannedCodeProperties, ')
-          ..write('gs1Enabled: $gs1Enabled, ')
-          ..write('resourceType: $resourceType, ')
-          ..write('resourceMetadataSchema: $resourceMetadataSchema')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('description: $description, ')
+      ..write('type: $type, ')
+      ..write('optionSet: $optionSet, ')
+      ..write('mandatory: $mandatory, ')
+      ..write('defaultValue: $defaultValue, ')
+      ..write('scannedCodeProperties: $scannedCodeProperties, ')
+      ..write('gs1Enabled: $gs1Enabled, ')
+      ..write('resourceType: $resourceType, ')
+      ..write('resourceMetadataSchema: $resourceMetadataSchema')
+      ..write(')'))
         .toString();
   }
 
@@ -8820,24 +8220,24 @@ class DataElement extends DataClass implements Insertable<DataElement> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is DataElement &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.displayName == this.displayName &&
-          other.label == this.label &&
-          other.translations == this.translations &&
-          other.name == this.name &&
-          other.code == this.code &&
-          other.description == this.description &&
-          other.type == this.type &&
-          other.optionSet == this.optionSet &&
-          other.mandatory == this.mandatory &&
-          other.defaultValue == this.defaultValue &&
-          other.scannedCodeProperties == this.scannedCodeProperties &&
-          other.gs1Enabled == this.gs1Enabled &&
-          other.resourceType == this.resourceType &&
-          other.resourceMetadataSchema == this.resourceMetadataSchema);
+          (other is DataElement &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.description == this.description &&
+              other.type == this.type &&
+              other.optionSet == this.optionSet &&
+              other.mandatory == this.mandatory &&
+              other.defaultValue == this.defaultValue &&
+              other.scannedCodeProperties == this.scannedCodeProperties &&
+              other.gs1Enabled == this.gs1Enabled &&
+              other.resourceType == this.resourceType &&
+              other.resourceMetadataSchema == this.resourceMetadataSchema);
 }
 
 class DataElementsCompanion extends UpdateCompanion<DataElement> {
@@ -8947,23 +8347,23 @@ class DataElementsCompanion extends UpdateCompanion<DataElement> {
 
   DataElementsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? displayName,
-      Value<Map<String, dynamic>?>? label,
-      Value<List<Translation>>? translations,
-      Value<String>? name,
-      Value<String?>? code,
-      Value<String?>? description,
-      Value<ValueType>? type,
-      Value<String?>? optionSet,
-      Value<bool?>? mandatory,
-      Value<String?>? defaultValue,
-      Value<ScannedCodeProperties?>? scannedCodeProperties,
-      Value<bool?>? gs1Enabled,
-      Value<MetadataResourceType?>? resourceType,
-      Value<String?>? resourceMetadataSchema,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<String?>? description,
+        Value<ValueType>? type,
+        Value<String?>? optionSet,
+        Value<bool?>? mandatory,
+        Value<String?>? defaultValue,
+        Value<ScannedCodeProperties?>? scannedCodeProperties,
+        Value<bool?>? gs1Enabled,
+        Value<MetadataResourceType?>? resourceType,
+        Value<String?>? resourceMetadataSchema,
+        Value<int>? rowid}) {
     return DataElementsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -8979,11 +8379,11 @@ class DataElementsCompanion extends UpdateCompanion<DataElement> {
       mandatory: mandatory ?? this.mandatory,
       defaultValue: defaultValue ?? this.defaultValue,
       scannedCodeProperties:
-          scannedCodeProperties ?? this.scannedCodeProperties,
+      scannedCodeProperties ?? this.scannedCodeProperties,
       gs1Enabled: gs1Enabled ?? this.gs1Enabled,
       resourceType: resourceType ?? this.resourceType,
       resourceMetadataSchema:
-          resourceMetadataSchema ?? this.resourceMetadataSchema,
+      resourceMetadataSchema ?? this.resourceMetadataSchema,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -9058,25 +8458,25 @@ class DataElementsCompanion extends UpdateCompanion<DataElement> {
   @override
   String toString() {
     return (StringBuffer('DataElementsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('description: $description, ')
-          ..write('type: $type, ')
-          ..write('optionSet: $optionSet, ')
-          ..write('mandatory: $mandatory, ')
-          ..write('defaultValue: $defaultValue, ')
-          ..write('scannedCodeProperties: $scannedCodeProperties, ')
-          ..write('gs1Enabled: $gs1Enabled, ')
-          ..write('resourceType: $resourceType, ')
-          ..write('resourceMetadataSchema: $resourceMetadataSchema, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('description: $description, ')
+      ..write('type: $type, ')
+      ..write('optionSet: $optionSet, ')
+      ..write('mandatory: $mandatory, ')
+      ..write('defaultValue: $defaultValue, ')
+      ..write('scannedCodeProperties: $scannedCodeProperties, ')
+      ..write('gs1Enabled: $gs1Enabled, ')
+      ..write('resourceType: $resourceType, ')
+      ..write('resourceMetadataSchema: $resourceMetadataSchema, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -9093,15 +8493,15 @@ class $DataValuesTable extends DataValues
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -9109,44 +8509,44 @@ class $DataValuesTable extends DataValues
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _dataElementMeta =
-      const VerificationMeta('dataElement');
+  const VerificationMeta('dataElement');
   @override
   late final GeneratedColumn<String> dataElement = GeneratedColumn<String>(
       'data_element', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES data_elements (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES data_elements (id)'));
   static const VerificationMeta _dataInstanceMeta =
-      const VerificationMeta('dataInstance');
+  const VerificationMeta('dataInstance');
   @override
   late final GeneratedColumn<String> dataInstance = GeneratedColumn<String>(
       'data_instance', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES data_instances (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES data_instances (id)'));
   static const VerificationMeta _valueMeta = const VerificationMeta('value');
   @override
   late final GeneratedColumn<String> value = GeneratedColumn<String>(
       'value', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _commentMeta =
-      const VerificationMeta('comment');
+  const VerificationMeta('comment');
   @override
   late final GeneratedColumn<String> comment = GeneratedColumn<String>(
       'comment', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        dataElement,
-        dataInstance,
-        value,
-        comment
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    dataElement,
+    dataInstance,
+    value,
+    comment
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -9240,12 +8640,12 @@ class DataValue extends DataClass implements Insertable<DataValue> {
   final String? comment;
   const DataValue(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.dataElement,
-      required this.dataInstance,
-      this.value,
-      this.comment});
+        this.lastModifiedDate,
+        this.createdDate,
+        required this.dataElement,
+        required this.dataInstance,
+        this.value,
+        this.comment});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -9279,7 +8679,7 @@ class DataValue extends DataClass implements Insertable<DataValue> {
       dataElement: Value(dataElement),
       dataInstance: Value(dataInstance),
       value:
-          value == null && nullToAbsent ? const Value.absent() : Value(value),
+      value == null && nullToAbsent ? const Value.absent() : Value(value),
       comment: comment == null && nullToAbsent
           ? const Value.absent()
           : Value(comment),
@@ -9292,7 +8692,7 @@ class DataValue extends DataClass implements Insertable<DataValue> {
     return DataValue(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       dataElement: serializer.fromJson<String>(json['dataElement']),
       dataInstance: serializer.fromJson<String>(json['dataInstance']),
@@ -9315,13 +8715,13 @@ class DataValue extends DataClass implements Insertable<DataValue> {
   }
 
   DataValue copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          String? dataElement,
-          String? dataInstance,
-          Value<String?> value = const Value.absent(),
-          Value<String?> comment = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        String? dataElement,
+        String? dataInstance,
+        Value<String?> value = const Value.absent(),
+        Value<String?> comment = const Value.absent()}) =>
       DataValue(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -9340,9 +8740,9 @@ class DataValue extends DataClass implements Insertable<DataValue> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       dataElement:
-          data.dataElement.present ? data.dataElement.value : this.dataElement,
+      data.dataElement.present ? data.dataElement.value : this.dataElement,
       dataInstance: data.dataInstance.present
           ? data.dataInstance.value
           : this.dataInstance,
@@ -9354,14 +8754,14 @@ class DataValue extends DataClass implements Insertable<DataValue> {
   @override
   String toString() {
     return (StringBuffer('DataValue(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('dataElement: $dataElement, ')
-          ..write('dataInstance: $dataInstance, ')
-          ..write('value: $value, ')
-          ..write('comment: $comment')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('dataElement: $dataElement, ')
+      ..write('dataInstance: $dataInstance, ')
+      ..write('value: $value, ')
+      ..write('comment: $comment')
+      ..write(')'))
         .toString();
   }
 
@@ -9371,14 +8771,14 @@ class DataValue extends DataClass implements Insertable<DataValue> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is DataValue &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.dataElement == this.dataElement &&
-          other.dataInstance == this.dataInstance &&
-          other.value == this.value &&
-          other.comment == this.comment);
+          (other is DataValue &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.dataElement == this.dataElement &&
+              other.dataInstance == this.dataInstance &&
+              other.value == this.value &&
+              other.comment == this.comment);
 }
 
 class DataValuesCompanion extends UpdateCompanion<DataValue> {
@@ -9436,13 +8836,13 @@ class DataValuesCompanion extends UpdateCompanion<DataValue> {
 
   DataValuesCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String>? dataElement,
-      Value<String>? dataInstance,
-      Value<String?>? value,
-      Value<String?>? comment,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String>? dataElement,
+        Value<String>? dataInstance,
+        Value<String?>? value,
+        Value<String?>? comment,
+        Value<int>? rowid}) {
     return DataValuesCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -9488,15 +8888,15 @@ class DataValuesCompanion extends UpdateCompanion<DataValue> {
   @override
   String toString() {
     return (StringBuffer('DataValuesCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('dataElement: $dataElement, ')
-          ..write('dataInstance: $dataInstance, ')
-          ..write('value: $value, ')
-          ..write('comment: $comment, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('dataElement: $dataElement, ')
+      ..write('dataInstance: $dataInstance, ')
+      ..write('value: $value, ')
+      ..write('comment: $comment, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -9513,15 +8913,15 @@ class $DataOptionsTable extends DataOptions
       'id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
+  const VerificationMeta('lastModifiedDate');
   @override
   late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
+  const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
       'created_date', aliasedName, true,
@@ -9529,27 +8929,27 @@ class $DataOptionsTable extends DataOptions
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   static const VerificationMeta _displayNameMeta =
-      const VerificationMeta('displayName');
+  const VerificationMeta('displayName');
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      label = GeneratedColumn<String>('label', aliasedName, true,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '{}')
-          .withConverter<Map<String, dynamic>?>(
-              $DataOptionsTable.$converterlabel);
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>(
+      $DataOptionsTable.$converterlabel);
   @override
   late final GeneratedColumnWithTypeConverter<List<Translation>, String>
-      translations = GeneratedColumn<String>('translations', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: false,
-              clientDefault: () => '[]')
-          .withConverter<List<Translation>>(
-              $DataOptionsTable.$convertertranslations);
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $DataOptionsTable.$convertertranslations);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -9561,7 +8961,7 @@ class $DataOptionsTable extends DataOptions
       'code', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _optionSetMeta =
-      const VerificationMeta('optionSet');
+  const VerificationMeta('optionSet');
   @override
   late final GeneratedColumn<String> optionSet = GeneratedColumn<String>(
       'option_set', aliasedName, false,
@@ -9577,25 +8977,25 @@ class $DataOptionsTable extends DataOptions
       requiredDuringInsert: false,
       clientDefault: () => 0);
   static const VerificationMeta _deletedAtMeta =
-      const VerificationMeta('deletedAt');
+  const VerificationMeta('deletedAt');
   @override
   late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
       'deleted_at', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        displayName,
-        label,
-        translations,
-        name,
-        code,
-        optionSet,
-        order,
-        deletedAt
-      ];
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    name,
+    code,
+    optionSet,
+    order,
+    deletedAt
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -9662,9 +9062,9 @@ class $DataOptionsTable extends DataOptions
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   List<Set<GeneratedColumn>> get uniqueKeys => [
-        {optionSet, id},
-        {optionSet, code},
-      ];
+    {optionSet, id},
+    {optionSet, code},
+  ];
   @override
   DataOption map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -9702,9 +9102,9 @@ class $DataOptionsTable extends DataOptions
   }
 
   static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
-      const NullAwareMapConverter();
+  const NullAwareMapConverter();
   static TypeConverter<List<Translation>, String> $convertertranslations =
-      const TranslationConverter();
+  const TranslationConverter();
 }
 
 class DataOption extends DataClass implements Insertable<DataOption> {
@@ -9721,16 +9121,16 @@ class DataOption extends DataClass implements Insertable<DataOption> {
   final DateTime? deletedAt;
   const DataOption(
       {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      this.displayName,
-      this.label,
-      required this.translations,
-      required this.name,
-      required this.code,
-      required this.optionSet,
-      required this.order,
-      this.deletedAt});
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.name,
+        required this.code,
+        required this.optionSet,
+        required this.order,
+        this.deletedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -9775,7 +9175,7 @@ class DataOption extends DataClass implements Insertable<DataOption> {
           ? const Value.absent()
           : Value(displayName),
       label:
-          label == null && nullToAbsent ? const Value.absent() : Value(label),
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
       translations: Value(translations),
       name: Value(name),
       code: Value(code),
@@ -9793,12 +9193,12 @@ class DataOption extends DataClass implements Insertable<DataOption> {
     return DataOption(
       id: serializer.fromJson<String>(json['id']),
       lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
       createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
       translations:
-          serializer.fromJson<List<Translation>>(json['translations']),
+      serializer.fromJson<List<Translation>>(json['translations']),
       name: serializer.fromJson<String>(json['name']),
       code: serializer.fromJson<String>(json['code']),
       optionSet: serializer.fromJson<String>(json['optionSet']),
@@ -9825,17 +9225,17 @@ class DataOption extends DataClass implements Insertable<DataOption> {
   }
 
   DataOption copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<String?> displayName = const Value.absent(),
-          Value<Map<String, dynamic>?> label = const Value.absent(),
-          List<Translation>? translations,
-          String? name,
-          String? code,
-          String? optionSet,
-          int? order,
-          Value<DateTime?> deletedAt = const Value.absent()}) =>
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? name,
+        String? code,
+        String? optionSet,
+        int? order,
+        Value<DateTime?> deletedAt = const Value.absent()}) =>
       DataOption(
         id: id ?? this.id,
         lastModifiedDate: lastModifiedDate.present
@@ -9858,9 +9258,9 @@ class DataOption extends DataClass implements Insertable<DataOption> {
           ? data.lastModifiedDate.value
           : this.lastModifiedDate,
       createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
       displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
+      data.displayName.present ? data.displayName.value : this.displayName,
       label: data.label.present ? data.label.value : this.label,
       translations: data.translations.present
           ? data.translations.value
@@ -9876,18 +9276,18 @@ class DataOption extends DataClass implements Insertable<DataOption> {
   @override
   String toString() {
     return (StringBuffer('DataOption(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('optionSet: $optionSet, ')
-          ..write('order: $order, ')
-          ..write('deletedAt: $deletedAt')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('optionSet: $optionSet, ')
+      ..write('order: $order, ')
+      ..write('deletedAt: $deletedAt')
+      ..write(')'))
         .toString();
   }
 
@@ -9907,18 +9307,18 @@ class DataOption extends DataClass implements Insertable<DataOption> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is DataOption &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.displayName == this.displayName &&
-          other.label == this.label &&
-          other.translations == this.translations &&
-          other.name == this.name &&
-          other.code == this.code &&
-          other.optionSet == this.optionSet &&
-          other.order == this.order &&
-          other.deletedAt == this.deletedAt);
+          (other is DataOption &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.optionSet == this.optionSet &&
+              other.order == this.order &&
+              other.deletedAt == this.deletedAt);
 }
 
 class DataOptionsCompanion extends UpdateCompanion<DataOption> {
@@ -9997,17 +9397,17 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
 
   DataOptionsCompanion copyWith(
       {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String?>? displayName,
-      Value<Map<String, dynamic>?>? label,
-      Value<List<Translation>>? translations,
-      Value<String>? name,
-      Value<String>? code,
-      Value<String>? optionSet,
-      Value<int>? order,
-      Value<DateTime?>? deletedAt,
-      Value<int>? rowid}) {
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? name,
+        Value<String>? code,
+        Value<String>? optionSet,
+        Value<int>? order,
+        Value<DateTime?>? deletedAt,
+        Value<int>? rowid}) {
     return DataOptionsCompanion(
       id: id ?? this.id,
       lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
@@ -10071,19 +9471,19 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
   @override
   String toString() {
     return (StringBuffer('DataOptionsCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('displayName: $displayName, ')
-          ..write('label: $label, ')
-          ..write('translations: $translations, ')
-          ..write('name: $name, ')
-          ..write('code: $code, ')
-          ..write('optionSet: $optionSet, ')
-          ..write('order: $order, ')
-          ..write('deletedAt: $deletedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('optionSet: $optionSet, ')
+      ..write('order: $order, ')
+      ..write('deletedAt: $deletedAt, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -10101,7 +9501,7 @@ class $UserFormPermissionsTable extends UserFormPermissions
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES teams (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES teams (id)'));
   static const VerificationMeta _formMeta = const VerificationMeta('form');
   @override
   late final GeneratedColumn<String> form = GeneratedColumn<String>(
@@ -10109,25 +9509,25 @@ class $UserFormPermissionsTable extends UserFormPermissions
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
+      GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
   static const VerificationMeta _validFromMeta =
-      const VerificationMeta('validFrom');
+  const VerificationMeta('validFrom');
   @override
   late final GeneratedColumn<DateTime> validFrom = GeneratedColumn<DateTime>(
       'valid_from', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _validToMeta =
-      const VerificationMeta('validTo');
+  const VerificationMeta('validTo');
   @override
   late final GeneratedColumn<DateTime> validTo = GeneratedColumn<DateTime>(
       'valid_to', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
   late final GeneratedColumnWithTypeConverter<List<FormPermission>, String>
-      permissions = GeneratedColumn<String>('permissions', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<FormPermission>>(
-              $UserFormPermissionsTable.$converterpermissions);
+  permissions = GeneratedColumn<String>('permissions', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<FormPermission>>(
+      $UserFormPermissionsTable.$converterpermissions);
   @override
   List<GeneratedColumn> get $columns =>
       [team, form, validFrom, validTo, permissions];
@@ -10190,7 +9590,7 @@ class $UserFormPermissionsTable extends UserFormPermissions
   }
 
   static TypeConverter<List<FormPermission>, String> $converterpermissions =
-      const FormPermissionsConverter();
+  const FormPermissionsConverter();
 }
 
 class UserFormPermission extends DataClass
@@ -10202,10 +9602,10 @@ class UserFormPermission extends DataClass
   final List<FormPermission> permissions;
   const UserFormPermission(
       {required this.team,
-      required this.form,
-      this.validFrom,
-      this.validTo,
-      required this.permissions});
+        required this.form,
+        this.validFrom,
+        this.validTo,
+        required this.permissions});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -10247,7 +9647,7 @@ class UserFormPermission extends DataClass
       validFrom: serializer.fromJson<DateTime?>(json['validFrom']),
       validTo: serializer.fromJson<DateTime?>(json['validTo']),
       permissions:
-          serializer.fromJson<List<FormPermission>>(json['permissions']),
+      serializer.fromJson<List<FormPermission>>(json['permissions']),
     );
   }
   @override
@@ -10263,11 +9663,11 @@ class UserFormPermission extends DataClass
   }
 
   UserFormPermission copyWith(
-          {String? team,
-          String? form,
-          Value<DateTime?> validFrom = const Value.absent(),
-          Value<DateTime?> validTo = const Value.absent(),
-          List<FormPermission>? permissions}) =>
+      {String? team,
+        String? form,
+        Value<DateTime?> validFrom = const Value.absent(),
+        Value<DateTime?> validTo = const Value.absent(),
+        List<FormPermission>? permissions}) =>
       UserFormPermission(
         team: team ?? this.team,
         form: form ?? this.form,
@@ -10282,19 +9682,19 @@ class UserFormPermission extends DataClass
       validFrom: data.validFrom.present ? data.validFrom.value : this.validFrom,
       validTo: data.validTo.present ? data.validTo.value : this.validTo,
       permissions:
-          data.permissions.present ? data.permissions.value : this.permissions,
+      data.permissions.present ? data.permissions.value : this.permissions,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('UserFormPermission(')
-          ..write('team: $team, ')
-          ..write('form: $form, ')
-          ..write('validFrom: $validFrom, ')
-          ..write('validTo: $validTo, ')
-          ..write('permissions: $permissions')
-          ..write(')'))
+      ..write('team: $team, ')
+      ..write('form: $form, ')
+      ..write('validFrom: $validFrom, ')
+      ..write('validTo: $validTo, ')
+      ..write('permissions: $permissions')
+      ..write(')'))
         .toString();
   }
 
@@ -10303,12 +9703,12 @@ class UserFormPermission extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is UserFormPermission &&
-          other.team == this.team &&
-          other.form == this.form &&
-          other.validFrom == this.validFrom &&
-          other.validTo == this.validTo &&
-          other.permissions == this.permissions);
+          (other is UserFormPermission &&
+              other.team == this.team &&
+              other.form == this.form &&
+              other.validFrom == this.validFrom &&
+              other.validTo == this.validTo &&
+              other.permissions == this.permissions);
 }
 
 class UserFormPermissionsCompanion extends UpdateCompanion<UserFormPermission> {
@@ -10356,11 +9756,11 @@ class UserFormPermissionsCompanion extends UpdateCompanion<UserFormPermission> {
 
   UserFormPermissionsCompanion copyWith(
       {Value<String>? team,
-      Value<String>? form,
-      Value<DateTime?>? validFrom,
-      Value<DateTime?>? validTo,
-      Value<List<FormPermission>>? permissions,
-      Value<int>? rowid}) {
+        Value<String>? form,
+        Value<DateTime?>? validFrom,
+        Value<DateTime?>? validTo,
+        Value<List<FormPermission>>? permissions,
+        Value<int>? rowid}) {
     return UserFormPermissionsCompanion(
       team: team ?? this.team,
       form: form ?? this.form,
@@ -10400,13 +9800,13 @@ class UserFormPermissionsCompanion extends UpdateCompanion<UserFormPermission> {
   @override
   String toString() {
     return (StringBuffer('UserFormPermissionsCompanion(')
-          ..write('team: $team, ')
-          ..write('form: $form, ')
-          ..write('validFrom: $validFrom, ')
-          ..write('validTo: $validTo, ')
-          ..write('permissions: $permissions, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('team: $team, ')
+      ..write('form: $form, ')
+      ..write('validFrom: $validFrom, ')
+      ..write('validTo: $validTo, ')
+      ..write('permissions: $permissions, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -10423,7 +9823,7 @@ class $SyncSummariesTable extends SyncSummaries
       'entity', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _lastSyncMeta =
-      const VerificationMeta('lastSync');
+  const VerificationMeta('lastSync');
   @override
   late final GeneratedColumn<DateTime> lastSync = GeneratedColumn<DateTime>(
       'last_sync', aliasedName, false,
@@ -10431,7 +9831,7 @@ class $SyncSummariesTable extends SyncSummaries
       requiredDuringInsert: false,
       defaultValue: currentDateAndTime);
   static const VerificationMeta _successCountMeta =
-      const VerificationMeta('successCount');
+  const VerificationMeta('successCount');
   @override
   late final GeneratedColumn<int> successCount = GeneratedColumn<int>(
       'success_count', aliasedName, false,
@@ -10439,7 +9839,7 @@ class $SyncSummariesTable extends SyncSummaries
       requiredDuringInsert: false,
       defaultValue: const Constant(0));
   static const VerificationMeta _failureCountMeta =
-      const VerificationMeta('failureCount');
+  const VerificationMeta('failureCount');
   @override
   late final GeneratedColumn<int> failureCount = GeneratedColumn<int>(
       'failure_count', aliasedName, false,
@@ -10448,13 +9848,25 @@ class $SyncSummariesTable extends SyncSummaries
       defaultValue: const Constant(0));
   @override
   late final GeneratedColumnWithTypeConverter<List<SyncError>?, String> errors =
-      GeneratedColumn<String>('errors', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<List<SyncError>?>(
-              $SyncSummariesTable.$convertererrorsn);
+  GeneratedColumn<String>('errors', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<List<SyncError>?>(
+      $SyncSummariesTable.$convertererrorsn);
+  static const VerificationMeta _lastSuccessfulSyncMeta =
+  const VerificationMeta('lastSuccessfulSync');
   @override
-  List<GeneratedColumn> get $columns =>
-      [entity, lastSync, successCount, failureCount, errors];
+  late final GeneratedColumn<DateTime> lastSuccessfulSync =
+  GeneratedColumn<DateTime>('last_successful_sync', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+    entity,
+    lastSync,
+    successCount,
+    failureCount,
+    errors,
+    lastSuccessfulSync
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -10487,6 +9899,12 @@ class $SyncSummariesTable extends SyncSummaries
           failureCount.isAcceptableOrUnknown(
               data['failure_count']!, _failureCountMeta));
     }
+    if (data.containsKey('last_successful_sync')) {
+      context.handle(
+          _lastSuccessfulSyncMeta,
+          lastSuccessfulSync.isAcceptableOrUnknown(
+              data['last_successful_sync']!, _lastSuccessfulSyncMeta));
+    }
     return context;
   }
 
@@ -10507,6 +9925,9 @@ class $SyncSummariesTable extends SyncSummaries
       errors: $SyncSummariesTable.$convertererrorsn.fromSql(attachedDatabase
           .typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}errors'])),
+      lastSuccessfulSync: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime,
+          data['${effectivePrefix}last_successful_sync']),
     );
   }
 
@@ -10516,26 +9937,31 @@ class $SyncSummariesTable extends SyncSummaries
   }
 
   static TypeConverter<List<SyncError>, String> $convertererrors =
-      const SyncErrorListConverter();
+  const SyncErrorListConverter();
   static TypeConverter<List<SyncError>?, String?> $convertererrorsn =
-      NullAwareTypeConverter.wrap($convertererrors);
+  NullAwareTypeConverter.wrap($convertererrors);
 }
 
 class SyncSummary extends DataClass implements Insertable<SyncSummary> {
   /// e.g. "activities", "teams"
+  /// resource key
   final String entity;
+
+  /// lastSyncAttempt
   final DateTime lastSync;
   final int successCount;
   final int failureCount;
 
   /// JSON‑encoded list of errors
   final List<SyncError>? errors;
+  final DateTime? lastSuccessfulSync;
   const SyncSummary(
       {required this.entity,
-      required this.lastSync,
-      required this.successCount,
-      required this.failureCount,
-      this.errors});
+        required this.lastSync,
+        required this.successCount,
+        required this.failureCount,
+        this.errors,
+        this.lastSuccessfulSync});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -10547,6 +9973,9 @@ class SyncSummary extends DataClass implements Insertable<SyncSummary> {
       map['errors'] =
           Variable<String>($SyncSummariesTable.$convertererrorsn.toSql(errors));
     }
+    if (!nullToAbsent || lastSuccessfulSync != null) {
+      map['last_successful_sync'] = Variable<DateTime>(lastSuccessfulSync);
+    }
     return map;
   }
 
@@ -10557,7 +9986,10 @@ class SyncSummary extends DataClass implements Insertable<SyncSummary> {
       successCount: Value(successCount),
       failureCount: Value(failureCount),
       errors:
-          errors == null && nullToAbsent ? const Value.absent() : Value(errors),
+      errors == null && nullToAbsent ? const Value.absent() : Value(errors),
+      lastSuccessfulSync: lastSuccessfulSync == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSuccessfulSync),
     );
   }
 
@@ -10570,6 +10002,8 @@ class SyncSummary extends DataClass implements Insertable<SyncSummary> {
       successCount: serializer.fromJson<int>(json['successCount']),
       failureCount: serializer.fromJson<int>(json['failureCount']),
       errors: serializer.fromJson<List<SyncError>?>(json['errors']),
+      lastSuccessfulSync:
+      serializer.fromJson<DateTime?>(json['lastSuccessfulSync']),
     );
   }
   @override
@@ -10581,21 +10015,26 @@ class SyncSummary extends DataClass implements Insertable<SyncSummary> {
       'successCount': serializer.toJson<int>(successCount),
       'failureCount': serializer.toJson<int>(failureCount),
       'errors': serializer.toJson<List<SyncError>?>(errors),
+      'lastSuccessfulSync': serializer.toJson<DateTime?>(lastSuccessfulSync),
     };
   }
 
   SyncSummary copyWith(
-          {String? entity,
-          DateTime? lastSync,
-          int? successCount,
-          int? failureCount,
-          Value<List<SyncError>?> errors = const Value.absent()}) =>
+      {String? entity,
+        DateTime? lastSync,
+        int? successCount,
+        int? failureCount,
+        Value<List<SyncError>?> errors = const Value.absent(),
+        Value<DateTime?> lastSuccessfulSync = const Value.absent()}) =>
       SyncSummary(
         entity: entity ?? this.entity,
         lastSync: lastSync ?? this.lastSync,
         successCount: successCount ?? this.successCount,
         failureCount: failureCount ?? this.failureCount,
         errors: errors.present ? errors.value : this.errors,
+        lastSuccessfulSync: lastSuccessfulSync.present
+            ? lastSuccessfulSync.value
+            : this.lastSuccessfulSync,
       );
   SyncSummary copyWithCompanion(SyncSummariesCompanion data) {
     return SyncSummary(
@@ -10608,33 +10047,38 @@ class SyncSummary extends DataClass implements Insertable<SyncSummary> {
           ? data.failureCount.value
           : this.failureCount,
       errors: data.errors.present ? data.errors.value : this.errors,
+      lastSuccessfulSync: data.lastSuccessfulSync.present
+          ? data.lastSuccessfulSync.value
+          : this.lastSuccessfulSync,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('SyncSummary(')
-          ..write('entity: $entity, ')
-          ..write('lastSync: $lastSync, ')
-          ..write('successCount: $successCount, ')
-          ..write('failureCount: $failureCount, ')
-          ..write('errors: $errors')
-          ..write(')'))
+      ..write('entity: $entity, ')
+      ..write('lastSync: $lastSync, ')
+      ..write('successCount: $successCount, ')
+      ..write('failureCount: $failureCount, ')
+      ..write('errors: $errors, ')
+      ..write('lastSuccessfulSync: $lastSuccessfulSync')
+      ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(entity, lastSync, successCount, failureCount, errors);
+  int get hashCode => Object.hash(
+      entity, lastSync, successCount, failureCount, errors, lastSuccessfulSync);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is SyncSummary &&
-          other.entity == this.entity &&
-          other.lastSync == this.lastSync &&
-          other.successCount == this.successCount &&
-          other.failureCount == this.failureCount &&
-          other.errors == this.errors);
+          (other is SyncSummary &&
+              other.entity == this.entity &&
+              other.lastSync == this.lastSync &&
+              other.successCount == this.successCount &&
+              other.failureCount == this.failureCount &&
+              other.errors == this.errors &&
+              other.lastSuccessfulSync == this.lastSuccessfulSync);
 }
 
 class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
@@ -10643,6 +10087,7 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
   final Value<int> successCount;
   final Value<int> failureCount;
   final Value<List<SyncError>?> errors;
+  final Value<DateTime?> lastSuccessfulSync;
   final Value<int> rowid;
   const SyncSummariesCompanion({
     this.entity = const Value.absent(),
@@ -10650,6 +10095,7 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
     this.successCount = const Value.absent(),
     this.failureCount = const Value.absent(),
     this.errors = const Value.absent(),
+    this.lastSuccessfulSync = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   SyncSummariesCompanion.insert({
@@ -10658,6 +10104,7 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
     this.successCount = const Value.absent(),
     this.failureCount = const Value.absent(),
     this.errors = const Value.absent(),
+    this.lastSuccessfulSync = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : entity = Value(entity);
   static Insertable<SyncSummary> custom({
@@ -10666,6 +10113,7 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
     Expression<int>? successCount,
     Expression<int>? failureCount,
     Expression<String>? errors,
+    Expression<DateTime>? lastSuccessfulSync,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -10674,23 +10122,27 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
       if (successCount != null) 'success_count': successCount,
       if (failureCount != null) 'failure_count': failureCount,
       if (errors != null) 'errors': errors,
+      if (lastSuccessfulSync != null)
+        'last_successful_sync': lastSuccessfulSync,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
   SyncSummariesCompanion copyWith(
       {Value<String>? entity,
-      Value<DateTime>? lastSync,
-      Value<int>? successCount,
-      Value<int>? failureCount,
-      Value<List<SyncError>?>? errors,
-      Value<int>? rowid}) {
+        Value<DateTime>? lastSync,
+        Value<int>? successCount,
+        Value<int>? failureCount,
+        Value<List<SyncError>?>? errors,
+        Value<DateTime?>? lastSuccessfulSync,
+        Value<int>? rowid}) {
     return SyncSummariesCompanion(
       entity: entity ?? this.entity,
       lastSync: lastSync ?? this.lastSync,
       successCount: successCount ?? this.successCount,
       failureCount: failureCount ?? this.failureCount,
       errors: errors ?? this.errors,
+      lastSuccessfulSync: lastSuccessfulSync ?? this.lastSuccessfulSync,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -10714,6 +10166,10 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
       map['errors'] = Variable<String>(
           $SyncSummariesTable.$convertererrorsn.toSql(errors.value));
     }
+    if (lastSuccessfulSync.present) {
+      map['last_successful_sync'] =
+          Variable<DateTime>(lastSuccessfulSync.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -10723,13 +10179,2222 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
   @override
   String toString() {
     return (StringBuffer('SyncSummariesCompanion(')
-          ..write('entity: $entity, ')
-          ..write('lastSync: $lastSync, ')
-          ..write('successCount: $successCount, ')
-          ..write('failureCount: $failureCount, ')
-          ..write('errors: $errors, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
+      ..write('entity: $entity, ')
+      ..write('lastSync: $lastSync, ')
+      ..write('successCount: $successCount, ')
+      ..write('failureCount: $failureCount, ')
+      ..write('errors: $errors, ')
+      ..write('lastSuccessfulSync: $lastSuccessfulSync, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
+        .toString();
+  }
+}
+
+class $AssignmentManifestsTable extends AssignmentManifests
+    with TableInfo<$AssignmentManifestsTable, AssignmentManifest> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AssignmentManifestsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<AssignmentStatus?, String>
+  status = GeneratedColumn<String>('status', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<AssignmentStatus?>(
+      $AssignmentManifestsTable.$converterstatusn);
+  @override
+  late final GeneratedColumnWithTypeConverter<List<String>, String>
+  templateUids = GeneratedColumn<String>(
+      'template_uids', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<List<String>>(
+      $AssignmentManifestsTable.$convertertemplateUids);
+  @override
+  late final GeneratedColumnWithTypeConverter<List<AssignmentBinding>?, String>
+  bindings = GeneratedColumn<String>('bindings', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<List<AssignmentBinding>?>(
+      $AssignmentManifestsTable.$converterbindings);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, status, templateUids, bindings];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'assignment_manifests';
+  @override
+  VerificationContext validateIntegrity(Insertable<AssignmentManifest> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AssignmentManifest map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AssignmentManifest(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name']),
+      status: $AssignmentManifestsTable.$converterstatusn.fromSql(
+          attachedDatabase.typeMapping
+              .read(DriftSqlType.string, data['${effectivePrefix}status'])),
+      templateUids: $AssignmentManifestsTable.$convertertemplateUids.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}template_uids'])!),
+      bindings: $AssignmentManifestsTable.$converterbindings.fromSql(
+          attachedDatabase.typeMapping
+              .read(DriftSqlType.string, data['${effectivePrefix}bindings'])),
+    );
+  }
+
+  @override
+  $AssignmentManifestsTable createAlias(String alias) {
+    return $AssignmentManifestsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<AssignmentStatus, String, String> $converterstatus =
+  const EnumNameConverter(AssignmentStatus.values);
+  static JsonTypeConverter2<AssignmentStatus?, String?, String?>
+  $converterstatusn = JsonTypeConverter2.asNullable($converterstatus);
+  static TypeConverter<List<String>, String> $convertertemplateUids =
+  const ListConverter<String>();
+  static TypeConverter<List<AssignmentBinding>?, String?> $converterbindings =
+  const AssignmentBindingListConverter();
+}
+
+class AssignmentManifest extends DataClass
+    implements Insertable<AssignmentManifest> {
+  /// assignmentUid
+  final String id;
+  final String? name;
+  final AssignmentStatus? status;
+
+  /// allowedTemplateUids
+  final List<String> templateUids;
+  final List<AssignmentBinding>? bindings;
+  const AssignmentManifest(
+      {required this.id,
+        this.name,
+        this.status,
+        required this.templateUids,
+        this.bindings});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || status != null) {
+      map['status'] = Variable<String>(
+          $AssignmentManifestsTable.$converterstatusn.toSql(status));
+    }
+    {
+      map['template_uids'] = Variable<String>(
+          $AssignmentManifestsTable.$convertertemplateUids.toSql(templateUids));
+    }
+    if (!nullToAbsent || bindings != null) {
+      map['bindings'] = Variable<String>(
+          $AssignmentManifestsTable.$converterbindings.toSql(bindings));
+    }
+    return map;
+  }
+
+  AssignmentManifestsCompanion toCompanion(bool nullToAbsent) {
+    return AssignmentManifestsCompanion(
+      id: Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      status:
+      status == null && nullToAbsent ? const Value.absent() : Value(status),
+      templateUids: Value(templateUids),
+      bindings: bindings == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bindings),
+    );
+  }
+
+  factory AssignmentManifest.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AssignmentManifest(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String?>(json['name']),
+      status: $AssignmentManifestsTable.$converterstatusn
+          .fromJson(serializer.fromJson<String?>(json['status'])),
+      templateUids: serializer.fromJson<List<String>>(json['templateUids']),
+      bindings: serializer.fromJson<List<AssignmentBinding>?>(json['bindings']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String?>(name),
+      'status': serializer.toJson<String?>(
+          $AssignmentManifestsTable.$converterstatusn.toJson(status)),
+      'templateUids': serializer.toJson<List<String>>(templateUids),
+      'bindings': serializer.toJson<List<AssignmentBinding>?>(bindings),
+    };
+  }
+
+  AssignmentManifest copyWith(
+      {String? id,
+        Value<String?> name = const Value.absent(),
+        Value<AssignmentStatus?> status = const Value.absent(),
+        List<String>? templateUids,
+        Value<List<AssignmentBinding>?> bindings = const Value.absent()}) =>
+      AssignmentManifest(
+        id: id ?? this.id,
+        name: name.present ? name.value : this.name,
+        status: status.present ? status.value : this.status,
+        templateUids: templateUids ?? this.templateUids,
+        bindings: bindings.present ? bindings.value : this.bindings,
+      );
+  AssignmentManifest copyWithCompanion(AssignmentManifestsCompanion data) {
+    return AssignmentManifest(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      status: data.status.present ? data.status.value : this.status,
+      templateUids: data.templateUids.present
+          ? data.templateUids.value
+          : this.templateUids,
+      bindings: data.bindings.present ? data.bindings.value : this.bindings,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AssignmentManifest(')
+      ..write('id: $id, ')
+      ..write('name: $name, ')
+      ..write('status: $status, ')
+      ..write('templateUids: $templateUids, ')
+      ..write('bindings: $bindings')
+      ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, status, templateUids, bindings);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          (other is AssignmentManifest &&
+              other.id == this.id &&
+              other.name == this.name &&
+              other.status == this.status &&
+              other.templateUids == this.templateUids &&
+              other.bindings == this.bindings);
+}
+
+class AssignmentManifestsCompanion extends UpdateCompanion<AssignmentManifest> {
+  final Value<String> id;
+  final Value<String?> name;
+  final Value<AssignmentStatus?> status;
+  final Value<List<String>> templateUids;
+  final Value<List<AssignmentBinding>?> bindings;
+  final Value<int> rowid;
+  const AssignmentManifestsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.status = const Value.absent(),
+    this.templateUids = const Value.absent(),
+    this.bindings = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AssignmentManifestsCompanion.insert({
+    required String id,
+    this.name = const Value.absent(),
+    this.status = const Value.absent(),
+    required List<String> templateUids,
+    this.bindings = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        templateUids = Value(templateUids);
+  static Insertable<AssignmentManifest> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? status,
+    Expression<String>? templateUids,
+    Expression<String>? bindings,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (status != null) 'status': status,
+      if (templateUids != null) 'template_uids': templateUids,
+      if (bindings != null) 'bindings': bindings,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AssignmentManifestsCompanion copyWith(
+      {Value<String>? id,
+        Value<String?>? name,
+        Value<AssignmentStatus?>? status,
+        Value<List<String>>? templateUids,
+        Value<List<AssignmentBinding>?>? bindings,
+        Value<int>? rowid}) {
+    return AssignmentManifestsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      status: status ?? this.status,
+      templateUids: templateUids ?? this.templateUids,
+      bindings: bindings ?? this.bindings,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+          $AssignmentManifestsTable.$converterstatusn.toSql(status.value));
+    }
+    if (templateUids.present) {
+      map['template_uids'] = Variable<String>($AssignmentManifestsTable
+          .$convertertemplateUids
+          .toSql(templateUids.value));
+    }
+    if (bindings.present) {
+      map['bindings'] = Variable<String>(
+          $AssignmentManifestsTable.$converterbindings.toSql(bindings.value));
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AssignmentManifestsCompanion(')
+      ..write('id: $id, ')
+      ..write('name: $name, ')
+      ..write('status: $status, ')
+      ..write('templateUids: $templateUids, ')
+      ..write('bindings: $bindings, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
+        .toString();
+  }
+}
+
+class $PartySetsTable extends PartySets
+    with TableInfo<$PartySetsTable, PartySet> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PartySetsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _lastModifiedDateMeta =
+  const VerificationMeta('lastModifiedDate');
+  @override
+  late final GeneratedColumn<DateTime> lastModifiedDate =
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
+  static const VerificationMeta _createdDateMeta =
+  const VerificationMeta('createdDate');
+  @override
+  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
+      'created_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
+  static const VerificationMeta _displayNameMeta =
+  const VerificationMeta('displayName');
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+      'display_name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>(
+      $PartySetsTable.$converterlabel);
+  @override
+  late final GeneratedColumnWithTypeConverter<List<Translation>, String>
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $PartySetsTable.$convertertranslations);
+  static const VerificationMeta _uidMeta = const VerificationMeta('uid');
+  @override
+  late final GeneratedColumn<String> uid = GeneratedColumn<String>(
+      'uid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+      'code', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<PartySetKind, String> kind =
+  GeneratedColumn<String>('kind', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<PartySetKind>($PartySetsTable.$converterkind);
+  @override
+  late final GeneratedColumnWithTypeConverter<PartySetSpec?, String> spec =
+  GeneratedColumn<String>('spec', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false)
+      .withConverter<PartySetSpec?>($PartySetsTable.$converterspec);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    uid,
+    name,
+    code,
+    kind,
+    spec
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'party_sets';
+  @override
+  VerificationContext validateIntegrity(Insertable<PartySet> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('last_modified_date')) {
+      context.handle(
+          _lastModifiedDateMeta,
+          lastModifiedDate.isAcceptableOrUnknown(
+              data['last_modified_date']!, _lastModifiedDateMeta));
+    }
+    if (data.containsKey('created_date')) {
+      context.handle(
+          _createdDateMeta,
+          createdDate.isAcceptableOrUnknown(
+              data['created_date']!, _createdDateMeta));
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+          _displayNameMeta,
+          displayName.isAcceptableOrUnknown(
+              data['display_name']!, _displayNameMeta));
+    }
+    if (data.containsKey('uid')) {
+      context.handle(
+          _uidMeta, uid.isAcceptableOrUnknown(data['uid']!, _uidMeta));
+    } else if (isInserting) {
+      context.missing(_uidMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+          _codeMeta, code.isAcceptableOrUnknown(data['code']!, _codeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PartySet map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PartySet(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      lastModifiedDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
+      createdDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
+      displayName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}display_name']),
+      label: $PartySetsTable.$converterlabel.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}label'])),
+      translations: $PartySetsTable.$convertertranslations.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}translations'])!),
+      uid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uid'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      code: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}code']),
+      kind: $PartySetsTable.$converterkind.fromSql(attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}kind'])!),
+      spec: $PartySetsTable.$converterspec.fromSql(attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}spec'])),
+    );
+  }
+
+  @override
+  $PartySetsTable createAlias(String alias) {
+    return $PartySetsTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
+  const NullAwareMapConverter();
+  static TypeConverter<List<Translation>, String> $convertertranslations =
+  const TranslationConverter();
+  static JsonTypeConverter2<PartySetKind, String, String> $converterkind =
+  const EnumNameConverter(PartySetKind.values);
+  static JsonTypeConverter2<PartySetSpec?, String?, Map<String, Object?>?>
+  $converterspec = const PartySetSpecConverter();
+}
+
+class PartySet extends DataClass implements Insertable<PartySet> {
+  final String id;
+  final DateTime? lastModifiedDate;
+  final DateTime? createdDate;
+  final String? displayName;
+  final Map<String, dynamic>? label;
+  final List<Translation> translations;
+  final String uid;
+  final String name;
+  final String? code;
+  final PartySetKind kind;
+  final PartySetSpec? spec;
+  const PartySet(
+      {required this.id,
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.uid,
+        required this.name,
+        this.code,
+        required this.kind,
+        this.spec});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || lastModifiedDate != null) {
+      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate);
+    }
+    if (!nullToAbsent || createdDate != null) {
+      map['created_date'] = Variable<DateTime>(createdDate);
+    }
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
+    }
+    if (!nullToAbsent || label != null) {
+      map['label'] =
+          Variable<String>($PartySetsTable.$converterlabel.toSql(label));
+    }
+    {
+      map['translations'] = Variable<String>(
+          $PartySetsTable.$convertertranslations.toSql(translations));
+    }
+    map['uid'] = Variable<String>(uid);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || code != null) {
+      map['code'] = Variable<String>(code);
+    }
+    {
+      map['kind'] =
+          Variable<String>($PartySetsTable.$converterkind.toSql(kind));
+    }
+    if (!nullToAbsent || spec != null) {
+      map['spec'] =
+          Variable<String>($PartySetsTable.$converterspec.toSql(spec));
+    }
+    return map;
+  }
+
+  PartySetsCompanion toCompanion(bool nullToAbsent) {
+    return PartySetsCompanion(
+      id: Value(id),
+      lastModifiedDate: lastModifiedDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastModifiedDate),
+      createdDate: createdDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdDate),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
+      label:
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
+      translations: Value(translations),
+      uid: Value(uid),
+      name: Value(name),
+      code: code == null && nullToAbsent ? const Value.absent() : Value(code),
+      kind: Value(kind),
+      spec: spec == null && nullToAbsent ? const Value.absent() : Value(spec),
+    );
+  }
+
+  factory PartySet.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PartySet(
+      id: serializer.fromJson<String>(json['id']),
+      lastModifiedDate:
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
+      label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
+      translations:
+      serializer.fromJson<List<Translation>>(json['translations']),
+      uid: serializer.fromJson<String>(json['uid']),
+      name: serializer.fromJson<String>(json['name']),
+      code: serializer.fromJson<String?>(json['code']),
+      kind: $PartySetsTable.$converterkind
+          .fromJson(serializer.fromJson<String>(json['kind'])),
+      spec: $PartySetsTable.$converterspec
+          .fromJson(serializer.fromJson<Map<String, Object?>?>(json['spec'])),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
+      'createdDate': serializer.toJson<DateTime?>(createdDate),
+      'displayName': serializer.toJson<String?>(displayName),
+      'label': serializer.toJson<Map<String, dynamic>?>(label),
+      'translations': serializer.toJson<List<Translation>>(translations),
+      'uid': serializer.toJson<String>(uid),
+      'name': serializer.toJson<String>(name),
+      'code': serializer.toJson<String?>(code),
+      'kind': serializer
+          .toJson<String>($PartySetsTable.$converterkind.toJson(kind)),
+      'spec': serializer.toJson<Map<String, Object?>?>(
+          $PartySetsTable.$converterspec.toJson(spec)),
+    };
+  }
+
+  PartySet copyWith(
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? uid,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        PartySetKind? kind,
+        Value<PartySetSpec?> spec = const Value.absent()}) =>
+      PartySet(
+        id: id ?? this.id,
+        lastModifiedDate: lastModifiedDate.present
+            ? lastModifiedDate.value
+            : this.lastModifiedDate,
+        createdDate: createdDate.present ? createdDate.value : this.createdDate,
+        displayName: displayName.present ? displayName.value : this.displayName,
+        label: label.present ? label.value : this.label,
+        translations: translations ?? this.translations,
+        uid: uid ?? this.uid,
+        name: name ?? this.name,
+        code: code.present ? code.value : this.code,
+        kind: kind ?? this.kind,
+        spec: spec.present ? spec.value : this.spec,
+      );
+  PartySet copyWithCompanion(PartySetsCompanion data) {
+    return PartySet(
+      id: data.id.present ? data.id.value : this.id,
+      lastModifiedDate: data.lastModifiedDate.present
+          ? data.lastModifiedDate.value
+          : this.lastModifiedDate,
+      createdDate:
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
+      displayName:
+      data.displayName.present ? data.displayName.value : this.displayName,
+      label: data.label.present ? data.label.value : this.label,
+      translations: data.translations.present
+          ? data.translations.value
+          : this.translations,
+      uid: data.uid.present ? data.uid.value : this.uid,
+      name: data.name.present ? data.name.value : this.name,
+      code: data.code.present ? data.code.value : this.code,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      spec: data.spec.present ? data.spec.value : this.spec,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PartySet(')
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('uid: $uid, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('kind: $kind, ')
+      ..write('spec: $spec')
+      ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, lastModifiedDate, createdDate,
+      displayName, label, translations, uid, name, code, kind, spec);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          (other is PartySet &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.uid == this.uid &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.kind == this.kind &&
+              other.spec == this.spec);
+}
+
+class PartySetsCompanion extends UpdateCompanion<PartySet> {
+  final Value<String> id;
+  final Value<DateTime?> lastModifiedDate;
+  final Value<DateTime?> createdDate;
+  final Value<String?> displayName;
+  final Value<Map<String, dynamic>?> label;
+  final Value<List<Translation>> translations;
+  final Value<String> uid;
+  final Value<String> name;
+  final Value<String?> code;
+  final Value<PartySetKind> kind;
+  final Value<PartySetSpec?> spec;
+  final Value<int> rowid;
+  const PartySetsCompanion({
+    this.id = const Value.absent(),
+    this.lastModifiedDate = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.label = const Value.absent(),
+    this.translations = const Value.absent(),
+    this.uid = const Value.absent(),
+    this.name = const Value.absent(),
+    this.code = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.spec = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PartySetsCompanion.insert({
+    required String id,
+    this.lastModifiedDate = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.label = const Value.absent(),
+    this.translations = const Value.absent(),
+    required String uid,
+    required String name,
+    this.code = const Value.absent(),
+    required PartySetKind kind,
+    this.spec = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        uid = Value(uid),
+        name = Value(name),
+        kind = Value(kind);
+  static Insertable<PartySet> custom({
+    Expression<String>? id,
+    Expression<DateTime>? lastModifiedDate,
+    Expression<DateTime>? createdDate,
+    Expression<String>? displayName,
+    Expression<String>? label,
+    Expression<String>? translations,
+    Expression<String>? uid,
+    Expression<String>? name,
+    Expression<String>? code,
+    Expression<String>? kind,
+    Expression<String>? spec,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
+      if (createdDate != null) 'created_date': createdDate,
+      if (displayName != null) 'display_name': displayName,
+      if (label != null) 'label': label,
+      if (translations != null) 'translations': translations,
+      if (uid != null) 'uid': uid,
+      if (name != null) 'name': name,
+      if (code != null) 'code': code,
+      if (kind != null) 'kind': kind,
+      if (spec != null) 'spec': spec,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PartySetsCompanion copyWith(
+      {Value<String>? id,
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? uid,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<PartySetKind>? kind,
+        Value<PartySetSpec?>? spec,
+        Value<int>? rowid}) {
+    return PartySetsCompanion(
+      id: id ?? this.id,
+      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
+      createdDate: createdDate ?? this.createdDate,
+      displayName: displayName ?? this.displayName,
+      label: label ?? this.label,
+      translations: translations ?? this.translations,
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      code: code ?? this.code,
+      kind: kind ?? this.kind,
+      spec: spec ?? this.spec,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (lastModifiedDate.present) {
+      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate.value);
+    }
+    if (createdDate.present) {
+      map['created_date'] = Variable<DateTime>(createdDate.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (label.present) {
+      map['label'] =
+          Variable<String>($PartySetsTable.$converterlabel.toSql(label.value));
+    }
+    if (translations.present) {
+      map['translations'] = Variable<String>(
+          $PartySetsTable.$convertertranslations.toSql(translations.value));
+    }
+    if (uid.present) {
+      map['uid'] = Variable<String>(uid.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (kind.present) {
+      map['kind'] =
+          Variable<String>($PartySetsTable.$converterkind.toSql(kind.value));
+    }
+    if (spec.present) {
+      map['spec'] =
+          Variable<String>($PartySetsTable.$converterspec.toSql(spec.value));
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PartySetsCompanion(')
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('uid: $uid, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('kind: $kind, ')
+      ..write('spec: $spec, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
+        .toString();
+  }
+}
+
+class $PartiesTable extends Parties with TableInfo<$PartiesTable, Party> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PartiesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _lastModifiedDateMeta =
+  const VerificationMeta('lastModifiedDate');
+  @override
+  late final GeneratedColumn<DateTime> lastModifiedDate =
+  GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
+  static const VerificationMeta _createdDateMeta =
+  const VerificationMeta('createdDate');
+  @override
+  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
+      'created_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
+  static const VerificationMeta _displayNameMeta =
+  const VerificationMeta('displayName');
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+      'display_name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
+  label = GeneratedColumn<String>('label', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '{}')
+      .withConverter<Map<String, dynamic>?>($PartiesTable.$converterlabel);
+  @override
+  late final GeneratedColumnWithTypeConverter<List<Translation>, String>
+  translations = GeneratedColumn<String>('translations', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      clientDefault: () => '[]')
+      .withConverter<List<Translation>>(
+      $PartiesTable.$convertertranslations);
+  static const VerificationMeta _uidMeta = const VerificationMeta('uid');
+  @override
+  late final GeneratedColumn<String> uid = GeneratedColumn<String>(
+      'uid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+      'code', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<PartyType, String> type =
+  GeneratedColumn<String>('type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<PartyType>($PartiesTable.$convertertype);
+  @override
+  late final GeneratedColumnWithTypeConverter<SourceType, String> sourceType =
+  GeneratedColumn<String>('source_type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true)
+      .withConverter<SourceType>($PartiesTable.$convertersourceType);
+  static const VerificationMeta _sourceIdMeta =
+  const VerificationMeta('sourceId');
+  @override
+  late final GeneratedColumn<String> sourceId = GeneratedColumn<String>(
+      'source_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _parentIdMeta =
+  const VerificationMeta('parentId');
+  @override
+  late final GeneratedColumn<String> parentId = GeneratedColumn<String>(
+      'parent_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    lastModifiedDate,
+    createdDate,
+    displayName,
+    label,
+    translations,
+    uid,
+    name,
+    code,
+    type,
+    sourceType,
+    sourceId,
+    parentId
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'parties';
+  @override
+  VerificationContext validateIntegrity(Insertable<Party> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('last_modified_date')) {
+      context.handle(
+          _lastModifiedDateMeta,
+          lastModifiedDate.isAcceptableOrUnknown(
+              data['last_modified_date']!, _lastModifiedDateMeta));
+    }
+    if (data.containsKey('created_date')) {
+      context.handle(
+          _createdDateMeta,
+          createdDate.isAcceptableOrUnknown(
+              data['created_date']!, _createdDateMeta));
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+          _displayNameMeta,
+          displayName.isAcceptableOrUnknown(
+              data['display_name']!, _displayNameMeta));
+    }
+    if (data.containsKey('uid')) {
+      context.handle(
+          _uidMeta, uid.isAcceptableOrUnknown(data['uid']!, _uidMeta));
+    } else if (isInserting) {
+      context.missing(_uidMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+          _codeMeta, code.isAcceptableOrUnknown(data['code']!, _codeMeta));
+    }
+    if (data.containsKey('source_id')) {
+      context.handle(_sourceIdMeta,
+          sourceId.isAcceptableOrUnknown(data['source_id']!, _sourceIdMeta));
+    } else if (isInserting) {
+      context.missing(_sourceIdMeta);
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(_parentIdMeta,
+          parentId.isAcceptableOrUnknown(data['parent_id']!, _parentIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Party map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Party(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      lastModifiedDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
+      createdDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
+      displayName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}display_name']),
+      label: $PartiesTable.$converterlabel.fromSql(attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}label'])),
+      translations: $PartiesTable.$convertertranslations.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}translations'])!),
+      uid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uid'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      code: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}code']),
+      type: $PartiesTable.$convertertype.fromSql(attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
+      sourceType: $PartiesTable.$convertersourceType.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}source_type'])!),
+      sourceId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}source_id'])!,
+      parentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}parent_id']),
+    );
+  }
+
+  @override
+  $PartiesTable createAlias(String alias) {
+    return $PartiesTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<Map<String, dynamic>?, String?> $converterlabel =
+  const NullAwareMapConverter();
+  static TypeConverter<List<Translation>, String> $convertertranslations =
+  const TranslationConverter();
+  static JsonTypeConverter2<PartyType, String, String> $convertertype =
+  const EnumNameConverter(PartyType.values);
+  static JsonTypeConverter2<SourceType, String, String> $convertersourceType =
+  const EnumNameConverter(SourceType.values);
+}
+
+class Party extends DataClass implements Insertable<Party> {
+  final String id;
+  final DateTime? lastModifiedDate;
+  final DateTime? createdDate;
+  final String? displayName;
+  final Map<String, dynamic>? label;
+  final List<Translation> translations;
+  final String uid;
+  final String name;
+  final String? code;
+  final PartyType type;
+  final SourceType sourceType;
+  final String sourceId;
+  final String? parentId;
+  const Party(
+      {required this.id,
+        this.lastModifiedDate,
+        this.createdDate,
+        this.displayName,
+        this.label,
+        required this.translations,
+        required this.uid,
+        required this.name,
+        this.code,
+        required this.type,
+        required this.sourceType,
+        required this.sourceId,
+        this.parentId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || lastModifiedDate != null) {
+      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate);
+    }
+    if (!nullToAbsent || createdDate != null) {
+      map['created_date'] = Variable<DateTime>(createdDate);
+    }
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
+    }
+    if (!nullToAbsent || label != null) {
+      map['label'] =
+          Variable<String>($PartiesTable.$converterlabel.toSql(label));
+    }
+    {
+      map['translations'] = Variable<String>(
+          $PartiesTable.$convertertranslations.toSql(translations));
+    }
+    map['uid'] = Variable<String>(uid);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || code != null) {
+      map['code'] = Variable<String>(code);
+    }
+    {
+      map['type'] = Variable<String>($PartiesTable.$convertertype.toSql(type));
+    }
+    {
+      map['source_type'] = Variable<String>(
+          $PartiesTable.$convertersourceType.toSql(sourceType));
+    }
+    map['source_id'] = Variable<String>(sourceId);
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<String>(parentId);
+    }
+    return map;
+  }
+
+  PartiesCompanion toCompanion(bool nullToAbsent) {
+    return PartiesCompanion(
+      id: Value(id),
+      lastModifiedDate: lastModifiedDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastModifiedDate),
+      createdDate: createdDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdDate),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
+      label:
+      label == null && nullToAbsent ? const Value.absent() : Value(label),
+      translations: Value(translations),
+      uid: Value(uid),
+      name: Value(name),
+      code: code == null && nullToAbsent ? const Value.absent() : Value(code),
+      type: Value(type),
+      sourceType: Value(sourceType),
+      sourceId: Value(sourceId),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
+    );
+  }
+
+  factory Party.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Party(
+      id: serializer.fromJson<String>(json['id']),
+      lastModifiedDate:
+      serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
+      label: serializer.fromJson<Map<String, dynamic>?>(json['label']),
+      translations:
+      serializer.fromJson<List<Translation>>(json['translations']),
+      uid: serializer.fromJson<String>(json['uid']),
+      name: serializer.fromJson<String>(json['name']),
+      code: serializer.fromJson<String?>(json['code']),
+      type: $PartiesTable.$convertertype
+          .fromJson(serializer.fromJson<String>(json['type'])),
+      sourceType: $PartiesTable.$convertersourceType
+          .fromJson(serializer.fromJson<String>(json['sourceType'])),
+      sourceId: serializer.fromJson<String>(json['sourceId']),
+      parentId: serializer.fromJson<String?>(json['parentId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
+      'createdDate': serializer.toJson<DateTime?>(createdDate),
+      'displayName': serializer.toJson<String?>(displayName),
+      'label': serializer.toJson<Map<String, dynamic>?>(label),
+      'translations': serializer.toJson<List<Translation>>(translations),
+      'uid': serializer.toJson<String>(uid),
+      'name': serializer.toJson<String>(name),
+      'code': serializer.toJson<String?>(code),
+      'type':
+      serializer.toJson<String>($PartiesTable.$convertertype.toJson(type)),
+      'sourceType': serializer.toJson<String>(
+          $PartiesTable.$convertersourceType.toJson(sourceType)),
+      'sourceId': serializer.toJson<String>(sourceId),
+      'parentId': serializer.toJson<String?>(parentId),
+    };
+  }
+
+  Party copyWith(
+      {String? id,
+        Value<DateTime?> lastModifiedDate = const Value.absent(),
+        Value<DateTime?> createdDate = const Value.absent(),
+        Value<String?> displayName = const Value.absent(),
+        Value<Map<String, dynamic>?> label = const Value.absent(),
+        List<Translation>? translations,
+        String? uid,
+        String? name,
+        Value<String?> code = const Value.absent(),
+        PartyType? type,
+        SourceType? sourceType,
+        String? sourceId,
+        Value<String?> parentId = const Value.absent()}) =>
+      Party(
+        id: id ?? this.id,
+        lastModifiedDate: lastModifiedDate.present
+            ? lastModifiedDate.value
+            : this.lastModifiedDate,
+        createdDate: createdDate.present ? createdDate.value : this.createdDate,
+        displayName: displayName.present ? displayName.value : this.displayName,
+        label: label.present ? label.value : this.label,
+        translations: translations ?? this.translations,
+        uid: uid ?? this.uid,
+        name: name ?? this.name,
+        code: code.present ? code.value : this.code,
+        type: type ?? this.type,
+        sourceType: sourceType ?? this.sourceType,
+        sourceId: sourceId ?? this.sourceId,
+        parentId: parentId.present ? parentId.value : this.parentId,
+      );
+  Party copyWithCompanion(PartiesCompanion data) {
+    return Party(
+      id: data.id.present ? data.id.value : this.id,
+      lastModifiedDate: data.lastModifiedDate.present
+          ? data.lastModifiedDate.value
+          : this.lastModifiedDate,
+      createdDate:
+      data.createdDate.present ? data.createdDate.value : this.createdDate,
+      displayName:
+      data.displayName.present ? data.displayName.value : this.displayName,
+      label: data.label.present ? data.label.value : this.label,
+      translations: data.translations.present
+          ? data.translations.value
+          : this.translations,
+      uid: data.uid.present ? data.uid.value : this.uid,
+      name: data.name.present ? data.name.value : this.name,
+      code: data.code.present ? data.code.value : this.code,
+      type: data.type.present ? data.type.value : this.type,
+      sourceType:
+      data.sourceType.present ? data.sourceType.value : this.sourceType,
+      sourceId: data.sourceId.present ? data.sourceId.value : this.sourceId,
+      parentId: data.parentId.present ? data.parentId.value : this.parentId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Party(')
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('uid: $uid, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('type: $type, ')
+      ..write('sourceType: $sourceType, ')
+      ..write('sourceId: $sourceId, ')
+      ..write('parentId: $parentId')
+      ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      lastModifiedDate,
+      createdDate,
+      displayName,
+      label,
+      translations,
+      uid,
+      name,
+      code,
+      type,
+      sourceType,
+      sourceId,
+      parentId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          (other is Party &&
+              other.id == this.id &&
+              other.lastModifiedDate == this.lastModifiedDate &&
+              other.createdDate == this.createdDate &&
+              other.displayName == this.displayName &&
+              other.label == this.label &&
+              other.translations == this.translations &&
+              other.uid == this.uid &&
+              other.name == this.name &&
+              other.code == this.code &&
+              other.type == this.type &&
+              other.sourceType == this.sourceType &&
+              other.sourceId == this.sourceId &&
+              other.parentId == this.parentId);
+}
+
+class PartiesCompanion extends UpdateCompanion<Party> {
+  final Value<String> id;
+  final Value<DateTime?> lastModifiedDate;
+  final Value<DateTime?> createdDate;
+  final Value<String?> displayName;
+  final Value<Map<String, dynamic>?> label;
+  final Value<List<Translation>> translations;
+  final Value<String> uid;
+  final Value<String> name;
+  final Value<String?> code;
+  final Value<PartyType> type;
+  final Value<SourceType> sourceType;
+  final Value<String> sourceId;
+  final Value<String?> parentId;
+  final Value<int> rowid;
+  const PartiesCompanion({
+    this.id = const Value.absent(),
+    this.lastModifiedDate = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.label = const Value.absent(),
+    this.translations = const Value.absent(),
+    this.uid = const Value.absent(),
+    this.name = const Value.absent(),
+    this.code = const Value.absent(),
+    this.type = const Value.absent(),
+    this.sourceType = const Value.absent(),
+    this.sourceId = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PartiesCompanion.insert({
+    required String id,
+    this.lastModifiedDate = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.label = const Value.absent(),
+    this.translations = const Value.absent(),
+    required String uid,
+    required String name,
+    this.code = const Value.absent(),
+    required PartyType type,
+    required SourceType sourceType,
+    required String sourceId,
+    this.parentId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        uid = Value(uid),
+        name = Value(name),
+        type = Value(type),
+        sourceType = Value(sourceType),
+        sourceId = Value(sourceId);
+  static Insertable<Party> custom({
+    Expression<String>? id,
+    Expression<DateTime>? lastModifiedDate,
+    Expression<DateTime>? createdDate,
+    Expression<String>? displayName,
+    Expression<String>? label,
+    Expression<String>? translations,
+    Expression<String>? uid,
+    Expression<String>? name,
+    Expression<String>? code,
+    Expression<String>? type,
+    Expression<String>? sourceType,
+    Expression<String>? sourceId,
+    Expression<String>? parentId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
+      if (createdDate != null) 'created_date': createdDate,
+      if (displayName != null) 'display_name': displayName,
+      if (label != null) 'label': label,
+      if (translations != null) 'translations': translations,
+      if (uid != null) 'uid': uid,
+      if (name != null) 'name': name,
+      if (code != null) 'code': code,
+      if (type != null) 'type': type,
+      if (sourceType != null) 'source_type': sourceType,
+      if (sourceId != null) 'source_id': sourceId,
+      if (parentId != null) 'parent_id': parentId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PartiesCompanion copyWith(
+      {Value<String>? id,
+        Value<DateTime?>? lastModifiedDate,
+        Value<DateTime?>? createdDate,
+        Value<String?>? displayName,
+        Value<Map<String, dynamic>?>? label,
+        Value<List<Translation>>? translations,
+        Value<String>? uid,
+        Value<String>? name,
+        Value<String?>? code,
+        Value<PartyType>? type,
+        Value<SourceType>? sourceType,
+        Value<String>? sourceId,
+        Value<String?>? parentId,
+        Value<int>? rowid}) {
+    return PartiesCompanion(
+      id: id ?? this.id,
+      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
+      createdDate: createdDate ?? this.createdDate,
+      displayName: displayName ?? this.displayName,
+      label: label ?? this.label,
+      translations: translations ?? this.translations,
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      code: code ?? this.code,
+      type: type ?? this.type,
+      sourceType: sourceType ?? this.sourceType,
+      sourceId: sourceId ?? this.sourceId,
+      parentId: parentId ?? this.parentId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (lastModifiedDate.present) {
+      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate.value);
+    }
+    if (createdDate.present) {
+      map['created_date'] = Variable<DateTime>(createdDate.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (label.present) {
+      map['label'] =
+          Variable<String>($PartiesTable.$converterlabel.toSql(label.value));
+    }
+    if (translations.present) {
+      map['translations'] = Variable<String>(
+          $PartiesTable.$convertertranslations.toSql(translations.value));
+    }
+    if (uid.present) {
+      map['uid'] = Variable<String>(uid.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (type.present) {
+      map['type'] =
+          Variable<String>($PartiesTable.$convertertype.toSql(type.value));
+    }
+    if (sourceType.present) {
+      map['source_type'] = Variable<String>(
+          $PartiesTable.$convertersourceType.toSql(sourceType.value));
+    }
+    if (sourceId.present) {
+      map['source_id'] = Variable<String>(sourceId.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<String>(parentId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PartiesCompanion(')
+      ..write('id: $id, ')
+      ..write('lastModifiedDate: $lastModifiedDate, ')
+      ..write('createdDate: $createdDate, ')
+      ..write('displayName: $displayName, ')
+      ..write('label: $label, ')
+      ..write('translations: $translations, ')
+      ..write('uid: $uid, ')
+      ..write('name: $name, ')
+      ..write('code: $code, ')
+      ..write('type: $type, ')
+      ..write('sourceType: $sourceType, ')
+      ..write('sourceId: $sourceId, ')
+      ..write('parentId: $parentId, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
+        .toString();
+  }
+}
+
+class $PartySetMembersTable extends PartySetMembers
+    with TableInfo<$PartySetMembersTable, PartySetMember> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PartySetMembersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _partySetMeta =
+  const VerificationMeta('partySet');
+  @override
+  late final GeneratedColumn<String> partySet = GeneratedColumn<String>(
+      'party_set', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES party_sets (id) ON UPDATE CASCADE ON DELETE CASCADE'));
+  static const VerificationMeta _PartyMeta = const VerificationMeta('Party');
+  @override
+  late final GeneratedColumn<String> Party = GeneratedColumn<String>(
+      'party', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints:
+      GeneratedColumn.constraintIsAlways('REFERENCES parties (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [partySet, Party];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'party_set_members';
+  @override
+  VerificationContext validateIntegrity(Insertable<PartySetMember> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('party_set')) {
+      context.handle(_partySetMeta,
+          partySet.isAcceptableOrUnknown(data['party_set']!, _partySetMeta));
+    } else if (isInserting) {
+      context.missing(_partySetMeta);
+    }
+    if (data.containsKey('party')) {
+      context.handle(
+          _PartyMeta, Party.isAcceptableOrUnknown(data['party']!, _PartyMeta));
+    } else if (isInserting) {
+      context.missing(_PartyMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {partySet, Party};
+  @override
+  PartySetMember map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PartySetMember(
+      partySet: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}party_set'])!,
+      Party: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}party'])!,
+    );
+  }
+
+  @override
+  $PartySetMembersTable createAlias(String alias) {
+    return $PartySetMembersTable(attachedDatabase, alias);
+  }
+}
+
+class PartySetMember extends DataClass implements Insertable<PartySetMember> {
+  final String partySet;
+  final String Party;
+  const PartySetMember({required this.partySet, required this.Party});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['party_set'] = Variable<String>(partySet);
+    map['party'] = Variable<String>(Party);
+    return map;
+  }
+
+  PartySetMembersCompanion toCompanion(bool nullToAbsent) {
+    return PartySetMembersCompanion(
+      partySet: Value(partySet),
+      Party: Value(Party),
+    );
+  }
+
+  factory PartySetMember.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PartySetMember(
+      partySet: serializer.fromJson<String>(json['partySet']),
+      Party: serializer.fromJson<String>(json['Party']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'partySet': serializer.toJson<String>(partySet),
+      'Party': serializer.toJson<String>(Party),
+    };
+  }
+
+  PartySetMember copyWith({String? partySet, String? Party}) => PartySetMember(
+    partySet: partySet ?? this.partySet,
+    Party: Party ?? this.Party,
+  );
+  PartySetMember copyWithCompanion(PartySetMembersCompanion data) {
+    return PartySetMember(
+      partySet: data.partySet.present ? data.partySet.value : this.partySet,
+      Party: data.Party.present ? data.Party.value : this.Party,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PartySetMember(')
+      ..write('partySet: $partySet, ')
+      ..write('Party: $Party')
+      ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(partySet, Party);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          (other is PartySetMember &&
+              other.partySet == this.partySet &&
+              other.Party == this.Party);
+}
+
+class PartySetMembersCompanion extends UpdateCompanion<PartySetMember> {
+  final Value<String> partySet;
+  final Value<String> Party;
+  final Value<int> rowid;
+  const PartySetMembersCompanion({
+    this.partySet = const Value.absent(),
+    this.Party = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PartySetMembersCompanion.insert({
+    required String partySet,
+    required String Party,
+    this.rowid = const Value.absent(),
+  })  : partySet = Value(partySet),
+        Party = Value(Party);
+  static Insertable<PartySetMember> custom({
+    Expression<String>? partySet,
+    Expression<String>? Party,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (partySet != null) 'party_set': partySet,
+      if (Party != null) 'party': Party,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PartySetMembersCompanion copyWith(
+      {Value<String>? partySet, Value<String>? Party, Value<int>? rowid}) {
+    return PartySetMembersCompanion(
+      partySet: partySet ?? this.partySet,
+      Party: Party ?? this.Party,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (partySet.present) {
+      map['party_set'] = Variable<String>(partySet.value);
+    }
+    if (Party.present) {
+      map['party'] = Variable<String>(Party.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PartySetMembersCompanion(')
+      ..write('partySet: $partySet, ')
+      ..write('Party: $Party, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
+        .toString();
+  }
+}
+
+class $AssignmentPartyBindingsTable extends AssignmentPartyBindings
+    with TableInfo<$AssignmentPartyBindingsTable, AssignmentPartyBinding> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AssignmentPartyBindingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _assignmentIdMeta =
+  const VerificationMeta('assignmentId');
+  @override
+  late final GeneratedColumn<String> assignmentId = GeneratedColumn<String>(
+      'assignment_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _roleNameMeta =
+  const VerificationMeta('roleName');
+  @override
+  late final GeneratedColumn<String> roleName = GeneratedColumn<String>(
+      'role_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _vocabularyIdMeta =
+  const VerificationMeta('vocabularyId');
+  @override
+  late final GeneratedColumn<String> vocabularyId = GeneratedColumn<String>(
+      'vocabulary_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _partySetIdMeta =
+  const VerificationMeta('partySetId');
+  @override
+  late final GeneratedColumn<String> partySetId = GeneratedColumn<String>(
+      'party_set_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _principalTypeMeta =
+  const VerificationMeta('principalType');
+  @override
+  late final GeneratedColumn<String> principalType = GeneratedColumn<String>(
+      'principal_type', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _principalIdMeta =
+  const VerificationMeta('principalId');
+  @override
+  late final GeneratedColumn<String> principalId = GeneratedColumn<String>(
+      'principal_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _combineModeMeta =
+  const VerificationMeta('combineMode');
+  @override
+  late final GeneratedColumn<String> combineMode = GeneratedColumn<String>(
+      'combine_mode', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('UNION'));
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    assignmentId,
+    roleName,
+    vocabularyId,
+    partySetId,
+    principalType,
+    principalId,
+    combineMode
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'assignment_party_bindings';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<AssignmentPartyBinding> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('assignment_id')) {
+      context.handle(
+          _assignmentIdMeta,
+          assignmentId.isAcceptableOrUnknown(
+              data['assignment_id']!, _assignmentIdMeta));
+    } else if (isInserting) {
+      context.missing(_assignmentIdMeta);
+    }
+    if (data.containsKey('role_name')) {
+      context.handle(_roleNameMeta,
+          roleName.isAcceptableOrUnknown(data['role_name']!, _roleNameMeta));
+    } else if (isInserting) {
+      context.missing(_roleNameMeta);
+    }
+    if (data.containsKey('vocabulary_id')) {
+      context.handle(
+          _vocabularyIdMeta,
+          vocabularyId.isAcceptableOrUnknown(
+              data['vocabulary_id']!, _vocabularyIdMeta));
+    }
+    if (data.containsKey('party_set_id')) {
+      context.handle(
+          _partySetIdMeta,
+          partySetId.isAcceptableOrUnknown(
+              data['party_set_id']!, _partySetIdMeta));
+    } else if (isInserting) {
+      context.missing(_partySetIdMeta);
+    }
+    if (data.containsKey('principal_type')) {
+      context.handle(
+          _principalTypeMeta,
+          principalType.isAcceptableOrUnknown(
+              data['principal_type']!, _principalTypeMeta));
+    }
+    if (data.containsKey('principal_id')) {
+      context.handle(
+          _principalIdMeta,
+          principalId.isAcceptableOrUnknown(
+              data['principal_id']!, _principalIdMeta));
+    }
+    if (data.containsKey('combine_mode')) {
+      context.handle(
+          _combineModeMeta,
+          combineMode.isAcceptableOrUnknown(
+              data['combine_mode']!, _combineModeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AssignmentPartyBinding map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AssignmentPartyBinding(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      assignmentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}assignment_id'])!,
+      roleName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}role_name'])!,
+      vocabularyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}vocabulary_id']),
+      partySetId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}party_set_id'])!,
+      principalType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}principal_type']),
+      principalId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}principal_id']),
+      combineMode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}combine_mode'])!,
+    );
+  }
+
+  @override
+  $AssignmentPartyBindingsTable createAlias(String alias) {
+    return $AssignmentPartyBindingsTable(attachedDatabase, alias);
+  }
+}
+
+class AssignmentPartyBinding extends DataClass
+    implements Insertable<AssignmentPartyBinding> {
+  /// Corresponds to the Binding UUID
+  final String id;
+  final String assignmentId;
+  final String roleName;
+
+  /// Can be null for global roles
+  final String? vocabularyId;
+  final String partySetId;
+  final String? principalType;
+  final String? principalId;
+  final String combineMode;
+  const AssignmentPartyBinding(
+      {required this.id,
+        required this.assignmentId,
+        required this.roleName,
+        this.vocabularyId,
+        required this.partySetId,
+        this.principalType,
+        this.principalId,
+        required this.combineMode});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['assignment_id'] = Variable<String>(assignmentId);
+    map['role_name'] = Variable<String>(roleName);
+    if (!nullToAbsent || vocabularyId != null) {
+      map['vocabulary_id'] = Variable<String>(vocabularyId);
+    }
+    map['party_set_id'] = Variable<String>(partySetId);
+    if (!nullToAbsent || principalType != null) {
+      map['principal_type'] = Variable<String>(principalType);
+    }
+    if (!nullToAbsent || principalId != null) {
+      map['principal_id'] = Variable<String>(principalId);
+    }
+    map['combine_mode'] = Variable<String>(combineMode);
+    return map;
+  }
+
+  AssignmentPartyBindingsCompanion toCompanion(bool nullToAbsent) {
+    return AssignmentPartyBindingsCompanion(
+      id: Value(id),
+      assignmentId: Value(assignmentId),
+      roleName: Value(roleName),
+      vocabularyId: vocabularyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vocabularyId),
+      partySetId: Value(partySetId),
+      principalType: principalType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(principalType),
+      principalId: principalId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(principalId),
+      combineMode: Value(combineMode),
+    );
+  }
+
+  factory AssignmentPartyBinding.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AssignmentPartyBinding(
+      id: serializer.fromJson<String>(json['id']),
+      assignmentId: serializer.fromJson<String>(json['assignmentId']),
+      roleName: serializer.fromJson<String>(json['roleName']),
+      vocabularyId: serializer.fromJson<String?>(json['vocabularyId']),
+      partySetId: serializer.fromJson<String>(json['partySetId']),
+      principalType: serializer.fromJson<String?>(json['principalType']),
+      principalId: serializer.fromJson<String?>(json['principalId']),
+      combineMode: serializer.fromJson<String>(json['combineMode']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'assignmentId': serializer.toJson<String>(assignmentId),
+      'roleName': serializer.toJson<String>(roleName),
+      'vocabularyId': serializer.toJson<String?>(vocabularyId),
+      'partySetId': serializer.toJson<String>(partySetId),
+      'principalType': serializer.toJson<String?>(principalType),
+      'principalId': serializer.toJson<String?>(principalId),
+      'combineMode': serializer.toJson<String>(combineMode),
+    };
+  }
+
+  AssignmentPartyBinding copyWith(
+      {String? id,
+        String? assignmentId,
+        String? roleName,
+        Value<String?> vocabularyId = const Value.absent(),
+        String? partySetId,
+        Value<String?> principalType = const Value.absent(),
+        Value<String?> principalId = const Value.absent(),
+        String? combineMode}) =>
+      AssignmentPartyBinding(
+        id: id ?? this.id,
+        assignmentId: assignmentId ?? this.assignmentId,
+        roleName: roleName ?? this.roleName,
+        vocabularyId:
+        vocabularyId.present ? vocabularyId.value : this.vocabularyId,
+        partySetId: partySetId ?? this.partySetId,
+        principalType:
+        principalType.present ? principalType.value : this.principalType,
+        principalId: principalId.present ? principalId.value : this.principalId,
+        combineMode: combineMode ?? this.combineMode,
+      );
+  AssignmentPartyBinding copyWithCompanion(
+      AssignmentPartyBindingsCompanion data) {
+    return AssignmentPartyBinding(
+      id: data.id.present ? data.id.value : this.id,
+      assignmentId: data.assignmentId.present
+          ? data.assignmentId.value
+          : this.assignmentId,
+      roleName: data.roleName.present ? data.roleName.value : this.roleName,
+      vocabularyId: data.vocabularyId.present
+          ? data.vocabularyId.value
+          : this.vocabularyId,
+      partySetId:
+      data.partySetId.present ? data.partySetId.value : this.partySetId,
+      principalType: data.principalType.present
+          ? data.principalType.value
+          : this.principalType,
+      principalId:
+      data.principalId.present ? data.principalId.value : this.principalId,
+      combineMode:
+      data.combineMode.present ? data.combineMode.value : this.combineMode,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AssignmentPartyBinding(')
+      ..write('id: $id, ')
+      ..write('assignmentId: $assignmentId, ')
+      ..write('roleName: $roleName, ')
+      ..write('vocabularyId: $vocabularyId, ')
+      ..write('partySetId: $partySetId, ')
+      ..write('principalType: $principalType, ')
+      ..write('principalId: $principalId, ')
+      ..write('combineMode: $combineMode')
+      ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, assignmentId, roleName, vocabularyId,
+      partySetId, principalType, principalId, combineMode);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          (other is AssignmentPartyBinding &&
+              other.id == this.id &&
+              other.assignmentId == this.assignmentId &&
+              other.roleName == this.roleName &&
+              other.vocabularyId == this.vocabularyId &&
+              other.partySetId == this.partySetId &&
+              other.principalType == this.principalType &&
+              other.principalId == this.principalId &&
+              other.combineMode == this.combineMode);
+}
+
+class AssignmentPartyBindingsCompanion
+    extends UpdateCompanion<AssignmentPartyBinding> {
+  final Value<String> id;
+  final Value<String> assignmentId;
+  final Value<String> roleName;
+  final Value<String?> vocabularyId;
+  final Value<String> partySetId;
+  final Value<String?> principalType;
+  final Value<String?> principalId;
+  final Value<String> combineMode;
+  final Value<int> rowid;
+  const AssignmentPartyBindingsCompanion({
+    this.id = const Value.absent(),
+    this.assignmentId = const Value.absent(),
+    this.roleName = const Value.absent(),
+    this.vocabularyId = const Value.absent(),
+    this.partySetId = const Value.absent(),
+    this.principalType = const Value.absent(),
+    this.principalId = const Value.absent(),
+    this.combineMode = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AssignmentPartyBindingsCompanion.insert({
+    required String id,
+    required String assignmentId,
+    required String roleName,
+    this.vocabularyId = const Value.absent(),
+    required String partySetId,
+    this.principalType = const Value.absent(),
+    this.principalId = const Value.absent(),
+    this.combineMode = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        assignmentId = Value(assignmentId),
+        roleName = Value(roleName),
+        partySetId = Value(partySetId);
+  static Insertable<AssignmentPartyBinding> custom({
+    Expression<String>? id,
+    Expression<String>? assignmentId,
+    Expression<String>? roleName,
+    Expression<String>? vocabularyId,
+    Expression<String>? partySetId,
+    Expression<String>? principalType,
+    Expression<String>? principalId,
+    Expression<String>? combineMode,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (assignmentId != null) 'assignment_id': assignmentId,
+      if (roleName != null) 'role_name': roleName,
+      if (vocabularyId != null) 'vocabulary_id': vocabularyId,
+      if (partySetId != null) 'party_set_id': partySetId,
+      if (principalType != null) 'principal_type': principalType,
+      if (principalId != null) 'principal_id': principalId,
+      if (combineMode != null) 'combine_mode': combineMode,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AssignmentPartyBindingsCompanion copyWith(
+      {Value<String>? id,
+        Value<String>? assignmentId,
+        Value<String>? roleName,
+        Value<String?>? vocabularyId,
+        Value<String>? partySetId,
+        Value<String?>? principalType,
+        Value<String?>? principalId,
+        Value<String>? combineMode,
+        Value<int>? rowid}) {
+    return AssignmentPartyBindingsCompanion(
+      id: id ?? this.id,
+      assignmentId: assignmentId ?? this.assignmentId,
+      roleName: roleName ?? this.roleName,
+      vocabularyId: vocabularyId ?? this.vocabularyId,
+      partySetId: partySetId ?? this.partySetId,
+      principalType: principalType ?? this.principalType,
+      principalId: principalId ?? this.principalId,
+      combineMode: combineMode ?? this.combineMode,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (assignmentId.present) {
+      map['assignment_id'] = Variable<String>(assignmentId.value);
+    }
+    if (roleName.present) {
+      map['role_name'] = Variable<String>(roleName.value);
+    }
+    if (vocabularyId.present) {
+      map['vocabulary_id'] = Variable<String>(vocabularyId.value);
+    }
+    if (partySetId.present) {
+      map['party_set_id'] = Variable<String>(partySetId.value);
+    }
+    if (principalType.present) {
+      map['principal_type'] = Variable<String>(principalType.value);
+    }
+    if (principalId.present) {
+      map['principal_id'] = Variable<String>(principalId.value);
+    }
+    if (combineMode.present) {
+      map['combine_mode'] = Variable<String>(combineMode.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AssignmentPartyBindingsCompanion(')
+      ..write('id: $id, ')
+      ..write('assignmentId: $assignmentId, ')
+      ..write('roleName: $roleName, ')
+      ..write('vocabularyId: $vocabularyId, ')
+      ..write('partySetId: $partySetId, ')
+      ..write('principalType: $principalType, ')
+      ..write('principalId: $principalId, ')
+      ..write('combineMode: $combineMode, ')
+      ..write('rowid: $rowid')
+      ..write(')'))
         .toString();
   }
 }
@@ -10747,35 +12412,41 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $AssignmentsTable assignments = $AssignmentsTable(this);
   late final $FormTemplatesTable formTemplates = $FormTemplatesTable(this);
   late final $AssignmentFormsTable assignmentForms =
-      $AssignmentFormsTable(this);
+  $AssignmentFormsTable(this);
   late final $FormTemplateVersionsTable formTemplateVersions =
-      $FormTemplateVersionsTable(this);
-  late final $MetadataSubmissionsTable metadataSubmissions =
-      $MetadataSubmissionsTable(this);
+  $FormTemplateVersionsTable(this);
   late final $DataInstancesTable dataInstances = $DataInstancesTable(this);
   late final $RepeatInstancesTable repeatInstances =
-      $RepeatInstancesTable(this);
+  $RepeatInstancesTable(this);
   late final $DataOptionSetsTable dataOptionSets = $DataOptionSetsTable(this);
   late final $DataElementsTable dataElements = $DataElementsTable(this);
   late final $DataValuesTable dataValues = $DataValuesTable(this);
   late final $DataOptionsTable dataOptions = $DataOptionsTable(this);
   late final $UserFormPermissionsTable userFormPermissions =
-      $UserFormPermissionsTable(this);
+  $UserFormPermissionsTable(this);
   late final $SyncSummariesTable syncSummaries = $SyncSummariesTable(this);
+  late final $AssignmentManifestsTable assignmentManifests =
+  $AssignmentManifestsTable(this);
+  late final $PartySetsTable partySets = $PartySetsTable(this);
+  late final $PartiesTable parties = $PartiesTable(this);
+  late final $PartySetMembersTable partySetMembers =
+  $PartySetMembersTable(this);
+  late final $AssignmentPartyBindingsTable assignmentPartyBindings =
+  $AssignmentPartyBindingsTable(this);
   late final Index orgNameIdx =
-      Index('org_name_idx', 'CREATE INDEX org_name_idx ON org_units (name)');
+  Index('org_name_idx', 'CREATE INDEX org_name_idx ON org_units (name)');
   late final Index orgCodeIdx = Index(
       'org_code_idx', 'CREATE UNIQUE INDEX org_code_idx ON org_units (code)');
   late final Index orgPathIdx = Index(
       'org_path_idx', 'CREATE UNIQUE INDEX org_path_idx ON org_units (path)');
   late final Index orgLevelIdx =
-      Index('org_level_idx', 'CREATE INDEX org_level_idx ON org_units (level)');
+  Index('org_level_idx', 'CREATE INDEX org_level_idx ON org_units (level)');
   late final Index levelNameIdx = Index(
       'level_name_idx', 'CREATE INDEX level_name_idx ON ou_levels (name)');
   late final Index activityDisabledIdx = Index('activity_disabled_idx',
       'CREATE INDEX activity_disabled_idx ON activities (disabled)');
   late final Index teamCodIdx =
-      Index('team_cod_idx', 'CREATE INDEX team_cod_idx ON teams (code)');
+  Index('team_cod_idx', 'CREATE INDEX team_cod_idx ON teams (code)');
   late final Index teamDisabledIdx = Index('team_disabled_idx',
       'CREATE INDEX team_disabled_idx ON teams (disabled)');
   late final Index managedTeamCodIdx = Index('managed_team_cod_idx',
@@ -10804,157 +12475,182 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       'CREATE INDEX data_instance_status_idx ON data_instances (sync_state)');
   late final Index formPermissionFormIdx = Index('form_permission_form_idx',
       'CREATE INDEX form_permission_form_idx ON user_form_permissions (team, form)');
+  late final Index partySetNameIdx = Index('party_set_name_idx',
+      'CREATE INDEX party_set_name_idx ON party_sets (name)');
+  late final Index partyNameIdx =
+  Index('party_name_idx', 'CREATE INDEX party_name_idx ON parties (name)');
   late final UsersDao usersDao = UsersDao(this as AppDatabase);
   late final OrgUnitsDao orgUnitsDao = OrgUnitsDao(this as AppDatabase);
   late final ActivitiesDao activitiesDao = ActivitiesDao(this as AppDatabase);
   late final TeamsDao teamsDao = TeamsDao(this as AppDatabase);
   late final AssignmentsDao assignmentsDao =
-      AssignmentsDao(this as AppDatabase);
+  AssignmentsDao(this as AppDatabase);
   late final FormTemplatesDao formTemplatesDao =
-      FormTemplatesDao(this as AppDatabase);
+  FormTemplatesDao(this as AppDatabase);
   late final DataElementsDao dataElementsDao =
-      DataElementsDao(this as AppDatabase);
+  DataElementsDao(this as AppDatabase);
   late final FormTemplateVersionsDao formTemplateVersionsDao =
-      FormTemplateVersionsDao(this as AppDatabase);
+  FormTemplateVersionsDao(this as AppDatabase);
   late final DataOptionSetsDao dataOptionSetsDao =
-      DataOptionSetsDao(this as AppDatabase);
+  DataOptionSetsDao(this as AppDatabase);
   late final DataOptionsDao dataOptionsDao =
-      DataOptionsDao(this as AppDatabase);
+  DataOptionsDao(this as AppDatabase);
   late final DataInstancesDao dataInstancesDao =
-      DataInstancesDao(this as AppDatabase);
+  DataInstancesDao(this as AppDatabase);
   late final DataValuesDao dataValuesDao = DataValuesDao(this as AppDatabase);
   late final RepeatInstancesDao repeatInstancesDao =
-      RepeatInstancesDao(this as AppDatabase);
+  RepeatInstancesDao(this as AppDatabase);
   late final SyncSummariesDao syncSummariesDao =
-      SyncSummariesDao(this as AppDatabase);
-  late final MetadataSubmissionsDao metadataSubmissionsDao =
-      MetadataSubmissionsDao(this as AppDatabase);
+  SyncSummariesDao(this as AppDatabase);
   late final OuLevelsDao ouLevelsDao = OuLevelsDao(this as AppDatabase);
   late final ProjectsDao projectsDao = ProjectsDao(this as AppDatabase);
   late final UserFormPermissionsDao userFormPermissionsDao =
-      UserFormPermissionsDao(this as AppDatabase);
+  UserFormPermissionsDao(this as AppDatabase);
+  late final PartyResolutionDao partyResolutionDao =
+  PartyResolutionDao(this as AppDatabase);
+  late final PartyDao partyDao = PartyDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-        users,
-        orgUnits,
-        ouLevels,
-        projects,
-        activities,
-        teams,
-        managedTeams,
-        assignments,
-        formTemplates,
-        assignmentForms,
-        formTemplateVersions,
-        metadataSubmissions,
-        dataInstances,
-        repeatInstances,
-        dataOptionSets,
-        dataElements,
-        dataValues,
-        dataOptions,
-        userFormPermissions,
-        syncSummaries,
-        orgNameIdx,
-        orgCodeIdx,
-        orgPathIdx,
-        orgLevelIdx,
-        levelNameIdx,
-        activityDisabledIdx,
-        teamCodIdx,
-        teamDisabledIdx,
-        managedTeamCodIdx,
-        assignmentStatusIdx,
-        templateVersionNumberIdx,
-        templateVersionTemplateIdx,
-        repeatTemplatePathIdx,
-        dataElementNameIdx,
-        optionSetNameIdx,
-        optionSetCodeIdx,
-        optionNameIdx,
-        optionCodeIdx,
-        dataInstanceStatusIdx,
-        formPermissionFormIdx
-      ];
+    users,
+    orgUnits,
+    ouLevels,
+    projects,
+    activities,
+    teams,
+    managedTeams,
+    assignments,
+    formTemplates,
+    assignmentForms,
+    formTemplateVersions,
+    dataInstances,
+    repeatInstances,
+    dataOptionSets,
+    dataElements,
+    dataValues,
+    dataOptions,
+    userFormPermissions,
+    syncSummaries,
+    assignmentManifests,
+    partySets,
+    parties,
+    partySetMembers,
+    assignmentPartyBindings,
+    orgNameIdx,
+    orgCodeIdx,
+    orgPathIdx,
+    orgLevelIdx,
+    levelNameIdx,
+    activityDisabledIdx,
+    teamCodIdx,
+    teamDisabledIdx,
+    managedTeamCodIdx,
+    assignmentStatusIdx,
+    templateVersionNumberIdx,
+    templateVersionTemplateIdx,
+    repeatTemplatePathIdx,
+    dataElementNameIdx,
+    optionSetNameIdx,
+    optionSetCodeIdx,
+    optionNameIdx,
+    optionCodeIdx,
+    dataInstanceStatusIdx,
+    formPermissionFormIdx,
+    partySetNameIdx,
+    partyNameIdx
+  ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
-        [
-          WritePropagation(
-            on: TableUpdateQuery.onTableName('assignments',
-                limitUpdateKind: UpdateKind.update),
-            result: [
-              TableUpdate('assignment_forms', kind: UpdateKind.update),
-            ],
-          ),
-          WritePropagation(
-            on: TableUpdateQuery.onTableName('data_option_sets',
-                limitUpdateKind: UpdateKind.delete),
-            result: [
-              TableUpdate('data_options', kind: UpdateKind.delete),
-            ],
-          ),
-          WritePropagation(
-            on: TableUpdateQuery.onTableName('data_option_sets',
-                limitUpdateKind: UpdateKind.update),
-            result: [
-              TableUpdate('data_options', kind: UpdateKind.update),
-            ],
-          ),
+    [
+      WritePropagation(
+        on: TableUpdateQuery.onTableName('assignments',
+            limitUpdateKind: UpdateKind.update),
+        result: [
+          TableUpdate('assignment_forms', kind: UpdateKind.update),
         ],
-      );
+      ),
+      WritePropagation(
+        on: TableUpdateQuery.onTableName('data_option_sets',
+            limitUpdateKind: UpdateKind.delete),
+        result: [
+          TableUpdate('data_options', kind: UpdateKind.delete),
+        ],
+      ),
+      WritePropagation(
+        on: TableUpdateQuery.onTableName('data_option_sets',
+            limitUpdateKind: UpdateKind.update),
+        result: [
+          TableUpdate('data_options', kind: UpdateKind.update),
+        ],
+      ),
+      WritePropagation(
+        on: TableUpdateQuery.onTableName('party_sets',
+            limitUpdateKind: UpdateKind.delete),
+        result: [
+          TableUpdate('party_set_members', kind: UpdateKind.delete),
+        ],
+      ),
+      WritePropagation(
+        on: TableUpdateQuery.onTableName('party_sets',
+            limitUpdateKind: UpdateKind.update),
+        result: [
+          TableUpdate('party_set_members', kind: UpdateKind.update),
+        ],
+      ),
+    ],
+  );
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);
 }
 
 typedef $$UsersTableCreateCompanionBuilder = UsersCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  required String username,
-  Value<String?> firstName,
-  Value<String?> lastName,
-  Value<String?> mobile,
-  Value<String?> email,
-  Value<String?> langKey,
-  Value<bool> activated,
-  Value<String?> imageUrl,
-  required List<String> authorities,
-  Value<int?> submissionCount,
-  Value<int?> assignmentCount,
-  Value<int?> orgUnitCount,
-  required List<String> activityUIDs,
-  required List<String> userTeamsUIDs,
-  required List<String> managedTeamsUIDs,
-  required List<String> userGroupsUIDs,
-  required List<String> userFormsUIDs,
-  Value<int> rowid,
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+required String username,
+Value<String?> firstName,
+Value<String?> lastName,
+Value<String?> mobile,
+Value<String?> email,
+Value<String?> langKey,
+Value<bool> activated,
+Value<String?> imageUrl,
+required List<String> authorities,
+Value<int?> submissionCount,
+Value<int?> assignmentCount,
+Value<int?> orgUnitCount,
+required List<String> activityUIDs,
+required List<String> userTeamsUIDs,
+required List<String> managedTeamsUIDs,
+required List<String> userGroupsUIDs,
+required List<String> userFormsUIDs,
+Value<int> rowid,
 });
 typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String> username,
-  Value<String?> firstName,
-  Value<String?> lastName,
-  Value<String?> mobile,
-  Value<String?> email,
-  Value<String?> langKey,
-  Value<bool> activated,
-  Value<String?> imageUrl,
-  Value<List<String>> authorities,
-  Value<int?> submissionCount,
-  Value<int?> assignmentCount,
-  Value<int?> orgUnitCount,
-  Value<List<String>> activityUIDs,
-  Value<List<String>> userTeamsUIDs,
-  Value<List<String>> managedTeamsUIDs,
-  Value<List<String>> userGroupsUIDs,
-  Value<List<String>> userFormsUIDs,
-  Value<int> rowid,
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String> username,
+Value<String?> firstName,
+Value<String?> lastName,
+Value<String?> mobile,
+Value<String?> email,
+Value<String?> langKey,
+Value<bool> activated,
+Value<String?> imageUrl,
+Value<List<String>> authorities,
+Value<int?> submissionCount,
+Value<int?> assignmentCount,
+Value<int?> orgUnitCount,
+Value<List<String>> activityUIDs,
+Value<List<String>> userTeamsUIDs,
+Value<List<String>> managedTeamsUIDs,
+Value<List<String>> userGroupsUIDs,
+Value<List<String>> userFormsUIDs,
+Value<int> rowid,
 });
 
 class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
@@ -11000,9 +12696,9 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
       column: $table.imageUrl, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-      get authorities => $composableBuilder(
-          column: $table.authorities,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get authorities => $composableBuilder(
+      column: $table.authorities,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<int> get submissionCount => $composableBuilder(
       column: $table.submissionCount,
@@ -11016,29 +12712,29 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
       column: $table.orgUnitCount, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-      get activityUIDs => $composableBuilder(
-          column: $table.activityUIDs,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get activityUIDs => $composableBuilder(
+      column: $table.activityUIDs,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-      get userTeamsUIDs => $composableBuilder(
-          column: $table.userTeamsUIDs,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get userTeamsUIDs => $composableBuilder(
+      column: $table.userTeamsUIDs,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-      get managedTeamsUIDs => $composableBuilder(
-          column: $table.managedTeamsUIDs,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get managedTeamsUIDs => $composableBuilder(
+      column: $table.managedTeamsUIDs,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-      get userGroupsUIDs => $composableBuilder(
-          column: $table.userGroupsUIDs,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get userGroupsUIDs => $composableBuilder(
+      column: $table.userGroupsUIDs,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-      get userFormsUIDs => $composableBuilder(
-          column: $table.userFormsUIDs,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get userFormsUIDs => $composableBuilder(
+      column: $table.userFormsUIDs,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 }
 
 class $$UsersTableOrderingComposer
@@ -11210,111 +12906,111 @@ class $$UsersTableTableManager extends RootTableManager<
     PrefetchHooks Function()> {
   $$UsersTableTableManager(_$AppDatabase db, $UsersTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$UsersTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$UsersTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$UsersTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String> username = const Value.absent(),
-            Value<String?> firstName = const Value.absent(),
-            Value<String?> lastName = const Value.absent(),
-            Value<String?> mobile = const Value.absent(),
-            Value<String?> email = const Value.absent(),
-            Value<String?> langKey = const Value.absent(),
-            Value<bool> activated = const Value.absent(),
-            Value<String?> imageUrl = const Value.absent(),
-            Value<List<String>> authorities = const Value.absent(),
-            Value<int?> submissionCount = const Value.absent(),
-            Value<int?> assignmentCount = const Value.absent(),
-            Value<int?> orgUnitCount = const Value.absent(),
-            Value<List<String>> activityUIDs = const Value.absent(),
-            Value<List<String>> userTeamsUIDs = const Value.absent(),
-            Value<List<String>> managedTeamsUIDs = const Value.absent(),
-            Value<List<String>> userGroupsUIDs = const Value.absent(),
-            Value<List<String>> userFormsUIDs = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UsersCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            username: username,
-            firstName: firstName,
-            lastName: lastName,
-            mobile: mobile,
-            email: email,
-            langKey: langKey,
-            activated: activated,
-            imageUrl: imageUrl,
-            authorities: authorities,
-            submissionCount: submissionCount,
-            assignmentCount: assignmentCount,
-            orgUnitCount: orgUnitCount,
-            activityUIDs: activityUIDs,
-            userTeamsUIDs: userTeamsUIDs,
-            managedTeamsUIDs: managedTeamsUIDs,
-            userGroupsUIDs: userGroupsUIDs,
-            userFormsUIDs: userFormsUIDs,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            required String username,
-            Value<String?> firstName = const Value.absent(),
-            Value<String?> lastName = const Value.absent(),
-            Value<String?> mobile = const Value.absent(),
-            Value<String?> email = const Value.absent(),
-            Value<String?> langKey = const Value.absent(),
-            Value<bool> activated = const Value.absent(),
-            Value<String?> imageUrl = const Value.absent(),
-            required List<String> authorities,
-            Value<int?> submissionCount = const Value.absent(),
-            Value<int?> assignmentCount = const Value.absent(),
-            Value<int?> orgUnitCount = const Value.absent(),
-            required List<String> activityUIDs,
-            required List<String> userTeamsUIDs,
-            required List<String> managedTeamsUIDs,
-            required List<String> userGroupsUIDs,
-            required List<String> userFormsUIDs,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UsersCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            username: username,
-            firstName: firstName,
-            lastName: lastName,
-            mobile: mobile,
-            email: email,
-            langKey: langKey,
-            activated: activated,
-            imageUrl: imageUrl,
-            authorities: authorities,
-            submissionCount: submissionCount,
-            assignmentCount: assignmentCount,
-            orgUnitCount: orgUnitCount,
-            activityUIDs: activityUIDs,
-            userTeamsUIDs: userTeamsUIDs,
-            managedTeamsUIDs: managedTeamsUIDs,
-            userGroupsUIDs: userGroupsUIDs,
-            userFormsUIDs: userFormsUIDs,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$UsersTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$UsersTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$UsersTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String> username = const Value.absent(),
+      Value<String?> firstName = const Value.absent(),
+      Value<String?> lastName = const Value.absent(),
+      Value<String?> mobile = const Value.absent(),
+      Value<String?> email = const Value.absent(),
+      Value<String?> langKey = const Value.absent(),
+      Value<bool> activated = const Value.absent(),
+      Value<String?> imageUrl = const Value.absent(),
+      Value<List<String>> authorities = const Value.absent(),
+      Value<int?> submissionCount = const Value.absent(),
+      Value<int?> assignmentCount = const Value.absent(),
+      Value<int?> orgUnitCount = const Value.absent(),
+      Value<List<String>> activityUIDs = const Value.absent(),
+      Value<List<String>> userTeamsUIDs = const Value.absent(),
+      Value<List<String>> managedTeamsUIDs = const Value.absent(),
+      Value<List<String>> userGroupsUIDs = const Value.absent(),
+      Value<List<String>> userFormsUIDs = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        UsersCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          mobile: mobile,
+          email: email,
+          langKey: langKey,
+          activated: activated,
+          imageUrl: imageUrl,
+          authorities: authorities,
+          submissionCount: submissionCount,
+          assignmentCount: assignmentCount,
+          orgUnitCount: orgUnitCount,
+          activityUIDs: activityUIDs,
+          userTeamsUIDs: userTeamsUIDs,
+          managedTeamsUIDs: managedTeamsUIDs,
+          userGroupsUIDs: userGroupsUIDs,
+          userFormsUIDs: userFormsUIDs,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      required String username,
+      Value<String?> firstName = const Value.absent(),
+      Value<String?> lastName = const Value.absent(),
+      Value<String?> mobile = const Value.absent(),
+      Value<String?> email = const Value.absent(),
+      Value<String?> langKey = const Value.absent(),
+      Value<bool> activated = const Value.absent(),
+      Value<String?> imageUrl = const Value.absent(),
+      required List<String> authorities,
+      Value<int?> submissionCount = const Value.absent(),
+      Value<int?> assignmentCount = const Value.absent(),
+      Value<int?> orgUnitCount = const Value.absent(),
+      required List<String> activityUIDs,
+      required List<String> userTeamsUIDs,
+      required List<String> managedTeamsUIDs,
+      required List<String> userGroupsUIDs,
+      required List<String> userFormsUIDs,
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        UsersCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          mobile: mobile,
+          email: email,
+          langKey: langKey,
+          activated: activated,
+          imageUrl: imageUrl,
+          authorities: authorities,
+          submissionCount: submissionCount,
+          assignmentCount: assignmentCount,
+          orgUnitCount: orgUnitCount,
+          activityUIDs: activityUIDs,
+          userTeamsUIDs: userTeamsUIDs,
+          managedTeamsUIDs: managedTeamsUIDs,
+          userGroupsUIDs: userGroupsUIDs,
+          userFormsUIDs: userFormsUIDs,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: null,
+  ));
 }
 
 typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
@@ -11330,32 +13026,32 @@ typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
     User,
     PrefetchHooks Function()>;
 typedef $$OrgUnitsTableCreateCompanionBuilder = OrgUnitsCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  required String name,
-  Value<String?> code,
-  required String path,
-  required int level,
-  Value<String?> parent,
-  Value<int> rowid,
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String name,
+Value<String?> code,
+required String path,
+required int level,
+Value<String?> parent,
+Value<int> rowid,
 });
 typedef $$OrgUnitsTableUpdateCompanionBuilder = OrgUnitsCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  Value<String> name,
-  Value<String?> code,
-  Value<String> path,
-  Value<int> level,
-  Value<String?> parent,
-  Value<int> rowid,
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> name,
+Value<String?> code,
+Value<String> path,
+Value<int> level,
+Value<String?> parent,
+Value<int> rowid,
 });
 
 final class $$OrgUnitsTableReferences
@@ -11377,10 +13073,10 @@ final class $$OrgUnitsTableReferences
   }
 
   static MultiTypedResultKey<$AssignmentsTable, List<Assignment>>
-      _ouAssignmentsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.assignments,
-              aliasName:
-                  $_aliasNameGenerator(db.orgUnits.id, db.assignments.orgUnit));
+  _ouAssignmentsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.assignments,
+          aliasName:
+          $_aliasNameGenerator(db.orgUnits.id, db.assignments.orgUnit));
 
   $$AssignmentsTableProcessedTableManager get ouAssignments {
     final manager = $$AssignmentsTableTableManager($_db, $_db.assignments)
@@ -11415,15 +13111,15 @@ class $$OrgUnitsTableFilterComposer
       column: $table.displayName, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
@@ -11444,15 +13140,15 @@ class $$OrgUnitsTableFilterComposer
         referencedTable: $db.orgUnits,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$OrgUnitsTableFilterComposer(
               $db: $db,
               $table: $db.orgUnits,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -11465,15 +13161,15 @@ class $$OrgUnitsTableFilterComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.orgUnit,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableFilterComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -11527,15 +13223,15 @@ class $$OrgUnitsTableOrderingComposer
         referencedTable: $db.orgUnits,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$OrgUnitsTableOrderingComposer(
               $db: $db,
               $table: $db.orgUnits,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -11566,8 +13262,8 @@ class $$OrgUnitsTableAnnotationComposer
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations, builder: (column) => column);
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -11588,15 +13284,15 @@ class $$OrgUnitsTableAnnotationComposer
         referencedTable: $db.orgUnits,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$OrgUnitsTableAnnotationComposer(
               $db: $db,
               $table: $db.orgUnits,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -11609,15 +13305,15 @@ class $$OrgUnitsTableAnnotationComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.orgUnit,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableAnnotationComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -11637,123 +13333,123 @@ class $$OrgUnitsTableTableManager extends RootTableManager<
     PrefetchHooks Function({bool parent, bool ouAssignments})> {
   $$OrgUnitsTableTableManager(_$AppDatabase db, $OrgUnitsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$OrgUnitsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$OrgUnitsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$OrgUnitsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<String> path = const Value.absent(),
-            Value<int> level = const Value.absent(),
-            Value<String?> parent = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              OrgUnitsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            path: path,
-            level: level,
-            parent: parent,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            required String name,
-            Value<String?> code = const Value.absent(),
-            required String path,
-            required int level,
-            Value<String?> parent = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              OrgUnitsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            path: path,
-            level: level,
-            parent: parent,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$OrgUnitsTableReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: ({parent = false, ouAssignments = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (ouAssignments) db.assignments],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (parent) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.parent,
-                    referencedTable: $$OrgUnitsTableReferences._parentTable(db),
-                    referencedColumn:
-                        $$OrgUnitsTableReferences._parentTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$OrgUnitsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$OrgUnitsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$OrgUnitsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<String> path = const Value.absent(),
+      Value<int> level = const Value.absent(),
+      Value<String?> parent = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        OrgUnitsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          path: path,
+          level: level,
+          parent: parent,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String name,
+      Value<String?> code = const Value.absent(),
+      required String path,
+      required int level,
+      Value<String?> parent = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        OrgUnitsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          path: path,
+          level: level,
+          parent: parent,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) =>
+    (e.readTable(table), $$OrgUnitsTableReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: ({parent = false, ouAssignments = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [if (ouAssignments) db.assignments],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (parent) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.parent,
+              referencedTable: $$OrgUnitsTableReferences._parentTable(db),
+              referencedColumn:
+              $$OrgUnitsTableReferences._parentTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (ouAssignments)
-                    await $_getPrefetchedData<OrgUnit, $OrgUnitsTable,
-                            Assignment>(
-                        currentTable: table,
-                        referencedTable:
-                            $$OrgUnitsTableReferences._ouAssignmentsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$OrgUnitsTableReferences(db, table, p0)
-                                .ouAssignments,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.orgUnit == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (ouAssignments)
+              await $_getPrefetchedData<OrgUnit, $OrgUnitsTable,
+                  Assignment>(
+                  currentTable: table,
+                  referencedTable:
+                  $$OrgUnitsTableReferences._ouAssignmentsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$OrgUnitsTableReferences(db, table, p0)
+                      .ouAssignments,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.orgUnit == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$OrgUnitsTableProcessedTableManager = ProcessedTableManager<
@@ -11769,30 +13465,30 @@ typedef $$OrgUnitsTableProcessedTableManager = ProcessedTableManager<
     OrgUnit,
     PrefetchHooks Function({bool parent, bool ouAssignments})>;
 typedef $$OuLevelsTableCreateCompanionBuilder = OuLevelsCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  required String name,
-  Value<String?> code,
-  required int level,
-  Value<int?> offlineLevels,
-  Value<int> rowid,
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String name,
+Value<String?> code,
+required int level,
+Value<int?> offlineLevels,
+Value<int> rowid,
 });
 typedef $$OuLevelsTableUpdateCompanionBuilder = OuLevelsCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  Value<String> name,
-  Value<String?> code,
-  Value<int> level,
-  Value<int?> offlineLevels,
-  Value<int> rowid,
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> name,
+Value<String?> code,
+Value<int> level,
+Value<int?> offlineLevels,
+Value<int> rowid,
 });
 
 class $$OuLevelsTableFilterComposer
@@ -11818,15 +13514,15 @@ class $$OuLevelsTableFilterComposer
       column: $table.displayName, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
@@ -11909,8 +13605,8 @@ class $$OuLevelsTableAnnotationComposer
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations, builder: (column) => column);
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -11939,71 +13635,71 @@ class $$OuLevelsTableTableManager extends RootTableManager<
     PrefetchHooks Function()> {
   $$OuLevelsTableTableManager(_$AppDatabase db, $OuLevelsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$OuLevelsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$OuLevelsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$OuLevelsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<int> level = const Value.absent(),
-            Value<int?> offlineLevels = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              OuLevelsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            level: level,
-            offlineLevels: offlineLevels,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            required String name,
-            Value<String?> code = const Value.absent(),
-            required int level,
-            Value<int?> offlineLevels = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              OuLevelsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            level: level,
-            offlineLevels: offlineLevels,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$OuLevelsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$OuLevelsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$OuLevelsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<int> level = const Value.absent(),
+      Value<int?> offlineLevels = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        OuLevelsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          level: level,
+          offlineLevels: offlineLevels,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String name,
+      Value<String?> code = const Value.absent(),
+      required int level,
+      Value<int?> offlineLevels = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        OuLevelsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          level: level,
+          offlineLevels: offlineLevels,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: null,
+  ));
 }
 
 typedef $$OuLevelsTableProcessedTableManager = ProcessedTableManager<
@@ -12019,28 +13715,28 @@ typedef $$OuLevelsTableProcessedTableManager = ProcessedTableManager<
     OuLevel,
     PrefetchHooks Function()>;
 typedef $$ProjectsTableCreateCompanionBuilder = ProjectsCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  required String name,
-  Value<String?> code,
-  Value<bool?> disabled,
-  Value<int> rowid,
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String name,
+Value<String?> code,
+Value<bool?> disabled,
+Value<int> rowid,
 });
 typedef $$ProjectsTableUpdateCompanionBuilder = ProjectsCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  Value<String> name,
-  Value<String?> code,
-  Value<bool?> disabled,
-  Value<int> rowid,
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> name,
+Value<String?> code,
+Value<bool?> disabled,
+Value<int> rowid,
 });
 
 final class $$ProjectsTableReferences
@@ -12048,10 +13744,10 @@ final class $$ProjectsTableReferences
   $$ProjectsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$ActivitiesTable, List<Activity>>
-      _activitiesRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.activities,
-              aliasName:
-                  $_aliasNameGenerator(db.projects.id, db.activities.project));
+  _activitiesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.activities,
+          aliasName:
+          $_aliasNameGenerator(db.projects.id, db.activities.project));
 
   $$ActivitiesTableProcessedTableManager get activitiesRefs {
     final manager = $$ActivitiesTableTableManager($_db, $_db.activities)
@@ -12086,15 +13782,15 @@ class $$ProjectsTableFilterComposer
       column: $table.displayName, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
@@ -12113,15 +13809,15 @@ class $$ProjectsTableFilterComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.project,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableFilterComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12191,8 +13887,8 @@ class $$ProjectsTableAnnotationComposer
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations, builder: (column) => column);
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -12211,15 +13907,15 @@ class $$ProjectsTableAnnotationComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.project,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableAnnotationComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12239,91 +13935,91 @@ class $$ProjectsTableTableManager extends RootTableManager<
     PrefetchHooks Function({bool activitiesRefs})> {
   $$ProjectsTableTableManager(_$AppDatabase db, $ProjectsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ProjectsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ProjectsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ProjectsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ProjectsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            disabled: disabled,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            required String name,
-            Value<String?> code = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ProjectsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            disabled: disabled,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$ProjectsTableReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: ({activitiesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (activitiesRefs) db.activities],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (activitiesRefs)
-                    await $_getPrefetchedData<Project, $ProjectsTable,
-                            Activity>(
-                        currentTable: table,
-                        referencedTable:
-                            $$ProjectsTableReferences._activitiesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$ProjectsTableReferences(db, table, p0)
-                                .activitiesRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.project == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$ProjectsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$ProjectsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$ProjectsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        ProjectsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          disabled: disabled,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String name,
+      Value<String?> code = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        ProjectsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          disabled: disabled,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) =>
+    (e.readTable(table), $$ProjectsTableReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: ({activitiesRefs = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [if (activitiesRefs) db.activities],
+        addJoins: null,
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (activitiesRefs)
+              await $_getPrefetchedData<Project, $ProjectsTable,
+                  Activity>(
+                  currentTable: table,
+                  referencedTable:
+                  $$ProjectsTableReferences._activitiesRefsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$ProjectsTableReferences(db, table, p0)
+                      .activitiesRefs,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.project == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$ProjectsTableProcessedTableManager = ProcessedTableManager<
@@ -12339,36 +14035,36 @@ typedef $$ProjectsTableProcessedTableManager = ProcessedTableManager<
     Project,
     PrefetchHooks Function({bool activitiesRefs})>;
 typedef $$ActivitiesTableCreateCompanionBuilder = ActivitiesCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  required String name,
-  Value<String?> code,
-  required String project,
-  Value<bool?> disabled,
-  Value<DateTime?> startDate,
-  Value<DateTime?> endDate,
-  Value<String?> description,
-  Value<int> rowid,
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String name,
+Value<String?> code,
+required String project,
+Value<bool?> disabled,
+Value<DateTime?> startDate,
+Value<DateTime?> endDate,
+Value<String?> description,
+Value<int> rowid,
 });
 typedef $$ActivitiesTableUpdateCompanionBuilder = ActivitiesCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  Value<String> name,
-  Value<String?> code,
-  Value<String> project,
-  Value<bool?> disabled,
-  Value<DateTime?> startDate,
-  Value<DateTime?> endDate,
-  Value<String?> description,
-  Value<int> rowid,
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> name,
+Value<String?> code,
+Value<String> project,
+Value<bool?> disabled,
+Value<DateTime?> startDate,
+Value<DateTime?> endDate,
+Value<String?> description,
+Value<int> rowid,
 });
 
 final class $$ActivitiesTableReferences
@@ -12390,7 +14086,7 @@ final class $$ActivitiesTableReferences
   }
 
   static MultiTypedResultKey<$TeamsTable, List<Team>> _assignedTeamsTable(
-          _$AppDatabase db) =>
+      _$AppDatabase db) =>
       MultiTypedResultKey.fromTable(db.teams,
           aliasName: $_aliasNameGenerator(db.activities.id, db.teams.activity));
 
@@ -12404,33 +14100,33 @@ final class $$ActivitiesTableReferences
   }
 
   static MultiTypedResultKey<$ManagedTeamsTable, List<ManagedTeam>>
-      _activityManagedTeamsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.managedTeams,
-              aliasName: $_aliasNameGenerator(
-                  db.activities.id, db.managedTeams.activity));
+  _activityManagedTeamsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.managedTeams,
+          aliasName: $_aliasNameGenerator(
+              db.activities.id, db.managedTeams.activity));
 
   $$ManagedTeamsTableProcessedTableManager get activityManagedTeams {
     final manager = $$ManagedTeamsTableTableManager($_db, $_db.managedTeams)
         .filter((f) => f.activity.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache =
-        $_typedResult.readTableOrNull(_activityManagedTeamsTable($_db));
+    $_typedResult.readTableOrNull(_activityManagedTeamsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
 
   static MultiTypedResultKey<$AssignmentsTable, List<Assignment>>
-      _activityAssignmentsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.assignments,
-              aliasName: $_aliasNameGenerator(
-                  db.activities.id, db.assignments.activity));
+  _activityAssignmentsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.assignments,
+          aliasName: $_aliasNameGenerator(
+              db.activities.id, db.assignments.activity));
 
   $$AssignmentsTableProcessedTableManager get activityAssignments {
     final manager = $$AssignmentsTableTableManager($_db, $_db.assignments)
         .filter((f) => f.activity.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache =
-        $_typedResult.readTableOrNull(_activityAssignmentsTable($_db));
+    $_typedResult.readTableOrNull(_activityAssignmentsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -12459,15 +14155,15 @@ class $$ActivitiesTableFilterComposer
       column: $table.displayName, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
@@ -12494,15 +14190,15 @@ class $$ActivitiesTableFilterComposer
         referencedTable: $db.projects,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ProjectsTableFilterComposer(
               $db: $db,
               $table: $db.projects,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -12515,15 +14211,15 @@ class $$ActivitiesTableFilterComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.activity,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableFilterComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12536,15 +14232,15 @@ class $$ActivitiesTableFilterComposer
         referencedTable: $db.managedTeams,
         getReferencedColumn: (t) => t.activity,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ManagedTeamsTableFilterComposer(
               $db: $db,
               $table: $db.managedTeams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12557,15 +14253,15 @@ class $$ActivitiesTableFilterComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.activity,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableFilterComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12625,15 +14321,15 @@ class $$ActivitiesTableOrderingComposer
         referencedTable: $db.projects,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ProjectsTableOrderingComposer(
               $db: $db,
               $table: $db.projects,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -12664,8 +14360,8 @@ class $$ActivitiesTableAnnotationComposer
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations, builder: (column) => column);
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -12692,15 +14388,15 @@ class $$ActivitiesTableAnnotationComposer
         referencedTable: $db.projects,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ProjectsTableAnnotationComposer(
               $db: $db,
               $table: $db.projects,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -12713,15 +14409,15 @@ class $$ActivitiesTableAnnotationComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.activity,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableAnnotationComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12734,15 +14430,15 @@ class $$ActivitiesTableAnnotationComposer
         referencedTable: $db.managedTeams,
         getReferencedColumn: (t) => t.activity,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ManagedTeamsTableAnnotationComposer(
               $db: $db,
               $table: $db.managedTeams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12755,15 +14451,15 @@ class $$ActivitiesTableAnnotationComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.activity,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableAnnotationComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -12787,167 +14483,167 @@ class $$ActivitiesTableTableManager extends RootTableManager<
         bool activityAssignments})> {
   $$ActivitiesTableTableManager(_$AppDatabase db, $ActivitiesTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ActivitiesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ActivitiesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ActivitiesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<String> project = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<DateTime?> startDate = const Value.absent(),
-            Value<DateTime?> endDate = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ActivitiesCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            project: project,
-            disabled: disabled,
-            startDate: startDate,
-            endDate: endDate,
-            description: description,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            required String name,
-            Value<String?> code = const Value.absent(),
-            required String project,
-            Value<bool?> disabled = const Value.absent(),
-            Value<DateTime?> startDate = const Value.absent(),
-            Value<DateTime?> endDate = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ActivitiesCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            project: project,
-            disabled: disabled,
-            startDate: startDate,
-            endDate: endDate,
-            description: description,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$ActivitiesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {project = false,
-              assignedTeams = false,
-              activityManagedTeams = false,
-              activityAssignments = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (assignedTeams) db.teams,
-                if (activityManagedTeams) db.managedTeams,
-                if (activityAssignments) db.assignments
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (project) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.project,
-                    referencedTable:
-                        $$ActivitiesTableReferences._projectTable(db),
-                    referencedColumn:
-                        $$ActivitiesTableReferences._projectTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$ActivitiesTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$ActivitiesTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$ActivitiesTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<String> project = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<DateTime?> startDate = const Value.absent(),
+      Value<DateTime?> endDate = const Value.absent(),
+      Value<String?> description = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        ActivitiesCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          project: project,
+          disabled: disabled,
+          startDate: startDate,
+          endDate: endDate,
+          description: description,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String name,
+      Value<String?> code = const Value.absent(),
+      required String project,
+      Value<bool?> disabled = const Value.absent(),
+      Value<DateTime?> startDate = const Value.absent(),
+      Value<DateTime?> endDate = const Value.absent(),
+      Value<String?> description = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        ActivitiesCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          project: project,
+          disabled: disabled,
+          startDate: startDate,
+          endDate: endDate,
+          description: description,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$ActivitiesTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: (
+        {project = false,
+          assignedTeams = false,
+          activityManagedTeams = false,
+          activityAssignments = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [
+          if (assignedTeams) db.teams,
+          if (activityManagedTeams) db.managedTeams,
+          if (activityAssignments) db.assignments
+        ],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (project) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.project,
+              referencedTable:
+              $$ActivitiesTableReferences._projectTable(db),
+              referencedColumn:
+              $$ActivitiesTableReferences._projectTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (assignedTeams)
-                    await $_getPrefetchedData<Activity, $ActivitiesTable, Team>(
-                        currentTable: table,
-                        referencedTable:
-                            $$ActivitiesTableReferences._assignedTeamsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$ActivitiesTableReferences(db, table, p0)
-                                .assignedTeams,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.activity == item.id),
-                        typedResults: items),
-                  if (activityManagedTeams)
-                    await $_getPrefetchedData<Activity, $ActivitiesTable,
-                            ManagedTeam>(
-                        currentTable: table,
-                        referencedTable: $$ActivitiesTableReferences
-                            ._activityManagedTeamsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$ActivitiesTableReferences(db, table, p0)
-                                .activityManagedTeams,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.activity == item.id),
-                        typedResults: items),
-                  if (activityAssignments)
-                    await $_getPrefetchedData<Activity, $ActivitiesTable,
-                            Assignment>(
-                        currentTable: table,
-                        referencedTable: $$ActivitiesTableReferences
-                            ._activityAssignmentsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$ActivitiesTableReferences(db, table, p0)
-                                .activityAssignments,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.activity == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (assignedTeams)
+              await $_getPrefetchedData<Activity, $ActivitiesTable, Team>(
+                  currentTable: table,
+                  referencedTable:
+                  $$ActivitiesTableReferences._assignedTeamsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$ActivitiesTableReferences(db, table, p0)
+                      .assignedTeams,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.activity == item.id),
+                  typedResults: items),
+            if (activityManagedTeams)
+              await $_getPrefetchedData<Activity, $ActivitiesTable,
+                  ManagedTeam>(
+                  currentTable: table,
+                  referencedTable: $$ActivitiesTableReferences
+                      ._activityManagedTeamsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$ActivitiesTableReferences(db, table, p0)
+                      .activityManagedTeams,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.activity == item.id),
+                  typedResults: items),
+            if (activityAssignments)
+              await $_getPrefetchedData<Activity, $ActivitiesTable,
+                  Assignment>(
+                  currentTable: table,
+                  referencedTable: $$ActivitiesTableReferences
+                      ._activityAssignmentsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$ActivitiesTableReferences(db, table, p0)
+                      .activityAssignments,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.activity == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$ActivitiesTableProcessedTableManager = ProcessedTableManager<
@@ -12967,22 +14663,22 @@ typedef $$ActivitiesTableProcessedTableManager = ProcessedTableManager<
         bool activityManagedTeams,
         bool activityAssignments})>;
 typedef $$TeamsTableCreateCompanionBuilder = TeamsCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> code,
-  Value<bool?> disabled,
-  required String activity,
-  Value<int> rowid,
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> code,
+Value<bool?> disabled,
+required String activity,
+Value<int> rowid,
 });
 typedef $$TeamsTableUpdateCompanionBuilder = TeamsCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> code,
-  Value<bool?> disabled,
-  Value<String> activity,
-  Value<int> rowid,
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> code,
+Value<bool?> disabled,
+Value<String> activity,
+Value<int> rowid,
 });
 
 final class $$TeamsTableReferences
@@ -13004,10 +14700,10 @@ final class $$TeamsTableReferences
   }
 
   static MultiTypedResultKey<$ManagedTeamsTable, List<ManagedTeam>>
-      _managedTeamsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.managedTeams,
-              aliasName:
-                  $_aliasNameGenerator(db.teams.id, db.managedTeams.managedBy));
+  _managedTeamsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.managedTeams,
+          aliasName:
+          $_aliasNameGenerator(db.teams.id, db.managedTeams.managedBy));
 
   $$ManagedTeamsTableProcessedTableManager get managedTeams {
     final manager = $$ManagedTeamsTableTableManager($_db, $_db.managedTeams)
@@ -13019,9 +14715,9 @@ final class $$TeamsTableReferences
   }
 
   static MultiTypedResultKey<$AssignmentsTable, List<Assignment>>
-      _teamAssignmentsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-          db.assignments,
-          aliasName: $_aliasNameGenerator(db.teams.id, db.assignments.team));
+  _teamAssignmentsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+      db.assignments,
+      aliasName: $_aliasNameGenerator(db.teams.id, db.assignments.team));
 
   $$AssignmentsTableProcessedTableManager get teamAssignments {
     final manager = $$AssignmentsTableTableManager($_db, $_db.assignments)
@@ -13034,18 +14730,18 @@ final class $$TeamsTableReferences
 
   static MultiTypedResultKey<$UserFormPermissionsTable,
       List<UserFormPermission>> _teamFormPermissionsTable(
-          _$AppDatabase db) =>
+      _$AppDatabase db) =>
       MultiTypedResultKey.fromTable(db.userFormPermissions,
           aliasName:
-              $_aliasNameGenerator(db.teams.id, db.userFormPermissions.team));
+          $_aliasNameGenerator(db.teams.id, db.userFormPermissions.team));
 
   $$UserFormPermissionsTableProcessedTableManager get teamFormPermissions {
     final manager =
-        $$UserFormPermissionsTableTableManager($_db, $_db.userFormPermissions)
-            .filter((f) => f.team.id.sqlEquals($_itemColumn<String>('id')!));
+    $$UserFormPermissionsTableTableManager($_db, $_db.userFormPermissions)
+        .filter((f) => f.team.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache =
-        $_typedResult.readTableOrNull(_teamFormPermissionsTable($_db));
+    $_typedResult.readTableOrNull(_teamFormPermissionsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -13082,15 +14778,15 @@ class $$TeamsTableFilterComposer extends Composer<_$AppDatabase, $TeamsTable> {
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableFilterComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13103,15 +14799,15 @@ class $$TeamsTableFilterComposer extends Composer<_$AppDatabase, $TeamsTable> {
         referencedTable: $db.managedTeams,
         getReferencedColumn: (t) => t.managedBy,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ManagedTeamsTableFilterComposer(
               $db: $db,
               $table: $db.managedTeams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -13124,15 +14820,15 @@ class $$TeamsTableFilterComposer extends Composer<_$AppDatabase, $TeamsTable> {
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.team,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableFilterComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -13145,15 +14841,15 @@ class $$TeamsTableFilterComposer extends Composer<_$AppDatabase, $TeamsTable> {
         referencedTable: $db.userFormPermissions,
         getReferencedColumn: (t) => t.team,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$UserFormPermissionsTableFilterComposer(
               $db: $db,
               $table: $db.userFormPermissions,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -13191,15 +14887,15 @@ class $$TeamsTableOrderingComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableOrderingComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13236,15 +14932,15 @@ class $$TeamsTableAnnotationComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableAnnotationComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13257,15 +14953,15 @@ class $$TeamsTableAnnotationComposer
         referencedTable: $db.managedTeams,
         getReferencedColumn: (t) => t.managedBy,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ManagedTeamsTableAnnotationComposer(
               $db: $db,
               $table: $db.managedTeams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -13278,39 +14974,39 @@ class $$TeamsTableAnnotationComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.team,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableAnnotationComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
 
   Expression<T> teamFormPermissions<T extends Object>(
       Expression<T> Function($$UserFormPermissionsTableAnnotationComposer a)
-          f) {
+      f) {
     final $$UserFormPermissionsTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.userFormPermissions,
-            getReferencedColumn: (t) => t.team,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$UserFormPermissionsTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.userFormPermissions,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+    $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.userFormPermissions,
+        getReferencedColumn: (t) => t.team,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$UserFormPermissionsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.userFormPermissions,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 }
@@ -13333,134 +15029,134 @@ class $$TeamsTableTableManager extends RootTableManager<
         bool teamFormPermissions})> {
   $$TeamsTableTableManager(_$AppDatabase db, $TeamsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TeamsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$TeamsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$TeamsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<String> activity = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TeamsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            code: code,
-            disabled: disabled,
-            activity: activity,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            required String activity,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              TeamsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            code: code,
-            disabled: disabled,
-            activity: activity,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$TeamsTableReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: (
-              {activity = false,
-              managedTeams = false,
-              teamAssignments = false,
-              teamFormPermissions = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (managedTeams) db.managedTeams,
-                if (teamAssignments) db.assignments,
-                if (teamFormPermissions) db.userFormPermissions
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (activity) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.activity,
-                    referencedTable: $$TeamsTableReferences._activityTable(db),
-                    referencedColumn:
-                        $$TeamsTableReferences._activityTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$TeamsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$TeamsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$TeamsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<String> activity = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        TeamsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          code: code,
+          disabled: disabled,
+          activity: activity,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      required String activity,
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        TeamsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          code: code,
+          disabled: disabled,
+          activity: activity,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) =>
+    (e.readTable(table), $$TeamsTableReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: (
+        {activity = false,
+          managedTeams = false,
+          teamAssignments = false,
+          teamFormPermissions = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [
+          if (managedTeams) db.managedTeams,
+          if (teamAssignments) db.assignments,
+          if (teamFormPermissions) db.userFormPermissions
+        ],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (activity) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.activity,
+              referencedTable: $$TeamsTableReferences._activityTable(db),
+              referencedColumn:
+              $$TeamsTableReferences._activityTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (managedTeams)
-                    await $_getPrefetchedData<Team, $TeamsTable, ManagedTeam>(
-                        currentTable: table,
-                        referencedTable:
-                            $$TeamsTableReferences._managedTeamsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$TeamsTableReferences(db, table, p0).managedTeams,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.managedBy == item.id),
-                        typedResults: items),
-                  if (teamAssignments)
-                    await $_getPrefetchedData<Team, $TeamsTable, Assignment>(
-                        currentTable: table,
-                        referencedTable:
-                            $$TeamsTableReferences._teamAssignmentsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$TeamsTableReferences(db, table, p0)
-                                .teamAssignments,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.team == item.id),
-                        typedResults: items),
-                  if (teamFormPermissions)
-                    await $_getPrefetchedData<Team, $TeamsTable,
-                            UserFormPermission>(
-                        currentTable: table,
-                        referencedTable: $$TeamsTableReferences
-                            ._teamFormPermissionsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$TeamsTableReferences(db, table, p0)
-                                .teamFormPermissions,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.team == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (managedTeams)
+              await $_getPrefetchedData<Team, $TeamsTable, ManagedTeam>(
+                  currentTable: table,
+                  referencedTable:
+                  $$TeamsTableReferences._managedTeamsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$TeamsTableReferences(db, table, p0).managedTeams,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.managedBy == item.id),
+                  typedResults: items),
+            if (teamAssignments)
+              await $_getPrefetchedData<Team, $TeamsTable, Assignment>(
+                  currentTable: table,
+                  referencedTable:
+                  $$TeamsTableReferences._teamAssignmentsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$TeamsTableReferences(db, table, p0)
+                      .teamAssignments,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) =>
+                      referencedItems.where((e) => e.team == item.id),
+                  typedResults: items),
+            if (teamFormPermissions)
+              await $_getPrefetchedData<Team, $TeamsTable,
+                  UserFormPermission>(
+                  currentTable: table,
+                  referencedTable: $$TeamsTableReferences
+                      ._teamFormPermissionsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$TeamsTableReferences(db, table, p0)
+                      .teamFormPermissions,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) =>
+                      referencedItems.where((e) => e.team == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$TeamsTableProcessedTableManager = ProcessedTableManager<
@@ -13480,24 +15176,24 @@ typedef $$TeamsTableProcessedTableManager = ProcessedTableManager<
         bool teamAssignments,
         bool teamFormPermissions})>;
 typedef $$ManagedTeamsTableCreateCompanionBuilder = ManagedTeamsCompanion
-    Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> code,
-  required String activity,
-  required String managedBy,
-  Value<int> rowid,
+Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> code,
+required String activity,
+required String managedBy,
+Value<int> rowid,
 });
 typedef $$ManagedTeamsTableUpdateCompanionBuilder = ManagedTeamsCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> code,
-  Value<String> activity,
-  Value<String> managedBy,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> code,
+Value<String> activity,
+Value<String> managedBy,
+Value<int> rowid,
 });
 
 final class $$ManagedTeamsTableReferences
@@ -13563,15 +15259,15 @@ class $$ManagedTeamsTableFilterComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableFilterComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13583,15 +15279,15 @@ class $$ManagedTeamsTableFilterComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableFilterComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13626,15 +15322,15 @@ class $$ManagedTeamsTableOrderingComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableOrderingComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13646,15 +15342,15 @@ class $$ManagedTeamsTableOrderingComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableOrderingComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13688,15 +15384,15 @@ class $$ManagedTeamsTableAnnotationComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableAnnotationComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13708,15 +15404,15 @@ class $$ManagedTeamsTableAnnotationComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableAnnotationComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -13736,102 +15432,102 @@ class $$ManagedTeamsTableTableManager extends RootTableManager<
     PrefetchHooks Function({bool activity, bool managedBy})> {
   $$ManagedTeamsTableTableManager(_$AppDatabase db, $ManagedTeamsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ManagedTeamsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ManagedTeamsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ManagedTeamsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<String> activity = const Value.absent(),
-            Value<String> managedBy = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ManagedTeamsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            code: code,
-            activity: activity,
-            managedBy: managedBy,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            required String activity,
-            required String managedBy,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ManagedTeamsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            code: code,
-            activity: activity,
-            managedBy: managedBy,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$ManagedTeamsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({activity = false, managedBy = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (activity) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.activity,
-                    referencedTable:
-                        $$ManagedTeamsTableReferences._activityTable(db),
-                    referencedColumn:
-                        $$ManagedTeamsTableReferences._activityTable(db).id,
-                  ) as T;
-                }
-                if (managedBy) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.managedBy,
-                    referencedTable:
-                        $$ManagedTeamsTableReferences._managedByTable(db),
-                    referencedColumn:
-                        $$ManagedTeamsTableReferences._managedByTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$ManagedTeamsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$ManagedTeamsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$ManagedTeamsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<String> activity = const Value.absent(),
+      Value<String> managedBy = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        ManagedTeamsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          code: code,
+          activity: activity,
+          managedBy: managedBy,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      required String activity,
+      required String managedBy,
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        ManagedTeamsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          code: code,
+          activity: activity,
+          managedBy: managedBy,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$ManagedTeamsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({activity = false, managedBy = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (activity) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.activity,
+              referencedTable:
+              $$ManagedTeamsTableReferences._activityTable(db),
+              referencedColumn:
+              $$ManagedTeamsTableReferences._activityTable(db).id,
+            ) as T;
+          }
+          if (managedBy) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.managedBy,
+              referencedTable:
+              $$ManagedTeamsTableReferences._managedByTable(db),
+              referencedColumn:
+              $$ManagedTeamsTableReferences._managedByTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$ManagedTeamsTableProcessedTableManager = ProcessedTableManager<
@@ -13847,36 +15543,36 @@ typedef $$ManagedTeamsTableProcessedTableManager = ProcessedTableManager<
     ManagedTeam,
     PrefetchHooks Function({bool activity, bool managedBy})>;
 typedef $$AssignmentsTableCreateCompanionBuilder = AssignmentsCompanion
-    Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  required String activity,
-  required String team,
-  required String orgUnit,
-  Value<DateTime?> instanceDate,
-  required InstanceSyncStatus syncState,
-  Value<AssignmentStatus?> status,
-  Value<DateTime?> completedDate,
-  Value<DateTime?> updatedAtClient,
-  Value<bool?> disabled,
-  Value<int> rowid,
+Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+required String activity,
+required String team,
+required String orgUnit,
+Value<DateTime?> instanceDate,
+required InstanceSyncStatus syncState,
+Value<AssignmentStatus?> status,
+Value<DateTime?> completedDate,
+Value<DateTime?> updatedAtClient,
+Value<bool?> disabled,
+Value<int> rowid,
 });
 typedef $$AssignmentsTableUpdateCompanionBuilder = AssignmentsCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String> activity,
-  Value<String> team,
-  Value<String> orgUnit,
-  Value<DateTime?> instanceDate,
-  Value<InstanceSyncStatus> syncState,
-  Value<AssignmentStatus?> status,
-  Value<DateTime?> completedDate,
-  Value<DateTime?> updatedAtClient,
-  Value<bool?> disabled,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String> activity,
+Value<String> team,
+Value<String> orgUnit,
+Value<DateTime?> instanceDate,
+Value<InstanceSyncStatus> syncState,
+Value<AssignmentStatus?> status,
+Value<DateTime?> completedDate,
+Value<DateTime?> updatedAtClient,
+Value<bool?> disabled,
+Value<int> rowid,
 });
 
 final class $$AssignmentsTableReferences
@@ -13928,14 +15624,14 @@ final class $$AssignmentsTableReferences
   }
 
   static MultiTypedResultKey<$AssignmentFormsTable, List<AssignmentForm>>
-      _formsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.assignmentForms,
-              aliasName: $_aliasNameGenerator(
-                  db.assignments.id, db.assignmentForms.assignment));
+  _formsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.assignmentForms,
+          aliasName: $_aliasNameGenerator(
+              db.assignments.id, db.assignmentForms.assignment));
 
   $$AssignmentFormsTableProcessedTableManager get forms {
     final manager = $$AssignmentFormsTableTableManager(
-            $_db, $_db.assignmentForms)
+        $_db, $_db.assignmentForms)
         .filter((f) => f.assignment.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_formsTable($_db));
@@ -13944,17 +15640,17 @@ final class $$AssignmentsTableReferences
   }
 
   static MultiTypedResultKey<$DataInstancesTable, List<DataInstance>>
-      _assignmentDataInstancesTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataInstances,
-              aliasName: $_aliasNameGenerator(
-                  db.assignments.id, db.dataInstances.assignment));
+  _assignmentDataInstancesTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.dataInstances,
+          aliasName: $_aliasNameGenerator(
+              db.assignments.id, db.dataInstances.assignment));
 
   $$DataInstancesTableProcessedTableManager get assignmentDataInstances {
     final manager = $$DataInstancesTableTableManager($_db, $_db.dataInstances)
         .filter((f) => f.assignment.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache =
-        $_typedResult.readTableOrNull(_assignmentDataInstancesTable($_db));
+    $_typedResult.readTableOrNull(_assignmentDataInstancesTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -13983,14 +15679,14 @@ class $$AssignmentsTableFilterComposer
       column: $table.instanceDate, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<InstanceSyncStatus, InstanceSyncStatus, String>
-      get syncState => $composableBuilder(
-          column: $table.syncState,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get syncState => $composableBuilder(
+      column: $table.syncState,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<AssignmentStatus?, AssignmentStatus, String>
-      get status => $composableBuilder(
-          column: $table.status,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get status => $composableBuilder(
+      column: $table.status,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<DateTime> get completedDate => $composableBuilder(
       column: $table.completedDate, builder: (column) => ColumnFilters(column));
@@ -14009,15 +15705,15 @@ class $$AssignmentsTableFilterComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableFilterComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14029,15 +15725,15 @@ class $$AssignmentsTableFilterComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableFilterComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14049,15 +15745,15 @@ class $$AssignmentsTableFilterComposer
         referencedTable: $db.orgUnits,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$OrgUnitsTableFilterComposer(
               $db: $db,
               $table: $db.orgUnits,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14070,15 +15766,15 @@ class $$AssignmentsTableFilterComposer
         referencedTable: $db.assignmentForms,
         getReferencedColumn: (t) => t.assignment,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentFormsTableFilterComposer(
               $db: $db,
               $table: $db.assignmentForms,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -14091,15 +15787,15 @@ class $$AssignmentsTableFilterComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.assignment,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableFilterComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -14152,15 +15848,15 @@ class $$AssignmentsTableOrderingComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableOrderingComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14172,15 +15868,15 @@ class $$AssignmentsTableOrderingComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableOrderingComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14192,15 +15888,15 @@ class $$AssignmentsTableOrderingComposer
         referencedTable: $db.orgUnits,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$OrgUnitsTableOrderingComposer(
               $db: $db,
               $table: $db.orgUnits,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14249,15 +15945,15 @@ class $$AssignmentsTableAnnotationComposer
         referencedTable: $db.activities,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$ActivitiesTableAnnotationComposer(
               $db: $db,
               $table: $db.activities,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14269,15 +15965,15 @@ class $$AssignmentsTableAnnotationComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableAnnotationComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14289,15 +15985,15 @@ class $$AssignmentsTableAnnotationComposer
         referencedTable: $db.orgUnits,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$OrgUnitsTableAnnotationComposer(
               $db: $db,
               $table: $db.orgUnits,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -14310,15 +16006,15 @@ class $$AssignmentsTableAnnotationComposer
         referencedTable: $db.assignmentForms,
         getReferencedColumn: (t) => t.assignment,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentFormsTableAnnotationComposer(
               $db: $db,
               $table: $db.assignmentForms,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -14331,15 +16027,15 @@ class $$AssignmentsTableAnnotationComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.assignment,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableAnnotationComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -14364,170 +16060,170 @@ class $$AssignmentsTableTableManager extends RootTableManager<
         bool assignmentDataInstances})> {
   $$AssignmentsTableTableManager(_$AppDatabase db, $AssignmentsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$AssignmentsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$AssignmentsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$AssignmentsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String> activity = const Value.absent(),
-            Value<String> team = const Value.absent(),
-            Value<String> orgUnit = const Value.absent(),
-            Value<DateTime?> instanceDate = const Value.absent(),
-            Value<InstanceSyncStatus> syncState = const Value.absent(),
-            Value<AssignmentStatus?> status = const Value.absent(),
-            Value<DateTime?> completedDate = const Value.absent(),
-            Value<DateTime?> updatedAtClient = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              AssignmentsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            activity: activity,
-            team: team,
-            orgUnit: orgUnit,
-            instanceDate: instanceDate,
-            syncState: syncState,
-            status: status,
-            completedDate: completedDate,
-            updatedAtClient: updatedAtClient,
-            disabled: disabled,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            required String activity,
-            required String team,
-            required String orgUnit,
-            Value<DateTime?> instanceDate = const Value.absent(),
-            required InstanceSyncStatus syncState,
-            Value<AssignmentStatus?> status = const Value.absent(),
-            Value<DateTime?> completedDate = const Value.absent(),
-            Value<DateTime?> updatedAtClient = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              AssignmentsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            activity: activity,
-            team: team,
-            orgUnit: orgUnit,
-            instanceDate: instanceDate,
-            syncState: syncState,
-            status: status,
-            completedDate: completedDate,
-            updatedAtClient: updatedAtClient,
-            disabled: disabled,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$AssignmentsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {activity = false,
-              team = false,
-              orgUnit = false,
-              forms = false,
-              assignmentDataInstances = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (forms) db.assignmentForms,
-                if (assignmentDataInstances) db.dataInstances
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (activity) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.activity,
-                    referencedTable:
-                        $$AssignmentsTableReferences._activityTable(db),
-                    referencedColumn:
-                        $$AssignmentsTableReferences._activityTable(db).id,
-                  ) as T;
-                }
-                if (team) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.team,
-                    referencedTable:
-                        $$AssignmentsTableReferences._teamTable(db),
-                    referencedColumn:
-                        $$AssignmentsTableReferences._teamTable(db).id,
-                  ) as T;
-                }
-                if (orgUnit) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.orgUnit,
-                    referencedTable:
-                        $$AssignmentsTableReferences._orgUnitTable(db),
-                    referencedColumn:
-                        $$AssignmentsTableReferences._orgUnitTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$AssignmentsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$AssignmentsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$AssignmentsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String> activity = const Value.absent(),
+      Value<String> team = const Value.absent(),
+      Value<String> orgUnit = const Value.absent(),
+      Value<DateTime?> instanceDate = const Value.absent(),
+      Value<InstanceSyncStatus> syncState = const Value.absent(),
+      Value<AssignmentStatus?> status = const Value.absent(),
+      Value<DateTime?> completedDate = const Value.absent(),
+      Value<DateTime?> updatedAtClient = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          activity: activity,
+          team: team,
+          orgUnit: orgUnit,
+          instanceDate: instanceDate,
+          syncState: syncState,
+          status: status,
+          completedDate: completedDate,
+          updatedAtClient: updatedAtClient,
+          disabled: disabled,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      required String activity,
+      required String team,
+      required String orgUnit,
+      Value<DateTime?> instanceDate = const Value.absent(),
+      required InstanceSyncStatus syncState,
+      Value<AssignmentStatus?> status = const Value.absent(),
+      Value<DateTime?> completedDate = const Value.absent(),
+      Value<DateTime?> updatedAtClient = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          activity: activity,
+          team: team,
+          orgUnit: orgUnit,
+          instanceDate: instanceDate,
+          syncState: syncState,
+          status: status,
+          completedDate: completedDate,
+          updatedAtClient: updatedAtClient,
+          disabled: disabled,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$AssignmentsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: (
+        {activity = false,
+          team = false,
+          orgUnit = false,
+          forms = false,
+          assignmentDataInstances = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [
+          if (forms) db.assignmentForms,
+          if (assignmentDataInstances) db.dataInstances
+        ],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (activity) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.activity,
+              referencedTable:
+              $$AssignmentsTableReferences._activityTable(db),
+              referencedColumn:
+              $$AssignmentsTableReferences._activityTable(db).id,
+            ) as T;
+          }
+          if (team) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.team,
+              referencedTable:
+              $$AssignmentsTableReferences._teamTable(db),
+              referencedColumn:
+              $$AssignmentsTableReferences._teamTable(db).id,
+            ) as T;
+          }
+          if (orgUnit) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.orgUnit,
+              referencedTable:
+              $$AssignmentsTableReferences._orgUnitTable(db),
+              referencedColumn:
+              $$AssignmentsTableReferences._orgUnitTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (forms)
-                    await $_getPrefetchedData<Assignment, $AssignmentsTable,
-                            AssignmentForm>(
-                        currentTable: table,
-                        referencedTable:
-                            $$AssignmentsTableReferences._formsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$AssignmentsTableReferences(db, table, p0).forms,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.assignment == item.id),
-                        typedResults: items),
-                  if (assignmentDataInstances)
-                    await $_getPrefetchedData<Assignment, $AssignmentsTable,
-                            DataInstance>(
-                        currentTable: table,
-                        referencedTable: $$AssignmentsTableReferences
-                            ._assignmentDataInstancesTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$AssignmentsTableReferences(db, table, p0)
-                                .assignmentDataInstances,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.assignment == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (forms)
+              await $_getPrefetchedData<Assignment, $AssignmentsTable,
+                  AssignmentForm>(
+                  currentTable: table,
+                  referencedTable:
+                  $$AssignmentsTableReferences._formsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$AssignmentsTableReferences(db, table, p0).forms,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.assignment == item.id),
+                  typedResults: items),
+            if (assignmentDataInstances)
+              await $_getPrefetchedData<Assignment, $AssignmentsTable,
+                  DataInstance>(
+                  currentTable: table,
+                  referencedTable: $$AssignmentsTableReferences
+                      ._assignmentDataInstancesTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$AssignmentsTableReferences(db, table, p0)
+                      .assignmentDataInstances,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.assignment == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$AssignmentsTableProcessedTableManager = ProcessedTableManager<
@@ -14548,26 +16244,26 @@ typedef $$AssignmentsTableProcessedTableManager = ProcessedTableManager<
         bool forms,
         bool assignmentDataInstances})>;
 typedef $$FormTemplatesTableCreateCompanionBuilder = FormTemplatesCompanion
-    Function({
-  required String id,
-  required String versionUid,
-  required int versionNumber,
-  required String name,
-  Value<Map<String, dynamic>?> label,
-  Value<String?> description,
-  Value<bool?> disabled,
-  Value<int> rowid,
+Function({
+required String id,
+required String versionUid,
+required int versionNumber,
+required String name,
+Value<Map<String, dynamic>?> label,
+Value<String?> description,
+Value<bool?> disabled,
+Value<int> rowid,
 });
 typedef $$FormTemplatesTableUpdateCompanionBuilder = FormTemplatesCompanion
-    Function({
-  Value<String> id,
-  Value<String> versionUid,
-  Value<int> versionNumber,
-  Value<String> name,
-  Value<Map<String, dynamic>?> label,
-  Value<String?> description,
-  Value<bool?> disabled,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<String> versionUid,
+Value<int> versionNumber,
+Value<String> name,
+Value<Map<String, dynamic>?> label,
+Value<String?> description,
+Value<bool?> disabled,
+Value<int> rowid,
 });
 
 final class $$FormTemplatesTableReferences
@@ -14576,15 +16272,15 @@ final class $$FormTemplatesTableReferences
       super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$AssignmentFormsTable, List<AssignmentForm>>
-      _assignmentsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.assignmentForms,
-              aliasName: $_aliasNameGenerator(
-                  db.formTemplates.id, db.assignmentForms.form));
+  _assignmentsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.assignmentForms,
+          aliasName: $_aliasNameGenerator(
+              db.formTemplates.id, db.assignmentForms.form));
 
   $$AssignmentFormsTableProcessedTableManager get assignments {
     final manager =
-        $$AssignmentFormsTableTableManager($_db, $_db.assignmentForms)
-            .filter((f) => f.form.id.sqlEquals($_itemColumn<String>('id')!));
+    $$AssignmentFormsTableTableManager($_db, $_db.assignmentForms)
+        .filter((f) => f.form.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_assignmentsTable($_db));
     return ProcessedTableManager(
@@ -14593,14 +16289,14 @@ final class $$FormTemplatesTableReferences
 
   static MultiTypedResultKey<$FormTemplateVersionsTable,
       List<FormTemplateVersion>> _versionsTable(
-          _$AppDatabase db) =>
+      _$AppDatabase db) =>
       MultiTypedResultKey.fromTable(db.formTemplateVersions,
           aliasName: $_aliasNameGenerator(
               db.formTemplates.id, db.formTemplateVersions.template));
 
   $$FormTemplateVersionsTableProcessedTableManager get versions {
     final manager = $$FormTemplateVersionsTableTableManager(
-            $_db, $_db.formTemplateVersions)
+        $_db, $_db.formTemplateVersions)
         .filter((f) => f.template.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_versionsTable($_db));
@@ -14609,10 +16305,10 @@ final class $$FormTemplatesTableReferences
   }
 
   static MultiTypedResultKey<$DataInstancesTable, List<DataInstance>>
-      _templateDataInstancesTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataInstances,
-              aliasName: $_aliasNameGenerator(
-                  db.formTemplates.id, db.dataInstances.formTemplate));
+  _templateDataInstancesTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.dataInstances,
+          aliasName: $_aliasNameGenerator(
+              db.formTemplates.id, db.dataInstances.formTemplate));
 
   $$DataInstancesTableProcessedTableManager get templateDataInstances {
     final manager = $$DataInstancesTableTableManager($_db, $_db.dataInstances)
@@ -14620,22 +16316,22 @@ final class $$FormTemplatesTableReferences
             (f) => f.formTemplate.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache =
-        $_typedResult.readTableOrNull(_templateDataInstancesTable($_db));
+    $_typedResult.readTableOrNull(_templateDataInstancesTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
 
   static MultiTypedResultKey<$UserFormPermissionsTable,
       List<UserFormPermission>> _formPermissionsTable(
-          _$AppDatabase db) =>
+      _$AppDatabase db) =>
       MultiTypedResultKey.fromTable(db.userFormPermissions,
           aliasName: $_aliasNameGenerator(
               db.formTemplates.id, db.userFormPermissions.form));
 
   $$UserFormPermissionsTableProcessedTableManager get formPermissions {
     final manager =
-        $$UserFormPermissionsTableTableManager($_db, $_db.userFormPermissions)
-            .filter((f) => f.form.id.sqlEquals($_itemColumn<String>('id')!));
+    $$UserFormPermissionsTableTableManager($_db, $_db.userFormPermissions)
+        .filter((f) => f.form.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_formPermissionsTable($_db));
     return ProcessedTableManager(
@@ -14665,10 +16361,10 @@ class $$FormTemplatesTableFilterComposer
       column: $table.name, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get description => $composableBuilder(
       column: $table.description, builder: (column) => ColumnFilters(column));
@@ -14684,37 +16380,37 @@ class $$FormTemplatesTableFilterComposer
         referencedTable: $db.assignmentForms,
         getReferencedColumn: (t) => t.form,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentFormsTableFilterComposer(
               $db: $db,
               $table: $db.assignmentForms,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
 
   Expression<bool> versions(
       Expression<bool> Function($$FormTemplateVersionsTableFilterComposer f)
-          f) {
+      f) {
     final $$FormTemplateVersionsTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.id,
         referencedTable: $db.formTemplateVersions,
         getReferencedColumn: (t) => t.template,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplateVersionsTableFilterComposer(
               $db: $db,
               $table: $db.formTemplateVersions,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -14727,15 +16423,15 @@ class $$FormTemplatesTableFilterComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.formTemplate,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableFilterComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -14748,15 +16444,15 @@ class $$FormTemplatesTableFilterComposer
         referencedTable: $db.userFormPermissions,
         getReferencedColumn: (t) => t.form,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$UserFormPermissionsTableFilterComposer(
               $db: $db,
               $table: $db.userFormPermissions,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -14832,39 +16528,39 @@ class $$FormTemplatesTableAnnotationComposer
         referencedTable: $db.assignmentForms,
         getReferencedColumn: (t) => t.form,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentFormsTableAnnotationComposer(
               $db: $db,
               $table: $db.assignmentForms,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
 
   Expression<T> versions<T extends Object>(
       Expression<T> Function($$FormTemplateVersionsTableAnnotationComposer a)
-          f) {
+      f) {
     final $$FormTemplateVersionsTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.formTemplateVersions,
-            getReferencedColumn: (t) => t.template,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$FormTemplateVersionsTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.formTemplateVersions,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+    $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.formTemplateVersions,
+        getReferencedColumn: (t) => t.template,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$FormTemplateVersionsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.formTemplateVersions,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 
@@ -14876,39 +16572,39 @@ class $$FormTemplatesTableAnnotationComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.formTemplate,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableAnnotationComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
 
   Expression<T> formPermissions<T extends Object>(
       Expression<T> Function($$UserFormPermissionsTableAnnotationComposer a)
-          f) {
+      f) {
     final $$UserFormPermissionsTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.userFormPermissions,
-            getReferencedColumn: (t) => t.form,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$UserFormPermissionsTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.userFormPermissions,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+    $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.userFormPermissions,
+        getReferencedColumn: (t) => t.form,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$UserFormPermissionsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.userFormPermissions,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 }
@@ -14931,133 +16627,133 @@ class $$FormTemplatesTableTableManager extends RootTableManager<
         bool formPermissions})> {
   $$FormTemplatesTableTableManager(_$AppDatabase db, $FormTemplatesTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$FormTemplatesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$FormTemplatesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$FormTemplatesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> versionUid = const Value.absent(),
-            Value<int> versionNumber = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              FormTemplatesCompanion(
-            id: id,
-            versionUid: versionUid,
-            versionNumber: versionNumber,
-            name: name,
-            label: label,
-            description: description,
-            disabled: disabled,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String versionUid,
-            required int versionNumber,
-            required String name,
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<bool?> disabled = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              FormTemplatesCompanion.insert(
-            id: id,
-            versionUid: versionUid,
-            versionNumber: versionNumber,
-            name: name,
-            label: label,
-            description: description,
-            disabled: disabled,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$FormTemplatesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {assignments = false,
-              versions = false,
-              templateDataInstances = false,
-              formPermissions = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (assignments) db.assignmentForms,
-                if (versions) db.formTemplateVersions,
-                if (templateDataInstances) db.dataInstances,
-                if (formPermissions) db.userFormPermissions
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (assignments)
-                    await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
-                            AssignmentForm>(
-                        currentTable: table,
-                        referencedTable: $$FormTemplatesTableReferences
-                            ._assignmentsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$FormTemplatesTableReferences(db, table, p0)
-                                .assignments,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.form == item.id),
-                        typedResults: items),
-                  if (versions)
-                    await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
-                            FormTemplateVersion>(
-                        currentTable: table,
-                        referencedTable:
-                            $$FormTemplatesTableReferences._versionsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$FormTemplatesTableReferences(db, table, p0)
-                                .versions,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.template == item.id),
-                        typedResults: items),
-                  if (templateDataInstances)
-                    await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
-                            DataInstance>(
-                        currentTable: table,
-                        referencedTable: $$FormTemplatesTableReferences
-                            ._templateDataInstancesTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$FormTemplatesTableReferences(db, table, p0)
-                                .templateDataInstances,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.formTemplate == item.id),
-                        typedResults: items),
-                  if (formPermissions)
-                    await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
-                            UserFormPermission>(
-                        currentTable: table,
-                        referencedTable: $$FormTemplatesTableReferences
-                            ._formPermissionsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$FormTemplatesTableReferences(db, table, p0)
-                                .formPermissions,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.form == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$FormTemplatesTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$FormTemplatesTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$FormTemplatesTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<String> versionUid = const Value.absent(),
+      Value<int> versionNumber = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<String?> description = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        FormTemplatesCompanion(
+          id: id,
+          versionUid: versionUid,
+          versionNumber: versionNumber,
+          name: name,
+          label: label,
+          description: description,
+          disabled: disabled,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      required String versionUid,
+      required int versionNumber,
+      required String name,
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<String?> description = const Value.absent(),
+      Value<bool?> disabled = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        FormTemplatesCompanion.insert(
+          id: id,
+          versionUid: versionUid,
+          versionNumber: versionNumber,
+          name: name,
+          label: label,
+          description: description,
+          disabled: disabled,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$FormTemplatesTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: (
+        {assignments = false,
+          versions = false,
+          templateDataInstances = false,
+          formPermissions = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [
+          if (assignments) db.assignmentForms,
+          if (versions) db.formTemplateVersions,
+          if (templateDataInstances) db.dataInstances,
+          if (formPermissions) db.userFormPermissions
+        ],
+        addJoins: null,
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (assignments)
+              await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
+                  AssignmentForm>(
+                  currentTable: table,
+                  referencedTable: $$FormTemplatesTableReferences
+                      ._assignmentsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$FormTemplatesTableReferences(db, table, p0)
+                      .assignments,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) =>
+                      referencedItems.where((e) => e.form == item.id),
+                  typedResults: items),
+            if (versions)
+              await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
+                  FormTemplateVersion>(
+                  currentTable: table,
+                  referencedTable:
+                  $$FormTemplatesTableReferences._versionsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$FormTemplatesTableReferences(db, table, p0)
+                      .versions,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.template == item.id),
+                  typedResults: items),
+            if (templateDataInstances)
+              await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
+                  DataInstance>(
+                  currentTable: table,
+                  referencedTable: $$FormTemplatesTableReferences
+                      ._templateDataInstancesTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$FormTemplatesTableReferences(db, table, p0)
+                      .templateDataInstances,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.formTemplate == item.id),
+                  typedResults: items),
+            if (formPermissions)
+              await $_getPrefetchedData<FormTemplate, $FormTemplatesTable,
+                  UserFormPermission>(
+                  currentTable: table,
+                  referencedTable: $$FormTemplatesTableReferences
+                      ._formPermissionsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$FormTemplatesTableReferences(db, table, p0)
+                      .formPermissions,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) =>
+                      referencedItems.where((e) => e.form == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$FormTemplatesTableProcessedTableManager = ProcessedTableManager<
@@ -15077,24 +16773,24 @@ typedef $$FormTemplatesTableProcessedTableManager = ProcessedTableManager<
         bool templateDataInstances,
         bool formPermissions})>;
 typedef $$AssignmentFormsTableCreateCompanionBuilder = AssignmentFormsCompanion
-    Function({
-  required String assignment,
-  required String form,
-  Value<bool?> canAddSubmissions,
-  Value<bool?> canViewSubmissions,
-  Value<bool?> canEditSubmissions,
-  Value<bool?> canDeleteSubmissions,
-  Value<int> rowid,
+Function({
+required String assignment,
+required String form,
+Value<bool?> canAddSubmissions,
+Value<bool?> canViewSubmissions,
+Value<bool?> canEditSubmissions,
+Value<bool?> canDeleteSubmissions,
+Value<int> rowid,
 });
 typedef $$AssignmentFormsTableUpdateCompanionBuilder = AssignmentFormsCompanion
-    Function({
-  Value<String> assignment,
-  Value<String> form,
-  Value<bool?> canAddSubmissions,
-  Value<bool?> canViewSubmissions,
-  Value<bool?> canEditSubmissions,
-  Value<bool?> canDeleteSubmissions,
-  Value<int> rowid,
+Function({
+Value<String> assignment,
+Value<String> form,
+Value<bool?> canAddSubmissions,
+Value<bool?> canViewSubmissions,
+Value<bool?> canEditSubmissions,
+Value<bool?> canDeleteSubmissions,
+Value<int> rowid,
 });
 
 final class $$AssignmentFormsTableReferences extends BaseReferences<
@@ -15165,15 +16861,15 @@ class $$AssignmentFormsTableFilterComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableFilterComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15185,15 +16881,15 @@ class $$AssignmentFormsTableFilterComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableFilterComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15231,15 +16927,15 @@ class $$AssignmentFormsTableOrderingComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableOrderingComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15251,15 +16947,15 @@ class $$AssignmentFormsTableOrderingComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableOrderingComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15293,15 +16989,15 @@ class $$AssignmentFormsTableAnnotationComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableAnnotationComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15313,15 +17009,15 @@ class $$AssignmentFormsTableAnnotationComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableAnnotationComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15342,103 +17038,103 @@ class $$AssignmentFormsTableTableManager extends RootTableManager<
   $$AssignmentFormsTableTableManager(
       _$AppDatabase db, $AssignmentFormsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$AssignmentFormsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$AssignmentFormsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$AssignmentFormsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> assignment = const Value.absent(),
-            Value<String> form = const Value.absent(),
-            Value<bool?> canAddSubmissions = const Value.absent(),
-            Value<bool?> canViewSubmissions = const Value.absent(),
-            Value<bool?> canEditSubmissions = const Value.absent(),
-            Value<bool?> canDeleteSubmissions = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              AssignmentFormsCompanion(
-            assignment: assignment,
-            form: form,
-            canAddSubmissions: canAddSubmissions,
-            canViewSubmissions: canViewSubmissions,
-            canEditSubmissions: canEditSubmissions,
-            canDeleteSubmissions: canDeleteSubmissions,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String assignment,
-            required String form,
-            Value<bool?> canAddSubmissions = const Value.absent(),
-            Value<bool?> canViewSubmissions = const Value.absent(),
-            Value<bool?> canEditSubmissions = const Value.absent(),
-            Value<bool?> canDeleteSubmissions = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              AssignmentFormsCompanion.insert(
-            assignment: assignment,
-            form: form,
-            canAddSubmissions: canAddSubmissions,
-            canViewSubmissions: canViewSubmissions,
-            canEditSubmissions: canEditSubmissions,
-            canDeleteSubmissions: canDeleteSubmissions,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$AssignmentFormsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({assignment = false, form = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (assignment) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.assignment,
-                    referencedTable:
-                        $$AssignmentFormsTableReferences._assignmentTable(db),
-                    referencedColumn: $$AssignmentFormsTableReferences
-                        ._assignmentTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (form) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.form,
-                    referencedTable:
-                        $$AssignmentFormsTableReferences._formTable(db),
-                    referencedColumn:
-                        $$AssignmentFormsTableReferences._formTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$AssignmentFormsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$AssignmentFormsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$AssignmentFormsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> assignment = const Value.absent(),
+      Value<String> form = const Value.absent(),
+      Value<bool?> canAddSubmissions = const Value.absent(),
+      Value<bool?> canViewSubmissions = const Value.absent(),
+      Value<bool?> canEditSubmissions = const Value.absent(),
+      Value<bool?> canDeleteSubmissions = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentFormsCompanion(
+          assignment: assignment,
+          form: form,
+          canAddSubmissions: canAddSubmissions,
+          canViewSubmissions: canViewSubmissions,
+          canEditSubmissions: canEditSubmissions,
+          canDeleteSubmissions: canDeleteSubmissions,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String assignment,
+      required String form,
+      Value<bool?> canAddSubmissions = const Value.absent(),
+      Value<bool?> canViewSubmissions = const Value.absent(),
+      Value<bool?> canEditSubmissions = const Value.absent(),
+      Value<bool?> canDeleteSubmissions = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentFormsCompanion.insert(
+          assignment: assignment,
+          form: form,
+          canAddSubmissions: canAddSubmissions,
+          canViewSubmissions: canViewSubmissions,
+          canEditSubmissions: canEditSubmissions,
+          canDeleteSubmissions: canDeleteSubmissions,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$AssignmentFormsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({assignment = false, form = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (assignment) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.assignment,
+              referencedTable:
+              $$AssignmentFormsTableReferences._assignmentTable(db),
+              referencedColumn: $$AssignmentFormsTableReferences
+                  ._assignmentTable(db)
+                  .id,
+            ) as T;
+          }
+          if (form) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.form,
+              referencedTable:
+              $$AssignmentFormsTableReferences._formTable(db),
+              referencedColumn:
+              $$AssignmentFormsTableReferences._formTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$AssignmentFormsTableProcessedTableManager = ProcessedTableManager<
@@ -15454,24 +17150,24 @@ typedef $$AssignmentFormsTableProcessedTableManager = ProcessedTableManager<
     AssignmentForm,
     PrefetchHooks Function({bool assignment, bool form})>;
 typedef $$FormTemplateVersionsTableCreateCompanionBuilder
-    = FormTemplateVersionsCompanion Function({
-  required String id,
-  required String template,
-  required int versionNumber,
-  required List<Template> fields,
-  required List<Template> sections,
-  Value<List<FormOption>?> options,
-  Value<int> rowid,
+= FormTemplateVersionsCompanion Function({
+required String id,
+required String template,
+required int versionNumber,
+required List<Template> fields,
+required List<Template> sections,
+Value<List<FormOption>?> options,
+Value<int> rowid,
 });
 typedef $$FormTemplateVersionsTableUpdateCompanionBuilder
-    = FormTemplateVersionsCompanion Function({
-  Value<String> id,
-  Value<String> template,
-  Value<int> versionNumber,
-  Value<List<Template>> fields,
-  Value<List<Template>> sections,
-  Value<List<FormOption>?> options,
-  Value<int> rowid,
+= FormTemplateVersionsCompanion Function({
+Value<String> id,
+Value<String> template,
+Value<int> versionNumber,
+Value<List<Template>> fields,
+Value<List<Template>> sections,
+Value<List<FormOption>?> options,
+Value<int> rowid,
 });
 
 final class $$FormTemplateVersionsTableReferences extends BaseReferences<
@@ -15495,10 +17191,10 @@ final class $$FormTemplateVersionsTableReferences extends BaseReferences<
   }
 
   static MultiTypedResultKey<$DataInstancesTable, List<DataInstance>>
-      _VersionDataInstancesTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataInstances,
-              aliasName: $_aliasNameGenerator(db.formTemplateVersions.id,
-                  db.dataInstances.templateVersion));
+  _VersionDataInstancesTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.dataInstances,
+          aliasName: $_aliasNameGenerator(db.formTemplateVersions.id,
+              db.dataInstances.templateVersion));
 
   $$DataInstancesTableProcessedTableManager get VersionDataInstances {
     final manager = $$DataInstancesTableTableManager($_db, $_db.dataInstances)
@@ -15506,7 +17202,7 @@ final class $$FormTemplateVersionsTableReferences extends BaseReferences<
             (f) => f.templateVersion.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache =
-        $_typedResult.readTableOrNull(_VersionDataInstancesTable($_db));
+    $_typedResult.readTableOrNull(_VersionDataInstancesTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -15528,19 +17224,19 @@ class $$FormTemplateVersionsTableFilterComposer
       column: $table.versionNumber, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<List<Template>, List<Template>, String>
-      get fields => $composableBuilder(
-          column: $table.fields,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get fields => $composableBuilder(
+      column: $table.fields,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Template>, List<Template>, String>
-      get sections => $composableBuilder(
-          column: $table.sections,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get sections => $composableBuilder(
+      column: $table.sections,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<FormOption>?, List<FormOption>, String>
-      get options => $composableBuilder(
-          column: $table.options,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get options => $composableBuilder(
+      column: $table.options,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   $$FormTemplatesTableFilterComposer get template {
     final $$FormTemplatesTableFilterComposer composer = $composerBuilder(
@@ -15549,15 +17245,15 @@ class $$FormTemplateVersionsTableFilterComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableFilterComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15570,15 +17266,15 @@ class $$FormTemplateVersionsTableFilterComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.templateVersion,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableFilterComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -15616,15 +17312,15 @@ class $$FormTemplateVersionsTableOrderingComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableOrderingComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15661,15 +17357,15 @@ class $$FormTemplateVersionsTableAnnotationComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableAnnotationComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -15682,15 +17378,15 @@ class $$FormTemplateVersionsTableAnnotationComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.templateVersion,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableAnnotationComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -15711,450 +17407,166 @@ class $$FormTemplateVersionsTableTableManager extends RootTableManager<
   $$FormTemplateVersionsTableTableManager(
       _$AppDatabase db, $FormTemplateVersionsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$FormTemplateVersionsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$FormTemplateVersionsTableOrderingComposer(
-                  $db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$FormTemplateVersionsTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> template = const Value.absent(),
-            Value<int> versionNumber = const Value.absent(),
-            Value<List<Template>> fields = const Value.absent(),
-            Value<List<Template>> sections = const Value.absent(),
-            Value<List<FormOption>?> options = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              FormTemplateVersionsCompanion(
-            id: id,
-            template: template,
-            versionNumber: versionNumber,
-            fields: fields,
-            sections: sections,
-            options: options,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String template,
-            required int versionNumber,
-            required List<Template> fields,
-            required List<Template> sections,
-            Value<List<FormOption>?> options = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              FormTemplateVersionsCompanion.insert(
-            id: id,
-            template: template,
-            versionNumber: versionNumber,
-            fields: fields,
-            sections: sections,
-            options: options,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$FormTemplateVersionsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {template = false, VersionDataInstances = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (VersionDataInstances) db.dataInstances
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (template) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.template,
-                    referencedTable: $$FormTemplateVersionsTableReferences
-                        ._templateTable(db),
-                    referencedColumn: $$FormTemplateVersionsTableReferences
-                        ._templateTable(db)
-                        .id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$FormTemplateVersionsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$FormTemplateVersionsTableOrderingComposer(
+            $db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$FormTemplateVersionsTableAnnotationComposer(
+            $db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<String> template = const Value.absent(),
+      Value<int> versionNumber = const Value.absent(),
+      Value<List<Template>> fields = const Value.absent(),
+      Value<List<Template>> sections = const Value.absent(),
+      Value<List<FormOption>?> options = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        FormTemplateVersionsCompanion(
+          id: id,
+          template: template,
+          versionNumber: versionNumber,
+          fields: fields,
+          sections: sections,
+          options: options,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      required String template,
+      required int versionNumber,
+      required List<Template> fields,
+      required List<Template> sections,
+      Value<List<FormOption>?> options = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        FormTemplateVersionsCompanion.insert(
+          id: id,
+          template: template,
+          versionNumber: versionNumber,
+          fields: fields,
+          sections: sections,
+          options: options,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$FormTemplateVersionsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: (
+        {template = false, VersionDataInstances = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [
+          if (VersionDataInstances) db.dataInstances
+        ],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (template) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.template,
+              referencedTable: $$FormTemplateVersionsTableReferences
+                  ._templateTable(db),
+              referencedColumn: $$FormTemplateVersionsTableReferences
+                  ._templateTable(db)
+                  .id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (VersionDataInstances)
-                    await $_getPrefetchedData<FormTemplateVersion,
-                            $FormTemplateVersionsTable, DataInstance>(
-                        currentTable: table,
-                        referencedTable: $$FormTemplateVersionsTableReferences
-                            ._VersionDataInstancesTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$FormTemplateVersionsTableReferences(db, table, p0)
-                                .VersionDataInstances,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.templateVersion == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (VersionDataInstances)
+              await $_getPrefetchedData<FormTemplateVersion,
+                  $FormTemplateVersionsTable, DataInstance>(
+                  currentTable: table,
+                  referencedTable: $$FormTemplateVersionsTableReferences
+                      ._VersionDataInstancesTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$FormTemplateVersionsTableReferences(db, table, p0)
+                      .VersionDataInstances,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.templateVersion == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$FormTemplateVersionsTableProcessedTableManager
-    = ProcessedTableManager<
-        _$AppDatabase,
-        $FormTemplateVersionsTable,
-        FormTemplateVersion,
-        $$FormTemplateVersionsTableFilterComposer,
-        $$FormTemplateVersionsTableOrderingComposer,
-        $$FormTemplateVersionsTableAnnotationComposer,
-        $$FormTemplateVersionsTableCreateCompanionBuilder,
-        $$FormTemplateVersionsTableUpdateCompanionBuilder,
-        (FormTemplateVersion, $$FormTemplateVersionsTableReferences),
-        FormTemplateVersion,
-        PrefetchHooks Function({bool template, bool VersionDataInstances})>;
-typedef $$MetadataSubmissionsTableCreateCompanionBuilder
-    = MetadataSubmissionsCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  required MetadataResourceType resourceType,
-  required String metadataSchema,
-  required int serialNumber,
-  required int version,
-  required String resourceId,
-  Value<Map<String, dynamic>?> formData,
-  Value<String?> createdBy,
-  Value<String?> lastModifiedBy,
-  Value<int> rowid,
-});
-typedef $$MetadataSubmissionsTableUpdateCompanionBuilder
-    = MetadataSubmissionsCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<MetadataResourceType> resourceType,
-  Value<String> metadataSchema,
-  Value<int> serialNumber,
-  Value<int> version,
-  Value<String> resourceId,
-  Value<Map<String, dynamic>?> formData,
-  Value<String?> createdBy,
-  Value<String?> lastModifiedBy,
-  Value<int> rowid,
-});
-
-class $$MetadataSubmissionsTableFilterComposer
-    extends Composer<_$AppDatabase, $MetadataSubmissionsTable> {
-  $$MetadataSubmissionsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<MetadataResourceType, MetadataResourceType,
-          String>
-      get resourceType => $composableBuilder(
-          column: $table.resourceType,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<String> get metadataSchema => $composableBuilder(
-      column: $table.metadataSchema,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get serialNumber => $composableBuilder(
-      column: $table.serialNumber, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get version => $composableBuilder(
-      column: $table.version, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get resourceId => $composableBuilder(
-      column: $table.resourceId, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get formData => $composableBuilder(
-          column: $table.formData,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<String> get createdBy => $composableBuilder(
-      column: $table.createdBy, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get lastModifiedBy => $composableBuilder(
-      column: $table.lastModifiedBy,
-      builder: (column) => ColumnFilters(column));
-}
-
-class $$MetadataSubmissionsTableOrderingComposer
-    extends Composer<_$AppDatabase, $MetadataSubmissionsTable> {
-  $$MetadataSubmissionsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get resourceType => $composableBuilder(
-      column: $table.resourceType,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get metadataSchema => $composableBuilder(
-      column: $table.metadataSchema,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get serialNumber => $composableBuilder(
-      column: $table.serialNumber,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get version => $composableBuilder(
-      column: $table.version, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get resourceId => $composableBuilder(
-      column: $table.resourceId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get formData => $composableBuilder(
-      column: $table.formData, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get createdBy => $composableBuilder(
-      column: $table.createdBy, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get lastModifiedBy => $composableBuilder(
-      column: $table.lastModifiedBy,
-      builder: (column) => ColumnOrderings(column));
-}
-
-class $$MetadataSubmissionsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $MetadataSubmissionsTable> {
-  $$MetadataSubmissionsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<MetadataResourceType, String>
-      get resourceType => $composableBuilder(
-          column: $table.resourceType, builder: (column) => column);
-
-  GeneratedColumn<String> get metadataSchema => $composableBuilder(
-      column: $table.metadataSchema, builder: (column) => column);
-
-  GeneratedColumn<int> get serialNumber => $composableBuilder(
-      column: $table.serialNumber, builder: (column) => column);
-
-  GeneratedColumn<int> get version =>
-      $composableBuilder(column: $table.version, builder: (column) => column);
-
-  GeneratedColumn<String> get resourceId => $composableBuilder(
-      column: $table.resourceId, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      get formData => $composableBuilder(
-          column: $table.formData, builder: (column) => column);
-
-  GeneratedColumn<String> get createdBy =>
-      $composableBuilder(column: $table.createdBy, builder: (column) => column);
-
-  GeneratedColumn<String> get lastModifiedBy => $composableBuilder(
-      column: $table.lastModifiedBy, builder: (column) => column);
-}
-
-class $$MetadataSubmissionsTableTableManager extends RootTableManager<
+= ProcessedTableManager<
     _$AppDatabase,
-    $MetadataSubmissionsTable,
-    MetadataSubmission,
-    $$MetadataSubmissionsTableFilterComposer,
-    $$MetadataSubmissionsTableOrderingComposer,
-    $$MetadataSubmissionsTableAnnotationComposer,
-    $$MetadataSubmissionsTableCreateCompanionBuilder,
-    $$MetadataSubmissionsTableUpdateCompanionBuilder,
-    (
-      MetadataSubmission,
-      BaseReferences<_$AppDatabase, $MetadataSubmissionsTable,
-          MetadataSubmission>
-    ),
-    MetadataSubmission,
-    PrefetchHooks Function()> {
-  $$MetadataSubmissionsTableTableManager(
-      _$AppDatabase db, $MetadataSubmissionsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MetadataSubmissionsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MetadataSubmissionsTableOrderingComposer(
-                  $db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MetadataSubmissionsTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<MetadataResourceType> resourceType = const Value.absent(),
-            Value<String> metadataSchema = const Value.absent(),
-            Value<int> serialNumber = const Value.absent(),
-            Value<int> version = const Value.absent(),
-            Value<String> resourceId = const Value.absent(),
-            Value<Map<String, dynamic>?> formData = const Value.absent(),
-            Value<String?> createdBy = const Value.absent(),
-            Value<String?> lastModifiedBy = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              MetadataSubmissionsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            resourceType: resourceType,
-            metadataSchema: metadataSchema,
-            serialNumber: serialNumber,
-            version: version,
-            resourceId: resourceId,
-            formData: formData,
-            createdBy: createdBy,
-            lastModifiedBy: lastModifiedBy,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            required MetadataResourceType resourceType,
-            required String metadataSchema,
-            required int serialNumber,
-            required int version,
-            required String resourceId,
-            Value<Map<String, dynamic>?> formData = const Value.absent(),
-            Value<String?> createdBy = const Value.absent(),
-            Value<String?> lastModifiedBy = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              MetadataSubmissionsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            resourceType: resourceType,
-            metadataSchema: metadataSchema,
-            serialNumber: serialNumber,
-            version: version,
-            resourceId: resourceId,
-            formData: formData,
-            createdBy: createdBy,
-            lastModifiedBy: lastModifiedBy,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$MetadataSubmissionsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $MetadataSubmissionsTable,
-    MetadataSubmission,
-    $$MetadataSubmissionsTableFilterComposer,
-    $$MetadataSubmissionsTableOrderingComposer,
-    $$MetadataSubmissionsTableAnnotationComposer,
-    $$MetadataSubmissionsTableCreateCompanionBuilder,
-    $$MetadataSubmissionsTableUpdateCompanionBuilder,
-    (
-      MetadataSubmission,
-      BaseReferences<_$AppDatabase, $MetadataSubmissionsTable,
-          MetadataSubmission>
-    ),
-    MetadataSubmission,
-    PrefetchHooks Function()>;
+    $FormTemplateVersionsTable,
+    FormTemplateVersion,
+    $$FormTemplateVersionsTableFilterComposer,
+    $$FormTemplateVersionsTableOrderingComposer,
+    $$FormTemplateVersionsTableAnnotationComposer,
+    $$FormTemplateVersionsTableCreateCompanionBuilder,
+    $$FormTemplateVersionsTableUpdateCompanionBuilder,
+    (FormTemplateVersion, $$FormTemplateVersionsTableReferences),
+    FormTemplateVersion,
+    PrefetchHooks Function({bool template, bool VersionDataInstances})>;
 typedef $$DataInstancesTableCreateCompanionBuilder = DataInstancesCompanion
-    Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<bool> deleted,
-  Value<DateTime?> deletedAt,
-  required String formTemplate,
-  required String templateVersion,
-  Value<String?> assignment,
-  Value<DateTime> startEntryTime,
-  Value<DateTime?> finishedEntryTime,
-  Value<Map<String, dynamic>?> formData,
-  Value<DateTime?> updatedAtClient,
-  required InstanceSyncStatus syncState,
-  Value<DateTime?> lastSyncDate,
-  Value<String?> lastSyncMessage,
-  required bool isToUpdate,
-  Value<int> rowid,
+Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<bool> deleted,
+Value<DateTime?> deletedAt,
+required String formTemplate,
+required String templateVersion,
+Value<String?> assignment,
+Value<DateTime> startEntryTime,
+Value<DateTime?> finishedEntryTime,
+Value<Map<String, dynamic>?> formData,
+Value<DateTime?> updatedAtClient,
+required InstanceSyncStatus syncState,
+Value<DateTime?> lastSyncDate,
+Value<String?> lastSyncMessage,
+required bool isToUpdate,
+Value<int> rowid,
 });
 typedef $$DataInstancesTableUpdateCompanionBuilder = DataInstancesCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<bool> deleted,
-  Value<DateTime?> deletedAt,
-  Value<String> formTemplate,
-  Value<String> templateVersion,
-  Value<String?> assignment,
-  Value<DateTime> startEntryTime,
-  Value<DateTime?> finishedEntryTime,
-  Value<Map<String, dynamic>?> formData,
-  Value<DateTime?> updatedAtClient,
-  Value<InstanceSyncStatus> syncState,
-  Value<DateTime?> lastSyncDate,
-  Value<String?> lastSyncMessage,
-  Value<bool> isToUpdate,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<bool> deleted,
+Value<DateTime?> deletedAt,
+Value<String> formTemplate,
+Value<String> templateVersion,
+Value<String?> assignment,
+Value<DateTime> startEntryTime,
+Value<DateTime?> finishedEntryTime,
+Value<Map<String, dynamic>?> formData,
+Value<DateTime?> updatedAtClient,
+Value<InstanceSyncStatus> syncState,
+Value<DateTime?> lastSyncDate,
+Value<String?> lastSyncMessage,
+Value<bool> isToUpdate,
+Value<int> rowid,
 });
 
 final class $$DataInstancesTableReferences
@@ -16185,8 +17597,8 @@ final class $$DataInstancesTableReferences
     final $_column = $_itemColumn<String>('template_version')!;
 
     final manager =
-        $$FormTemplateVersionsTableTableManager($_db, $_db.formTemplateVersions)
-            .filter((f) => f.id.sqlEquals($_column));
+    $$FormTemplateVersionsTableTableManager($_db, $_db.formTemplateVersions)
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_templateVersionTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -16209,31 +17621,31 @@ final class $$DataInstancesTableReferences
   }
 
   static MultiTypedResultKey<$RepeatInstancesTable, List<RepeatInstance>>
-      _repeatInstancesRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.repeatInstances,
-              aliasName: $_aliasNameGenerator(
-                  db.dataInstances.id, db.repeatInstances.submission));
+  _repeatInstancesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.repeatInstances,
+          aliasName: $_aliasNameGenerator(
+              db.dataInstances.id, db.repeatInstances.submission));
 
   $$RepeatInstancesTableProcessedTableManager get repeatInstancesRefs {
     final manager = $$RepeatInstancesTableTableManager(
-            $_db, $_db.repeatInstances)
+        $_db, $_db.repeatInstances)
         .filter((f) => f.submission.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache =
-        $_typedResult.readTableOrNull(_repeatInstancesRefsTable($_db));
+    $_typedResult.readTableOrNull(_repeatInstancesRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
 
   static MultiTypedResultKey<$DataValuesTable, List<DataValue>>
-      _instanceValuesTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataValues,
-              aliasName: $_aliasNameGenerator(
-                  db.dataInstances.id, db.dataValues.dataInstance));
+  _instanceValuesTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.dataValues,
+          aliasName: $_aliasNameGenerator(
+              db.dataInstances.id, db.dataValues.dataInstance));
 
   $$DataValuesTableProcessedTableManager get instanceValues {
     final manager = $$DataValuesTableTableManager($_db, $_db.dataValues).filter(
-        (f) => f.dataInstance.id.sqlEquals($_itemColumn<String>('id')!));
+            (f) => f.dataInstance.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_instanceValuesTable($_db));
     return ProcessedTableManager(
@@ -16275,19 +17687,19 @@ class $$DataInstancesTableFilterComposer
       builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get formData => $composableBuilder(
-          column: $table.formData,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get formData => $composableBuilder(
+      column: $table.formData,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<DateTime> get updatedAtClient => $composableBuilder(
       column: $table.updatedAtClient,
       builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<InstanceSyncStatus, InstanceSyncStatus, String>
-      get syncState => $composableBuilder(
-          column: $table.syncState,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get syncState => $composableBuilder(
+      column: $table.syncState,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<DateTime> get lastSyncDate => $composableBuilder(
       column: $table.lastSyncDate, builder: (column) => ColumnFilters(column));
@@ -16306,15 +17718,15 @@ class $$DataInstancesTableFilterComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableFilterComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -16326,15 +17738,15 @@ class $$DataInstancesTableFilterComposer
         referencedTable: $db.formTemplateVersions,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplateVersionsTableFilterComposer(
               $db: $db,
               $table: $db.formTemplateVersions,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -16346,15 +17758,15 @@ class $$DataInstancesTableFilterComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableFilterComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -16367,15 +17779,15 @@ class $$DataInstancesTableFilterComposer
         referencedTable: $db.repeatInstances,
         getReferencedColumn: (t) => t.submission,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$RepeatInstancesTableFilterComposer(
               $db: $db,
               $table: $db.repeatInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -16388,15 +17800,15 @@ class $$DataInstancesTableFilterComposer
         referencedTable: $db.dataValues,
         getReferencedColumn: (t) => t.dataInstance,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataValuesTableFilterComposer(
               $db: $db,
               $table: $db.dataValues,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -16463,37 +17875,37 @@ class $$DataInstancesTableOrderingComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableOrderingComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
 
   $$FormTemplateVersionsTableOrderingComposer get templateVersion {
     final $$FormTemplateVersionsTableOrderingComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.templateVersion,
-            referencedTable: $db.formTemplateVersions,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$FormTemplateVersionsTableOrderingComposer(
-                  $db: $db,
-                  $table: $db.formTemplateVersions,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+    $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.templateVersion,
+        referencedTable: $db.formTemplateVersions,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$FormTemplateVersionsTableOrderingComposer(
+              $db: $db,
+              $table: $db.formTemplateVersions,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 
@@ -16504,15 +17916,15 @@ class $$DataInstancesTableOrderingComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableOrderingComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -16549,8 +17961,8 @@ class $$DataInstancesTableAnnotationComposer
       column: $table.finishedEntryTime, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      get formData => $composableBuilder(
-          column: $table.formData, builder: (column) => column);
+  get formData => $composableBuilder(
+      column: $table.formData, builder: (column) => column);
 
   GeneratedColumn<DateTime> get updatedAtClient => $composableBuilder(
       column: $table.updatedAtClient, builder: (column) => column);
@@ -16574,37 +17986,37 @@ class $$DataInstancesTableAnnotationComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableAnnotationComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
 
   $$FormTemplateVersionsTableAnnotationComposer get templateVersion {
     final $$FormTemplateVersionsTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.templateVersion,
-            referencedTable: $db.formTemplateVersions,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$FormTemplateVersionsTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.formTemplateVersions,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+    $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.templateVersion,
+        referencedTable: $db.formTemplateVersions,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$FormTemplateVersionsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.formTemplateVersions,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 
@@ -16615,15 +18027,15 @@ class $$DataInstancesTableAnnotationComposer
         referencedTable: $db.assignments,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$AssignmentsTableAnnotationComposer(
               $db: $db,
               $table: $db.assignments,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -16636,15 +18048,15 @@ class $$DataInstancesTableAnnotationComposer
         referencedTable: $db.repeatInstances,
         getReferencedColumn: (t) => t.submission,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$RepeatInstancesTableAnnotationComposer(
               $db: $db,
               $table: $db.repeatInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -16657,15 +18069,15 @@ class $$DataInstancesTableAnnotationComposer
         referencedTable: $db.dataValues,
         getReferencedColumn: (t) => t.dataInstance,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataValuesTableAnnotationComposer(
               $db: $db,
               $table: $db.dataValues,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -16690,188 +18102,188 @@ class $$DataInstancesTableTableManager extends RootTableManager<
         bool instanceValues})> {
   $$DataInstancesTableTableManager(_$AppDatabase db, $DataInstancesTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$DataInstancesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$DataInstancesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$DataInstancesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<bool> deleted = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            Value<String> formTemplate = const Value.absent(),
-            Value<String> templateVersion = const Value.absent(),
-            Value<String?> assignment = const Value.absent(),
-            Value<DateTime> startEntryTime = const Value.absent(),
-            Value<DateTime?> finishedEntryTime = const Value.absent(),
-            Value<Map<String, dynamic>?> formData = const Value.absent(),
-            Value<DateTime?> updatedAtClient = const Value.absent(),
-            Value<InstanceSyncStatus> syncState = const Value.absent(),
-            Value<DateTime?> lastSyncDate = const Value.absent(),
-            Value<String?> lastSyncMessage = const Value.absent(),
-            Value<bool> isToUpdate = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataInstancesCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            deleted: deleted,
-            deletedAt: deletedAt,
-            formTemplate: formTemplate,
-            templateVersion: templateVersion,
-            assignment: assignment,
-            startEntryTime: startEntryTime,
-            finishedEntryTime: finishedEntryTime,
-            formData: formData,
-            updatedAtClient: updatedAtClient,
-            syncState: syncState,
-            lastSyncDate: lastSyncDate,
-            lastSyncMessage: lastSyncMessage,
-            isToUpdate: isToUpdate,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<bool> deleted = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            required String formTemplate,
-            required String templateVersion,
-            Value<String?> assignment = const Value.absent(),
-            Value<DateTime> startEntryTime = const Value.absent(),
-            Value<DateTime?> finishedEntryTime = const Value.absent(),
-            Value<Map<String, dynamic>?> formData = const Value.absent(),
-            Value<DateTime?> updatedAtClient = const Value.absent(),
-            required InstanceSyncStatus syncState,
-            Value<DateTime?> lastSyncDate = const Value.absent(),
-            Value<String?> lastSyncMessage = const Value.absent(),
-            required bool isToUpdate,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataInstancesCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            deleted: deleted,
-            deletedAt: deletedAt,
-            formTemplate: formTemplate,
-            templateVersion: templateVersion,
-            assignment: assignment,
-            startEntryTime: startEntryTime,
-            finishedEntryTime: finishedEntryTime,
-            formData: formData,
-            updatedAtClient: updatedAtClient,
-            syncState: syncState,
-            lastSyncDate: lastSyncDate,
-            lastSyncMessage: lastSyncMessage,
-            isToUpdate: isToUpdate,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$DataInstancesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {formTemplate = false,
-              templateVersion = false,
-              assignment = false,
-              repeatInstancesRefs = false,
-              instanceValues = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (repeatInstancesRefs) db.repeatInstances,
-                if (instanceValues) db.dataValues
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (formTemplate) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.formTemplate,
-                    referencedTable:
-                        $$DataInstancesTableReferences._formTemplateTable(db),
-                    referencedColumn: $$DataInstancesTableReferences
-                        ._formTemplateTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (templateVersion) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.templateVersion,
-                    referencedTable: $$DataInstancesTableReferences
-                        ._templateVersionTable(db),
-                    referencedColumn: $$DataInstancesTableReferences
-                        ._templateVersionTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (assignment) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.assignment,
-                    referencedTable:
-                        $$DataInstancesTableReferences._assignmentTable(db),
-                    referencedColumn:
-                        $$DataInstancesTableReferences._assignmentTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$DataInstancesTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$DataInstancesTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$DataInstancesTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<bool> deleted = const Value.absent(),
+      Value<DateTime?> deletedAt = const Value.absent(),
+      Value<String> formTemplate = const Value.absent(),
+      Value<String> templateVersion = const Value.absent(),
+      Value<String?> assignment = const Value.absent(),
+      Value<DateTime> startEntryTime = const Value.absent(),
+      Value<DateTime?> finishedEntryTime = const Value.absent(),
+      Value<Map<String, dynamic>?> formData = const Value.absent(),
+      Value<DateTime?> updatedAtClient = const Value.absent(),
+      Value<InstanceSyncStatus> syncState = const Value.absent(),
+      Value<DateTime?> lastSyncDate = const Value.absent(),
+      Value<String?> lastSyncMessage = const Value.absent(),
+      Value<bool> isToUpdate = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataInstancesCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          deleted: deleted,
+          deletedAt: deletedAt,
+          formTemplate: formTemplate,
+          templateVersion: templateVersion,
+          assignment: assignment,
+          startEntryTime: startEntryTime,
+          finishedEntryTime: finishedEntryTime,
+          formData: formData,
+          updatedAtClient: updatedAtClient,
+          syncState: syncState,
+          lastSyncDate: lastSyncDate,
+          lastSyncMessage: lastSyncMessage,
+          isToUpdate: isToUpdate,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<bool> deleted = const Value.absent(),
+      Value<DateTime?> deletedAt = const Value.absent(),
+      required String formTemplate,
+      required String templateVersion,
+      Value<String?> assignment = const Value.absent(),
+      Value<DateTime> startEntryTime = const Value.absent(),
+      Value<DateTime?> finishedEntryTime = const Value.absent(),
+      Value<Map<String, dynamic>?> formData = const Value.absent(),
+      Value<DateTime?> updatedAtClient = const Value.absent(),
+      required InstanceSyncStatus syncState,
+      Value<DateTime?> lastSyncDate = const Value.absent(),
+      Value<String?> lastSyncMessage = const Value.absent(),
+      required bool isToUpdate,
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataInstancesCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          deleted: deleted,
+          deletedAt: deletedAt,
+          formTemplate: formTemplate,
+          templateVersion: templateVersion,
+          assignment: assignment,
+          startEntryTime: startEntryTime,
+          finishedEntryTime: finishedEntryTime,
+          formData: formData,
+          updatedAtClient: updatedAtClient,
+          syncState: syncState,
+          lastSyncDate: lastSyncDate,
+          lastSyncMessage: lastSyncMessage,
+          isToUpdate: isToUpdate,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$DataInstancesTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: (
+        {formTemplate = false,
+          templateVersion = false,
+          assignment = false,
+          repeatInstancesRefs = false,
+          instanceValues = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [
+          if (repeatInstancesRefs) db.repeatInstances,
+          if (instanceValues) db.dataValues
+        ],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (formTemplate) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.formTemplate,
+              referencedTable:
+              $$DataInstancesTableReferences._formTemplateTable(db),
+              referencedColumn: $$DataInstancesTableReferences
+                  ._formTemplateTable(db)
+                  .id,
+            ) as T;
+          }
+          if (templateVersion) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.templateVersion,
+              referencedTable: $$DataInstancesTableReferences
+                  ._templateVersionTable(db),
+              referencedColumn: $$DataInstancesTableReferences
+                  ._templateVersionTable(db)
+                  .id,
+            ) as T;
+          }
+          if (assignment) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.assignment,
+              referencedTable:
+              $$DataInstancesTableReferences._assignmentTable(db),
+              referencedColumn:
+              $$DataInstancesTableReferences._assignmentTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (repeatInstancesRefs)
-                    await $_getPrefetchedData<DataInstance, $DataInstancesTable, RepeatInstance>(
-                        currentTable: table,
-                        referencedTable: $$DataInstancesTableReferences
-                            ._repeatInstancesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataInstancesTableReferences(db, table, p0)
-                                .repeatInstancesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.submission == item.id),
-                        typedResults: items),
-                  if (instanceValues)
-                    await $_getPrefetchedData<DataInstance, $DataInstancesTable,
-                            DataValue>(
-                        currentTable: table,
-                        referencedTable: $$DataInstancesTableReferences
-                            ._instanceValuesTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataInstancesTableReferences(db, table, p0)
-                                .instanceValues,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.dataInstance == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (repeatInstancesRefs)
+              await $_getPrefetchedData<DataInstance, $DataInstancesTable, RepeatInstance>(
+                  currentTable: table,
+                  referencedTable: $$DataInstancesTableReferences
+                      ._repeatInstancesRefsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$DataInstancesTableReferences(db, table, p0)
+                      .repeatInstancesRefs,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.submission == item.id),
+                  typedResults: items),
+            if (instanceValues)
+              await $_getPrefetchedData<DataInstance, $DataInstancesTable,
+                  DataValue>(
+                  currentTable: table,
+                  referencedTable: $$DataInstancesTableReferences
+                      ._instanceValuesTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$DataInstancesTableReferences(db, table, p0)
+                      .instanceValues,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.dataInstance == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$DataInstancesTableProcessedTableManager = ProcessedTableManager<
@@ -16892,28 +18304,28 @@ typedef $$DataInstancesTableProcessedTableManager = ProcessedTableManager<
         bool repeatInstancesRefs,
         bool instanceValues})>;
 typedef $$RepeatInstancesTableCreateCompanionBuilder = RepeatInstancesCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  required String submission,
-  Value<String?> parent,
-  required String templatePath,
-  required int repeatIndex,
-  Value<bool> deleted,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+required String submission,
+Value<String?> parent,
+required String templatePath,
+required int repeatIndex,
+Value<bool> deleted,
+Value<int> rowid,
 });
 typedef $$RepeatInstancesTableUpdateCompanionBuilder = RepeatInstancesCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String> submission,
-  Value<String?> parent,
-  Value<String> templatePath,
-  Value<int> repeatIndex,
-  Value<bool> deleted,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String> submission,
+Value<String?> parent,
+Value<String> templatePath,
+Value<int> repeatIndex,
+Value<bool> deleted,
+Value<int> rowid,
 });
 
 final class $$RepeatInstancesTableReferences extends BaseReferences<
@@ -16944,8 +18356,8 @@ final class $$RepeatInstancesTableReferences extends BaseReferences<
     final $_column = $_itemColumn<String>('parent');
     if ($_column == null) return null;
     final manager =
-        $$RepeatInstancesTableTableManager($_db, $_db.repeatInstances)
-            .filter((f) => f.id.sqlEquals($_column));
+    $$RepeatInstancesTableTableManager($_db, $_db.repeatInstances)
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_parentTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -16988,15 +18400,15 @@ class $$RepeatInstancesTableFilterComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableFilterComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17008,15 +18420,15 @@ class $$RepeatInstancesTableFilterComposer
         referencedTable: $db.repeatInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$RepeatInstancesTableFilterComposer(
               $db: $db,
               $table: $db.repeatInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17058,15 +18470,15 @@ class $$RepeatInstancesTableOrderingComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableOrderingComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17078,15 +18490,15 @@ class $$RepeatInstancesTableOrderingComposer
         referencedTable: $db.repeatInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$RepeatInstancesTableOrderingComposer(
               $db: $db,
               $table: $db.repeatInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17126,15 +18538,15 @@ class $$RepeatInstancesTableAnnotationComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableAnnotationComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17146,15 +18558,15 @@ class $$RepeatInstancesTableAnnotationComposer
         referencedTable: $db.repeatInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$RepeatInstancesTableAnnotationComposer(
               $db: $db,
               $table: $db.repeatInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17175,111 +18587,111 @@ class $$RepeatInstancesTableTableManager extends RootTableManager<
   $$RepeatInstancesTableTableManager(
       _$AppDatabase db, $RepeatInstancesTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$RepeatInstancesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$RepeatInstancesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$RepeatInstancesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String> submission = const Value.absent(),
-            Value<String?> parent = const Value.absent(),
-            Value<String> templatePath = const Value.absent(),
-            Value<int> repeatIndex = const Value.absent(),
-            Value<bool> deleted = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              RepeatInstancesCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            submission: submission,
-            parent: parent,
-            templatePath: templatePath,
-            repeatIndex: repeatIndex,
-            deleted: deleted,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            required String submission,
-            Value<String?> parent = const Value.absent(),
-            required String templatePath,
-            required int repeatIndex,
-            Value<bool> deleted = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              RepeatInstancesCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            submission: submission,
-            parent: parent,
-            templatePath: templatePath,
-            repeatIndex: repeatIndex,
-            deleted: deleted,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$RepeatInstancesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({submission = false, parent = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (submission) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.submission,
-                    referencedTable:
-                        $$RepeatInstancesTableReferences._submissionTable(db),
-                    referencedColumn: $$RepeatInstancesTableReferences
-                        ._submissionTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (parent) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.parent,
-                    referencedTable:
-                        $$RepeatInstancesTableReferences._parentTable(db),
-                    referencedColumn:
-                        $$RepeatInstancesTableReferences._parentTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$RepeatInstancesTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$RepeatInstancesTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$RepeatInstancesTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String> submission = const Value.absent(),
+      Value<String?> parent = const Value.absent(),
+      Value<String> templatePath = const Value.absent(),
+      Value<int> repeatIndex = const Value.absent(),
+      Value<bool> deleted = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        RepeatInstancesCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          submission: submission,
+          parent: parent,
+          templatePath: templatePath,
+          repeatIndex: repeatIndex,
+          deleted: deleted,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      required String submission,
+      Value<String?> parent = const Value.absent(),
+      required String templatePath,
+      required int repeatIndex,
+      Value<bool> deleted = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        RepeatInstancesCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          submission: submission,
+          parent: parent,
+          templatePath: templatePath,
+          repeatIndex: repeatIndex,
+          deleted: deleted,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$RepeatInstancesTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({submission = false, parent = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (submission) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.submission,
+              referencedTable:
+              $$RepeatInstancesTableReferences._submissionTable(db),
+              referencedColumn: $$RepeatInstancesTableReferences
+                  ._submissionTable(db)
+                  .id,
+            ) as T;
+          }
+          if (parent) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.parent,
+              referencedTable:
+              $$RepeatInstancesTableReferences._parentTable(db),
+              referencedColumn:
+              $$RepeatInstancesTableReferences._parentTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$RepeatInstancesTableProcessedTableManager = ProcessedTableManager<
@@ -17295,30 +18707,30 @@ typedef $$RepeatInstancesTableProcessedTableManager = ProcessedTableManager<
     RepeatInstance,
     PrefetchHooks Function({bool submission, bool parent})>;
 typedef $$DataOptionSetsTableCreateCompanionBuilder = DataOptionSetsCompanion
-    Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  required String name,
-  Value<String?> code,
-  Value<DateTime?> deletedAt,
-  Value<int> rowid,
+Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String name,
+Value<String?> code,
+Value<DateTime?> deletedAt,
+Value<int> rowid,
 });
 typedef $$DataOptionSetsTableUpdateCompanionBuilder = DataOptionSetsCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  Value<String> name,
-  Value<String?> code,
-  Value<DateTime?> deletedAt,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> name,
+Value<String?> code,
+Value<DateTime?> deletedAt,
+Value<int> rowid,
 });
 
 final class $$DataOptionSetsTableReferences
@@ -17327,10 +18739,10 @@ final class $$DataOptionSetsTableReferences
       super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$DataElementsTable, List<DataElement>>
-      _dataElementsRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataElements,
-              aliasName: $_aliasNameGenerator(
-                  db.dataOptionSets.id, db.dataElements.optionSet));
+  _dataElementsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.dataElements,
+          aliasName: $_aliasNameGenerator(
+              db.dataOptionSets.id, db.dataElements.optionSet));
 
   $$DataElementsTableProcessedTableManager get dataElementsRefs {
     final manager = $$DataElementsTableTableManager($_db, $_db.dataElements)
@@ -17342,7 +18754,7 @@ final class $$DataOptionSetsTableReferences
   }
 
   static MultiTypedResultKey<$DataOptionsTable, List<DataOption>> _optionsTable(
-          _$AppDatabase db) =>
+      _$AppDatabase db) =>
       MultiTypedResultKey.fromTable(db.dataOptions,
           aliasName: $_aliasNameGenerator(
               db.dataOptionSets.id, db.dataOptions.optionSet));
@@ -17380,15 +18792,15 @@ class $$DataOptionSetsTableFilterComposer
       column: $table.displayName, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
@@ -17407,15 +18819,15 @@ class $$DataOptionSetsTableFilterComposer
         referencedTable: $db.dataElements,
         getReferencedColumn: (t) => t.optionSet,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataElementsTableFilterComposer(
               $db: $db,
               $table: $db.dataElements,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -17428,15 +18840,15 @@ class $$DataOptionSetsTableFilterComposer
         referencedTable: $db.dataOptions,
         getReferencedColumn: (t) => t.optionSet,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionsTableFilterComposer(
               $db: $db,
               $table: $db.dataOptions,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -17506,8 +18918,8 @@ class $$DataOptionSetsTableAnnotationComposer
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations, builder: (column) => column);
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -17526,15 +18938,15 @@ class $$DataOptionSetsTableAnnotationComposer
         referencedTable: $db.dataElements,
         getReferencedColumn: (t) => t.optionSet,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataElementsTableAnnotationComposer(
               $db: $db,
               $table: $db.dataElements,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -17547,15 +18959,15 @@ class $$DataOptionSetsTableAnnotationComposer
         referencedTable: $db.dataOptions,
         getReferencedColumn: (t) => t.optionSet,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionsTableAnnotationComposer(
               $db: $db,
               $table: $db.dataOptions,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -17576,109 +18988,109 @@ class $$DataOptionSetsTableTableManager extends RootTableManager<
   $$DataOptionSetsTableTableManager(
       _$AppDatabase db, $DataOptionSetsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$DataOptionSetsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$DataOptionSetsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$DataOptionSetsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataOptionSetsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            deletedAt: deletedAt,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            required String name,
-            Value<String?> code = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataOptionSetsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            deletedAt: deletedAt,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$DataOptionSetsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({dataElementsRefs = false, options = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (dataElementsRefs) db.dataElements,
-                if (options) db.dataOptions
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (dataElementsRefs)
-                    await $_getPrefetchedData<DataOptionSet,
-                            $DataOptionSetsTable, DataElement>(
-                        currentTable: table,
-                        referencedTable: $$DataOptionSetsTableReferences
-                            ._dataElementsRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataOptionSetsTableReferences(db, table, p0)
-                                .dataElementsRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.optionSet == item.id),
-                        typedResults: items),
-                  if (options)
-                    await $_getPrefetchedData<DataOptionSet,
-                            $DataOptionSetsTable, DataOption>(
-                        currentTable: table,
-                        referencedTable:
-                            $$DataOptionSetsTableReferences._optionsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataOptionSetsTableReferences(db, table, p0)
-                                .options,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.optionSet == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$DataOptionSetsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$DataOptionSetsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$DataOptionSetsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<DateTime?> deletedAt = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataOptionSetsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          deletedAt: deletedAt,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String name,
+      Value<String?> code = const Value.absent(),
+      Value<DateTime?> deletedAt = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataOptionSetsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          deletedAt: deletedAt,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$DataOptionSetsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({dataElementsRefs = false, options = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [
+          if (dataElementsRefs) db.dataElements,
+          if (options) db.dataOptions
+        ],
+        addJoins: null,
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (dataElementsRefs)
+              await $_getPrefetchedData<DataOptionSet,
+                  $DataOptionSetsTable, DataElement>(
+                  currentTable: table,
+                  referencedTable: $$DataOptionSetsTableReferences
+                      ._dataElementsRefsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$DataOptionSetsTableReferences(db, table, p0)
+                      .dataElementsRefs,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.optionSet == item.id),
+                  typedResults: items),
+            if (options)
+              await $_getPrefetchedData<DataOptionSet,
+                  $DataOptionSetsTable, DataOption>(
+                  currentTable: table,
+                  referencedTable:
+                  $$DataOptionSetsTableReferences._optionsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$DataOptionSetsTableReferences(db, table, p0)
+                      .options,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.optionSet == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$DataOptionSetsTableProcessedTableManager = ProcessedTableManager<
@@ -17694,46 +19106,46 @@ typedef $$DataOptionSetsTableProcessedTableManager = ProcessedTableManager<
     DataOptionSet,
     PrefetchHooks Function({bool dataElementsRefs, bool options})>;
 typedef $$DataElementsTableCreateCompanionBuilder = DataElementsCompanion
-    Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  required String name,
-  Value<String?> code,
-  Value<String?> description,
-  required ValueType type,
-  Value<String?> optionSet,
-  Value<bool?> mandatory,
-  Value<String?> defaultValue,
-  Value<ScannedCodeProperties?> scannedCodeProperties,
-  Value<bool?> gs1Enabled,
-  Value<MetadataResourceType?> resourceType,
-  Value<String?> resourceMetadataSchema,
-  Value<int> rowid,
+Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String name,
+Value<String?> code,
+Value<String?> description,
+required ValueType type,
+Value<String?> optionSet,
+Value<bool?> mandatory,
+Value<String?> defaultValue,
+Value<ScannedCodeProperties?> scannedCodeProperties,
+Value<bool?> gs1Enabled,
+Value<MetadataResourceType?> resourceType,
+Value<String?> resourceMetadataSchema,
+Value<int> rowid,
 });
 typedef $$DataElementsTableUpdateCompanionBuilder = DataElementsCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  Value<String> name,
-  Value<String?> code,
-  Value<String?> description,
-  Value<ValueType> type,
-  Value<String?> optionSet,
-  Value<bool?> mandatory,
-  Value<String?> defaultValue,
-  Value<ScannedCodeProperties?> scannedCodeProperties,
-  Value<bool?> gs1Enabled,
-  Value<MetadataResourceType?> resourceType,
-  Value<String?> resourceMetadataSchema,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> name,
+Value<String?> code,
+Value<String?> description,
+Value<ValueType> type,
+Value<String?> optionSet,
+Value<bool?> mandatory,
+Value<String?> defaultValue,
+Value<ScannedCodeProperties?> scannedCodeProperties,
+Value<bool?> gs1Enabled,
+Value<MetadataResourceType?> resourceType,
+Value<String?> resourceMetadataSchema,
+Value<int> rowid,
 });
 
 final class $$DataElementsTableReferences
@@ -17756,10 +19168,10 @@ final class $$DataElementsTableReferences
   }
 
   static MultiTypedResultKey<$DataValuesTable, List<DataValue>>
-      _dataValuesRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataValues,
-              aliasName: $_aliasNameGenerator(
-                  db.dataElements.id, db.dataValues.dataElement));
+  _dataValuesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.dataValues,
+          aliasName: $_aliasNameGenerator(
+              db.dataElements.id, db.dataValues.dataElement));
 
   $$DataValuesTableProcessedTableManager get dataValuesRefs {
     final manager = $$DataValuesTableTableManager($_db, $_db.dataValues)
@@ -17794,15 +19206,15 @@ class $$DataElementsTableFilterComposer
       column: $table.displayName, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
@@ -17825,19 +19237,19 @@ class $$DataElementsTableFilterComposer
       column: $table.defaultValue, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<ScannedCodeProperties?, ScannedCodeProperties,
-          String>
-      get scannedCodeProperties => $composableBuilder(
-          column: $table.scannedCodeProperties,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get scannedCodeProperties => $composableBuilder(
+      column: $table.scannedCodeProperties,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<bool> get gs1Enabled => $composableBuilder(
       column: $table.gs1Enabled, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<MetadataResourceType?, MetadataResourceType,
-          String>
-      get resourceType => $composableBuilder(
-          column: $table.resourceType,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get resourceType => $composableBuilder(
+      column: $table.resourceType,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get resourceMetadataSchema => $composableBuilder(
       column: $table.resourceMetadataSchema,
@@ -17850,15 +19262,15 @@ class $$DataElementsTableFilterComposer
         referencedTable: $db.dataOptionSets,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionSetsTableFilterComposer(
               $db: $db,
               $table: $db.dataOptionSets,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17871,15 +19283,15 @@ class $$DataElementsTableFilterComposer
         referencedTable: $db.dataValues,
         getReferencedColumn: (t) => t.dataElement,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataValuesTableFilterComposer(
               $db: $db,
               $table: $db.dataValues,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -17955,15 +19367,15 @@ class $$DataElementsTableOrderingComposer
         referencedTable: $db.dataOptionSets,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionSetsTableOrderingComposer(
               $db: $db,
               $table: $db.dataOptionSets,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -17994,8 +19406,8 @@ class $$DataElementsTableAnnotationComposer
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations, builder: (column) => column);
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -18016,15 +19428,15 @@ class $$DataElementsTableAnnotationComposer
       column: $table.defaultValue, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<ScannedCodeProperties?, String>
-      get scannedCodeProperties => $composableBuilder(
-          column: $table.scannedCodeProperties, builder: (column) => column);
+  get scannedCodeProperties => $composableBuilder(
+      column: $table.scannedCodeProperties, builder: (column) => column);
 
   GeneratedColumn<bool> get gs1Enabled => $composableBuilder(
       column: $table.gs1Enabled, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<MetadataResourceType?, String>
-      get resourceType => $composableBuilder(
-          column: $table.resourceType, builder: (column) => column);
+  get resourceType => $composableBuilder(
+      column: $table.resourceType, builder: (column) => column);
 
   GeneratedColumn<String> get resourceMetadataSchema => $composableBuilder(
       column: $table.resourceMetadataSchema, builder: (column) => column);
@@ -18036,15 +19448,15 @@ class $$DataElementsTableAnnotationComposer
         referencedTable: $db.dataOptionSets,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionSetsTableAnnotationComposer(
               $db: $db,
               $table: $db.dataOptionSets,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18057,15 +19469,15 @@ class $$DataElementsTableAnnotationComposer
         referencedTable: $db.dataValues,
         getReferencedColumn: (t) => t.dataElement,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataValuesTableAnnotationComposer(
               $db: $db,
               $table: $db.dataValues,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return f(composer);
   }
@@ -18085,152 +19497,152 @@ class $$DataElementsTableTableManager extends RootTableManager<
     PrefetchHooks Function({bool optionSet, bool dataValuesRefs})> {
   $$DataElementsTableTableManager(_$AppDatabase db, $DataElementsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$DataElementsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$DataElementsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$DataElementsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String?> code = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<ValueType> type = const Value.absent(),
-            Value<String?> optionSet = const Value.absent(),
-            Value<bool?> mandatory = const Value.absent(),
-            Value<String?> defaultValue = const Value.absent(),
-            Value<ScannedCodeProperties?> scannedCodeProperties =
-                const Value.absent(),
-            Value<bool?> gs1Enabled = const Value.absent(),
-            Value<MetadataResourceType?> resourceType = const Value.absent(),
-            Value<String?> resourceMetadataSchema = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataElementsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            description: description,
-            type: type,
-            optionSet: optionSet,
-            mandatory: mandatory,
-            defaultValue: defaultValue,
-            scannedCodeProperties: scannedCodeProperties,
-            gs1Enabled: gs1Enabled,
-            resourceType: resourceType,
-            resourceMetadataSchema: resourceMetadataSchema,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            required String name,
-            Value<String?> code = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            required ValueType type,
-            Value<String?> optionSet = const Value.absent(),
-            Value<bool?> mandatory = const Value.absent(),
-            Value<String?> defaultValue = const Value.absent(),
-            Value<ScannedCodeProperties?> scannedCodeProperties =
-                const Value.absent(),
-            Value<bool?> gs1Enabled = const Value.absent(),
-            Value<MetadataResourceType?> resourceType = const Value.absent(),
-            Value<String?> resourceMetadataSchema = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataElementsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            description: description,
-            type: type,
-            optionSet: optionSet,
-            mandatory: mandatory,
-            defaultValue: defaultValue,
-            scannedCodeProperties: scannedCodeProperties,
-            gs1Enabled: gs1Enabled,
-            resourceType: resourceType,
-            resourceMetadataSchema: resourceMetadataSchema,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$DataElementsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({optionSet = false, dataValuesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (dataValuesRefs) db.dataValues],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (optionSet) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.optionSet,
-                    referencedTable:
-                        $$DataElementsTableReferences._optionSetTable(db),
-                    referencedColumn:
-                        $$DataElementsTableReferences._optionSetTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$DataElementsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$DataElementsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$DataElementsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<String?> description = const Value.absent(),
+      Value<ValueType> type = const Value.absent(),
+      Value<String?> optionSet = const Value.absent(),
+      Value<bool?> mandatory = const Value.absent(),
+      Value<String?> defaultValue = const Value.absent(),
+      Value<ScannedCodeProperties?> scannedCodeProperties =
+      const Value.absent(),
+      Value<bool?> gs1Enabled = const Value.absent(),
+      Value<MetadataResourceType?> resourceType = const Value.absent(),
+      Value<String?> resourceMetadataSchema = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataElementsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          description: description,
+          type: type,
+          optionSet: optionSet,
+          mandatory: mandatory,
+          defaultValue: defaultValue,
+          scannedCodeProperties: scannedCodeProperties,
+          gs1Enabled: gs1Enabled,
+          resourceType: resourceType,
+          resourceMetadataSchema: resourceMetadataSchema,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String name,
+      Value<String?> code = const Value.absent(),
+      Value<String?> description = const Value.absent(),
+      required ValueType type,
+      Value<String?> optionSet = const Value.absent(),
+      Value<bool?> mandatory = const Value.absent(),
+      Value<String?> defaultValue = const Value.absent(),
+      Value<ScannedCodeProperties?> scannedCodeProperties =
+      const Value.absent(),
+      Value<bool?> gs1Enabled = const Value.absent(),
+      Value<MetadataResourceType?> resourceType = const Value.absent(),
+      Value<String?> resourceMetadataSchema = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataElementsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          description: description,
+          type: type,
+          optionSet: optionSet,
+          mandatory: mandatory,
+          defaultValue: defaultValue,
+          scannedCodeProperties: scannedCodeProperties,
+          gs1Enabled: gs1Enabled,
+          resourceType: resourceType,
+          resourceMetadataSchema: resourceMetadataSchema,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$DataElementsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({optionSet = false, dataValuesRefs = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [if (dataValuesRefs) db.dataValues],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (optionSet) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.optionSet,
+              referencedTable:
+              $$DataElementsTableReferences._optionSetTable(db),
+              referencedColumn:
+              $$DataElementsTableReferences._optionSetTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (dataValuesRefs)
-                    await $_getPrefetchedData<DataElement, $DataElementsTable,
-                            DataValue>(
-                        currentTable: table,
-                        referencedTable: $$DataElementsTableReferences
-                            ._dataValuesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataElementsTableReferences(db, table, p0)
-                                .dataValuesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.dataElement == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (dataValuesRefs)
+              await $_getPrefetchedData<DataElement, $DataElementsTable,
+                  DataValue>(
+                  currentTable: table,
+                  referencedTable: $$DataElementsTableReferences
+                      ._dataValuesRefsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$DataElementsTableReferences(db, table, p0)
+                      .dataValuesRefs,
+                  referencedItemsForCurrentItem:
+                      (item, referencedItems) => referencedItems
+                      .where((e) => e.dataElement == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$DataElementsTableProcessedTableManager = ProcessedTableManager<
@@ -18246,24 +19658,24 @@ typedef $$DataElementsTableProcessedTableManager = ProcessedTableManager<
     DataElement,
     PrefetchHooks Function({bool optionSet, bool dataValuesRefs})>;
 typedef $$DataValuesTableCreateCompanionBuilder = DataValuesCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  required String dataElement,
-  required String dataInstance,
-  Value<String?> value,
-  Value<String?> comment,
-  Value<int> rowid,
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+required String dataElement,
+required String dataInstance,
+Value<String?> value,
+Value<String?> comment,
+Value<int> rowid,
 });
 typedef $$DataValuesTableUpdateCompanionBuilder = DataValuesCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String> dataElement,
-  Value<String> dataInstance,
-  Value<String?> value,
-  Value<String?> comment,
-  Value<int> rowid,
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String> dataElement,
+Value<String> dataInstance,
+Value<String?> value,
+Value<String?> comment,
+Value<int> rowid,
 });
 
 final class $$DataValuesTableReferences
@@ -18333,15 +19745,15 @@ class $$DataValuesTableFilterComposer
         referencedTable: $db.dataElements,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataElementsTableFilterComposer(
               $db: $db,
               $table: $db.dataElements,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18353,15 +19765,15 @@ class $$DataValuesTableFilterComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableFilterComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18399,15 +19811,15 @@ class $$DataValuesTableOrderingComposer
         referencedTable: $db.dataElements,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataElementsTableOrderingComposer(
               $db: $db,
               $table: $db.dataElements,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18419,15 +19831,15 @@ class $$DataValuesTableOrderingComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableOrderingComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18464,15 +19876,15 @@ class $$DataValuesTableAnnotationComposer
         referencedTable: $db.dataElements,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataElementsTableAnnotationComposer(
               $db: $db,
               $table: $db.dataElements,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18484,15 +19896,15 @@ class $$DataValuesTableAnnotationComposer
         referencedTable: $db.dataInstances,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataInstancesTableAnnotationComposer(
               $db: $db,
               $table: $db.dataInstances,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18512,106 +19924,106 @@ class $$DataValuesTableTableManager extends RootTableManager<
     PrefetchHooks Function({bool dataElement, bool dataInstance})> {
   $$DataValuesTableTableManager(_$AppDatabase db, $DataValuesTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$DataValuesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$DataValuesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$DataValuesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String> dataElement = const Value.absent(),
-            Value<String> dataInstance = const Value.absent(),
-            Value<String?> value = const Value.absent(),
-            Value<String?> comment = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataValuesCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            dataElement: dataElement,
-            dataInstance: dataInstance,
-            value: value,
-            comment: comment,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            required String dataElement,
-            required String dataInstance,
-            Value<String?> value = const Value.absent(),
-            Value<String?> comment = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataValuesCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            dataElement: dataElement,
-            dataInstance: dataInstance,
-            value: value,
-            comment: comment,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$DataValuesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({dataElement = false, dataInstance = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (dataElement) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dataElement,
-                    referencedTable:
-                        $$DataValuesTableReferences._dataElementTable(db),
-                    referencedColumn:
-                        $$DataValuesTableReferences._dataElementTable(db).id,
-                  ) as T;
-                }
-                if (dataInstance) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dataInstance,
-                    referencedTable:
-                        $$DataValuesTableReferences._dataInstanceTable(db),
-                    referencedColumn:
-                        $$DataValuesTableReferences._dataInstanceTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$DataValuesTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$DataValuesTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$DataValuesTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String> dataElement = const Value.absent(),
+      Value<String> dataInstance = const Value.absent(),
+      Value<String?> value = const Value.absent(),
+      Value<String?> comment = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataValuesCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          dataElement: dataElement,
+          dataInstance: dataInstance,
+          value: value,
+          comment: comment,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      required String dataElement,
+      required String dataInstance,
+      Value<String?> value = const Value.absent(),
+      Value<String?> comment = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataValuesCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          dataElement: dataElement,
+          dataInstance: dataInstance,
+          value: value,
+          comment: comment,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$DataValuesTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({dataElement = false, dataInstance = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (dataElement) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.dataElement,
+              referencedTable:
+              $$DataValuesTableReferences._dataElementTable(db),
+              referencedColumn:
+              $$DataValuesTableReferences._dataElementTable(db).id,
+            ) as T;
+          }
+          if (dataInstance) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.dataInstance,
+              referencedTable:
+              $$DataValuesTableReferences._dataInstanceTable(db),
+              referencedColumn:
+              $$DataValuesTableReferences._dataInstanceTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$DataValuesTableProcessedTableManager = ProcessedTableManager<
@@ -18627,34 +20039,34 @@ typedef $$DataValuesTableProcessedTableManager = ProcessedTableManager<
     DataValue,
     PrefetchHooks Function({bool dataElement, bool dataInstance})>;
 typedef $$DataOptionsTableCreateCompanionBuilder = DataOptionsCompanion
-    Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  required String name,
-  required String code,
-  required String optionSet,
-  Value<int> order,
-  Value<DateTime?> deletedAt,
-  Value<int> rowid,
+Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String name,
+required String code,
+required String optionSet,
+Value<int> order,
+Value<DateTime?> deletedAt,
+Value<int> rowid,
 });
 typedef $$DataOptionsTableUpdateCompanionBuilder = DataOptionsCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String?> displayName,
-  Value<Map<String, dynamic>?> label,
-  Value<List<Translation>> translations,
-  Value<String> name,
-  Value<String> code,
-  Value<String> optionSet,
-  Value<int> order,
-  Value<DateTime?> deletedAt,
-  Value<int> rowid,
+Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> name,
+Value<String> code,
+Value<String> optionSet,
+Value<int> order,
+Value<DateTime?> deletedAt,
+Value<int> rowid,
 });
 
 final class $$DataOptionsTableReferences
@@ -18700,15 +20112,15 @@ class $$DataOptionsTableFilterComposer
       column: $table.displayName, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get label => $composableBuilder(
-          column: $table.label,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
@@ -18729,15 +20141,15 @@ class $$DataOptionsTableFilterComposer
         referencedTable: $db.dataOptionSets,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionSetsTableFilterComposer(
               $db: $db,
               $table: $db.dataOptionSets,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18791,15 +20203,15 @@ class $$DataOptionsTableOrderingComposer
         referencedTable: $db.dataOptionSets,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionSetsTableOrderingComposer(
               $db: $db,
               $table: $db.dataOptionSets,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18830,8 +20242,8 @@ class $$DataOptionsTableAnnotationComposer
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<Translation>, String>
-      get translations => $composableBuilder(
-          column: $table.translations, builder: (column) => column);
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -18852,15 +20264,15 @@ class $$DataOptionsTableAnnotationComposer
         referencedTable: $db.dataOptionSets,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$DataOptionSetsTableAnnotationComposer(
               $db: $db,
               $table: $db.dataOptionSets,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -18880,112 +20292,112 @@ class $$DataOptionsTableTableManager extends RootTableManager<
     PrefetchHooks Function({bool optionSet})> {
   $$DataOptionsTableTableManager(_$AppDatabase db, $DataOptionsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$DataOptionsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$DataOptionsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$DataOptionsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> code = const Value.absent(),
-            Value<String> optionSet = const Value.absent(),
-            Value<int> order = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataOptionsCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            optionSet: optionSet,
-            order: order,
-            deletedAt: deletedAt,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String?> displayName = const Value.absent(),
-            Value<Map<String, dynamic>?> label = const Value.absent(),
-            Value<List<Translation>> translations = const Value.absent(),
-            required String name,
-            required String code,
-            required String optionSet,
-            Value<int> order = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataOptionsCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            displayName: displayName,
-            label: label,
-            translations: translations,
-            name: name,
-            code: code,
-            optionSet: optionSet,
-            order: order,
-            deletedAt: deletedAt,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$DataOptionsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({optionSet = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (optionSet) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.optionSet,
-                    referencedTable:
-                        $$DataOptionsTableReferences._optionSetTable(db),
-                    referencedColumn:
-                        $$DataOptionsTableReferences._optionSetTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$DataOptionsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$DataOptionsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$DataOptionsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String> code = const Value.absent(),
+      Value<String> optionSet = const Value.absent(),
+      Value<int> order = const Value.absent(),
+      Value<DateTime?> deletedAt = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataOptionsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          optionSet: optionSet,
+          order: order,
+          deletedAt: deletedAt,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String name,
+      required String code,
+      required String optionSet,
+      Value<int> order = const Value.absent(),
+      Value<DateTime?> deletedAt = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        DataOptionsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          name: name,
+          code: code,
+          optionSet: optionSet,
+          order: order,
+          deletedAt: deletedAt,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$DataOptionsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({optionSet = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (optionSet) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.optionSet,
+              referencedTable:
+              $$DataOptionsTableReferences._optionSetTable(db),
+              referencedColumn:
+              $$DataOptionsTableReferences._optionSetTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$DataOptionsTableProcessedTableManager = ProcessedTableManager<
@@ -19001,22 +20413,22 @@ typedef $$DataOptionsTableProcessedTableManager = ProcessedTableManager<
     DataOption,
     PrefetchHooks Function({bool optionSet})>;
 typedef $$UserFormPermissionsTableCreateCompanionBuilder
-    = UserFormPermissionsCompanion Function({
-  required String team,
-  required String form,
-  Value<DateTime?> validFrom,
-  Value<DateTime?> validTo,
-  required List<FormPermission> permissions,
-  Value<int> rowid,
+= UserFormPermissionsCompanion Function({
+required String team,
+required String form,
+Value<DateTime?> validFrom,
+Value<DateTime?> validTo,
+required List<FormPermission> permissions,
+Value<int> rowid,
 });
 typedef $$UserFormPermissionsTableUpdateCompanionBuilder
-    = UserFormPermissionsCompanion Function({
-  Value<String> team,
-  Value<String> form,
-  Value<DateTime?> validFrom,
-  Value<DateTime?> validTo,
-  Value<List<FormPermission>> permissions,
-  Value<int> rowid,
+= UserFormPermissionsCompanion Function({
+Value<String> team,
+Value<String> form,
+Value<DateTime?> validFrom,
+Value<DateTime?> validTo,
+Value<List<FormPermission>> permissions,
+Value<int> rowid,
 });
 
 final class $$UserFormPermissionsTableReferences extends BaseReferences<
@@ -19070,10 +20482,10 @@ class $$UserFormPermissionsTableFilterComposer
       column: $table.validTo, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<List<FormPermission>, List<FormPermission>,
-          String>
-      get permissions => $composableBuilder(
-          column: $table.permissions,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+      String>
+  get permissions => $composableBuilder(
+      column: $table.permissions,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
 
   $$TeamsTableFilterComposer get team {
     final $$TeamsTableFilterComposer composer = $composerBuilder(
@@ -19082,15 +20494,15 @@ class $$UserFormPermissionsTableFilterComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableFilterComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -19102,15 +20514,15 @@ class $$UserFormPermissionsTableFilterComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableFilterComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -19141,15 +20553,15 @@ class $$UserFormPermissionsTableOrderingComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableOrderingComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -19161,15 +20573,15 @@ class $$UserFormPermissionsTableOrderingComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableOrderingComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -19191,8 +20603,8 @@ class $$UserFormPermissionsTableAnnotationComposer
       $composableBuilder(column: $table.validTo, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<List<FormPermission>, String>
-      get permissions => $composableBuilder(
-          column: $table.permissions, builder: (column) => column);
+  get permissions => $composableBuilder(
+      column: $table.permissions, builder: (column) => column);
 
   $$TeamsTableAnnotationComposer get team {
     final $$TeamsTableAnnotationComposer composer = $composerBuilder(
@@ -19201,15 +20613,15 @@ class $$UserFormPermissionsTableAnnotationComposer
         referencedTable: $db.teams,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$TeamsTableAnnotationComposer(
               $db: $db,
               $table: $db.teams,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -19221,15 +20633,15 @@ class $$UserFormPermissionsTableAnnotationComposer
         referencedTable: $db.formTemplates,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
             $$FormTemplatesTableAnnotationComposer(
               $db: $db,
               $table: $db.formTemplates,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
+              $removeJoinBuilderFromRootComposer,
             ));
     return composer;
   }
@@ -19250,100 +20662,100 @@ class $$UserFormPermissionsTableTableManager extends RootTableManager<
   $$UserFormPermissionsTableTableManager(
       _$AppDatabase db, $UserFormPermissionsTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$UserFormPermissionsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$UserFormPermissionsTableOrderingComposer(
-                  $db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$UserFormPermissionsTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> team = const Value.absent(),
-            Value<String> form = const Value.absent(),
-            Value<DateTime?> validFrom = const Value.absent(),
-            Value<DateTime?> validTo = const Value.absent(),
-            Value<List<FormPermission>> permissions = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UserFormPermissionsCompanion(
-            team: team,
-            form: form,
-            validFrom: validFrom,
-            validTo: validTo,
-            permissions: permissions,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String team,
-            required String form,
-            Value<DateTime?> validFrom = const Value.absent(),
-            Value<DateTime?> validTo = const Value.absent(),
-            required List<FormPermission> permissions,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              UserFormPermissionsCompanion.insert(
-            team: team,
-            form: form,
-            validFrom: validFrom,
-            validTo: validTo,
-            permissions: permissions,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$UserFormPermissionsTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({team = false, form = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (team) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.team,
-                    referencedTable:
-                        $$UserFormPermissionsTableReferences._teamTable(db),
-                    referencedColumn:
-                        $$UserFormPermissionsTableReferences._teamTable(db).id,
-                  ) as T;
-                }
-                if (form) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.form,
-                    referencedTable:
-                        $$UserFormPermissionsTableReferences._formTable(db),
-                    referencedColumn:
-                        $$UserFormPermissionsTableReferences._formTable(db).id,
-                  ) as T;
-                }
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$UserFormPermissionsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$UserFormPermissionsTableOrderingComposer(
+            $db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$UserFormPermissionsTableAnnotationComposer(
+            $db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> team = const Value.absent(),
+      Value<String> form = const Value.absent(),
+      Value<DateTime?> validFrom = const Value.absent(),
+      Value<DateTime?> validTo = const Value.absent(),
+      Value<List<FormPermission>> permissions = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        UserFormPermissionsCompanion(
+          team: team,
+          form: form,
+          validFrom: validFrom,
+          validTo: validTo,
+          permissions: permissions,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String team,
+      required String form,
+      Value<DateTime?> validFrom = const Value.absent(),
+      Value<DateTime?> validTo = const Value.absent(),
+      required List<FormPermission> permissions,
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        UserFormPermissionsCompanion.insert(
+          team: team,
+          form: form,
+          validFrom: validFrom,
+          validTo: validTo,
+          permissions: permissions,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$UserFormPermissionsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({team = false, form = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (team) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.team,
+              referencedTable:
+              $$UserFormPermissionsTableReferences._teamTable(db),
+              referencedColumn:
+              $$UserFormPermissionsTableReferences._teamTable(db).id,
+            ) as T;
+          }
+          if (form) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.form,
+              referencedTable:
+              $$UserFormPermissionsTableReferences._formTable(db),
+              referencedColumn:
+              $$UserFormPermissionsTableReferences._formTable(db).id,
+            ) as T;
+          }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [];
+        },
+      );
+    },
+  ));
 }
 
 typedef $$UserFormPermissionsTableProcessedTableManager = ProcessedTableManager<
@@ -19359,22 +20771,24 @@ typedef $$UserFormPermissionsTableProcessedTableManager = ProcessedTableManager<
     UserFormPermission,
     PrefetchHooks Function({bool team, bool form})>;
 typedef $$SyncSummariesTableCreateCompanionBuilder = SyncSummariesCompanion
-    Function({
-  required String entity,
-  Value<DateTime> lastSync,
-  Value<int> successCount,
-  Value<int> failureCount,
-  Value<List<SyncError>?> errors,
-  Value<int> rowid,
+Function({
+required String entity,
+Value<DateTime> lastSync,
+Value<int> successCount,
+Value<int> failureCount,
+Value<List<SyncError>?> errors,
+Value<DateTime?> lastSuccessfulSync,
+Value<int> rowid,
 });
 typedef $$SyncSummariesTableUpdateCompanionBuilder = SyncSummariesCompanion
-    Function({
-  Value<String> entity,
-  Value<DateTime> lastSync,
-  Value<int> successCount,
-  Value<int> failureCount,
-  Value<List<SyncError>?> errors,
-  Value<int> rowid,
+Function({
+Value<String> entity,
+Value<DateTime> lastSync,
+Value<int> successCount,
+Value<int> failureCount,
+Value<List<SyncError>?> errors,
+Value<DateTime?> lastSuccessfulSync,
+Value<int> rowid,
 });
 
 class $$SyncSummariesTableFilterComposer
@@ -19399,9 +20813,13 @@ class $$SyncSummariesTableFilterComposer
       column: $table.failureCount, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<List<SyncError>?, List<SyncError>, String>
-      get errors => $composableBuilder(
-          column: $table.errors,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+  get errors => $composableBuilder(
+      column: $table.errors,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<DateTime> get lastSuccessfulSync => $composableBuilder(
+      column: $table.lastSuccessfulSync,
+      builder: (column) => ColumnFilters(column));
 }
 
 class $$SyncSummariesTableOrderingComposer
@@ -19429,6 +20847,10 @@ class $$SyncSummariesTableOrderingComposer
 
   ColumnOrderings<String> get errors => $composableBuilder(
       column: $table.errors, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get lastSuccessfulSync => $composableBuilder(
+      column: $table.lastSuccessfulSync,
+      builder: (column) => ColumnOrderings(column));
 }
 
 class $$SyncSummariesTableAnnotationComposer
@@ -19454,6 +20876,9 @@ class $$SyncSummariesTableAnnotationComposer
 
   GeneratedColumnWithTypeConverter<List<SyncError>?, String> get errors =>
       $composableBuilder(column: $table.errors, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastSuccessfulSync => $composableBuilder(
+      column: $table.lastSuccessfulSync, builder: (column) => column);
 }
 
 class $$SyncSummariesTableTableManager extends RootTableManager<
@@ -19466,58 +20891,62 @@ class $$SyncSummariesTableTableManager extends RootTableManager<
     $$SyncSummariesTableCreateCompanionBuilder,
     $$SyncSummariesTableUpdateCompanionBuilder,
     (
-      SyncSummary,
-      BaseReferences<_$AppDatabase, $SyncSummariesTable, SyncSummary>
+    SyncSummary,
+    BaseReferences<_$AppDatabase, $SyncSummariesTable, SyncSummary>
     ),
     SyncSummary,
     PrefetchHooks Function()> {
   $$SyncSummariesTableTableManager(_$AppDatabase db, $SyncSummariesTable table)
       : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$SyncSummariesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$SyncSummariesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$SyncSummariesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> entity = const Value.absent(),
-            Value<DateTime> lastSync = const Value.absent(),
-            Value<int> successCount = const Value.absent(),
-            Value<int> failureCount = const Value.absent(),
-            Value<List<SyncError>?> errors = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              SyncSummariesCompanion(
-            entity: entity,
-            lastSync: lastSync,
-            successCount: successCount,
-            failureCount: failureCount,
-            errors: errors,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String entity,
-            Value<DateTime> lastSync = const Value.absent(),
-            Value<int> successCount = const Value.absent(),
-            Value<int> failureCount = const Value.absent(),
-            Value<List<SyncError>?> errors = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              SyncSummariesCompanion.insert(
-            entity: entity,
-            lastSync: lastSync,
-            successCount: successCount,
-            failureCount: failureCount,
-            errors: errors,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$SyncSummariesTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$SyncSummariesTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$SyncSummariesTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> entity = const Value.absent(),
+      Value<DateTime> lastSync = const Value.absent(),
+      Value<int> successCount = const Value.absent(),
+      Value<int> failureCount = const Value.absent(),
+      Value<List<SyncError>?> errors = const Value.absent(),
+      Value<DateTime?> lastSuccessfulSync = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        SyncSummariesCompanion(
+          entity: entity,
+          lastSync: lastSync,
+          successCount: successCount,
+          failureCount: failureCount,
+          errors: errors,
+          lastSuccessfulSync: lastSuccessfulSync,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String entity,
+      Value<DateTime> lastSync = const Value.absent(),
+      Value<int> successCount = const Value.absent(),
+      Value<int> failureCount = const Value.absent(),
+      Value<List<SyncError>?> errors = const Value.absent(),
+      Value<DateTime?> lastSuccessfulSync = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        SyncSummariesCompanion.insert(
+          entity: entity,
+          lastSync: lastSync,
+          successCount: successCount,
+          failureCount: failureCount,
+          errors: errors,
+          lastSuccessfulSync: lastSuccessfulSync,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: null,
+  ));
 }
 
 typedef $$SyncSummariesTableProcessedTableManager = ProcessedTableManager<
@@ -19530,10 +20959,1474 @@ typedef $$SyncSummariesTableProcessedTableManager = ProcessedTableManager<
     $$SyncSummariesTableCreateCompanionBuilder,
     $$SyncSummariesTableUpdateCompanionBuilder,
     (
-      SyncSummary,
-      BaseReferences<_$AppDatabase, $SyncSummariesTable, SyncSummary>
+    SyncSummary,
+    BaseReferences<_$AppDatabase, $SyncSummariesTable, SyncSummary>
     ),
     SyncSummary,
+    PrefetchHooks Function()>;
+typedef $$AssignmentManifestsTableCreateCompanionBuilder
+= AssignmentManifestsCompanion Function({
+required String id,
+Value<String?> name,
+Value<AssignmentStatus?> status,
+required List<String> templateUids,
+Value<List<AssignmentBinding>?> bindings,
+Value<int> rowid,
+});
+typedef $$AssignmentManifestsTableUpdateCompanionBuilder
+= AssignmentManifestsCompanion Function({
+Value<String> id,
+Value<String?> name,
+Value<AssignmentStatus?> status,
+Value<List<String>> templateUids,
+Value<List<AssignmentBinding>?> bindings,
+Value<int> rowid,
+});
+
+class $$AssignmentManifestsTableFilterComposer
+    extends Composer<_$AppDatabase, $AssignmentManifestsTable> {
+  $$AssignmentManifestsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<AssignmentStatus?, AssignmentStatus, String>
+  get status => $composableBuilder(
+      column: $table.status,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<String>, List<String>, String>
+  get templateUids => $composableBuilder(
+      column: $table.templateUids,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<AssignmentBinding>?,
+      List<AssignmentBinding>, String>
+  get bindings => $composableBuilder(
+      column: $table.bindings,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+}
+
+class $$AssignmentManifestsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AssignmentManifestsTable> {
+  $$AssignmentManifestsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get templateUids => $composableBuilder(
+      column: $table.templateUids,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get bindings => $composableBuilder(
+      column: $table.bindings, builder: (column) => ColumnOrderings(column));
+}
+
+class $$AssignmentManifestsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AssignmentManifestsTable> {
+  $$AssignmentManifestsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<AssignmentStatus?, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<String>, String> get templateUids =>
+      $composableBuilder(
+          column: $table.templateUids, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<AssignmentBinding>?, String>
+  get bindings => $composableBuilder(
+      column: $table.bindings, builder: (column) => column);
+}
+
+class $$AssignmentManifestsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $AssignmentManifestsTable,
+    AssignmentManifest,
+    $$AssignmentManifestsTableFilterComposer,
+    $$AssignmentManifestsTableOrderingComposer,
+    $$AssignmentManifestsTableAnnotationComposer,
+    $$AssignmentManifestsTableCreateCompanionBuilder,
+    $$AssignmentManifestsTableUpdateCompanionBuilder,
+    (
+    AssignmentManifest,
+    BaseReferences<_$AppDatabase, $AssignmentManifestsTable,
+        AssignmentManifest>
+    ),
+    AssignmentManifest,
+    PrefetchHooks Function()> {
+  $$AssignmentManifestsTableTableManager(
+      _$AppDatabase db, $AssignmentManifestsTable table)
+      : super(TableManagerState(
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$AssignmentManifestsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$AssignmentManifestsTableOrderingComposer(
+            $db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$AssignmentManifestsTableAnnotationComposer(
+            $db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<String?> name = const Value.absent(),
+      Value<AssignmentStatus?> status = const Value.absent(),
+      Value<List<String>> templateUids = const Value.absent(),
+      Value<List<AssignmentBinding>?> bindings = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentManifestsCompanion(
+          id: id,
+          name: name,
+          status: status,
+          templateUids: templateUids,
+          bindings: bindings,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<String?> name = const Value.absent(),
+      Value<AssignmentStatus?> status = const Value.absent(),
+      required List<String> templateUids,
+      Value<List<AssignmentBinding>?> bindings = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentManifestsCompanion.insert(
+          id: id,
+          name: name,
+          status: status,
+          templateUids: templateUids,
+          bindings: bindings,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: null,
+  ));
+}
+
+typedef $$AssignmentManifestsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $AssignmentManifestsTable,
+    AssignmentManifest,
+    $$AssignmentManifestsTableFilterComposer,
+    $$AssignmentManifestsTableOrderingComposer,
+    $$AssignmentManifestsTableAnnotationComposer,
+    $$AssignmentManifestsTableCreateCompanionBuilder,
+    $$AssignmentManifestsTableUpdateCompanionBuilder,
+    (
+    AssignmentManifest,
+    BaseReferences<_$AppDatabase, $AssignmentManifestsTable,
+        AssignmentManifest>
+    ),
+    AssignmentManifest,
+    PrefetchHooks Function()>;
+typedef $$PartySetsTableCreateCompanionBuilder = PartySetsCompanion Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String uid,
+required String name,
+Value<String?> code,
+required PartySetKind kind,
+Value<PartySetSpec?> spec,
+Value<int> rowid,
+});
+typedef $$PartySetsTableUpdateCompanionBuilder = PartySetsCompanion Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> uid,
+Value<String> name,
+Value<String?> code,
+Value<PartySetKind> kind,
+Value<PartySetSpec?> spec,
+Value<int> rowid,
+});
+
+final class $$PartySetsTableReferences
+    extends BaseReferences<_$AppDatabase, $PartySetsTable, PartySet> {
+  $$PartySetsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$PartySetMembersTable, List<PartySetMember>>
+  _partySetsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.partySetMembers,
+          aliasName: $_aliasNameGenerator(
+              db.partySets.id, db.partySetMembers.partySet));
+
+  $$PartySetMembersTableProcessedTableManager get partySets {
+    final manager = $$PartySetMembersTableTableManager(
+        $_db, $_db.partySetMembers)
+        .filter((f) => f.partySet.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_partySetsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$PartySetsTableFilterComposer
+    extends Composer<_$AppDatabase, $PartySetsTable> {
+  $$PartySetsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get code => $composableBuilder(
+      column: $table.code, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<PartySetKind, PartySetKind, String> get kind =>
+      $composableBuilder(
+          column: $table.kind,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<PartySetSpec?, PartySetSpec, String>
+  get spec => $composableBuilder(
+      column: $table.spec,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  Expression<bool> partySets(
+      Expression<bool> Function($$PartySetMembersTableFilterComposer f) f) {
+    final $$PartySetMembersTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.partySetMembers,
+        getReferencedColumn: (t) => t.partySet,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartySetMembersTableFilterComposer(
+              $db: $db,
+              $table: $db.partySetMembers,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$PartySetsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PartySetsTable> {
+  $$PartySetsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get label => $composableBuilder(
+      column: $table.label, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get code => $composableBuilder(
+      column: $table.code, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+      column: $table.kind, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get spec => $composableBuilder(
+      column: $table.spec, builder: (column) => ColumnOrderings(column));
+}
+
+class $$PartySetsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PartySetsTable> {
+  $$PartySetsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String> get label =>
+      $composableBuilder(column: $table.label, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<Translation>, String>
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
+
+  GeneratedColumn<String> get uid =>
+      $composableBuilder(column: $table.uid, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PartySetKind, String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PartySetSpec?, String> get spec =>
+      $composableBuilder(column: $table.spec, builder: (column) => column);
+
+  Expression<T> partySets<T extends Object>(
+      Expression<T> Function($$PartySetMembersTableAnnotationComposer a) f) {
+    final $$PartySetMembersTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.partySetMembers,
+        getReferencedColumn: (t) => t.partySet,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartySetMembersTableAnnotationComposer(
+              $db: $db,
+              $table: $db.partySetMembers,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$PartySetsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PartySetsTable,
+    PartySet,
+    $$PartySetsTableFilterComposer,
+    $$PartySetsTableOrderingComposer,
+    $$PartySetsTableAnnotationComposer,
+    $$PartySetsTableCreateCompanionBuilder,
+    $$PartySetsTableUpdateCompanionBuilder,
+    (PartySet, $$PartySetsTableReferences),
+    PartySet,
+    PrefetchHooks Function({bool partySets})> {
+  $$PartySetsTableTableManager(_$AppDatabase db, $PartySetsTable table)
+      : super(TableManagerState(
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$PartySetsTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$PartySetsTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$PartySetsTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> uid = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<PartySetKind> kind = const Value.absent(),
+      Value<PartySetSpec?> spec = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        PartySetsCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          uid: uid,
+          name: name,
+          code: code,
+          kind: kind,
+          spec: spec,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String uid,
+      required String name,
+      Value<String?> code = const Value.absent(),
+      required PartySetKind kind,
+      Value<PartySetSpec?> spec = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        PartySetsCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          uid: uid,
+          name: name,
+          code: code,
+          kind: kind,
+          spec: spec,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$PartySetsTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({partySets = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [if (partySets) db.partySetMembers],
+        addJoins: null,
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (partySets)
+              await $_getPrefetchedData<PartySet, $PartySetsTable,
+                  PartySetMember>(
+                  currentTable: table,
+                  referencedTable:
+                  $$PartySetsTableReferences._partySetsTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$PartySetsTableReferences(db, table, p0).partySets,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.partySet == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
+}
+
+typedef $$PartySetsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PartySetsTable,
+    PartySet,
+    $$PartySetsTableFilterComposer,
+    $$PartySetsTableOrderingComposer,
+    $$PartySetsTableAnnotationComposer,
+    $$PartySetsTableCreateCompanionBuilder,
+    $$PartySetsTableUpdateCompanionBuilder,
+    (PartySet, $$PartySetsTableReferences),
+    PartySet,
+    PrefetchHooks Function({bool partySets})>;
+typedef $$PartiesTableCreateCompanionBuilder = PartiesCompanion Function({
+required String id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+required String uid,
+required String name,
+Value<String?> code,
+required PartyType type,
+required SourceType sourceType,
+required String sourceId,
+Value<String?> parentId,
+Value<int> rowid,
+});
+typedef $$PartiesTableUpdateCompanionBuilder = PartiesCompanion Function({
+Value<String> id,
+Value<DateTime?> lastModifiedDate,
+Value<DateTime?> createdDate,
+Value<String?> displayName,
+Value<Map<String, dynamic>?> label,
+Value<List<Translation>> translations,
+Value<String> uid,
+Value<String> name,
+Value<String?> code,
+Value<PartyType> type,
+Value<SourceType> sourceType,
+Value<String> sourceId,
+Value<String?> parentId,
+Value<int> rowid,
+});
+
+final class $$PartiesTableReferences
+    extends BaseReferences<_$AppDatabase, $PartiesTable, Party> {
+  $$PartiesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$PartySetMembersTable, List<PartySetMember>>
+  _partiesTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+      db.partySetMembers,
+      aliasName:
+      $_aliasNameGenerator(db.parties.id, db.partySetMembers.Party));
+
+  $$PartySetMembersTableProcessedTableManager get parties {
+    final manager =
+    $$PartySetMembersTableTableManager($_db, $_db.partySetMembers)
+        .filter((f) => f.Party.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_partiesTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$PartiesTableFilterComposer
+    extends Composer<_$AppDatabase, $PartiesTable> {
+  $$PartiesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
+      String>
+  get label => $composableBuilder(
+      column: $table.label,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<Translation>, List<Translation>, String>
+  get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get code => $composableBuilder(
+      column: $table.code, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<PartyType, PartyType, String> get type =>
+      $composableBuilder(
+          column: $table.type,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<SourceType, SourceType, String>
+  get sourceType => $composableBuilder(
+      column: $table.sourceType,
+      builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<String> get sourceId => $composableBuilder(
+      column: $table.sourceId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get parentId => $composableBuilder(
+      column: $table.parentId, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> parties(
+      Expression<bool> Function($$PartySetMembersTableFilterComposer f) f) {
+    final $$PartySetMembersTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.partySetMembers,
+        getReferencedColumn: (t) => t.Party,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartySetMembersTableFilterComposer(
+              $db: $db,
+              $table: $db.partySetMembers,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$PartiesTableOrderingComposer
+    extends Composer<_$AppDatabase, $PartiesTable> {
+  $$PartiesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get label => $composableBuilder(
+      column: $table.label, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get translations => $composableBuilder(
+      column: $table.translations,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get code => $composableBuilder(
+      column: $table.code, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get sourceType => $composableBuilder(
+      column: $table.sourceType, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get sourceId => $composableBuilder(
+      column: $table.sourceId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get parentId => $composableBuilder(
+      column: $table.parentId, builder: (column) => ColumnOrderings(column));
+}
+
+class $$PartiesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PartiesTable> {
+  $$PartiesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String> get label =>
+      $composableBuilder(column: $table.label, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<Translation>, String>
+  get translations => $composableBuilder(
+      column: $table.translations, builder: (column) => column);
+
+  GeneratedColumn<String> get uid =>
+      $composableBuilder(column: $table.uid, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PartyType, String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<SourceType, String> get sourceType =>
+      $composableBuilder(
+          column: $table.sourceType, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceId =>
+      $composableBuilder(column: $table.sourceId, builder: (column) => column);
+
+  GeneratedColumn<String> get parentId =>
+      $composableBuilder(column: $table.parentId, builder: (column) => column);
+
+  Expression<T> parties<T extends Object>(
+      Expression<T> Function($$PartySetMembersTableAnnotationComposer a) f) {
+    final $$PartySetMembersTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.partySetMembers,
+        getReferencedColumn: (t) => t.Party,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartySetMembersTableAnnotationComposer(
+              $db: $db,
+              $table: $db.partySetMembers,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$PartiesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PartiesTable,
+    Party,
+    $$PartiesTableFilterComposer,
+    $$PartiesTableOrderingComposer,
+    $$PartiesTableAnnotationComposer,
+    $$PartiesTableCreateCompanionBuilder,
+    $$PartiesTableUpdateCompanionBuilder,
+    (Party, $$PartiesTableReferences),
+    Party,
+    PrefetchHooks Function({bool parties})> {
+  $$PartiesTableTableManager(_$AppDatabase db, $PartiesTable table)
+      : super(TableManagerState(
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$PartiesTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$PartiesTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$PartiesTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      Value<String> uid = const Value.absent(),
+      Value<String> name = const Value.absent(),
+      Value<String?> code = const Value.absent(),
+      Value<PartyType> type = const Value.absent(),
+      Value<SourceType> sourceType = const Value.absent(),
+      Value<String> sourceId = const Value.absent(),
+      Value<String?> parentId = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        PartiesCompanion(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          uid: uid,
+          name: name,
+          code: code,
+          type: type,
+          sourceType: sourceType,
+          sourceId: sourceId,
+          parentId: parentId,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      Value<DateTime?> lastModifiedDate = const Value.absent(),
+      Value<DateTime?> createdDate = const Value.absent(),
+      Value<String?> displayName = const Value.absent(),
+      Value<Map<String, dynamic>?> label = const Value.absent(),
+      Value<List<Translation>> translations = const Value.absent(),
+      required String uid,
+      required String name,
+      Value<String?> code = const Value.absent(),
+      required PartyType type,
+      required SourceType sourceType,
+      required String sourceId,
+      Value<String?> parentId = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        PartiesCompanion.insert(
+          id: id,
+          lastModifiedDate: lastModifiedDate,
+          createdDate: createdDate,
+          displayName: displayName,
+          label: label,
+          translations: translations,
+          uid: uid,
+          name: name,
+          code: code,
+          type: type,
+          sourceType: sourceType,
+          sourceId: sourceId,
+          parentId: parentId,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) =>
+    (e.readTable(table), $$PartiesTableReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: ({parties = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [if (parties) db.partySetMembers],
+        addJoins: null,
+        getPrefetchedDataCallback: (items) async {
+          return [
+            if (parties)
+              await $_getPrefetchedData<Party, $PartiesTable,
+                  PartySetMember>(
+                  currentTable: table,
+                  referencedTable:
+                  $$PartiesTableReferences._partiesTable(db),
+                  managerFromTypedResult: (p0) =>
+                  $$PartiesTableReferences(db, table, p0).parties,
+                  referencedItemsForCurrentItem: (item,
+                      referencedItems) =>
+                      referencedItems.where((e) => e.Party == item.id),
+                  typedResults: items)
+          ];
+        },
+      );
+    },
+  ));
+}
+
+typedef $$PartiesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PartiesTable,
+    Party,
+    $$PartiesTableFilterComposer,
+    $$PartiesTableOrderingComposer,
+    $$PartiesTableAnnotationComposer,
+    $$PartiesTableCreateCompanionBuilder,
+    $$PartiesTableUpdateCompanionBuilder,
+    (Party, $$PartiesTableReferences),
+    Party,
+    PrefetchHooks Function({bool parties})>;
+typedef $$PartySetMembersTableCreateCompanionBuilder = PartySetMembersCompanion
+Function({
+required String partySet,
+required String Party,
+Value<int> rowid,
+});
+typedef $$PartySetMembersTableUpdateCompanionBuilder = PartySetMembersCompanion
+Function({
+Value<String> partySet,
+Value<String> Party,
+Value<int> rowid,
+});
+
+final class $$PartySetMembersTableReferences extends BaseReferences<
+    _$AppDatabase, $PartySetMembersTable, PartySetMember> {
+  $$PartySetMembersTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $PartySetsTable _partySetTable(_$AppDatabase db) =>
+      db.partySets.createAlias(
+          $_aliasNameGenerator(db.partySetMembers.partySet, db.partySets.id));
+
+  $$PartySetsTableProcessedTableManager get partySet {
+    final $_column = $_itemColumn<String>('party_set')!;
+
+    final manager = $$PartySetsTableTableManager($_db, $_db.partySets)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_partySetTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $PartiesTable _PartyTable(_$AppDatabase db) => db.parties.createAlias(
+      $_aliasNameGenerator(db.partySetMembers.Party, db.parties.id));
+
+  $$PartiesTableProcessedTableManager get Party {
+    final $_column = $_itemColumn<String>('party')!;
+
+    final manager = $$PartiesTableTableManager($_db, $_db.parties)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_PartyTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$PartySetMembersTableFilterComposer
+    extends Composer<_$AppDatabase, $PartySetMembersTable> {
+  $$PartySetMembersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$PartySetsTableFilterComposer get partySet {
+    final $$PartySetsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.partySet,
+        referencedTable: $db.partySets,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartySetsTableFilterComposer(
+              $db: $db,
+              $table: $db.partySets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$PartiesTableFilterComposer get Party {
+    final $$PartiesTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.Party,
+        referencedTable: $db.parties,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartiesTableFilterComposer(
+              $db: $db,
+              $table: $db.parties,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$PartySetMembersTableOrderingComposer
+    extends Composer<_$AppDatabase, $PartySetMembersTable> {
+  $$PartySetMembersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$PartySetsTableOrderingComposer get partySet {
+    final $$PartySetsTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.partySet,
+        referencedTable: $db.partySets,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartySetsTableOrderingComposer(
+              $db: $db,
+              $table: $db.partySets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$PartiesTableOrderingComposer get Party {
+    final $$PartiesTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.Party,
+        referencedTable: $db.parties,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartiesTableOrderingComposer(
+              $db: $db,
+              $table: $db.parties,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$PartySetMembersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PartySetMembersTable> {
+  $$PartySetMembersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$PartySetsTableAnnotationComposer get partySet {
+    final $$PartySetsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.partySet,
+        referencedTable: $db.partySets,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartySetsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.partySets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$PartiesTableAnnotationComposer get Party {
+    final $$PartiesTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.Party,
+        referencedTable: $db.parties,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+            {$addJoinBuilderToRootComposer,
+              $removeJoinBuilderFromRootComposer}) =>
+            $$PartiesTableAnnotationComposer(
+              $db: $db,
+              $table: $db.parties,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+              $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$PartySetMembersTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PartySetMembersTable,
+    PartySetMember,
+    $$PartySetMembersTableFilterComposer,
+    $$PartySetMembersTableOrderingComposer,
+    $$PartySetMembersTableAnnotationComposer,
+    $$PartySetMembersTableCreateCompanionBuilder,
+    $$PartySetMembersTableUpdateCompanionBuilder,
+    (PartySetMember, $$PartySetMembersTableReferences),
+    PartySetMember,
+    PrefetchHooks Function({bool partySet, bool Party})> {
+  $$PartySetMembersTableTableManager(
+      _$AppDatabase db, $PartySetMembersTable table)
+      : super(TableManagerState(
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$PartySetMembersTableFilterComposer($db: db, $table: table),
+    createOrderingComposer: () =>
+        $$PartySetMembersTableOrderingComposer($db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$PartySetMembersTableAnnotationComposer($db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> partySet = const Value.absent(),
+      Value<String> Party = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        PartySetMembersCompanion(
+          partySet: partySet,
+          Party: Party,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String partySet,
+      required String Party,
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        PartySetMembersCompanion.insert(
+          partySet: partySet,
+          Party: Party,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (
+    e.readTable(table),
+    $$PartySetMembersTableReferences(db, table, e)
+    ))
+        .toList(),
+    prefetchHooksCallback: ({partySet = false, Party = false}) {
+      return PrefetchHooks(
+        db: db,
+        explicitlyWatchedTables: [],
+        addJoins: <
+        T extends TableManagerState<
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic,
+            dynamic>>(state) {
+          if (partySet) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.partySet,
+              referencedTable:
+              $$PartySetMembersTableReferences._partySetTable(db),
+              referencedColumn:
+              $$PartySetMembersTableReferences._partySetTable(db).id,
+            ) as T;
+          }
+          if (Party) {
+            state = state.withJoin(
+              currentTable: table,
+              currentColumn: table.Party,
+              referencedTable:
+              $$PartySetMembersTableReferences._PartyTable(db),
+              referencedColumn:
+              $$PartySetMembersTableReferences._PartyTable(db).id,
+            ) as T;
+          }
+
+          return state;
+        },
+        getPrefetchedDataCallback: (items) async {
+          return [];
+        },
+      );
+    },
+  ));
+}
+
+typedef $$PartySetMembersTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PartySetMembersTable,
+    PartySetMember,
+    $$PartySetMembersTableFilterComposer,
+    $$PartySetMembersTableOrderingComposer,
+    $$PartySetMembersTableAnnotationComposer,
+    $$PartySetMembersTableCreateCompanionBuilder,
+    $$PartySetMembersTableUpdateCompanionBuilder,
+    (PartySetMember, $$PartySetMembersTableReferences),
+    PartySetMember,
+    PrefetchHooks Function({bool partySet, bool Party})>;
+typedef $$AssignmentPartyBindingsTableCreateCompanionBuilder
+= AssignmentPartyBindingsCompanion Function({
+required String id,
+required String assignmentId,
+required String roleName,
+Value<String?> vocabularyId,
+required String partySetId,
+Value<String?> principalType,
+Value<String?> principalId,
+Value<String> combineMode,
+Value<int> rowid,
+});
+typedef $$AssignmentPartyBindingsTableUpdateCompanionBuilder
+= AssignmentPartyBindingsCompanion Function({
+Value<String> id,
+Value<String> assignmentId,
+Value<String> roleName,
+Value<String?> vocabularyId,
+Value<String> partySetId,
+Value<String?> principalType,
+Value<String?> principalId,
+Value<String> combineMode,
+Value<int> rowid,
+});
+
+class $$AssignmentPartyBindingsTableFilterComposer
+    extends Composer<_$AppDatabase, $AssignmentPartyBindingsTable> {
+  $$AssignmentPartyBindingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get assignmentId => $composableBuilder(
+      column: $table.assignmentId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get roleName => $composableBuilder(
+      column: $table.roleName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get vocabularyId => $composableBuilder(
+      column: $table.vocabularyId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get partySetId => $composableBuilder(
+      column: $table.partySetId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get principalType => $composableBuilder(
+      column: $table.principalType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get principalId => $composableBuilder(
+      column: $table.principalId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get combineMode => $composableBuilder(
+      column: $table.combineMode, builder: (column) => ColumnFilters(column));
+}
+
+class $$AssignmentPartyBindingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AssignmentPartyBindingsTable> {
+  $$AssignmentPartyBindingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get assignmentId => $composableBuilder(
+      column: $table.assignmentId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get roleName => $composableBuilder(
+      column: $table.roleName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get vocabularyId => $composableBuilder(
+      column: $table.vocabularyId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get partySetId => $composableBuilder(
+      column: $table.partySetId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get principalType => $composableBuilder(
+      column: $table.principalType,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get principalId => $composableBuilder(
+      column: $table.principalId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get combineMode => $composableBuilder(
+      column: $table.combineMode, builder: (column) => ColumnOrderings(column));
+}
+
+class $$AssignmentPartyBindingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AssignmentPartyBindingsTable> {
+  $$AssignmentPartyBindingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get assignmentId => $composableBuilder(
+      column: $table.assignmentId, builder: (column) => column);
+
+  GeneratedColumn<String> get roleName =>
+      $composableBuilder(column: $table.roleName, builder: (column) => column);
+
+  GeneratedColumn<String> get vocabularyId => $composableBuilder(
+      column: $table.vocabularyId, builder: (column) => column);
+
+  GeneratedColumn<String> get partySetId => $composableBuilder(
+      column: $table.partySetId, builder: (column) => column);
+
+  GeneratedColumn<String> get principalType => $composableBuilder(
+      column: $table.principalType, builder: (column) => column);
+
+  GeneratedColumn<String> get principalId => $composableBuilder(
+      column: $table.principalId, builder: (column) => column);
+
+  GeneratedColumn<String> get combineMode => $composableBuilder(
+      column: $table.combineMode, builder: (column) => column);
+}
+
+class $$AssignmentPartyBindingsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $AssignmentPartyBindingsTable,
+    AssignmentPartyBinding,
+    $$AssignmentPartyBindingsTableFilterComposer,
+    $$AssignmentPartyBindingsTableOrderingComposer,
+    $$AssignmentPartyBindingsTableAnnotationComposer,
+    $$AssignmentPartyBindingsTableCreateCompanionBuilder,
+    $$AssignmentPartyBindingsTableUpdateCompanionBuilder,
+    (
+    AssignmentPartyBinding,
+    BaseReferences<_$AppDatabase, $AssignmentPartyBindingsTable,
+        AssignmentPartyBinding>
+    ),
+    AssignmentPartyBinding,
+    PrefetchHooks Function()> {
+  $$AssignmentPartyBindingsTableTableManager(
+      _$AppDatabase db, $AssignmentPartyBindingsTable table)
+      : super(TableManagerState(
+    db: db,
+    table: table,
+    createFilteringComposer: () =>
+        $$AssignmentPartyBindingsTableFilterComposer(
+            $db: db, $table: table),
+    createOrderingComposer: () =>
+        $$AssignmentPartyBindingsTableOrderingComposer(
+            $db: db, $table: table),
+    createComputedFieldComposer: () =>
+        $$AssignmentPartyBindingsTableAnnotationComposer(
+            $db: db, $table: table),
+    updateCompanionCallback: ({
+      Value<String> id = const Value.absent(),
+      Value<String> assignmentId = const Value.absent(),
+      Value<String> roleName = const Value.absent(),
+      Value<String?> vocabularyId = const Value.absent(),
+      Value<String> partySetId = const Value.absent(),
+      Value<String?> principalType = const Value.absent(),
+      Value<String?> principalId = const Value.absent(),
+      Value<String> combineMode = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentPartyBindingsCompanion(
+          id: id,
+          assignmentId: assignmentId,
+          roleName: roleName,
+          vocabularyId: vocabularyId,
+          partySetId: partySetId,
+          principalType: principalType,
+          principalId: principalId,
+          combineMode: combineMode,
+          rowid: rowid,
+        ),
+    createCompanionCallback: ({
+      required String id,
+      required String assignmentId,
+      required String roleName,
+      Value<String?> vocabularyId = const Value.absent(),
+      required String partySetId,
+      Value<String?> principalType = const Value.absent(),
+      Value<String?> principalId = const Value.absent(),
+      Value<String> combineMode = const Value.absent(),
+      Value<int> rowid = const Value.absent(),
+    }) =>
+        AssignmentPartyBindingsCompanion.insert(
+          id: id,
+          assignmentId: assignmentId,
+          roleName: roleName,
+          vocabularyId: vocabularyId,
+          partySetId: partySetId,
+          principalType: principalType,
+          principalId: principalId,
+          combineMode: combineMode,
+          rowid: rowid,
+        ),
+    withReferenceMapper: (p0) => p0
+        .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+        .toList(),
+    prefetchHooksCallback: null,
+  ));
+}
+
+typedef $$AssignmentPartyBindingsTableProcessedTableManager
+= ProcessedTableManager<
+    _$AppDatabase,
+    $AssignmentPartyBindingsTable,
+    AssignmentPartyBinding,
+    $$AssignmentPartyBindingsTableFilterComposer,
+    $$AssignmentPartyBindingsTableOrderingComposer,
+    $$AssignmentPartyBindingsTableAnnotationComposer,
+    $$AssignmentPartyBindingsTableCreateCompanionBuilder,
+    $$AssignmentPartyBindingsTableUpdateCompanionBuilder,
+    (
+    AssignmentPartyBinding,
+    BaseReferences<_$AppDatabase, $AssignmentPartyBindingsTable,
+        AssignmentPartyBinding>
+    ),
+    AssignmentPartyBinding,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
@@ -19561,8 +22454,6 @@ class $AppDatabaseManager {
       $$AssignmentFormsTableTableManager(_db, _db.assignmentForms);
   $$FormTemplateVersionsTableTableManager get formTemplateVersions =>
       $$FormTemplateVersionsTableTableManager(_db, _db.formTemplateVersions);
-  $$MetadataSubmissionsTableTableManager get metadataSubmissions =>
-      $$MetadataSubmissionsTableTableManager(_db, _db.metadataSubmissions);
   $$DataInstancesTableTableManager get dataInstances =>
       $$DataInstancesTableTableManager(_db, _db.dataInstances);
   $$RepeatInstancesTableTableManager get repeatInstances =>
@@ -19579,4 +22470,15 @@ class $AppDatabaseManager {
       $$UserFormPermissionsTableTableManager(_db, _db.userFormPermissions);
   $$SyncSummariesTableTableManager get syncSummaries =>
       $$SyncSummariesTableTableManager(_db, _db.syncSummaries);
+  $$AssignmentManifestsTableTableManager get assignmentManifests =>
+      $$AssignmentManifestsTableTableManager(_db, _db.assignmentManifests);
+  $$PartySetsTableTableManager get partySets =>
+      $$PartySetsTableTableManager(_db, _db.partySets);
+  $$PartiesTableTableManager get parties =>
+      $$PartiesTableTableManager(_db, _db.parties);
+  $$PartySetMembersTableTableManager get partySetMembers =>
+      $$PartySetMembersTableTableManager(_db, _db.partySetMembers);
+  $$AssignmentPartyBindingsTableTableManager get assignmentPartyBindings =>
+      $$AssignmentPartyBindingsTableTableManager(
+          _db, _db.assignmentPartyBindings);
 }

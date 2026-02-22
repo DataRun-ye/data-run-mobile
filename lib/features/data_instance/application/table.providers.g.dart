@@ -515,7 +515,7 @@ final selectedItemsProvider =
 
 typedef _$SelectedItems = AutoDisposeNotifier<ISet<String>>;
 String _$tableAppearanceControllerHash() =>
-    r'95057ae626c649fa928b138bf0bc6569b4069238';
+    r'935c795f09a9163848e7cca7d5f02833af78cdaa';
 
 /// See also [TableAppearanceController].
 @ProviderFor(TableAppearanceController)

@@ -1,5 +1,9 @@
 //GENERATED BARREL FILE
+export './party/party_resolution_params.dart';
+export './party/party_set_kind.dart';
+export './party/party_set_spec.dart';
 export 'activity_model.dart';
+export 'assignment_binding.dart';
 export 'assignment_model.dart';
 export 'assignment_status.dart';
 export 'collections.dart';
@@ -29,4 +33,3 @@ export 'translations.dart';
 export 'user_form_access.dart';
 export 'validation_strategy.dart';
 export 'value_type.dart';
-

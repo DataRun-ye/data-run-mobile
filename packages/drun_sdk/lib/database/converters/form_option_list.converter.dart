@@ -4,7 +4,6 @@ import 'package:d_sdk/database/shared/shared.dart';
 import 'package:drift/drift.dart';
 
 /// Converts a List<FormOption> to/from a JSON String.
-/// (Assumes you already have a converter for FormOption lists.)
 class FormOptionListConverter extends TypeConverter<List<FormOption>?, String?> {
   const FormOptionListConverter();
 

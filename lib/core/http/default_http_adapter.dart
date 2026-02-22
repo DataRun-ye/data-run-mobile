@@ -14,16 +14,19 @@ class DefaultHttpAdapter extends HttpClient<dynamic> {
 
   String get apiVersionPath => '/${AppEnvironment.apiV1Path}';
 
+  String get apiBaseUrl => AppEnvironment.apiBaseUrl;
+
   @override
   Future<Response<dynamic>> request(
       {required String resourceName,
+      String? path,
       required String method,
       Object? data,
       Map<String, dynamic>? headers}) async {
     final defaultHeaders = headers?.cast<String, String>() ?? {}
       ..addAll({HttpHeaders.contentTypeHeader: 'application/json'});
 
-    final resourcePath = '${this.apiVersionPath}/$resourceName';
+    final resourcePath = path ?? '${this.apiVersionPath}/$resourceName';
 
     Response<dynamic> response = noResponse(
         url: resourcePath, method: method, data: data, headers: defaultHeaders);
@@ -61,11 +64,9 @@ class DefaultHttpAdapter extends HttpClient<dynamic> {
   }
 
   Response<dynamic> _handleResponse(Response<dynamic> response) {
-    return switch (response.statusCode) {
-      == 200 => response,
-      _ =>
-        throw NetworkHttpError.error(response, stackTrace: StackTrace.current),
-    };
+    final responseCode = response.statusCode;
+    if (responseCode != null && responseCode < 400) return response;
+    throw NetworkHttpError.error(response, stackTrace: StackTrace.current);
   }
 
   Response<dynamic> noResponse(

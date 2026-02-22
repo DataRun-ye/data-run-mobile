@@ -1,6 +1,6 @@
 {
   "env_label": "local",
   "api_base_url": "http://localhost:8080",
-  "default_locale": "en",
+  "default_locale": "ar",
   "secure_cache": false
 }

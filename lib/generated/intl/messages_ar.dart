@@ -86,7 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m27(error) => "خطأ عند محاولة الوصول لملفات التخزين: ${error}";
 
-  static String m28(error) => "وصول غير مصرح به إلى نقطة المورد: ${error}.";
+  static String m28(error) => "خطأ في إسم المستخدم أو كلمة المرور: ${error}.";
 
   static String m29(error) =>
       "حدث خطأ غير متوقع: ${error}. يرجى المحاولة مرة أخرى.";

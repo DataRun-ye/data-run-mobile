@@ -32,10 +32,12 @@ class AuthApi {
           ));
 
       return AuthResponse.fromJson(response.data);
-    } catch (e, s) {
+    } on DioException catch (e, s) {
       logError('Error during login', source: e, stackTrace: s);
-      throw AuthException('Error during login',
-          cause: e, errorCode: DRunErrorCode.noUserDetailsFetchedFromServer);
+      throw NetworkHttpError.fromDioException(e,
+          stackTrace: StackTrace.current);
+      // throw AuthException('Error during login',
+      //     cause: e, errorCode: DRunErrorCode.noUserDetailsFetchedFromServer);
     }
   }
 

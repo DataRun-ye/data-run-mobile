@@ -322,7 +322,7 @@
   "badRequestToEndPoint": "طلب غير صحيح: {error}.",
   "endPointNotFound": "لم يتم العثور على نقطة المورد: {error}.",
   "serverError": "خطأ في الخادم: {error}.",
-  "unauthorizedAccessToEndPoint": "وصول غير مصرح به إلى نقطة المورد: {error}.",
+  "unauthorizedAccessToEndPoint": "خطأ في إسم المستخدم أو كلمة المرور: {error}.",
   "forbidden": "ممنوع: {error}.",
   "noUserDetailsFetchedFromServer": "لم يتمكن من مزامنة معلومات المستخدم من السيرفر: {error}.",
   "materialVersion": "Material Version",

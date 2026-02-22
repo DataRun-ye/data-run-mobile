@@ -1,6 +1,8 @@
 //GENERATED BARREL FILE
 export 'activities.table.dart';
 export 'assignment_forms.table.dart';
+export 'assignment_manifests.table.dart';
+export 'assignment_party_bindings.table.dart';
 export 'assignments.table.dart';
 export 'base.entity.mixin.dart';
 export 'data_elements.table.dart';
@@ -15,10 +17,14 @@ export 'option_sets.table.dart';
 export 'options.table.dart';
 export 'org_units.table.dart';
 export 'ou_levels.table.dart';
+export 'parties.table.dart';
+export 'party.tag.dart';
+export 'party_set_members.table.dart';
+export 'party_sets.table.dart';
 export 'projects.table.dart';
 export 'repeat_instances.table.dart';
 export 'sync_summaries.dart';
 export 'teams.table.dart';
+export 'user_allowed_parties.table.dart';
 export 'user_form_permissions.dart';
 export 'users.table.dart';
-

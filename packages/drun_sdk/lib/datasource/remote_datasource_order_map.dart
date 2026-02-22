@@ -42,6 +42,6 @@ class DSOrder {
     dataInstance: DataInstanceDatasource,
     // repeatInstance: RepeatInstanceDatasource,
     dataValue: DataValueDatasource,
-    metadataSubmission: MetadataSubmissionDatasource,
+    // metadataSubmission: MetadataSubmissionDatasource,
   };
 }

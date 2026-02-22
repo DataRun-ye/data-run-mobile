@@ -111,17 +111,17 @@ class MetadataSubmissionUpdate {
   @override
   String toString() => householdName ?? '';
 }
-
-extension MetadataSubmissionHouseholds on MetadataSubmission {
-  Map<String, dynamic> toContext() {
-    return {
-      'metadataSubmission': id,
-      'createdDate': createdDate,
-      'lastModifiedDate': lastModifiedDate,
-      'metadataSchema': metadataSchema,
-      'resourceType': resourceType.name,
-      'resourceId': resourceId,
-      'households': formData?['households'],
-    };
-  }
-}
+//
+// extension MetadataSubmissionHouseholds on MetadataSubmission {
+//   Map<String, dynamic> toContext() {
+//     return {
+//       'metadataSubmission': id,
+//       'createdDate': createdDate,
+//       'lastModifiedDate': lastModifiedDate,
+//       'metadataSchema': metadataSchema,
+//       'resourceType': resourceType.name,
+//       'resourceId': resourceId,
+//       'households': formData?['households'],
+//     };
+//   }
+// }

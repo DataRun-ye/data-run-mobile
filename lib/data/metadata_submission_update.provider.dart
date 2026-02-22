@@ -6,14 +6,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'metadata_submission_update.provider.g.dart';
 
-@riverpod
-Future<MetadataSubmission?> metadataSubmissionRepository(
-    Ref ref, String? orgUnit) {
-  final db = DSdk.db;
-  return (db.select(db.metadataSubmissions)
-        ..where((tbl) => tbl.resourceId.equals(orgUnit ?? '')))
-      .getSingleOrNull();
-}
+// @riverpod
+// Future<MetadataSubmission?> metadataSubmissionRepository(
+//     Ref ref, String? orgUnit) {
+//   final db = DSdk.db;
+//   return (db.select(db.metadataSubmissions)
+//         ..where((tbl) => tbl.resourceId.equals(orgUnit ?? '')))
+//       .getSingleOrNull();
+// }
 
 @riverpod
 Future<List<MetadataSubmissionUpdate>> systemMetadataSubmissions(Ref ref,
@@ -28,19 +28,20 @@ Future<List<MetadataSubmissionUpdate>> systemMetadataSubmissions(Ref ref,
 
   final Assignment? assignment = dd?.assignment?.prefetchedData?.first;
 
-  final metadataSubmission = await ref
-      .watch(metadataSubmissionRepositoryProvider(assignment?.orgUnit).future);
+  // final metadataSubmission = await ref
+  //     .watch(metadataSubmissionRepositoryProvider(assignment?.orgUnit).future);
+  //
+  // if (metadataSubmission == null) {
+  //   return [];
+  // }
+  //
+  // final allItems = MetadataSubmissionUpdate.fromJsonList(
+  //     metadataSubmission.toContext()['households'],
+  //     resourceId: metadataSubmission.resourceId,
+  //     submissionId: submissionId,
+  //     metadataSubmission: metadataSubmission.metadataSchema,
+  //     resourceType: metadataSubmission.resourceType);
 
-  if (metadataSubmission == null) {
-    return [];
-  }
-
-  final allItems = MetadataSubmissionUpdate.fromJsonList(
-      metadataSubmission.toContext()['households'],
-      resourceId: metadataSubmission.resourceId,
-      submissionId: submissionId,
-      metadataSubmission: metadataSubmission.metadataSchema,
-      resourceType: metadataSubmission.resourceType);
-
-  return allItems;
+  // return allItems;
+  return [];
 }

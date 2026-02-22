@@ -24,10 +24,6 @@ List<String> getFilteredData(
       })
       .map((item) => item.householdName!)
       .toList();
-  // return data
-  //     .where((item) => item.userFilterBySerialName(filter))
-  //     .map((item) => item.householdName ?? '')
-  //     .toList();
 }
 
 class QReferenceDropDownSearchField extends StatefulHookConsumerWidget {
@@ -52,13 +48,12 @@ class QReferenceDropDownSearchFieldState
 
     return AsyncValueWidget(
       value: listValuesAsync,
-      valueBuilder: (households) {
+      valueBuilder: (List<MetadataSubmissionUpdate> households) {
         return ReactiveDropdownSearch<String, String>(
           widgetKey: _dropDownCustomBGKey,
           formControl: formInstance.form.control(widget.element.elementPath!)
               as FormControl<String>,
           validationMessages: validationMessages(),
-          // valueAccessor: NameToLabelValueAccessor(households),
           dropdownDecoratorProps: DropDownDecoratorProps(
             decoration: InputDecoration(
               labelText: widget.element.label,
@@ -66,8 +61,6 @@ class QReferenceDropDownSearchFieldState
               border: const OutlineInputBorder(),
             ),
           ),
-          // itemAsString: (metadata) =>
-          //     '${metadata.householdName} ${metadata.householdName?.substring(0, 7)}',
           items: (filter, t) => getFilteredData(filter, households),
           compareFn: (i, s) => i == s,
           popupProps: PopupProps.modalBottomSheet(
@@ -85,27 +78,6 @@ class QReferenceDropDownSearchFieldState
       },
     );
   }
-
-  // Future<void> _openAddNewForm(
-  //     BuildContext context, String submissionId, String orgUnit) async {
-  //
-  //   return showDialog(
-  //     context: context,
-  //     builder: (_) => Dialog(
-  //       child: AddMetadataSubmissionForm(
-  //         onSubmit: (newItem) {
-  //           // Handle adding new item to the dropdown's list
-  //           ref
-  //               .read(metadataSubmissionUpdatesProvider(orgUnit).notifier)
-  //               .add(newItem);
-  //           _dropDownCustomBGKey.currentState?.changeSelectedItem(newItem.id);
-  //         },
-  //         submissionId: submissionId,
-  //         resourceId: orgUnit,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget buildDropdownItem(BuildContext context, MetadataSubmissionUpdate item,
       bool isDisabled, bool isSelected) {
@@ -130,30 +102,6 @@ class QReferenceDropDownSearchFieldState
       ),
     );
   }
-//
-// Widget buildModalFooter(
-//     BuildContext context, MetadataSubmissionUpdate? selectedItem) {
-//   return Container(
-//     color: Colors.grey[200],
-//     padding: const EdgeInsets.all(8.0),
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [
-//         ElevatedButton.icon(
-//           onPressed: () => _openAddNewForm(context),
-//           icon: const Icon(Icons.add),
-//           label: const Text("Add New"),
-//         ),
-//         if (selectedItem != null)
-//           ElevatedButton.icon(
-//             onPressed: () => _openEditForm(context, selectedItem),
-//             icon: const Icon(Icons.edit),
-//             label: const Text("Edit"),
-//           ),
-//       ],
-//     ),
-//   );
-// }
 }
 
 Widget referenceModelPopupItem(BuildContext context,
@@ -174,28 +122,3 @@ Widget referenceModelPopupItem(BuildContext context,
     ),
   );
 }
-
-//
-// class NameToLabelValueAccessor
-//     extends DropDownSearchValueAccessor<String, String> {
-//   NameToLabelValueAccessor(this.metadataUpdates);
-//
-//   final List<MetadataSubmissionUpdate> metadataUpdates;
-//
-//   @override
-//   String? modelToViewValue(List<String> items, String? modelValue) {
-//     return metadataUpdates
-//         .where((item) => item.id == modelValue)
-//         .firstOrNull
-//         ?.name;
-//   }
-//
-//   @override
-//   String? viewToModelValue(List<String> items, String? viewValue) {
-//     // return viewValue?.id;
-//     return metadataUpdates
-//         .where((item) => item.householdName == viewValue)
-//         .map((t) => t.id)
-//         .firstOrNull;
-//   }
-// }

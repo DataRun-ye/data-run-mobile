@@ -4,7 +4,6 @@ import 'package:d_sdk/database/shared/shared.dart';
 import 'package:drift/drift.dart';
 
 /// Converter for List<TeamFormPermission> <-> JSON String.
-/// Assumes that TeamFormPermission has fromJson and toJson.
 class TeamFormPermissionListConverter
     extends TypeConverter<List<TeamFormPermission>, String> {
   const TeamFormPermissionListConverter();

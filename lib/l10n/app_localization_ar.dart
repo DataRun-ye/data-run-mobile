@@ -962,7 +962,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String unauthorizedAccessToEndPoint(Object error) {
-    return 'وصول غير مصرح به إلى نقطة المورد: $error.';
+    return 'خطأ في إسم المستخدم أو كلمة المرور: $error.';
   }
 
   @override

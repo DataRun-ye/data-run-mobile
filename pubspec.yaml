@@ -46,6 +46,7 @@ dependencies:
   reactive_dropdown_search: ^5.0.6
   reactive_forms: ^17.0.1
   riverpod_annotation: ^2.6.1
+  sentry_flutter: ^9.14.0
   shared_preferences: ^2.5.3
   sliver_tools: ^0.2.12
   stacked: ^3.4.4

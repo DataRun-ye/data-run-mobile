@@ -10,6 +10,7 @@ abstract class HttpClient<T> {
 
   Future<Response<T>> request({
     required String resourceName,
+    String? path,
     required String method,
     Object? data,
     Map<String, dynamic>? headers,

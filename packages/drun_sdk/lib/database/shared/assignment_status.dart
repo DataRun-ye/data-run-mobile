@@ -5,6 +5,7 @@ enum AssignmentStatus {
   IN_PROGRESS, // Active
   DONE, // Completed
   RESCHEDULED,
+  Expired,
   MERGED,
   REASSIGNED,
   CANCELLED;
@@ -65,15 +66,12 @@ enum AssignmentStatus {
     ];
   }
 
-  // static AssignmentStatus? fromString(String? status) {
-  //   return AssignmentStatus.values
-  //       .firstOrNullWhere((e) => e.toString().split('.').last == status);
-  // }
-
   static AssignmentStatus? getType(String? value) {
     switch (value?.toLowerCase()) {
       case 'planned':
         return AssignmentStatus.PLANNED;
+      case 'expired':
+        return AssignmentStatus.Expired;
       case 'not_started':
         return AssignmentStatus.PLANNED;
       case 'in_progress':

@@ -138,6 +138,7 @@ class AssignmentOverviewItem extends ConsumerWidget {
       case AssignmentStatus.MERGED:
       case AssignmentStatus.REASSIGNED:
       case AssignmentStatus.CANCELLED:
+      case AssignmentStatus.Expired:
         return Colors.orangeAccent.withValues(alpha: 0.2);
     }
   }

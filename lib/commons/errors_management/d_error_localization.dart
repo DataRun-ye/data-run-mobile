@@ -16,7 +16,7 @@ class ErrorMessage {
   }
 
   static String _handleDError(DError d2Error) {
-    final message = d2Error.message ?? d2Error.cause.toString();
+    final message = '\n' + (d2Error.message ?? d2Error.cause.toString());
     return switch (d2Error.errorCode) {
       DRunErrorCode.validationError => S.current.validationError,
       DRunErrorCode.networkTimeout => S.current.networkTimeout,
@@ -56,7 +56,7 @@ class ErrorMessage {
   }
 
   static String _handleDException(DException dException) {
-    if (dException.cause is DioException) {
+    if (dException is DioException || dException.cause is DioException) {
       final dioException = dException.cause as DioException;
       return dioException.type.toPrettyDescription(dioException);
     }

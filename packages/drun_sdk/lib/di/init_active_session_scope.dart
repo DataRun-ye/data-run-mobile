@@ -9,8 +9,6 @@ import 'package:d_sdk/datasource/remote_data_sources/data_submission_datasource.
     as _i646;
 import 'package:d_sdk/datasource/remote_data_sources/form_template_datasource.dart'
     as _i569;
-import 'package:d_sdk/datasource/remote_data_sources/metadata_submission_datasource.dart'
-    as _i1071;
 import 'package:d_sdk/datasource/remote_data_sources/option_set_datasource.dart'
     as _i756;
 import 'package:d_sdk/datasource/remote_data_sources/org_unit_datasource.dart'
@@ -25,6 +23,8 @@ import 'package:d_sdk/datasource/remote_data_sources/user_datasource.dart'
     as _i822;
 import 'package:d_sdk/datasource/remote_data_sources/user_form_permission_datasource.dart'
     as _i588;
+import 'package:d_sdk/service/manifest_repository.dart' as _i385;
+import 'package:d_sdk/service/manifest_service.dart' as _i659;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -40,6 +40,9 @@ _i174.GetIt registerUserSdkDeps(
     environment,
     environmentFilter,
   );
+  gh.factory<_i385.ManifestRepository>(() => const _i385.ManifestRepository());
+  gh.factory<_i659.ManifestService>(() => _i659.ManifestService(
+      manifestRepository: gh<_i385.ManifestRepository>()));
 
   gh.factory<_i822.UserDatasource>(() => _i822.UserDatasource());
   gh.factory<_i277.AbstractDatasource>(() => _i589.ProjectDatasource());
@@ -47,18 +50,14 @@ _i174.GetIt registerUserSdkDeps(
   gh.factory<_i277.AbstractDatasource>(() => _i790.OuLevelDatasource());
   gh.factory<_i277.AbstractDatasource>(() => _i185.OrgUnitDatasource());
   gh.factory<_i277.AbstractDatasource>(() => _i756.OptionSetDatasource());
-  gh.factory<_i277.AbstractDatasource>(
-      () => _i827.DataElementDatasource());
+  gh.factory<_i277.AbstractDatasource>(() => _i827.DataElementDatasource());
   gh.factory<_i277.AbstractDatasource>(
       () => _i569.DataFormTemplateDatasource());
   gh.factory<_i277.AbstractDatasource>(() => _i143.TeamDatasource());
   gh.factory<_i277.AbstractDatasource>(
       () => _i588.UserFormAccessesDatasource());
   gh.factory<_i277.AbstractDatasource>(() => _i90.AssignmentDatasource());
-  gh.factory<_i277.AbstractDatasource>(
-      () => _i646.DataInstanceDatasource());
-  gh.factory<_i277.AbstractDatasource>(
-      () => _i1071.MetadataSubmissionDatasource());
+  gh.factory<_i277.AbstractDatasource>(() => _i646.DataInstanceDatasource());
 
   return getIt;
 }

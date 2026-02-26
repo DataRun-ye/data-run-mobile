@@ -1,3 +1,5 @@
+import 'dart:io';
+
 abstract class AppEnvironment {
   static const envLabel =
       String.fromEnvironment('env_label', defaultValue: "prod");
@@ -8,7 +10,7 @@ abstract class AppEnvironment {
   static const defaultLocale =
       String.fromEnvironment('default_locale', defaultValue: 'ar');
 
-  static const isDev = envLabel == 'dev';
+  static const isDev = envLabel == 'development';
 
   // if not present it defaults to false
   static const secureCache =

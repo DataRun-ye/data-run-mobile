@@ -20,6 +20,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 enum AuthStatus {
@@ -51,6 +52,21 @@ class AuthManager extends ChangeNotifier {
 
   UserSession? get activeUserSession => _activeUserSession;
 
+// Call this after your login is successful
+  FutureOr<void> setSentryUser(UserSession? activeUserSession) =>
+      Sentry.configureScope((scope) {
+        scope.setUser(SentryUser(
+          id: activeUserSession?.id,
+          username: activeUserSession?.username,
+          data: {
+            'firstname': activeUserSession?.firstName,
+            'langKey': activeUserSession?.userTeamsUIDs,
+            'activityUIDs': activeUserSession?.activityUIDs,
+            'userTeamsUIDs': activeUserSession?.userTeamsUIDs
+          },
+        ));
+      });
+
   /// Checks for any active session or previously logged in users.
   Future<void> initialize() async {
     _status = AuthStatus.unknown;
@@ -59,9 +75,11 @@ class AuthManager extends ChangeNotifier {
     try {
       final userSession = await initializeApp();
       await _restoreSession(userSession);
+      setSentryUser(activeUserSession);
     } catch (e) {
       _status = AuthStatus.unauthenticated;
       _activeUserSession = null;
+      Sentry.configureScope((scope) => scope.setUser(null));
     } finally {
       notifyListeners();
     }

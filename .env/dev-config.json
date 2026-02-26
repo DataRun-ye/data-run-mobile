@@ -1,5 +1,5 @@
 {
-  "env_label": "dev",
+  "env_label": "development",
   "api_base_url": "https://api.nmcpye.org",
   "default_locale": "en",
   "secure_cache": true

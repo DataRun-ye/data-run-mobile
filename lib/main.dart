@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:d_sdk/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
@@ -15,58 +16,85 @@ import 'package:flutter/services.dart'
     show SystemUiOverlayStyle, SystemChrome, SystemUiMode;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await configureDependencies();
-
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    systemNavigationBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-    systemNavigationBarIconBrightness: Brightness.dark,
-    systemNavigationBarDividerColor: Colors.transparent,
-  ));
-
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-  FlutterError.demangleStackTrace = (StackTrace stack) {
-    if (stack is stack_trace.Trace) {
-      return stack.vmTrace;
-    }
-    if (stack is stack_trace.Chain) {
-      return stack.toTrace().vmTrace;
-    }
-    return stack;
-  };
+  final packageInfo = await PackageInfo.fromPlatform();
 
   await SentryFlutter.init(
     (options) {
       options.dsn =
-          'https://c6f523c5756a2704053c97f582ec28f2@o4504831846645760.ingest.us.sentry.io/4510931399802880';
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production.
-      // options.tracesSampleRate = 1.0;
-      // The sampling rate for profiling is relative to tracesSampleRate
-      // Setting to 1.0 will profile 100% of sampled transactions:
-      // options.profilesSampleRate = 1.0;
-    },
-    appRunner: () => runApp(
-      const ProviderScope(
-        child: App(
-          key: ValueKey('DATARUN_MAIN_APP'),
-        ),
-      ),
-    ),
-  );
+          'https://1bb94e6e215c4c72a8ef5c260ed71745@glitchtip.nmcpye.org/1';
+      // CRITICAL: Link Sentry to your Stacked navigator
+      options.navigatorKey = StackedService.navigatorKey;
 
-  // runApp(const ProviderScope(
-  //   child: App(key: ValueKey('DATARUN_MAIN_APP')),
-  // ));
+      options.environment = AppEnvironment.envLabel;
+
+      // Track the Version (Automatic: name@version+build)
+      options.release = '${packageInfo.appName}@${packageInfo.version}+${packageInfo.buildNumber}';
+
+      // Distinguish the platform (e.g., 'windows', 'android')
+      options.dist = Platform.operatingSystem;
+
+      options.maxCacheItems = 50;
+
+      options.enableAutoSessionTracking = false;
+
+      // Visual Debugging (The "Secret Sauce")
+      options.attachScreenshot = true;
+      options.attachViewHierarchy = true;
+      options.maxAttachmentSize = 1 * 1024 * 1024;
+      // Performance (Keep it low to save your VM RAM/Disk)
+      options.tracesSampleRate = 0.01;
+
+      // Privacy & Cleanliness
+      // 2. Performance: Don't let reporting lag the app
+      options.sendDefaultPii = false; // Good for privacy
+      options.reportPackages = true;
+
+
+      // 3. Troubleshooting: See why reports fail in your IDE console
+      // Turn this OFF for production releases
+      // options.debug = true;
+      // Optional: Customize the feedback dialog's requirements
+      options.feedback.isNameRequired = true;
+      // options.feedback.isEmailRequired = true;
+    },
+    appRunner: () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await configureDependencies();
+
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ));
+
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+      FlutterError.demangleStackTrace = (StackTrace stack) {
+        if (stack is stack_trace.Trace) {
+          return stack.vmTrace;
+        }
+        if (stack is stack_trace.Chain) {
+          return stack.toTrace().vmTrace;
+        }
+        return stack;
+      };
+
+      runApp(SentryWidget(
+        child: const ProviderScope(
+          child: App(key: ValueKey('DATARUN_MAIN_APP')),
+        ),
+      ));
+    },
+  );
 }
 
 class App extends ConsumerWidget {
@@ -76,6 +104,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Sentry.captureMessage('DATARUN-APP, Glitch is working, again!');
     final authManager = ref.watch(authNotifierProvider);
     final language =
         ref.watch(preferenceNotifierProvider(Preference.language)) as String;
@@ -143,6 +172,7 @@ class App extends ConsumerWidget {
       // stacked
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorObservers: [
+        SentryNavigatorObserver(), // Automatically tracks screen navigation breadcrumbs
         StackedService.routeObserver,
       ],
       //

@@ -6,8 +6,8 @@ part of 'metadata_submission_update.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$metadataSubmissionRepositoryHash() =>
-    r'908b5a21a1853daf2920c86cb926707dd093442e';
+String _$systemMetadataSubmissionsHash() =>
+    r'f5922f0a29d7f1854a41322170ccaee6138cff8d';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,17 +29,6 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin MetadataSubmissionRepositoryRef
-    on AutoDisposeFutureProviderRef<MetadataSubmission?> {
-  /// The parameter `orgUnit` of this provider.
-  String? get orgUnit;
-}
-
-String _$systemMetadataSubmissionsHash() =>
-    r'd615c07e057ee7c88d5313f56cf19054ce486a47';
 
 /// See also [systemMetadataSubmissions].
 @ProviderFor(systemMetadataSubmissions)

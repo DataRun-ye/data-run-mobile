@@ -118,7 +118,7 @@ class _SettingsLanguageItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String prefLang =
-        ref.watch(preferenceNotifierProvider(Preference.language)) as String;
+        ref.watch(preferenceProvider(Preference.language)) as String;
     String language = prefLang == 'NA' ? 'en' : prefLang;
 
     return Card(
@@ -133,8 +133,7 @@ class _SettingsLanguageItem extends ConsumerWidget {
             if (newValue != null) {
               {
                 ref
-                    .read(preferenceNotifierProvider(Preference.language)
-                        .notifier)
+                    .read(preferenceProvider(Preference.language).notifier)
                     .update(newValue);
               }
             }

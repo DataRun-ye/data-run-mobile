@@ -1,5 +1,5 @@
 import 'package:datarunmobile/features/team/application/team_model.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final teamListProvider =
     StateNotifierProvider<TeamListNotifier, List<TeamSummary>>(

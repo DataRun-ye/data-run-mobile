@@ -6,39 +6,88 @@ part of 'ref_extension.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(authNotifier)
+final authProvider = AuthNotifierProvider._();
+
+final class AuthNotifierProvider extends $FunctionalProvider<Raw<AuthManager>,
+    Raw<AuthManager>, Raw<AuthManager>> with $Provider<Raw<AuthManager>> {
+  AuthNotifierProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'authProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$authNotifierHash();
+
+  @$internal
+  @override
+  $ProviderElement<Raw<AuthManager>> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Raw<AuthManager> create(Ref ref) {
+    return authNotifier(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Raw<AuthManager> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Raw<AuthManager>>(value),
+    );
+  }
+}
+
 String _$authNotifierHash() => r'ab5f95021aadc2c2813686f4264fa5093b6302b0';
 
-/// See also [authNotifier].
-@ProviderFor(authNotifier)
-final authNotifierProvider = AutoDisposeProvider<Raw<AuthManager>>.internal(
-  authNotifier,
-  name: r'authNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AuthNotifierRef = AutoDisposeProviderRef<Raw<AuthManager>>;
-String _$localeNotifierHash() => r'951ed6457bf93e85c62714ec41e8421c967ca9c1';
-
-/// See also [localeNotifier].
 @ProviderFor(localeNotifier)
-final localeNotifierProvider =
-    AutoDisposeProvider<Raw<ChangeNotifier>>.internal(
-  localeNotifier,
-  name: r'localeNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$localeNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final localeProvider = LocaleNotifierProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef LocaleNotifierRef = AutoDisposeProviderRef<Raw<ChangeNotifier>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class LocaleNotifierProvider extends $FunctionalProvider<
+    Raw<ChangeNotifier>,
+    Raw<ChangeNotifier>,
+    Raw<ChangeNotifier>> with $Provider<Raw<ChangeNotifier>> {
+  LocaleNotifierProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'localeProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$localeNotifierHash();
+
+  @$internal
+  @override
+  $ProviderElement<Raw<ChangeNotifier>> $createElement(
+          $ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Raw<ChangeNotifier> create(Ref ref) {
+    return localeNotifier(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Raw<ChangeNotifier> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Raw<ChangeNotifier>>(value),
+    );
+  }
+}
+
+String _$localeNotifierHash() => r'951ed6457bf93e85c62714ec41e8421c967ca9c1';

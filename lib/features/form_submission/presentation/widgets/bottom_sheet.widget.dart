@@ -1,3 +1,4 @@
+import 'package:datarunmobile/data/model/bottom_sheet_content_model.data.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_completion_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -38,18 +39,16 @@ class QBottomSheetDialog extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  children:
-                      completionDialogModel.bottomSheetContentModel.body.when(
-                    messageBody: (messageBody) => [
-                      Text(
-                        messageBody,
-                        style: const TextStyle(fontSize: 16.0),
-                      )
-                    ],
-                    errorsBody: (message, fieldsWithIssues) {
-                      return fieldsWithIssues.entries
-                          .toList()
-                          .map((sectionEntry) {
+                  children: switch (
+                      completionDialogModel.bottomSheetContentModel.body) {
+                    MessageBody(:final message) => [
+                        Text(
+                          message,
+                          style: const TextStyle(fontSize: 16.0),
+                        )
+                      ],
+                    ErrorsBody(:final fieldsWithIssues) =>
+                      fieldsWithIssues.entries.toList().map((sectionEntry) {
                         final sectionName = sectionEntry.key;
                         final fieldErrors = sectionEntry.value;
 
@@ -92,9 +91,9 @@ class QBottomSheetDialog extends StatelessWidget {
                             );
                           }).toList(),
                         );
-                      }).toList();
-                    },
-                  ),
+                      }).toList(),
+                    _ => const <Widget>[],
+                  },
                 ),
               ),
             ),

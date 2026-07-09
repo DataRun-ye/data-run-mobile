@@ -21,8 +21,7 @@ class AppearanceTab extends ViewModelWidget<SettingsViewmodel> {
                 value: Theme.of(context).brightness == Brightness.light,
                 onChanged: (value) {
                   ref
-                      .read(preferenceNotifierProvider(Preference.themeMode)
-                          .notifier)
+                      .read(preferenceProvider(Preference.themeMode).notifier)
                       .update(
                           value ? ThemeMode.light.index : ThemeMode.dark.index);
                 },
@@ -44,8 +43,8 @@ class _ColorSeedButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorSeed = ColorSeed.values[
-        ref.watch(preferenceNotifierProvider(Preference.colorSeed)) as int];
+    final colorSeed = ColorSeed
+        .values[ref.watch(preferenceProvider(Preference.colorSeed)) as int];
 
     return PopupMenuButton(
       icon: const Icon(
@@ -81,7 +80,7 @@ class _ColorSeedButton extends ConsumerWidget {
         });
       },
       onSelected: (value) => ref
-          .read(preferenceNotifierProvider(Preference.colorSeed).notifier)
+          .read(preferenceProvider(Preference.colorSeed).notifier)
           .update(value),
     );
   }

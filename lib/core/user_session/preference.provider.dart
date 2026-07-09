@@ -29,11 +29,11 @@ enum Preference {
 
 /// read
 ///
-/// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
+/// ref.watch(preferenceProvider(Preference.shouldShowWalkthrough));
 ///
 /// write
 ///
-/// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
+/// ref.read(preferenceProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 @riverpod
 class PreferenceNotifier extends _$PreferenceNotifier {
   @override

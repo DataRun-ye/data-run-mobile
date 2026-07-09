@@ -26,8 +26,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
         errorBuilder != null
             ? errorBuilder!.call(error, stackTrace)
             : getErrorWidget(error, stackTrace),
-      AsyncValue(valueOrNull: final valueOrNull?) =>
-        valueBuilder.call(valueOrNull),
+      AsyncValue(:final value, hasValue: true) => valueBuilder.call(value as T),
       AsyncValue() => loadingBuilder != null
           ? loadingBuilder!.call()
           : Center(child: const CircularProgressIndicator()),

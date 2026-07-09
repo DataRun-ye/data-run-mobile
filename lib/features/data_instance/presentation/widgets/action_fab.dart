@@ -22,9 +22,9 @@ class ActionFAB extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
-    final bool upwardDirectionOfSpeedDial = ref.watch(
-            preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial))
-        as bool;
+    final bool upwardDirectionOfSpeedDial =
+        ref.watch(preferenceProvider(Preference.upwardDirectionOfSpeedDial))
+            as bool;
 
     // final direction = upwardDirectionOfSpeedDial
     //     ? SpeedDialDirection.up

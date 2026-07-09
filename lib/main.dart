@@ -28,17 +28,18 @@ Future<void> main() async {
   await SentryFlutter.init(
     (options) {
       options.dsn =
-          'https://1bb94e6e215c4c72a8ef5c260ed71745@glitchtip.nmcpye.org/1';
+          'https://1bb94e6e215c4c72a8ef5c260ed71745@glitch.nmcpye.org/1';
       // CRITICAL: Link Sentry to your Stacked navigator
       options.navigatorKey = StackedService.navigatorKey;
 
       options.environment = AppEnvironment.envLabel;
 
-      // Track the Version (Automatic: name@version+build)
+      // Track the Version (Automatic: datarun@version+build)
       options.release = '${packageInfo.appName}@${packageInfo.version}+${packageInfo.buildNumber}';
 
       // Distinguish the platform (e.g., 'windows', 'android')
       options.dist = Platform.operatingSystem;
+      options.serverName = AppEnvironment.apiBaseUrl;
 
       options.maxCacheItems = 50;
 
@@ -104,7 +105,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Sentry.captureMessage('DATARUN-APP, Glitch is working, again!');
+    // Sentry.captureMessage('DATARUN-APP, Glitch is working, again!');
     final authManager = ref.watch(authNotifierProvider);
     final language =
         ref.watch(preferenceNotifierProvider(Preference.language)) as String;

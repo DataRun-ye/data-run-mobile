@@ -104,6 +104,8 @@ extension DioExceptionTypeExtension on DioExceptionType {
       case DioExceptionType.unknown:
         return S.current.unexpected(
             (message.length > 255 ? message.substring(0, 255) : message));
+      case DioExceptionType.transformTimeout:
+        return S.current.connectionError(message);
     }
   }
 }

@@ -73,27 +73,4 @@ class SyncProgressGlobalState {
         syncedItems: syncedItems ?? this.syncedItems,
         completed: completed ?? this.completed);
   }
-
-// static SyncProgressGlobalState aggregate(List<SyncResourceStatus> states,
-//     double percentage, String currentMessage) {
-//   if (states.isEmpty) return SyncProgressGlobalState.initial();
-//   //
-//   // final totalPercentage =
-//   //     states.map((s) => s.percentage).reduce((a, b) => a + b);
-//   // final avgPercentage = totalPercentage / states.length;
-//
-//   final anyFailed = states.any((s) => s.state == SyncProgressState.FAILED);
-//   final allComplete = states.every((s) => s.completed);
-//
-//   final overallState = anyFailed
-//       ? SyncProgressState.FAILED
-//       : allComplete
-//           ? SyncProgressState.SUCCEEDED
-//           : SyncProgressState.RUNNING;
-//
-//   return SyncProgressGlobalState(
-//       percentage: percentage,
-//       overallState: overallState,
-//       currentMessage: currentMessage);
-// }
 }

@@ -6,22 +6,46 @@ part of 'activity.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$activityModelHash() => r'928a4945ee10951d3a3e28af8119fd2287ea3f76';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [activityModel].
 @ProviderFor(activityModel)
-final activityModelProvider = AutoDisposeProvider<ActivityModel>.internal(
-  activityModel,
-  name: r'activityModelProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$activityModelHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final activityModelProvider = ActivityModelProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ActivityModelRef = AutoDisposeProviderRef<ActivityModel>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ActivityModelProvider
+    extends $FunctionalProvider<ActivityModel, ActivityModel, ActivityModel>
+    with $Provider<ActivityModel> {
+  ActivityModelProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'activityModelProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$activityModelHash();
+
+  @$internal
+  @override
+  $ProviderElement<ActivityModel> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ActivityModel create(Ref ref) {
+    return activityModel(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ActivityModel value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ActivityModel>(value),
+    );
+  }
+}
+
+String _$activityModelHash() => r'928a4945ee10951d3a3e28af8119fd2287ea3f76';

@@ -6,22 +6,52 @@ part of 'password_visibility.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(PasswordVisibility)
+final passwordVisibilityProvider = PasswordVisibilityProvider._();
+
+final class PasswordVisibilityProvider
+    extends $NotifierProvider<PasswordVisibility, bool> {
+  PasswordVisibilityProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'passwordVisibilityProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$passwordVisibilityHash();
+
+  @$internal
+  @override
+  PasswordVisibility create() => PasswordVisibility();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
 String _$passwordVisibilityHash() =>
     r'8d390ed6a44b5f46add91af55715063553f16792';
 
-/// See also [PasswordVisibility].
-@ProviderFor(PasswordVisibility)
-final passwordVisibilityProvider =
-    AutoDisposeNotifierProvider<PasswordVisibility, bool>.internal(
-  PasswordVisibility.new,
-  name: r'passwordVisibilityProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$passwordVisibilityHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$PasswordVisibility = AutoDisposeNotifier<bool>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$PasswordVisibility extends $Notifier<bool> {
+  bool build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<bool, bool>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<bool, bool>, bool, Object?, Object?>;
+    element.handleCreate(ref, build);
+  }
+}

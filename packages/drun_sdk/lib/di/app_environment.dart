@@ -17,5 +17,5 @@ abstract class AppEnvironment {
       bool.fromEnvironment('secure_cache', defaultValue: true);
   static const apiPath = '/api/custom';
   static const apiV1Path = '/api/v1';
-  static const apiPingUrl = '$apiBaseUrl/api/authenticate';
+  static const apiPingUrl = '$apiBaseUrl/api/v1/authenticate';
 }

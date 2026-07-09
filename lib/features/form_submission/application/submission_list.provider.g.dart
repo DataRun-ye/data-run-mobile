@@ -6,457 +6,288 @@ part of 'submission_list.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(formSubmissionRepository)
+final formSubmissionRepositoryProvider = FormSubmissionRepositoryProvider._();
+
+final class FormSubmissionRepositoryProvider extends $FunctionalProvider<
+    FormSubmissionRepository,
+    FormSubmissionRepository,
+    FormSubmissionRepository> with $Provider<FormSubmissionRepository> {
+  FormSubmissionRepositoryProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'formSubmissionRepositoryProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$formSubmissionRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<FormSubmissionRepository> $createElement(
+          $ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  FormSubmissionRepository create(Ref ref) {
+    return formSubmissionRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(FormSubmissionRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<FormSubmissionRepository>(value),
+    );
+  }
+}
+
 String _$formSubmissionRepositoryHash() =>
     r'563d892c0f3b7f12559b16c0c0e04ed616934624';
 
-/// See also [formSubmissionRepository].
-@ProviderFor(formSubmissionRepository)
-final formSubmissionRepositoryProvider =
-    AutoDisposeProvider<FormSubmissionRepository>.internal(
-  formSubmissionRepository,
-  name: r'formSubmissionRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$formSubmissionRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(FormSubmissions)
+final formSubmissionsProvider = FormSubmissionsFamily._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef FormSubmissionRepositoryRef
-    = AutoDisposeProviderRef<FormSubmissionRepository>;
-String _$dataInstanceHash() => r'70a423b295b3df9f3128fded4d9db234ff8146fd';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [dataInstance].
-@ProviderFor(dataInstance)
-const dataInstanceProvider = DataInstanceFamily();
-
-/// See also [dataInstance].
-class DataInstanceFamily extends Family<AsyncValue<DataInstance>> {
-  /// See also [dataInstance].
-  const DataInstanceFamily();
-
-  /// See also [dataInstance].
-  DataInstanceProvider call({
-    required String id,
-  }) {
-    return DataInstanceProvider(
-      id: id,
-    );
-  }
-
-  @override
-  DataInstanceProvider getProviderOverride(
-    covariant DataInstanceProvider provider,
-  ) {
-    return call(
-      id: provider.id,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'dataInstanceProvider';
-}
-
-/// See also [dataInstance].
-class DataInstanceProvider extends AutoDisposeFutureProvider<DataInstance> {
-  /// See also [dataInstance].
-  DataInstanceProvider({
-    required String id,
-  }) : this._internal(
-          (ref) => dataInstance(
-            ref as DataInstanceRef,
-            id: id,
-          ),
-          from: dataInstanceProvider,
-          name: r'dataInstanceProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$dataInstanceHash,
-          dependencies: DataInstanceFamily._dependencies,
-          allTransitiveDependencies:
-              DataInstanceFamily._allTransitiveDependencies,
-          id: id,
+final class FormSubmissionsProvider
+    extends $AsyncNotifierProvider<FormSubmissions, IList<DataInstance>> {
+  FormSubmissionsProvider._(
+      {required FormSubmissionsFamily super.from,
+      required String super.argument})
+      : super(
+          retry: null,
+          name: r'formSubmissionsProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  DataInstanceProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.id,
-  }) : super.internal();
-
-  final String id;
+  @override
+  String debugGetCreateSourceHash() => _$formSubmissionsHash();
 
   @override
-  Override overrideWith(
-    FutureOr<DataInstance> Function(DataInstanceRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: DataInstanceProvider._internal(
-        (ref) => create(ref as DataInstanceRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        id: id,
-      ),
-    );
+  String toString() {
+    return r'formSubmissionsProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  AutoDisposeFutureProviderElement<DataInstance> createElement() {
-    return _DataInstanceProviderElement(this);
-  }
+  FormSubmissions create() => FormSubmissions();
 
   @override
   bool operator ==(Object other) {
-    return other is DataInstanceProvider && other.id == id;
+    return other is FormSubmissionsProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin DataInstanceRef on AutoDisposeFutureProviderRef<DataInstance> {
-  /// The parameter `id` of this provider.
-  String get id;
-}
+String _$formSubmissionsHash() => r'a7e0cddd7442048939cddb3dc3f2fe0471af98c5';
 
-class _DataInstanceProviderElement
-    extends AutoDisposeFutureProviderElement<DataInstance>
-    with DataInstanceRef {
-  _DataInstanceProviderElement(super.provider);
+final class FormSubmissionsFamily extends $Family
+    with
+        $ClassFamilyOverride<FormSubmissions, AsyncValue<IList<DataInstance>>,
+            IList<DataInstance>, FutureOr<IList<DataInstance>>, String> {
+  FormSubmissionsFamily._()
+      : super(
+          retry: null,
+          name: r'formSubmissionsProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  FormSubmissionsProvider call(
+    String form,
+  ) =>
+      FormSubmissionsProvider._(argument: form, from: this);
 
   @override
-  String get id => (origin as DataInstanceProvider).id;
+  String toString() => r'formSubmissionsProvider';
+}
+
+abstract class _$FormSubmissions extends $AsyncNotifier<IList<DataInstance>> {
+  late final _$args = ref.$arg as String;
+  String get form => _$args;
+
+  FutureOr<IList<DataInstance>> build(
+    String form,
+  );
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<IList<DataInstance>>, IList<DataInstance>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<IList<DataInstance>>, IList<DataInstance>>,
+        AsyncValue<IList<DataInstance>>,
+        Object?,
+        Object?>;
+    element.handleCreate(
+        ref,
+        () => build(
+              _$args,
+            ));
+  }
+}
+
+@ProviderFor(dataInstance)
+final dataInstanceProvider = DataInstanceFamily._();
+
+final class DataInstanceProvider extends $FunctionalProvider<
+        AsyncValue<DataInstance>, DataInstance, FutureOr<DataInstance>>
+    with $FutureModifier<DataInstance>, $FutureProvider<DataInstance> {
+  DataInstanceProvider._(
+      {required DataInstanceFamily super.from, required String super.argument})
+      : super(
+          retry: null,
+          name: r'dataInstanceProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$dataInstanceHash();
+
+  @override
+  String toString() {
+    return r'dataInstanceProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<DataInstance> $createElement(
+          $ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<DataInstance> create(Ref ref) {
+    final argument = this.argument as String;
+    return dataInstance(
+      ref,
+      id: argument,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is DataInstanceProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$dataInstanceHash() => r'70a423b295b3df9f3128fded4d9db234ff8146fd';
+
+final class DataInstanceFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<DataInstance>, String> {
+  DataInstanceFamily._()
+      : super(
+          retry: null,
+          name: r'dataInstanceProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  DataInstanceProvider call({
+    required String id,
+  }) =>
+      DataInstanceProvider._(argument: id, from: this);
+
+  @override
+  String toString() => r'dataInstanceProvider';
+}
+
+@ProviderFor(submissionEditStatus)
+final submissionEditStatusProvider = SubmissionEditStatusFamily._();
+
+final class SubmissionEditStatusProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  SubmissionEditStatusProvider._(
+      {required SubmissionEditStatusFamily super.from,
+      required String super.argument})
+      : super(
+          retry: null,
+          name: r'submissionEditStatusProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$submissionEditStatusHash();
+
+  @override
+  String toString() {
+    return r'submissionEditStatusProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    final argument = this.argument as String;
+    return submissionEditStatus(
+      ref,
+      submissionId: argument,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SubmissionEditStatusProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$submissionEditStatusHash() =>
     r'02d9349aaea6e5b425324fcafea9817097b43533';
 
-/// See also [submissionEditStatus].
-@ProviderFor(submissionEditStatus)
-const submissionEditStatusProvider = SubmissionEditStatusFamily();
+final class SubmissionEditStatusFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<bool>, String> {
+  SubmissionEditStatusFamily._()
+      : super(
+          retry: null,
+          name: r'submissionEditStatusProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
 
-/// See also [submissionEditStatus].
-class SubmissionEditStatusFamily extends Family<AsyncValue<bool>> {
-  /// See also [submissionEditStatus].
-  const SubmissionEditStatusFamily();
-
-  /// See also [submissionEditStatus].
   SubmissionEditStatusProvider call({
     required String submissionId,
-  }) {
-    return SubmissionEditStatusProvider(
-      submissionId: submissionId,
-    );
-  }
+  }) =>
+      SubmissionEditStatusProvider._(argument: submissionId, from: this);
 
   @override
-  SubmissionEditStatusProvider getProviderOverride(
-    covariant SubmissionEditStatusProvider provider,
-  ) {
-    return call(
-      submissionId: provider.submissionId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'submissionEditStatusProvider';
+  String toString() => r'submissionEditStatusProvider';
 }
-
-/// See also [submissionEditStatus].
-class SubmissionEditStatusProvider extends AutoDisposeFutureProvider<bool> {
-  /// See also [submissionEditStatus].
-  SubmissionEditStatusProvider({
-    required String submissionId,
-  }) : this._internal(
-          (ref) => submissionEditStatus(
-            ref as SubmissionEditStatusRef,
-            submissionId: submissionId,
-          ),
-          from: submissionEditStatusProvider,
-          name: r'submissionEditStatusProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$submissionEditStatusHash,
-          dependencies: SubmissionEditStatusFamily._dependencies,
-          allTransitiveDependencies:
-              SubmissionEditStatusFamily._allTransitiveDependencies,
-          submissionId: submissionId,
-        );
-
-  SubmissionEditStatusProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.submissionId,
-  }) : super.internal();
-
-  final String submissionId;
-
-  @override
-  Override overrideWith(
-    FutureOr<bool> Function(SubmissionEditStatusRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: SubmissionEditStatusProvider._internal(
-        (ref) => create(ref as SubmissionEditStatusRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        submissionId: submissionId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<bool> createElement() {
-    return _SubmissionEditStatusProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is SubmissionEditStatusProvider &&
-        other.submissionId == submissionId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, submissionId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin SubmissionEditStatusRef on AutoDisposeFutureProviderRef<bool> {
-  /// The parameter `submissionId` of this provider.
-  String get submissionId;
-}
-
-class _SubmissionEditStatusProviderElement
-    extends AutoDisposeFutureProviderElement<bool>
-    with SubmissionEditStatusRef {
-  _SubmissionEditStatusProviderElement(super.provider);
-
-  @override
-  String get submissionId =>
-      (origin as SubmissionEditStatusProvider).submissionId;
-}
-
-String _$formSubmissionsHash() => r'a7e0cddd7442048939cddb3dc3f2fe0471af98c5';
-
-abstract class _$FormSubmissions
-    extends BuildlessAutoDisposeAsyncNotifier<IList<DataInstance>> {
-  late final String form;
-
-  FutureOr<IList<DataInstance>> build(
-    String form,
-  );
-}
-
-/// See also [FormSubmissions].
-@ProviderFor(FormSubmissions)
-const formSubmissionsProvider = FormSubmissionsFamily();
-
-/// See also [FormSubmissions].
-class FormSubmissionsFamily extends Family<AsyncValue<IList<DataInstance>>> {
-  /// See also [FormSubmissions].
-  const FormSubmissionsFamily();
-
-  /// See also [FormSubmissions].
-  FormSubmissionsProvider call(
-    String form,
-  ) {
-    return FormSubmissionsProvider(
-      form,
-    );
-  }
-
-  @override
-  FormSubmissionsProvider getProviderOverride(
-    covariant FormSubmissionsProvider provider,
-  ) {
-    return call(
-      provider.form,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formSubmissionsProvider';
-}
-
-/// See also [FormSubmissions].
-class FormSubmissionsProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    FormSubmissions, IList<DataInstance>> {
-  /// See also [FormSubmissions].
-  FormSubmissionsProvider(
-    String form,
-  ) : this._internal(
-          () => FormSubmissions()..form = form,
-          from: formSubmissionsProvider,
-          name: r'formSubmissionsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$formSubmissionsHash,
-          dependencies: FormSubmissionsFamily._dependencies,
-          allTransitiveDependencies:
-              FormSubmissionsFamily._allTransitiveDependencies,
-          form: form,
-        );
-
-  FormSubmissionsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.form,
-  }) : super.internal();
-
-  final String form;
-
-  @override
-  FutureOr<IList<DataInstance>> runNotifierBuild(
-    covariant FormSubmissions notifier,
-  ) {
-    return notifier.build(
-      form,
-    );
-  }
-
-  @override
-  Override overrideWith(FormSubmissions Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: FormSubmissionsProvider._internal(
-        () => create()..form = form,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        form: form,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<FormSubmissions, IList<DataInstance>>
-      createElement() {
-    return _FormSubmissionsProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is FormSubmissionsProvider && other.form == form;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, form.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin FormSubmissionsRef
-    on AutoDisposeAsyncNotifierProviderRef<IList<DataInstance>> {
-  /// The parameter `form` of this provider.
-  String get form;
-}
-
-class _FormSubmissionsProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<FormSubmissions,
-        IList<DataInstance>> with FormSubmissionsRef {
-  _FormSubmissionsProviderElement(super.provider);
-
-  @override
-  String get form => (origin as FormSubmissionsProvider).form;
-}
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

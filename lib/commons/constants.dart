@@ -5,4 +5,4 @@ const String kApiBaseUrl = 'https://api.nmcpye.org';
 // const String kApiBaseUrl = 'http://192.168.80.1:8080'; // hNet
 // const String kApiBaseUrl = 'http://192.168.43.217:8080'; // hNet
 
-const String kApiPingUrl = '$kApiBaseUrl/api/authenticate';
+const String kApiPingUrl = '$kApiBaseUrl/api/v1/authenticate';

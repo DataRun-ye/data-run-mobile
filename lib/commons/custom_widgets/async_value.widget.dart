@@ -26,7 +26,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
         errorBuilder != null
             ? errorBuilder!.call(error, stackTrace)
             : getErrorWidget(error, stackTrace),
-      AsyncValue(valueOrNull: final valueOrNull?) =>
+      AsyncValue(value: final valueOrNull?) =>
         valueBuilder.call(valueOrNull),
       AsyncValue() => loadingBuilder != null
           ? loadingBuilder!.call()

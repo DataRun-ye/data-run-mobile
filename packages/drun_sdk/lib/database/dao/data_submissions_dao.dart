@@ -23,7 +23,7 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
   String get resourceName => 'dataSubmission';
 
   @override
-  String get resourcePath => '$resourceName/objects?paged=false';
+  String get resourcePath => '$resourceName?paged=false';
 
   @override
   DataInstance fromApiJson(Map<String, dynamic> data,

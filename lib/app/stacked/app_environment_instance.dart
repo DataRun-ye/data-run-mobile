@@ -25,5 +25,5 @@ class AppEnvironmentInstance {
   final bool secureDatabase;
   final String? encryptionKey;
 
-  String get apiPingUrl => '$apiBaseUrl/api/authenticate';
+  String get apiPingUrl => '$apiBaseUrl/api/v1/authenticate';
 }

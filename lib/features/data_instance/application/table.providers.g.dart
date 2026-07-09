@@ -439,7 +439,7 @@ final class TableAppearanceControllerProvider
 }
 
 String _$tableAppearanceControllerHash() =>
-    r'935c795f09a9163848e7cca7d5f02833af78cdaa';
+    r'ba076a48fe1b4bbe359e27d6da2e40201d59ead7';
 
 abstract class _$TableAppearanceController extends $Notifier<TableAppearance> {
   TableAppearance build();

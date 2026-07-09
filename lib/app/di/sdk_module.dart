@@ -28,17 +28,4 @@ abstract class SdkModule {
   @injectable
   TokenStorage getTokenStorage(StorageService storageService) =>
       TokenStorage(storage: storageService);
-
-// @LazySingleton(as: AuthManager)
-// AuthManager getAuthManager(
-//     {required TokenStorage tokenStorage,
-//     required SessionStorage sessionStorage,
-//     required SharedPreferences prefs,
-//     required AuthApi authApi}) {
-//   return AuthManager(
-//       tokenStorage: tokenStorage,
-//       sessionStorage: sessionStorage,
-//       prefs: prefs,
-//       authApi: authApi);
-// }
 }

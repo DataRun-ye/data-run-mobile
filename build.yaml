@@ -49,8 +49,6 @@ targets:
         enabled: true
         generate_for:
           - lib/app/stacked/app.**.dart
-#      stacked_generator:stackedLoggerGenerator:
-#        enabled: false
       # Configuring this builder isn't required for most apps. In our case, we
       # want to compile the web worker in `web/worker.dart` to JS and we use the
       # build system for that.

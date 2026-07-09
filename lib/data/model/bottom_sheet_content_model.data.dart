@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'bottom_sheet_content_model.data.freezed.dart';
 
 @freezed
-class DialogContentModel with _$DialogContentModel {
+abstract class DialogContentModel with _$DialogContentModel {
   const factory DialogContentModel({
     required String title,
     required String subtitle,
@@ -25,7 +25,7 @@ abstract class BottomSheetBodyModel with _$BottomSheetBodyModel {
 }
 
 @freezed
-class FieldWithIssue with _$FieldWithIssue {
+abstract class FieldWithIssue with _$FieldWithIssue {
   const factory FieldWithIssue({
     String? repeatGroupUid,
     String? rowUid,

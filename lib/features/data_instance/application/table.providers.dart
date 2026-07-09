@@ -72,9 +72,9 @@ Stream<int> totalItemsStream(Ref ref,
       assignmentId: templateFilter.assignmentId));
   return appLocator<FormInstanceService>()
       .countByFilter(
-        filter,
-        // filters: filters,
-      )
+    filter,
+    // filters: filters,
+  )
       .watchSingle();
 }
 
@@ -209,7 +209,7 @@ Future<ISet<String>> selectedFinalizedItem(Ref ref) async {
   final selectedIds = ref.watch(selectedItemsProvider);
   if (selectedIds.isEmpty) return const ISet.empty();
   final syncableIds =
-      await appLocator<TableRepository>().getSyncableIds(selectedIds);
+  await appLocator<TableRepository>().getSyncableIds(selectedIds);
   return ISet(syncableIds);
 }
 
@@ -218,12 +218,12 @@ class TableAppearanceController extends _$TableAppearanceController {
   @override
   TableAppearance build() {
     final compactTableView =
-        ref.watch(preferenceNotifierProvider(Preference.compactTableView));
-    final upwardDirectionOfSpeedDial = ref.watch(preferenceNotifierProvider(
-            Preference.upwardDirectionOfSpeedDial)) ??
+    ref.watch(preferenceProvider(Preference.compactTableView));
+    final upwardDirectionOfSpeedDial = ref.watch(preferenceProvider(
+        Preference.upwardDirectionOfSpeedDial)) ??
         false;
     final fixedActionColumns =
-        ref.watch(preferenceNotifierProvider(Preference.fixedActionColumns));
+    ref.watch(preferenceProvider(Preference.fixedActionColumns));
 
     return TableAppearance(
         fixedActionColumns: fixedActionColumns,
@@ -234,15 +234,15 @@ class TableAppearanceController extends _$TableAppearanceController {
   void toggleCompact(bool? value) {
     // it will invalidate and update this notifier
     ref
-        .read(preferenceNotifierProvider(Preference.compactTableView).notifier)
+        .read(preferenceProvider(Preference.compactTableView).notifier)
         .update(value ?? false);
   }
 
   void toggleDirectionOfSpeedDial(bool? value) {
     // it will invalidate and update this notifier
     ref
-        .read(preferenceNotifierProvider(Preference.upwardDirectionOfSpeedDial)
-            .notifier)
+        .read(preferenceProvider(Preference.upwardDirectionOfSpeedDial)
+        .notifier)
         .update(value);
   }
 
@@ -250,7 +250,7 @@ class TableAppearanceController extends _$TableAppearanceController {
     // it will invalidate and update this notifier
     ref
         .read(
-            preferenceNotifierProvider(Preference.fixedActionColumns).notifier)
+        preferenceProvider(Preference.fixedActionColumns).notifier)
         .update(value);
   }
 }

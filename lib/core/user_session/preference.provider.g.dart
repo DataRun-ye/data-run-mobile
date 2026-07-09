@@ -10,31 +10,31 @@ part of 'preference.provider.dart';
 // ignore_for_file: type=lint, type=warning
 /// read
 ///
-/// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
+/// ref.watch(preferenceProvider(Preference.shouldShowWalkthrough));
 ///
 /// write
 ///
-/// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
+/// ref.read(preferenceProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 
 @ProviderFor(PreferenceNotifier)
 final preferenceProvider = PreferenceNotifierFamily._();
 
 /// read
 ///
-/// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
+/// ref.watch(preferenceProvider(Preference.shouldShowWalkthrough));
 ///
 /// write
 ///
-/// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
+/// ref.read(preferenceProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 final class PreferenceNotifierProvider
     extends $NotifierProvider<PreferenceNotifier, dynamic> {
   /// read
   ///
-  /// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
+  /// ref.watch(preferenceProvider(Preference.shouldShowWalkthrough));
   ///
   /// write
   ///
-  /// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
+  /// ref.read(preferenceProvider(Preference.shouldShowWalkthrough).notifier).update(false);
   PreferenceNotifierProvider._(
       {required PreferenceNotifierFamily super.from,
       required Preference super.argument})
@@ -84,11 +84,11 @@ String _$preferenceNotifierHash() =>
 
 /// read
 ///
-/// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
+/// ref.watch(preferenceProvider(Preference.shouldShowWalkthrough));
 ///
 /// write
 ///
-/// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
+/// ref.read(preferenceProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 
 final class PreferenceNotifierFamily extends $Family
     with
@@ -105,11 +105,11 @@ final class PreferenceNotifierFamily extends $Family
 
   /// read
   ///
-  /// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
+  /// ref.watch(preferenceProvider(Preference.shouldShowWalkthrough));
   ///
   /// write
   ///
-  /// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
+  /// ref.read(preferenceProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 
   PreferenceNotifierProvider call(
     Preference pref,
@@ -122,11 +122,11 @@ final class PreferenceNotifierFamily extends $Family
 
 /// read
 ///
-/// ref.watch(preferenceNotifierProvider(Preference.shouldShowWalkthrough));
+/// ref.watch(preferenceProvider(Preference.shouldShowWalkthrough));
 ///
 /// write
 ///
-/// ref.read(preferenceNotifierProvider(Preference.shouldShowWalkthrough).notifier).update(false);
+/// ref.read(preferenceProvider(Preference.shouldShowWalkthrough).notifier).update(false);
 
 abstract class _$PreferenceNotifier extends $Notifier<dynamic> {
   late final _$args = ref.$arg as Preference;

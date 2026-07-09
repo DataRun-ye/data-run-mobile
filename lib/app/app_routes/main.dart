@@ -85,13 +85,13 @@
 //   Widget build(BuildContext context, WidgetRef ref) {
 //     final authManager = ref.watch(authNotifierProvider);
 //     final language =
-//         ref.watch(preferenceNotifierProvider(Preference.language)) as String;
+//         ref.watch(preferenceProvider(Preference.language)) as String;
 //
-//     final seed = ref.watch(preferenceNotifierProvider(Preference.colorSeed));
-//     final mode = ref.watch(preferenceNotifierProvider(Preference.themeMode));
+//     final seed = ref.watch(preferenceProvider(Preference.colorSeed));
+//     final mode = ref.watch(preferenceProvider(Preference.themeMode));
 //     final colorSeed = ColorSeed.values[seed];
 //     final useMaterial3 =
-//         ref.watch(preferenceNotifierProvider(Preference.useMaterial3));
+//         ref.watch(preferenceProvider(Preference.useMaterial3));
 //     final themeMode = ThemeMode.values[mode];
 //
 //     final cs = ColorScheme.fromSeed(

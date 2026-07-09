@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'option_set_configuration.data.freezed.dart';
 
 @freezed
-class OptionSetConfiguration with _$OptionSetConfiguration {
+abstract class OptionSetConfiguration with _$OptionSetConfiguration {
   const factory OptionSetConfiguration.defaultOptionSet(
       {required List<DataOption> options,
       @Default(<String>[]) List<String> optionsToHide,

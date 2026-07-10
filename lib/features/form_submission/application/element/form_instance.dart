@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
@@ -10,6 +12,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -83,8 +86,14 @@ class FormInstance {
   // String? get submissionUid => formMetadata.submission;
 
   Future<void> saveFormData() async {
+    final totalWatch = Stopwatch()..start();
+    final loadWatch = Stopwatch()..start();
     final formSubmission = await _db.dataInstancesDao.getById(submissionId);
+    loadWatch.stop();
+
+    final reduceWatch = Stopwatch()..start();
     final Map<String, Object?> formValue = formSection.value;
+    reduceWatch.stop();
     // final formErrors = form.errors;
     // logDebug('formValid: ${form.valid},formErrors: ${formErrors.toString()}');
     formValue.forEach((key, value) {
@@ -96,11 +105,30 @@ class FormInstance {
     });
 
     // formSubmission.status = _assignmentStatus;
+    final mergeWatch = Stopwatch()..start();
     final formData = (formSubmission!.formData ?? {})
       ..removeWhere((k, v) => !metadata.contains(k))
       ..addAll(formValue);
+    mergeWatch.stop();
 
+    final updateWatch = Stopwatch()..start();
     await _db.dataInstancesDao.updateData(submissionId, data: formData);
+    updateWatch.stop();
+    totalWatch.stop();
+
+    if (kDebugMode) {
+      logInfo('form save metrics', data: {
+        'submissionId': submissionId,
+        'totalMs': totalWatch.elapsedMilliseconds,
+        'loadMs': loadWatch.elapsedMilliseconds,
+        'reduceMs': reduceWatch.elapsedMilliseconds,
+        'mergeMs': mergeWatch.elapsedMilliseconds,
+        'dbUpdateMs': updateWatch.elapsedMilliseconds,
+        'topLevelKeys': formData.length,
+        'repeatRowCount': _countRepeatRows(formData),
+        'jsonBytes': _jsonByteLengthOrNull(formData),
+      });
+    }
 
     // return updatedSubmission;
   }
@@ -388,3 +416,33 @@ const List<String> metadata = [
   '_teamCode',
   '_serialNumber'
 ];
+
+int _countRepeatRows(Object? value) {
+  if (value is List) {
+    var total = 0;
+    for (final item in value) {
+      if (item is Map) {
+        total++;
+      }
+      total += _countRepeatRows(item);
+    }
+    return total;
+  }
+
+  if (value is Map) {
+    return value.values.fold<int>(
+      0,
+      (total, child) => total + _countRepeatRows(child),
+    );
+  }
+
+  return 0;
+}
+
+int? _jsonByteLengthOrNull(Object? value) {
+  try {
+    return utf8.encode(jsonEncode(value)).length;
+  } catch (_) {
+    return null;
+  }
+}

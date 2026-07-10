@@ -195,15 +195,18 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                     onRemoveItem: (item) {
                       _dataSource.removeItem(item);
                     },
-                    onSave: (formGroup, action) {
+                    onSave: (formGroup, action) async {
                       _repeatInstance.elementControl.markAsTouched();
-                      formInstance.saveFormData();
+                      await formInstance.saveFormData();
+                      if (!context.mounted) {
+                        return;
+                      }
                       _dataSource.updateItems(_repeatInstance.elements);
                       // repeatItem.updateValue(formGroup.value);
                       if (formGroup.valid) {
                         itemSaved = true;
-                        _handleSave(context, formInstance, _repeatInstance,
-                            repeatItem, action);
+                        await _handleSave(context, formInstance,
+                            _repeatInstance, repeatItem, action);
                       }
                     },
                   );
@@ -259,15 +262,18 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                     title: title,
                     repeatInstance: _repeatInstance,
                     item: repeatItem,
-                    onSave: (formGroup, action) {
+                    onSave: (formGroup, action) async {
                       _repeatInstance.elementControl.markAsTouched();
-                      formInstance.saveFormData();
+                      await formInstance.saveFormData();
+                      if (!context.mounted) {
+                        return;
+                      }
                       _dataSource.updateItems(_repeatInstance.elements);
                       // repeatItem.updateValue(formGroup.value);
                       if (formGroup.valid) {
                         itemSaved = true;
-                        _handleSave(context, formInstance, _repeatInstance,
-                            repeatItem, action);
+                        await _handleSave(context, formInstance,
+                            _repeatInstance, repeatItem, action);
                       }
                     },
                   ),
@@ -294,7 +300,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       if (action == EditActionType.SAVE_AND_ADD_ANOTHER) {
         final repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
         _dataSource.addItem(repeatItem);
-        _showEditPanel(context, formInstance, repeatItem);
+        await _showEditPanel(context, formInstance, repeatItem);
       } else if (action == EditActionType.SAVE_AND_CLOSE) {
         // Do nothing, as we've already closed the dialog
       }

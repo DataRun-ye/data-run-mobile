@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
+import 'package:d_sdk/database/database.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
@@ -69,7 +70,7 @@ class FormInstance {
   AssignmentStatus? _assignmentStatus;
   final FieldContextRegistry fieldKeysRegistery;
 
-  final _db = DSdk.db;
+  AppDatabase get _db => DSdk.db;
 
   // final FormConfiguration formConfiguration;
 
@@ -178,6 +179,73 @@ class FormInstance {
     return itemInstance;
   }
 
+  bool repeatItemControlsMaterialized(RepeatItemInstance item) {
+    try {
+      return item.elementControl.controls.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  void materializeRepeatItemControls(
+      RepeatSection parent, RepeatItemInstance item) {
+    final index = parent.elements.indexOf(item);
+    if (index < 0) {
+      throw FormControlNotFoundException();
+    }
+
+    if (repeatItemControlsMaterialized(item)) {
+      return;
+    }
+
+    final itemFormGroup = FormElementControlBuilder.createSectionFormGroup(
+      formFlatTemplate,
+      parent.template,
+      initialValue: item.currentRawValue,
+    );
+
+    parent.elementControl
+        .removeAt(index, emitEvent: false, updateParent: false);
+    parent.elementControl
+        .insert(index, itemFormGroup, emitEvent: false, updateParent: false);
+
+    if (!enabled) {
+      itemFormGroup.markAsDisabled(emitEvent: false);
+    }
+
+    item
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+  }
+
+  void dehydrateRepeatItemControls(
+      RepeatSection parent, RepeatItemInstance item) {
+    final index = parent.elements.indexOf(item);
+    if (index < 0 || !repeatItemControlsMaterialized(item)) {
+      return;
+    }
+
+    final placeholder = FormGroup({});
+    if (!enabled) {
+      placeholder.markAsDisabled(emitEvent: false);
+    }
+
+    parent.elementControl
+        .removeAt(index, emitEvent: false, updateParent: false);
+    parent.elementControl
+        .insert(index, placeholder, emitEvent: false, updateParent: false);
+  }
+
+  void materializeAllRepeatItemControls() {
+    final repeatSections =
+        getFormElementIterator<RepeatSection>(_formSection).toList();
+    for (final repeatSection in repeatSections) {
+      for (final item in repeatSection.elements) {
+        materializeRepeatItemControls(repeatSection, item);
+      }
+    }
+  }
+
   RepeatItemInstance onRemoveRepeatedItem(int index, RepeatSection parent) {
     final removedItem = parent.removeAt(index);
     parent.elementControl.removeAt(index);
@@ -263,6 +331,7 @@ class FormInstance {
     final allFields =
         getFormElementIterator<FieldInstance<dynamic>>(_formSection)
             .where((e) => e.elementPath != null)
+            .where((e) => e.controlExist)
             .where((e) => !e.hidden)
             .toList();
 

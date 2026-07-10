@@ -54,7 +54,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
     }
 
     updateStatus(elementState.reset(value: value));
-    elementControl.updateValue(
+    optionalElementControl?.updateValue(
       value,
       updateParent: updateParent,
       emitEvent: emitEvent,
@@ -92,7 +92,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
       logDebug(
           '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
       updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
+      optionalElementControl?.updateValue(newState.value);
     } else if (choiceFilter?.expression != null) {
       final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
       logDebug(
@@ -104,7 +104,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
       logDebug(
           '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
       updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
+      optionalElementControl?.updateValue(newState.value);
     }
   }
 }

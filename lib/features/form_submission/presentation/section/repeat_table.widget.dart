@@ -47,6 +47,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     final formInstance = appLocator<FormInstance>();
 
     final itemInstance = _dataSource.elements[index];
+    formInstance.materializeRepeatItemControls(_repeatInstance, itemInstance);
     await _showEditPanel(context, formInstance, itemInstance);
   }
 
@@ -115,6 +116,8 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                       final repeatItem =
                           formInstance.onAddRepeatedItem(_repeatInstance);
                       _dataSource.addItem(repeatItem);
+                      formInstance.materializeRepeatItemControls(
+                          _repeatInstance, repeatItem);
 
                       await _showEditPanel(context, formInstance, repeatItem);
                     }
@@ -296,10 +299,12 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       // the values are already updated, just to let the repeat
       // instance emit on stream so it rebuilds,
       Navigator.of(context).pop(); // Close the current dialog
+      formInstance.dehydrateRepeatItemControls(repeatInstance, repeatItem);
 
       if (action == EditActionType.SAVE_AND_ADD_ANOTHER) {
         final repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
         _dataSource.addItem(repeatItem);
+        formInstance.materializeRepeatItemControls(_repeatInstance, repeatItem);
         await _showEditPanel(context, formInstance, repeatItem);
       } else if (action == EditActionType.SAVE_AND_CLOSE) {
         // Do nothing, as we've already closed the dialog

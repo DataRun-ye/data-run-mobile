@@ -188,12 +188,14 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
 
   Future<void> _saveAndShowBottomSheet(FormInstance formInstance) async {
     await _onSaveForm();
+    formInstance.materializeAllRepeatItemControls();
     if (context.mounted) {
       return _showBottomSheet(formInstance);
     }
   }
 
   Future<void> backButtonPressed(FormInstance formInstance) async {
+    formInstance.materializeAllRepeatItemControls();
     if (formInstance.form.hasErrors || formInstance.form.dirty) {
       await _saveAndShowBottomSheet(formInstance);
     } else {

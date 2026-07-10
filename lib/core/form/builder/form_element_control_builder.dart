@@ -52,10 +52,8 @@ class FormElementControlBuilder {
       FormTemplateRepository formFlatTemplate, SectionTemplate fieldTemplate,
       {dynamic initialValue}) {
     final formArray = FormArray<Map<String, Object?>>((initialValue ?? [])
-        .map<FormGroup>((e) => createSectionFormGroup(
-            formFlatTemplate, fieldTemplate,
-            initialValue: e))
-        .toList());
+        .map<FormGroup>((_) => FormGroup({}))
+        .toList(growable: false));
 
     return formArray;
   }

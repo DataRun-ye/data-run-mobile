@@ -35,7 +35,7 @@ class FieldWidget extends HookConsumerWidget {
       });
 
       logDebug('call use effect: ${element.name}, unsubscribe');
-      return () => subscription;
+      return subscription.cancel;
     }, [control]);
 
     if (!elementPropertiesSnapshot.hasData) {
@@ -49,7 +49,8 @@ class FieldWidget extends HookConsumerWidget {
     }
 
     return SliverPadding(
-      padding: const EdgeInsets.only(right: 16.0, left: 16, top: 12, bottom: 12),
+      padding:
+          const EdgeInsets.only(right: 16.0, left: 16, top: 12, bottom: 12),
       sliver: MultiSliver(children: [
         SliverToBoxAdapter(
           child: FieldFactory.fromType(element),

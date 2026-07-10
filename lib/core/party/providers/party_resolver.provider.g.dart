@@ -6,171 +6,94 @@ part of 'party_resolver.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$partyResolverHash() => r'bcb3e1624efee10e7c064dafb52c5c8882c5301f';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$PartyResolver
-    extends BuildlessAutoDisposeAsyncNotifier<List<Party>> {
-  late final PartyResolutionParams params;
-
-  FutureOr<List<Party>> build(
-    PartyResolutionParams params,
-  );
-}
-
-/// See also [PartyResolver].
 @ProviderFor(PartyResolver)
-const partyResolverProvider = PartyResolverFamily();
+final partyResolverProvider = PartyResolverFamily._();
 
-/// See also [PartyResolver].
-class PartyResolverFamily extends Family<AsyncValue<List<Party>>> {
-  /// See also [PartyResolver].
-  const PartyResolverFamily();
-
-  /// See also [PartyResolver].
-  PartyResolverProvider call(
-    PartyResolutionParams params,
-  ) {
-    return PartyResolverProvider(
-      params,
-    );
-  }
-
-  @override
-  PartyResolverProvider getProviderOverride(
-    covariant PartyResolverProvider provider,
-  ) {
-    return call(
-      provider.params,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'partyResolverProvider';
-}
-
-/// See also [PartyResolver].
-class PartyResolverProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<PartyResolver, List<Party>> {
-  /// See also [PartyResolver].
-  PartyResolverProvider(
-    PartyResolutionParams params,
-  ) : this._internal(
-          () => PartyResolver()..params = params,
-          from: partyResolverProvider,
+final class PartyResolverProvider
+    extends $AsyncNotifierProvider<PartyResolver, List<Party>> {
+  PartyResolverProvider._(
+      {required PartyResolverFamily super.from,
+      required PartyResolutionParams super.argument})
+      : super(
+          retry: null,
           name: r'partyResolverProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$partyResolverHash,
-          dependencies: PartyResolverFamily._dependencies,
-          allTransitiveDependencies:
-              PartyResolverFamily._allTransitiveDependencies,
-          params: params,
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  PartyResolverProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.params,
-  }) : super.internal();
-
-  final PartyResolutionParams params;
+  @override
+  String debugGetCreateSourceHash() => _$partyResolverHash();
 
   @override
-  FutureOr<List<Party>> runNotifierBuild(
-    covariant PartyResolver notifier,
-  ) {
-    return notifier.build(
-      params,
-    );
+  String toString() {
+    return r'partyResolverProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  Override overrideWith(PartyResolver Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: PartyResolverProvider._internal(
-        () => create()..params = params,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        params: params,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<PartyResolver, List<Party>>
-      createElement() {
-    return _PartyResolverProviderElement(this);
-  }
+  PartyResolver create() => PartyResolver();
 
   @override
   bool operator ==(Object other) {
-    return other is PartyResolverProvider && other.params == params;
+    return other is PartyResolverProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, params.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin PartyResolverRef on AutoDisposeAsyncNotifierProviderRef<List<Party>> {
-  /// The parameter `params` of this provider.
-  PartyResolutionParams get params;
-}
+String _$partyResolverHash() => r'bcb3e1624efee10e7c064dafb52c5c8882c5301f';
 
-class _PartyResolverProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<PartyResolver, List<Party>>
-    with PartyResolverRef {
-  _PartyResolverProviderElement(super.provider);
+final class PartyResolverFamily extends $Family
+    with
+        $ClassFamilyOverride<PartyResolver, AsyncValue<List<Party>>,
+            List<Party>, FutureOr<List<Party>>, PartyResolutionParams> {
+  PartyResolverFamily._()
+      : super(
+          retry: null,
+          name: r'partyResolverProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  PartyResolverProvider call(
+    PartyResolutionParams params,
+  ) =>
+      PartyResolverProvider._(argument: params, from: this);
 
   @override
-  PartyResolutionParams get params => (origin as PartyResolverProvider).params;
+  String toString() => r'partyResolverProvider';
 }
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+
+abstract class _$PartyResolver extends $AsyncNotifier<List<Party>> {
+  late final _$args = ref.$arg as PartyResolutionParams;
+  PartyResolutionParams get params => _$args;
+
+  FutureOr<List<Party>> build(
+    PartyResolutionParams params,
+  );
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<List<Party>>, List<Party>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<List<Party>>, List<Party>>,
+        AsyncValue<List<Party>>,
+        Object?,
+        Object?>;
+    element.handleCreate(
+        ref,
+        () => build(
+              _$args,
+            ));
+  }
+}

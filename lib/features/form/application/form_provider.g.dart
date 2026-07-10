@@ -6,299 +6,247 @@ part of 'form_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$formListItemsHash() => r'caefe3a46771712441487eec1c6c42aecee5cb28';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [formListItems].
 @ProviderFor(formListItems)
-const formListItemsProvider = FormListItemsFamily();
+final formListItemsProvider = FormListItemsFamily._();
 
-/// See also [formListItems].
-class FormListItemsFamily extends Family<AsyncValue<List<FormListItemModel>>> {
-  /// See also [formListItems].
-  const FormListItemsFamily();
-
-  /// See also [formListItems].
-  FormListItemsProvider call(
-    FormListFilter filter,
-  ) {
-    return FormListItemsProvider(
-      filter,
-    );
-  }
-
-  @override
-  FormListItemsProvider getProviderOverride(
-    covariant FormListItemsProvider provider,
-  ) {
-    return call(
-      provider.filter,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formListItemsProvider';
-}
-
-/// See also [formListItems].
-class FormListItemsProvider
-    extends AutoDisposeFutureProvider<List<FormListItemModel>> {
-  /// See also [formListItems].
-  FormListItemsProvider(
-    FormListFilter filter,
-  ) : this._internal(
-          (ref) => formListItems(
-            ref as FormListItemsRef,
-            filter,
-          ),
-          from: formListItemsProvider,
+final class FormListItemsProvider extends $FunctionalProvider<
+        AsyncValue<List<FormListItemModel>>,
+        List<FormListItemModel>,
+        FutureOr<List<FormListItemModel>>>
+    with
+        $FutureModifier<List<FormListItemModel>>,
+        $FutureProvider<List<FormListItemModel>> {
+  FormListItemsProvider._(
+      {required FormListItemsFamily super.from,
+      required FormListFilter super.argument})
+      : super(
+          retry: null,
           name: r'formListItemsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$formListItemsHash,
-          dependencies: FormListItemsFamily._dependencies,
-          allTransitiveDependencies:
-              FormListItemsFamily._allTransitiveDependencies,
-          filter: filter,
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  FormListItemsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.filter,
-  }) : super.internal();
-
-  final FormListFilter filter;
+  @override
+  String debugGetCreateSourceHash() => _$formListItemsHash();
 
   @override
-  Override overrideWith(
-    FutureOr<List<FormListItemModel>> Function(FormListItemsRef provider)
-        create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: FormListItemsProvider._internal(
-        (ref) => create(ref as FormListItemsRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        filter: filter,
-      ),
-    );
+  String toString() {
+    return r'formListItemsProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  AutoDisposeFutureProviderElement<List<FormListItemModel>> createElement() {
-    return _FormListItemsProviderElement(this);
+  $FutureProviderElement<List<FormListItemModel>> $createElement(
+          $ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<FormListItemModel>> create(Ref ref) {
+    final argument = this.argument as FormListFilter;
+    return formListItems(
+      ref,
+      argument,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is FormListItemsProvider && other.filter == filter;
+    return other is FormListItemsProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, filter.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin FormListItemsRef
-    on AutoDisposeFutureProviderRef<List<FormListItemModel>> {
-  /// The parameter `filter` of this provider.
-  FormListFilter get filter;
-}
+String _$formListItemsHash() => r'caefe3a46771712441487eec1c6c42aecee5cb28';
 
-class _FormListItemsProviderElement
-    extends AutoDisposeFutureProviderElement<List<FormListItemModel>>
-    with FormListItemsRef {
-  _FormListItemsProviderElement(super.provider);
-
-  @override
-  FormListFilter get filter => (origin as FormListItemsProvider).filter;
-}
-
-String _$availableUserFormTemplatesHash() =>
-    r'dec7515c5cb3d95e5373a3762ceef19c64f434ea';
-
-/// See also [availableUserFormTemplates].
-@ProviderFor(availableUserFormTemplates)
-const availableUserFormTemplatesProvider = AvailableUserFormTemplatesFamily();
-
-/// See also [availableUserFormTemplates].
-class AvailableUserFormTemplatesFamily
-    extends Family<AsyncValue<List<Pair<AssignmentForm, bool>>>> {
-  /// See also [availableUserFormTemplates].
-  const AvailableUserFormTemplatesFamily();
-
-  /// See also [availableUserFormTemplates].
-  AvailableUserFormTemplatesProvider call({
-    String? assignmentId,
-  }) {
-    return AvailableUserFormTemplatesProvider(
-      assignmentId: assignmentId,
-    );
-  }
-
-  @override
-  AvailableUserFormTemplatesProvider getProviderOverride(
-    covariant AvailableUserFormTemplatesProvider provider,
-  ) {
-    return call(
-      assignmentId: provider.assignmentId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'availableUserFormTemplatesProvider';
-}
-
-/// See also [availableUserFormTemplates].
-class AvailableUserFormTemplatesProvider
-    extends AutoDisposeFutureProvider<List<Pair<AssignmentForm, bool>>> {
-  /// See also [availableUserFormTemplates].
-  AvailableUserFormTemplatesProvider({
-    String? assignmentId,
-  }) : this._internal(
-          (ref) => availableUserFormTemplates(
-            ref as AvailableUserFormTemplatesRef,
-            assignmentId: assignmentId,
-          ),
-          from: availableUserFormTemplatesProvider,
-          name: r'availableUserFormTemplatesProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$availableUserFormTemplatesHash,
-          dependencies: AvailableUserFormTemplatesFamily._dependencies,
-          allTransitiveDependencies:
-              AvailableUserFormTemplatesFamily._allTransitiveDependencies,
-          assignmentId: assignmentId,
+final class FormListItemsFamily extends $Family
+    with
+        $FunctionalFamilyOverride<FutureOr<List<FormListItemModel>>,
+            FormListFilter> {
+  FormListItemsFamily._()
+      : super(
+          retry: null,
+          name: r'formListItemsProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
         );
 
-  AvailableUserFormTemplatesProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.assignmentId,
-  }) : super.internal();
-
-  final String? assignmentId;
+  FormListItemsProvider call(
+    FormListFilter filter,
+  ) =>
+      FormListItemsProvider._(argument: filter, from: this);
 
   @override
-  Override overrideWith(
-    FutureOr<List<Pair<AssignmentForm, bool>>> Function(
-            AvailableUserFormTemplatesRef provider)
-        create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: AvailableUserFormTemplatesProvider._internal(
-        (ref) => create(ref as AvailableUserFormTemplatesRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        assignmentId: assignmentId,
-      ),
-    );
+  String toString() => r'formListItemsProvider';
+}
+
+@ProviderFor(availableUserFormTemplates)
+final availableUserFormTemplatesProvider = AvailableUserFormTemplatesFamily._();
+
+final class AvailableUserFormTemplatesProvider extends $FunctionalProvider<
+        AsyncValue<List<Pair<AssignmentForm, bool>>>,
+        List<Pair<AssignmentForm, bool>>,
+        FutureOr<List<Pair<AssignmentForm, bool>>>>
+    with
+        $FutureModifier<List<Pair<AssignmentForm, bool>>>,
+        $FutureProvider<List<Pair<AssignmentForm, bool>>> {
+  AvailableUserFormTemplatesProvider._(
+      {required AvailableUserFormTemplatesFamily super.from,
+      required String? super.argument})
+      : super(
+          retry: null,
+          name: r'availableUserFormTemplatesProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$availableUserFormTemplatesHash();
+
+  @override
+  String toString() {
+    return r'availableUserFormTemplatesProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  AutoDisposeFutureProviderElement<List<Pair<AssignmentForm, bool>>>
-      createElement() {
-    return _AvailableUserFormTemplatesProviderElement(this);
+  $FutureProviderElement<List<Pair<AssignmentForm, bool>>> $createElement(
+          $ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Pair<AssignmentForm, bool>>> create(Ref ref) {
+    final argument = this.argument as String?;
+    return availableUserFormTemplates(
+      ref,
+      assignmentId: argument,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return other is AvailableUserFormTemplatesProvider &&
-        other.assignmentId == assignmentId;
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, assignmentId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin AvailableUserFormTemplatesRef
-    on AutoDisposeFutureProviderRef<List<Pair<AssignmentForm, bool>>> {
-  /// The parameter `assignmentId` of this provider.
-  String? get assignmentId;
-}
+String _$availableUserFormTemplatesHash() =>
+    r'dec7515c5cb3d95e5373a3762ceef19c64f434ea';
 
-class _AvailableUserFormTemplatesProviderElement
-    extends AutoDisposeFutureProviderElement<List<Pair<AssignmentForm, bool>>>
-    with AvailableUserFormTemplatesRef {
-  _AvailableUserFormTemplatesProviderElement(super.provider);
+final class AvailableUserFormTemplatesFamily extends $Family
+    with
+        $FunctionalFamilyOverride<FutureOr<List<Pair<AssignmentForm, bool>>>,
+            String?> {
+  AvailableUserFormTemplatesFamily._()
+      : super(
+          retry: null,
+          name: r'availableUserFormTemplatesProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  AvailableUserFormTemplatesProvider call({
+    String? assignmentId,
+  }) =>
+      AvailableUserFormTemplatesProvider._(argument: assignmentId, from: this);
 
   @override
-  String? get assignmentId =>
-      (origin as AvailableUserFormTemplatesProvider).assignmentId;
+  String toString() => r'availableUserFormTemplatesProvider';
+}
+
+/// form id could be on the format of formId-version or formId
+/// look for the latest version of the form template or the form template
+/// that matches the version
+
+@ProviderFor(formTemplate)
+final formTemplateProvider = FormTemplateFamily._();
+
+/// form id could be on the format of formId-version or formId
+/// look for the latest version of the form template or the form template
+/// that matches the version
+
+final class FormTemplateProvider extends $FunctionalProvider<
+        AsyncValue<FormTemplateModel>,
+        FormTemplateModel,
+        FutureOr<FormTemplateModel>>
+    with
+        $FutureModifier<FormTemplateModel>,
+        $FutureProvider<FormTemplateModel> {
+  /// form id could be on the format of formId-version or formId
+  /// look for the latest version of the form template or the form template
+  /// that matches the version
+  FormTemplateProvider._(
+      {required FormTemplateFamily super.from,
+      required ({
+        String? formId,
+        String? versionId,
+      })
+          super.argument})
+      : super(
+          retry: null,
+          name: r'formTemplateProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$formTemplateHash();
+
+  @override
+  String toString() {
+    return r'formTemplateProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<FormTemplateModel> $createElement(
+          $ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<FormTemplateModel> create(Ref ref) {
+    final argument = this.argument as ({
+      String? formId,
+      String? versionId,
+    });
+    return formTemplate(
+      ref,
+      formId: argument.formId,
+      versionId: argument.versionId,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FormTemplateProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$formTemplateHash() => r'976dd3516dba95565f2b714c7b543a8cec6fcb17';
@@ -306,172 +254,37 @@ String _$formTemplateHash() => r'976dd3516dba95565f2b714c7b543a8cec6fcb17';
 /// form id could be on the format of formId-version or formId
 /// look for the latest version of the form template or the form template
 /// that matches the version
-///
-/// Copied from [formTemplate].
-@ProviderFor(formTemplate)
-const formTemplateProvider = FormTemplateFamily();
 
-/// form id could be on the format of formId-version or formId
-/// look for the latest version of the form template or the form template
-/// that matches the version
-///
-/// Copied from [formTemplate].
-class FormTemplateFamily extends Family<AsyncValue<FormTemplateModel>> {
+final class FormTemplateFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+            FutureOr<FormTemplateModel>,
+            ({
+              String? formId,
+              String? versionId,
+            })> {
+  FormTemplateFamily._()
+      : super(
+          retry: null,
+          name: r'formTemplateProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
   /// form id could be on the format of formId-version or formId
   /// look for the latest version of the form template or the form template
   /// that matches the version
-  ///
-  /// Copied from [formTemplate].
-  const FormTemplateFamily();
 
-  /// form id could be on the format of formId-version or formId
-  /// look for the latest version of the form template or the form template
-  /// that matches the version
-  ///
-  /// Copied from [formTemplate].
   FormTemplateProvider call({
     String? formId,
     String? versionId,
-  }) {
-    return FormTemplateProvider(
-      formId: formId,
-      versionId: versionId,
-    );
-  }
-
-  @override
-  FormTemplateProvider getProviderOverride(
-    covariant FormTemplateProvider provider,
-  ) {
-    return call(
-      formId: provider.formId,
-      versionId: provider.versionId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'formTemplateProvider';
-}
-
-/// form id could be on the format of formId-version or formId
-/// look for the latest version of the form template or the form template
-/// that matches the version
-///
-/// Copied from [formTemplate].
-class FormTemplateProvider
-    extends AutoDisposeFutureProvider<FormTemplateModel> {
-  /// form id could be on the format of formId-version or formId
-  /// look for the latest version of the form template or the form template
-  /// that matches the version
-  ///
-  /// Copied from [formTemplate].
-  FormTemplateProvider({
-    String? formId,
-    String? versionId,
-  }) : this._internal(
-          (ref) => formTemplate(
-            ref as FormTemplateRef,
-            formId: formId,
-            versionId: versionId,
-          ),
-          from: formTemplateProvider,
-          name: r'formTemplateProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$formTemplateHash,
-          dependencies: FormTemplateFamily._dependencies,
-          allTransitiveDependencies:
-              FormTemplateFamily._allTransitiveDependencies,
-          formId: formId,
-          versionId: versionId,
-        );
-
-  FormTemplateProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.formId,
-    required this.versionId,
-  }) : super.internal();
-
-  final String? formId;
-  final String? versionId;
-
-  @override
-  Override overrideWith(
-    FutureOr<FormTemplateModel> Function(FormTemplateRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: FormTemplateProvider._internal(
-        (ref) => create(ref as FormTemplateRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
+  }) =>
+      FormTemplateProvider._(argument: (
         formId: formId,
         versionId: versionId,
-      ),
-    );
-  }
+      ), from: this);
 
   @override
-  AutoDisposeFutureProviderElement<FormTemplateModel> createElement() {
-    return _FormTemplateProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is FormTemplateProvider &&
-        other.formId == formId &&
-        other.versionId == versionId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, formId.hashCode);
-    hash = _SystemHash.combine(hash, versionId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
+  String toString() => r'formTemplateProvider';
 }
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin FormTemplateRef on AutoDisposeFutureProviderRef<FormTemplateModel> {
-  /// The parameter `formId` of this provider.
-  String? get formId;
-
-  /// The parameter `versionId` of this provider.
-  String? get versionId;
-}
-
-class _FormTemplateProviderElement
-    extends AutoDisposeFutureProviderElement<FormTemplateModel>
-    with FormTemplateRef {
-  _FormTemplateProviderElement(super.provider);
-
-  @override
-  String? get formId => (origin as FormTemplateProvider).formId;
-  @override
-  String? get versionId => (origin as FormTemplateProvider).versionId;
-}
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

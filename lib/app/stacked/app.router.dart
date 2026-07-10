@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // StackedNavigatorGenerator
@@ -137,8 +138,11 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i4.SplashView: (data) {
+      final args = data.getArgs<SplashViewArguments>(
+        orElse: () => const SplashViewArguments(),
+      );
       return _i12.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i4.SplashView(),
+        builder: (context) => _i4.SplashView(key: args.key),
         settings: data,
       );
     },
@@ -155,8 +159,11 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i7.AssignmentScreen: (data) {
+      final args = data.getArgs<AssignmentScreenArguments>(
+        orElse: () => const AssignmentScreenArguments(),
+      );
       return _i12.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i7.AssignmentScreen(),
+        builder: (context) => _i7.AssignmentScreen(key: args.key),
         settings: data,
       );
     },
@@ -272,6 +279,50 @@ class LoginViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ onResult.hashCode;
+  }
+}
+
+class SplashViewArguments {
+  const SplashViewArguments({this.key});
+
+  final _i12.Key? key;
+
+  @override
+  String toString() {
+    return '{"key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant SplashViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode;
+  }
+}
+
+class AssignmentScreenArguments {
+  const AssignmentScreenArguments({this.key});
+
+  final _i12.Key? key;
+
+  @override
+  String toString() {
+    return '{"key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant AssignmentScreenArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode;
   }
 }
 
@@ -485,14 +536,16 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToSplashView([
+  Future<dynamic> navigateToSplashView({
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.splashView,
+        arguments: SplashViewArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -527,14 +580,16 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToAssignmentScreen([
+  Future<dynamic> navigateToAssignmentScreen({
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.assignmentScreen,
+        arguments: AssignmentScreenArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -677,14 +732,16 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithSplashView([
+  Future<dynamic> replaceWithSplashView({
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.splashView,
+        arguments: SplashViewArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -719,14 +776,16 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithAssignmentScreen([
+  Future<dynamic> replaceWithAssignmentScreen({
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.assignmentScreen,
+        arguments: AssignmentScreenArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

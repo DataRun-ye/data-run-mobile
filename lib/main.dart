@@ -35,7 +35,8 @@ Future<void> main() async {
       options.environment = AppEnvironment.envLabel;
 
       // Track the Version (Automatic: name@version+build)
-      options.release = '${packageInfo.appName}@${packageInfo.version}+${packageInfo.buildNumber}';
+      options.release =
+          '${packageInfo.appName}@${packageInfo.version}+${packageInfo.buildNumber}';
 
       // Distinguish the platform (e.g., 'windows', 'android')
       options.dist = Platform.operatingSystem;
@@ -55,7 +56,6 @@ Future<void> main() async {
       // 2. Performance: Don't let reporting lag the app
       options.sendDefaultPii = false; // Good for privacy
       options.reportPackages = true;
-
 
       // 3. Troubleshooting: See why reports fail in your IDE console
       // Turn this OFF for production releases
@@ -105,12 +105,12 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Sentry.captureMessage('DATARUN-APP, Glitch is working, again!');
-    final authManager = ref.watch(authNotifierProvider);
+    final authManager = ref.watch(authProvider);
     final language =
-        ref.watch(preferenceNotifierProvider(Preference.language)) as String;
+        ref.watch(preferenceProvider(Preference.language)) as String;
 
-    final seed = ref.watch(preferenceNotifierProvider(Preference.colorSeed));
-    final mode = ref.watch(preferenceNotifierProvider(Preference.themeMode));
+    final seed = ref.watch(preferenceProvider(Preference.colorSeed));
+    final mode = ref.watch(preferenceProvider(Preference.themeMode));
     final colorSeed = ColorSeed.values[seed];
     final themeMode = ThemeMode.values[mode];
 

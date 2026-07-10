@@ -2,17 +2,17 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 
-class ProviderLogger extends ProviderObserver {
+base class ProviderLogger extends ProviderObserver {
   ProviderLogger({required this.providersNameToLog});
 
   final IList<String> providersNameToLog;
 
   @override
   void didAddProvider(
-    ProviderBase<Object?> provider,
+    ProviderObserverContext context,
     Object? value,
-    ProviderContainer container,
   ) {
+    final provider = context.provider;
     if (providersNameToLog.isEmpty) {
       provider.name != null
           ? logDebug('didAddProvider, NAME: ${provider.name}, VALUE: $value')
@@ -30,11 +30,11 @@ class ProviderLogger extends ProviderObserver {
 
   @override
   void didUpdateProvider(
-    ProviderBase<Object?> provider,
+    ProviderObserverContext context,
     Object? previousValue,
     Object? newValue,
-    ProviderContainer container,
   ) {
+    final provider = context.provider;
     if (providersNameToLog.isEmpty) {
       provider.name != null
           ? logDebug('didUpdateProvider, newValue: $newValue')
@@ -51,10 +51,8 @@ class ProviderLogger extends ProviderObserver {
   }
 
   @override
-  void didDisposeProvider(
-    ProviderBase<Object?> provider,
-    ProviderContainer container,
-  ) {
+  void didDisposeProvider(ProviderObserverContext context) {
+    final provider = context.provider;
     if (providersNameToLog.isEmpty) {
       provider.name != null
           ? logDebug('NAME: ${provider.name}, didDisposeProvider')

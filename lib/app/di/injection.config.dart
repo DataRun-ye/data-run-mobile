@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -120,33 +121,13 @@ Future<_i174.GetIt> setupGlobalDependencies(
   );
   gh.lazySingleton<_i342.FieldContextRegistry>(
       () => _i342.FieldContextRegistry());
-  gh.factory<_i775.UserSessionService>(
-      () => _i775.UserSessionService(gh<_i460.SharedPreferences>()));
-  gh.factory<_i139.SessionStorage>(
-      () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
-  gh.factory<_i492.SyncMetadataRepository>(
-      () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
   gh.factory<_i935.AssignmentService>(() => _i1027.AssignmentServiceImpl());
   gh.factory<_i258.FormTemplateService>(() => _i489.FormTemplateServiceImpl());
-  gh.factory<_i658.SyncScheduler>(() => _i658.SyncScheduler(
-        metadataRepo: gh<_i492.SyncMetadataRepository>(),
-        connectivity: gh<_i658.ConnectivityService>(),
-      ));
-  gh.factory<_i34.FormInstanceService>(() => _i756.FormInstanceServiceImpl());
-  gh.factory<_i602.SyncManager>(
-      () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
-  gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(
-        resources: gh<_i683.ResourceManager>(),
-        repository: gh<_i730.DataValueRepository>(),
-      ));
-  gh.factory<_i325.TableRepository>(() => _i128.DriftTableRepository());
-  gh.factory<_i148.SyncExecutor>(() =>
-      _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
-  gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
   gh.factory<_i537.StorageService>(() => sdkModule.getStorageService(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i460.SharedPreferences>(),
       ));
+  gh.factory<_i34.FormInstanceService>(() => _i756.FormInstanceServiceImpl());
   gh.factoryParam<_i747.FormMetadataService, _i54.FormMetadata, dynamic>((
     formMetadata,
     _,
@@ -155,14 +136,36 @@ Future<_i174.GetIt> setupGlobalDependencies(
         deviceInfoService: gh<_i1058.AndroidDeviceInfoService>(),
         formMetadata: formMetadata,
       ));
+  gh.factory<_i325.TableRepository>(() => _i128.DriftTableRepository());
+  gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
+  gh.factory<_i148.SyncExecutor>(() =>
+      _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
+  gh.factory<_i602.SyncManager>(
+      () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
+  gh.factory<_i492.SyncMetadataRepository>(
+      () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
+  gh.factory<_i139.SessionStorage>(
+      () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
   gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
       optionSetService: gh<_i158.OptionSetService>()));
+  gh.factory<_i775.UserSessionService>(
+      () => _i775.UserSessionService(gh<_i460.SharedPreferences>()));
+  gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(
+        resources: gh<_i683.ResourceManager>(),
+        repository: gh<_i730.DataValueRepository>(),
+      ));
   gh.factory<_i765.TokenStorage>(
       () => sdkModule.getTokenStorage(gh<_i537.StorageService>()));
+  gh.factory<_i48.TokenRefresher>(
+      () => _i48.TokenRefresher(gh<_i765.TokenStorage>()));
   gh.factory<_i324.AuthStorage>(() => _i324.AuthStorage(
         tokenStorage: gh<_i765.TokenStorage>(),
         sessionStorage: gh<_i139.SessionStorage>(),
         prefs: gh<_i460.SharedPreferences>(),
+      ));
+  gh.factory<_i658.SyncScheduler>(() => _i658.SyncScheduler(
+        metadataRepo: gh<_i492.SyncMetadataRepository>(),
+        connectivity: gh<_i658.ConnectivityService>(),
       ));
   gh.factory<_i432.SyncCoordinator>(() => _i432.SyncCoordinator(
         gh<_i492.SyncMetadataRepository>(),
@@ -171,20 +174,18 @@ Future<_i174.GetIt> setupGlobalDependencies(
       ));
   gh.factory<_i656.AuthInterceptor>(
       () => _i656.AuthInterceptor(authStorage: gh<_i324.AuthStorage>()));
-  gh.factory<_i361.Dio>(
-      () => thirdPartyServicesModule.dio(gh<_i656.AuthInterceptor>()));
-  gh.factory<_i48.TokenRefresher>(
-      () => _i48.TokenRefresher(gh<_i765.TokenStorage>()));
   gh.lazySingleton<_i261.AuthManager>(() => _i261.AuthManager(
         authStorage: gh<_i324.AuthStorage>(),
         authApi: gh<_i64.AuthApi>(),
       ));
+  gh.factory<_i361.Dio>(
+      () => thirdPartyServicesModule.dio(gh<_i656.AuthInterceptor>()));
+  gh.factory<_i8.HttpClient<dynamic>>(
+      () => _i832.DefaultHttpAdapter(gh<_i361.Dio>()));
   gh.lazySingleton<_i537.NetworkUtil>(
     () => _i537.NetworkUtil(dio: gh<_i361.Dio>()),
     dispose: (i) => i.dispose(),
   );
-  gh.factory<_i8.HttpClient<dynamic>>(
-      () => _i832.DefaultHttpAdapter(gh<_i361.Dio>()));
   return getIt;
 }
 

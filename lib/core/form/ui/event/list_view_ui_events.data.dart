@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'list_view_ui_events.data.freezed.dart';
 
 @freezed
-class ListViewUiEvents with _$ListViewUiEvents {
+abstract class ListViewUiEvents with _$ListViewUiEvents {
   const factory ListViewUiEvents.openYearMonthDayAgeCalendar(
       {required String uid,
       required int year,

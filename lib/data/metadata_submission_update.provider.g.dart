@@ -6,181 +6,104 @@ part of 'metadata_submission_update.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$systemMetadataSubmissionsHash() =>
-    r'f5922f0a29d7f1854a41322170ccaee6138cff8d';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [systemMetadataSubmissions].
 @ProviderFor(systemMetadataSubmissions)
-const systemMetadataSubmissionsProvider = SystemMetadataSubmissionsFamily();
+final systemMetadataSubmissionsProvider = SystemMetadataSubmissionsFamily._();
 
-/// See also [systemMetadataSubmissions].
-class SystemMetadataSubmissionsFamily
-    extends Family<AsyncValue<List<MetadataSubmissionUpdate>>> {
-  /// See also [systemMetadataSubmissions].
-  const SystemMetadataSubmissionsFamily();
-
-  /// See also [systemMetadataSubmissions].
-  SystemMetadataSubmissionsProvider call({
-    required String query,
-    required String submissionId,
-  }) {
-    return SystemMetadataSubmissionsProvider(
-      query: query,
-      submissionId: submissionId,
-    );
-  }
-
-  @override
-  SystemMetadataSubmissionsProvider getProviderOverride(
-    covariant SystemMetadataSubmissionsProvider provider,
-  ) {
-    return call(
-      query: provider.query,
-      submissionId: provider.submissionId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'systemMetadataSubmissionsProvider';
-}
-
-/// See also [systemMetadataSubmissions].
-class SystemMetadataSubmissionsProvider
-    extends AutoDisposeFutureProvider<List<MetadataSubmissionUpdate>> {
-  /// See also [systemMetadataSubmissions].
-  SystemMetadataSubmissionsProvider({
-    required String query,
-    required String submissionId,
-  }) : this._internal(
-          (ref) => systemMetadataSubmissions(
-            ref as SystemMetadataSubmissionsRef,
-            query: query,
-            submissionId: submissionId,
-          ),
-          from: systemMetadataSubmissionsProvider,
+final class SystemMetadataSubmissionsProvider extends $FunctionalProvider<
+        AsyncValue<List<MetadataSubmissionUpdate>>,
+        List<MetadataSubmissionUpdate>,
+        FutureOr<List<MetadataSubmissionUpdate>>>
+    with
+        $FutureModifier<List<MetadataSubmissionUpdate>>,
+        $FutureProvider<List<MetadataSubmissionUpdate>> {
+  SystemMetadataSubmissionsProvider._(
+      {required SystemMetadataSubmissionsFamily super.from,
+      required ({
+        String query,
+        String submissionId,
+      })
+          super.argument})
+      : super(
+          retry: null,
           name: r'systemMetadataSubmissionsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$systemMetadataSubmissionsHash,
-          dependencies: SystemMetadataSubmissionsFamily._dependencies,
-          allTransitiveDependencies:
-              SystemMetadataSubmissionsFamily._allTransitiveDependencies,
-          query: query,
-          submissionId: submissionId,
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  SystemMetadataSubmissionsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.query,
-    required this.submissionId,
-  }) : super.internal();
-
-  final String query;
-  final String submissionId;
+  @override
+  String debugGetCreateSourceHash() => _$systemMetadataSubmissionsHash();
 
   @override
-  Override overrideWith(
-    FutureOr<List<MetadataSubmissionUpdate>> Function(
-            SystemMetadataSubmissionsRef provider)
-        create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: SystemMetadataSubmissionsProvider._internal(
-        (ref) => create(ref as SystemMetadataSubmissionsRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        query: query,
-        submissionId: submissionId,
-      ),
-    );
+  String toString() {
+    return r'systemMetadataSubmissionsProvider'
+        ''
+        '$argument';
   }
 
+  @$internal
   @override
-  AutoDisposeFutureProviderElement<List<MetadataSubmissionUpdate>>
-      createElement() {
-    return _SystemMetadataSubmissionsProviderElement(this);
+  $FutureProviderElement<List<MetadataSubmissionUpdate>> $createElement(
+          $ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<MetadataSubmissionUpdate>> create(Ref ref) {
+    final argument = this.argument as ({
+      String query,
+      String submissionId,
+    });
+    return systemMetadataSubmissions(
+      ref,
+      query: argument.query,
+      submissionId: argument.submissionId,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return other is SystemMetadataSubmissionsProvider &&
-        other.query == query &&
-        other.submissionId == submissionId;
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, query.hashCode);
-    hash = _SystemHash.combine(hash, submissionId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin SystemMetadataSubmissionsRef
-    on AutoDisposeFutureProviderRef<List<MetadataSubmissionUpdate>> {
-  /// The parameter `query` of this provider.
-  String get query;
+String _$systemMetadataSubmissionsHash() =>
+    r'f5922f0a29d7f1854a41322170ccaee6138cff8d';
 
-  /// The parameter `submissionId` of this provider.
-  String get submissionId;
-}
+final class SystemMetadataSubmissionsFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+            FutureOr<List<MetadataSubmissionUpdate>>,
+            ({
+              String query,
+              String submissionId,
+            })> {
+  SystemMetadataSubmissionsFamily._()
+      : super(
+          retry: null,
+          name: r'systemMetadataSubmissionsProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
 
-class _SystemMetadataSubmissionsProviderElement
-    extends AutoDisposeFutureProviderElement<List<MetadataSubmissionUpdate>>
-    with SystemMetadataSubmissionsRef {
-  _SystemMetadataSubmissionsProviderElement(super.provider);
+  SystemMetadataSubmissionsProvider call({
+    required String query,
+    required String submissionId,
+  }) =>
+      SystemMetadataSubmissionsProvider._(argument: (
+        query: query,
+        submissionId: submissionId,
+      ), from: this);
 
   @override
-  String get query => (origin as SystemMetadataSubmissionsProvider).query;
-  @override
-  String get submissionId =>
-      (origin as SystemMetadataSubmissionsProvider).submissionId;
+  String toString() => r'systemMetadataSubmissionsProvider';
 }
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

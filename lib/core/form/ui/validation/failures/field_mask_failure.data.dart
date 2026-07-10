@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'field_mask_failure.data.freezed.dart';
 
 @freezed
-class FieldMaskFailure with _$FieldMaskFailure implements DException {
+abstract class FieldMaskFailure with _$FieldMaskFailure implements DException {
   @Implements<DException>()
   const factory FieldMaskFailure.wrongPatternException(
       [@Default('Exception') String message,

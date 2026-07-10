@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,30 +9,50 @@ part of 'bottom_sheet_content_model.data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$DialogContentModel {
-  String get title => throw _privateConstructorUsedError;
-  String get subtitle => throw _privateConstructorUsedError;
-  IconData get icon => throw _privateConstructorUsedError;
-  BottomSheetBodyModel get body => throw _privateConstructorUsedError;
+  String get title;
+  String get subtitle;
+  IconData get icon;
+  BottomSheetBodyModel get body;
 
   /// Create a copy of DialogContentModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $DialogContentModelCopyWith<DialogContentModel> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$DialogContentModelCopyWithImpl<DialogContentModel>(
+          this as DialogContentModel, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DialogContentModel &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.subtitle, subtitle) ||
+                other.subtitle == subtitle) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.body, body) || other.body == body));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, title, subtitle, icon, body);
+
+  @override
+  String toString() {
+    return 'DialogContentModel(title: $title, subtitle: $subtitle, icon: $icon, body: $body)';
+  }
 }
 
 /// @nodoc
-abstract class $DialogContentModelCopyWith<$Res> {
+abstract mixin class $DialogContentModelCopyWith<$Res> {
   factory $DialogContentModelCopyWith(
-          DialogContentModel value, $Res Function(DialogContentModel) then) =
-      _$DialogContentModelCopyWithImpl<$Res, DialogContentModel>;
+          DialogContentModel value, $Res Function(DialogContentModel) _then) =
+      _$DialogContentModelCopyWithImpl;
   @useResult
   $Res call(
       {String title,
@@ -44,14 +64,12 @@ abstract class $DialogContentModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DialogContentModelCopyWithImpl<$Res, $Val extends DialogContentModel>
+class _$DialogContentModelCopyWithImpl<$Res>
     implements $DialogContentModelCopyWith<$Res> {
-  _$DialogContentModelCopyWithImpl(this._value, this._then);
+  _$DialogContentModelCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final DialogContentModel _self;
+  final $Res Function(DialogContentModel) _then;
 
   /// Create a copy of DialogContentModel
   /// with the given fields replaced by the non-null parameter values.
@@ -63,24 +81,24 @@ class _$DialogContentModelCopyWithImpl<$Res, $Val extends DialogContentModel>
     Object? icon = null,
     Object? body = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       subtitle: null == subtitle
-          ? _value.subtitle
+          ? _self.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
               as String,
       icon: null == icon
-          ? _value.icon
+          ? _self.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as IconData,
       body: null == body
-          ? _value.body
+          ? _self.body
           : body // ignore: cast_nullable_to_non_nullable
               as BottomSheetBodyModel,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of DialogContentModel
@@ -88,73 +106,179 @@ class _$DialogContentModelCopyWithImpl<$Res, $Val extends DialogContentModel>
   @override
   @pragma('vm:prefer-inline')
   $BottomSheetBodyModelCopyWith<$Res> get body {
-    return $BottomSheetBodyModelCopyWith<$Res>(_value.body, (value) {
-      return _then(_value.copyWith(body: value) as $Val);
+    return $BottomSheetBodyModelCopyWith<$Res>(_self.body, (value) {
+      return _then(_self.copyWith(body: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$DialogContentModelImplCopyWith<$Res>
-    implements $DialogContentModelCopyWith<$Res> {
-  factory _$$DialogContentModelImplCopyWith(_$DialogContentModelImpl value,
-          $Res Function(_$DialogContentModelImpl) then) =
-      __$$DialogContentModelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String title,
-      String subtitle,
-      IconData icon,
-      BottomSheetBodyModel body});
+/// Adds pattern-matching-related methods to [DialogContentModel].
+extension DialogContentModelPatterns on DialogContentModel {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $BottomSheetBodyModelCopyWith<$Res> get body;
-}
-
-/// @nodoc
-class __$$DialogContentModelImplCopyWithImpl<$Res>
-    extends _$DialogContentModelCopyWithImpl<$Res, _$DialogContentModelImpl>
-    implements _$$DialogContentModelImplCopyWith<$Res> {
-  __$$DialogContentModelImplCopyWithImpl(_$DialogContentModelImpl _value,
-      $Res Function(_$DialogContentModelImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DialogContentModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? subtitle = null,
-    Object? icon = null,
-    Object? body = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_DialogContentModel value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$DialogContentModelImpl(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      subtitle: null == subtitle
-          ? _value.subtitle
-          : subtitle // ignore: cast_nullable_to_non_nullable
-              as String,
-      icon: null == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
-      body: null == body
-          ? _value.body
-          : body // ignore: cast_nullable_to_non_nullable
-              as BottomSheetBodyModel,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _DialogContentModel() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_DialogContentModel value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DialogContentModel():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_DialogContentModel value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DialogContentModel() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String title, String subtitle, IconData icon,
+            BottomSheetBodyModel body)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _DialogContentModel() when $default != null:
+        return $default(_that.title, _that.subtitle, _that.icon, _that.body);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String title, String subtitle, IconData icon,
+            BottomSheetBodyModel body)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DialogContentModel():
+        return $default(_that.title, _that.subtitle, _that.icon, _that.body);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String title, String subtitle, IconData icon,
+            BottomSheetBodyModel body)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DialogContentModel() when $default != null:
+        return $default(_that.title, _that.subtitle, _that.icon, _that.body);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$DialogContentModelImpl implements _DialogContentModel {
-  const _$DialogContentModelImpl(
+class _DialogContentModel implements DialogContentModel {
+  const _DialogContentModel(
       {required this.title,
       required this.subtitle,
       required this.icon,
@@ -169,16 +293,19 @@ class _$DialogContentModelImpl implements _DialogContentModel {
   @override
   final BottomSheetBodyModel body;
 
+  /// Create a copy of DialogContentModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'DialogContentModel(title: $title, subtitle: $subtitle, icon: $icon, body: $body)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DialogContentModelCopyWith<_DialogContentModel> get copyWith =>
+      __$DialogContentModelCopyWithImpl<_DialogContentModel>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DialogContentModelImpl &&
+            other is _DialogContentModel &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.subtitle, subtitle) ||
                 other.subtitle == subtitle) &&
@@ -189,221 +316,241 @@ class _$DialogContentModelImpl implements _DialogContentModel {
   @override
   int get hashCode => Object.hash(runtimeType, title, subtitle, icon, body);
 
-  /// Create a copy of DialogContentModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$DialogContentModelImplCopyWith<_$DialogContentModelImpl> get copyWith =>
-      __$$DialogContentModelImplCopyWithImpl<_$DialogContentModelImpl>(
-          this, _$identity);
+  String toString() {
+    return 'DialogContentModel(title: $title, subtitle: $subtitle, icon: $icon, body: $body)';
+  }
 }
 
-abstract class _DialogContentModel implements DialogContentModel {
-  const factory _DialogContentModel(
-      {required final String title,
-      required final String subtitle,
-      required final IconData icon,
-      required final BottomSheetBodyModel body}) = _$DialogContentModelImpl;
+/// @nodoc
+abstract mixin class _$DialogContentModelCopyWith<$Res>
+    implements $DialogContentModelCopyWith<$Res> {
+  factory _$DialogContentModelCopyWith(
+          _DialogContentModel value, $Res Function(_DialogContentModel) _then) =
+      __$DialogContentModelCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String title,
+      String subtitle,
+      IconData icon,
+      BottomSheetBodyModel body});
 
   @override
-  String get title;
-  @override
-  String get subtitle;
-  @override
-  IconData get icon;
-  @override
-  BottomSheetBodyModel get body;
+  $BottomSheetBodyModelCopyWith<$Res> get body;
+}
+
+/// @nodoc
+class __$DialogContentModelCopyWithImpl<$Res>
+    implements _$DialogContentModelCopyWith<$Res> {
+  __$DialogContentModelCopyWithImpl(this._self, this._then);
+
+  final _DialogContentModel _self;
+  final $Res Function(_DialogContentModel) _then;
 
   /// Create a copy of DialogContentModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DialogContentModelImplCopyWith<_$DialogContentModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? title = null,
+    Object? subtitle = null,
+    Object? icon = null,
+    Object? body = null,
+  }) {
+    return _then(_DialogContentModel(
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      subtitle: null == subtitle
+          ? _self.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: null == icon
+          ? _self.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as IconData,
+      body: null == body
+          ? _self.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as BottomSheetBodyModel,
+    ));
+  }
+
+  /// Create a copy of DialogContentModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BottomSheetBodyModelCopyWith<$Res> get body {
+    return $BottomSheetBodyModelCopyWith<$Res>(_self.body, (value) {
+      return _then(_self.copyWith(body: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$BottomSheetBodyModel {
-  String get message => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String message) messageBody,
-    required TResult Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)
-        errorsBody,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? messageBody,
-    TResult? Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)?
-        errorsBody,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? messageBody,
-    TResult Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)?
-        errorsBody,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(MessageBody value) messageBody,
-    required TResult Function(ErrorsBody value) errorsBody,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(MessageBody value)? messageBody,
-    TResult? Function(ErrorsBody value)? errorsBody,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(MessageBody value)? messageBody,
-    TResult Function(ErrorsBody value)? errorsBody,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  String get message;
 
   /// Create a copy of BottomSheetBodyModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $BottomSheetBodyModelCopyWith<BottomSheetBodyModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BottomSheetBodyModelCopyWith<$Res> {
-  factory $BottomSheetBodyModelCopyWith(BottomSheetBodyModel value,
-          $Res Function(BottomSheetBodyModel) then) =
-      _$BottomSheetBodyModelCopyWithImpl<$Res, BottomSheetBodyModel>;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class _$BottomSheetBodyModelCopyWithImpl<$Res,
-        $Val extends BottomSheetBodyModel>
-    implements $BottomSheetBodyModelCopyWith<$Res> {
-  _$BottomSheetBodyModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BottomSheetBodyModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_value.copyWith(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$MessageBodyImplCopyWith<$Res>
-    implements $BottomSheetBodyModelCopyWith<$Res> {
-  factory _$$MessageBodyImplCopyWith(
-          _$MessageBodyImpl value, $Res Function(_$MessageBodyImpl) then) =
-      __$$MessageBodyImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$MessageBodyImplCopyWithImpl<$Res>
-    extends _$BottomSheetBodyModelCopyWithImpl<$Res, _$MessageBodyImpl>
-    implements _$$MessageBodyImplCopyWith<$Res> {
-  __$$MessageBodyImplCopyWithImpl(
-      _$MessageBodyImpl _value, $Res Function(_$MessageBodyImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BottomSheetBodyModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$MessageBodyImpl(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$MessageBodyImpl implements MessageBody {
-  _$MessageBodyImpl({required this.message});
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'BottomSheetBodyModel.messageBody(message: $message)';
-  }
+      _$BottomSheetBodyModelCopyWithImpl<BottomSheetBodyModel>(
+          this as BottomSheetBodyModel, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MessageBodyImpl &&
+            other is BottomSheetBodyModel &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
+  @override
+  String toString() {
+    return 'BottomSheetBodyModel(message: $message)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $BottomSheetBodyModelCopyWith<$Res> {
+  factory $BottomSheetBodyModelCopyWith(BottomSheetBodyModel value,
+          $Res Function(BottomSheetBodyModel) _then) =
+      _$BottomSheetBodyModelCopyWithImpl;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class _$BottomSheetBodyModelCopyWithImpl<$Res>
+    implements $BottomSheetBodyModelCopyWith<$Res> {
+  _$BottomSheetBodyModelCopyWithImpl(this._self, this._then);
+
+  final BottomSheetBodyModel _self;
+  final $Res Function(BottomSheetBodyModel) _then;
+
   /// Create a copy of BottomSheetBodyModel
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
   @pragma('vm:prefer-inline')
-  _$$MessageBodyImplCopyWith<_$MessageBodyImpl> get copyWith =>
-      __$$MessageBodyImplCopyWithImpl<_$MessageBodyImpl>(this, _$identity);
-
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String message) messageBody,
-    required TResult Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)
-        errorsBody,
+  $Res call({
+    Object? message = null,
   }) {
-    return messageBody(message);
+    return _then(_self.copyWith(
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [BottomSheetBodyModel].
+extension BottomSheetBodyModelPatterns on BottomSheetBodyModel {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(MessageBody value)? messageBody,
+    TResult Function(ErrorsBody value)? errorsBody,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case MessageBody() when messageBody != null:
+        return messageBody(_that);
+      case ErrorsBody() when errorsBody != null:
+        return errorsBody(_that);
+      case _:
+        return orElse();
+    }
   }
 
-  @override
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? messageBody,
-    TResult? Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)?
-        errorsBody,
+  TResult map<TResult extends Object?>({
+    required TResult Function(MessageBody value) messageBody,
+    required TResult Function(ErrorsBody value) errorsBody,
   }) {
-    return messageBody?.call(message);
+    final _that = this;
+    switch (_that) {
+      case MessageBody():
+        return messageBody(_that);
+      case ErrorsBody():
+        return errorsBody(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
   }
 
-  @override
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(MessageBody value)? messageBody,
+    TResult? Function(ErrorsBody value)? errorsBody,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case MessageBody() when messageBody != null:
+        return messageBody(_that);
+      case ErrorsBody() when errorsBody != null:
+        return errorsBody(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? messageBody,
@@ -412,103 +559,150 @@ class _$MessageBodyImpl implements MessageBody {
         errorsBody,
     required TResult orElse(),
   }) {
-    if (messageBody != null) {
-      return messageBody(message);
+    final _that = this;
+    switch (_that) {
+      case MessageBody() when messageBody != null:
+        return messageBody(_that.message);
+      case ErrorsBody() when errorsBody != null:
+        return errorsBody(_that.message, _that.fieldsWithIssues);
+      case _:
+        return orElse();
     }
-    return orElse();
   }
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(MessageBody value) messageBody,
-    required TResult Function(ErrorsBody value) errorsBody,
-  }) {
-    return messageBody(this);
-  }
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
 
-  @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(MessageBody value)? messageBody,
-    TResult? Function(ErrorsBody value)? errorsBody,
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) messageBody,
+    required TResult Function(
+            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)
+        errorsBody,
   }) {
-    return messageBody?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(MessageBody value)? messageBody,
-    TResult Function(ErrorsBody value)? errorsBody,
-    required TResult orElse(),
-  }) {
-    if (messageBody != null) {
-      return messageBody(this);
+    final _that = this;
+    switch (_that) {
+      case MessageBody():
+        return messageBody(_that.message);
+      case ErrorsBody():
+        return errorsBody(_that.message, _that.fieldsWithIssues);
+      case _:
+        throw StateError('Unexpected subclass');
     }
-    return orElse();
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String message)? messageBody,
+    TResult? Function(
+            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)?
+        errorsBody,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case MessageBody() when messageBody != null:
+        return messageBody(_that.message);
+      case ErrorsBody() when errorsBody != null:
+        return errorsBody(_that.message, _that.fieldsWithIssues);
+      case _:
+        return null;
+    }
   }
 }
 
-abstract class MessageBody implements BottomSheetBodyModel {
-  factory MessageBody({required final String message}) = _$MessageBodyImpl;
+/// @nodoc
+
+class MessageBody implements BottomSheetBodyModel {
+  MessageBody({required this.message});
 
   @override
-  String get message;
+  final String message;
 
   /// Create a copy of BottomSheetBodyModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MessageBodyImplCopyWith<_$MessageBodyImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $MessageBodyCopyWith<MessageBody> get copyWith =>
+      _$MessageBodyCopyWithImpl<MessageBody>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MessageBody &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @override
+  String toString() {
+    return 'BottomSheetBodyModel.messageBody(message: $message)';
+  }
 }
 
 /// @nodoc
-abstract class _$$ErrorsBodyImplCopyWith<$Res>
+abstract mixin class $MessageBodyCopyWith<$Res>
     implements $BottomSheetBodyModelCopyWith<$Res> {
-  factory _$$ErrorsBodyImplCopyWith(
-          _$ErrorsBodyImpl value, $Res Function(_$ErrorsBodyImpl) then) =
-      __$$ErrorsBodyImplCopyWithImpl<$Res>;
+  factory $MessageBodyCopyWith(
+          MessageBody value, $Res Function(MessageBody) _then) =
+      _$MessageBodyCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String message, Map<String, List<FieldWithIssue>> fieldsWithIssues});
+  $Res call({String message});
 }
 
 /// @nodoc
-class __$$ErrorsBodyImplCopyWithImpl<$Res>
-    extends _$BottomSheetBodyModelCopyWithImpl<$Res, _$ErrorsBodyImpl>
-    implements _$$ErrorsBodyImplCopyWith<$Res> {
-  __$$ErrorsBodyImplCopyWithImpl(
-      _$ErrorsBodyImpl _value, $Res Function(_$ErrorsBodyImpl) _then)
-      : super(_value, _then);
+class _$MessageBodyCopyWithImpl<$Res> implements $MessageBodyCopyWith<$Res> {
+  _$MessageBodyCopyWithImpl(this._self, this._then);
+
+  final MessageBody _self;
+  final $Res Function(MessageBody) _then;
 
   /// Create a copy of BottomSheetBodyModel
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? message = null,
-    Object? fieldsWithIssues = null,
   }) {
-    return _then(_$ErrorsBodyImpl(
+    return _then(MessageBody(
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      fieldsWithIssues: null == fieldsWithIssues
-          ? _value._fieldsWithIssues
-          : fieldsWithIssues // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<FieldWithIssue>>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$ErrorsBodyImpl implements ErrorsBody {
-  _$ErrorsBodyImpl(
+class ErrorsBody implements BottomSheetBodyModel {
+  ErrorsBody(
       {required this.message,
       required final Map<String, List<FieldWithIssue>> fieldsWithIssues})
       : _fieldsWithIssues = fieldsWithIssues;
@@ -516,23 +710,25 @@ class _$ErrorsBodyImpl implements ErrorsBody {
   @override
   final String message;
   final Map<String, List<FieldWithIssue>> _fieldsWithIssues;
-  @override
   Map<String, List<FieldWithIssue>> get fieldsWithIssues {
     if (_fieldsWithIssues is EqualUnmodifiableMapView) return _fieldsWithIssues;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_fieldsWithIssues);
   }
 
+  /// Create a copy of BottomSheetBodyModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'BottomSheetBodyModel.errorsBody(message: $message, fieldsWithIssues: $fieldsWithIssues)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ErrorsBodyCopyWith<ErrorsBody> get copyWith =>
+      _$ErrorsBodyCopyWithImpl<ErrorsBody>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorsBodyImpl &&
+            other is ErrorsBody &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality()
                 .equals(other._fieldsWithIssues, _fieldsWithIssues));
@@ -542,207 +738,106 @@ class _$ErrorsBodyImpl implements ErrorsBody {
   int get hashCode => Object.hash(runtimeType, message,
       const DeepCollectionEquality().hash(_fieldsWithIssues));
 
-  /// Create a copy of BottomSheetBodyModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorsBodyImplCopyWith<_$ErrorsBodyImpl> get copyWith =>
-      __$$ErrorsBodyImplCopyWithImpl<_$ErrorsBodyImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String message) messageBody,
-    required TResult Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)
-        errorsBody,
-  }) {
-    return errorsBody(message, fieldsWithIssues);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? messageBody,
-    TResult? Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)?
-        errorsBody,
-  }) {
-    return errorsBody?.call(message, fieldsWithIssues);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? messageBody,
-    TResult Function(
-            String message, Map<String, List<FieldWithIssue>> fieldsWithIssues)?
-        errorsBody,
-    required TResult orElse(),
-  }) {
-    if (errorsBody != null) {
-      return errorsBody(message, fieldsWithIssues);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(MessageBody value) messageBody,
-    required TResult Function(ErrorsBody value) errorsBody,
-  }) {
-    return errorsBody(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(MessageBody value)? messageBody,
-    TResult? Function(ErrorsBody value)? errorsBody,
-  }) {
-    return errorsBody?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(MessageBody value)? messageBody,
-    TResult Function(ErrorsBody value)? errorsBody,
-    required TResult orElse(),
-  }) {
-    if (errorsBody != null) {
-      return errorsBody(this);
-    }
-    return orElse();
+  String toString() {
+    return 'BottomSheetBodyModel.errorsBody(message: $message, fieldsWithIssues: $fieldsWithIssues)';
   }
 }
 
-abstract class ErrorsBody implements BottomSheetBodyModel {
-  factory ErrorsBody(
-          {required final String message,
-          required final Map<String, List<FieldWithIssue>> fieldsWithIssues}) =
-      _$ErrorsBodyImpl;
-
+/// @nodoc
+abstract mixin class $ErrorsBodyCopyWith<$Res>
+    implements $BottomSheetBodyModelCopyWith<$Res> {
+  factory $ErrorsBodyCopyWith(
+          ErrorsBody value, $Res Function(ErrorsBody) _then) =
+      _$ErrorsBodyCopyWithImpl;
   @override
-  String get message;
-  Map<String, List<FieldWithIssue>> get fieldsWithIssues;
+  @useResult
+  $Res call(
+      {String message, Map<String, List<FieldWithIssue>> fieldsWithIssues});
+}
+
+/// @nodoc
+class _$ErrorsBodyCopyWithImpl<$Res> implements $ErrorsBodyCopyWith<$Res> {
+  _$ErrorsBodyCopyWithImpl(this._self, this._then);
+
+  final ErrorsBody _self;
+  final $Res Function(ErrorsBody) _then;
 
   /// Create a copy of BottomSheetBodyModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorsBodyImplCopyWith<_$ErrorsBodyImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? message = null,
+    Object? fieldsWithIssues = null,
+  }) {
+    return _then(ErrorsBody(
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      fieldsWithIssues: null == fieldsWithIssues
+          ? _self._fieldsWithIssues
+          : fieldsWithIssues // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<FieldWithIssue>>,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$FieldWithIssue {
-  String? get repeatGroupUid => throw _privateConstructorUsedError;
-  String? get rowUid => throw _privateConstructorUsedError;
-  String? get parent => throw _privateConstructorUsedError;
-  String? get fieldPath =>
-      throw _privateConstructorUsedError; // path to the leaf field with an error
-  String get fieldUid =>
-      throw _privateConstructorUsedError; // path to the leaf field with an error
-  String get fieldName =>
-      throw _privateConstructorUsedError; // name of the leaf field
-  IssueType get issueType => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
+  String? get repeatGroupUid;
+  String? get rowUid;
+  String? get parent;
+  String? get fieldPath; // path to the leaf field with an error
+  String get fieldUid; // path to the leaf field with an error
+  String get fieldName; // name of the leaf field
+  IssueType get issueType;
+  String get message;
 
   /// Create a copy of FieldWithIssue
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FieldWithIssueCopyWith<FieldWithIssue> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FieldWithIssueCopyWith<$Res> {
-  factory $FieldWithIssueCopyWith(
-          FieldWithIssue value, $Res Function(FieldWithIssue) then) =
-      _$FieldWithIssueCopyWithImpl<$Res, FieldWithIssue>;
-  @useResult
-  $Res call(
-      {String? repeatGroupUid,
-      String? rowUid,
-      String? parent,
-      String? fieldPath,
-      String fieldUid,
-      String fieldName,
-      IssueType issueType,
-      String message});
-}
-
-/// @nodoc
-class _$FieldWithIssueCopyWithImpl<$Res, $Val extends FieldWithIssue>
-    implements $FieldWithIssueCopyWith<$Res> {
-  _$FieldWithIssueCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of FieldWithIssue
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $FieldWithIssueCopyWith<FieldWithIssue> get copyWith =>
+      _$FieldWithIssueCopyWithImpl<FieldWithIssue>(
+          this as FieldWithIssue, _$identity);
+
   @override
-  $Res call({
-    Object? repeatGroupUid = freezed,
-    Object? rowUid = freezed,
-    Object? parent = freezed,
-    Object? fieldPath = freezed,
-    Object? fieldUid = null,
-    Object? fieldName = null,
-    Object? issueType = null,
-    Object? message = null,
-  }) {
-    return _then(_value.copyWith(
-      repeatGroupUid: freezed == repeatGroupUid
-          ? _value.repeatGroupUid
-          : repeatGroupUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rowUid: freezed == rowUid
-          ? _value.rowUid
-          : rowUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as String?,
-      fieldPath: freezed == fieldPath
-          ? _value.fieldPath
-          : fieldPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      fieldUid: null == fieldUid
-          ? _value.fieldUid
-          : fieldUid // ignore: cast_nullable_to_non_nullable
-              as String,
-      fieldName: null == fieldName
-          ? _value.fieldName
-          : fieldName // ignore: cast_nullable_to_non_nullable
-              as String,
-      issueType: null == issueType
-          ? _value.issueType
-          : issueType // ignore: cast_nullable_to_non_nullable
-              as IssueType,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is FieldWithIssue &&
+            (identical(other.repeatGroupUid, repeatGroupUid) ||
+                other.repeatGroupUid == repeatGroupUid) &&
+            (identical(other.rowUid, rowUid) || other.rowUid == rowUid) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.fieldPath, fieldPath) ||
+                other.fieldPath == fieldPath) &&
+            (identical(other.fieldUid, fieldUid) ||
+                other.fieldUid == fieldUid) &&
+            (identical(other.fieldName, fieldName) ||
+                other.fieldName == fieldName) &&
+            (identical(other.issueType, issueType) ||
+                other.issueType == issueType) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, repeatGroupUid, rowUid, parent,
+      fieldPath, fieldUid, fieldName, issueType, message);
+
+  @override
+  String toString() {
+    return 'FieldWithIssue(repeatGroupUid: $repeatGroupUid, rowUid: $rowUid, parent: $parent, fieldPath: $fieldPath, fieldUid: $fieldUid, fieldName: $fieldName, issueType: $issueType, message: $message)';
   }
 }
 
 /// @nodoc
-abstract class _$$FieldWithIssueImplCopyWith<$Res>
-    implements $FieldWithIssueCopyWith<$Res> {
-  factory _$$FieldWithIssueImplCopyWith(_$FieldWithIssueImpl value,
-          $Res Function(_$FieldWithIssueImpl) then) =
-      __$$FieldWithIssueImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $FieldWithIssueCopyWith<$Res> {
+  factory $FieldWithIssueCopyWith(
+          FieldWithIssue value, $Res Function(FieldWithIssue) _then) =
+      _$FieldWithIssueCopyWithImpl;
   @useResult
   $Res call(
       {String? repeatGroupUid,
@@ -756,12 +851,12 @@ abstract class _$$FieldWithIssueImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$FieldWithIssueImplCopyWithImpl<$Res>
-    extends _$FieldWithIssueCopyWithImpl<$Res, _$FieldWithIssueImpl>
-    implements _$$FieldWithIssueImplCopyWith<$Res> {
-  __$$FieldWithIssueImplCopyWithImpl(
-      _$FieldWithIssueImpl _value, $Res Function(_$FieldWithIssueImpl) _then)
-      : super(_value, _then);
+class _$FieldWithIssueCopyWithImpl<$Res>
+    implements $FieldWithIssueCopyWith<$Res> {
+  _$FieldWithIssueCopyWithImpl(this._self, this._then);
+
+  final FieldWithIssue _self;
+  final $Res Function(FieldWithIssue) _then;
 
   /// Create a copy of FieldWithIssue
   /// with the given fields replaced by the non-null parameter values.
@@ -777,47 +872,255 @@ class __$$FieldWithIssueImplCopyWithImpl<$Res>
     Object? issueType = null,
     Object? message = null,
   }) {
-    return _then(_$FieldWithIssueImpl(
+    return _then(_self.copyWith(
       repeatGroupUid: freezed == repeatGroupUid
-          ? _value.repeatGroupUid
+          ? _self.repeatGroupUid
           : repeatGroupUid // ignore: cast_nullable_to_non_nullable
               as String?,
       rowUid: freezed == rowUid
-          ? _value.rowUid
+          ? _self.rowUid
           : rowUid // ignore: cast_nullable_to_non_nullable
               as String?,
       parent: freezed == parent
-          ? _value.parent
+          ? _self.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as String?,
       fieldPath: freezed == fieldPath
-          ? _value.fieldPath
+          ? _self.fieldPath
           : fieldPath // ignore: cast_nullable_to_non_nullable
               as String?,
       fieldUid: null == fieldUid
-          ? _value.fieldUid
+          ? _self.fieldUid
           : fieldUid // ignore: cast_nullable_to_non_nullable
               as String,
       fieldName: null == fieldName
-          ? _value.fieldName
+          ? _self.fieldName
           : fieldName // ignore: cast_nullable_to_non_nullable
               as String,
       issueType: null == issueType
-          ? _value.issueType
+          ? _self.issueType
           : issueType // ignore: cast_nullable_to_non_nullable
               as IssueType,
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [FieldWithIssue].
+extension FieldWithIssuePatterns on FieldWithIssue {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_FieldWithIssue value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FieldWithIssue() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_FieldWithIssue value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FieldWithIssue():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_FieldWithIssue value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FieldWithIssue() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String? repeatGroupUid,
+            String? rowUid,
+            String? parent,
+            String? fieldPath,
+            String fieldUid,
+            String fieldName,
+            IssueType issueType,
+            String message)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FieldWithIssue() when $default != null:
+        return $default(
+            _that.repeatGroupUid,
+            _that.rowUid,
+            _that.parent,
+            _that.fieldPath,
+            _that.fieldUid,
+            _that.fieldName,
+            _that.issueType,
+            _that.message);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String? repeatGroupUid,
+            String? rowUid,
+            String? parent,
+            String? fieldPath,
+            String fieldUid,
+            String fieldName,
+            IssueType issueType,
+            String message)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FieldWithIssue():
+        return $default(
+            _that.repeatGroupUid,
+            _that.rowUid,
+            _that.parent,
+            _that.fieldPath,
+            _that.fieldUid,
+            _that.fieldName,
+            _that.issueType,
+            _that.message);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String? repeatGroupUid,
+            String? rowUid,
+            String? parent,
+            String? fieldPath,
+            String fieldUid,
+            String fieldName,
+            IssueType issueType,
+            String message)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FieldWithIssue() when $default != null:
+        return $default(
+            _that.repeatGroupUid,
+            _that.rowUid,
+            _that.parent,
+            _that.fieldPath,
+            _that.fieldUid,
+            _that.fieldName,
+            _that.issueType,
+            _that.message);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$FieldWithIssueImpl implements _FieldWithIssue {
-  const _$FieldWithIssueImpl(
+class _FieldWithIssue implements FieldWithIssue {
+  const _FieldWithIssue(
       {this.repeatGroupUid,
       this.rowUid,
       this.parent,
@@ -849,16 +1152,19 @@ class _$FieldWithIssueImpl implements _FieldWithIssue {
   @JsonKey()
   final String message;
 
+  /// Create a copy of FieldWithIssue
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'FieldWithIssue(repeatGroupUid: $repeatGroupUid, rowUid: $rowUid, parent: $parent, fieldPath: $fieldPath, fieldUid: $fieldUid, fieldName: $fieldName, issueType: $issueType, message: $message)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$FieldWithIssueCopyWith<_FieldWithIssue> get copyWith =>
+      __$FieldWithIssueCopyWithImpl<_FieldWithIssue>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FieldWithIssueImpl &&
+            other is _FieldWithIssue &&
             (identical(other.repeatGroupUid, repeatGroupUid) ||
                 other.repeatGroupUid == repeatGroupUid) &&
             (identical(other.rowUid, rowUid) || other.rowUid == rowUid) &&
@@ -878,48 +1184,88 @@ class _$FieldWithIssueImpl implements _FieldWithIssue {
   int get hashCode => Object.hash(runtimeType, repeatGroupUid, rowUid, parent,
       fieldPath, fieldUid, fieldName, issueType, message);
 
+  @override
+  String toString() {
+    return 'FieldWithIssue(repeatGroupUid: $repeatGroupUid, rowUid: $rowUid, parent: $parent, fieldPath: $fieldPath, fieldUid: $fieldUid, fieldName: $fieldName, issueType: $issueType, message: $message)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$FieldWithIssueCopyWith<$Res>
+    implements $FieldWithIssueCopyWith<$Res> {
+  factory _$FieldWithIssueCopyWith(
+          _FieldWithIssue value, $Res Function(_FieldWithIssue) _then) =
+      __$FieldWithIssueCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String? repeatGroupUid,
+      String? rowUid,
+      String? parent,
+      String? fieldPath,
+      String fieldUid,
+      String fieldName,
+      IssueType issueType,
+      String message});
+}
+
+/// @nodoc
+class __$FieldWithIssueCopyWithImpl<$Res>
+    implements _$FieldWithIssueCopyWith<$Res> {
+  __$FieldWithIssueCopyWithImpl(this._self, this._then);
+
+  final _FieldWithIssue _self;
+  final $Res Function(_FieldWithIssue) _then;
+
   /// Create a copy of FieldWithIssue
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FieldWithIssueImplCopyWith<_$FieldWithIssueImpl> get copyWith =>
-      __$$FieldWithIssueImplCopyWithImpl<_$FieldWithIssueImpl>(
-          this, _$identity);
+  $Res call({
+    Object? repeatGroupUid = freezed,
+    Object? rowUid = freezed,
+    Object? parent = freezed,
+    Object? fieldPath = freezed,
+    Object? fieldUid = null,
+    Object? fieldName = null,
+    Object? issueType = null,
+    Object? message = null,
+  }) {
+    return _then(_FieldWithIssue(
+      repeatGroupUid: freezed == repeatGroupUid
+          ? _self.repeatGroupUid
+          : repeatGroupUid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rowUid: freezed == rowUid
+          ? _self.rowUid
+          : rowUid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parent: freezed == parent
+          ? _self.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fieldPath: freezed == fieldPath
+          ? _self.fieldPath
+          : fieldPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fieldUid: null == fieldUid
+          ? _self.fieldUid
+          : fieldUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      fieldName: null == fieldName
+          ? _self.fieldName
+          : fieldName // ignore: cast_nullable_to_non_nullable
+              as String,
+      issueType: null == issueType
+          ? _self.issueType
+          : issueType // ignore: cast_nullable_to_non_nullable
+              as IssueType,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
-abstract class _FieldWithIssue implements FieldWithIssue {
-  const factory _FieldWithIssue(
-      {final String? repeatGroupUid,
-      final String? rowUid,
-      final String? parent,
-      final String? fieldPath,
-      required final String fieldUid,
-      required final String fieldName,
-      final IssueType issueType,
-      final String message}) = _$FieldWithIssueImpl;
-
-  @override
-  String? get repeatGroupUid;
-  @override
-  String? get rowUid;
-  @override
-  String? get parent;
-  @override
-  String? get fieldPath; // path to the leaf field with an error
-  @override
-  String get fieldUid; // path to the leaf field with an error
-  @override
-  String get fieldName; // name of the leaf field
-  @override
-  IssueType get issueType;
-  @override
-  String get message;
-
-  /// Create a copy of FieldWithIssue
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FieldWithIssueImplCopyWith<_$FieldWithIssueImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

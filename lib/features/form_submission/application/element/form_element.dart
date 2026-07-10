@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/rule/action.dart';
 import 'package:d_sdk/core/form/rule/calculated_Expression.dart';
@@ -349,8 +350,8 @@ sealed class FormElementInstance<T> {
       if (state.hidden) {
         logDebug('3/3.$elementPath, updateValueAndValidity, Hide.');
         markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
-        elementControl!.reset(
-            disabled: true, updateParent: false, emitEvent: false);
+        elementControl!
+            .reset(disabled: true, updateParent: false, emitEvent: false);
       } else {
         logDebug('3/3.$elementPath, updateValueAndValidity, Show.');
         markAsVisible(updateParent: updateParent, emitEvent: emitEvent);

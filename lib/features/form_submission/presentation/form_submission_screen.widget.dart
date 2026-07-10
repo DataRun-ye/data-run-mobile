@@ -123,7 +123,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         if (didPop) {
           return;
         }
-        backButtonPressed(formInstance);
+        await backButtonPressed(formInstance);
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -165,9 +165,9 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
             child: FloatingActionButton(
               tooltip: S.of(context).saveAndCheck,
               child: getFloatIcon(),
-              onPressed: () {
+              onPressed: () async {
                 if (widget.enabled) {
-                  _saveAndShowBottomSheet(formInstance);
+                  await _saveAndShowBottomSheet(formInstance);
                 } else {
                   Navigator.pop(context);
                 }
@@ -208,7 +208,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     //     .read(formInstanceProvider(submissionId: widget.submissionId))
     //     .requireValue
     //     .saveFormData();
-    final formInstance = appLocator<FormInstance>().saveFormData();
+    await appLocator<FormInstance>().saveFormData();
   }
 
   Future<void> _showBottomSheet(FormInstance formInstance) async {

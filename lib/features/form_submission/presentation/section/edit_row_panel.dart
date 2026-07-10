@@ -117,16 +117,18 @@ class EditRowPanelState extends ConsumerState<EditRowPanel> {
             children: <Widget>[
               ReactiveValidButton(
                 color: cs.primary,
-                onPressed: () =>
-                    widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE),
+                onPressed: () {
+                  widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE);
+                },
                 label: Text(S.of(context).saveAndClose),
                 toolTip: S.of(context).saveAndClose,
                 icon: Icon(MdiIcons.contentSaveCheck),
               ),
               ReactiveValidButton(
                 label: Text(S.of(context).addNew),
-                onPressed: () => widget.onSave(
-                    formGroup, EditActionType.SAVE_AND_ADD_ANOTHER),
+                onPressed: () {
+                  widget.onSave(formGroup, EditActionType.SAVE_AND_ADD_ANOTHER);
+                },
                 icon: Icon(MdiIcons.contentSaveMove),
                 color: cs.secondary,
                 toolTip: S.of(context).addNew,

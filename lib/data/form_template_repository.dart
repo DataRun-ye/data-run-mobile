@@ -15,6 +15,18 @@ class FormTemplateRepository {
       required this.optionSets})
       : _formTemplateModel = formTemplateModel;
 
+  factory FormTemplateRepository.inMemory({
+    required FormTemplateModel formTemplateModel,
+    Map<String, List<FormOption>> optionMap = const {},
+    Map<String, DataOptionSet> optionSets = const {},
+  }) {
+    return FormTemplateRepository._(
+      formTemplateModel: formTemplateModel,
+      optionMap: optionMap,
+      optionSets: optionSets,
+    );
+  }
+
   static Future<FormTemplateRepository> create(
       {required String versionUid}) async {
     final FormTemplateModel versionModel =

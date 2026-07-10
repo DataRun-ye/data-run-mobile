@@ -115,6 +115,49 @@ void main() {
     );
     expect(builtForm.root.value, initialRootValue);
   });
+
+  test('lazy hydrated repeat controls sync hidden and non-mandatory state',
+      () async {
+    const formPath = 'example/ITNs Household Distribution Form.json';
+    const submissionPath =
+        'example/ITNs Household Distribution submission.json';
+    const repeatPath = ['households_information', 'householdnames'];
+
+    final formJson = await _readJsonFile(formPath);
+    final submissionJson = await _readJsonFile(submissionPath);
+    final formData = _withRepeatRows(
+      Map<String, Object?>.from(submissionJson['formData'] as Map),
+      repeatPath: repeatPath,
+      rowCount: 1,
+    );
+
+    final builtForm = _buildRepeatForm(
+      repository: FormTemplateRepository.inMemory(
+        formTemplateModel: _templateModelFromJson(formJson),
+      ),
+      formData: formData,
+    );
+    final repeat = getFormElementIterator<RepeatSection>(builtForm.root).single;
+    final firstItem = repeat.elements.first;
+    final fields =
+        getFormElementIterator<FieldInstance<dynamic>>(firstItem).toList();
+    final hiddenField = fields.first;
+    final mandatoryField = fields.firstWhere(
+      (field) => field.template.name == 'householdName',
+    );
+
+    hiddenField.markAsHidden(emitEvent: false);
+
+    builtForm.instance.materializeRepeatItemControls(repeat, firstItem);
+
+    hiddenField.markAsHidden(emitEvent: false);
+    mandatoryField.updateValue(null, emitEvent: false);
+    mandatoryField.markAsMandatory(emitEvent: false);
+    mandatoryField.markAsUnMandatory(emitEvent: false);
+
+    expect(hiddenField.elementControl.disabled, true);
+    expect(mandatoryField.elementControl.hasErrors, false);
+  });
 }
 
 RepeatProfileMetrics _profileFormBuildAndReduce({

@@ -14,7 +14,7 @@ Core rules:
 - Classify code as ACTIVE only when removing it without replacement would break startup/auth/navigation, sync/offline cache, assignment/form access, form load/render/repeat/edit/save, or submission table behavior.
 - Prefer active runtime entrypoints, imports, route registrations, DI registrations actually used, and call paths over names that sound relevant.
 - Keep code changes small, reversible, and scoped to one behavior.
-- Do not mix tooling, docs, save correctness, repeat UID behavior, and performance refactors in one PR.
+- Do not mix tooling, docs, save correctness, repeat metadata behavior, and performance refactors in one PR.
 - Do not base form persistence changes on inactive-looking `repeat_instances`, `data_values`, or old form-state/provider paths unless runtime evidence proves they are active.
 
 Known high-risk form areas:
@@ -22,7 +22,7 @@ Known high-risk form areas:
 - active form state is scoped `GetIt` `FormInstance` plus `reactive_forms`, not the old commented Riverpod form providers.
 - form loading builds the full form JSON, full control tree, and full element tree eagerly.
 - submissions are saved as one whole `formData` JSON object.
-- large repeats, expressions, field subscriptions, and repeat UID persistence are known risk areas.
+- large repeats, expressions, field subscriptions, and repeat metadata persistence are known risk areas; use `docs/agent-context/07-repeat-uid-contract.md` as the current contract instead of old `repeatUid` assumptions.
 
 Common commands:
 

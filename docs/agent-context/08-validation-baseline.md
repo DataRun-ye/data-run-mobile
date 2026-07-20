@@ -54,9 +54,9 @@ The first cleanup target should not be "fix all tests." The practical target is 
 
 Create a small test PR before deeper form refactoring. Keep it focused on active behavior:
 
-1. Repeat UID preservation test.
-   - Prove an existing repeat row UID loaded from JSON is preserved after reduce/save behavior.
-   - Prove a new repeat row receives a UID before persistence.
+1. Repeat metadata preservation test.
+   - Prove an existing repeat row `_id` loaded from JSON is preserved after reduce/save behavior.
+   - Prove a new repeat row receives backend-compatible repeat metadata before persistence.
    - Target active files: `repeat_item_instance.dart`, `repeat_instance.dart`, and the active builder/reducer path.
 
 2. Submission save characterization.

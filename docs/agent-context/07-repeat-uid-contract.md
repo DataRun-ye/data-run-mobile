@@ -1,8 +1,9 @@
-# Repeat UID Behavior Contract
+# Repeat Metadata Contract
 
 Generated: 2026-07-10
+Updated: 2026-07-21
 
-Scope: define the intended behavior for repeat item UIDs before implementing anything. This document uses active code paths as authority and treats earlier docs/comments/table names as evidence only.
+Scope: define the active repeat row identity contract before implementation. This document supersedes the earlier `repeatUid`-only assumption after validating the backend submission path.
 
 Related maps:
 
@@ -10,56 +11,85 @@ Related maps:
 - `05-classification-reconciliation.md`
 - `06-large-repeat-hang-data-loss.md`
 
-## Proposed Contract
+## Backend-Validated Contract
 
-Repeat item UID behavior should be:
+Repeat rows in mobile `formData` should use the backend V1 shape:
 
-1. Each repeat item has a client-generated `repeatUid`.
-2. New repeat rows created on the client receive a `repeatUid` before they are persisted into submission JSON.
-3. Existing repeat rows loaded for edit preserve their existing `repeatUid`.
-4. A non-null repeat item UID is immutable in memory; later edits must not overwrite it.
-5. Submission save/upload uses the `repeatUid` stored inside the whole `formData` JSON.
-6. The implementation must not depend on inactive-looking `repeat_instances`, `data_values`, or old form-state/provider paths.
-7. Missing `repeatUid` on legacy/existing row JSON should be treated as "needs client UID assignment on next save", not as a reason to use row index as identity.
+```json
+{
+  "_id": "26-char ULID",
+  "_index": 1,
+  "_parentId": "submission uid for top-level repeats, parent repeat _id for nested repeats",
+  "_submissionUid": "submission uid"
+}
+```
 
-This contract keeps repeat identity local to the active whole-submission JSON flow. It does not introduce normalized repeat-row persistence.
+Rules:
 
-## Current Active Flow
+1. New repeat rows get a client-generated `_id`.
+2. Existing `_id` values are preserved and must not be overwritten during edits.
+3. Legacy local `repeatUid` may be used as a fallback when `_id` is missing, but new saves should write `_id`.
+4. `_index` is 1-based repeat creation/order index. Preserve existing `_index` when present; otherwise derive it from current row order.
+5. `_parentId` is the submission UID for top-level repeats and the parent repeat row `_id` for nested repeats.
+6. `_submissionUid` is the owning submission UID.
+7. The implementation must not depend on inactive-looking `repeat_instances`, `data_values`, or old form-state/provider paths.
 
-| Question | Current code path | Evidence | Current behavior |
-| --- | --- | --- | --- |
-| Where repeat rows are loaded for editing | `FormFlowBootstrapperVm._formInstance` reads `DataInstance.formData`, builds controls, then builds element instances. | `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:92-116` | Existing saved JSON is loaded all at once. Repeat rows are not loaded from a separate repeat table. |
-| Where repeat controls are loaded | `FormElementControlBuilder.createRepeatFormArray` maps each existing repeat row JSON item into a `FormGroup`. | `lib/core/form/builder/form_element_control_builder.dart:51-58` | The reactive controls are built from template children. `repeatUid` is not a template child, so it is not represented as a form control. |
-| Where repeat row models are loaded | `FormElementBuilder.buildRepeatInstance` maps each row into `buildRepeatItem`; `buildRepeatItem` passes `initialFormValue?['repeatUid']` into `RepeatItemInstance`. | `lib/core/form/builder/form_element_builder.dart:60-96` | Existing `repeatUid` can be preserved in the in-memory repeat item model if it exists in row JSON. |
-| Where new repeat rows are created | `RepeatTable` add action calls `FormInstance.onAddRepeatedItem`; save-and-add-another also calls `onAddRepeatedItem`. | `lib/features/form_submission/presentation/section/repeat_table.widget.dart:112-120`, `:294-297`; `lib/features/form_submission/application/element/form_instance.dart:134-150` | New rows are created with no `initialFormValue`, so `RepeatItemInstance.uid` starts as null. |
-| Where repeat rows are edited | `RepeatTable._showEditPanel` navigates to `EditRowScreen` using the existing `RepeatItemInstance`. | `lib/features/form_submission/presentation/section/repeat_table.widget.dart:177-211`; `lib/features/form_submission/presentation/section/edit_row_screen.dart:17-32` | Edit uses the current row model/control. Existing row UID is available through `RepeatItemInstance.uid` if it was loaded. |
-| Where UID is currently generated | Close-confirm save paths call `repeatItem.setUid(CodeGenerator.generateUid())` when `uid == null`. | `lib/features/form_submission/presentation/section/edit_row_screen.dart:161-185`; `lib/features/form_submission/presentation/section/repeat_table.widget.dart:304-329` | UID generation is UI-path dependent. Normal row save buttons do not obviously set UID before `saveFormData()`. |
-| Where UID overwrite is prevented | `RepeatItemInstance.setUid` throws if `_uid` is already non-null. | `lib/features/form_submission/application/element/repeat_item_instance.dart:21-25` | In-memory overwrite protection exists, but only for callers using `setUid`. |
-| Where repeat rows are serialized | `FormInstance.saveFormData` reads `formSection.value`; `Section.reduceValue`, `RepeatSection.reduceValue`, and `RepeatItemInstance.reduceValue` produce the nested map/list. | `lib/features/form_submission/application/element/form_instance.dart:85-103`; `lib/features/form_submission/application/element/section_instance.dart:129-138`; `lib/features/form_submission/application/element/repeat_instance.dart:101-106`; `lib/features/form_submission/application/element/repeat_item_instance.dart:43-55` | `RepeatItemInstance.reduceValue` currently does not write `repeatUid`; the line that would write it is commented out. |
-| Where saved JSON is persisted | `DataInstancesDao.updateData` writes `formData` into `data_instances.form_data`. | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart:198-208` | The active persistence unit is one whole submission JSON object. |
-| Where upload payload reads repeat rows | `DataSubmissionUploadExt.toUpload` includes `formData` directly. | `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart:3-23`; `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart:68` | Upload uses whatever repeat row JSON was saved. It does not add repeat UIDs later. |
+Use ULID, not UUIDv7, for the first mobile implementation. The backend generates repeat IDs with `CodeGenerator.nextUlid()`, and analytics `events.event_id` / `parent_event_id` columns are `varchar(26)`. UUIDv7 strings are 36 characters and can break that path.
 
-## Current New Submission Vs Edit Behavior
+## Backend Evidence
 
-| Flow | Current behavior | Contract gap |
+Active upload/save path:
+
+```text
+DataSubmissionResource
+-> DataSubmissionV1ServiceImpl.upsertAll
+-> preProcess
+-> MigrationRepeatIdGenerator.generateMissingIdsForMigration
+-> CompositeSubmissionValidator
+-> DataSubmissionService.upsertAll
+-> data_submission.form_data JSONB
+-> outbox
+-> ETL
+```
+
+Key evidence:
+
+- `/home/hamza/datarun/data-run-api/src/main/java/org/nmcpye/datarun/web/rest/v1/datasubmission/DataSubmissionResource.java` handles `POST /dataSubmission` and `/bulk`.
+- `/home/hamza/datarun/data-run-api/src/main/java/org/nmcpye/datarun/web/rest/v1/datasubmission/service/DataSubmissionV1ServiceImpl.java` runs `MigrationRepeatIdGenerator.generateMissingIdsForMigration(...)` before validation/upsert.
+- `MigrationRepeatIdGenerator` recognizes existing `_id` or legacy `_uid`, not mobile `repeatUid`.
+- `MigrationRepeatIdGenerator` fills missing `_id`, `_parentId`, `_submissionUid`, and `_index`.
+- `DefaultDataSubmissionService.upsertAll(...)` persists the whole JSON into `data_submission.form_data`; it does not write normalized repeat tables.
+- `TransformServiceRobust` reads repeat instance identity from nearest repeat row `_id` and repeat order from `_index`.
+- `TransformServiceV2` uses repeat instance IDs as event IDs for repeat rows.
+- `analytics.events.event_id` and `parent_event_id` are `varchar(26)`, matching backend ULID length.
+
+Current backend behavior is compatible with older mobile payloads because it generates missing repeat metadata before save. The mobile fix is still needed so repeat identity is stable on the client before save/upload and later edit/update behavior can preserve row identity.
+
+## Current Mobile Behavior
+
+Current `main`/`develop` behavior before this slice:
+
+| Area | Current code path | Behavior |
 | --- | --- | --- |
-| New submission, new repeat row, normal row save | Row is created with `uid == null`; active row save calls `formInstance.saveFormData()` but does not set UID first. | The saved row can be missing `repeatUid`. |
-| New submission, new repeat row, close-confirm save | `_onTryToClose` can set a UID before closing if user chooses save-and-close from the warning dialog. | UID assignment depends on a specific close path, not the canonical save path. |
-| Existing draft/synced submission, row has `repeatUid` in JSON | `buildRepeatItem` reads it into `RepeatItemInstance.uid`; `setUid` would reject overwrite. | The next save can still drop it because `reduceValue` does not serialize it. |
-| Existing draft/synced submission, row lacks `repeatUid` in JSON | Row loads with `uid == null`; close paths treat it as new. | Legacy rows need UID assignment on next save, but the app should not treat row index as stable identity. |
-| Upload after edit | Upload sends saved `formData`. | If save dropped UID, upload cannot recover it. |
+| Load repeat row model | `lib/core/form/builder/form_element_builder.dart` | Reads `initialFormValue?['repeatUid']` into `RepeatItemInstance.uid` if present. It does not read `_id`. |
+| New repeat row close-save paths | `lib/features/form_submission/presentation/section/edit_row_screen.dart`, `repeat_table.widget.dart` | Some warning-dialog save paths call `repeatItem.setUid(CodeGenerator.generateUid())`. |
+| Save serialization | `lib/features/form_submission/application/element/repeat_item_instance.dart` | `repeatUid` writeback is commented out in `reduceValue()`, so live saved JSON usually has no repeat row id generated by mobile. |
+| Upload | `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart` | Upload sends saved `formData` directly. It does not add repeat metadata. |
+
+So live mobile uses `repeatUid` mainly as an in-memory "row was saved" marker. It is not the backend contract and is not reliably persisted.
 
 ## Active/Inert Boundary
 
-UID implementation should stay in the active whole-JSON path:
+Implementation should stay in the active whole-JSON path:
 
-- `RepeatItemInstance`
-- `FormElementBuilder`
-- `FormInstance.saveFormData`
-- `DataInstancesDao.updateData`
-- `DataSubmissionUploadExt.toUpload`
+- `lib/features/form_submission/application/element/repeat_item_instance.dart`
+- `lib/core/form/builder/form_element_builder.dart`
+- `lib/features/form_submission/application/element/repeat_instance.dart`
+- `lib/features/form_submission/application/element/form_instance.dart`
+- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`
+- `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart`
 
-Do not base the UID contract on these inactive or legacy-risk paths unless a later runtime pass proves they are active:
+Do not base this work on these inactive or legacy-risk paths unless a later runtime pass proves they are active:
 
 - `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
 - `packages/drun_sdk/lib/database/dao/repeat_instances_dao.dart`
@@ -69,88 +99,59 @@ Do not base the UID contract on these inactive or legacy-risk paths unless a lat
 - `lib/features/form_submission/application/form_instance.provider.dart`
 - `lib/core/form/data/form_repository_impl.dart`
 
-## Impacted Files
+## Locked Backlog Slice
 
-Must understand before implementation:
+Slice name:
 
-- `lib/features/form_submission/application/element/repeat_item_instance.dart`
-- `lib/core/form/builder/form_element_builder.dart`
-- `lib/features/form_submission/application/element/repeat_instance.dart`
-- `lib/features/form_submission/application/element/section_instance.dart`
-- `lib/features/form_submission/application/element/form_instance.dart`
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart`
-- `lib/features/form_submission/presentation/section/edit_row_screen.dart`
-- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`
-- `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart`
+```text
+fix: write backend-compatible repeat metadata
+```
 
-Likely test/smoke support:
+Goal:
 
-- active example forms under `example/`
-- any existing form submission tests if present
-- a manual DB inspection path for `data_instances.form_data`
+Generate and preserve backend-compatible repeat metadata in mobile `formData` without DB schema changes, hydration/performance work, or team-selection fixes.
 
-## Minimal Implementation Plan
+Scope:
 
-Do not implement in the docs pass. Proposed smallest code change later:
-
-1. Add an explicit `ensureUid()` method to `RepeatItemInstance`.
-   - If `_uid` is null, assign `CodeGenerator.generateUid()`.
-   - If `_uid` is non-null, return it unchanged.
-2. Make `RepeatItemInstance.reduceValue()` serialize `repeatUid`.
-   - Use `map['repeatUid'] = ensureUid();`
-   - Keep existing field serialization unchanged.
-3. Keep `setUid` immutability behavior.
-   - It should still throw if callers try to overwrite an existing UID.
-4. Avoid moving UID generation into `onAddRepeatedItem` unless the close-without-saving UX is adjusted.
-   - Current close-warning logic uses `uid == null` to identify unsaved new rows.
-   - Generating UID at add time would accidentally make new unsaved rows look existing.
-5. Leave inactive repeat/data-value tables untouched.
-6. After this contract is implemented, consider whether UI close-confirm `setUid(...)` calls are redundant, but do not remove them in the same minimal change unless tests prove the flow is unchanged.
-
-Why this is minimal:
-
-- Existing rows keep their loaded UID because `ensureUid()` uses null-coalescing assignment.
-- New rows get a UID at the point they are serialized for actual save.
-- Saved JSON gains `repeatUid` in the same active whole-submission persistence path.
-- No DB schema change is required.
-- No server upload code changes are required if server already consumes `formData`.
+1. Preserve existing row `_id`.
+2. Fallback from legacy `repeatUid` or `_uid` only when `_id` is missing.
+3. Generate a 26-character ULID for new rows with no existing id.
+4. Serialize `_id`, `_index`, `_parentId`, and `_submissionUid`.
+5. Preserve existing `_index` when present; otherwise assign 1-based order.
+6. For nested repeats, set `_parentId` to the parent repeat row `_id`.
+7. For top-level repeats, set `_parentId` to the submission UID to match the active backend migration generator.
+8. Leave app/SDK database schema unchanged.
+9. Leave large-repeat performance, hidden mandatory validation, and team scoping for separate slices.
 
 ## Acceptance Criteria
 
 Behavioral:
 
-1. A newly added repeat row saved through the normal row save button has `repeatUid` in `data_instances.form_data`.
-2. A newly added repeat row saved through save-and-add-another has `repeatUid` in `data_instances.form_data`.
-3. An existing repeat row loaded with `repeatUid` keeps the exact same UID after edit/save/reopen.
-4. An existing repeat row loaded without `repeatUid` receives one on next save.
-5. Editing an existing row never replaces a non-null `repeatUid`.
-6. Upload payload includes repeat rows with the saved `repeatUid` because `toUpload()` sends `formData`.
-7. No `repeat_instances` or `data_values` capture path is introduced.
-
-Code-level:
-
-1. `RepeatItemInstance.reduceValue()` includes `repeatUid`.
-2. UID assignment is centralized in the repeat item model, not scattered through UI save buttons.
-3. Existing `setUid` overwrite protection remains.
-4. The change is independent of the await-save fix, although the await-save fix should land first for save correctness.
+1. A newly added repeat row saved through the normal row save path has `_id`, `_index`, `_parentId`, and `_submissionUid` in `data_instances.form_data`.
+2. A newly added repeat row saved through save-and-add-another has the same metadata.
+3. Existing repeat rows loaded with `_id` keep the exact same `_id` after edit/save/reopen.
+4. Legacy rows loaded with `repeatUid` but no `_id` preserve that identity by writing it as `_id`.
+5. Legacy rows loaded with neither `_id` nor `repeatUid` receive a new ULID on next save.
+6. Nested repeat rows get `_parentId` equal to the parent repeat row `_id`.
+7. Upload payload includes repeat rows with backend-compatible metadata because `toUpload()` sends saved `formData`.
+8. No `repeat_instances` or `data_values` capture path is introduced.
 
 Smoke checks:
 
-1. Create a new submission with one repeat row, save, reopen, confirm `repeatUid` exists and is stable.
-2. Add two repeat rows, save-and-add-another, reopen, confirm each row has a distinct `repeatUid`.
-3. Edit a saved repeat row, save, reopen, confirm UID did not change.
-4. Import or seed a submission with a repeat row containing `repeatUid`, edit it, save, inspect DB JSON, confirm same UID.
-5. Seed a legacy row without `repeatUid`, save, inspect DB JSON, confirm a UID was added.
-6. Build upload payload for a finalized submission and confirm nested repeat rows include `repeatUid`.
+1. Create a new submission with one repeat row, save, reopen, confirm `_id` exists and is stable.
+2. Add two repeat rows, save-and-add-another, reopen, confirm each row has a distinct `_id` and expected `_index`.
+3. Edit a saved repeat row, save, reopen, confirm `_id` did not change.
+4. Seed a row with old `repeatUid`, save, inspect DB JSON, confirm `_id` equals the old `repeatUid` and `repeatUid` is not required for upload.
+5. Seed a legacy row without any id, save, inspect DB JSON, confirm `_id` was added.
+6. Use a nested repeat fixture or targeted unit/harness test to confirm child `_parentId` equals the parent row `_id`.
 
 ## Ordering With Other Work
 
-Recommended order:
+Recommended current order:
 
-1. Tooling baseline on `develop`.
-2. Docs PR containing this contract.
-3. `fix/await-form-save` PR.
-4. Repeat UID implementation PR.
-5. Large-repeat performance measurement/refactor PRs.
-
-Reason: UID persistence depends on save correctness. If saves can still race navigation or scope disposal, UID behavior tests may produce misleading failures.
+1. Merge agent context docs into `develop`.
+2. Implement this repeat metadata contract on the current repeat-stability branch.
+3. Run repeat/save checks.
+4. Merge repeat-stability into `develop`.
+5. Stop before `develop -> main` promotion to discuss production-style release build/signing/smoke.
+6. Return to the team-scoping bug as a separate slice.

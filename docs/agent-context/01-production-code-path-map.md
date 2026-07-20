@@ -4,6 +4,8 @@ Generated: 2026-07-10
 
 Scope: map active production paths before refactoring. This treats docs, names, comments, and stale-looking code as evidence only. Classifications below are based on live imports, route registration, DI registration, and call sites found in this scan.
 
+Update 2026-07-21: rows that mention `repeatUid` reflect the original mobile-only scan. Backend validation later proved the active server contract is repeat metadata with `_id`, `_index`, `_parentId`, and `_submissionUid`; see `07-repeat-uid-contract.md`.
+
 Status legend:
 
 - Active: reachable through current app entrypoints, DI, imports, routes, or direct call sites.

@@ -48,12 +48,12 @@ Do not edit SDK-looking code just because a form feature sounds related. First p
 Read these before touching related areas:
 
 - `01-production-code-path-map.md`: broad first-pass production path map.
-- `02-form-flow.md`: active/inactive form load, render, repeat, save, edit, UID, and local persistence map.
+- `02-form-flow.md`: active/inactive form load, render, repeat, save, edit, repeat metadata, and local persistence map.
 - `03-config-fetching.md`: server config/form/assignment/org-unit/metadata fetch and offline cache map.
 - `04-state-di-runtime-map.md`: state management, DI, scopes, generated registration, and runtime ownership map.
 - `05-classification-reconciliation.md`: strict active/inactive classification overlay. Use this legend.
 - `06-large-repeat-hang-data-loss.md`: large repeat hang and save/data-loss risk investigation.
-- `07-repeat-uid-contract.md`: repeat UID behavior contract and planned minimal implementation.
+- `07-repeat-uid-contract.md`: backend-validated repeat metadata contract and planned implementation slice.
 
 ## Active Form Flow Map
 
@@ -176,7 +176,7 @@ Before editing code:
 4. Keep the PR slice narrow.
 5. Avoid mixed-purpose commits.
 6. Do not refactor while mapping.
-7. Do not change persistence format, repeat UID semantics, sync payloads, or generated code casually.
+7. Do not change persistence format, repeat metadata semantics, sync payloads, or generated code casually.
 8. Do not revert user changes you did not make.
 9. Prefer local patterns over new abstractions.
 10. Run the smallest meaningful validation.
@@ -214,6 +214,24 @@ For form/repeat/save changes, also confirm:
 - repeat rows are not silently dropped;
 - large-repeat risk was considered.
 
+## Solo Production Workflow
+
+Use this lightweight workflow for solo developer plus AI-agent work:
+
+1. Treat `develop` as integration and `main` as production.
+2. Keep each production fix small and named by behavior.
+3. Before code, write the data contract or behavior contract in plain text.
+4. During code, avoid DB schema changes unless truly required.
+5. Before merging to `develop`, run `git diff develop...HEAD`, run the smallest relevant checks, and do one smoke test for the touched workflow.
+6. Before promoting `develop` to `main`, intentionally bump version/build number, confirm old local drafts/finals still load or upload, call out rollback risk, and tag the release commit.
+7. After release, verify one real device can open, save, and sync, and keep the previous APK/build available for rollback.
+
+Release signing notes:
+
+- Do not commit signing keys.
+- Release builds require a local signing configuration pointing at the Google Play key, currently expected outside the repo at `/home/hamza/datarun/datarun-key`.
+- Stop before `develop -> main` promotion when signing, production-style build, or update smoke behavior is uncertain.
+
 ## PR Slicing Rules
 
 Keep PRs boring and reviewable.
@@ -224,13 +242,13 @@ Good slices:
 - docs/context maps;
 - await-save correctness fix;
 - subscription cleanup;
-- repeat UID contract implementation;
+- repeat metadata contract implementation;
 - large-repeat measurement instrumentation;
 - one performance improvement chosen from measurement.
 
 Bad slices:
 
-- save race fix plus repeat UID persistence plus render optimization;
+- save race fix plus repeat metadata persistence plus render optimization;
 - build tooling plus production behavior changes;
 - generated churn plus unrelated refactor;
 - data model migration without runtime proof;
@@ -249,15 +267,15 @@ Current known risks:
 - `FieldWidget` value subscriptions appear to need cleanup review;
 - `saveFormData()` writes one whole `formData` JSON object;
 - active save call sites have had unawaited-save risk and need a focused fix;
-- repeat UID persistence is incomplete in the current reducer;
+- repeat metadata persistence must match the backend V1 shape: `_id`, `_index`, `_parentId`, `_submissionUid`;
 - generated and old form-state paths can mislead agents into editing inactive code.
 
 Current recommended order for known work:
 
-1. docs/context PRs;
-2. tooling baseline on `develop`;
-3. `fix/await-form-save`;
-4. subscription cleanup;
-5. repeat UID implementation based on `07-repeat-uid-contract.md`;
-6. measured large-repeat profiling;
-7. targeted performance PR selected by measurement.
+1. Merge docs/context maps to `develop`.
+2. Implement repeat metadata contract based on `07-repeat-uid-contract.md`.
+3. Run repeat/save checks.
+4. Merge repeat-stability work to `develop`.
+5. Stop before `develop -> main` promotion to discuss production-style release build/signing/smoke.
+6. Return to the team-scoping bug: team selection currently shows all managed teams across activities instead of only managed teams for the same activity.
+7. Continue later with measured large-repeat profiling and targeted performance work.

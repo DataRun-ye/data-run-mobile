@@ -4,6 +4,8 @@ Generated: 2026-07-10
 
 Scope: reconcile `01-production-code-path-map.md`, `02-form-flow.md`, `03-config-fetching.md`, and `04-state-di-runtime-map.md` under a stricter active-code definition. This document is an overlay on the earlier maps: it does not invalidate their evidence, but it supersedes older classifications where later scans proved a narrower label.
 
+Update 2026-07-21: this reconciliation preserves the earlier `repeatUid` finding as mobile-side evidence only. The backend-validated contract is repeat metadata with `_id`, `_index`, `_parentId`, and `_submissionUid`; see `07-repeat-uid-contract.md`.
+
 ## Strict Legend
 
 - ACTIVE: commenting/removing the path without replacement would break app startup/auth/navigation, sync/offline cache, assignment/form access, form load/render/repeat/edit/save, or submission table behavior.
@@ -59,7 +61,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `partyResolverProvider` and party/manifest tables | Mixed/uncertain in `03`, INCOMPLETE in `04` | INCOMPLETE | Provider contains placeholder user/team/party IDs and no static production consumer was found. |
 | Form route/load/save/repeat core in `02` | ACTIVE | ACTIVE | `FormFlowBootstrapperVm`, `FormTemplateRepository`, `FormElementControlBuilder`, `FormElementBuilder`, `FormInstance`, repeat models/widgets, and `DataInstancesDao.updateData` pass the strict test. |
 | Form summary utilities | ACTIVE in `02` | ACTIVE | `FormDataUtil`/`FormDataAggregator` are active through submission table summaries, but not part of form load/save/repeat persistence. |
-| `CodeGenerator` | ACTIVE in `02` | ACTIVE | Active for submission IDs and referenced by repeat UID UI code. It does not prove repeat UID persistence, which remains INCOMPLETE because `RepeatItemInstance.reduceValue()` does not write `repeatUid`. |
+| `CodeGenerator` | ACTIVE in `02` | ACTIVE | Active for submission IDs and referenced by old repeat UID UI code. Backend validation later proved mobile should write repeat metadata, not `repeatUid`; see `07-repeat-uid-contract.md`. |
 | Example/debug `main()` functions inside helper files | Mentioned as examples | INACTIVE | Files like date-time demos or aggregator examples are not production entrypoints unless imported by `lib/main.dart` or routed production paths. |
 
 ## Strict Active Core To Carry Forward

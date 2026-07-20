@@ -10,6 +10,8 @@ Scope: active large-repeat performance and possible unsaved-work loss in the cur
 
 This is still pre-refactor mapping. No persistence format change, repeat renderer rewrite, expression-engine rewrite, or data model migration is assumed here.
 
+Update 2026-07-21: rows that discuss repeat UID persistence reflect the original mobile-only scan. Backend validation later proved the active server contract is repeat metadata with `_id`, `_index`, `_parentId`, and `_submissionUid`; see `07-repeat-uid-contract.md`.
+
 ## Validation Legend
 
 - STATIC-VALIDATED: the code path or bug shape is directly proven by active call sites and implementations.
@@ -96,7 +98,7 @@ Why first: this is the only area where static evidence already proves a correctn
 
 Why second: this proves where the hang likely comes from, but the safe fix is not obvious without trace data.
 
-### Repeat UID
+### Repeat Metadata
 
 - `lib/features/form_submission/application/element/repeat_item_instance.dart`
   - `uid`
@@ -111,7 +113,7 @@ Why second: this proves where the hang likely comes from, but the safe fix is no
 - `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart`
   - `toUpload`
 
-Why separate: persisting repeat UIDs changes saved JSON semantics and may affect server update matching. It should not be bundled into the first safety PR.
+Why separate: writing backend-compatible repeat metadata changes saved JSON semantics and may affect server update matching. It should not be bundled into the first save-safety PR.
 
 ## Runtime Measurements Needed
 
@@ -125,7 +127,7 @@ Use a real or generated copy of the large activity form with 50, 100, 200, and 3
 | Save timings: reduce time, JSON byte length, JSON encode time, DB update time, total save time. | Whether row edits block on whole-form JSON persistence. | `FormInstance.saveFormData`, `NullAwareMapConverter.requireToSql`, `DataInstancesDao.updateData`. |
 | Save ordering trace: save-start, save-end, save-error, row-screen pop, bottom-sheet open, mark-final, drop-scope. | Whether unawaited save races exist in real interaction. | Form screen and repeat row save handlers. |
 | Subscription count per field/control after opening and closing row edit 10-20 times. | Whether `FieldWidget` leaks listeners. | `FieldWidget` effect/dispose trace. |
-| UID persistence trace: row UID before save, saved DB JSON, reopened row UID, upload payload. | Whether repeat UIDs are dropped and whether server update sees stable row identity. | `RepeatItemInstance.reduceValue`, `saveFormData`, `toUpload`. |
+| Repeat metadata trace: row `_id` before save, saved DB JSON, reopened row `_id`, upload payload. | Whether repeat identity metadata is dropped and whether server update sees stable row identity. | `RepeatItemInstance.reduceValue`, `saveFormData`, `toUpload`. |
 | Memory/GC snapshots before open, after open, after editing rows, after close/reopen. | Whether memory pressure contributes to hangs or process death. | Flutter DevTools/profile build on device. |
 
 ## Minimal Safety Improvements
@@ -138,7 +140,7 @@ These are not structural optimizations. They are guardrails to reduce data loss 
 4. Add timing and size traces around save reduction, JSON encoding, and DB update.
 5. Log repeat row count and JSON size at save time.
 6. Do not change the persistence format in this PR.
-7. Do not persist `repeatUid` in this PR unless a separate runtime test proves the server contract and expected JSON shape.
+7. Do not change repeat metadata in this PR unless a separate runtime test proves the server contract and expected JSON shape.
 
 ## First PR Slice Evaluation
 
@@ -195,7 +197,7 @@ Done means:
 | --- | --- | --- |
 | Repeat rendering virtualization/lazy row model | NOT-FIRST-PR | Probably necessary later, but too structural before measurements. It risks changing UI behavior without first proving the slow phase. |
 | Expression engine caching/rewrite | NOT-FIRST-PR | The active evaluation path is risky, but changing dependency semantics before traces could break form rules. |
-| Persist `repeatUid` in `reduceValue()` | NOT-FIRST-PR | Static evidence says persistence is incomplete, but this changes saved JSON and server update semantics. Needs a focused UID runtime test first. |
+| Persist repeat metadata in saved JSON | NOT-FIRST-PR | Static evidence says persistence is incomplete, but this changes saved JSON and server update semantics. Needs a focused backend-contract runtime test first. |
 | Replace whole JSON persistence | NOT-FIRST-PR | Too large and explicitly outside current constraints. |
 | Instrumentation-only PR | Reject | It measures but does not fix the proven unawaited-save race. |
 | Save lifecycle guard plus traces | Accept | Fixes a real correctness bug and gives the minimum measurements needed for the next performance PR. |
@@ -209,7 +211,7 @@ Done means:
 5. How large is the encoded `formData` JSON at those row counts?
 6. How many `evaluate()` calls happen when editing one field inside a repeat row?
 7. Does opening and closing repeat row edit screens increase active `valueChanges` listeners?
-8. Does a server-submitted repeat row keep its original `repeatUid` after load, save, reopen, and upload?
+8. Does a server-submitted repeat row keep its original `_id` after load, save, reopen, and upload?
 9. Are forms with more rules slower because of rule count, dependency fallback walks, choice filters, or save size?
 10. On target Android devices, does memory rise enough at 200-300 rows to trigger process death or OS pressure?
 
@@ -222,7 +224,7 @@ Done means:
 | Whole-submission JSON save | STATIC-VALIDATED | Measure first; structural changes later only if approved. |
 | Expression/repeat evaluation cost | STATIC-PARTIAL | Add counters/timings before changing semantics. |
 | Field subscription cleanup | STATIC-VALIDATED for missing cancel | Candidate small correctness fix, but can be separate from save guard if it risks widget lifecycle changes. |
-| Repeat UID persistence | STATIC-VALIDATED for missing reducer writeback | Dedicated runtime test and server-contract decision before code change. |
+| Repeat metadata persistence | STATIC-VALIDATED for missing reducer writeback | Dedicated runtime test and server-contract decision before code change. |
 | Memory pressure | STATIC-PARTIAL | Needs profile-mode device measurements. |
 
 ## Next Investigation Step
@@ -232,4 +234,4 @@ Do the first PR as a safety-and-measurement slice only if it includes the awaite
 1. If bootstrap dominates, investigate lazy repeat control/model construction.
 2. If evaluation dominates, investigate dependency resolution and expression evaluation counters.
 3. If save dominates, investigate save reduction/JSON encode/DB write strategy.
-4. If UID loss is reproduced, plan a separate repeat UID contract PR with server payload examples.
+4. If repeat identity loss is reproduced, plan a separate repeat metadata contract PR with server payload examples.

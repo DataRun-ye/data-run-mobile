@@ -6,6 +6,8 @@ Scope: evidence-based map for form JSON loading, form rendering, repeats, expres
 
 Read mode: production source was scanned only. This document is the only new output.
 
+Update 2026-07-21: rows that discuss `repeatUid` reflect the earlier mobile-only scan. Backend validation later proved the active server contract is repeat metadata with `_id`, `_index`, `_parentId`, and `_submissionUid`; see `07-repeat-uid-contract.md`.
+
 Status legend:
 
 - ACTIVE: used by reachable production runtime flow.

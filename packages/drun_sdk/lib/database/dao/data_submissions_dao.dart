@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/data_instance/form_data_util.dart';
+import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:d_sdk/core/sync/sync_summary_model.dart';
 import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:d_sdk/database/app_database.dart';
@@ -49,7 +52,7 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
   /// Upload a batch of submissions and update DB statuses inside a transaction.
   Future<ImportSummaryModel> upload(Iterable<String> ids) async {
-    final submissions = await (select(dataInstances)
+    var submissions = await (select(dataInstances)
           ..where((f) =>
               f.id.isIn(ids) &
               f.syncState.isIn([
@@ -61,6 +64,8 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     if (submissions.isEmpty) {
       return ImportSummaryModel.empty();
     }
+
+    submissions = await _persistRepeatMetadataBeforeUpload(submissions);
 
     // mark as uploading so UI can react
     await markUploading(submissions.map((s) => s.id));
@@ -152,6 +157,56 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
       // or: rethrow if the caller needs to know the upload failed
       return ImportSummaryModel.empty();
     }
+  }
+
+  Future<List<DataInstance>> _persistRepeatMetadataBeforeUpload(
+      List<DataInstance> submissions) async {
+    final normalizedSubmissions = <DataInstance>[];
+    final changedSubmissions = <DataInstance>[];
+    final now = DateTime.now().toUtc();
+
+    for (final submission in submissions) {
+      final formData = submission.formData;
+      if (formData == null) {
+        normalizedSubmissions.add(submission);
+        continue;
+      }
+
+      final normalizedFormData = RepeatMetadataNormalizer.normalizeFormData(
+        formData,
+        submissionUid: submission.id,
+      );
+
+      if (jsonEncode(normalizedFormData) == jsonEncode(formData)) {
+        normalizedSubmissions.add(submission);
+        continue;
+      }
+
+      final normalizedSubmission = submission.copyWith(
+        formData: Value(normalizedFormData),
+        lastModifiedDate: Value(now),
+        updatedAtClient: Value(now),
+      );
+
+      normalizedSubmissions.add(normalizedSubmission);
+      changedSubmissions.add(normalizedSubmission);
+    }
+
+    if (changedSubmissions.isNotEmpty) {
+      await transaction(() async {
+        for (final submission in changedSubmissions) {
+          await (update(dataInstances)
+                ..where((t) => t.id.equals(submission.id)))
+              .write(DataInstancesCompanion(
+            formData: Value(submission.formData),
+            lastModifiedDate: Value(now),
+            updatedAtClient: Value(now),
+          ));
+        }
+      });
+    }
+
+    return normalizedSubmissions;
   }
 
   Future<DataInstance?> getById(String id) {

@@ -331,7 +331,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
                 TextButton(
                   child: Text(S.of(context).saveAndClose),
                   onPressed: () {
-                    repeatItem.setUid(CodeGenerator.generateUid());
+                    repeatItem.setUid(CodeGenerator.generateUlid());
                     Navigator.of(context).pop(true);
                   },
                 ),

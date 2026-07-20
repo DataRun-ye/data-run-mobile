@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
@@ -92,7 +93,10 @@ class FormInstance {
     loadWatch.stop();
 
     final reduceWatch = Stopwatch()..start();
-    final Map<String, Object?> formValue = formSection.value;
+    final formValue = RepeatMetadataNormalizer.normalizeFormData(
+      Map<String, dynamic>.from(formSection.value),
+      submissionUid: submissionId,
+    );
     reduceWatch.stop();
     // final formErrors = form.errors;
     // logDebug('formValid: ${form.valid},formErrors: ${formErrors.toString()}');

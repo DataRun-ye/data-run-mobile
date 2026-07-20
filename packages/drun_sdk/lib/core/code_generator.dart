@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:convert';
 
+import 'package:ulid/ulid.dart';
+
 class CodeGenerator {
   static const String letters =
       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -15,6 +17,10 @@ class CodeGenerator {
   /// - First character is alphabetic.
   static String generateUid() {
     return generateCode(codeSize);
+  }
+
+  static String generateUlid() {
+    return Ulid().toCanonical();
   }
 
   /// Generates a composite UID in the format `uid-uid`.

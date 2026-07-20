@@ -1,4 +1,5 @@
 import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:d_sdk/core/form/rule/calculated_Expression.dart';
 import 'package:d_sdk/core/form/rule/choice_filter.dart';
 import 'package:d_sdk/core/form/rule/rule_parse_extension.dart';
@@ -66,7 +67,7 @@ class FormElementBuilder {
         template: template,
         form: rootFormControl,
         // parentUid: parentUid,
-        uid: initialFormValue?['repeatUid'] as String?);
+        uid: RepeatMetadataNormalizer.readRepeatRowId(initialFormValue));
     for (var childTemplate in template.children) {
       elements[childTemplate.name!] = buildFormElement(
           rootFormControl, formFlatTemplate, childTemplate,

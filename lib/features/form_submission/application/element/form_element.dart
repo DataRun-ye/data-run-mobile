@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:d_sdk/core/code_generator.dart';
+import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/form/rule/action.dart';
 import 'package:d_sdk/core/form/rule/calculated_Expression.dart';

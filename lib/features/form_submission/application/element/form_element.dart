@@ -120,20 +120,13 @@ sealed class FormElementInstance<T> {
   AbstractControl<dynamic>? get elementControl =>
       elementPath != null ? form.control(elementPath!) : null;
 
-  AbstractControl<dynamic>? get optionalElementControl {
-    if (elementPath == null) {
-      return null;
-    }
-
-    try {
-      return form.control(elementPath!);
-    } catch (_) {
-      return null;
-    }
-  }
-
   bool get controlExist {
-    return optionalElementControl != null;
+    try {
+      form.control(elementPath!);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   void updateValue(T? value, {bool updateParent = true, bool emitEvent = true});
@@ -152,10 +145,7 @@ sealed class FormElementInstance<T> {
 
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.${elementPath}, markAsHidden: ${_getDebugState()}.');
-    final control = optionalElementControl;
     if (hidden) {
-      control?.reset(
-          disabled: true, updateParent: updateParent, emitEvent: emitEvent);
       logDebug('_.${elementPath}, markAsHidden, return: already hidden.');
       return;
     }
@@ -163,7 +153,7 @@ sealed class FormElementInstance<T> {
         _elementState.copyWith(
             hidden: true, errors: {}, mandatory: false, warning: ''),
         emitEvent: emitEvent);
-    control?.reset(
+    elementControl!.reset(
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
 
     logDebug('2.${elementPath}, markAsHidden, marked: ${_getDebugState()}.');
@@ -174,9 +164,7 @@ sealed class FormElementInstance<T> {
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.${elementPath}, markAsVisible: ${_getDebugState()}.');
-    final control = optionalElementControl;
     if (visible) {
-      control?.markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
       logDebug('_.${elementPath}, markAsVisible, return: already visible.');
       return;
     }
@@ -184,51 +172,42 @@ sealed class FormElementInstance<T> {
     updateStatus(
         _elementState.copyWith(hidden: false, mandatory: _template.mandatory),
         emitEvent: emitEvent);
-    control?.markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
+    elementControl!
+        .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
     logDebug('2.${elementPath}, markAsVisible, marked: ${_getDebugState()}.');
   }
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.${elementPath}, markAsMandatory: ${_getDebugState()}.');
-    final control = optionalElementControl;
     if (mandatory) {
-      if (control != null &&
-          !control.validators.contains(Validators.required)) {
-        control.setValidators([...control.validators, Validators.required],
-            autoValidate: true,
-            updateParent: updateParent,
-            emitEvent: emitEvent);
-      }
       logDebug('_.${elementPath}, markAsMandatory, return: already mandatory.');
       return;
     }
     updateStatus(_elementState.copyWith(mandatory: true), emitEvent: emitEvent);
 
-    if (control != null) {
-      final elementValidators = [...control.validators, Validators.required];
-      control.setValidators(elementValidators,
-          autoValidate: true, updateParent: updateParent, emitEvent: emitEvent);
-    }
+    final elementValidators = [
+      ...elementControl!.validators,
+      Validators.required
+    ];
+    elementControl!.setValidators(elementValidators, autoValidate: true);
     logDebug('2.${elementPath}, markAsMandatory, marked: ${_getDebugState()}.');
   }
 
   void markAsUnMandatory({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.${elementPath}, markAsUnMandatory: ${_getDebugState()}.');
-    final control = optionalElementControl;
-    final wasMandatory = mandatory;
     updateStatus(_elementState.copyWith(mandatory: false),
         emitEvent: emitEvent);
-    if (control != null) {
-      final elementValidators = [...control.validators]
-        ..remove(Validators.required);
-      control.setValidators(elementValidators,
-          autoValidate: true, updateParent: updateParent, emitEvent: emitEvent);
-    }
-    if (!wasMandatory) {
+    if (!mandatory) {
       logDebug(
           '_.${elementPath}, markAsUnMandatory, return: already un-mandatory.');
       return;
     }
+    final elementValidators = [
+      ...elementControl!.validators,
+    ]..remove(Validators.required);
+
+    elementControl!.setValidators(elementValidators,
+        autoValidate: true, updateParent: updateParent, emitEvent: emitEvent);
     logDebug(
         '2.${elementPath}, markAsUnMandatory, marked: ${_getDebugState()}.');
   }
@@ -237,7 +216,7 @@ sealed class FormElementInstance<T> {
     // if (visible) {
     updateStatus(_elementState.copyWith(errors: errors));
     // _updateControlsErrors();
-    optionalElementControl?.setErrors(errors, markAsDirty: markAsDirty);
+    elementControl?.setErrors(errors, markAsDirty: markAsDirty);
     // }
   }
 
@@ -247,7 +226,7 @@ sealed class FormElementInstance<T> {
     updateStatus(_elementState.copyWith(errors: {...errors}..remove(key)),
         emitEvent: emitEvent);
     // _updateControlsErrors();
-    optionalElementControl?.removeError(key);
+    elementControl?.removeError(key);
     // }
   }
 
@@ -371,8 +350,8 @@ sealed class FormElementInstance<T> {
       if (state.hidden) {
         logDebug('3/3.$elementPath, updateValueAndValidity, Hide.');
         markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
-        optionalElementControl?.reset(
-            disabled: true, updateParent: false, emitEvent: false);
+        elementControl!
+            .reset(disabled: true, updateParent: false, emitEvent: false);
       } else {
         logDebug('3/3.$elementPath, updateValueAndValidity, Show.');
         markAsVisible(updateParent: updateParent, emitEvent: emitEvent);

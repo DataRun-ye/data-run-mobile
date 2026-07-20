@@ -11,9 +11,6 @@ import 'package:datarunmobile/core/form/builder/form_element_control_builder.dar
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
-import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -64,99 +61,6 @@ void main() {
       expect(metrics.elementCount, greaterThan(rowCount));
       expect(metrics.jsonBytes, greaterThan(0));
     }
-  });
-
-  test('loaded repeat rows hydrate only while editing', () async {
-    const formPath = 'example/ITNs Household Distribution Form.json';
-    const submissionPath =
-        'example/ITNs Household Distribution submission.json';
-    const repeatPath = ['households_information', 'householdnames'];
-
-    final formJson = await _readJsonFile(formPath);
-    final submissionJson = await _readJsonFile(submissionPath);
-    final formData = _withRepeatRows(
-      Map<String, Object?>.from(submissionJson['formData'] as Map),
-      repeatPath: repeatPath,
-      rowCount: 3,
-    );
-
-    final builtForm = _buildRepeatForm(
-      repository: FormTemplateRepository.inMemory(
-        formTemplateModel: _templateModelFromJson(formJson),
-      ),
-      formData: formData,
-    );
-    final repeat = getFormElementIterator<RepeatSection>(builtForm.root).single;
-    final firstItem = repeat.elements.first;
-    final initialValue = firstItem.value;
-    final initialRootValue = builtForm.root.value;
-
-    expect(repeat.elementControl.controls, hasLength(3));
-    expect(firstItem.elementControl.controls, isEmpty);
-    expect(builtForm.instance.repeatItemControlsMaterialized(firstItem), false);
-
-    builtForm.instance.materializeRepeatItemControls(repeat, firstItem);
-
-    expect(builtForm.instance.repeatItemControlsMaterialized(firstItem), true);
-    expect(firstItem.elementControl.controls, isNotEmpty);
-    expect(firstItem.value, initialValue);
-
-    builtForm.instance.dehydrateRepeatItemControls(repeat, firstItem);
-
-    expect(builtForm.instance.repeatItemControlsMaterialized(firstItem), false);
-    expect(firstItem.elementControl.controls, isEmpty);
-    expect(firstItem.value, initialValue);
-
-    builtForm.instance.materializeAllRepeatItemControls();
-
-    expect(
-      repeat.elements.every(builtForm.instance.repeatItemControlsMaterialized),
-      true,
-    );
-    expect(builtForm.root.value, initialRootValue);
-  });
-
-  test('lazy hydrated repeat controls sync hidden and non-mandatory state',
-      () async {
-    const formPath = 'example/ITNs Household Distribution Form.json';
-    const submissionPath =
-        'example/ITNs Household Distribution submission.json';
-    const repeatPath = ['households_information', 'householdnames'];
-
-    final formJson = await _readJsonFile(formPath);
-    final submissionJson = await _readJsonFile(submissionPath);
-    final formData = _withRepeatRows(
-      Map<String, Object?>.from(submissionJson['formData'] as Map),
-      repeatPath: repeatPath,
-      rowCount: 1,
-    );
-
-    final builtForm = _buildRepeatForm(
-      repository: FormTemplateRepository.inMemory(
-        formTemplateModel: _templateModelFromJson(formJson),
-      ),
-      formData: formData,
-    );
-    final repeat = getFormElementIterator<RepeatSection>(builtForm.root).single;
-    final firstItem = repeat.elements.first;
-    final fields =
-        getFormElementIterator<FieldInstance<dynamic>>(firstItem).toList();
-    final hiddenField = fields.first;
-    final mandatoryField = fields.firstWhere(
-      (field) => field.template.name == 'householdName',
-    );
-
-    hiddenField.markAsHidden(emitEvent: false);
-
-    builtForm.instance.materializeRepeatItemControls(repeat, firstItem);
-
-    hiddenField.markAsHidden(emitEvent: false);
-    mandatoryField.updateValue(null, emitEvent: false);
-    mandatoryField.markAsMandatory(emitEvent: false);
-    mandatoryField.markAsUnMandatory(emitEvent: false);
-
-    expect(hiddenField.elementControl.disabled, true);
-    expect(mandatoryField.elementControl.hasErrors, false);
   });
 }
 
@@ -217,46 +121,6 @@ RepeatProfileMetrics _profileFormBuildAndReduce({
         .fold<int>(0, (total, repeat) => total + repeat.elements.length),
     jsonBytes: jsonBytes,
   );
-}
-
-BuiltRepeatForm _buildRepeatForm({
-  required FormTemplateRepository repository,
-  required Map<String, Object?> formData,
-}) {
-  final form = FormGroup(
-    FormElementControlBuilder.formDataControls(repository, formData),
-  );
-  final elements = FormElementBuilder.buildFormElements(
-    form,
-    repository,
-    initialFormValue: formData,
-  );
-  final root = Section(
-    template: repository.rootSection,
-    elements: elements,
-    form: form,
-  )
-    ..resolveDependencies()
-    ..evaluate(emitEvent: false);
-
-  final instance = FormInstance(
-    form: form,
-    formFlatTemplate: repository,
-    formMetadata: const FormMetadata(
-      formId: 'profile-form',
-      versionUid: 'profile-version',
-      submission: 'profile-submission',
-    ),
-    entryStarted: DateTime(2026),
-    fieldKeysRegistery: FieldContextRegistry(),
-    submissionId: 'profile-submission',
-    rootSection: root,
-    elements: elements,
-    initialValue: formData,
-    enabled: true,
-  );
-
-  return BuiltRepeatForm(root: root, instance: instance);
 }
 
 Future<Map<String, dynamic>> _readJsonFile(String path) async {
@@ -403,14 +267,4 @@ class RepeatProfileMetrics {
         'repeatRowCount': repeatRowCount,
         'jsonBytes': jsonBytes,
       };
-}
-
-class BuiltRepeatForm {
-  BuiltRepeatForm({
-    required this.root,
-    required this.instance,
-  });
-
-  final Section root;
-  final FormInstance instance;
 }

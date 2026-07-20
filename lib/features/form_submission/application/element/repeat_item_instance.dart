@@ -20,17 +20,6 @@ class RepeatItemInstance extends Section {
 
   String ensureUid() => _uid ??= CodeGenerator.generateUid();
 
-  Map<String, Object?> get currentRawValue {
-    final map = <String, Object?>{};
-    if (_uid != null) {
-      map['repeatUid'] = _uid;
-    }
-    _elements.forEach((key, element) {
-      map[key] = element.value;
-    });
-    return map;
-  }
-
   void setUid(String value) {
     if (_uid != null) {
       throw StateError('A RepeatItemInstance\'s uid cannot be changed');

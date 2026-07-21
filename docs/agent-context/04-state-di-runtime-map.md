@@ -54,7 +54,7 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | `reactive_forms` | ACTIVE | Declared in `pubspec.yaml`; login form and form submission form use `FormGroup`, `FormArray`, `FormControl`, `ReactiveForm`, and reactive field widgets. | High | Active form value state and repeat rows live in reactive controls. |
 | `ChangeNotifier` | ACTIVE | `AuthManager extends ChangeNotifier`; `LocaleService extends ChangeNotifier`; `ref_extension.provider.dart` wraps them for Riverpod. | High | Changing notifier ownership can break root auth/locale updates. |
 | `StateNotifierProvider` / `StateProvider` old Riverpod style | LEGACY-RISK | Used in `lib/features/team/application/team_state.dart` and `expanded_team_state.dart`; reachable only through `ManageTeamsScreen`, which is not in generated Stacked routes and has only a commented dashboard import. | Medium | Compiles, but route reachability is not proven. Treat as a removal candidate only after runtime/menu confirmation. |
-| `go_router` path | INACTIVE | `lib/app/app_routes/router.dart` and `main.dart` under `app_routes` are fully commented old router code; production `lib/main.dart` uses Stacked router. | High | Do not use `app_routes` as evidence for active navigation. |
+| Old `go_router` path | OBSOLETE-REMOVED | The unimported `lib/app/app_routes/` experiment was removed; production `lib/main.dart` uses the generated Stacked router. | High | Navigation evidence must come from the active Stacked route registration and callers. |
 | `rxdart` `BehaviorSubject` sync progress stack | LEGACY-RISK | `SyncProgressNotifier`, `SyncExecutor`, and `SyncCoordinator` are injectable, but routed sync screen uses `SyncManager` directly. References outside generated DI are not proven active. | Medium | There appear to be two sync progress stacks. Changing the inactive-looking one may not affect production sync. |
 
 ## Active DI And Scope Map
@@ -158,10 +158,8 @@ Why it matters: datasource registration order and type shape affect config fetch
 
 | Classification | File path | Evidence | Confidence | Why it matters |
 | --- | --- | --- | --- | --- |
-| INACTIVE | `lib/app/app_routes/main.dart` | File is commented out; production `lib/main.dart` is active and uses Stacked router. | High | Do not use this as entrypoint evidence. |
-| INACTIVE | `lib/app/app_routes/router.dart` | File is commented out; imports `go_router`; generated Stacked router is active instead. | High | Old route names/screens here do not prove reachability. |
-| INACTIVE | `lib/app/app_routes/auth.dart` | Defines mock `DatarunAuth`; static references found only within the file. | High | Not part of production auth; active auth is `AuthManager`. |
-| INACTIVE | `lib/features/login/presentation/login_screen.dart`, `login_screen_viewmodel.dart` | Obsolete-looking path: static refs show only self-imports and commented old router references; Stacked route uses `LoginView`. | High | Avoid fixing wrong login page. |
+| OBSOLETE-REMOVED | Old `lib/app/app_routes/` experiment | No active importer; it contained commented routes and an isolated mock `DatarunAuth`. Production uses Stacked navigation and `AuthManager`. | High | The obsolete route names and mock auth can no longer be mistaken for production behavior. |
+| OBSOLETE-REMOVED | Old `LoginScreen` and `LoginScreenViewmodel` | Only referenced each other and the commented router. The generated Stacked route uses `LoginView`. | High | The active development-only demo login remains in `LoginView`/`LoginViewModel`. |
 | INACTIVE | `lib/core/element_instance/form_state.provider.dart` | Obsolete-looking path: entire provider implementation is commented and references old `D2Remote`/old template names. | High | Not active form state. |
 | INACTIVE | `lib/features/form_submission/application/form_instance.provider.dart` | Obsolete-looking path: entire Riverpod `FormInstance` provider path is commented; active form screen comments show it was replaced by `appLocator<FormInstance>()`. | High | Active form state is scoped GetIt, not this provider. |
 | INACTIVE | `lib/features/form_submission/application/element/form_element_instance.provider.dart` | Obsolete-looking path: entire file is commented and contains unimplemented provider sketches. | High | Not active element state. |

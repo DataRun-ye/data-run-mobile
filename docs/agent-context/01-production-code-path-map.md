@@ -32,7 +32,7 @@ Active:
 
 Obsolete-looking or inactive:
 
-- `lib/app/app_routes/*` contains older/commented route code. Current `MaterialApp` uses the Stacked router in `lib/main.dart:174`, not those old route files.
+- The older `lib/app/app_routes/*` experiment was removed after confirming it had no active importer. Current `MaterialApp` uses the Stacked router in `lib/main.dart`.
 - `lib/app/stacked/app.router.dart` is active generated route code, but should not be edited manually.
 
 ## 2. SDK entrypoints and app consumption

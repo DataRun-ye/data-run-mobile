@@ -42,7 +42,7 @@ Do not edit SDK-looking code just because a form feature sounds related. First p
 - Riverpod, Stacked viewmodels, GetIt scopes, `reactive_forms`, `ChangeNotifier`, generated injectable registrations, and generated providers coexist.
 - Form state is not owned by one clean system.
 - Generated files are significant and can be stale or noisy.
-- There are old router, form-state, form-value, sync, data-value, repeat-instance, metadata-submission, and party/manifest paths that are not proven active for current form capture.
+- There are old form-state, form-value, sync, data-value, repeat-instance, and metadata-submission paths that are not proven active for current form capture.
 - Example forms live under `example/`, but examples are evidence only, not production truth.
 
 ## Existing Context Maps
@@ -114,7 +114,6 @@ Treat these as inactive, incomplete, or legacy-risk unless runtime evidence prov
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart` as active capture storage
 - `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
 - `lib/data/metadata_submission_update.provider.dart` and its reference-field UI remain reachable but incomplete; do not infer active persistence from their names.
-- old `go_router` files under `lib/app/app_routes/`
 
 These files may contain useful ideas or stale design intent, but they are not authority for current behavior.
 

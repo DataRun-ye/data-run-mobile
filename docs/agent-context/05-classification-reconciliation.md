@@ -154,9 +154,6 @@ These are used or plausible, but should not be treated as core-active without mo
 
 Do not delete these yet, but they are strong candidates for demotion/removal after runtime confirmation.
 
-- `lib/app/app_routes/*`
-- `lib/features/login/presentation/login_screen.dart`
-- `lib/features/login/presentation/login_screen_viewmodel.dart`
 - `lib/features/team/presentation/managed_team_screen.dart`
 - `lib/features/team/application/team_state.dart`
 - `lib/features/team/application/expanded_team_state.dart`

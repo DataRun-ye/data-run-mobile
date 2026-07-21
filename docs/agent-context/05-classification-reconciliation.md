@@ -154,9 +154,6 @@ These are used or plausible, but should not be treated as core-active without mo
 
 Do not delete these yet, but they are strong candidates for demotion/removal after runtime confirmation.
 
-- `lib/data/controller.provider.dart`
-- `lib/data/org_unit/ou_picker_data_source.provider.dart`
-- `lib/features/form_submission/presentation/field/date_time_main.dart`
 - `lib/core/sync_manager/sync_service.provider.dart`
 - `packages/drun_sdk/lib/di/injection.config.dart` generated `initActiveSessionContextScope(...)`
 - `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart`

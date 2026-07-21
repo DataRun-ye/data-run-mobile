@@ -106,10 +106,11 @@ Closed on `develop`: submission pull is excluded from the active manual and gene
 
 Draft saves now preserve `finishedEntryTime` instead of creating or advancing it; `markFinal()` remains the normal completion-time writer. `test/dev/data_submission_lifecycle_test.dart` characterizes both transitions.
 
+Template-required fields were confirmed to stop blocking validation while hidden and become required when shown again. The actual defects were rule-driven mandatory removal and stale required validators on optional fields after hide/show; both are fixed and characterized in `test/dev/form_element_visibility_validation_test.dart`.
+
 | Finding | Classification | Evidence | Required next proof |
 |---|---|---|---|
 | Pulled submission mapping does not satisfy the current generated Drift `DataInstance.fromJson` contract | `REACHABLE-INCOMPLETE` | `data_submission_datasource.dart` mapping differs from required Drift fields | Focused mapping test only if pull is later designed; do not repair it implicitly now |
-| Hidden required validator lifecycle does not reliably implement the stated policy | `ACTIVE-CORE` contract bug | `form_element.dart`: value clearing is active, but required-validator removal/reapplication is inconsistent | Focused hide/show/required test before changing expression or form architecture |
 | Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `form_flow_bootstrapper_vm.dart` and `submission_list.provider.dart` use `canEditSubmissions || !isSynced` | Confirm deployed assignment values and define one edit gate |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
 | `user_form_permissions` is fetched/stored but no active authorization read was proven | `REACHABLE-INCOMPLETE` | `UserFormAccessesDatasource` registration and table/DAO references | Trace or test intended consumer before activation or removal |
@@ -149,7 +150,6 @@ This is an ordering framework, not a commitment to months of infrastructure work
 
 Use small behavior PRs for confirmed conflicts that can affect live data or repeatedly mislead investigation:
 
-- correct hidden required validator hide/show behavior;
 - return to the known team-scoping bug as its own slice.
 
 Each slice must add the smallest characterization check that proves the bug and the fix. Do not combine these changes.

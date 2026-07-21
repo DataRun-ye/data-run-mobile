@@ -157,6 +157,11 @@ sealed class FormElementInstance<T> {
         _elementState.copyWith(
             hidden: true, errors: {}, mandatory: false, warning: ''),
         emitEvent: emitEvent);
+    _syncRequiredValidator(
+      false,
+      updateParent: false,
+      emitEvent: false,
+    );
     elementControl!.reset(
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
 
@@ -173,9 +178,15 @@ sealed class FormElementInstance<T> {
       return;
     }
 
+    final templateMandatory = _template.mandatory;
     updateStatus(
-        _elementState.copyWith(hidden: false, mandatory: _template.mandatory),
+        _elementState.copyWith(hidden: false, mandatory: templateMandatory),
         emitEvent: emitEvent);
+    _syncRequiredValidator(
+      templateMandatory,
+      updateParent: false,
+      emitEvent: false,
+    );
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
     logDebug('2.${elementPath}, markAsVisible, marked: ${_getDebugState()}.');
@@ -183,37 +194,57 @@ sealed class FormElementInstance<T> {
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.${elementPath}, markAsMandatory: ${_getDebugState()}.');
-    if (mandatory) {
+    if (mandatory && _hasRequiredValidator) {
       logDebug('_.${elementPath}, markAsMandatory, return: already mandatory.');
       return;
     }
     updateStatus(_elementState.copyWith(mandatory: true), emitEvent: emitEvent);
-
-    final elementValidators = [
-      ...elementControl!.validators,
-      Validators.required
-    ];
-    elementControl!.setValidators(elementValidators, autoValidate: true);
+    _syncRequiredValidator(
+      true,
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
     logDebug('2.${elementPath}, markAsMandatory, marked: ${_getDebugState()}.');
   }
 
   void markAsUnMandatory({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.${elementPath}, markAsUnMandatory: ${_getDebugState()}.');
-    updateStatus(_elementState.copyWith(mandatory: false),
-        emitEvent: emitEvent);
-    if (!mandatory) {
+    if (!mandatory && !_hasRequiredValidator) {
       logDebug(
           '_.${elementPath}, markAsUnMandatory, return: already un-mandatory.');
       return;
     }
-    final elementValidators = [
-      ...elementControl!.validators,
-    ]..remove(Validators.required);
-
-    elementControl!.setValidators(elementValidators,
-        autoValidate: true, updateParent: updateParent, emitEvent: emitEvent);
+    updateStatus(_elementState.copyWith(mandatory: false),
+        emitEvent: emitEvent);
+    _syncRequiredValidator(
+      false,
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
     logDebug(
         '2.${elementPath}, markAsUnMandatory, marked: ${_getDebugState()}.');
+  }
+
+  bool get _hasRequiredValidator => elementControl!.validators
+      .any((validator) => validator is RequiredValidator);
+
+  void _syncRequiredValidator(
+    bool required, {
+    required bool updateParent,
+    required bool emitEvent,
+  }) {
+    final validators = elementControl!.validators
+        .where((validator) => validator is! RequiredValidator)
+        .toList();
+    if (required) {
+      validators.add(Validators.required);
+    }
+    elementControl!.setValidators(
+      validators,
+      autoValidate: true,
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
   }
 
   void setErrors(Map<String, dynamic> errors, {bool markAsDirty = true}) {

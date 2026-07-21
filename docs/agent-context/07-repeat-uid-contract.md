@@ -95,8 +95,6 @@ Do not base this work on these inactive or legacy-risk paths unless a later runt
 - `packages/drun_sdk/lib/database/dao/repeat_instances_dao.dart`
 - `packages/drun_sdk/lib/datasource/remote_data_sources/repeat_instance_datasource.dart`
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart` as capture storage
-- `lib/core/element_instance/form_state.provider.dart`
-- `lib/features/form_submission/application/form_instance.provider.dart`
 - `lib/core/form/data/form_repository_impl.dart`
 
 ## Locked Backlog Slice

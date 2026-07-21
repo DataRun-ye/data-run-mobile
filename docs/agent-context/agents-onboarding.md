@@ -102,9 +102,6 @@ Core active files:
 
 Treat these as inactive, incomplete, or legacy-risk unless runtime evidence proves otherwise:
 
-- `lib/features/form_submission/application/form_instance.provider.dart`
-- `lib/features/form_submission/application/element/form_element_instance.provider.dart`
-- `lib/core/element_instance/form_state.provider.dart`
 - `lib/core/form/data/form_repository_impl.dart`
 - `lib/core/form/data/form_value_store.dart`
 - `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart`

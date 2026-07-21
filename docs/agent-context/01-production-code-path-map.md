@@ -111,7 +111,7 @@ Active:
 Inactive or obsolete-looking:
 
 - `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart` is fully commented and references old DHIS/D2 style APIs.
-- `lib/features/form_submission/application/form_instance.provider.dart` is fully commented; the active `FormInstance` is now registered in GetIt scope by the bootstrapper.
+- The fully commented Riverpod `FormInstance` provider experiment was removed; the active `FormInstance` is registered in GetIt scope by the bootstrapper.
 
 ## 5. Active repeat-rendering/editing path
 
@@ -173,8 +173,8 @@ Active:
 
 Inactive or obsolete-looking:
 
-- `lib/features/form_submission/application/form_instance.provider.dart` and `lib/features/form_submission/application/element/form_element_instance.provider.dart` are commented Riverpod form-instance experiments.
-- `lib/core/element_instance/form_state.provider.dart` and `lib/core/form/form_state/form_state.provider.dart` are commented/incomplete alternate form state approaches.
+- The commented Riverpod form-instance/element/provider experiments were removed.
+- `lib/core/form/form_state/form_state.provider.dart` remains a commented/incomplete alternate form-state approach.
 - Several `StateProvider`/`StateNotifier` form-state files under `lib/features/form/application/form/form_state/` look experimental or commented.
 
 ## 7. Form-related DB tables/code paths that appear inactive or incomplete
@@ -218,7 +218,7 @@ Observations only:
   - `lib/data/form_template_repository.dart:53,101` builds another tree/cache for runtime rendering.
 - Form instance construction appears duplicated:
   - Active: `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:103-127`.
-  - Commented old Riverpod path: `lib/features/form_submission/application/form_instance.provider.dart:21-90`.
+  - The commented old Riverpod construction path was removed.
 - Template services overlap:
   - Active list/detail service: `lib/data/form_template_list_service.dart`.
   - Active DI service: `lib/features/form/application/form_template_service_impl.dart`.
@@ -323,9 +323,6 @@ Treat these as high-risk files until the active paths above are fully understood
 
 Also do not delete these until their old/partial roles are explicitly resolved:
 
-- `lib/features/form_submission/application/form_instance.provider.dart`
-- `lib/features/form_submission/application/element/form_element_instance.provider.dart`
-- `lib/core/element_instance/form_state.provider.dart`
 - `lib/core/form/form_state/form_state.provider.dart`
 - `lib/core/element_instance/data_value_repository.dart`
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart`

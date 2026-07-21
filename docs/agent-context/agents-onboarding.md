@@ -6,6 +6,8 @@ Purpose: give future AI agents enough stable repository context to avoid repeati
 
 This file is an onboarding guide. The numbered files in `docs/agent-context/` are the evidence maps.
 
+Start with `09-production-boundaries-and-work-strategy.md`. It records the current product contracts, corrections to earlier classifications, production compatibility boundary, and investigation/cleanup order. Earlier maps remain evidence snapshots.
+
 ## Repository Purpose
 
 This repo contains the DataRun mobile/data-collection app and the SDK code used by the app. It is a Flutter application for offline-capable field data collection, assignment-driven form access, local form entry, local submission storage, and sync/upload.
@@ -53,7 +55,9 @@ Read these before touching related areas:
 - `04-state-di-runtime-map.md`: state management, DI, scopes, generated registration, and runtime ownership map.
 - `05-classification-reconciliation.md`: strict active/inactive classification overlay. Use this legend.
 - `06-large-repeat-hang-data-loss.md`: large repeat hang and save/data-loss risk investigation.
-- `07-repeat-uid-contract.md`: backend-validated repeat metadata contract and planned implementation slice.
+- `07-repeat-uid-contract.md`: backend-validated repeat metadata evidence; its original implementation-status wording is historical.
+- `08-validation-baseline.md`: check/test baseline snapshot; rerun commands before relying on its status.
+- `09-production-boundaries-and-work-strategy.md`: current product-contract and production-boundary authority overlay.
 
 ## Active Form Flow Map
 

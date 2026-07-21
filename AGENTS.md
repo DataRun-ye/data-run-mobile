@@ -4,6 +4,7 @@ This repository contains the running production DataRun mobile/data-collection a
 
 Before changing code, read:
 
+- `docs/agent-context/09-production-boundaries-and-work-strategy.md` for current product contracts, corrections, and work ordering.
 - `docs/agent-context/agents-onboarding.md`
 - `docs/agent-context/05-classification-reconciliation.md`
 - the focused map for the area you are touching, especially `02-form-flow.md`, `03-config-fetching.md`, `04-state-di-runtime-map.md`, `06-large-repeat-hang-data-loss.md`, and `07-repeat-uid-contract.md`.
@@ -22,7 +23,7 @@ Known high-risk form areas:
 - active form state is scoped `GetIt` `FormInstance` plus `reactive_forms`, not the old commented Riverpod form providers.
 - form loading builds the full form JSON, full control tree, and full element tree eagerly.
 - submissions are saved as one whole `formData` JSON object.
-- large repeats, expressions, field subscriptions, and repeat metadata persistence are known risk areas; use `docs/agent-context/07-repeat-uid-contract.md` as the current contract instead of old `repeatUid` assumptions.
+- large repeats, expressions, field subscriptions, and repeat metadata persistence are known risk areas; use `09-production-boundaries-and-work-strategy.md` as the current decision overlay and `07-repeat-uid-contract.md` for repeat metadata evidence.
 
 Common commands:
 

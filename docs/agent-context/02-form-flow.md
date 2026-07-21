@@ -82,13 +82,8 @@ Status legend:
 | LEGACY-RISK | `lib/features/form_submission/presentation/section/edit_row_panel.dart` | Still compiled and imported by repeat UI, but the active `_showEditPanel` path navigates to `EditRowScreen`; `showEditDialog`/panel path appears secondary. | Medium | Could still be called from local dialog code paths; do not delete or modify until runtime confirms. |
 | LEGACY-RISK | `lib/features/form_submission/presentation/section/sliver_form_dialog.dart` | Compiled widget with repeat/field rendering, but no active navigation call was proven in this scan. | Medium | Another possible row/section renderer that could be reintroduced or indirectly used. |
 | LEGACY-RISK | `lib/core/element_instance/data_value_repository.dart` | Directly reads/writes `db.dataValues`; active capture save does not call it, but it is registered in DI and used by display mapping services. | Medium | Data values table exists and can confuse repeat persistence work. It is not active for form save. |
-| LEGACY-RISK | `lib/core/form/data/form_repository_impl.dart` | Implements old form repository using `FormValueStore`; no active form submission screen call path found. | Medium | Old per-value save and validation ideas may not match current whole JSON save. |
-| LEGACY-RISK | `lib/core/form/data/form_value_store.dart` | Referenced by old evaluation utilities and repository code; not found on active `FormInstance.saveFormData` path. | Medium | Looks like a normalized value-store layer that is not current capture persistence. |
-| LEGACY-RISK | `lib/core/form/evaluation_engine/rules/RulesUtilsProviderImpl.dart` and `rules_utils_provider.dart` | Reference `FormValueStore`; active rule evaluation flows through `FormElementInstance`, SDK `RuleAction`, and `ChoiceFilter`. | Medium | Could be confused with the active expression engine; do not alter for repeat rules until proven in use. |
+| OBSOLETE-REMOVED | Legacy `lib/core/form` repository/value-store, alternate evaluation engine, UI model/intent, dependency graph, scan helper, and commented builder trees | No production source imported these closed trees, no active DI registration existed, and the sole external data-integrity provider had no consumers. They were removed after analyzer and form-test validation. | High | These alternate form, validation, and expression implementations can no longer be confused with the active whole-JSON form engine. |
 | UNKNOWN | `lib/features/form_submission/application/evaluation_engine.dart` | No active imports found in current form element evaluation path. | Low | It may be abandoned or experimental; avoid assuming it evaluates repeat expressions. |
-| LEGACY-RISK | `lib/core/form/ui/form_element_renderer.dart` and `form_element_renderer_function.dart` | Renderer abstraction exists, but active form screen uses `FieldFactory`, `SectionWidget`, and `RepeatTableSliver`. | Medium | Not active rendering for repeat rows based on this scan. |
-| INACTIVE | `lib/core/form/builder/element_state_builder.dart` | Repeat build code appears commented. | High | Old repeat builder; active builder is `form_element_builder.dart`. |
-| INACTIVE | `lib/core/form/builder/template_form_control_builder.dart` | Appears to be old/commented builder code. | Medium | Do not tune this for active repeat performance. |
 | LEGACY-RISK | `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart` | Table is included in `AppDatabase`, but active form save stores repeat rows inside `data_submissions.formData`. | Medium | Form-related table name is misleading for current capture. It may be old sync design or future work. |
 | LEGACY-RISK | `packages/drun_sdk/lib/database/dao/repeat_instances_dao.dart` | DAO exists; no active capture save call found. | Medium | Do not use it as proof that repeat rows are separately persisted. |
 | INACTIVE | `packages/drun_sdk/lib/datasource/remote_data_sources/repeat_instance_datasource.dart` | `@Injectable` annotation is commented; `remote_datasource_order_map.dart` comments out `repeatInstance`. | High | Repeat instance sync is not registered in active SDK session datasource list. |
@@ -149,7 +144,7 @@ Inactive or not active for capture:
 - `repeat_instances` table/DAO/datasource.
 - `data_values` capture datasource.
 - `metadata_submissions`.
-- Old `FormValueStore` and `FormRepositoryImpl` capture path.
+- The removed `FormValueStore` and `FormRepositoryImpl` capture path was not active.
 
 ## Large Repeat Risk Map
 

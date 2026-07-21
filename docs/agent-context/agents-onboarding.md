@@ -102,8 +102,6 @@ Core active files:
 
 Treat these as inactive, incomplete, or legacy-risk unless runtime evidence proves otherwise:
 
-- `lib/core/form/data/form_repository_impl.dart`
-- `lib/core/form/data/form_value_store.dart`
 - `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart`
 - `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
 - `packages/drun_sdk/lib/database/dao/repeat_instances_dao.dart`
@@ -111,6 +109,11 @@ Treat these as inactive, incomplete, or legacy-risk unless runtime evidence prov
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart` as active capture storage
 - `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
 - `lib/data/metadata_submission_update.provider.dart` and its reference-field UI remain reachable but incomplete; do not infer active persistence from their names.
+
+The closed legacy repository/value-store/evaluation/UI-model architecture formerly
+under `lib/core/form` has been removed. The production-reached files remaining in
+that directory are the two builders, the form-element iterator, and the
+`HintProvider` interface/implementation.
 
 These files may contain useful ideas or stale design intent, but they are not authority for current behavior.
 

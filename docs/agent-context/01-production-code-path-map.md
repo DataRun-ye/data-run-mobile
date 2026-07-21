@@ -174,7 +174,7 @@ Active:
 Inactive or obsolete-looking:
 
 - The commented Riverpod form-instance/element/provider experiments were removed.
-- `lib/core/form/form_state/form_state.provider.dart` remains a commented/incomplete alternate form-state approach.
+- The remaining unused core `FormState`/provider/repository model was removed with its isolated element-state tree.
 - The entirely commented `lib/features/form/application/form/form_state/` experiment was removed; active form state remains under `features/form_submission`.
 
 ## 7. Form-related DB tables/code paths that appear inactive or incomplete
@@ -323,7 +323,6 @@ Treat these as high-risk files until the active paths above are fully understood
 
 Also do not delete these until their old/partial roles are explicitly resolved:
 
-- `lib/core/form/form_state/form_state.provider.dart`
 - `lib/core/element_instance/data_value_repository.dart`
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart`
 - `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`

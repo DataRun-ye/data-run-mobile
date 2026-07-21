@@ -23,6 +23,8 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final packageInfo = await PackageInfo.fromPlatform();
 
   await SentryFlutter.init(

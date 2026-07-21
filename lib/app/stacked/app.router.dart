@@ -6,21 +6,19 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:d_sdk/core/user_session/user_session.dart' as _i13;
-import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart'
-    as _i7;
+import 'package:d_sdk/core/user_session/user_session.dart' as _i12;
 import 'package:datarunmobile/features/data_instance/presentation/table_screen.dart'
-    as _i11;
-import 'package:datarunmobile/features/form_submission/application/element/form_element.dart'
-    as _i14;
-import 'package:datarunmobile/features/form_submission/presentation/form_flow_bootstrapper.dart'
     as _i10;
-import 'package:datarunmobile/features/form_submission/presentation/form_submission_screen.widget.dart'
+import 'package:datarunmobile/features/form_submission/application/element/form_element.dart'
+    as _i13;
+import 'package:datarunmobile/features/form_submission/presentation/form_flow_bootstrapper.dart'
     as _i9;
-import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart'
-    as _i16;
-import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart'
+import 'package:datarunmobile/features/form_submission/presentation/form_submission_screen.widget.dart'
     as _i8;
+import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart'
+    as _i15;
+import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart'
+    as _i7;
 import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart'
     as _i2;
 import 'package:datarunmobile/features/home/presentation/settings_view.dart'
@@ -31,11 +29,11 @@ import 'package:datarunmobile/features/startup/presentation/splash_view.dart'
     as _i4;
 import 'package:datarunmobile/features/sync/presentation/sync_resources_view.dart'
     as _i6;
-import 'package:flutter/material.dart' as _i12;
+import 'package:flutter/material.dart' as _i11;
 import 'package:flutter/material.dart';
-import 'package:reactive_forms/reactive_forms.dart' as _i15;
+import 'package:reactive_forms/reactive_forms.dart' as _i14;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i17;
+import 'package:stacked_services/stacked_services.dart' as _i16;
 
 class Routes {
   static const homeWrapperPage = '/home-wrapper-page';
@@ -47,8 +45,6 @@ class Routes {
   static const settingsView = '/settings-view';
 
   static const syncResourcesView = '/sync-resources-view';
-
-  static const assignmentScreen = '/assignment-screen';
 
   static const editRowScreen = '/edit-row-screen';
 
@@ -64,7 +60,6 @@ class Routes {
     splashView,
     settingsView,
     syncResourcesView,
-    assignmentScreen,
     editRowScreen,
     formSubmissionScreen,
     formFlowBootstrapper,
@@ -95,24 +90,20 @@ class StackedRouter extends _i1.RouterBase {
       page: _i6.SyncResourcesView,
     ),
     _i1.RouteDef(
-      Routes.assignmentScreen,
-      page: _i7.AssignmentScreen,
-    ),
-    _i1.RouteDef(
       Routes.editRowScreen,
-      page: _i8.EditRowScreen,
+      page: _i7.EditRowScreen,
     ),
     _i1.RouteDef(
       Routes.formSubmissionScreen,
-      page: _i9.FormSubmissionScreen,
+      page: _i8.FormSubmissionScreen,
     ),
     _i1.RouteDef(
       Routes.formFlowBootstrapper,
-      page: _i10.FormFlowBootstrapper,
+      page: _i9.FormFlowBootstrapper,
     ),
     _i1.RouteDef(
       Routes.tableScreen,
-      page: _i11.TableScreen,
+      page: _i10.TableScreen,
     ),
   ];
 
@@ -121,7 +112,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<HomeWrapperPageArguments>(
         orElse: () => const HomeWrapperPageArguments(),
       );
-      return _i12.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i2.HomeWrapperPage(key: args.key, langKey: args.langKey),
         settings: data,
@@ -131,7 +122,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<LoginViewArguments>(
         orElse: () => const LoginViewArguments(),
       );
-      return _i12.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i3.LoginView(key: args.key, onResult: args.onResult),
         settings: data,
@@ -141,36 +132,27 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<SplashViewArguments>(
         orElse: () => const SplashViewArguments(),
       );
-      return _i12.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i4.SplashView(key: args.key),
         settings: data,
       );
     },
     _i5.SettingsView: (data) {
-      return _i12.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i5.SettingsView(),
         settings: data,
       );
     },
     _i6.SyncResourcesView: (data) {
-      return _i12.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i6.SyncResourcesView(),
         settings: data,
       );
     },
-    _i7.AssignmentScreen: (data) {
-      final args = data.getArgs<AssignmentScreenArguments>(
-        orElse: () => const AssignmentScreenArguments(),
-      );
-      return _i12.MaterialPageRoute<dynamic>(
-        builder: (context) => _i7.AssignmentScreen(key: args.key),
-        settings: data,
-      );
-    },
-    _i8.EditRowScreen: (data) {
+    _i7.EditRowScreen: (data) {
       final args = data.getArgs<EditRowScreenArguments>(nullOk: false);
-      return _i12.MaterialPageRoute<dynamic>(
-        builder: (context) => _i8.EditRowScreen(
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i7.EditRowScreen(
             repeatInstance: args.repeatInstance,
             item: args.item,
             title: args.title,
@@ -179,10 +161,10 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i9.FormSubmissionScreen: (data) {
+    _i8.FormSubmissionScreen: (data) {
       final args = data.getArgs<FormSubmissionScreenArguments>(nullOk: false);
-      return _i12.MaterialPageRoute<dynamic>(
-        builder: (context) => _i9.FormSubmissionScreen(
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i8.FormSubmissionScreen(
             key: args.key,
             submissionId: args.submissionId,
             formId: args.formId,
@@ -192,12 +174,12 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i10.FormFlowBootstrapper: (data) {
+    _i9.FormFlowBootstrapper: (data) {
       final args = data.getArgs<FormFlowBootstrapperArguments>(
         orElse: () => const FormFlowBootstrapperArguments(),
       );
-      return _i12.MaterialPageRoute<dynamic>(
-        builder: (context) => _i10.FormFlowBootstrapper(
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i9.FormFlowBootstrapper(
             key: args.key,
             submissionId: args.submissionId,
             formId: args.formId,
@@ -206,10 +188,10 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i11.TableScreen: (data) {
+    _i10.TableScreen: (data) {
       final args = data.getArgs<TableScreenArguments>(nullOk: false);
-      return _i12.MaterialPageRoute<dynamic>(
-        builder: (context) => _i11.TableScreen(
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i10.TableScreen(
             key: args.key,
             formId: args.formId,
             assignmentId: args.assignmentId),
@@ -231,7 +213,7 @@ class HomeWrapperPageArguments {
     this.langKey = 'ar',
   });
 
-  final _i12.Key? key;
+  final _i11.Key? key;
 
   final String langKey;
 
@@ -258,11 +240,11 @@ class LoginViewArguments {
     this.onResult,
   });
 
-  final _i12.Key? key;
+  final _i11.Key? key;
 
   final dynamic Function(
     bool,
-    _i13.UserSession?,
+    _i12.UserSession?,
   )? onResult;
 
   @override
@@ -285,7 +267,7 @@ class LoginViewArguments {
 class SplashViewArguments {
   const SplashViewArguments({this.key});
 
-  final _i12.Key? key;
+  final _i11.Key? key;
 
   @override
   String toString() {
@@ -294,28 +276,6 @@ class SplashViewArguments {
 
   @override
   bool operator ==(covariant SplashViewArguments other) {
-    if (identical(this, other)) return true;
-    return other.key == key;
-  }
-
-  @override
-  int get hashCode {
-    return key.hashCode;
-  }
-}
-
-class AssignmentScreenArguments {
-  const AssignmentScreenArguments({this.key});
-
-  final _i12.Key? key;
-
-  @override
-  String toString() {
-    return '{"key": "$key"}';
-  }
-
-  @override
-  bool operator ==(covariant AssignmentScreenArguments other) {
     if (identical(this, other)) return true;
     return other.key == key;
   }
@@ -335,17 +295,17 @@ class EditRowScreenArguments {
     required this.onSave,
   });
 
-  final _i14.RepeatSection repeatInstance;
+  final _i13.RepeatSection repeatInstance;
 
-  final _i14.RepeatItemInstance item;
+  final _i13.RepeatItemInstance item;
 
   final String? title;
 
-  final void Function(_i14.RepeatItemInstance)? onRemoveItem;
+  final void Function(_i13.RepeatItemInstance)? onRemoveItem;
 
   final void Function(
-    _i15.FormGroup,
-    _i16.EditActionType,
+    _i14.FormGroup,
+    _i15.EditActionType,
   ) onSave;
 
   @override
@@ -383,7 +343,7 @@ class FormSubmissionScreenArguments {
     this.currentPageIndex = 0,
   });
 
-  final _i12.Key? key;
+  final _i11.Key? key;
 
   final String submissionId;
 
@@ -431,7 +391,7 @@ class FormFlowBootstrapperArguments {
     this.assignmentId,
   });
 
-  final _i12.Key? key;
+  final _i11.Key? key;
 
   final String? submissionId;
 
@@ -473,7 +433,7 @@ class TableScreenArguments {
     this.assignmentId,
   });
 
-  final _i12.Key? key;
+  final _i11.Key? key;
 
   final String formId;
 
@@ -498,9 +458,9 @@ class TableScreenArguments {
   }
 }
 
-extension NavigatorStateExtension on _i17.NavigationService {
+extension NavigatorStateExtension on _i16.NavigationService {
   Future<dynamic> navigateToHomeWrapperPage({
-    _i12.Key? key,
+    _i11.Key? key,
     String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
@@ -517,10 +477,10 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> navigateToLoginView({
-    _i12.Key? key,
+    _i11.Key? key,
     dynamic Function(
       bool,
-      _i13.UserSession?,
+      _i12.UserSession?,
     )? onResult,
     int? routerId,
     bool preventDuplicates = true,
@@ -537,7 +497,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> navigateToSplashView({
-    _i12.Key? key,
+    _i11.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -580,30 +540,14 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToAssignmentScreen({
-    _i12.Key? key,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo<dynamic>(Routes.assignmentScreen,
-        arguments: AssignmentScreenArguments(key: key),
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToEditRowScreen({
-    required _i14.RepeatSection repeatInstance,
-    required _i14.RepeatItemInstance item,
+    required _i13.RepeatSection repeatInstance,
+    required _i13.RepeatItemInstance item,
     String? title,
-    void Function(_i14.RepeatItemInstance)? onRemoveItem,
+    void Function(_i13.RepeatItemInstance)? onRemoveItem,
     required void Function(
-      _i15.FormGroup,
-      _i16.EditActionType,
+      _i14.FormGroup,
+      _i15.EditActionType,
     ) onSave,
     int? routerId,
     bool preventDuplicates = true,
@@ -625,7 +569,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> navigateToFormSubmissionScreen({
-    _i12.Key? key,
+    _i11.Key? key,
     required String submissionId,
     required String formId,
     required String versionId,
@@ -652,7 +596,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> navigateToFormFlowBootstrapper({
-    _i12.Key? key,
+    _i11.Key? key,
     String? submissionId,
     String? formId,
     String? versionId,
@@ -677,7 +621,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> navigateToTableScreen({
-    _i12.Key? key,
+    _i11.Key? key,
     required String formId,
     String? assignmentId,
     int? routerId,
@@ -696,7 +640,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithHomeWrapperPage({
-    _i12.Key? key,
+    _i11.Key? key,
     String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
@@ -713,10 +657,10 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithLoginView({
-    _i12.Key? key,
+    _i11.Key? key,
     dynamic Function(
       bool,
-      _i13.UserSession?,
+      _i12.UserSession?,
     )? onResult,
     int? routerId,
     bool preventDuplicates = true,
@@ -733,7 +677,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithSplashView({
-    _i12.Key? key,
+    _i11.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -776,30 +720,14 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithAssignmentScreen({
-    _i12.Key? key,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return replaceWith<dynamic>(Routes.assignmentScreen,
-        arguments: AssignmentScreenArguments(key: key),
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithEditRowScreen({
-    required _i14.RepeatSection repeatInstance,
-    required _i14.RepeatItemInstance item,
+    required _i13.RepeatSection repeatInstance,
+    required _i13.RepeatItemInstance item,
     String? title,
-    void Function(_i14.RepeatItemInstance)? onRemoveItem,
+    void Function(_i13.RepeatItemInstance)? onRemoveItem,
     required void Function(
-      _i15.FormGroup,
-      _i16.EditActionType,
+      _i14.FormGroup,
+      _i15.EditActionType,
     ) onSave,
     int? routerId,
     bool preventDuplicates = true,
@@ -821,7 +749,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithFormSubmissionScreen({
-    _i12.Key? key,
+    _i11.Key? key,
     required String submissionId,
     required String formId,
     required String versionId,
@@ -848,7 +776,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithFormFlowBootstrapper({
-    _i12.Key? key,
+    _i11.Key? key,
     String? submissionId,
     String? formId,
     String? versionId,
@@ -873,7 +801,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithTableScreen({
-    _i12.Key? key,
+    _i11.Key? key,
     required String formId,
     String? assignmentId,
     int? routerId,

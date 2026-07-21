@@ -1,11 +1,9 @@
-import 'package:datarunmobile/features/activity/application/activity.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_card.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_list_viewmodel.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stacked/stacked.dart';
 
 class ActivityListView extends StackedView<ActivityListViewModel> {
@@ -31,11 +29,8 @@ class ActivityListView extends StackedView<ActivityListViewModel> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => ProviderScope(
-                  overrides: [
-                    activityModelProvider.overrideWithValue(activity)
-                  ],
-                  child: const AssignmentScreen(),
+                builder: (context) => AssignmentScreen(
+                  activityId: activity.id,
                 ),
               ),
             );

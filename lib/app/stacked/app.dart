@@ -1,4 +1,3 @@
-import 'package:datarunmobile/features/assignment/presentation/assignment_screen.dart';
 import 'package:datarunmobile/features/data_instance/presentation/table_screen.dart';
 import 'package:datarunmobile/features/common_ui_element/info_alert/info_alert_dialog.dart';
 import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet.dart';
@@ -21,7 +20,6 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SplashView),
     MaterialRoute(page: SettingsView),
     MaterialRoute(page: SyncResourcesView),
-    MaterialRoute(page: AssignmentScreen),
     MaterialRoute(page: EditRowScreen),
     MaterialRoute(page: FormSubmissionScreen),
     MaterialRoute(page: FormFlowBootstrapper),

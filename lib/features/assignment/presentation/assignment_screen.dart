@@ -1,6 +1,5 @@
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
-import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/active_filters_widget.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignment_card_view/assignments_card_view.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/assignment_table_view.dart';
@@ -11,7 +10,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AssignmentScreen extends HookConsumerWidget {
-  const AssignmentScreen({super.key});
+  const AssignmentScreen({
+    super.key,
+    required this.activityId,
+  });
+
+  final String activityId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,11 +77,13 @@ class AssignmentScreen extends HookConsumerWidget {
                       filterQueryProvider.select((value) => value.isCardView))
                   ? AssignmentsCardView(
                       key: const ValueKey('cardView'),
+                      activityId: activityId,
                       onViewDetails: (assignment) =>
                           _navigateToDetails(context, assignment),
                     )
                   : AssignmentTableView(
                       key: const ValueKey('tableView'),
+                      activityId: activityId,
                       onViewDetails: (assignment) =>
                           _navigateToDetails(context, assignment),
                     ),
@@ -88,18 +94,13 @@ class AssignmentScreen extends HookConsumerWidget {
     );
   }
 
-  // TODO pass only the assignment Id
   void _navigateToDetails(BuildContext context, AssignmentModel assignment) {
     Navigator.of(context).push(
       MaterialPageRoute(
-          builder: (context) => ProviderScope(
-                overrides: [
-                  assignmentProvider.overrideWithValue(assignment),
-                ],
-                child: AssignmentDetailPage(
-                  assignment: assignment,
-                ),
-              )),
+        builder: (context) => AssignmentDetailPage(
+          assignment: assignment,
+        ),
+      ),
     );
   }
 }

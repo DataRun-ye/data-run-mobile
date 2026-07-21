@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:d_sdk/database/shared/assignment_model.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
-import 'package:datarunmobile/features/activity/application/activity.provider.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,9 +9,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'assignment_filter.provider.g.dart';
 
 /// filters the list of assignment by certain
-@Riverpod(dependencies: [activityModel, Assignments])
-Future<List<AssignmentModel>> filterAssignments(Ref ref) async {
-  final assignments = await ref.watch(assignmentsProvider.future);
+@riverpod
+Future<List<AssignmentModel>> filterAssignments(
+  Ref ref,
+  String activityId,
+) async {
+  final assignments = await ref.watch(assignmentsProvider(activityId).future);
   final query = ref.watch(filterQueryProvider);
   final teamsAsync = await ref.watch(teamsProvider().future);
   final lowerCaseQuery = query.searchQuery.toLowerCase();

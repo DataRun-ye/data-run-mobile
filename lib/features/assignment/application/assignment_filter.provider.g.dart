@@ -11,7 +11,7 @@ part of 'assignment_filter.provider.dart';
 /// filters the list of assignment by certain
 
 @ProviderFor(filterAssignments)
-final filterAssignmentsProvider = FilterAssignmentsProvider._();
+final filterAssignmentsProvider = FilterAssignmentsFamily._();
 
 /// filters the list of assignment by certain
 
@@ -23,28 +23,26 @@ final class FilterAssignmentsProvider extends $FunctionalProvider<
         $FutureModifier<List<AssignmentModel>>,
         $FutureProvider<List<AssignmentModel>> {
   /// filters the list of assignment by certain
-  FilterAssignmentsProvider._()
+  FilterAssignmentsProvider._(
+      {required FilterAssignmentsFamily super.from,
+      required String super.argument})
       : super(
-          from: null,
-          argument: null,
           retry: null,
           name: r'filterAssignmentsProvider',
           isAutoDispose: true,
-          dependencies: <ProviderOrFamily>[
-            activityModelProvider,
-            assignmentsProvider
-          ],
-          $allTransitiveDependencies: <ProviderOrFamily>[
-            FilterAssignmentsProvider.$allTransitiveDependencies0,
-            FilterAssignmentsProvider.$allTransitiveDependencies1,
-          ],
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
-
-  static final $allTransitiveDependencies0 = activityModelProvider;
-  static final $allTransitiveDependencies1 = assignmentsProvider;
 
   @override
   String debugGetCreateSourceHash() => _$filterAssignmentsHash();
+
+  @override
+  String toString() {
+    return r'filterAssignmentsProvider'
+        ''
+        '($argument)';
+  }
 
   @$internal
   @override
@@ -54,11 +52,49 @@ final class FilterAssignmentsProvider extends $FunctionalProvider<
 
   @override
   FutureOr<List<AssignmentModel>> create(Ref ref) {
-    return filterAssignments(ref);
+    final argument = this.argument as String;
+    return filterAssignments(
+      ref,
+      argument,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FilterAssignmentsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
   }
 }
 
-String _$filterAssignmentsHash() => r'afc52dae3b02d91b311aebedf89b120d1da1353f';
+String _$filterAssignmentsHash() => r'fc771c45395f1ee54dc091ec2abb7b569612c1ff';
+
+/// filters the list of assignment by certain
+
+final class FilterAssignmentsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<AssignmentModel>>, String> {
+  FilterAssignmentsFamily._()
+      : super(
+          retry: null,
+          name: r'filterAssignmentsProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  /// filters the list of assignment by certain
+
+  FilterAssignmentsProvider call(
+    String activityId,
+  ) =>
+      FilterAssignmentsProvider._(argument: activityId, from: this);
+
+  @override
+  String toString() => r'filterAssignmentsProvider';
+}
 
 /// filter query model notifier that store filtering cretirias
 

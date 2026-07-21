@@ -11,13 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AssignmentTableView extends HookConsumerWidget {
-  AssignmentTableView({super.key, required this.onViewDetails});
+  AssignmentTableView({
+    super.key,
+    required this.activityId,
+    required this.onViewDetails,
+  });
 
+  final String activityId;
   final void Function(AssignmentModel) onViewDetails;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final assignmentsAsync = ref.watch(filterAssignmentsProvider);
+    final assignmentsAsync = ref.watch(filterAssignmentsProvider(activityId));
     final searchQuery = ref.watch(filterQueryProvider).searchQuery;
     return AsyncValueWidget(
       value: assignmentsAsync,

@@ -55,8 +55,8 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `assignment_forms` | ACTIVE | ACTIVE | Used by available forms, assignment detail access, edit permissions, and form list filtering. This is the active form-access table. |
 | `sync_summaries` | ACTIVE in `03` | SUPPORTING-USED | `BaseDataSource` writes summaries. The unreachable `SyncSummaryCard` UI was removed; core sync completion uses progress/global state and SharedPreferences flags. |
 | `DataValueRepository` display helper | Partially active in `01`, LEGACY-RISK in `02` | SUPPORTING-USED | `DataValueRepository` is used by `MapValueToDisplay`, but this is display support, not current capture persistence. |
-| `data_values` table as capture storage | Previously partially active/LEGACY-RISK | INACTIVE-SCHEMA | DAO/datasource/CRUD callers are removed; active form save writes `data_instances.formData`. The table awaits a tested migration. |
-| `repeat_instances` table | Previously LEGACY-RISK | INACTIVE-SCHEMA | DAO/datasource are removed and no non-generated table access remains. Repeat rows live in nested submission JSON. |
+| `data_values` table as capture storage | Previously partially active/LEGACY-RISK | OBSOLETE-REMOVED | DAO/datasource/CRUD callers and table are removed; migration 5 preserves active whole submission JSON. |
+| `repeat_instances` table | Previously LEGACY-RISK | OBSOLETE-REMOVED | DAO/datasource/table are removed; migration 5 preserves repeats in nested submission JSON. |
 | `metadata_submissions` and `systemMetadataSubmissionsProvider` | Inactive/incomplete in `01`/`03`, incomplete in `04` | INCOMPLETE | The comment-only SDK table/datasource artifacts were removed. Reference widgets can still watch the provider, but it currently returns `[]` after commented DB logic. Production use depends on forms containing `ValueType.Reference`. |
 | `partyResolverProvider` and party/manifest tables | Mixed/uncertain in `03`, INCOMPLETE in `04` | INCOMPLETE | Provider contains placeholder user/team/party IDs and no static production consumer was found. |
 | Form route/load/save/repeat core in `02` | ACTIVE | ACTIVE | `FormFlowBootstrapperVm`, `FormTemplateRepository`, `FormElementControlBuilder`, `FormElementBuilder`, `FormInstance`, repeat models/widgets, and `DataInstancesDao.updateData` pass the strict test. |
@@ -143,7 +143,7 @@ These are used or plausible, but should not be treated as core-active without mo
 | `lib/data/app_about_info.provider.dart` | SUPPORTING-USED | Version/about display only. |
 | Settings screens and appearance/preferences UI | SUPPORTING-USED | Reachable UI, but not core data-collection behavior. Preference provider itself remains ACTIVE because root app and table appearance use it. |
 | `SyncSummaryCard` UI | OBSOLETE-REMOVED | It had no executable consumer; `sync_summaries` persistence remains supporting-used independently. |
-| `DataValueRepository` / `data_values` | SUPPORTING-USED | Display helper use exists; capture/save does not use this path. Treat `data_values` as LEGACY-RISK for storage design. |
+| `DataValueRepository` | SUPPORTING-USED | Only org-unit/team/option display lookup remains; inactive normalized value persistence was removed. |
 | `data_elements` table | SUPPORTING-USED | Synced actively, used by display/older metadata helpers, but not the primary form JSON source. |
 | `ValueType.Reference` widgets and metadata provider | INCOMPLETE | Field factory can route to reference widgets, but provider returns empty data and production form use is unconfirmed. |
 | `UserFormAccessesDatasource` table output | UNKNOWN | Synced actively, but active access checks rely on `assignment_forms`. |
@@ -157,8 +157,6 @@ Do not delete these yet, but they are strong candidates for demotion/removal aft
 - `lib/core/sync_manager/sync_service.provider.dart`
 - `packages/drun_sdk/lib/di/injection.config.dart` generated `initActiveSessionContextScope(...)`
 - `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart`
-- `repeat_instances` schema table
-- `data_values` capture datasource
 - `metadata_submissions` table/datasource
 - `party`/manifest provider and tables, unless a future runtime pass proves production use
 

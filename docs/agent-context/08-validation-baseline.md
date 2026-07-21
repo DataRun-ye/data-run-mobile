@@ -65,7 +65,7 @@ Create a small test PR before deeper form refactoring. Keep it focused on active
 
 3. Form JSON loading smoke test.
    - Use a small fixture modeled after `example/` forms.
-   - Prove loading creates repeat controls/items from whole JSON rather than inactive `repeat_instances` or `data_values` tables.
+   - Prove loading creates repeat controls/items from whole JSON and does not recreate normalized repeat/data-value persistence.
 
 Acceptance for that test PR:
 

@@ -103,9 +103,11 @@ Core active files:
 Treat these as inactive, incomplete, or legacy-risk unless runtime evidence proves otherwise:
 
 - `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart`
-- `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
-- `packages/drun_sdk/lib/database/tables/data_values.table.dart` as active capture storage
 - `lib/data/metadata_submission_update.provider.dart` and its reference-field UI remain reachable but incomplete; do not infer active persistence from their names.
+
+The obsolete normalized repeat/data-value persistence path was removed in schema
+5. Active form capture stores fields and repeat rows only in
+`data_instances.formData`.
 
 The closed legacy repository/value-store/evaluation/UI-model architecture formerly
 under `lib/core/form` has been removed. The production-reached files remaining in

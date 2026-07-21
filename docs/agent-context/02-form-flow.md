@@ -82,10 +82,9 @@ Status legend:
 | LEGACY-RISK | `lib/core/element_instance/data_value_repository.dart` | Directly reads/writes `db.dataValues`; active capture save does not call it, but it is registered in DI and used by display mapping services. | Medium | Data values table exists and can confuse repeat persistence work. It is not active for form save. |
 | OBSOLETE-REMOVED | Legacy `lib/core/form` repository/value-store, alternate evaluation engine, UI model/intent, dependency graph, scan helper, and commented builder trees | No production source imported these closed trees, no active DI registration existed, and the sole external data-integrity provider had no consumers. They were removed after analyzer and form-test validation. | High | These alternate form, validation, and expression implementations can no longer be confused with the active whole-JSON form engine. |
 | UNKNOWN | `lib/features/form_submission/application/evaluation_engine.dart` | No active imports found in current form element evaluation path. | Low | It may be abandoned or experimental; avoid assuming it evaluates repeat expressions. |
-| LEGACY-RISK | `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart` | Table is included in `AppDatabase`, but active form save stores repeat rows inside `data_submissions.formData`. | Medium | Form-related table name is misleading for current capture. It may be old sync design or future work. |
-| INACTIVE-SCHEMA | `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart` | Its DAO/datasource were removed and no non-generated read or write remains; the table is retained only until a tested migration removes it. | High | Repeat rows are not separately persisted. |
+| OBSOLETE-REMOVED | Normalized `repeat_instances` persistence path | No runtime read/write remained. Table, DAO, and datasource were removed; schema migration 5 drops populated legacy tables from schema 3/4. | High | Repeat rows are persisted only inside whole submission JSON. |
 | OBSOLETE-REMOVED | Repeat-instance datasource | It had no active annotation, order registration, import, or consumer and was removed. | High | Repeat instance sync is not part of the active whole-JSON capture path. |
-| INACTIVE-SCHEMA | `packages/drun_sdk/lib/database/tables/data_values.table.dart` | Its DAO/datasource and inactive CRUD facade were removed; no non-generated read or write remains. The table is retained until a tested migration removes it. | High | Field values are persisted only in whole submission JSON. |
+| OBSOLETE-REMOVED | Normalized `data_values` persistence path | No runtime read/write remained. Table, DAO, datasource, and inactive CRUD facade were removed; schema migration 5 covers schema 3/4. | High | Field values are persisted only inside whole submission JSON. |
 | INACTIVE | `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart` | `@Injectable` annotation is commented. | High | Data value sync is not part of active form capture sync. |
 | INACTIVE | `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart` and `remote_data_sources/metadata_submission_datasource.dart` | Table and datasource are commented. | High | Not active local persistence before sync. |
 | OBSOLETE-REMOVED | Alternate form-template-version datasource | It had no registration or consumer and was removed. Active template sync remains in `DataFormTemplateDatasource`. | High | It can no longer be mistaken for the active form JSON sync path. |
@@ -138,8 +137,6 @@ Active local layers:
 
 Inactive or not active for capture:
 
-- `repeat_instances` schema table.
-- `data_values` capture datasource.
 - `metadata_submissions`.
 - The removed `FormValueStore` and `FormRepositoryImpl` capture path was not active.
 
@@ -205,7 +202,6 @@ Treat these as the minimum "do not touch until understood" set for repeat perfor
 6. For nested repeats or repeated field names, does `findElementInParentSection` resolve dependencies to the intended row-local field every time?
 7. How long does bootstrap take on a real form with 200-300 repeat rows and representative choice filters/calculated fields?
 8. Does `PaginatedDataTable` create only visible row widgets, or do row/cell builders still cause expensive traversal across all repeat elements during refresh?
-9. Are `repeat_instances` or `data_values` ever touched by sync/runtime code outside the scanned production form path?
 10. Are calculated fields expected to work in production forms, given that `CalculatedFieldInstance.evaluate` calculation writeback is commented?
 
 ## Next Investigation Step

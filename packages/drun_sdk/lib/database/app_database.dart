@@ -12,7 +12,6 @@ import 'package:d_sdk/database/shared/translations.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:d_sdk/database/tables/tables.dart';
 import 'package:drift/drift.dart';
-import 'package:ulid/ulid.dart';
 
 part 'app_database.g.dart';
 
@@ -28,8 +27,6 @@ part 'app_database.g.dart';
   AssignmentForms,
   FormTemplates,
   FormTemplateVersions,
-  RepeatInstances,
-  DataValues,
   DataElements,
   DataOptionSets,
   DataOptions,
@@ -50,7 +47,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor);
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -68,6 +65,10 @@ class AppDatabase extends _$AppDatabase {
           if (from < 4) {
             await m.addColumn(syncSummaries,
                 syncSummaries.lastSuccessfulSync as GeneratedColumn);
+          }
+          if (from < 5) {
+            await m.deleteTable('data_values');
+            await m.deleteTable('repeat_instances');
           }
         },
       );

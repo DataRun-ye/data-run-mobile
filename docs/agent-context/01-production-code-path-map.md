@@ -187,16 +187,7 @@ Active:
 
 Inactive or incomplete-looking:
 
-- `repeat_instances`:
-  - The table remains in the Drift schema for migration compatibility; its unused DAO and datasource were removed.
-  - App repeat rendering/editing does not use the table; repeats are stored inside `DataInstance.formData` as nested JSON lists.
-  - No non-generated runtime read or write remains.
-  - Classification: schema-only inactive; removal requires a tested database migration.
-- `data_values`:
-  - The table remains in the Drift schema for migration compatibility; its unused DAO, datasource, and CRUD facade were removed.
-  - Active capture save does not write `data_values`; it writes `data_instances.formData`.
-  - `DataValueRepository` remains active only for org-unit/team/option display lookup; it no longer presents inactive per-field persistence methods.
-  - Classification: schema-only inactive as persistence; removal requires a tested database migration.
+- `repeat_instances` and `data_values`: obsolete normalized persistence tables, DAOs, datasources, and callers were removed. Schema migration 5 drops populated legacy tables while preserving active `data_instances.formData`; schema 3 and 4 upgrade fixtures cover the transition.
 - `metadata_submissions`:
   - `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart:6` is commented out.
   - `packages/drun_sdk/lib/database/tables/tables.dart` exports it, but `AppDatabase` does not include an active `MetadataSubmissions` table.
@@ -319,8 +310,6 @@ Treat these as high-risk files until the active paths above are fully understood
 Also do not delete these until their old/partial roles are explicitly resolved:
 
 - `lib/core/element_instance/data_value_repository.dart`
-- `packages/drun_sdk/lib/database/tables/data_values.table.dart`
-- `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
 - `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart`
 - `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
 - `packages/drun_sdk/lib/datasource/remote_data_sources/metadata_submission_datasource.dart`

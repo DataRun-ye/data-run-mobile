@@ -5802,1308 +5802,6 @@ class FormTemplateVersionsCompanion
   }
 }
 
-class $DataInstancesTable extends DataInstances
-    with TableInfo<$DataInstancesTable, DataInstance> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $DataInstancesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
-  @override
-  late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
-  @override
-  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, true,
-      type: DriftSqlType.dateTime,
-      requiredDuringInsert: false,
-      clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _deletedMeta =
-      const VerificationMeta('deleted');
-  @override
-  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
-      'deleted', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
-      clientDefault: () => false);
-  static const VerificationMeta _deletedAtMeta =
-      const VerificationMeta('deletedAt');
-  @override
-  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
-      'deleted_at', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _formTemplateMeta =
-      const VerificationMeta('formTemplate');
-  @override
-  late final GeneratedColumn<String> formTemplate = GeneratedColumn<String>(
-      'form_template', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
-  static const VerificationMeta _templateVersionMeta =
-      const VerificationMeta('templateVersion');
-  @override
-  late final GeneratedColumn<String> templateVersion = GeneratedColumn<String>(
-      'template_version', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES form_template_versions (id)'));
-  static const VerificationMeta _assignmentMeta =
-      const VerificationMeta('assignment');
-  @override
-  late final GeneratedColumn<String> assignment = GeneratedColumn<String>(
-      'assignment', aliasedName, true,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES assignments (id)'));
-  static const VerificationMeta _startEntryTimeMeta =
-      const VerificationMeta('startEntryTime');
-  @override
-  late final GeneratedColumn<DateTime> startEntryTime =
-      GeneratedColumn<DateTime>('start_entry_time', aliasedName, false,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _finishedEntryTimeMeta =
-      const VerificationMeta('finishedEntryTime');
-  @override
-  late final GeneratedColumn<DateTime> finishedEntryTime =
-      GeneratedColumn<DateTime>('finished_entry_time', aliasedName, true,
-          type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  @override
-  late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      formData = GeneratedColumn<String>('form_data', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<Map<String, dynamic>?>(
-              $DataInstancesTable.$converterformData);
-  static const VerificationMeta _updatedAtClientMeta =
-      const VerificationMeta('updatedAtClient');
-  @override
-  late final GeneratedColumn<DateTime> updatedAtClient =
-      GeneratedColumn<DateTime>('updated_at_client', aliasedName, true,
-          type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  @override
-  late final GeneratedColumnWithTypeConverter<InstanceSyncStatus, String>
-      syncState = GeneratedColumn<String>('sync_state', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<InstanceSyncStatus>(
-              $DataInstancesTable.$convertersyncState);
-  static const VerificationMeta _lastSyncDateMeta =
-      const VerificationMeta('lastSyncDate');
-  @override
-  late final GeneratedColumn<DateTime> lastSyncDate = GeneratedColumn<DateTime>(
-      'last_sync_date', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _lastSyncMessageMeta =
-      const VerificationMeta('lastSyncMessage');
-  @override
-  late final GeneratedColumn<String> lastSyncMessage = GeneratedColumn<String>(
-      'last_sync_message', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _isToUpdateMeta =
-      const VerificationMeta('isToUpdate');
-  @override
-  late final GeneratedColumn<bool> isToUpdate = GeneratedColumn<bool>(
-      'is_to_update', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("is_to_update" IN (0, 1))'));
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        deleted,
-        deletedAt,
-        formTemplate,
-        templateVersion,
-        assignment,
-        startEntryTime,
-        finishedEntryTime,
-        formData,
-        updatedAtClient,
-        syncState,
-        lastSyncDate,
-        lastSyncMessage,
-        isToUpdate
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'data_instances';
-  @override
-  VerificationContext validateIntegrity(Insertable<DataInstance> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('last_modified_date')) {
-      context.handle(
-          _lastModifiedDateMeta,
-          lastModifiedDate.isAcceptableOrUnknown(
-              data['last_modified_date']!, _lastModifiedDateMeta));
-    }
-    if (data.containsKey('created_date')) {
-      context.handle(
-          _createdDateMeta,
-          createdDate.isAcceptableOrUnknown(
-              data['created_date']!, _createdDateMeta));
-    }
-    if (data.containsKey('deleted')) {
-      context.handle(_deletedMeta,
-          deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta));
-    }
-    if (data.containsKey('deleted_at')) {
-      context.handle(_deletedAtMeta,
-          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
-    }
-    if (data.containsKey('form_template')) {
-      context.handle(
-          _formTemplateMeta,
-          formTemplate.isAcceptableOrUnknown(
-              data['form_template']!, _formTemplateMeta));
-    } else if (isInserting) {
-      context.missing(_formTemplateMeta);
-    }
-    if (data.containsKey('template_version')) {
-      context.handle(
-          _templateVersionMeta,
-          templateVersion.isAcceptableOrUnknown(
-              data['template_version']!, _templateVersionMeta));
-    } else if (isInserting) {
-      context.missing(_templateVersionMeta);
-    }
-    if (data.containsKey('assignment')) {
-      context.handle(
-          _assignmentMeta,
-          assignment.isAcceptableOrUnknown(
-              data['assignment']!, _assignmentMeta));
-    }
-    if (data.containsKey('start_entry_time')) {
-      context.handle(
-          _startEntryTimeMeta,
-          startEntryTime.isAcceptableOrUnknown(
-              data['start_entry_time']!, _startEntryTimeMeta));
-    }
-    if (data.containsKey('finished_entry_time')) {
-      context.handle(
-          _finishedEntryTimeMeta,
-          finishedEntryTime.isAcceptableOrUnknown(
-              data['finished_entry_time']!, _finishedEntryTimeMeta));
-    }
-    if (data.containsKey('updated_at_client')) {
-      context.handle(
-          _updatedAtClientMeta,
-          updatedAtClient.isAcceptableOrUnknown(
-              data['updated_at_client']!, _updatedAtClientMeta));
-    }
-    if (data.containsKey('last_sync_date')) {
-      context.handle(
-          _lastSyncDateMeta,
-          lastSyncDate.isAcceptableOrUnknown(
-              data['last_sync_date']!, _lastSyncDateMeta));
-    }
-    if (data.containsKey('last_sync_message')) {
-      context.handle(
-          _lastSyncMessageMeta,
-          lastSyncMessage.isAcceptableOrUnknown(
-              data['last_sync_message']!, _lastSyncMessageMeta));
-    }
-    if (data.containsKey('is_to_update')) {
-      context.handle(
-          _isToUpdateMeta,
-          isToUpdate.isAcceptableOrUnknown(
-              data['is_to_update']!, _isToUpdateMeta));
-    } else if (isInserting) {
-      context.missing(_isToUpdateMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  DataInstance map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return DataInstance(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      lastModifiedDate: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
-      createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      deleted: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}deleted'])!,
-      deletedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
-      formTemplate: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}form_template'])!,
-      templateVersion: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}template_version'])!,
-      assignment: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}assignment']),
-      startEntryTime: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}start_entry_time'])!,
-      finishedEntryTime: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}finished_entry_time']),
-      formData: $DataInstancesTable.$converterformData.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}form_data'])),
-      updatedAtClient: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}updated_at_client']),
-      syncState: $DataInstancesTable.$convertersyncState.fromSql(
-          attachedDatabase.typeMapping.read(
-              DriftSqlType.string, data['${effectivePrefix}sync_state'])!),
-      lastSyncDate: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}last_sync_date']),
-      lastSyncMessage: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}last_sync_message']),
-      isToUpdate: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_to_update'])!,
-    );
-  }
-
-  @override
-  $DataInstancesTable createAlias(String alias) {
-    return $DataInstancesTable(attachedDatabase, alias);
-  }
-
-  static TypeConverter<Map<String, dynamic>?, String?> $converterformData =
-      const NullAwareMapConverter();
-  static JsonTypeConverter2<InstanceSyncStatus, String, String>
-      $convertersyncState = const EnumNameConverter(InstanceSyncStatus.values);
-}
-
-class DataInstance extends DataClass implements Insertable<DataInstance> {
-  final String id;
-  final DateTime? lastModifiedDate;
-  final DateTime? createdDate;
-  final bool deleted;
-  final DateTime? deletedAt;
-
-  /// analogous to program
-  final String formTemplate;
-  final String templateVersion;
-
-  /// analogous to enrollment
-  final String? assignment;
-  final DateTime startEntryTime;
-  final DateTime? finishedEntryTime;
-  final Map<String, dynamic>? formData;
-  final DateTime? updatedAtClient;
-  final InstanceSyncStatus syncState;
-  final DateTime? lastSyncDate;
-  final String? lastSyncMessage;
-
-  /// is already synced to server
-  final bool isToUpdate;
-  const DataInstance(
-      {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.deleted,
-      this.deletedAt,
-      required this.formTemplate,
-      required this.templateVersion,
-      this.assignment,
-      required this.startEntryTime,
-      this.finishedEntryTime,
-      this.formData,
-      this.updatedAtClient,
-      required this.syncState,
-      this.lastSyncDate,
-      this.lastSyncMessage,
-      required this.isToUpdate});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    if (!nullToAbsent || lastModifiedDate != null) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate);
-    }
-    if (!nullToAbsent || createdDate != null) {
-      map['created_date'] = Variable<DateTime>(createdDate);
-    }
-    map['deleted'] = Variable<bool>(deleted);
-    if (!nullToAbsent || deletedAt != null) {
-      map['deleted_at'] = Variable<DateTime>(deletedAt);
-    }
-    map['form_template'] = Variable<String>(formTemplate);
-    map['template_version'] = Variable<String>(templateVersion);
-    if (!nullToAbsent || assignment != null) {
-      map['assignment'] = Variable<String>(assignment);
-    }
-    map['start_entry_time'] = Variable<DateTime>(startEntryTime);
-    if (!nullToAbsent || finishedEntryTime != null) {
-      map['finished_entry_time'] = Variable<DateTime>(finishedEntryTime);
-    }
-    if (!nullToAbsent || formData != null) {
-      map['form_data'] = Variable<String>(
-          $DataInstancesTable.$converterformData.toSql(formData));
-    }
-    if (!nullToAbsent || updatedAtClient != null) {
-      map['updated_at_client'] = Variable<DateTime>(updatedAtClient);
-    }
-    {
-      map['sync_state'] = Variable<String>(
-          $DataInstancesTable.$convertersyncState.toSql(syncState));
-    }
-    if (!nullToAbsent || lastSyncDate != null) {
-      map['last_sync_date'] = Variable<DateTime>(lastSyncDate);
-    }
-    if (!nullToAbsent || lastSyncMessage != null) {
-      map['last_sync_message'] = Variable<String>(lastSyncMessage);
-    }
-    map['is_to_update'] = Variable<bool>(isToUpdate);
-    return map;
-  }
-
-  DataInstancesCompanion toCompanion(bool nullToAbsent) {
-    return DataInstancesCompanion(
-      id: Value(id),
-      lastModifiedDate: lastModifiedDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastModifiedDate),
-      createdDate: createdDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdDate),
-      deleted: Value(deleted),
-      deletedAt: deletedAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(deletedAt),
-      formTemplate: Value(formTemplate),
-      templateVersion: Value(templateVersion),
-      assignment: assignment == null && nullToAbsent
-          ? const Value.absent()
-          : Value(assignment),
-      startEntryTime: Value(startEntryTime),
-      finishedEntryTime: finishedEntryTime == null && nullToAbsent
-          ? const Value.absent()
-          : Value(finishedEntryTime),
-      formData: formData == null && nullToAbsent
-          ? const Value.absent()
-          : Value(formData),
-      updatedAtClient: updatedAtClient == null && nullToAbsent
-          ? const Value.absent()
-          : Value(updatedAtClient),
-      syncState: Value(syncState),
-      lastSyncDate: lastSyncDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastSyncDate),
-      lastSyncMessage: lastSyncMessage == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastSyncMessage),
-      isToUpdate: Value(isToUpdate),
-    );
-  }
-
-  factory DataInstance.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return DataInstance(
-      id: serializer.fromJson<String>(json['id']),
-      lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
-      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      deleted: serializer.fromJson<bool>(json['deleted']),
-      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
-      formTemplate: serializer.fromJson<String>(json['formTemplate']),
-      templateVersion: serializer.fromJson<String>(json['templateVersion']),
-      assignment: serializer.fromJson<String?>(json['assignment']),
-      startEntryTime: serializer.fromJson<DateTime>(json['startEntryTime']),
-      finishedEntryTime:
-          serializer.fromJson<DateTime?>(json['finishedEntryTime']),
-      formData: serializer.fromJson<Map<String, dynamic>?>(json['formData']),
-      updatedAtClient: serializer.fromJson<DateTime?>(json['updatedAtClient']),
-      syncState: $DataInstancesTable.$convertersyncState
-          .fromJson(serializer.fromJson<String>(json['syncState'])),
-      lastSyncDate: serializer.fromJson<DateTime?>(json['lastSyncDate']),
-      lastSyncMessage: serializer.fromJson<String?>(json['lastSyncMessage']),
-      isToUpdate: serializer.fromJson<bool>(json['isToUpdate']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
-      'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'deleted': serializer.toJson<bool>(deleted),
-      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
-      'formTemplate': serializer.toJson<String>(formTemplate),
-      'templateVersion': serializer.toJson<String>(templateVersion),
-      'assignment': serializer.toJson<String?>(assignment),
-      'startEntryTime': serializer.toJson<DateTime>(startEntryTime),
-      'finishedEntryTime': serializer.toJson<DateTime?>(finishedEntryTime),
-      'formData': serializer.toJson<Map<String, dynamic>?>(formData),
-      'updatedAtClient': serializer.toJson<DateTime?>(updatedAtClient),
-      'syncState': serializer.toJson<String>(
-          $DataInstancesTable.$convertersyncState.toJson(syncState)),
-      'lastSyncDate': serializer.toJson<DateTime?>(lastSyncDate),
-      'lastSyncMessage': serializer.toJson<String?>(lastSyncMessage),
-      'isToUpdate': serializer.toJson<bool>(isToUpdate),
-    };
-  }
-
-  DataInstance copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          bool? deleted,
-          Value<DateTime?> deletedAt = const Value.absent(),
-          String? formTemplate,
-          String? templateVersion,
-          Value<String?> assignment = const Value.absent(),
-          DateTime? startEntryTime,
-          Value<DateTime?> finishedEntryTime = const Value.absent(),
-          Value<Map<String, dynamic>?> formData = const Value.absent(),
-          Value<DateTime?> updatedAtClient = const Value.absent(),
-          InstanceSyncStatus? syncState,
-          Value<DateTime?> lastSyncDate = const Value.absent(),
-          Value<String?> lastSyncMessage = const Value.absent(),
-          bool? isToUpdate}) =>
-      DataInstance(
-        id: id ?? this.id,
-        lastModifiedDate: lastModifiedDate.present
-            ? lastModifiedDate.value
-            : this.lastModifiedDate,
-        createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        deleted: deleted ?? this.deleted,
-        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
-        formTemplate: formTemplate ?? this.formTemplate,
-        templateVersion: templateVersion ?? this.templateVersion,
-        assignment: assignment.present ? assignment.value : this.assignment,
-        startEntryTime: startEntryTime ?? this.startEntryTime,
-        finishedEntryTime: finishedEntryTime.present
-            ? finishedEntryTime.value
-            : this.finishedEntryTime,
-        formData: formData.present ? formData.value : this.formData,
-        updatedAtClient: updatedAtClient.present
-            ? updatedAtClient.value
-            : this.updatedAtClient,
-        syncState: syncState ?? this.syncState,
-        lastSyncDate:
-            lastSyncDate.present ? lastSyncDate.value : this.lastSyncDate,
-        lastSyncMessage: lastSyncMessage.present
-            ? lastSyncMessage.value
-            : this.lastSyncMessage,
-        isToUpdate: isToUpdate ?? this.isToUpdate,
-      );
-  DataInstance copyWithCompanion(DataInstancesCompanion data) {
-    return DataInstance(
-      id: data.id.present ? data.id.value : this.id,
-      lastModifiedDate: data.lastModifiedDate.present
-          ? data.lastModifiedDate.value
-          : this.lastModifiedDate,
-      createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
-      deleted: data.deleted.present ? data.deleted.value : this.deleted,
-      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
-      formTemplate: data.formTemplate.present
-          ? data.formTemplate.value
-          : this.formTemplate,
-      templateVersion: data.templateVersion.present
-          ? data.templateVersion.value
-          : this.templateVersion,
-      assignment:
-          data.assignment.present ? data.assignment.value : this.assignment,
-      startEntryTime: data.startEntryTime.present
-          ? data.startEntryTime.value
-          : this.startEntryTime,
-      finishedEntryTime: data.finishedEntryTime.present
-          ? data.finishedEntryTime.value
-          : this.finishedEntryTime,
-      formData: data.formData.present ? data.formData.value : this.formData,
-      updatedAtClient: data.updatedAtClient.present
-          ? data.updatedAtClient.value
-          : this.updatedAtClient,
-      syncState: data.syncState.present ? data.syncState.value : this.syncState,
-      lastSyncDate: data.lastSyncDate.present
-          ? data.lastSyncDate.value
-          : this.lastSyncDate,
-      lastSyncMessage: data.lastSyncMessage.present
-          ? data.lastSyncMessage.value
-          : this.lastSyncMessage,
-      isToUpdate:
-          data.isToUpdate.present ? data.isToUpdate.value : this.isToUpdate,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('DataInstance(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('deleted: $deleted, ')
-          ..write('deletedAt: $deletedAt, ')
-          ..write('formTemplate: $formTemplate, ')
-          ..write('templateVersion: $templateVersion, ')
-          ..write('assignment: $assignment, ')
-          ..write('startEntryTime: $startEntryTime, ')
-          ..write('finishedEntryTime: $finishedEntryTime, ')
-          ..write('formData: $formData, ')
-          ..write('updatedAtClient: $updatedAtClient, ')
-          ..write('syncState: $syncState, ')
-          ..write('lastSyncDate: $lastSyncDate, ')
-          ..write('lastSyncMessage: $lastSyncMessage, ')
-          ..write('isToUpdate: $isToUpdate')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      id,
-      lastModifiedDate,
-      createdDate,
-      deleted,
-      deletedAt,
-      formTemplate,
-      templateVersion,
-      assignment,
-      startEntryTime,
-      finishedEntryTime,
-      formData,
-      updatedAtClient,
-      syncState,
-      lastSyncDate,
-      lastSyncMessage,
-      isToUpdate);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is DataInstance &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.deleted == this.deleted &&
-          other.deletedAt == this.deletedAt &&
-          other.formTemplate == this.formTemplate &&
-          other.templateVersion == this.templateVersion &&
-          other.assignment == this.assignment &&
-          other.startEntryTime == this.startEntryTime &&
-          other.finishedEntryTime == this.finishedEntryTime &&
-          other.formData == this.formData &&
-          other.updatedAtClient == this.updatedAtClient &&
-          other.syncState == this.syncState &&
-          other.lastSyncDate == this.lastSyncDate &&
-          other.lastSyncMessage == this.lastSyncMessage &&
-          other.isToUpdate == this.isToUpdate);
-}
-
-class DataInstancesCompanion extends UpdateCompanion<DataInstance> {
-  final Value<String> id;
-  final Value<DateTime?> lastModifiedDate;
-  final Value<DateTime?> createdDate;
-  final Value<bool> deleted;
-  final Value<DateTime?> deletedAt;
-  final Value<String> formTemplate;
-  final Value<String> templateVersion;
-  final Value<String?> assignment;
-  final Value<DateTime> startEntryTime;
-  final Value<DateTime?> finishedEntryTime;
-  final Value<Map<String, dynamic>?> formData;
-  final Value<DateTime?> updatedAtClient;
-  final Value<InstanceSyncStatus> syncState;
-  final Value<DateTime?> lastSyncDate;
-  final Value<String?> lastSyncMessage;
-  final Value<bool> isToUpdate;
-  final Value<int> rowid;
-  const DataInstancesCompanion({
-    this.id = const Value.absent(),
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    this.deleted = const Value.absent(),
-    this.deletedAt = const Value.absent(),
-    this.formTemplate = const Value.absent(),
-    this.templateVersion = const Value.absent(),
-    this.assignment = const Value.absent(),
-    this.startEntryTime = const Value.absent(),
-    this.finishedEntryTime = const Value.absent(),
-    this.formData = const Value.absent(),
-    this.updatedAtClient = const Value.absent(),
-    this.syncState = const Value.absent(),
-    this.lastSyncDate = const Value.absent(),
-    this.lastSyncMessage = const Value.absent(),
-    this.isToUpdate = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  DataInstancesCompanion.insert({
-    required String id,
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    this.deleted = const Value.absent(),
-    this.deletedAt = const Value.absent(),
-    required String formTemplate,
-    required String templateVersion,
-    this.assignment = const Value.absent(),
-    this.startEntryTime = const Value.absent(),
-    this.finishedEntryTime = const Value.absent(),
-    this.formData = const Value.absent(),
-    this.updatedAtClient = const Value.absent(),
-    required InstanceSyncStatus syncState,
-    this.lastSyncDate = const Value.absent(),
-    this.lastSyncMessage = const Value.absent(),
-    required bool isToUpdate,
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        formTemplate = Value(formTemplate),
-        templateVersion = Value(templateVersion),
-        syncState = Value(syncState),
-        isToUpdate = Value(isToUpdate);
-  static Insertable<DataInstance> custom({
-    Expression<String>? id,
-    Expression<DateTime>? lastModifiedDate,
-    Expression<DateTime>? createdDate,
-    Expression<bool>? deleted,
-    Expression<DateTime>? deletedAt,
-    Expression<String>? formTemplate,
-    Expression<String>? templateVersion,
-    Expression<String>? assignment,
-    Expression<DateTime>? startEntryTime,
-    Expression<DateTime>? finishedEntryTime,
-    Expression<String>? formData,
-    Expression<DateTime>? updatedAtClient,
-    Expression<String>? syncState,
-    Expression<DateTime>? lastSyncDate,
-    Expression<String>? lastSyncMessage,
-    Expression<bool>? isToUpdate,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
-      if (createdDate != null) 'created_date': createdDate,
-      if (deleted != null) 'deleted': deleted,
-      if (deletedAt != null) 'deleted_at': deletedAt,
-      if (formTemplate != null) 'form_template': formTemplate,
-      if (templateVersion != null) 'template_version': templateVersion,
-      if (assignment != null) 'assignment': assignment,
-      if (startEntryTime != null) 'start_entry_time': startEntryTime,
-      if (finishedEntryTime != null) 'finished_entry_time': finishedEntryTime,
-      if (formData != null) 'form_data': formData,
-      if (updatedAtClient != null) 'updated_at_client': updatedAtClient,
-      if (syncState != null) 'sync_state': syncState,
-      if (lastSyncDate != null) 'last_sync_date': lastSyncDate,
-      if (lastSyncMessage != null) 'last_sync_message': lastSyncMessage,
-      if (isToUpdate != null) 'is_to_update': isToUpdate,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  DataInstancesCompanion copyWith(
-      {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<bool>? deleted,
-      Value<DateTime?>? deletedAt,
-      Value<String>? formTemplate,
-      Value<String>? templateVersion,
-      Value<String?>? assignment,
-      Value<DateTime>? startEntryTime,
-      Value<DateTime?>? finishedEntryTime,
-      Value<Map<String, dynamic>?>? formData,
-      Value<DateTime?>? updatedAtClient,
-      Value<InstanceSyncStatus>? syncState,
-      Value<DateTime?>? lastSyncDate,
-      Value<String?>? lastSyncMessage,
-      Value<bool>? isToUpdate,
-      Value<int>? rowid}) {
-    return DataInstancesCompanion(
-      id: id ?? this.id,
-      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
-      createdDate: createdDate ?? this.createdDate,
-      deleted: deleted ?? this.deleted,
-      deletedAt: deletedAt ?? this.deletedAt,
-      formTemplate: formTemplate ?? this.formTemplate,
-      templateVersion: templateVersion ?? this.templateVersion,
-      assignment: assignment ?? this.assignment,
-      startEntryTime: startEntryTime ?? this.startEntryTime,
-      finishedEntryTime: finishedEntryTime ?? this.finishedEntryTime,
-      formData: formData ?? this.formData,
-      updatedAtClient: updatedAtClient ?? this.updatedAtClient,
-      syncState: syncState ?? this.syncState,
-      lastSyncDate: lastSyncDate ?? this.lastSyncDate,
-      lastSyncMessage: lastSyncMessage ?? this.lastSyncMessage,
-      isToUpdate: isToUpdate ?? this.isToUpdate,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (lastModifiedDate.present) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate.value);
-    }
-    if (createdDate.present) {
-      map['created_date'] = Variable<DateTime>(createdDate.value);
-    }
-    if (deleted.present) {
-      map['deleted'] = Variable<bool>(deleted.value);
-    }
-    if (deletedAt.present) {
-      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
-    }
-    if (formTemplate.present) {
-      map['form_template'] = Variable<String>(formTemplate.value);
-    }
-    if (templateVersion.present) {
-      map['template_version'] = Variable<String>(templateVersion.value);
-    }
-    if (assignment.present) {
-      map['assignment'] = Variable<String>(assignment.value);
-    }
-    if (startEntryTime.present) {
-      map['start_entry_time'] = Variable<DateTime>(startEntryTime.value);
-    }
-    if (finishedEntryTime.present) {
-      map['finished_entry_time'] = Variable<DateTime>(finishedEntryTime.value);
-    }
-    if (formData.present) {
-      map['form_data'] = Variable<String>(
-          $DataInstancesTable.$converterformData.toSql(formData.value));
-    }
-    if (updatedAtClient.present) {
-      map['updated_at_client'] = Variable<DateTime>(updatedAtClient.value);
-    }
-    if (syncState.present) {
-      map['sync_state'] = Variable<String>(
-          $DataInstancesTable.$convertersyncState.toSql(syncState.value));
-    }
-    if (lastSyncDate.present) {
-      map['last_sync_date'] = Variable<DateTime>(lastSyncDate.value);
-    }
-    if (lastSyncMessage.present) {
-      map['last_sync_message'] = Variable<String>(lastSyncMessage.value);
-    }
-    if (isToUpdate.present) {
-      map['is_to_update'] = Variable<bool>(isToUpdate.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('DataInstancesCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('deleted: $deleted, ')
-          ..write('deletedAt: $deletedAt, ')
-          ..write('formTemplate: $formTemplate, ')
-          ..write('templateVersion: $templateVersion, ')
-          ..write('assignment: $assignment, ')
-          ..write('startEntryTime: $startEntryTime, ')
-          ..write('finishedEntryTime: $finishedEntryTime, ')
-          ..write('formData: $formData, ')
-          ..write('updatedAtClient: $updatedAtClient, ')
-          ..write('syncState: $syncState, ')
-          ..write('lastSyncDate: $lastSyncDate, ')
-          ..write('lastSyncMessage: $lastSyncMessage, ')
-          ..write('isToUpdate: $isToUpdate, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $RepeatInstancesTable extends RepeatInstances
-    with TableInfo<$RepeatInstancesTable, RepeatInstance> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $RepeatInstancesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: Constant(Ulid().toCanonical()));
-  static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
-  @override
-  late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
-  @override
-  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, true,
-      type: DriftSqlType.dateTime,
-      requiredDuringInsert: false,
-      clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _submissionMeta =
-      const VerificationMeta('submission');
-  @override
-  late final GeneratedColumn<String> submission = GeneratedColumn<String>(
-      'submission', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES data_instances (id)'));
-  static const VerificationMeta _parentMeta = const VerificationMeta('parent');
-  @override
-  late final GeneratedColumn<String> parent = GeneratedColumn<String>(
-      'parent', aliasedName, true,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES repeat_instances (id)'));
-  static const VerificationMeta _templatePathMeta =
-      const VerificationMeta('templatePath');
-  @override
-  late final GeneratedColumn<String> templatePath = GeneratedColumn<String>(
-      'template_path', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _repeatIndexMeta =
-      const VerificationMeta('repeatIndex');
-  @override
-  late final GeneratedColumn<int> repeatIndex = GeneratedColumn<int>(
-      'repeat_index', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _deletedMeta =
-      const VerificationMeta('deleted');
-  @override
-  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
-      'deleted', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
-      defaultValue: Constant(false));
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        submission,
-        parent,
-        templatePath,
-        repeatIndex,
-        deleted
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'repeat_instances';
-  @override
-  VerificationContext validateIntegrity(Insertable<RepeatInstance> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('last_modified_date')) {
-      context.handle(
-          _lastModifiedDateMeta,
-          lastModifiedDate.isAcceptableOrUnknown(
-              data['last_modified_date']!, _lastModifiedDateMeta));
-    }
-    if (data.containsKey('created_date')) {
-      context.handle(
-          _createdDateMeta,
-          createdDate.isAcceptableOrUnknown(
-              data['created_date']!, _createdDateMeta));
-    }
-    if (data.containsKey('submission')) {
-      context.handle(
-          _submissionMeta,
-          submission.isAcceptableOrUnknown(
-              data['submission']!, _submissionMeta));
-    } else if (isInserting) {
-      context.missing(_submissionMeta);
-    }
-    if (data.containsKey('parent')) {
-      context.handle(_parentMeta,
-          parent.isAcceptableOrUnknown(data['parent']!, _parentMeta));
-    }
-    if (data.containsKey('template_path')) {
-      context.handle(
-          _templatePathMeta,
-          templatePath.isAcceptableOrUnknown(
-              data['template_path']!, _templatePathMeta));
-    } else if (isInserting) {
-      context.missing(_templatePathMeta);
-    }
-    if (data.containsKey('repeat_index')) {
-      context.handle(
-          _repeatIndexMeta,
-          repeatIndex.isAcceptableOrUnknown(
-              data['repeat_index']!, _repeatIndexMeta));
-    } else if (isInserting) {
-      context.missing(_repeatIndexMeta);
-    }
-    if (data.containsKey('deleted')) {
-      context.handle(_deletedMeta,
-          deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  RepeatInstance map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return RepeatInstance(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      lastModifiedDate: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
-      createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      submission: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}submission'])!,
-      parent: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}parent']),
-      templatePath: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}template_path'])!,
-      repeatIndex: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}repeat_index'])!,
-      deleted: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}deleted'])!,
-    );
-  }
-
-  @override
-  $RepeatInstancesTable createAlias(String alias) {
-    return $RepeatInstancesTable(attachedDatabase, alias);
-  }
-}
-
-class RepeatInstance extends DataClass implements Insertable<RepeatInstance> {
-  final String id;
-  final DateTime? lastModifiedDate;
-  final DateTime? createdDate;
-  final String submission;
-
-  /// reference to nearest parent RepeatInstance (nullable)
-  final String? parent;
-
-  /// Path of the Repeat in the FormTemplate (non-null)
-  final String templatePath;
-
-  /// Repeat index for order and identity (non-null)
-  final int repeatIndex;
-  final bool deleted;
-  const RepeatInstance(
-      {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.submission,
-      this.parent,
-      required this.templatePath,
-      required this.repeatIndex,
-      required this.deleted});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    if (!nullToAbsent || lastModifiedDate != null) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate);
-    }
-    if (!nullToAbsent || createdDate != null) {
-      map['created_date'] = Variable<DateTime>(createdDate);
-    }
-    map['submission'] = Variable<String>(submission);
-    if (!nullToAbsent || parent != null) {
-      map['parent'] = Variable<String>(parent);
-    }
-    map['template_path'] = Variable<String>(templatePath);
-    map['repeat_index'] = Variable<int>(repeatIndex);
-    map['deleted'] = Variable<bool>(deleted);
-    return map;
-  }
-
-  RepeatInstancesCompanion toCompanion(bool nullToAbsent) {
-    return RepeatInstancesCompanion(
-      id: Value(id),
-      lastModifiedDate: lastModifiedDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastModifiedDate),
-      createdDate: createdDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdDate),
-      submission: Value(submission),
-      parent:
-          parent == null && nullToAbsent ? const Value.absent() : Value(parent),
-      templatePath: Value(templatePath),
-      repeatIndex: Value(repeatIndex),
-      deleted: Value(deleted),
-    );
-  }
-
-  factory RepeatInstance.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return RepeatInstance(
-      id: serializer.fromJson<String>(json['id']),
-      lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
-      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      submission: serializer.fromJson<String>(json['submission']),
-      parent: serializer.fromJson<String?>(json['parent']),
-      templatePath: serializer.fromJson<String>(json['templatePath']),
-      repeatIndex: serializer.fromJson<int>(json['repeatIndex']),
-      deleted: serializer.fromJson<bool>(json['deleted']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
-      'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'submission': serializer.toJson<String>(submission),
-      'parent': serializer.toJson<String?>(parent),
-      'templatePath': serializer.toJson<String>(templatePath),
-      'repeatIndex': serializer.toJson<int>(repeatIndex),
-      'deleted': serializer.toJson<bool>(deleted),
-    };
-  }
-
-  RepeatInstance copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          String? submission,
-          Value<String?> parent = const Value.absent(),
-          String? templatePath,
-          int? repeatIndex,
-          bool? deleted}) =>
-      RepeatInstance(
-        id: id ?? this.id,
-        lastModifiedDate: lastModifiedDate.present
-            ? lastModifiedDate.value
-            : this.lastModifiedDate,
-        createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        submission: submission ?? this.submission,
-        parent: parent.present ? parent.value : this.parent,
-        templatePath: templatePath ?? this.templatePath,
-        repeatIndex: repeatIndex ?? this.repeatIndex,
-        deleted: deleted ?? this.deleted,
-      );
-  RepeatInstance copyWithCompanion(RepeatInstancesCompanion data) {
-    return RepeatInstance(
-      id: data.id.present ? data.id.value : this.id,
-      lastModifiedDate: data.lastModifiedDate.present
-          ? data.lastModifiedDate.value
-          : this.lastModifiedDate,
-      createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
-      submission:
-          data.submission.present ? data.submission.value : this.submission,
-      parent: data.parent.present ? data.parent.value : this.parent,
-      templatePath: data.templatePath.present
-          ? data.templatePath.value
-          : this.templatePath,
-      repeatIndex:
-          data.repeatIndex.present ? data.repeatIndex.value : this.repeatIndex,
-      deleted: data.deleted.present ? data.deleted.value : this.deleted,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RepeatInstance(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('submission: $submission, ')
-          ..write('parent: $parent, ')
-          ..write('templatePath: $templatePath, ')
-          ..write('repeatIndex: $repeatIndex, ')
-          ..write('deleted: $deleted')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, lastModifiedDate, createdDate, submission,
-      parent, templatePath, repeatIndex, deleted);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is RepeatInstance &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.submission == this.submission &&
-          other.parent == this.parent &&
-          other.templatePath == this.templatePath &&
-          other.repeatIndex == this.repeatIndex &&
-          other.deleted == this.deleted);
-}
-
-class RepeatInstancesCompanion extends UpdateCompanion<RepeatInstance> {
-  final Value<String> id;
-  final Value<DateTime?> lastModifiedDate;
-  final Value<DateTime?> createdDate;
-  final Value<String> submission;
-  final Value<String?> parent;
-  final Value<String> templatePath;
-  final Value<int> repeatIndex;
-  final Value<bool> deleted;
-  final Value<int> rowid;
-  const RepeatInstancesCompanion({
-    this.id = const Value.absent(),
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    this.submission = const Value.absent(),
-    this.parent = const Value.absent(),
-    this.templatePath = const Value.absent(),
-    this.repeatIndex = const Value.absent(),
-    this.deleted = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  RepeatInstancesCompanion.insert({
-    this.id = const Value.absent(),
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    required String submission,
-    this.parent = const Value.absent(),
-    required String templatePath,
-    required int repeatIndex,
-    this.deleted = const Value.absent(),
-    this.rowid = const Value.absent(),
-  })  : submission = Value(submission),
-        templatePath = Value(templatePath),
-        repeatIndex = Value(repeatIndex);
-  static Insertable<RepeatInstance> custom({
-    Expression<String>? id,
-    Expression<DateTime>? lastModifiedDate,
-    Expression<DateTime>? createdDate,
-    Expression<String>? submission,
-    Expression<String>? parent,
-    Expression<String>? templatePath,
-    Expression<int>? repeatIndex,
-    Expression<bool>? deleted,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
-      if (createdDate != null) 'created_date': createdDate,
-      if (submission != null) 'submission': submission,
-      if (parent != null) 'parent': parent,
-      if (templatePath != null) 'template_path': templatePath,
-      if (repeatIndex != null) 'repeat_index': repeatIndex,
-      if (deleted != null) 'deleted': deleted,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  RepeatInstancesCompanion copyWith(
-      {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String>? submission,
-      Value<String?>? parent,
-      Value<String>? templatePath,
-      Value<int>? repeatIndex,
-      Value<bool>? deleted,
-      Value<int>? rowid}) {
-    return RepeatInstancesCompanion(
-      id: id ?? this.id,
-      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
-      createdDate: createdDate ?? this.createdDate,
-      submission: submission ?? this.submission,
-      parent: parent ?? this.parent,
-      templatePath: templatePath ?? this.templatePath,
-      repeatIndex: repeatIndex ?? this.repeatIndex,
-      deleted: deleted ?? this.deleted,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (lastModifiedDate.present) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate.value);
-    }
-    if (createdDate.present) {
-      map['created_date'] = Variable<DateTime>(createdDate.value);
-    }
-    if (submission.present) {
-      map['submission'] = Variable<String>(submission.value);
-    }
-    if (parent.present) {
-      map['parent'] = Variable<String>(parent.value);
-    }
-    if (templatePath.present) {
-      map['template_path'] = Variable<String>(templatePath.value);
-    }
-    if (repeatIndex.present) {
-      map['repeat_index'] = Variable<int>(repeatIndex.value);
-    }
-    if (deleted.present) {
-      map['deleted'] = Variable<bool>(deleted.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RepeatInstancesCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('submission: $submission, ')
-          ..write('parent: $parent, ')
-          ..write('templatePath: $templatePath, ')
-          ..write('repeatIndex: $repeatIndex, ')
-          ..write('deleted: $deleted, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $DataOptionSetsTable extends DataOptionSets
     with TableInfo<$DataOptionSetsTable, DataOptionSet> {
   @override
@@ -8481,426 +7179,6 @@ class DataElementsCompanion extends UpdateCompanion<DataElement> {
   }
 }
 
-class $DataValuesTable extends DataValues
-    with TableInfo<$DataValuesTable, DataValue> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $DataValuesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _lastModifiedDateMeta =
-      const VerificationMeta('lastModifiedDate');
-  @override
-  late final GeneratedColumn<DateTime> lastModifiedDate =
-      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
-          type: DriftSqlType.dateTime,
-          requiredDuringInsert: false,
-          clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
-  @override
-  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, true,
-      type: DriftSqlType.dateTime,
-      requiredDuringInsert: false,
-      clientDefault: () => DateTime.now().toUtc());
-  static const VerificationMeta _dataElementMeta =
-      const VerificationMeta('dataElement');
-  @override
-  late final GeneratedColumn<String> dataElement = GeneratedColumn<String>(
-      'data_element', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES data_elements (id)'));
-  static const VerificationMeta _dataInstanceMeta =
-      const VerificationMeta('dataInstance');
-  @override
-  late final GeneratedColumn<String> dataInstance = GeneratedColumn<String>(
-      'data_instance', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES data_instances (id)'));
-  static const VerificationMeta _valueMeta = const VerificationMeta('value');
-  @override
-  late final GeneratedColumn<String> value = GeneratedColumn<String>(
-      'value', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _commentMeta =
-      const VerificationMeta('comment');
-  @override
-  late final GeneratedColumn<String> comment = GeneratedColumn<String>(
-      'comment', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        lastModifiedDate,
-        createdDate,
-        dataElement,
-        dataInstance,
-        value,
-        comment
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'data_values';
-  @override
-  VerificationContext validateIntegrity(Insertable<DataValue> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('last_modified_date')) {
-      context.handle(
-          _lastModifiedDateMeta,
-          lastModifiedDate.isAcceptableOrUnknown(
-              data['last_modified_date']!, _lastModifiedDateMeta));
-    }
-    if (data.containsKey('created_date')) {
-      context.handle(
-          _createdDateMeta,
-          createdDate.isAcceptableOrUnknown(
-              data['created_date']!, _createdDateMeta));
-    }
-    if (data.containsKey('data_element')) {
-      context.handle(
-          _dataElementMeta,
-          dataElement.isAcceptableOrUnknown(
-              data['data_element']!, _dataElementMeta));
-    } else if (isInserting) {
-      context.missing(_dataElementMeta);
-    }
-    if (data.containsKey('data_instance')) {
-      context.handle(
-          _dataInstanceMeta,
-          dataInstance.isAcceptableOrUnknown(
-              data['data_instance']!, _dataInstanceMeta));
-    } else if (isInserting) {
-      context.missing(_dataInstanceMeta);
-    }
-    if (data.containsKey('value')) {
-      context.handle(
-          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
-    }
-    if (data.containsKey('comment')) {
-      context.handle(_commentMeta,
-          comment.isAcceptableOrUnknown(data['comment']!, _commentMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  DataValue map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return DataValue(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      lastModifiedDate: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
-      createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      dataElement: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}data_element'])!,
-      dataInstance: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}data_instance'])!,
-      value: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}value']),
-      comment: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}comment']),
-    );
-  }
-
-  @override
-  $DataValuesTable createAlias(String alias) {
-    return $DataValuesTable(attachedDatabase, alias);
-  }
-}
-
-class DataValue extends DataClass implements Insertable<DataValue> {
-  final String id;
-  final DateTime? lastModifiedDate;
-  final DateTime? createdDate;
-  final String dataElement;
-  final String dataInstance;
-  final String? value;
-  final String? comment;
-  const DataValue(
-      {required this.id,
-      this.lastModifiedDate,
-      this.createdDate,
-      required this.dataElement,
-      required this.dataInstance,
-      this.value,
-      this.comment});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    if (!nullToAbsent || lastModifiedDate != null) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate);
-    }
-    if (!nullToAbsent || createdDate != null) {
-      map['created_date'] = Variable<DateTime>(createdDate);
-    }
-    map['data_element'] = Variable<String>(dataElement);
-    map['data_instance'] = Variable<String>(dataInstance);
-    if (!nullToAbsent || value != null) {
-      map['value'] = Variable<String>(value);
-    }
-    if (!nullToAbsent || comment != null) {
-      map['comment'] = Variable<String>(comment);
-    }
-    return map;
-  }
-
-  DataValuesCompanion toCompanion(bool nullToAbsent) {
-    return DataValuesCompanion(
-      id: Value(id),
-      lastModifiedDate: lastModifiedDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastModifiedDate),
-      createdDate: createdDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdDate),
-      dataElement: Value(dataElement),
-      dataInstance: Value(dataInstance),
-      value:
-          value == null && nullToAbsent ? const Value.absent() : Value(value),
-      comment: comment == null && nullToAbsent
-          ? const Value.absent()
-          : Value(comment),
-    );
-  }
-
-  factory DataValue.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return DataValue(
-      id: serializer.fromJson<String>(json['id']),
-      lastModifiedDate:
-          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
-      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      dataElement: serializer.fromJson<String>(json['dataElement']),
-      dataInstance: serializer.fromJson<String>(json['dataInstance']),
-      value: serializer.fromJson<String?>(json['value']),
-      comment: serializer.fromJson<String?>(json['comment']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
-      'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'dataElement': serializer.toJson<String>(dataElement),
-      'dataInstance': serializer.toJson<String>(dataInstance),
-      'value': serializer.toJson<String?>(value),
-      'comment': serializer.toJson<String?>(comment),
-    };
-  }
-
-  DataValue copyWith(
-          {String? id,
-          Value<DateTime?> lastModifiedDate = const Value.absent(),
-          Value<DateTime?> createdDate = const Value.absent(),
-          String? dataElement,
-          String? dataInstance,
-          Value<String?> value = const Value.absent(),
-          Value<String?> comment = const Value.absent()}) =>
-      DataValue(
-        id: id ?? this.id,
-        lastModifiedDate: lastModifiedDate.present
-            ? lastModifiedDate.value
-            : this.lastModifiedDate,
-        createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        dataElement: dataElement ?? this.dataElement,
-        dataInstance: dataInstance ?? this.dataInstance,
-        value: value.present ? value.value : this.value,
-        comment: comment.present ? comment.value : this.comment,
-      );
-  DataValue copyWithCompanion(DataValuesCompanion data) {
-    return DataValue(
-      id: data.id.present ? data.id.value : this.id,
-      lastModifiedDate: data.lastModifiedDate.present
-          ? data.lastModifiedDate.value
-          : this.lastModifiedDate,
-      createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
-      dataElement:
-          data.dataElement.present ? data.dataElement.value : this.dataElement,
-      dataInstance: data.dataInstance.present
-          ? data.dataInstance.value
-          : this.dataInstance,
-      value: data.value.present ? data.value.value : this.value,
-      comment: data.comment.present ? data.comment.value : this.comment,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('DataValue(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('dataElement: $dataElement, ')
-          ..write('dataInstance: $dataInstance, ')
-          ..write('value: $value, ')
-          ..write('comment: $comment')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, lastModifiedDate, createdDate,
-      dataElement, dataInstance, value, comment);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is DataValue &&
-          other.id == this.id &&
-          other.lastModifiedDate == this.lastModifiedDate &&
-          other.createdDate == this.createdDate &&
-          other.dataElement == this.dataElement &&
-          other.dataInstance == this.dataInstance &&
-          other.value == this.value &&
-          other.comment == this.comment);
-}
-
-class DataValuesCompanion extends UpdateCompanion<DataValue> {
-  final Value<String> id;
-  final Value<DateTime?> lastModifiedDate;
-  final Value<DateTime?> createdDate;
-  final Value<String> dataElement;
-  final Value<String> dataInstance;
-  final Value<String?> value;
-  final Value<String?> comment;
-  final Value<int> rowid;
-  const DataValuesCompanion({
-    this.id = const Value.absent(),
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    this.dataElement = const Value.absent(),
-    this.dataInstance = const Value.absent(),
-    this.value = const Value.absent(),
-    this.comment = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  DataValuesCompanion.insert({
-    required String id,
-    this.lastModifiedDate = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    required String dataElement,
-    required String dataInstance,
-    this.value = const Value.absent(),
-    this.comment = const Value.absent(),
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        dataElement = Value(dataElement),
-        dataInstance = Value(dataInstance);
-  static Insertable<DataValue> custom({
-    Expression<String>? id,
-    Expression<DateTime>? lastModifiedDate,
-    Expression<DateTime>? createdDate,
-    Expression<String>? dataElement,
-    Expression<String>? dataInstance,
-    Expression<String>? value,
-    Expression<String>? comment,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
-      if (createdDate != null) 'created_date': createdDate,
-      if (dataElement != null) 'data_element': dataElement,
-      if (dataInstance != null) 'data_instance': dataInstance,
-      if (value != null) 'value': value,
-      if (comment != null) 'comment': comment,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  DataValuesCompanion copyWith(
-      {Value<String>? id,
-      Value<DateTime?>? lastModifiedDate,
-      Value<DateTime?>? createdDate,
-      Value<String>? dataElement,
-      Value<String>? dataInstance,
-      Value<String?>? value,
-      Value<String?>? comment,
-      Value<int>? rowid}) {
-    return DataValuesCompanion(
-      id: id ?? this.id,
-      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
-      createdDate: createdDate ?? this.createdDate,
-      dataElement: dataElement ?? this.dataElement,
-      dataInstance: dataInstance ?? this.dataInstance,
-      value: value ?? this.value,
-      comment: comment ?? this.comment,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (lastModifiedDate.present) {
-      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate.value);
-    }
-    if (createdDate.present) {
-      map['created_date'] = Variable<DateTime>(createdDate.value);
-    }
-    if (dataElement.present) {
-      map['data_element'] = Variable<String>(dataElement.value);
-    }
-    if (dataInstance.present) {
-      map['data_instance'] = Variable<String>(dataInstance.value);
-    }
-    if (value.present) {
-      map['value'] = Variable<String>(value.value);
-    }
-    if (comment.present) {
-      map['comment'] = Variable<String>(comment.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('DataValuesCompanion(')
-          ..write('id: $id, ')
-          ..write('lastModifiedDate: $lastModifiedDate, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('dataElement: $dataElement, ')
-          ..write('dataInstance: $dataInstance, ')
-          ..write('value: $value, ')
-          ..write('comment: $comment, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $DataOptionsTable extends DataOptions
     with TableInfo<$DataOptionsTable, DataOption> {
   @override
@@ -9482,6 +7760,842 @@ class DataOptionsCompanion extends UpdateCompanion<DataOption> {
           ..write('optionSet: $optionSet, ')
           ..write('order: $order, ')
           ..write('deletedAt: $deletedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DataInstancesTable extends DataInstances
+    with TableInfo<$DataInstancesTable, DataInstance> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DataInstancesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _lastModifiedDateMeta =
+      const VerificationMeta('lastModifiedDate');
+  @override
+  late final GeneratedColumn<DateTime> lastModifiedDate =
+      GeneratedColumn<DateTime>('last_modified_date', aliasedName, true,
+          type: DriftSqlType.dateTime,
+          requiredDuringInsert: false,
+          clientDefault: () => DateTime.now().toUtc());
+  static const VerificationMeta _createdDateMeta =
+      const VerificationMeta('createdDate');
+  @override
+  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
+      'created_date', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now().toUtc());
+  static const VerificationMeta _deletedMeta =
+      const VerificationMeta('deleted');
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+      'deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("deleted" IN (0, 1))'),
+      clientDefault: () => false);
+  static const VerificationMeta _deletedAtMeta =
+      const VerificationMeta('deletedAt');
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+      'deleted_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _formTemplateMeta =
+      const VerificationMeta('formTemplate');
+  @override
+  late final GeneratedColumn<String> formTemplate = GeneratedColumn<String>(
+      'form_template', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES form_templates (id)'));
+  static const VerificationMeta _templateVersionMeta =
+      const VerificationMeta('templateVersion');
+  @override
+  late final GeneratedColumn<String> templateVersion = GeneratedColumn<String>(
+      'template_version', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES form_template_versions (id)'));
+  static const VerificationMeta _assignmentMeta =
+      const VerificationMeta('assignment');
+  @override
+  late final GeneratedColumn<String> assignment = GeneratedColumn<String>(
+      'assignment', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES assignments (id)'));
+  static const VerificationMeta _startEntryTimeMeta =
+      const VerificationMeta('startEntryTime');
+  @override
+  late final GeneratedColumn<DateTime> startEntryTime =
+      GeneratedColumn<DateTime>('start_entry_time', aliasedName, false,
+          type: DriftSqlType.dateTime,
+          requiredDuringInsert: false,
+          clientDefault: () => DateTime.now().toUtc());
+  static const VerificationMeta _finishedEntryTimeMeta =
+      const VerificationMeta('finishedEntryTime');
+  @override
+  late final GeneratedColumn<DateTime> finishedEntryTime =
+      GeneratedColumn<DateTime>('finished_entry_time', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
+      formData = GeneratedColumn<String>('form_data', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<Map<String, dynamic>?>(
+              $DataInstancesTable.$converterformData);
+  static const VerificationMeta _updatedAtClientMeta =
+      const VerificationMeta('updatedAtClient');
+  @override
+  late final GeneratedColumn<DateTime> updatedAtClient =
+      GeneratedColumn<DateTime>('updated_at_client', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<InstanceSyncStatus, String>
+      syncState = GeneratedColumn<String>('sync_state', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<InstanceSyncStatus>(
+              $DataInstancesTable.$convertersyncState);
+  static const VerificationMeta _lastSyncDateMeta =
+      const VerificationMeta('lastSyncDate');
+  @override
+  late final GeneratedColumn<DateTime> lastSyncDate = GeneratedColumn<DateTime>(
+      'last_sync_date', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _lastSyncMessageMeta =
+      const VerificationMeta('lastSyncMessage');
+  @override
+  late final GeneratedColumn<String> lastSyncMessage = GeneratedColumn<String>(
+      'last_sync_message', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _isToUpdateMeta =
+      const VerificationMeta('isToUpdate');
+  @override
+  late final GeneratedColumn<bool> isToUpdate = GeneratedColumn<bool>(
+      'is_to_update', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_to_update" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        lastModifiedDate,
+        createdDate,
+        deleted,
+        deletedAt,
+        formTemplate,
+        templateVersion,
+        assignment,
+        startEntryTime,
+        finishedEntryTime,
+        formData,
+        updatedAtClient,
+        syncState,
+        lastSyncDate,
+        lastSyncMessage,
+        isToUpdate
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'data_instances';
+  @override
+  VerificationContext validateIntegrity(Insertable<DataInstance> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('last_modified_date')) {
+      context.handle(
+          _lastModifiedDateMeta,
+          lastModifiedDate.isAcceptableOrUnknown(
+              data['last_modified_date']!, _lastModifiedDateMeta));
+    }
+    if (data.containsKey('created_date')) {
+      context.handle(
+          _createdDateMeta,
+          createdDate.isAcceptableOrUnknown(
+              data['created_date']!, _createdDateMeta));
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(_deletedMeta,
+          deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta));
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta,
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
+    if (data.containsKey('form_template')) {
+      context.handle(
+          _formTemplateMeta,
+          formTemplate.isAcceptableOrUnknown(
+              data['form_template']!, _formTemplateMeta));
+    } else if (isInserting) {
+      context.missing(_formTemplateMeta);
+    }
+    if (data.containsKey('template_version')) {
+      context.handle(
+          _templateVersionMeta,
+          templateVersion.isAcceptableOrUnknown(
+              data['template_version']!, _templateVersionMeta));
+    } else if (isInserting) {
+      context.missing(_templateVersionMeta);
+    }
+    if (data.containsKey('assignment')) {
+      context.handle(
+          _assignmentMeta,
+          assignment.isAcceptableOrUnknown(
+              data['assignment']!, _assignmentMeta));
+    }
+    if (data.containsKey('start_entry_time')) {
+      context.handle(
+          _startEntryTimeMeta,
+          startEntryTime.isAcceptableOrUnknown(
+              data['start_entry_time']!, _startEntryTimeMeta));
+    }
+    if (data.containsKey('finished_entry_time')) {
+      context.handle(
+          _finishedEntryTimeMeta,
+          finishedEntryTime.isAcceptableOrUnknown(
+              data['finished_entry_time']!, _finishedEntryTimeMeta));
+    }
+    if (data.containsKey('updated_at_client')) {
+      context.handle(
+          _updatedAtClientMeta,
+          updatedAtClient.isAcceptableOrUnknown(
+              data['updated_at_client']!, _updatedAtClientMeta));
+    }
+    if (data.containsKey('last_sync_date')) {
+      context.handle(
+          _lastSyncDateMeta,
+          lastSyncDate.isAcceptableOrUnknown(
+              data['last_sync_date']!, _lastSyncDateMeta));
+    }
+    if (data.containsKey('last_sync_message')) {
+      context.handle(
+          _lastSyncMessageMeta,
+          lastSyncMessage.isAcceptableOrUnknown(
+              data['last_sync_message']!, _lastSyncMessageMeta));
+    }
+    if (data.containsKey('is_to_update')) {
+      context.handle(
+          _isToUpdateMeta,
+          isToUpdate.isAcceptableOrUnknown(
+              data['is_to_update']!, _isToUpdateMeta));
+    } else if (isInserting) {
+      context.missing(_isToUpdateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DataInstance map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DataInstance(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      lastModifiedDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}last_modified_date']),
+      createdDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
+      deleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}deleted'])!,
+      deletedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
+      formTemplate: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}form_template'])!,
+      templateVersion: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}template_version'])!,
+      assignment: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}assignment']),
+      startEntryTime: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}start_entry_time'])!,
+      finishedEntryTime: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}finished_entry_time']),
+      formData: $DataInstancesTable.$converterformData.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}form_data'])),
+      updatedAtClient: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}updated_at_client']),
+      syncState: $DataInstancesTable.$convertersyncState.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}sync_state'])!),
+      lastSyncDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}last_sync_date']),
+      lastSyncMessage: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}last_sync_message']),
+      isToUpdate: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_to_update'])!,
+    );
+  }
+
+  @override
+  $DataInstancesTable createAlias(String alias) {
+    return $DataInstancesTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<Map<String, dynamic>?, String?> $converterformData =
+      const NullAwareMapConverter();
+  static JsonTypeConverter2<InstanceSyncStatus, String, String>
+      $convertersyncState = const EnumNameConverter(InstanceSyncStatus.values);
+}
+
+class DataInstance extends DataClass implements Insertable<DataInstance> {
+  final String id;
+  final DateTime? lastModifiedDate;
+  final DateTime? createdDate;
+  final bool deleted;
+  final DateTime? deletedAt;
+
+  /// analogous to program
+  final String formTemplate;
+  final String templateVersion;
+
+  /// analogous to enrollment
+  final String? assignment;
+  final DateTime startEntryTime;
+  final DateTime? finishedEntryTime;
+  final Map<String, dynamic>? formData;
+  final DateTime? updatedAtClient;
+  final InstanceSyncStatus syncState;
+  final DateTime? lastSyncDate;
+  final String? lastSyncMessage;
+
+  /// is already synced to server
+  final bool isToUpdate;
+  const DataInstance(
+      {required this.id,
+      this.lastModifiedDate,
+      this.createdDate,
+      required this.deleted,
+      this.deletedAt,
+      required this.formTemplate,
+      required this.templateVersion,
+      this.assignment,
+      required this.startEntryTime,
+      this.finishedEntryTime,
+      this.formData,
+      this.updatedAtClient,
+      required this.syncState,
+      this.lastSyncDate,
+      this.lastSyncMessage,
+      required this.isToUpdate});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || lastModifiedDate != null) {
+      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate);
+    }
+    if (!nullToAbsent || createdDate != null) {
+      map['created_date'] = Variable<DateTime>(createdDate);
+    }
+    map['deleted'] = Variable<bool>(deleted);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['form_template'] = Variable<String>(formTemplate);
+    map['template_version'] = Variable<String>(templateVersion);
+    if (!nullToAbsent || assignment != null) {
+      map['assignment'] = Variable<String>(assignment);
+    }
+    map['start_entry_time'] = Variable<DateTime>(startEntryTime);
+    if (!nullToAbsent || finishedEntryTime != null) {
+      map['finished_entry_time'] = Variable<DateTime>(finishedEntryTime);
+    }
+    if (!nullToAbsent || formData != null) {
+      map['form_data'] = Variable<String>(
+          $DataInstancesTable.$converterformData.toSql(formData));
+    }
+    if (!nullToAbsent || updatedAtClient != null) {
+      map['updated_at_client'] = Variable<DateTime>(updatedAtClient);
+    }
+    {
+      map['sync_state'] = Variable<String>(
+          $DataInstancesTable.$convertersyncState.toSql(syncState));
+    }
+    if (!nullToAbsent || lastSyncDate != null) {
+      map['last_sync_date'] = Variable<DateTime>(lastSyncDate);
+    }
+    if (!nullToAbsent || lastSyncMessage != null) {
+      map['last_sync_message'] = Variable<String>(lastSyncMessage);
+    }
+    map['is_to_update'] = Variable<bool>(isToUpdate);
+    return map;
+  }
+
+  DataInstancesCompanion toCompanion(bool nullToAbsent) {
+    return DataInstancesCompanion(
+      id: Value(id),
+      lastModifiedDate: lastModifiedDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastModifiedDate),
+      createdDate: createdDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdDate),
+      deleted: Value(deleted),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      formTemplate: Value(formTemplate),
+      templateVersion: Value(templateVersion),
+      assignment: assignment == null && nullToAbsent
+          ? const Value.absent()
+          : Value(assignment),
+      startEntryTime: Value(startEntryTime),
+      finishedEntryTime: finishedEntryTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(finishedEntryTime),
+      formData: formData == null && nullToAbsent
+          ? const Value.absent()
+          : Value(formData),
+      updatedAtClient: updatedAtClient == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAtClient),
+      syncState: Value(syncState),
+      lastSyncDate: lastSyncDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSyncDate),
+      lastSyncMessage: lastSyncMessage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSyncMessage),
+      isToUpdate: Value(isToUpdate),
+    );
+  }
+
+  factory DataInstance.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DataInstance(
+      id: serializer.fromJson<String>(json['id']),
+      lastModifiedDate:
+          serializer.fromJson<DateTime?>(json['lastModifiedDate']),
+      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      formTemplate: serializer.fromJson<String>(json['formTemplate']),
+      templateVersion: serializer.fromJson<String>(json['templateVersion']),
+      assignment: serializer.fromJson<String?>(json['assignment']),
+      startEntryTime: serializer.fromJson<DateTime>(json['startEntryTime']),
+      finishedEntryTime:
+          serializer.fromJson<DateTime?>(json['finishedEntryTime']),
+      formData: serializer.fromJson<Map<String, dynamic>?>(json['formData']),
+      updatedAtClient: serializer.fromJson<DateTime?>(json['updatedAtClient']),
+      syncState: $DataInstancesTable.$convertersyncState
+          .fromJson(serializer.fromJson<String>(json['syncState'])),
+      lastSyncDate: serializer.fromJson<DateTime?>(json['lastSyncDate']),
+      lastSyncMessage: serializer.fromJson<String?>(json['lastSyncMessage']),
+      isToUpdate: serializer.fromJson<bool>(json['isToUpdate']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'lastModifiedDate': serializer.toJson<DateTime?>(lastModifiedDate),
+      'createdDate': serializer.toJson<DateTime?>(createdDate),
+      'deleted': serializer.toJson<bool>(deleted),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'formTemplate': serializer.toJson<String>(formTemplate),
+      'templateVersion': serializer.toJson<String>(templateVersion),
+      'assignment': serializer.toJson<String?>(assignment),
+      'startEntryTime': serializer.toJson<DateTime>(startEntryTime),
+      'finishedEntryTime': serializer.toJson<DateTime?>(finishedEntryTime),
+      'formData': serializer.toJson<Map<String, dynamic>?>(formData),
+      'updatedAtClient': serializer.toJson<DateTime?>(updatedAtClient),
+      'syncState': serializer.toJson<String>(
+          $DataInstancesTable.$convertersyncState.toJson(syncState)),
+      'lastSyncDate': serializer.toJson<DateTime?>(lastSyncDate),
+      'lastSyncMessage': serializer.toJson<String?>(lastSyncMessage),
+      'isToUpdate': serializer.toJson<bool>(isToUpdate),
+    };
+  }
+
+  DataInstance copyWith(
+          {String? id,
+          Value<DateTime?> lastModifiedDate = const Value.absent(),
+          Value<DateTime?> createdDate = const Value.absent(),
+          bool? deleted,
+          Value<DateTime?> deletedAt = const Value.absent(),
+          String? formTemplate,
+          String? templateVersion,
+          Value<String?> assignment = const Value.absent(),
+          DateTime? startEntryTime,
+          Value<DateTime?> finishedEntryTime = const Value.absent(),
+          Value<Map<String, dynamic>?> formData = const Value.absent(),
+          Value<DateTime?> updatedAtClient = const Value.absent(),
+          InstanceSyncStatus? syncState,
+          Value<DateTime?> lastSyncDate = const Value.absent(),
+          Value<String?> lastSyncMessage = const Value.absent(),
+          bool? isToUpdate}) =>
+      DataInstance(
+        id: id ?? this.id,
+        lastModifiedDate: lastModifiedDate.present
+            ? lastModifiedDate.value
+            : this.lastModifiedDate,
+        createdDate: createdDate.present ? createdDate.value : this.createdDate,
+        deleted: deleted ?? this.deleted,
+        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+        formTemplate: formTemplate ?? this.formTemplate,
+        templateVersion: templateVersion ?? this.templateVersion,
+        assignment: assignment.present ? assignment.value : this.assignment,
+        startEntryTime: startEntryTime ?? this.startEntryTime,
+        finishedEntryTime: finishedEntryTime.present
+            ? finishedEntryTime.value
+            : this.finishedEntryTime,
+        formData: formData.present ? formData.value : this.formData,
+        updatedAtClient: updatedAtClient.present
+            ? updatedAtClient.value
+            : this.updatedAtClient,
+        syncState: syncState ?? this.syncState,
+        lastSyncDate:
+            lastSyncDate.present ? lastSyncDate.value : this.lastSyncDate,
+        lastSyncMessage: lastSyncMessage.present
+            ? lastSyncMessage.value
+            : this.lastSyncMessage,
+        isToUpdate: isToUpdate ?? this.isToUpdate,
+      );
+  DataInstance copyWithCompanion(DataInstancesCompanion data) {
+    return DataInstance(
+      id: data.id.present ? data.id.value : this.id,
+      lastModifiedDate: data.lastModifiedDate.present
+          ? data.lastModifiedDate.value
+          : this.lastModifiedDate,
+      createdDate:
+          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      formTemplate: data.formTemplate.present
+          ? data.formTemplate.value
+          : this.formTemplate,
+      templateVersion: data.templateVersion.present
+          ? data.templateVersion.value
+          : this.templateVersion,
+      assignment:
+          data.assignment.present ? data.assignment.value : this.assignment,
+      startEntryTime: data.startEntryTime.present
+          ? data.startEntryTime.value
+          : this.startEntryTime,
+      finishedEntryTime: data.finishedEntryTime.present
+          ? data.finishedEntryTime.value
+          : this.finishedEntryTime,
+      formData: data.formData.present ? data.formData.value : this.formData,
+      updatedAtClient: data.updatedAtClient.present
+          ? data.updatedAtClient.value
+          : this.updatedAtClient,
+      syncState: data.syncState.present ? data.syncState.value : this.syncState,
+      lastSyncDate: data.lastSyncDate.present
+          ? data.lastSyncDate.value
+          : this.lastSyncDate,
+      lastSyncMessage: data.lastSyncMessage.present
+          ? data.lastSyncMessage.value
+          : this.lastSyncMessage,
+      isToUpdate:
+          data.isToUpdate.present ? data.isToUpdate.value : this.isToUpdate,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DataInstance(')
+          ..write('id: $id, ')
+          ..write('lastModifiedDate: $lastModifiedDate, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('deleted: $deleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('formTemplate: $formTemplate, ')
+          ..write('templateVersion: $templateVersion, ')
+          ..write('assignment: $assignment, ')
+          ..write('startEntryTime: $startEntryTime, ')
+          ..write('finishedEntryTime: $finishedEntryTime, ')
+          ..write('formData: $formData, ')
+          ..write('updatedAtClient: $updatedAtClient, ')
+          ..write('syncState: $syncState, ')
+          ..write('lastSyncDate: $lastSyncDate, ')
+          ..write('lastSyncMessage: $lastSyncMessage, ')
+          ..write('isToUpdate: $isToUpdate')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      lastModifiedDate,
+      createdDate,
+      deleted,
+      deletedAt,
+      formTemplate,
+      templateVersion,
+      assignment,
+      startEntryTime,
+      finishedEntryTime,
+      formData,
+      updatedAtClient,
+      syncState,
+      lastSyncDate,
+      lastSyncMessage,
+      isToUpdate);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DataInstance &&
+          other.id == this.id &&
+          other.lastModifiedDate == this.lastModifiedDate &&
+          other.createdDate == this.createdDate &&
+          other.deleted == this.deleted &&
+          other.deletedAt == this.deletedAt &&
+          other.formTemplate == this.formTemplate &&
+          other.templateVersion == this.templateVersion &&
+          other.assignment == this.assignment &&
+          other.startEntryTime == this.startEntryTime &&
+          other.finishedEntryTime == this.finishedEntryTime &&
+          other.formData == this.formData &&
+          other.updatedAtClient == this.updatedAtClient &&
+          other.syncState == this.syncState &&
+          other.lastSyncDate == this.lastSyncDate &&
+          other.lastSyncMessage == this.lastSyncMessage &&
+          other.isToUpdate == this.isToUpdate);
+}
+
+class DataInstancesCompanion extends UpdateCompanion<DataInstance> {
+  final Value<String> id;
+  final Value<DateTime?> lastModifiedDate;
+  final Value<DateTime?> createdDate;
+  final Value<bool> deleted;
+  final Value<DateTime?> deletedAt;
+  final Value<String> formTemplate;
+  final Value<String> templateVersion;
+  final Value<String?> assignment;
+  final Value<DateTime> startEntryTime;
+  final Value<DateTime?> finishedEntryTime;
+  final Value<Map<String, dynamic>?> formData;
+  final Value<DateTime?> updatedAtClient;
+  final Value<InstanceSyncStatus> syncState;
+  final Value<DateTime?> lastSyncDate;
+  final Value<String?> lastSyncMessage;
+  final Value<bool> isToUpdate;
+  final Value<int> rowid;
+  const DataInstancesCompanion({
+    this.id = const Value.absent(),
+    this.lastModifiedDate = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.formTemplate = const Value.absent(),
+    this.templateVersion = const Value.absent(),
+    this.assignment = const Value.absent(),
+    this.startEntryTime = const Value.absent(),
+    this.finishedEntryTime = const Value.absent(),
+    this.formData = const Value.absent(),
+    this.updatedAtClient = const Value.absent(),
+    this.syncState = const Value.absent(),
+    this.lastSyncDate = const Value.absent(),
+    this.lastSyncMessage = const Value.absent(),
+    this.isToUpdate = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DataInstancesCompanion.insert({
+    required String id,
+    this.lastModifiedDate = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    required String formTemplate,
+    required String templateVersion,
+    this.assignment = const Value.absent(),
+    this.startEntryTime = const Value.absent(),
+    this.finishedEntryTime = const Value.absent(),
+    this.formData = const Value.absent(),
+    this.updatedAtClient = const Value.absent(),
+    required InstanceSyncStatus syncState,
+    this.lastSyncDate = const Value.absent(),
+    this.lastSyncMessage = const Value.absent(),
+    required bool isToUpdate,
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        formTemplate = Value(formTemplate),
+        templateVersion = Value(templateVersion),
+        syncState = Value(syncState),
+        isToUpdate = Value(isToUpdate);
+  static Insertable<DataInstance> custom({
+    Expression<String>? id,
+    Expression<DateTime>? lastModifiedDate,
+    Expression<DateTime>? createdDate,
+    Expression<bool>? deleted,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? formTemplate,
+    Expression<String>? templateVersion,
+    Expression<String>? assignment,
+    Expression<DateTime>? startEntryTime,
+    Expression<DateTime>? finishedEntryTime,
+    Expression<String>? formData,
+    Expression<DateTime>? updatedAtClient,
+    Expression<String>? syncState,
+    Expression<DateTime>? lastSyncDate,
+    Expression<String>? lastSyncMessage,
+    Expression<bool>? isToUpdate,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (lastModifiedDate != null) 'last_modified_date': lastModifiedDate,
+      if (createdDate != null) 'created_date': createdDate,
+      if (deleted != null) 'deleted': deleted,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (formTemplate != null) 'form_template': formTemplate,
+      if (templateVersion != null) 'template_version': templateVersion,
+      if (assignment != null) 'assignment': assignment,
+      if (startEntryTime != null) 'start_entry_time': startEntryTime,
+      if (finishedEntryTime != null) 'finished_entry_time': finishedEntryTime,
+      if (formData != null) 'form_data': formData,
+      if (updatedAtClient != null) 'updated_at_client': updatedAtClient,
+      if (syncState != null) 'sync_state': syncState,
+      if (lastSyncDate != null) 'last_sync_date': lastSyncDate,
+      if (lastSyncMessage != null) 'last_sync_message': lastSyncMessage,
+      if (isToUpdate != null) 'is_to_update': isToUpdate,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DataInstancesCompanion copyWith(
+      {Value<String>? id,
+      Value<DateTime?>? lastModifiedDate,
+      Value<DateTime?>? createdDate,
+      Value<bool>? deleted,
+      Value<DateTime?>? deletedAt,
+      Value<String>? formTemplate,
+      Value<String>? templateVersion,
+      Value<String?>? assignment,
+      Value<DateTime>? startEntryTime,
+      Value<DateTime?>? finishedEntryTime,
+      Value<Map<String, dynamic>?>? formData,
+      Value<DateTime?>? updatedAtClient,
+      Value<InstanceSyncStatus>? syncState,
+      Value<DateTime?>? lastSyncDate,
+      Value<String?>? lastSyncMessage,
+      Value<bool>? isToUpdate,
+      Value<int>? rowid}) {
+    return DataInstancesCompanion(
+      id: id ?? this.id,
+      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
+      createdDate: createdDate ?? this.createdDate,
+      deleted: deleted ?? this.deleted,
+      deletedAt: deletedAt ?? this.deletedAt,
+      formTemplate: formTemplate ?? this.formTemplate,
+      templateVersion: templateVersion ?? this.templateVersion,
+      assignment: assignment ?? this.assignment,
+      startEntryTime: startEntryTime ?? this.startEntryTime,
+      finishedEntryTime: finishedEntryTime ?? this.finishedEntryTime,
+      formData: formData ?? this.formData,
+      updatedAtClient: updatedAtClient ?? this.updatedAtClient,
+      syncState: syncState ?? this.syncState,
+      lastSyncDate: lastSyncDate ?? this.lastSyncDate,
+      lastSyncMessage: lastSyncMessage ?? this.lastSyncMessage,
+      isToUpdate: isToUpdate ?? this.isToUpdate,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (lastModifiedDate.present) {
+      map['last_modified_date'] = Variable<DateTime>(lastModifiedDate.value);
+    }
+    if (createdDate.present) {
+      map['created_date'] = Variable<DateTime>(createdDate.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (formTemplate.present) {
+      map['form_template'] = Variable<String>(formTemplate.value);
+    }
+    if (templateVersion.present) {
+      map['template_version'] = Variable<String>(templateVersion.value);
+    }
+    if (assignment.present) {
+      map['assignment'] = Variable<String>(assignment.value);
+    }
+    if (startEntryTime.present) {
+      map['start_entry_time'] = Variable<DateTime>(startEntryTime.value);
+    }
+    if (finishedEntryTime.present) {
+      map['finished_entry_time'] = Variable<DateTime>(finishedEntryTime.value);
+    }
+    if (formData.present) {
+      map['form_data'] = Variable<String>(
+          $DataInstancesTable.$converterformData.toSql(formData.value));
+    }
+    if (updatedAtClient.present) {
+      map['updated_at_client'] = Variable<DateTime>(updatedAtClient.value);
+    }
+    if (syncState.present) {
+      map['sync_state'] = Variable<String>(
+          $DataInstancesTable.$convertersyncState.toSql(syncState.value));
+    }
+    if (lastSyncDate.present) {
+      map['last_sync_date'] = Variable<DateTime>(lastSyncDate.value);
+    }
+    if (lastSyncMessage.present) {
+      map['last_sync_message'] = Variable<String>(lastSyncMessage.value);
+    }
+    if (isToUpdate.present) {
+      map['is_to_update'] = Variable<bool>(isToUpdate.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DataInstancesCompanion(')
+          ..write('id: $id, ')
+          ..write('lastModifiedDate: $lastModifiedDate, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('deleted: $deleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('formTemplate: $formTemplate, ')
+          ..write('templateVersion: $templateVersion, ')
+          ..write('assignment: $assignment, ')
+          ..write('startEntryTime: $startEntryTime, ')
+          ..write('finishedEntryTime: $finishedEntryTime, ')
+          ..write('formData: $formData, ')
+          ..write('updatedAtClient: $updatedAtClient, ')
+          ..write('syncState: $syncState, ')
+          ..write('lastSyncDate: $lastSyncDate, ')
+          ..write('lastSyncMessage: $lastSyncMessage, ')
+          ..write('isToUpdate: $isToUpdate, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -10207,13 +9321,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $AssignmentFormsTable(this);
   late final $FormTemplateVersionsTable formTemplateVersions =
       $FormTemplateVersionsTable(this);
-  late final $DataInstancesTable dataInstances = $DataInstancesTable(this);
-  late final $RepeatInstancesTable repeatInstances =
-      $RepeatInstancesTable(this);
   late final $DataOptionSetsTable dataOptionSets = $DataOptionSetsTable(this);
   late final $DataElementsTable dataElements = $DataElementsTable(this);
-  late final $DataValuesTable dataValues = $DataValuesTable(this);
   late final $DataOptionsTable dataOptions = $DataOptionsTable(this);
+  late final $DataInstancesTable dataInstances = $DataInstancesTable(this);
   late final $UserFormPermissionsTable userFormPermissions =
       $UserFormPermissionsTable(this);
   late final $SyncSummariesTable syncSummaries = $SyncSummariesTable(this);
@@ -10243,8 +9354,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final Index templateVersionTemplateIdx = Index(
       'template_version_template_idx',
       'CREATE INDEX template_version_template_idx ON form_template_versions (template)');
-  late final Index repeatTemplatePathIdx = Index('repeat_template_path_idx',
-      'CREATE INDEX repeat_template_path_idx ON repeat_instances (template_path)');
   late final Index dataElementNameIdx = Index('data_element_name_idx',
       'CREATE INDEX data_element_name_idx ON data_elements (name)');
   late final Index optionSetNameIdx = Index('option_set_name_idx',
@@ -10283,12 +9392,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         formTemplates,
         assignmentForms,
         formTemplateVersions,
-        dataInstances,
-        repeatInstances,
         dataOptionSets,
         dataElements,
-        dataValues,
         dataOptions,
+        dataInstances,
         userFormPermissions,
         syncSummaries,
         orgNameIdx,
@@ -10303,7 +9410,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         assignmentStatusIdx,
         templateVersionNumberIdx,
         templateVersionTemplateIdx,
-        repeatTemplatePathIdx,
         dataElementNameIdx,
         optionSetNameIdx,
         optionSetCodeIdx,
@@ -15265,1184 +14371,6 @@ typedef $$FormTemplateVersionsTableProcessedTableManager
         (FormTemplateVersion, $$FormTemplateVersionsTableReferences),
         FormTemplateVersion,
         PrefetchHooks Function({bool template, bool VersionDataInstances})>;
-typedef $$DataInstancesTableCreateCompanionBuilder = DataInstancesCompanion
-    Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<bool> deleted,
-  Value<DateTime?> deletedAt,
-  required String formTemplate,
-  required String templateVersion,
-  Value<String?> assignment,
-  Value<DateTime> startEntryTime,
-  Value<DateTime?> finishedEntryTime,
-  Value<Map<String, dynamic>?> formData,
-  Value<DateTime?> updatedAtClient,
-  required InstanceSyncStatus syncState,
-  Value<DateTime?> lastSyncDate,
-  Value<String?> lastSyncMessage,
-  required bool isToUpdate,
-  Value<int> rowid,
-});
-typedef $$DataInstancesTableUpdateCompanionBuilder = DataInstancesCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<bool> deleted,
-  Value<DateTime?> deletedAt,
-  Value<String> formTemplate,
-  Value<String> templateVersion,
-  Value<String?> assignment,
-  Value<DateTime> startEntryTime,
-  Value<DateTime?> finishedEntryTime,
-  Value<Map<String, dynamic>?> formData,
-  Value<DateTime?> updatedAtClient,
-  Value<InstanceSyncStatus> syncState,
-  Value<DateTime?> lastSyncDate,
-  Value<String?> lastSyncMessage,
-  Value<bool> isToUpdate,
-  Value<int> rowid,
-});
-
-final class $$DataInstancesTableReferences
-    extends BaseReferences<_$AppDatabase, $DataInstancesTable, DataInstance> {
-  $$DataInstancesTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static $FormTemplatesTable _formTemplateTable(_$AppDatabase db) =>
-      db.formTemplates.createAlias($_aliasNameGenerator(
-          db.dataInstances.formTemplate, db.formTemplates.id));
-
-  $$FormTemplatesTableProcessedTableManager get formTemplate {
-    final $_column = $_itemColumn<String>('form_template')!;
-
-    final manager = $$FormTemplatesTableTableManager($_db, $_db.formTemplates)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_formTemplateTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static $FormTemplateVersionsTable _templateVersionTable(_$AppDatabase db) =>
-      db.formTemplateVersions.createAlias($_aliasNameGenerator(
-          db.dataInstances.templateVersion, db.formTemplateVersions.id));
-
-  $$FormTemplateVersionsTableProcessedTableManager get templateVersion {
-    final $_column = $_itemColumn<String>('template_version')!;
-
-    final manager =
-        $$FormTemplateVersionsTableTableManager($_db, $_db.formTemplateVersions)
-            .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_templateVersionTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static $AssignmentsTable _assignmentTable(_$AppDatabase db) =>
-      db.assignments.createAlias(
-          $_aliasNameGenerator(db.dataInstances.assignment, db.assignments.id));
-
-  $$AssignmentsTableProcessedTableManager? get assignment {
-    final $_column = $_itemColumn<String>('assignment');
-    if ($_column == null) return null;
-    final manager = $$AssignmentsTableTableManager($_db, $_db.assignments)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_assignmentTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static MultiTypedResultKey<$RepeatInstancesTable, List<RepeatInstance>>
-      _repeatInstancesRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.repeatInstances,
-              aliasName: $_aliasNameGenerator(
-                  db.dataInstances.id, db.repeatInstances.submission));
-
-  $$RepeatInstancesTableProcessedTableManager get repeatInstancesRefs {
-    final manager = $$RepeatInstancesTableTableManager(
-            $_db, $_db.repeatInstances)
-        .filter((f) => f.submission.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache =
-        $_typedResult.readTableOrNull(_repeatInstancesRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-
-  static MultiTypedResultKey<$DataValuesTable, List<DataValue>>
-      _instanceValuesTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataValues,
-              aliasName: $_aliasNameGenerator(
-                  db.dataInstances.id, db.dataValues.dataInstance));
-
-  $$DataValuesTableProcessedTableManager get instanceValues {
-    final manager = $$DataValuesTableTableManager($_db, $_db.dataValues).filter(
-        (f) => f.dataInstance.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_instanceValuesTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-}
-
-class $$DataInstancesTableFilterComposer
-    extends Composer<_$AppDatabase, $DataInstancesTable> {
-  $$DataInstancesTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get deleted => $composableBuilder(
-      column: $table.deleted, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
-      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get startEntryTime => $composableBuilder(
-      column: $table.startEntryTime,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get finishedEntryTime => $composableBuilder(
-      column: $table.finishedEntryTime,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get formData => $composableBuilder(
-          column: $table.formData,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<DateTime> get updatedAtClient => $composableBuilder(
-      column: $table.updatedAtClient,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<InstanceSyncStatus, InstanceSyncStatus, String>
-      get syncState => $composableBuilder(
-          column: $table.syncState,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<DateTime> get lastSyncDate => $composableBuilder(
-      column: $table.lastSyncDate, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get lastSyncMessage => $composableBuilder(
-      column: $table.lastSyncMessage,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get isToUpdate => $composableBuilder(
-      column: $table.isToUpdate, builder: (column) => ColumnFilters(column));
-
-  $$FormTemplatesTableFilterComposer get formTemplate {
-    final $$FormTemplatesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.formTemplate,
-        referencedTable: $db.formTemplates,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FormTemplatesTableFilterComposer(
-              $db: $db,
-              $table: $db.formTemplates,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$FormTemplateVersionsTableFilterComposer get templateVersion {
-    final $$FormTemplateVersionsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.templateVersion,
-        referencedTable: $db.formTemplateVersions,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FormTemplateVersionsTableFilterComposer(
-              $db: $db,
-              $table: $db.formTemplateVersions,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$AssignmentsTableFilterComposer get assignment {
-    final $$AssignmentsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.assignment,
-        referencedTable: $db.assignments,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$AssignmentsTableFilterComposer(
-              $db: $db,
-              $table: $db.assignments,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  Expression<bool> repeatInstancesRefs(
-      Expression<bool> Function($$RepeatInstancesTableFilterComposer f) f) {
-    final $$RepeatInstancesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.repeatInstances,
-        getReferencedColumn: (t) => t.submission,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$RepeatInstancesTableFilterComposer(
-              $db: $db,
-              $table: $db.repeatInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-
-  Expression<bool> instanceValues(
-      Expression<bool> Function($$DataValuesTableFilterComposer f) f) {
-    final $$DataValuesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.dataValues,
-        getReferencedColumn: (t) => t.dataInstance,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataValuesTableFilterComposer(
-              $db: $db,
-              $table: $db.dataValues,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-}
-
-class $$DataInstancesTableOrderingComposer
-    extends Composer<_$AppDatabase, $DataInstancesTable> {
-  $$DataInstancesTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get deleted => $composableBuilder(
-      column: $table.deleted, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
-      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get startEntryTime => $composableBuilder(
-      column: $table.startEntryTime,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get finishedEntryTime => $composableBuilder(
-      column: $table.finishedEntryTime,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get formData => $composableBuilder(
-      column: $table.formData, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get updatedAtClient => $composableBuilder(
-      column: $table.updatedAtClient,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get syncState => $composableBuilder(
-      column: $table.syncState, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get lastSyncDate => $composableBuilder(
-      column: $table.lastSyncDate,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get lastSyncMessage => $composableBuilder(
-      column: $table.lastSyncMessage,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get isToUpdate => $composableBuilder(
-      column: $table.isToUpdate, builder: (column) => ColumnOrderings(column));
-
-  $$FormTemplatesTableOrderingComposer get formTemplate {
-    final $$FormTemplatesTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.formTemplate,
-        referencedTable: $db.formTemplates,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FormTemplatesTableOrderingComposer(
-              $db: $db,
-              $table: $db.formTemplates,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$FormTemplateVersionsTableOrderingComposer get templateVersion {
-    final $$FormTemplateVersionsTableOrderingComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.templateVersion,
-            referencedTable: $db.formTemplateVersions,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$FormTemplateVersionsTableOrderingComposer(
-                  $db: $db,
-                  $table: $db.formTemplateVersions,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return composer;
-  }
-
-  $$AssignmentsTableOrderingComposer get assignment {
-    final $$AssignmentsTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.assignment,
-        referencedTable: $db.assignments,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$AssignmentsTableOrderingComposer(
-              $db: $db,
-              $table: $db.assignments,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$DataInstancesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $DataInstancesTable> {
-  $$DataInstancesTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => column);
-
-  GeneratedColumn<bool> get deleted =>
-      $composableBuilder(column: $table.deleted, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get deletedAt =>
-      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get startEntryTime => $composableBuilder(
-      column: $table.startEntryTime, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get finishedEntryTime => $composableBuilder(
-      column: $table.finishedEntryTime, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
-      get formData => $composableBuilder(
-          column: $table.formData, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAtClient => $composableBuilder(
-      column: $table.updatedAtClient, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<InstanceSyncStatus, String> get syncState =>
-      $composableBuilder(column: $table.syncState, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get lastSyncDate => $composableBuilder(
-      column: $table.lastSyncDate, builder: (column) => column);
-
-  GeneratedColumn<String> get lastSyncMessage => $composableBuilder(
-      column: $table.lastSyncMessage, builder: (column) => column);
-
-  GeneratedColumn<bool> get isToUpdate => $composableBuilder(
-      column: $table.isToUpdate, builder: (column) => column);
-
-  $$FormTemplatesTableAnnotationComposer get formTemplate {
-    final $$FormTemplatesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.formTemplate,
-        referencedTable: $db.formTemplates,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FormTemplatesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.formTemplates,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$FormTemplateVersionsTableAnnotationComposer get templateVersion {
-    final $$FormTemplateVersionsTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.templateVersion,
-            referencedTable: $db.formTemplateVersions,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$FormTemplateVersionsTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.formTemplateVersions,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return composer;
-  }
-
-  $$AssignmentsTableAnnotationComposer get assignment {
-    final $$AssignmentsTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.assignment,
-        referencedTable: $db.assignments,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$AssignmentsTableAnnotationComposer(
-              $db: $db,
-              $table: $db.assignments,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  Expression<T> repeatInstancesRefs<T extends Object>(
-      Expression<T> Function($$RepeatInstancesTableAnnotationComposer a) f) {
-    final $$RepeatInstancesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.repeatInstances,
-        getReferencedColumn: (t) => t.submission,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$RepeatInstancesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.repeatInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-
-  Expression<T> instanceValues<T extends Object>(
-      Expression<T> Function($$DataValuesTableAnnotationComposer a) f) {
-    final $$DataValuesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.dataValues,
-        getReferencedColumn: (t) => t.dataInstance,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataValuesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.dataValues,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-}
-
-class $$DataInstancesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $DataInstancesTable,
-    DataInstance,
-    $$DataInstancesTableFilterComposer,
-    $$DataInstancesTableOrderingComposer,
-    $$DataInstancesTableAnnotationComposer,
-    $$DataInstancesTableCreateCompanionBuilder,
-    $$DataInstancesTableUpdateCompanionBuilder,
-    (DataInstance, $$DataInstancesTableReferences),
-    DataInstance,
-    PrefetchHooks Function(
-        {bool formTemplate,
-        bool templateVersion,
-        bool assignment,
-        bool repeatInstancesRefs,
-        bool instanceValues})> {
-  $$DataInstancesTableTableManager(_$AppDatabase db, $DataInstancesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$DataInstancesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$DataInstancesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$DataInstancesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<bool> deleted = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            Value<String> formTemplate = const Value.absent(),
-            Value<String> templateVersion = const Value.absent(),
-            Value<String?> assignment = const Value.absent(),
-            Value<DateTime> startEntryTime = const Value.absent(),
-            Value<DateTime?> finishedEntryTime = const Value.absent(),
-            Value<Map<String, dynamic>?> formData = const Value.absent(),
-            Value<DateTime?> updatedAtClient = const Value.absent(),
-            Value<InstanceSyncStatus> syncState = const Value.absent(),
-            Value<DateTime?> lastSyncDate = const Value.absent(),
-            Value<String?> lastSyncMessage = const Value.absent(),
-            Value<bool> isToUpdate = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataInstancesCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            deleted: deleted,
-            deletedAt: deletedAt,
-            formTemplate: formTemplate,
-            templateVersion: templateVersion,
-            assignment: assignment,
-            startEntryTime: startEntryTime,
-            finishedEntryTime: finishedEntryTime,
-            formData: formData,
-            updatedAtClient: updatedAtClient,
-            syncState: syncState,
-            lastSyncDate: lastSyncDate,
-            lastSyncMessage: lastSyncMessage,
-            isToUpdate: isToUpdate,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<bool> deleted = const Value.absent(),
-            Value<DateTime?> deletedAt = const Value.absent(),
-            required String formTemplate,
-            required String templateVersion,
-            Value<String?> assignment = const Value.absent(),
-            Value<DateTime> startEntryTime = const Value.absent(),
-            Value<DateTime?> finishedEntryTime = const Value.absent(),
-            Value<Map<String, dynamic>?> formData = const Value.absent(),
-            Value<DateTime?> updatedAtClient = const Value.absent(),
-            required InstanceSyncStatus syncState,
-            Value<DateTime?> lastSyncDate = const Value.absent(),
-            Value<String?> lastSyncMessage = const Value.absent(),
-            required bool isToUpdate,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataInstancesCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            deleted: deleted,
-            deletedAt: deletedAt,
-            formTemplate: formTemplate,
-            templateVersion: templateVersion,
-            assignment: assignment,
-            startEntryTime: startEntryTime,
-            finishedEntryTime: finishedEntryTime,
-            formData: formData,
-            updatedAtClient: updatedAtClient,
-            syncState: syncState,
-            lastSyncDate: lastSyncDate,
-            lastSyncMessage: lastSyncMessage,
-            isToUpdate: isToUpdate,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$DataInstancesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {formTemplate = false,
-              templateVersion = false,
-              assignment = false,
-              repeatInstancesRefs = false,
-              instanceValues = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (repeatInstancesRefs) db.repeatInstances,
-                if (instanceValues) db.dataValues
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (formTemplate) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.formTemplate,
-                    referencedTable:
-                        $$DataInstancesTableReferences._formTemplateTable(db),
-                    referencedColumn: $$DataInstancesTableReferences
-                        ._formTemplateTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (templateVersion) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.templateVersion,
-                    referencedTable: $$DataInstancesTableReferences
-                        ._templateVersionTable(db),
-                    referencedColumn: $$DataInstancesTableReferences
-                        ._templateVersionTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (assignment) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.assignment,
-                    referencedTable:
-                        $$DataInstancesTableReferences._assignmentTable(db),
-                    referencedColumn:
-                        $$DataInstancesTableReferences._assignmentTable(db).id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (repeatInstancesRefs)
-                    await $_getPrefetchedData<DataInstance, $DataInstancesTable, RepeatInstance>(
-                        currentTable: table,
-                        referencedTable: $$DataInstancesTableReferences
-                            ._repeatInstancesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataInstancesTableReferences(db, table, p0)
-                                .repeatInstancesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.submission == item.id),
-                        typedResults: items),
-                  if (instanceValues)
-                    await $_getPrefetchedData<DataInstance, $DataInstancesTable,
-                            DataValue>(
-                        currentTable: table,
-                        referencedTable: $$DataInstancesTableReferences
-                            ._instanceValuesTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataInstancesTableReferences(db, table, p0)
-                                .instanceValues,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.dataInstance == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$DataInstancesTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $DataInstancesTable,
-    DataInstance,
-    $$DataInstancesTableFilterComposer,
-    $$DataInstancesTableOrderingComposer,
-    $$DataInstancesTableAnnotationComposer,
-    $$DataInstancesTableCreateCompanionBuilder,
-    $$DataInstancesTableUpdateCompanionBuilder,
-    (DataInstance, $$DataInstancesTableReferences),
-    DataInstance,
-    PrefetchHooks Function(
-        {bool formTemplate,
-        bool templateVersion,
-        bool assignment,
-        bool repeatInstancesRefs,
-        bool instanceValues})>;
-typedef $$RepeatInstancesTableCreateCompanionBuilder = RepeatInstancesCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  required String submission,
-  Value<String?> parent,
-  required String templatePath,
-  required int repeatIndex,
-  Value<bool> deleted,
-  Value<int> rowid,
-});
-typedef $$RepeatInstancesTableUpdateCompanionBuilder = RepeatInstancesCompanion
-    Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String> submission,
-  Value<String?> parent,
-  Value<String> templatePath,
-  Value<int> repeatIndex,
-  Value<bool> deleted,
-  Value<int> rowid,
-});
-
-final class $$RepeatInstancesTableReferences extends BaseReferences<
-    _$AppDatabase, $RepeatInstancesTable, RepeatInstance> {
-  $$RepeatInstancesTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static $DataInstancesTable _submissionTable(_$AppDatabase db) =>
-      db.dataInstances.createAlias($_aliasNameGenerator(
-          db.repeatInstances.submission, db.dataInstances.id));
-
-  $$DataInstancesTableProcessedTableManager get submission {
-    final $_column = $_itemColumn<String>('submission')!;
-
-    final manager = $$DataInstancesTableTableManager($_db, $_db.dataInstances)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_submissionTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static $RepeatInstancesTable _parentTable(_$AppDatabase db) =>
-      db.repeatInstances.createAlias($_aliasNameGenerator(
-          db.repeatInstances.parent, db.repeatInstances.id));
-
-  $$RepeatInstancesTableProcessedTableManager? get parent {
-    final $_column = $_itemColumn<String>('parent');
-    if ($_column == null) return null;
-    final manager =
-        $$RepeatInstancesTableTableManager($_db, $_db.repeatInstances)
-            .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_parentTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-}
-
-class $$RepeatInstancesTableFilterComposer
-    extends Composer<_$AppDatabase, $RepeatInstancesTable> {
-  $$RepeatInstancesTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get templatePath => $composableBuilder(
-      column: $table.templatePath, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get repeatIndex => $composableBuilder(
-      column: $table.repeatIndex, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get deleted => $composableBuilder(
-      column: $table.deleted, builder: (column) => ColumnFilters(column));
-
-  $$DataInstancesTableFilterComposer get submission {
-    final $$DataInstancesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.submission,
-        referencedTable: $db.dataInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataInstancesTableFilterComposer(
-              $db: $db,
-              $table: $db.dataInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$RepeatInstancesTableFilterComposer get parent {
-    final $$RepeatInstancesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.parent,
-        referencedTable: $db.repeatInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$RepeatInstancesTableFilterComposer(
-              $db: $db,
-              $table: $db.repeatInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$RepeatInstancesTableOrderingComposer
-    extends Composer<_$AppDatabase, $RepeatInstancesTable> {
-  $$RepeatInstancesTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get templatePath => $composableBuilder(
-      column: $table.templatePath,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get repeatIndex => $composableBuilder(
-      column: $table.repeatIndex, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get deleted => $composableBuilder(
-      column: $table.deleted, builder: (column) => ColumnOrderings(column));
-
-  $$DataInstancesTableOrderingComposer get submission {
-    final $$DataInstancesTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.submission,
-        referencedTable: $db.dataInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataInstancesTableOrderingComposer(
-              $db: $db,
-              $table: $db.dataInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$RepeatInstancesTableOrderingComposer get parent {
-    final $$RepeatInstancesTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.parent,
-        referencedTable: $db.repeatInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$RepeatInstancesTableOrderingComposer(
-              $db: $db,
-              $table: $db.repeatInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$RepeatInstancesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $RepeatInstancesTable> {
-  $$RepeatInstancesTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => column);
-
-  GeneratedColumn<String> get templatePath => $composableBuilder(
-      column: $table.templatePath, builder: (column) => column);
-
-  GeneratedColumn<int> get repeatIndex => $composableBuilder(
-      column: $table.repeatIndex, builder: (column) => column);
-
-  GeneratedColumn<bool> get deleted =>
-      $composableBuilder(column: $table.deleted, builder: (column) => column);
-
-  $$DataInstancesTableAnnotationComposer get submission {
-    final $$DataInstancesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.submission,
-        referencedTable: $db.dataInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataInstancesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.dataInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$RepeatInstancesTableAnnotationComposer get parent {
-    final $$RepeatInstancesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.parent,
-        referencedTable: $db.repeatInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$RepeatInstancesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.repeatInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$RepeatInstancesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $RepeatInstancesTable,
-    RepeatInstance,
-    $$RepeatInstancesTableFilterComposer,
-    $$RepeatInstancesTableOrderingComposer,
-    $$RepeatInstancesTableAnnotationComposer,
-    $$RepeatInstancesTableCreateCompanionBuilder,
-    $$RepeatInstancesTableUpdateCompanionBuilder,
-    (RepeatInstance, $$RepeatInstancesTableReferences),
-    RepeatInstance,
-    PrefetchHooks Function({bool submission, bool parent})> {
-  $$RepeatInstancesTableTableManager(
-      _$AppDatabase db, $RepeatInstancesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$RepeatInstancesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$RepeatInstancesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$RepeatInstancesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String> submission = const Value.absent(),
-            Value<String?> parent = const Value.absent(),
-            Value<String> templatePath = const Value.absent(),
-            Value<int> repeatIndex = const Value.absent(),
-            Value<bool> deleted = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              RepeatInstancesCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            submission: submission,
-            parent: parent,
-            templatePath: templatePath,
-            repeatIndex: repeatIndex,
-            deleted: deleted,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            required String submission,
-            Value<String?> parent = const Value.absent(),
-            required String templatePath,
-            required int repeatIndex,
-            Value<bool> deleted = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              RepeatInstancesCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            submission: submission,
-            parent: parent,
-            templatePath: templatePath,
-            repeatIndex: repeatIndex,
-            deleted: deleted,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$RepeatInstancesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({submission = false, parent = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (submission) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.submission,
-                    referencedTable:
-                        $$RepeatInstancesTableReferences._submissionTable(db),
-                    referencedColumn: $$RepeatInstancesTableReferences
-                        ._submissionTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (parent) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.parent,
-                    referencedTable:
-                        $$RepeatInstancesTableReferences._parentTable(db),
-                    referencedColumn:
-                        $$RepeatInstancesTableReferences._parentTable(db).id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$RepeatInstancesTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $RepeatInstancesTable,
-    RepeatInstance,
-    $$RepeatInstancesTableFilterComposer,
-    $$RepeatInstancesTableOrderingComposer,
-    $$RepeatInstancesTableAnnotationComposer,
-    $$RepeatInstancesTableCreateCompanionBuilder,
-    $$RepeatInstancesTableUpdateCompanionBuilder,
-    (RepeatInstance, $$RepeatInstancesTableReferences),
-    RepeatInstance,
-    PrefetchHooks Function({bool submission, bool parent})>;
 typedef $$DataOptionSetsTableCreateCompanionBuilder = DataOptionSetsCompanion
     Function({
   required String id,
@@ -16903,21 +14831,6 @@ final class $$DataElementsTableReferences
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: [item]));
   }
-
-  static MultiTypedResultKey<$DataValuesTable, List<DataValue>>
-      _dataValuesRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.dataValues,
-              aliasName: $_aliasNameGenerator(
-                  db.dataElements.id, db.dataValues.dataElement));
-
-  $$DataValuesTableProcessedTableManager get dataValuesRefs {
-    final manager = $$DataValuesTableTableManager($_db, $_db.dataValues)
-        .filter((f) => f.dataElement.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_dataValuesRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
 }
 
 class $$DataElementsTableFilterComposer
@@ -17010,27 +14923,6 @@ class $$DataElementsTableFilterComposer
                   $removeJoinBuilderFromRootComposer,
             ));
     return composer;
-  }
-
-  Expression<bool> dataValuesRefs(
-      Expression<bool> Function($$DataValuesTableFilterComposer f) f) {
-    final $$DataValuesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.dataValues,
-        getReferencedColumn: (t) => t.dataElement,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataValuesTableFilterComposer(
-              $db: $db,
-              $table: $db.dataValues,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
   }
 }
 
@@ -17197,27 +15089,6 @@ class $$DataElementsTableAnnotationComposer
             ));
     return composer;
   }
-
-  Expression<T> dataValuesRefs<T extends Object>(
-      Expression<T> Function($$DataValuesTableAnnotationComposer a) f) {
-    final $$DataValuesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.dataValues,
-        getReferencedColumn: (t) => t.dataElement,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataValuesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.dataValues,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
 }
 
 class $$DataElementsTableTableManager extends RootTableManager<
@@ -17231,7 +15102,7 @@ class $$DataElementsTableTableManager extends RootTableManager<
     $$DataElementsTableUpdateCompanionBuilder,
     (DataElement, $$DataElementsTableReferences),
     DataElement,
-    PrefetchHooks Function({bool optionSet, bool dataValuesRefs})> {
+    PrefetchHooks Function({bool optionSet})> {
   $$DataElementsTableTableManager(_$AppDatabase db, $DataElementsTable table)
       : super(TableManagerState(
           db: db,
@@ -17330,10 +15201,10 @@ class $$DataElementsTableTableManager extends RootTableManager<
                     $$DataElementsTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: ({optionSet = false, dataValuesRefs = false}) {
+          prefetchHooksCallback: ({optionSet = false}) {
             return PrefetchHooks(
               db: db,
-              explicitlyWatchedTables: [if (dataValuesRefs) db.dataValues],
+              explicitlyWatchedTables: [],
               addJoins: <
                   T extends TableManagerState<
                       dynamic,
@@ -17361,21 +15232,7 @@ class $$DataElementsTableTableManager extends RootTableManager<
                 return state;
               },
               getPrefetchedDataCallback: (items) async {
-                return [
-                  if (dataValuesRefs)
-                    await $_getPrefetchedData<DataElement, $DataElementsTable,
-                            DataValue>(
-                        currentTable: table,
-                        referencedTable: $$DataElementsTableReferences
-                            ._dataValuesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$DataElementsTableReferences(db, table, p0)
-                                .dataValuesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.dataElement == item.id),
-                        typedResults: items)
-                ];
+                return [];
               },
             );
           },
@@ -17393,388 +15250,7 @@ typedef $$DataElementsTableProcessedTableManager = ProcessedTableManager<
     $$DataElementsTableUpdateCompanionBuilder,
     (DataElement, $$DataElementsTableReferences),
     DataElement,
-    PrefetchHooks Function({bool optionSet, bool dataValuesRefs})>;
-typedef $$DataValuesTableCreateCompanionBuilder = DataValuesCompanion Function({
-  required String id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  required String dataElement,
-  required String dataInstance,
-  Value<String?> value,
-  Value<String?> comment,
-  Value<int> rowid,
-});
-typedef $$DataValuesTableUpdateCompanionBuilder = DataValuesCompanion Function({
-  Value<String> id,
-  Value<DateTime?> lastModifiedDate,
-  Value<DateTime?> createdDate,
-  Value<String> dataElement,
-  Value<String> dataInstance,
-  Value<String?> value,
-  Value<String?> comment,
-  Value<int> rowid,
-});
-
-final class $$DataValuesTableReferences
-    extends BaseReferences<_$AppDatabase, $DataValuesTable, DataValue> {
-  $$DataValuesTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $DataElementsTable _dataElementTable(_$AppDatabase db) =>
-      db.dataElements.createAlias(
-          $_aliasNameGenerator(db.dataValues.dataElement, db.dataElements.id));
-
-  $$DataElementsTableProcessedTableManager get dataElement {
-    final $_column = $_itemColumn<String>('data_element')!;
-
-    final manager = $$DataElementsTableTableManager($_db, $_db.dataElements)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_dataElementTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static $DataInstancesTable _dataInstanceTable(_$AppDatabase db) =>
-      db.dataInstances.createAlias($_aliasNameGenerator(
-          db.dataValues.dataInstance, db.dataInstances.id));
-
-  $$DataInstancesTableProcessedTableManager get dataInstance {
-    final $_column = $_itemColumn<String>('data_instance')!;
-
-    final manager = $$DataInstancesTableTableManager($_db, $_db.dataInstances)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_dataInstanceTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-}
-
-class $$DataValuesTableFilterComposer
-    extends Composer<_$AppDatabase, $DataValuesTable> {
-  $$DataValuesTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get comment => $composableBuilder(
-      column: $table.comment, builder: (column) => ColumnFilters(column));
-
-  $$DataElementsTableFilterComposer get dataElement {
-    final $$DataElementsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dataElement,
-        referencedTable: $db.dataElements,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataElementsTableFilterComposer(
-              $db: $db,
-              $table: $db.dataElements,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$DataInstancesTableFilterComposer get dataInstance {
-    final $$DataInstancesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dataInstance,
-        referencedTable: $db.dataInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataInstancesTableFilterComposer(
-              $db: $db,
-              $table: $db.dataInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$DataValuesTableOrderingComposer
-    extends Composer<_$AppDatabase, $DataValuesTable> {
-  $$DataValuesTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get comment => $composableBuilder(
-      column: $table.comment, builder: (column) => ColumnOrderings(column));
-
-  $$DataElementsTableOrderingComposer get dataElement {
-    final $$DataElementsTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dataElement,
-        referencedTable: $db.dataElements,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataElementsTableOrderingComposer(
-              $db: $db,
-              $table: $db.dataElements,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$DataInstancesTableOrderingComposer get dataInstance {
-    final $$DataInstancesTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dataInstance,
-        referencedTable: $db.dataInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataInstancesTableOrderingComposer(
-              $db: $db,
-              $table: $db.dataInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$DataValuesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $DataValuesTable> {
-  $$DataValuesTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get lastModifiedDate => $composableBuilder(
-      column: $table.lastModifiedDate, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => column);
-
-  GeneratedColumn<String> get value =>
-      $composableBuilder(column: $table.value, builder: (column) => column);
-
-  GeneratedColumn<String> get comment =>
-      $composableBuilder(column: $table.comment, builder: (column) => column);
-
-  $$DataElementsTableAnnotationComposer get dataElement {
-    final $$DataElementsTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dataElement,
-        referencedTable: $db.dataElements,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataElementsTableAnnotationComposer(
-              $db: $db,
-              $table: $db.dataElements,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$DataInstancesTableAnnotationComposer get dataInstance {
-    final $$DataInstancesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dataInstance,
-        referencedTable: $db.dataInstances,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$DataInstancesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.dataInstances,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$DataValuesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $DataValuesTable,
-    DataValue,
-    $$DataValuesTableFilterComposer,
-    $$DataValuesTableOrderingComposer,
-    $$DataValuesTableAnnotationComposer,
-    $$DataValuesTableCreateCompanionBuilder,
-    $$DataValuesTableUpdateCompanionBuilder,
-    (DataValue, $$DataValuesTableReferences),
-    DataValue,
-    PrefetchHooks Function({bool dataElement, bool dataInstance})> {
-  $$DataValuesTableTableManager(_$AppDatabase db, $DataValuesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$DataValuesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$DataValuesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$DataValuesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<String> dataElement = const Value.absent(),
-            Value<String> dataInstance = const Value.absent(),
-            Value<String?> value = const Value.absent(),
-            Value<String?> comment = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataValuesCompanion(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            dataElement: dataElement,
-            dataInstance: dataInstance,
-            value: value,
-            comment: comment,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<DateTime?> lastModifiedDate = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            required String dataElement,
-            required String dataInstance,
-            Value<String?> value = const Value.absent(),
-            Value<String?> comment = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DataValuesCompanion.insert(
-            id: id,
-            lastModifiedDate: lastModifiedDate,
-            createdDate: createdDate,
-            dataElement: dataElement,
-            dataInstance: dataInstance,
-            value: value,
-            comment: comment,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$DataValuesTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({dataElement = false, dataInstance = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (dataElement) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dataElement,
-                    referencedTable:
-                        $$DataValuesTableReferences._dataElementTable(db),
-                    referencedColumn:
-                        $$DataValuesTableReferences._dataElementTable(db).id,
-                  ) as T;
-                }
-                if (dataInstance) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dataInstance,
-                    referencedTable:
-                        $$DataValuesTableReferences._dataInstanceTable(db),
-                    referencedColumn:
-                        $$DataValuesTableReferences._dataInstanceTable(db).id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$DataValuesTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $DataValuesTable,
-    DataValue,
-    $$DataValuesTableFilterComposer,
-    $$DataValuesTableOrderingComposer,
-    $$DataValuesTableAnnotationComposer,
-    $$DataValuesTableCreateCompanionBuilder,
-    $$DataValuesTableUpdateCompanionBuilder,
-    (DataValue, $$DataValuesTableReferences),
-    DataValue,
-    PrefetchHooks Function({bool dataElement, bool dataInstance})>;
+    PrefetchHooks Function({bool optionSet})>;
 typedef $$DataOptionsTableCreateCompanionBuilder = DataOptionsCompanion
     Function({
   required String id,
@@ -18149,6 +15625,626 @@ typedef $$DataOptionsTableProcessedTableManager = ProcessedTableManager<
     (DataOption, $$DataOptionsTableReferences),
     DataOption,
     PrefetchHooks Function({bool optionSet})>;
+typedef $$DataInstancesTableCreateCompanionBuilder = DataInstancesCompanion
+    Function({
+  required String id,
+  Value<DateTime?> lastModifiedDate,
+  Value<DateTime?> createdDate,
+  Value<bool> deleted,
+  Value<DateTime?> deletedAt,
+  required String formTemplate,
+  required String templateVersion,
+  Value<String?> assignment,
+  Value<DateTime> startEntryTime,
+  Value<DateTime?> finishedEntryTime,
+  Value<Map<String, dynamic>?> formData,
+  Value<DateTime?> updatedAtClient,
+  required InstanceSyncStatus syncState,
+  Value<DateTime?> lastSyncDate,
+  Value<String?> lastSyncMessage,
+  required bool isToUpdate,
+  Value<int> rowid,
+});
+typedef $$DataInstancesTableUpdateCompanionBuilder = DataInstancesCompanion
+    Function({
+  Value<String> id,
+  Value<DateTime?> lastModifiedDate,
+  Value<DateTime?> createdDate,
+  Value<bool> deleted,
+  Value<DateTime?> deletedAt,
+  Value<String> formTemplate,
+  Value<String> templateVersion,
+  Value<String?> assignment,
+  Value<DateTime> startEntryTime,
+  Value<DateTime?> finishedEntryTime,
+  Value<Map<String, dynamic>?> formData,
+  Value<DateTime?> updatedAtClient,
+  Value<InstanceSyncStatus> syncState,
+  Value<DateTime?> lastSyncDate,
+  Value<String?> lastSyncMessage,
+  Value<bool> isToUpdate,
+  Value<int> rowid,
+});
+
+final class $$DataInstancesTableReferences
+    extends BaseReferences<_$AppDatabase, $DataInstancesTable, DataInstance> {
+  $$DataInstancesTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $FormTemplatesTable _formTemplateTable(_$AppDatabase db) =>
+      db.formTemplates.createAlias($_aliasNameGenerator(
+          db.dataInstances.formTemplate, db.formTemplates.id));
+
+  $$FormTemplatesTableProcessedTableManager get formTemplate {
+    final $_column = $_itemColumn<String>('form_template')!;
+
+    final manager = $$FormTemplatesTableTableManager($_db, $_db.formTemplates)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_formTemplateTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $FormTemplateVersionsTable _templateVersionTable(_$AppDatabase db) =>
+      db.formTemplateVersions.createAlias($_aliasNameGenerator(
+          db.dataInstances.templateVersion, db.formTemplateVersions.id));
+
+  $$FormTemplateVersionsTableProcessedTableManager get templateVersion {
+    final $_column = $_itemColumn<String>('template_version')!;
+
+    final manager =
+        $$FormTemplateVersionsTableTableManager($_db, $_db.formTemplateVersions)
+            .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_templateVersionTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $AssignmentsTable _assignmentTable(_$AppDatabase db) =>
+      db.assignments.createAlias(
+          $_aliasNameGenerator(db.dataInstances.assignment, db.assignments.id));
+
+  $$AssignmentsTableProcessedTableManager? get assignment {
+    final $_column = $_itemColumn<String>('assignment');
+    if ($_column == null) return null;
+    final manager = $$AssignmentsTableTableManager($_db, $_db.assignments)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_assignmentTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$DataInstancesTableFilterComposer
+    extends Composer<_$AppDatabase, $DataInstancesTable> {
+  $$DataInstancesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+      column: $table.deleted, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get startEntryTime => $composableBuilder(
+      column: $table.startEntryTime,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get finishedEntryTime => $composableBuilder(
+      column: $table.finishedEntryTime,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
+          String>
+      get formData => $composableBuilder(
+          column: $table.formData,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<DateTime> get updatedAtClient => $composableBuilder(
+      column: $table.updatedAtClient,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<InstanceSyncStatus, InstanceSyncStatus, String>
+      get syncState => $composableBuilder(
+          column: $table.syncState,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<DateTime> get lastSyncDate => $composableBuilder(
+      column: $table.lastSyncDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get lastSyncMessage => $composableBuilder(
+      column: $table.lastSyncMessage,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isToUpdate => $composableBuilder(
+      column: $table.isToUpdate, builder: (column) => ColumnFilters(column));
+
+  $$FormTemplatesTableFilterComposer get formTemplate {
+    final $$FormTemplatesTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.formTemplate,
+        referencedTable: $db.formTemplates,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$FormTemplatesTableFilterComposer(
+              $db: $db,
+              $table: $db.formTemplates,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$FormTemplateVersionsTableFilterComposer get templateVersion {
+    final $$FormTemplateVersionsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.templateVersion,
+        referencedTable: $db.formTemplateVersions,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$FormTemplateVersionsTableFilterComposer(
+              $db: $db,
+              $table: $db.formTemplateVersions,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$AssignmentsTableFilterComposer get assignment {
+    final $$AssignmentsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.assignment,
+        referencedTable: $db.assignments,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AssignmentsTableFilterComposer(
+              $db: $db,
+              $table: $db.assignments,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$DataInstancesTableOrderingComposer
+    extends Composer<_$AppDatabase, $DataInstancesTable> {
+  $$DataInstancesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+      column: $table.deleted, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get startEntryTime => $composableBuilder(
+      column: $table.startEntryTime,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get finishedEntryTime => $composableBuilder(
+      column: $table.finishedEntryTime,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get formData => $composableBuilder(
+      column: $table.formData, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAtClient => $composableBuilder(
+      column: $table.updatedAtClient,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncState => $composableBuilder(
+      column: $table.syncState, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get lastSyncDate => $composableBuilder(
+      column: $table.lastSyncDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get lastSyncMessage => $composableBuilder(
+      column: $table.lastSyncMessage,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isToUpdate => $composableBuilder(
+      column: $table.isToUpdate, builder: (column) => ColumnOrderings(column));
+
+  $$FormTemplatesTableOrderingComposer get formTemplate {
+    final $$FormTemplatesTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.formTemplate,
+        referencedTable: $db.formTemplates,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$FormTemplatesTableOrderingComposer(
+              $db: $db,
+              $table: $db.formTemplates,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$FormTemplateVersionsTableOrderingComposer get templateVersion {
+    final $$FormTemplateVersionsTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.templateVersion,
+            referencedTable: $db.formTemplateVersions,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$FormTemplateVersionsTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.formTemplateVersions,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$AssignmentsTableOrderingComposer get assignment {
+    final $$AssignmentsTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.assignment,
+        referencedTable: $db.assignments,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AssignmentsTableOrderingComposer(
+              $db: $db,
+              $table: $db.assignments,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$DataInstancesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DataInstancesTable> {
+  $$DataInstancesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastModifiedDate => $composableBuilder(
+      column: $table.lastModifiedDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startEntryTime => $composableBuilder(
+      column: $table.startEntryTime, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get finishedEntryTime => $composableBuilder(
+      column: $table.finishedEntryTime, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
+      get formData => $composableBuilder(
+          column: $table.formData, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAtClient => $composableBuilder(
+      column: $table.updatedAtClient, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<InstanceSyncStatus, String> get syncState =>
+      $composableBuilder(column: $table.syncState, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastSyncDate => $composableBuilder(
+      column: $table.lastSyncDate, builder: (column) => column);
+
+  GeneratedColumn<String> get lastSyncMessage => $composableBuilder(
+      column: $table.lastSyncMessage, builder: (column) => column);
+
+  GeneratedColumn<bool> get isToUpdate => $composableBuilder(
+      column: $table.isToUpdate, builder: (column) => column);
+
+  $$FormTemplatesTableAnnotationComposer get formTemplate {
+    final $$FormTemplatesTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.formTemplate,
+        referencedTable: $db.formTemplates,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$FormTemplatesTableAnnotationComposer(
+              $db: $db,
+              $table: $db.formTemplates,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$FormTemplateVersionsTableAnnotationComposer get templateVersion {
+    final $$FormTemplateVersionsTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.templateVersion,
+            referencedTable: $db.formTemplateVersions,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$FormTemplateVersionsTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.formTemplateVersions,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$AssignmentsTableAnnotationComposer get assignment {
+    final $$AssignmentsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.assignment,
+        referencedTable: $db.assignments,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AssignmentsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.assignments,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$DataInstancesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $DataInstancesTable,
+    DataInstance,
+    $$DataInstancesTableFilterComposer,
+    $$DataInstancesTableOrderingComposer,
+    $$DataInstancesTableAnnotationComposer,
+    $$DataInstancesTableCreateCompanionBuilder,
+    $$DataInstancesTableUpdateCompanionBuilder,
+    (DataInstance, $$DataInstancesTableReferences),
+    DataInstance,
+    PrefetchHooks Function(
+        {bool formTemplate, bool templateVersion, bool assignment})> {
+  $$DataInstancesTableTableManager(_$AppDatabase db, $DataInstancesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DataInstancesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DataInstancesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DataInstancesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<DateTime?> lastModifiedDate = const Value.absent(),
+            Value<DateTime?> createdDate = const Value.absent(),
+            Value<bool> deleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            Value<String> formTemplate = const Value.absent(),
+            Value<String> templateVersion = const Value.absent(),
+            Value<String?> assignment = const Value.absent(),
+            Value<DateTime> startEntryTime = const Value.absent(),
+            Value<DateTime?> finishedEntryTime = const Value.absent(),
+            Value<Map<String, dynamic>?> formData = const Value.absent(),
+            Value<DateTime?> updatedAtClient = const Value.absent(),
+            Value<InstanceSyncStatus> syncState = const Value.absent(),
+            Value<DateTime?> lastSyncDate = const Value.absent(),
+            Value<String?> lastSyncMessage = const Value.absent(),
+            Value<bool> isToUpdate = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DataInstancesCompanion(
+            id: id,
+            lastModifiedDate: lastModifiedDate,
+            createdDate: createdDate,
+            deleted: deleted,
+            deletedAt: deletedAt,
+            formTemplate: formTemplate,
+            templateVersion: templateVersion,
+            assignment: assignment,
+            startEntryTime: startEntryTime,
+            finishedEntryTime: finishedEntryTime,
+            formData: formData,
+            updatedAtClient: updatedAtClient,
+            syncState: syncState,
+            lastSyncDate: lastSyncDate,
+            lastSyncMessage: lastSyncMessage,
+            isToUpdate: isToUpdate,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            Value<DateTime?> lastModifiedDate = const Value.absent(),
+            Value<DateTime?> createdDate = const Value.absent(),
+            Value<bool> deleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            required String formTemplate,
+            required String templateVersion,
+            Value<String?> assignment = const Value.absent(),
+            Value<DateTime> startEntryTime = const Value.absent(),
+            Value<DateTime?> finishedEntryTime = const Value.absent(),
+            Value<Map<String, dynamic>?> formData = const Value.absent(),
+            Value<DateTime?> updatedAtClient = const Value.absent(),
+            required InstanceSyncStatus syncState,
+            Value<DateTime?> lastSyncDate = const Value.absent(),
+            Value<String?> lastSyncMessage = const Value.absent(),
+            required bool isToUpdate,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DataInstancesCompanion.insert(
+            id: id,
+            lastModifiedDate: lastModifiedDate,
+            createdDate: createdDate,
+            deleted: deleted,
+            deletedAt: deletedAt,
+            formTemplate: formTemplate,
+            templateVersion: templateVersion,
+            assignment: assignment,
+            startEntryTime: startEntryTime,
+            finishedEntryTime: finishedEntryTime,
+            formData: formData,
+            updatedAtClient: updatedAtClient,
+            syncState: syncState,
+            lastSyncDate: lastSyncDate,
+            lastSyncMessage: lastSyncMessage,
+            isToUpdate: isToUpdate,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$DataInstancesTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {formTemplate = false,
+              templateVersion = false,
+              assignment = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (formTemplate) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.formTemplate,
+                    referencedTable:
+                        $$DataInstancesTableReferences._formTemplateTable(db),
+                    referencedColumn: $$DataInstancesTableReferences
+                        ._formTemplateTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (templateVersion) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.templateVersion,
+                    referencedTable: $$DataInstancesTableReferences
+                        ._templateVersionTable(db),
+                    referencedColumn: $$DataInstancesTableReferences
+                        ._templateVersionTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (assignment) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.assignment,
+                    referencedTable:
+                        $$DataInstancesTableReferences._assignmentTable(db),
+                    referencedColumn:
+                        $$DataInstancesTableReferences._assignmentTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$DataInstancesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $DataInstancesTable,
+    DataInstance,
+    $$DataInstancesTableFilterComposer,
+    $$DataInstancesTableOrderingComposer,
+    $$DataInstancesTableAnnotationComposer,
+    $$DataInstancesTableCreateCompanionBuilder,
+    $$DataInstancesTableUpdateCompanionBuilder,
+    (DataInstance, $$DataInstancesTableReferences),
+    DataInstance,
+    PrefetchHooks Function(
+        {bool formTemplate, bool templateVersion, bool assignment})>;
 typedef $$UserFormPermissionsTableCreateCompanionBuilder
     = UserFormPermissionsCompanion Function({
   required String team,
@@ -18727,18 +16823,14 @@ class $AppDatabaseManager {
       $$AssignmentFormsTableTableManager(_db, _db.assignmentForms);
   $$FormTemplateVersionsTableTableManager get formTemplateVersions =>
       $$FormTemplateVersionsTableTableManager(_db, _db.formTemplateVersions);
-  $$DataInstancesTableTableManager get dataInstances =>
-      $$DataInstancesTableTableManager(_db, _db.dataInstances);
-  $$RepeatInstancesTableTableManager get repeatInstances =>
-      $$RepeatInstancesTableTableManager(_db, _db.repeatInstances);
   $$DataOptionSetsTableTableManager get dataOptionSets =>
       $$DataOptionSetsTableTableManager(_db, _db.dataOptionSets);
   $$DataElementsTableTableManager get dataElements =>
       $$DataElementsTableTableManager(_db, _db.dataElements);
-  $$DataValuesTableTableManager get dataValues =>
-      $$DataValuesTableTableManager(_db, _db.dataValues);
   $$DataOptionsTableTableManager get dataOptions =>
       $$DataOptionsTableTableManager(_db, _db.dataOptions);
+  $$DataInstancesTableTableManager get dataInstances =>
+      $$DataInstancesTableTableManager(_db, _db.dataInstances);
   $$UserFormPermissionsTableTableManager get userFormPermissions =>
       $$UserFormPermissionsTableTableManager(_db, _db.userFormPermissions);
   $$SyncSummariesTableTableManager get syncSummaries =>

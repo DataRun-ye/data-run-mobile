@@ -32,7 +32,7 @@ Rules:
 4. `_index` is 1-based repeat creation/order index. Preserve existing `_index` when present; otherwise derive it from current row order.
 5. `_parentId` is the submission UID for top-level repeats and the parent repeat row `_id` for nested repeats.
 6. `_submissionUid` is the owning submission UID.
-7. The implementation must not depend on inactive-looking `repeat_instances`, `data_values`, or old form-state/provider paths.
+7. The implementation must not recreate the removed normalized repeat/data-value persistence path or depend on old form-state/provider paths.
 
 Use ULID, not UUIDv7, for the first mobile implementation. The backend generates repeat IDs with `CodeGenerator.nextUlid()`, and analytics `events.event_id` / `parent_event_id` columns are `varchar(26)`. UUIDv7 strings are 36 characters and can break that path.
 
@@ -91,8 +91,6 @@ Implementation should stay in the active whole-JSON path:
 
 Do not base this work on these inactive or legacy-risk paths unless a later runtime pass proves they are active:
 
-- `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
-- `packages/drun_sdk/lib/database/tables/data_values.table.dart` as capture storage
 
 The old app-side `FormRepositoryImpl`/`FormValueStore` path was removed after it
 was proven unreachable from production form loading and saving.
@@ -132,7 +130,7 @@ Behavioral:
 5. Legacy rows loaded with neither `_id` nor `repeatUid` receive a new ULID on next save.
 6. Nested repeat rows get `_parentId` equal to the parent repeat row `_id`.
 7. Upload payload includes repeat rows with backend-compatible metadata because `toUpload()` sends saved `formData`.
-8. No `repeat_instances` or `data_values` capture path is introduced.
+8. No normalized repeat/data-value capture path is reintroduced.
 
 Smoke checks:
 

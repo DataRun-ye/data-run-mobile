@@ -16,7 +16,7 @@ Core rules:
 - Prefer active runtime entrypoints, imports, route registrations, DI registrations actually used, and call paths over names that sound relevant.
 - Keep code changes small, reversible, and scoped to one behavior.
 - Do not mix tooling, docs, save correctness, repeat metadata behavior, and performance refactors in one PR.
-- Do not base form persistence changes on inactive-looking `repeat_instances`, `data_values`, or old form-state/provider paths unless runtime evidence proves they are active.
+- The obsolete normalized `repeat_instances` and `data_values` persistence paths were removed in schema 5; do not recreate them when changing the active whole-JSON form path.
 
 Known high-risk form areas:
 

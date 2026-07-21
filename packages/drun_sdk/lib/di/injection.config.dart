@@ -35,8 +35,6 @@ import 'package:d_sdk/datasource/remote_data_sources/user_datasource.dart'
     as _i822;
 import 'package:d_sdk/datasource/remote_data_sources/user_form_permission_datasource.dart'
     as _i588;
-import 'package:d_sdk/service/manifest_repository.dart' as _i385;
-import 'package:d_sdk/service/manifest_service.dart' as _i659;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -72,10 +70,6 @@ _i174.GetIt initActiveSessionContextScope(
     'activeSessionContext',
     dispose: dispose,
     init: (_i526.GetItHelper gh) {
-      gh.factory<_i385.ManifestRepository>(
-          () => const _i385.ManifestRepository());
-      gh.factory<_i659.ManifestService>(() => _i659.ManifestService(
-          manifestRepository: gh<_i385.ManifestRepository>()));
       gh.factory<_i822.UserDatasource>(() => _i822.UserDatasource());
       gh.factory<_i458.AbstractDatasource<_i648.Project>>(
           () => _i589.ProjectDatasource());

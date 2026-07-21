@@ -1,13 +1,10 @@
 import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/database/converters/converters.dart';
 import 'package:d_sdk/database/dao/dao.dart';
-import 'package:d_sdk/database/shared/assignment_binding.dart';
 import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:d_sdk/database/shared/form_permission.dart';
 import 'package:d_sdk/database/shared/metadata_resource_type.dart';
-import 'package:d_sdk/database/shared/party/party_set_kind.dart';
-import 'package:d_sdk/database/shared/party/party_set_spec.dart';
 import 'package:d_sdk/database/shared/scanned_code_properties.dart';
 import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:d_sdk/database/shared/sync_error.dart';
@@ -40,11 +37,6 @@ part 'app_database.g.dart';
   FormTemplateVersions,
   UserFormPermissions,
   SyncSummaries,
-  AssignmentManifests,
-  PartySets,
-  Parties,
-  PartySetMembers,
-  AssignmentPartyBindings,
 ], daos: [
   UsersDao,
   OrgUnitsDao,
@@ -63,8 +55,6 @@ part 'app_database.g.dart';
   OuLevelsDao,
   ProjectsDao,
   UserFormPermissionsDao,
-  PartyResolutionDao,
-  PartyDao,
 ])
 class AppDatabase extends _$AppDatabase {
   String userId;
@@ -105,8 +95,8 @@ class AppDatabase extends _$AppDatabase {
           //----------------------------------------------------
           if (from < 4) {
             // add the new nullable column in a safe, Drift-native way
-            await m.addColumn(
-                syncSummaries, syncSummaries.lastSuccessfulSync as GeneratedColumn);
+            await m.addColumn(syncSummaries,
+                syncSummaries.lastSuccessfulSync as GeneratedColumn);
           }
           //----------------------------------------------------
 

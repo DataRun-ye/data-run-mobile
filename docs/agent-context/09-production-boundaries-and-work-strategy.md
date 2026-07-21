@@ -144,7 +144,9 @@ Before any SDK move, state-management consolidation, persistence refactor, or ta
 - offline drafts/finals, sync state, and retry idempotency;
 - active DI registration order where synchronization depends on it.
 
-Current `AppDatabase.schemaVersion` is 4. Git history contains application version `5.3.1+21` with both schema 3 and schema 4, so the application version does not prove an installed database version. Before the first schema-changing PR, inspect a real production-style device/database (`PRAGMA user_version`), add Drift schema snapshots, and test migration from the observed old schema. Until then, installed production schema is `UNKNOWN`.
+Google Play `5.3.1+21` was inspected through a read-only Android backup: its active per-user `datarun_<user>.db` is healthy at schema version 3. Current `AppDatabase.schemaVersion` is 4. `test/fixtures/database/schema_v3.sql` captures the data-free production schema, and `test/dev/app_database_migration_test.dart` proves a 3-to-4 upgrade preserves cached form/submission JSON and extra unowned tables. Schema 3 is the required production migration source until field evidence proves another shipped version.
+
+The Play-installed APK is signed by the Google Play App Signing certificate, while local release builds use the Hamza/nmcpye upload key. A locally built APK cannot update the Play installation in place. Production upgrade smoke must use a Play internal-testing build (or another Play-distributed track) so Google re-signs it with the installed-app certificate.
 
 ## Work Sequence
 

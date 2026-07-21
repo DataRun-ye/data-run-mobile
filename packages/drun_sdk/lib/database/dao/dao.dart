@@ -12,8 +12,6 @@ export 'form_template_versions_dao.dart';
 export 'form_templates_dao.dart';
 export 'org_units_dao.dart';
 export 'ou_levels_dao.dart';
-export 'party_dao.dart';
-export 'party_resolution_dao.dart';
 export 'projects_dao.dart';
 export 'repeat_instances_dao.dart';
 export 'sync_summaries_dao.dart';

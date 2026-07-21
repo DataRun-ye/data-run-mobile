@@ -62,12 +62,10 @@ Registered as `AbstractDatasource` and therefore collected by `SyncManager`:
 8. `TeamDatasource`
 9. `UserFormAccessesDatasource`
 10. `AssignmentDatasource`
-11. `DataInstanceDatasource`
 
 Registered but not part of `SyncManager.getAll<AbstractDatasource>()`:
 
-- `ManifestRepository` and `ManifestService` at lines 43-45.
-- `UserDatasource` at line 47.
+- `UserDatasource` as a concrete registration.
 
 Why this matters: changing registration order or converting a concrete registration into `AbstractDatasource` changes what the app fetches during config sync. Some tables have foreign keys, so order is not just cosmetic.
 
@@ -141,8 +139,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 
 | Classification | File path | Evidence | Why it matters |
 | --- | --- | --- | --- |
-| INCOMPLETE | `packages/drun_sdk/lib/service/manifest_service.dart` and `manifest_repository.dart` | Registered in session scope, but no active call to `fetchAndPersistManifest` was found. `persistManifest` mostly contains TODO/commented upsert steps and only records a sync summary. | Looks like a newer context/manifest design for assignments, party sets, and bindings, but it is not the active config sync path. |
-| UNKNOWN/INCOMPLETE | `assignment_manifests`, `party_sets`, `parties`, `party_set_members`, `assignment_party_bindings` tables | Tables are registered in `AppDatabase`, and party resolver code exists, but active server fetch into these tables was not proven. | Do not assume party/manifest tables currently power assignment availability offline. |
+| OBSOLETE-REMOVED | Abandoned manifest services, party resolver, and `assignment_manifests`/party table declarations | No runtime consumer existed; persistence was TODO/comment-only; the resolver returned placeholders; the Play schema-3 database has none of these tables. Removed from active DI/schema declarations without a `DROP TABLE` migration. | Existing databases that happen to contain these unowned tables retain them, but active code no longer presents them as a production capability. |
 | LEGACY-RISK | `packages/drun_sdk/lib/database/dao/base_dao_extension.dart` and DAO `syncWithRemote` mixins | Many DAOs import `BaseDaoMixin`, which duplicates the datasource fetch/upsert algorithm. Active `SyncManager` calls `AbstractDatasource.syncWithRemote`, not DAO sync methods. | Changing DAO sync code may not affect production config fetch, while changing datasource code will. |
 | LEGACY-RISK | `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart` | Defines `DSOrder` and ordered datasource type map, including commented/unused resources. Active registration is generated in `init_active_session_scope.dart`. | Useful evidence for intended order, but not the runtime list by itself. |
 | INACTIVE | `DataValueDatasource`, `RepeatInstanceDatasource`, `MetadataSubmissionDatasource`, `FormTemplateVersionDatasource`, `OptionDatasource` | Injectable annotations are commented or these are not registered as active `AbstractDatasource` in `init_active_session_scope.dart`. | Table/datasource names sound form-related but are not active for current config or form capture sync. |
@@ -152,12 +149,10 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 ## Risks And Questions For Next Pass
 
 1. Does `GetIt.getAll<AbstractDatasource>()` preserve the generated registration order on all targets? The current order matters for FK-linked tables.
-2. Should resources without `disableStale` keep stale rows forever, especially projects, org units, option sets, data elements, form permissions, and data submissions?
+2. Should resources without `disableStale` keep stale rows forever, especially projects, org units, option sets, data elements, and form permissions?
 3. Child-table refresh deletes all rows from the child table before reinserting extras. Confirm this is acceptable for `form_template_versions`, `assignment_forms`, `managed_teams`, and `data_options`.
 4. Confirm runtime behavior when one resource fetch fails: the base datasource records errors, but may still emit a final succeeded event and the sync screen may mark global sync done.
-5. Confirm whether `ManifestService` is intended to replace current assignment/forms/party fetching or is abandoned/incomplete.
-6. Confirm whether `user_form_permissions` is still needed, since active form access appears to rely mostly on `assignment_forms`.
-7. Confirm whether syncing `dataSubmission` belongs in the config sync pass or should be separated later from metadata/config refresh.
+5. Confirm whether `user_form_permissions` is still needed, since active form access appears to rely mostly on `assignment_forms`.
 
 ## Do Not Touch Until Understood
 

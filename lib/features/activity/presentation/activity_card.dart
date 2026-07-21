@@ -50,27 +50,27 @@ class ActivityCard extends StatelessWidget {
                 ),
 
               // Managed Teams and Assignments
-              if(activity.managedTeams.length > 0)
-              _infoRow(
-                context,
-                icon: Icons.groups,
-                label: S.of(context).managedTeams,
-                value: activity.managedTeams.length.toString(),
-              ),
-              if(activity.assignedAssignments > 0)
-              _infoRow(
-                context,
-                icon: Icons.assignment,
-                label: S.of(context).assignedAssignments,
-                value: activity.assignedAssignments.toString(),
-              ),
-              if(activity.managedAssignments > 0)
-              _infoRow(
-                context,
-                icon: Icons.assignment_turned_in,
-                label: S.of(context).managedAssignments,
-                value: activity.managedAssignments.toString(),
-              ),
+              if (activity.managedTeams.length > 0)
+                _infoRow(
+                  context,
+                  icon: Icons.groups,
+                  label: S.of(context).managedTeams,
+                  value: activity.managedTeams.length.toString(),
+                ),
+              if (activity.assignedAssignments > 0)
+                _infoRow(
+                  context,
+                  icon: Icons.assignment,
+                  label: S.of(context).assignedAssignments,
+                  value: activity.assignedAssignments.toString(),
+                ),
+              if (activity.managedAssignments > 0)
+                _infoRow(
+                  context,
+                  icon: Icons.assignment_turned_in,
+                  label: S.of(context).managedAssignments,
+                  value: activity.managedAssignments.toString(),
+                ),
 
               // Start Date and End Date
               if (activity.properties['startDate'] != null)
@@ -122,10 +122,6 @@ class ActivityCard extends StatelessWidget {
       ),
     );
   }
-}
-
-String formatDate(DateTime date, BuildContext context) {
-  return MaterialLocalizations.of(context).formatFullDate(date);
 }
 
 String formatDateString(String date, BuildContext context) {

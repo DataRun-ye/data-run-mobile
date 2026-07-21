@@ -20,23 +20,14 @@ class FormInstanceEntryViewSliver extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final FormInstance formInstance = ref
-    //     .watch(formInstanceProvider(submissionId: submissionId))
-    //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
     List<Widget> buildSlivers() {
       return formInstance.formSection.elements.values.map((element) {
         if (element is Section) {
-          return SectionWidget(
-            // key: key, linked to the nested child table
-            element: element,
-          );
+          return SectionWidget(element: element);
         } else if (element is RepeatSection) {
-          return RepeatTableSliver(
-            // key: key, linked to the nested child table
-            repeatInstance: element,
-          );
+          return RepeatTableSliver(repeatInstance: element);
         } else if (element is FieldInstance) {
           return FieldWidget(
               key: appLocator<FieldContextRegistry>()
@@ -53,63 +44,4 @@ class FormInstanceEntryViewSliver extends HookConsumerWidget {
       slivers: buildSlivers(),
     );
   }
-
-//
-// /*List<Widget>*/
-//
-// buildSlivers(
-//     FormInstance formInstance,
-//     WidgetRef ref,
-//     ) {
-//   final ff = formInstance.forElementMap.values.map((element) {
-//     final propsAsync = ref.watch(elementPropertiesStreamProvider(
-//         path: element.elementPath!, formMetadata: formInstance.formMetadata));
-//     return AsyncValueWidget(
-//       value: propsAsync,
-//       valueBuilder: (FormElementState elementState) {
-//         if (elementState.hidden) {
-//           return const SliverToBoxAdapter(child: SizedBox.shrink());
-//         }
-//         if (element is FieldInstance) {
-//           final key = formInstance.fieldKeysRegistery
-//               .getOrCreateKey(element.elementPath!);
-//           return SliverToBoxAdapter(
-//             key: key,
-//             child: ListTile(
-//               title: FieldWidget(key: key, element: element),
-//             ),
-//           );
-//         }
-//         return SizedBox();
-//       },
-//       isLoadingBuilder: () =>
-//           SliverToBoxAdapter(child: CircularProgressIndicator()),
-//       errorBuilder: (error, st) =>
-//           SliverToBoxAdapter(child: getErrorWidget(error, st)),
-//     );
-//
-//     propsAsync.when(
-//       loading: () => SliverToBoxAdapter(child: CircularProgressIndicator()),
-//       error: (_, __) => SliverToBoxAdapter(child: SizedBox.shrink()),
-//       data: (props) {
-//         if (props.hidden) {
-//           return const SliverToBoxAdapter(child: SizedBox.shrink());
-//         }
-//
-//         // otherwise build exactly one sliver for this element:
-//         if (element is FieldInstance) {
-//           final key = formInstance.fieldKeysRegistery
-//               .getOrCreateKey(element.elementPath!);
-//           return SliverToBoxAdapter(
-//             key: key,
-//             child: ListTile(
-//               title: FieldWidget(key: key, element: element),
-//             ),
-//           );
-//         }
-//         // …sections, repeats, etc…
-//       },
-//     );
-//   }).toList();
-// }
 }

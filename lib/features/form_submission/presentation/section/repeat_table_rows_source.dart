@@ -22,14 +22,6 @@ class RepeatTableDataSource extends DataTableSource {
     this.elements.addAll(elements);
   }
 
-  void markEnabled() {
-    if (editable) {
-      return;
-    }
-    editable = true;
-    notifyListeners();
-  }
-
   void removeItem(RepeatItemInstance item) {
     elements.remove(item);
     notifyListeners();
@@ -42,12 +34,6 @@ class RepeatTableDataSource extends DataTableSource {
 
   void addItem(RepeatItemInstance item) {
     elements.add(item);
-    notifyListeners();
-  }
-
-  void setItems(List<RepeatItemInstance> items) {
-    elements.clear();
-    elements.addAll(items);
     notifyListeners();
   }
 
@@ -197,14 +183,6 @@ class RepeatTableDataSource extends DataTableSource {
 
     return cellContent;
   }
-
-  // String? modelToViewValue(String? modelValue, DateFormat format) {
-  //   if (modelValue == null) return null;
-  //   final dt = DateTime.tryParse(modelValue);
-  //   if (dt == null) return modelValue;
-  //
-  //   return format.format(dt);
-  // }
 
   @override
   int get rowCount => elements.length;

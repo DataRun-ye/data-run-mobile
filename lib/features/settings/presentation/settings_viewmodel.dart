@@ -5,18 +5,6 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 class SettingsViewmodel extends BaseViewModel {
-  Future<void> changePassword(String password) async {
-    // setBusy(true);
-    // user = (await _sessionDb.usersDao.getAllItems()).firstOrNull;
-    // setBusy(false);
-  }
-
-  Future<void> changeMobile(String mobile) async {
-    // setBusy(true);
-    // user = (await _sessionDb.usersDao.getAllItems()).firstOrNull;
-    // setBusy(false);
-  }
-
   void logout() async {
     appLocator<AuthManager>().logout();
     Sentry.configureScope((scope) => scope.setUser(null));

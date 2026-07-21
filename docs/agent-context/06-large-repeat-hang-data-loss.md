@@ -61,7 +61,6 @@ The strongest immediate correctness problem is not rendering performance. It is 
   - `backButtonPressed`
 - `lib/features/form_submission/presentation/section/repeat_table.widget.dart`
   - `_showEditPanel`
-  - `showEditDialog`
   - `_handleSave`
 - `lib/features/form_submission/application/element/form_instance.dart`
   - `saveFormData`

@@ -1,19 +1,3 @@
-/// Metadata for the age field, storing only a reference date and
-/// readonly flag
-class AgeFieldElement {
-  AgeFieldElement({
-    required this.label,
-    this.initialValue,
-    this.readOnly = false,
-    DateTime? referenceDate,
-  }) : referenceDate = referenceDate ?? DateTime.now();
-  final String label;
-  // from API as dob-based
-  final AgeValue? initialValue;
-  final bool readOnly;
-  final DateTime referenceDate;
-}
-
 /// Internal model holding DOB and derived components
 class AgeValue {
   AgeValue({required this.dateOfBirth});

@@ -107,8 +107,6 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
                 formId: widget.templateModel.id,
                 assignmentId: widget.assignmentId)), (prev, next) {
       next.whenData((count) {
-        final currentTotal = ref.read(tablePaginationProvider).totalItems;
-        // _onPageOrSizeChanged();
         _onPageOrSizeChanged1();
       });
     });
@@ -255,21 +253,5 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
       wrapInCard: false,
       renderEmptyRowsInTheEnd: false,
     );
-  }
-
-  @override
-  void didUpdateWidget(covariant PaginatedItemsTable oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    final prev = oldWidget.pagination;
-    final next = widget.pagination;
-    final loadData = prev?.currentPage != next?.currentPage ||
-        prev?.pageSize != next?.pageSize ||
-        prev?.totalItems != next?.totalItems;
-    // logDebug(
-    //     '2.**********************        didUpdateWidget, load data? $loadData');
-    // if (loadData) {
-    //   _pagination = next;
-    //   _loadPage();
-    // }
   }
 }

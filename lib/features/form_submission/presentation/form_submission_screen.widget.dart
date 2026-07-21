@@ -275,28 +275,3 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     return formInstance.markSubmissionAsFinal();
   }
 }
-
-// class _EagerInitialization extends ConsumerWidget {
-//   _EagerInitialization({
-//     required this.submissionId,
-//     required this.child,
-//   });
-//
-//   final Widget child;
-//   final String submissionId;
-//
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     // final formInstance =
-//     //     ref.watch(formInstanceProvider(submissionId: submissionId));
-//     final formInstance = appLocator<FormInstance>();
-//
-//     if (formInstance.isLoading) {
-//       return const Center(child: CircularProgressIndicator());
-//     } else if (formInstance.hasError) {
-//       return getErrorWidget(formInstance.error, formInstance.stackTrace);
-//     }
-//
-//     return child;
-//   }
-// }

@@ -4,8 +4,6 @@ import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/e
 import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/table_widgets.dart';
 import 'package:flutter/material.dart';
 
-typedef OnRowSelected = void Function(String itemId, bool? selected);
-
 class PaginatedTableSource extends DataTableSource {
   PaginatedTableSource({
     required this.templateModel,

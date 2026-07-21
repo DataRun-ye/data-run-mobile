@@ -15,16 +15,3 @@ Widget getErrorWidget(Object? error, StackTrace? stackTrace) {
     // assetName: 'assets/app/confused-face.svg',
   ));
 }
-
-Widget getErrorWidget2(Object? error, StackTrace? stackTrace) {
-  logError('error: $error');
-  debugPrintStack(stackTrace: stackTrace, label: error.toString());
-  final message =
-      error != null ? error.toString() : S.current.generalErrorMessage;
-  return Center(
-      child: ExceptionIndicator(
-    title: S.current.generalErrorTitle,
-    message: '${message}\n',
-    // assetName: 'assets/app/confused-face.png',
-  ));
-}

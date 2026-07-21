@@ -161,7 +161,7 @@ Why it matters: datasource registration order and type shape affect config fetch
 | OBSOLETE-REMOVED | Old `LoginScreen` and `LoginScreenViewmodel` | Only referenced each other and the commented router. The generated Stacked route uses `LoginView`. | High | The active development-only demo login remains in `LoginView`/`LoginViewModel`. |
 | OBSOLETE-REMOVED | Commented Riverpod form-instance/element/table state and completion-dialog providers | No executable references or generated companions existed. Active form state remains scoped GetIt `FormInstance` plus `reactive_forms`; active completion uses `ConfigureFormCompletionDialog`. | High | The removed sketches can no longer be mistaken for active form or completion state. |
 | OBSOLETE-REMOVED | Old settings/org-unit picker providers | The settings controller was already removed; the remaining org-unit provider was entirely commented and had no consumer. | High | Active settings and org-unit metadata paths are separate. |
-| OBSOLETE-REMOVED | Commented form-state adjunct providers/widgets | Element-properties, submission-creation, popup-section, old org-unit field, and old repeat edit-panel files had no executable implementation or consumer. | High | Active draft creation, form rendering, org-unit fields, and repeat editing use separate paths. |
+| OBSOLETE-REMOVED | Commented form-state adjunct providers/widgets | Element-properties, submission-creation, popup-section, old org-unit field, and the repeat panel widget had no executable consumer. The panel file retains only the active `EditActionType` contract. | High | Active draft creation, form rendering, org-unit fields, and repeat editing use separate paths. |
 | OBSOLETE-REMOVED | Standalone date/time demo entrypoint | It had its own `runApp` and no production importer. | High | Active date/time fields continue through `CustomReactiveDateTimePicker`. |
 | OBSOLETE-REMOVED | Old team-management feature and dashboard demo | The screen used hard-coded team summaries, had no route, and was referenced only by a comment-only dashboard. | High | Active assignment/team behavior continues through SDK team persistence and `lib/data/teams.provider.dart`. |
 | OBSOLETE-REMOVED | Duplicate coordinator/executor/progress sync stack | Generated DI was its only outside reference; the stack and its private progress models were removed. `SyncScheduler` and `SyncMetadataRepository` remain active. | High | Sync ownership is now clearer without changing the active fetch path. |
@@ -230,7 +230,6 @@ Form/repeat state:
 - `lib/features/form_submission/presentation/section/repeat_table.widget.dart`
 - `lib/features/form_submission/presentation/section/repeat_table_sliver.dart`
 - `lib/features/form_submission/presentation/section/edit_row_screen.dart`
-- `lib/features/form_submission/presentation/section/edit_row_panel.dart`
 
 Active Riverpod app state:
 

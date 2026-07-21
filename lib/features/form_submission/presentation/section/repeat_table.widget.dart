@@ -1,4 +1,3 @@
-import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/app/di/injection.dart';
@@ -176,185 +175,49 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   }
 
   Future<void> _showEditPanel(BuildContext context, FormInstance formInstance,
-      [RepeatItemInstance? repeatItem]) async {
-    if (true) {
-      bool itemSaved = false;
-      appLocator<NavigationService>().navigateToView(
-          preventDuplicates: false,
-          FormMetadataWidget(
-              formMetadata: formInstance.formMetadata,
-              child: ReactiveForm(
-                formGroup: repeatItem!.elementControl,
-                child: Builder(builder: (context) {
-                  String title =
-                      '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
-
-                  return EditRowScreen(
-                    title: title,
-                    repeatInstance: _repeatInstance,
-                    item: repeatItem,
-                    onRemoveItem: (item) {
-                      _dataSource.removeItem(item);
-                    },
-                    onSave: (formGroup, action) async {
-                      _repeatInstance.elementControl.markAsTouched();
-                      await formInstance.saveFormData();
-                      if (!context.mounted) {
-                        return;
-                      }
-                      _dataSource.updateItems(_repeatInstance.elements);
-                      // repeatItem.updateValue(formGroup.value);
-                      if (formGroup.valid) {
-                        itemSaved = true;
-                        await _handleSave(context, formInstance,
-                            _repeatInstance, repeatItem, action);
-                      }
-                    },
-                  );
-                }),
-              )));
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //       builder: (context) => ),
-      // );
-    }
-  }
-
-  Future<void> showEditDialog(BuildContext context, FormInstance formInstance,
-      [RepeatItemInstance? repeatItem]) async {
-    bool itemSaved = false;
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (bool didPop, result) async {
-            if (didPop) {
-              return;
-            }
-
-            final bool shouldPop = await _onTryToClose(
-              context,
-              formInstance,
-              _repeatInstance,
-              repeatItem!,
-              itemSaved,
-            );
-            if (context.mounted && shouldPop) {
-              Navigator.pop(context);
-            }
-          },
-          child: FormMetadataWidget(
+      RepeatItemInstance repeatItem) async {
+    appLocator<NavigationService>().navigateToView(
+        preventDuplicates: false,
+        FormMetadataWidget(
             formMetadata: formInstance.formMetadata,
-            child: Builder(builder: (context) {
-              String title = repeatItem == null
-                  ? '${S.of(context).newItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}'
-                  : '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
+            child: ReactiveForm(
+              formGroup: repeatItem.elementControl,
+              child: Builder(builder: (context) {
+                final title =
+                    '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
 
-              // if (repeatItem == null) {
-              //   repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
-              //   _dataSource.addItem(repeatItem!);
-              // }
-
-              return ReactiveForm(
-                formGroup: repeatItem!.elementControl,
-                child: Dialog(
-                  child: EditRowPanel(
-                    title: title,
-                    repeatInstance: _repeatInstance,
-                    item: repeatItem,
-                    onSave: (formGroup, action) async {
-                      _repeatInstance.elementControl.markAsTouched();
-                      await formInstance.saveFormData();
-                      if (!context.mounted) {
-                        return;
-                      }
-                      _dataSource.updateItems(_repeatInstance.elements);
-                      // repeatItem.updateValue(formGroup.value);
-                      if (formGroup.valid) {
-                        itemSaved = true;
-                        await _handleSave(context, formInstance,
-                            _repeatInstance, repeatItem, action);
-                      }
-                    },
-                  ),
-                ),
-              );
-            }),
-          ),
-        );
-      },
-    );
+                return EditRowScreen(
+                  title: title,
+                  repeatInstance: _repeatInstance,
+                  item: repeatItem,
+                  onRemoveItem: _dataSource.removeItem,
+                  onSave: (formGroup, action) async {
+                    _repeatInstance.elementControl.markAsTouched();
+                    await formInstance.saveFormData();
+                    if (!context.mounted) {
+                      return;
+                    }
+                    _dataSource.updateItems(_repeatInstance.elements);
+                    if (formGroup.valid) {
+                      await _handleSave(
+                          context, formInstance, repeatItem, action);
+                    }
+                  },
+                );
+              }),
+            )));
   }
 
-  Future<void> _handleSave(
-      BuildContext context,
-      FormInstance formInstance,
-      RepeatSection repeatInstance,
-      RepeatItemInstance repeatItem,
-      EditActionType action) async {
+  Future<void> _handleSave(BuildContext context, FormInstance formInstance,
+      RepeatItemInstance repeatItem, EditActionType action) async {
     if (repeatItem.elementControl.valid) {
-      // the values are already updated, just to let the repeat
-      // instance emit on stream so it rebuilds,
-      Navigator.of(context).pop(); // Close the current dialog
+      Navigator.of(context).pop();
 
       if (action == EditActionType.SAVE_AND_ADD_ANOTHER) {
         final repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
         _dataSource.addItem(repeatItem);
         await _showEditPanel(context, formInstance, repeatItem);
-      } else if (action == EditActionType.SAVE_AND_CLOSE) {
-        // Do nothing, as we've already closed the dialog
       }
     }
-  }
-
-  Future<bool> _onTryToClose(
-      BuildContext context,
-      FormInstance formInstance,
-      RepeatSection repeatInstance,
-      RepeatItemInstance repeatItem,
-      bool itemSaved) async {
-    final isNew = repeatItem.uid == null;
-
-    if (/*control.itemFormGroup.dirty && */ isNew) {
-      final bool? confirmClose = await showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(S.of(context).unsavedChangesWarning),
-            content: Text(S.of(context).closeWithoutSaving),
-            actions: <Widget>[
-              TextButton(
-                child: Text(S.of(context).cancel),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-              if (repeatItem.elementControl.valid)
-                TextButton(
-                  child: Text(S.of(context).saveAndClose),
-                  onPressed: () {
-                    repeatItem.setUid(CodeGenerator.generateUlid());
-                    Navigator.of(context).pop(true);
-                  },
-                ),
-              TextButton(
-                child: Text(S.of(context).closeWithoutSaving),
-                onPressed: () {
-                  final item = formInstance.onRemoveLastItem(repeatInstance);
-                  if (item != null) {
-                    _dataSource.removeItem(item);
-                  }
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
-          );
-        },
-      );
-
-      return (confirmClose ?? false);
-    } else if (repeatItem.elementControl.valid) {
-      return true;
-    }
-    return false;
   }
 }

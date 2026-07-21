@@ -71,7 +71,6 @@ Active evidence:
 
 - `lib/features/data_instance/presentation/table_screen.dart:93` creates a new submission by navigating to `FormFlowBootstrapper`.
 - `lib/features/data_instance/presentation/table_widget.dart:62` edits an existing item by navigating to `FormFlowBootstrapper` with `submissionId`, `formId`, `versionId`, and `assignmentId`.
-- `lib/features/assignment_detail/presentation/details_submissions_table.dart:201` also edits by navigating to `FormFlowBootstrapper`.
 - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:47` creates a draft via `_db.dataInstancesDao.createDraft(...)` when `submissionId == null`.
 - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:60-68` pushes a GetIt scope for the submission and registers `FormTemplateRepository` plus `FormInstance`.
 - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:65` loads template data through `FormTemplateRepository.create(versionUid: dataInstance.templateVersion)`.
@@ -230,9 +229,7 @@ Observations only:
 - Submission list state overlaps:
   - `lib/features/form_submission/application/submission_list.provider.dart` manages form submissions and update/sync operations.
   - `lib/features/data_instance/application/table.providers.dart` and `table_controller.provider.dart` manage current table filters, selection, delete, and sync.
-- Repeat row UI has both screen and dialog/panel paths:
-  - `EditRowScreen` is active.
-  - `EditRowPanel` and `showEditDialog` are still present; `showEditPanel` currently uses `EditRowScreen` inside `navigateToView`.
+- Repeat row editing uses `EditRowScreen`; the unreachable dialog/panel path was removed.
 - Value/display mapping has multiple layers:
   - `MapValueToDisplay`, `ValueTypeValueDisplay`, `SubmissionTableCell`, `DataValueRepository`, and field-level user-friendly value helpers overlap in responsibility.
 

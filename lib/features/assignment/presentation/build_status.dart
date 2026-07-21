@@ -42,11 +42,6 @@ Widget buildStatusBadge(AssignmentStatus status,
       badgeColor = Colors.black;
   }
 
-  // return Badge(
-  //   child: Icon(statusIcon, color: Colors.white),
-  //   textColor: badgeColor,
-  // );
-
   return Tooltip(
     key: key,
     message: Intl.message(status.name.toLowerCase()),
@@ -82,24 +77,3 @@ Color? statusColor(AssignmentStatus? status) {
       return Colors.grey.withValues(alpha: 0.3);
   }
 }
-
-// Future<void> goToDataEntryForm(BuildContext context, AssignmentModel assignment,
-//     DataInstance submission) async {
-//   appLocator<NavigationService>().navigateToFormSubmissionScreen(
-//     currentPageIndex: 1,
-//     submissionId: submission.id,
-//     formId: submission.formTemplate,
-//     versionId: submission.templateVersion,
-//     assignmentId: assignment.id,
-//   );
-//   // await Navigator.push(
-//   //     context,
-//   //     MaterialPageRoute(
-//   //         builder: (context) => FormSubmissionScreen(
-//   //               currentPageIndex: 1,
-//   //               submissionId: submission.id,
-//   //               formId: submission.formTemplate,
-//   //               versionId: submission.templateVersion,
-//   //               assignmentId: assignment.id,
-//   //             )));
-// }

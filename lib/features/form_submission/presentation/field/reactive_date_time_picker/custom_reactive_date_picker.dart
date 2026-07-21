@@ -393,11 +393,3 @@ class _DefaultAccessor extends ControlValueAccessor<String, String> {
   @override
   String? viewToModelValue(String? viewValue) => viewValue;
 }
-
-int getIsoWeekNumber(DateTime date) {
-  final dayOfYear = int.parse(DateFormat('D').format(date));
-  return ((dayOfYear - date.weekday + 10) / 7).floor();
-}
-
-DateTime getStartOfWeek(DateTime date) =>
-    date.subtract(Duration(days: date.weekday - 1));

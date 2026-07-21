@@ -34,12 +34,12 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `01` status legend | Active if reachable/imported/registered/routed | Use this document's strict labels | The old label is too broad for cleanup. Treat `01` "Active" as "reachable evidence" unless confirmed by `02`, `03`, `04`, or this document. |
 | Generated Stacked router and locator | Active generated code | ACTIVE | `lib/main.dart` uses `StackedRouter().onGenerateRoute`; active navigation uses `NavigationService`. Generated route/locator output is required, but should not be edited manually. |
 | Stacked `SettingsView` and about/version UI | Active route/UI | SUPPORTING-USED | Settings is routed, but removing settings/about display would not break startup, sync, form capture, repeat edit, save, or submission table behavior. |
-| Stacked `DialogService` | UNKNOWN in `04` | ACTIVE | `DExceptionReporter` uses `appLocator<DialogService>().showDialog(...)`; login/startup/form-template error paths call the reporter. `details_submissions_table.dart` also calls `showCustomDialog(...)`. |
+| Stacked `DialogService` | UNKNOWN in `04` | ACTIVE | `DExceptionReporter` uses `appLocator<DialogService>().showDialog(...)`; login/startup/form-template error paths call the reporter. |
 | Stacked `SnackbarService` | Registered/generated | UNKNOWN | Static scan found registration but no required core call site. Do not classify active from generated registration alone. |
 | Stacked `BottomSheetService` | Registered/generated | UNKNOWN | Active form completion uses Flutter `showModalBottomSheet`, not Stacked `BottomSheetService`. Generated registration alone is not enough. |
 | `EditRowScreen` widget | ACTIVE in `02` | ACTIVE | Repeat edit constructs `EditRowScreen` through `NavigationService.navigateToView(...)`; commenting the widget would break active repeat editing. |
 | `EditRowScreen` generated Stacked route | ACTIVE in `02` | LEGACY-RISK | The generated `navigateToEditRowScreen` route was not proven required because the active repeat edit path constructs the widget through `navigateToView(...)`. |
-| `EditRowPanel` and dialog repeat edit path | LEGACY-RISK in `02` | LEGACY-RISK | `showEditDialog(...)` exists and builds `EditRowPanel`, but active `_showEditPanel(...)` always takes the `if (true)` branch and navigates to `EditRowScreen`. |
+| `EditRowPanel` and dialog repeat edit path | LEGACY-RISK in `02` | OBSOLETE-REMOVED | The active path always navigated to `EditRowScreen`; the unreachable `if (true)` alternative, `showEditDialog(...)`, and panel widget were removed. |
 | Riverpod as a library | ACTIVE | ACTIVE | Root `ProviderScope` and many providers are active, but every provider still needs per-provider evidence. Generated `*.provider.g.dart` files are not active unless their provider is watched by a core path. |
 | Old team `StateNotifierProvider` files | Active-looking Riverpod state | OBSOLETE-REMOVED | The only screen used hard-coded demo data, had no active route, and was referenced only by a comment-only dashboard. Active assignment filtering remains in `lib/data/teams.provider.dart`. |
 | `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | OBSOLETE-REMOVED | Generated DI was their only outside reference. The duplicate stack and private progress models were removed; active sync remains `SyncResourcesViewModel` plus `SyncManager`. |
@@ -53,7 +53,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `UserFormAccessesDatasource` | ACTIVE in `03` | ACTIVE | The datasource is in the `AbstractDatasource` sync loop. |
 | `user_form_permissions` as access gate | ACTIVE in `03` | UNKNOWN | Active form access checks found in later passes rely mostly on `assignment_forms`; direct production use of `user_form_permissions` was not proven. |
 | `assignment_forms` | ACTIVE | ACTIVE | Used by available forms, assignment detail access, edit permissions, and form list filtering. This is the active form-access table. |
-| `sync_summaries` | ACTIVE in `03` | SUPPORTING-USED | `BaseDataSource` writes summaries, but `SyncSummaryCard` is only found in commented settings UI. Core sync completion uses progress/global state and SharedPreferences flags. |
+| `sync_summaries` | ACTIVE in `03` | SUPPORTING-USED | `BaseDataSource` writes summaries. The unreachable `SyncSummaryCard` UI was removed; core sync completion uses progress/global state and SharedPreferences flags. |
 | `DataValueRepository` display helper | Partially active in `01`, LEGACY-RISK in `02` | SUPPORTING-USED | `DataValueRepository` is used by `MapValueToDisplay`, but this is display support, not current capture persistence. |
 | `data_values` table/DAO as capture storage | Partially active in `01`, LEGACY-RISK in `02` | LEGACY-RISK | Active form save writes `data_instances.formData`, not per-field `data_values`. |
 | `repeat_instances` table/DAO | LEGACY-RISK in `02`, inactive-looking in `01` | LEGACY-RISK | Table/DAO exist, but active repeat rows are stored in `data_instances.formData` as nested JSON lists. |
@@ -142,7 +142,7 @@ These are used or plausible, but should not be treated as core-active without mo
 | --- | --- | --- |
 | `lib/data/app_about_info.provider.dart` | SUPPORTING-USED | Version/about display only. |
 | Settings screens and appearance/preferences UI | SUPPORTING-USED | Reachable UI, but not core data-collection behavior. Preference provider itself remains ACTIVE because root app and table appearance use it. |
-| `SyncSummaryCard` and `sync_summaries` UI | SUPPORTING-USED | Summary writes happen during sync, but the UI consumer found in settings is commented. |
+| `SyncSummaryCard` UI | OBSOLETE-REMOVED | It had no executable consumer; `sync_summaries` persistence remains supporting-used independently. |
 | `DataValueRepository` / `data_values` | SUPPORTING-USED | Display helper use exists; capture/save does not use this path. Treat `data_values` as LEGACY-RISK for storage design. |
 | `data_elements` table | SUPPORTING-USED | Synced actively, used by display/older metadata helpers, but not the primary form JSON source. |
 | `ValueType.Reference` widgets and metadata provider | INCOMPLETE | Field factory can route to reference widgets, but provider returns empty data and production form use is unconfirmed. |

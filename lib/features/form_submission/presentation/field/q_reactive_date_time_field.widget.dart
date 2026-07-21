@@ -142,10 +142,3 @@ class QReactiveDateTimeFormField extends ConsumerWidget {
         FieldInstance<String>() => throw UnimplementedError(),
       };
 }
-
-/// Which type of picker to display.
-enum ReactiveDateTimePickerMode {
-  date,
-  time,
-  dateTime,
-}

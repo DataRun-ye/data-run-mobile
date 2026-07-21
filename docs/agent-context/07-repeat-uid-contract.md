@@ -84,7 +84,7 @@ Implementation should stay in the active whole-JSON path:
 
 - `lib/features/form_submission/application/element/repeat_item_instance.dart`
 - `lib/core/form/builder/form_element_builder.dart`
-- `lib/features/form_submission/application/element/repeat_instance.dart`
+- `lib/features/form_submission/application/element/repeat_section.dart`
 - `lib/features/form_submission/application/element/form_instance.dart`
 - `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`
 - `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart`

@@ -24,7 +24,7 @@ Do not treat the current test suite as coverage for production form behavior.
 | Static analysis | `flutter analyze` | FAIL | 50 issues. Mostly unused/unnecessary imports, deprecated API use, `sort_constructors_first`, and experimental Sentry API warning. Includes app and `packages/drun_sdk`. |
 | Root tests | `flutter test` | FAIL | Both discovered test files fail to load because they have no active `main()` method. |
 | Debug Android build | `flutter build apk --debug` | PASS | Produces `build/app/outputs/flutter-apk/app-debug.apk`. |
-| Code generation | `dart run build_runner build --delete-conflicting-outputs` | AVAILABLE, NOT RUN | Generator command is discoverable from dev dependencies but rewrites generated files, so do not run as a read-only baseline. Run only in PRs that intentionally touch generated code. |
+| Code generation | `dart run build_runner build` | AVAILABLE | Generator command rewrites generated files, so run it only in changes that intentionally touch generated code. |
 | SDK tests | `cd packages/drun_sdk && dart test` | UNAVAILABLE / NOT BASELINE | No `packages/drun_sdk/test` directory found. SDK `flutter_test` dev dependency is commented out. Root `flutter analyze` still analyzes SDK code. |
 | Release build | `flutter build apk --release` | NOT BASELINE | Release signing intentionally requires valid local `android/key.properties`; do not use this as normal PR validation until signing is configured on the machine/CI. |
 
@@ -45,7 +45,7 @@ Until real characterization tests exist, future code PRs should use this baselin
 | Docs-only | Verify diff is docs-only. Runtime checks optional. | No app behavior changed. |
 | Tooling/build config | `flutter pub get`, `flutter build apk --debug` | Both should pass before merge. |
 | Runtime app or SDK code | `flutter pub get`, `flutter analyze`, `flutter test`, `flutter build apk --debug` | Build must pass. Analyze/test failures must be reported and should not get worse. |
-| Generated-code PR | `dart run build_runner build --delete-conflicting-outputs`, then normal runtime checks | Generated diffs must be intentional and reviewed. |
+| Generated-code PR | `dart run build_runner build`, then normal runtime checks | Generated diffs must be intentional and reviewed. |
 | Form/save/repeat PR | Normal runtime checks plus targeted characterization tests once added | Do not rely on current stale tests as proof. |
 
 The first cleanup target should not be "fix all tests." The practical target is to add a few focused tests around active behavior, then make `flutter test` meaningful again.
@@ -57,7 +57,7 @@ Create a small test PR before deeper form refactoring. Keep it focused on active
 1. Repeat metadata preservation test.
    - Prove an existing repeat row `_id` loaded from JSON is preserved after reduce/save behavior.
    - Prove a new repeat row receives backend-compatible repeat metadata before persistence.
-   - Target active files: `repeat_item_instance.dart`, `repeat_instance.dart`, and the active builder/reducer path.
+   - Target active files: `repeat_item_instance.dart`, `repeat_section.dart`, and the active builder/reducer path.
 
 2. Submission save characterization.
    - Prove `FormInstance.saveFormData()` awaits the DAO write and persists the whole `formData` JSON expected by upload.

@@ -96,7 +96,7 @@ final class FilterQueryProvider
   }
 }
 
-String _$filterQueryHash() => r'a68b50397ff2453e39cfae241108214737a4d6fa';
+String _$filterQueryHash() => r'dd65b73b7b12917a4001e583f07e8d50f21f446c';
 
 /// filter query model notifier that store filtering cretirias
 

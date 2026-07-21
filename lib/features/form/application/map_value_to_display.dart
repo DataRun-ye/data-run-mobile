@@ -4,7 +4,6 @@ import 'package:d_sdk/core/data_instance/field_value.dart';
 import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/core/element_instance/data_value_repository.dart';
-import 'package:datarunmobile/core/resources/resource_manager.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_date_time_picker/custom_date_pickers.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -13,9 +12,8 @@ import 'package:intl/intl.dart';
 
 @injectable
 class MapValueToDisplay {
-  MapValueToDisplay({required this.resources, required this.repository});
+  MapValueToDisplay({required this.repository});
 
-  final ResourceManager resources;
   final DataValueRepository repository;
 
   FutureOr<String?> map(ValueType type, dynamic value) {

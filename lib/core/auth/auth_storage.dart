@@ -36,8 +36,7 @@ class AuthStorage {
     final activeUserId = getActiveUserId();
     final activeSession = _sessionStorage.readSession(activeUserId);
     if (activeSession == null) {
-      logDebug('No Cached Token for active user: $activeUserId',
-          source: this);
+      logDebug('No Cached Token for active user: $activeUserId', source: this);
       _prefs.remove(CacheKeys.activeUserKey);
       throw NoCachedAuthenticatedUser(
           message: 'No Active UserSession for user: $activeSession');
@@ -65,11 +64,6 @@ class AuthStorage {
   Future<void> setActiveSession(UserSession userSession) async {
     await _prefs.setString(CacheKeys.activeUserKey, userSession.username);
     return _sessionStorage.writeSession(userSession.username,
-        session: userSession);
-  }
-
-  Future<void> updateActiveUserSession(UserSession userSession) async {
-    return _sessionStorage.writeSession(getActiveUserId(),
         session: userSession);
   }
 

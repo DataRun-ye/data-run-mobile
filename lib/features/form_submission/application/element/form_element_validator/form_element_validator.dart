@@ -30,35 +30,6 @@ class FieldValidators {
       validators.addAll([Validators.min(0), Validators.maxLength(100)]);
     return validators.toList();
   }
-
-  static Map<String, String Function(Object error)> getValidationMessages(
-      FieldTemplate element) {
-    final Map<String, String Function(Object error)> messages = {};
-    if (element.mandatory)
-      messages['required'] = (error) => 'This field is mandatory.';
-    if (element.type == ValueType.Email)
-      messages['email'] = (error) => 'Invalid email format.';
-    if (element.type.isInteger) {
-      messages['number'] = (error) => 'Please enter an integer.';
-    }
-    if (element.type == ValueType.IntegerZeroOrPositive) {
-      messages['number'] = (error) => 'Only zero or positive numbers allowed.';
-      messages['min'] = (error) => 'Value cannot be less than 0.';
-    }
-    if (element.type == ValueType.IntegerNegative) {
-      messages['number'] = (error) => 'Please enter an integer.';
-      messages['max'] = (error) => 'Value cannot be greater than -1.';
-    }
-    if (element.type == ValueType.IntegerPositive) {
-      messages['min'] = (error) => 'Value must be greater than 0.';
-    }
-    if (element.type == ValueType.Percentage) {
-      messages['min'] = (error) => 'Percentage cannot be negative.';
-      messages['maxLength'] = (error) => 'Percentage cannot exceed 100%.';
-    }
-
-    return messages;
-  }
 }
 
 class RequiredFieldValidator extends RequiredValidator {

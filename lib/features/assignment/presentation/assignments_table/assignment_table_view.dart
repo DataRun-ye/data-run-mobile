@@ -1,5 +1,4 @@
 import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/entity_scope.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
@@ -12,10 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AssignmentTableView extends HookConsumerWidget {
-  AssignmentTableView({super.key, required this.onViewDetails, this.scope});
+  AssignmentTableView({super.key, required this.onViewDetails});
 
   final void Function(AssignmentModel) onViewDetails;
-  final EntityScope? scope;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,11 +30,6 @@ class AssignmentTableView extends HookConsumerWidget {
         return _buildTable(context, assignmentsMap, searchQuery);
       },
     );
-  }
-
-  num calculateColumnSum(List<Map<String, dynamic>> rows, String colIndex) {
-    return rows.fold(0,
-        (sum, row) => sum + (row[colIndex] is num ? row[colIndex] as num : 0));
   }
 
   Widget _buildTable(BuildContext context,
@@ -86,8 +79,7 @@ class AssignmentTableView extends HookConsumerWidget {
                         ),
                       ))),
                   DataCell(
-                    SyncStatusBadgesView(
-                        assignmentId: assignment.id),
+                    SyncStatusBadgesView(assignmentId: assignment.id),
                   ),
                   DataCell(OrgUnitDisplay(
                       orgUnit: assignment.orgUnit, highlightText: searchQuery)),

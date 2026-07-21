@@ -30,8 +30,6 @@ import 'package:datarunmobile/core/http/default_http_adapter.dart' as _i832;
 import 'package:datarunmobile/core/network/network_util.dart' as _i537;
 import 'package:datarunmobile/core/network/reactive_connectivity_service.dart'
     as _i658;
-import 'package:datarunmobile/core/resources/resource_manager.provider.dart'
-    as _i683;
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart' as _i492;
 import 'package:datarunmobile/core/sync/sync_scheduler.dart' as _i658;
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart' as _i602;
@@ -42,8 +40,6 @@ import 'package:datarunmobile/features/assignment/application/assignment_service
     as _i935;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
-import 'package:datarunmobile/features/data_instance/application/table_selection_service.dart'
-    as _i939;
 import 'package:datarunmobile/features/data_instance/data/drift_table_repository.dart'
     as _i128;
 import 'package:datarunmobile/features/data_instance/data/table_repository.dart'
@@ -99,7 +95,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
   );
   gh.factory<_i64.AuthApi>(() => _i64.AuthApi());
   gh.factory<_i730.DataValueRepository>(() => _i730.DataValueRepository());
-  gh.factory<_i683.ResourceManager>(() => const _i683.ResourceManager());
   gh.factory<_i602.SyncManager>(() => _i602.SyncManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
   gh.factory<_i415.RuleEffectStateFactory>(
@@ -107,12 +102,10 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());
-  gh.lazySingleton<_i939.TableSelectionRepository>(
-    () => _i939.TableSelectionRepository(),
-    dispose: (i) => i.dispose(),
-  );
   gh.lazySingleton<_i342.FieldContextRegistry>(
       () => _i342.FieldContextRegistry());
+  gh.factory<_i244.MapValueToDisplay>(() =>
+      _i244.MapValueToDisplay(repository: gh<_i730.DataValueRepository>()));
   gh.factory<_i935.AssignmentService>(() => _i1027.AssignmentServiceImpl());
   gh.factory<_i258.FormTemplateService>(() => _i489.FormTemplateServiceImpl());
   gh.factory<_i537.StorageService>(() => sdkModule.getStorageService(
@@ -136,10 +129,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
   gh.factory<_i139.SessionStorage>(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
-  gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(
-        resources: gh<_i683.ResourceManager>(),
-        repository: gh<_i730.DataValueRepository>(),
-      ));
   gh.factory<_i765.TokenStorage>(
       () => sdkModule.getTokenStorage(gh<_i537.StorageService>()));
   gh.factory<_i48.TokenRefresher>(

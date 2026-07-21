@@ -65,7 +65,7 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
     for (final element in _elements) {
       // decide my children
       element.evaluate(
-          changedDependency: 'Parent RepeatInstance call',
+          changedDependency: 'Parent RepeatSection call',
           updateParent: updateParent,
           emitEvent: emitEvent);
     }

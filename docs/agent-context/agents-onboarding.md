@@ -87,7 +87,7 @@ Core active files:
 - `lib/features/form_submission/application/element/form_instance.dart`
 - `lib/features/form_submission/application/element/form_element.dart`
 - `lib/features/form_submission/application/element/section_instance.dart`
-- `lib/features/form_submission/application/element/repeat_instance.dart`
+- `lib/features/form_submission/application/element/repeat_section.dart`
 - `lib/features/form_submission/application/element/repeat_item_instance.dart`
 - `lib/features/form_submission/application/element/field_instance.dart`
 - `lib/features/form_submission/presentation/form_submission_screen.widget.dart`
@@ -138,7 +138,7 @@ flutter run
 flutter build apk --debug
 flutter analyze
 flutter test
-dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 ```
 
 Notes:

@@ -5,7 +5,6 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/common/confirmation_service.dart';
-import 'package:datarunmobile/features/data_instance/application/models.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
 import 'package:datarunmobile/features/data_instance/presentation/paginated_table_source.dart';
 import 'package:datarunmobile/features/data_instance/presentation/table_columns_build_extension.dart';
@@ -25,7 +24,6 @@ class PaginatedItemsTable extends ConsumerStatefulWidget {
     this.assignmentId,
     this.header,
     this.disabledCellColor,
-    this.pagination,
     this.filters = const IList.empty(),
   });
 
@@ -33,7 +31,6 @@ class PaginatedItemsTable extends ConsumerStatefulWidget {
   final String? assignmentId;
   final Widget? header;
   final WidgetStateProperty<Color?>? disabledCellColor;
-  final Pagination? pagination;
   final IList<FilterCondition<Object>> filters;
 
   @override

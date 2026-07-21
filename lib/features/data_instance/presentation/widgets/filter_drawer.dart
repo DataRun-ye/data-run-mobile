@@ -1,7 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/domain/filter.dart';
 import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:d_sdk/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
@@ -287,8 +285,4 @@ class FilterDrawer extends ConsumerWidget {
       },
     );
   }
-}
-
-FilterCondition syncStatFilter(InstanceSyncStatus status) {
-  return FilterCondition.equals(DSdk.db.dataInstances.syncState, status.name);
 }

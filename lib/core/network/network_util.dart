@@ -13,7 +13,7 @@ class NetworkUtil {
   CancelToken? _currentPingToken;
 
   final StreamController<bool> _connectivityStatusController =
-  StreamController<bool>.broadcast();
+      StreamController<bool>.broadcast();
 
   Stream<bool> get connectivityStatusStream =>
       _connectivityStatusController.stream;
@@ -27,10 +27,6 @@ class NetworkUtil {
     final result = connectivityResult.contains(ConnectivityResult.wifi) ||
         connectivityResult.contains(ConnectivityResult.mobile);
     return !result;
-  }
-
-  Future<bool> isOffline() async {
-    return !(await isOnline());
   }
 
   Future<bool> isOnline() async {

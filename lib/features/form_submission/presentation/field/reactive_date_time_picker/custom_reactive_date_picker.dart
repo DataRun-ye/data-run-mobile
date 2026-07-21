@@ -15,10 +15,6 @@ enum ReactiveDatePickerFieldType {
   year,
 }
 
-typedef GetInitialDate = DateTime Function(
-    String? fieldValue, DateTime lastDate);
-typedef GetInitialTime = TimeOfDay Function(String? fieldValue);
-
 class CustomReactiveDateTimePicker
     extends ReactiveFocusableFormField<String, String> {
   CustomReactiveDateTimePicker({
@@ -38,7 +34,6 @@ class CustomReactiveDateTimePicker
     String? cancelText,
     String? confirmText,
     String? helpText,
-    GetInitialDate? getInitialDate,
     DateFormat? dateFormat,
     DateTime? firstDate,
     DateTime? lastDate,

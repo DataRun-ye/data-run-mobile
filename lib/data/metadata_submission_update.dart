@@ -64,49 +64,6 @@ class MetadataSubmissionUpdate {
 
   String? get householdName => formData['householdName'] as String?;
 
-  static List<MetadataSubmissionUpdate> fromJsonList(
-    List<dynamic> list, {
-    required String resourceId,
-    required String metadataSubmission,
-    required MetadataResourceType resourceType,
-    required String submissionId,
-  }) {
-    return list
-        .map((item) => MetadataSubmissionUpdate.fromJson({
-              ...item,
-              'resourceId': resourceId,
-              'submissionId': resourceId,
-              'resourceType': resourceType.name,
-              'metadataSubmission': metadataSubmission,
-              'formData': {
-                '_id': item['_id'],
-                'submissionId': item['submissionId'],
-                'householdName': item['householdName'],
-                'householdHeadSerialNumber': item['householdHeadSerialNumber'],
-                'resourceType': resourceType.name,
-                'resourceId': resourceId,
-              },
-            }))
-        .toList();
-  }
-
-  ///this method will prevent the override of toString
-  String resourceAsString() {
-    return '#$householdHeadSerialNumber $householdName';
-  }
-
-  ///this method will prevent the override of toString
-  bool userFilterBySerialName(String filter) {
-    return resourceAsString().contains(filter);
-  }
-
-  ///custom comparing function to check if two users are equal
-  bool isEqual(MetadataSubmissionUpdate model) {
-    return householdHeadSerialNumber == model.householdHeadSerialNumber &&
-        householdName == model.householdName &&
-        resourceId == model.resourceId;
-  }
-
   @override
   String toString() => householdName ?? '';
 }

@@ -24,11 +24,4 @@ class SessionStorage {
     if (jsonString == null) return null;
     return UserSession.fromJsonString(jsonString);
   }
-
-  /// Delete session
-  Future<bool> deleteSession(String userId) => _storage.remove(userId);
-
-  Set<String> getAllUserIds() {
-    return _storage.getKeys();
-  }
 }

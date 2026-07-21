@@ -168,7 +168,7 @@ Active:
   - Field widgets and row edit screens use `ReactiveForm` and `ReactiveFormField`.
 - RxDart/streams:
   - `lib/features/form_submission/application/element/form_element.dart:42-47` uses `BehaviorSubject` for element property changes.
-  - `lib/features/form_submission/application/element/repeat_instance.dart:14-17` uses `BehaviorSubject` for repeat collection changes.
+  - `lib/features/form_submission/application/element/repeat_section.dart:14-17` uses `BehaviorSubject` for repeat collection changes.
 
 Inactive or obsolete-looking:
 
@@ -228,7 +228,7 @@ High risk:
 
 - Full upfront form construction:
   - `FormElementControlBuilder.formDataControls` and `createRepeatFormArray` build controls for every repeat row.
-  - `FormElementBuilder.buildRepeatInstance` builds `RepeatItemInstance` objects for every repeat row.
+  - `FormElementBuilder.buildRepeatSection` builds `RepeatItemInstance` objects for every repeat row.
   - `Section.resolveDependencies()` and `Section.evaluate()` traverse the full tree at bootstrap.
   - Impact: startup/render latency and memory grow with repeat rows multiplied by fields per row.
 - Whole-submission save:
@@ -290,7 +290,7 @@ Treat these as high-risk files until the active paths above are fully understood
 - `lib/features/form_submission/application/element/form_instance.dart`
 - `lib/features/form_submission/application/element/form_element.dart`
 - `lib/features/form_submission/application/element/section_instance.dart`
-- `lib/features/form_submission/application/element/repeat_instance.dart`
+- `lib/features/form_submission/application/element/repeat_section.dart`
 - `lib/features/form_submission/application/element/repeat_item_instance.dart`
 - `lib/features/form_submission/presentation/form_entry_view_silver.widget.dart`
 - `lib/features/form_submission/presentation/section/section.widget.dart`

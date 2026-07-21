@@ -1,6 +1,5 @@
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
@@ -121,25 +120,6 @@ class AssignmentOverviewItem extends ConsumerWidget {
         ),
       ],
     );
-  }
-
-  Color? getCardColor(AssignmentStatus status, ThemeData theme) {
-    switch (status) {
-      case AssignmentStatus.NOT_STARTED:
-      case AssignmentStatus.PLANNED:
-      case AssignmentStatus.RESCHEDULED:
-        return theme.cardColor.withValues(alpha: 0.5);
-      case AssignmentStatus.DONE:
-        return theme.cardColor;
-      case AssignmentStatus.IN_PROGRESS:
-        return Colors.greenAccent.withValues(alpha: 0.2);
-
-      case AssignmentStatus.MERGED:
-      case AssignmentStatus.REASSIGNED:
-      case AssignmentStatus.CANCELLED:
-      case AssignmentStatus.Expired:
-        return Colors.orangeAccent.withValues(alpha: 0.2);
-    }
   }
 }
 

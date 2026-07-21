@@ -31,7 +31,7 @@ class FormElementBuilder {
       {dynamic initialFormValue}) {
     if (template is SectionTemplate) {
       if (template.repeatable) {
-        return buildRepeatInstance(form, formFlatTemplate, template,
+        return buildRepeatSection(form, formFlatTemplate, template,
             initialFormValue: initialFormValue);
       }
       return buildSectionInstance(form, formFlatTemplate, template,
@@ -79,7 +79,7 @@ class FormElementBuilder {
     return repeatedSection;
   }
 
-  static RepeatSection buildRepeatInstance(FormGroup rootFormControl,
+  static RepeatSection buildRepeatSection(FormGroup rootFormControl,
       FormTemplateRepository formFlatTemplate, SectionTemplate template,
       {List<dynamic>? initialFormValue}) {
     final List<RepeatItemInstance> elements = initialFormValue

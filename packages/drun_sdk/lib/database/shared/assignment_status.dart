@@ -10,14 +10,6 @@ enum AssignmentStatus {
   REASSIGNED,
   CANCELLED;
 
-  bool isDone() {
-    return this == AssignmentStatus.DONE;
-  }
-
-  bool isInProgress() {
-    return this == AssignmentStatus.IN_PROGRESS;
-  }
-
   bool isPlanned() {
     return this == AssignmentStatus.PLANNED ||
         this == AssignmentStatus.NOT_STARTED;
@@ -28,25 +20,7 @@ enum AssignmentStatus {
     return isPlanned();
   }
 
-  bool isRescheduled() {
-    return this == AssignmentStatus.RESCHEDULED;
-  }
-
-  bool isMerged() {
-    return this == AssignmentStatus.MERGED;
-  }
-
-  bool isReassigned() {
-    return this == AssignmentStatus.REASSIGNED;
-  }
-
-  bool isCancelled() {
-    return this == AssignmentStatus.CANCELLED;
-  }
-
   bool isActive() => isActiveStatuses().contains(this);
-
-  bool isCompleted() => isCompletedStatuses().contains(this);
 
   static List<AssignmentStatus> isActiveStatuses() {
     return [
@@ -56,13 +30,6 @@ enum AssignmentStatus {
       RESCHEDULED,
       MERGED,
       REASSIGNED,
-    ];
-  }
-
-  static List<AssignmentStatus> isCompletedStatuses() {
-    return [
-      DONE, // Completed
-      CANCELLED
     ];
   }
 

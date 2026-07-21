@@ -36,7 +36,7 @@ class RepeatItemInstance extends Section {
   set parentSection(SectionElement<dynamic>? parent) {
     if (parent is! RepeatSection?) {
       throw StateError(
-          'A RepeatItemInstance\'s Parent can only be a RepeatInstance, parent: ${parent.runtimeType}');
+          'A RepeatItemInstance\'s parent must be a RepeatSection, parent: ${parent.runtimeType}');
     }
 
     _parentSection = parent;

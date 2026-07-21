@@ -45,19 +45,6 @@ extension ElementDependencyHandler<T> on FormElementInstance<T> {
     }
   }
 
-  void addDependency(FormElementInstance<dynamic> dependency) {
-    _resolvedDependencies.add(dependency);
-    dependency._addDependent(this);
-  }
-
-  void removeDependent(FormElementInstance<dynamic> dependent) {
-    _dependents.remove(dependent);
-  }
-
-  void removeDependency(FormElementInstance<dynamic> dependency) {
-    _resolvedDependencies.remove(dependency);
-  }
-
   void _addDependent(FormElementInstance<dynamic> dependent) {
     _dependents.add(dependent);
   }

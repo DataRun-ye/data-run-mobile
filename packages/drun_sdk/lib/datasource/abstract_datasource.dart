@@ -3,8 +3,6 @@ import 'package:d_sdk/core/sync/sync_logger.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 
-typedef FromJsonCallback<D> = D Function(Map<String, dynamic> data);
-
 abstract class AbstractDatasource<D> {
   Future<List<Insertable<D>>> syncWithRemote({
     SyncConfig? options,

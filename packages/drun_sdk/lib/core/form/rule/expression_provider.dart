@@ -8,10 +8,6 @@ abstract class DependenciesProvider {
   List<String> get dependencies;
 }
 
-abstract class EvalContextProvider {
-  Map<String, dynamic> get evalContext;
-}
-
 const evaluator = const ExpressionEvaluator();
 
 abstract class EvaluationEngine<T> {

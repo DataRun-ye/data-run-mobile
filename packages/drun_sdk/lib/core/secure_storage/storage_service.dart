@@ -1,6 +1,3 @@
-/// Generic interface for session storage
-typedef FutureCallback<T> = Future<T> Function();
-
 enum StorageType { secure, prefs }
 
 /// Secure implementation
@@ -29,4 +26,3 @@ abstract class StorageService {
   /// Delete all stored entries
   Future<void> deleteAll();
 }
-

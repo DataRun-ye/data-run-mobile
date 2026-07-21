@@ -9,9 +9,5 @@ class AndroidDeviceInfoService {
 
   String? model() => androidDeviceInfo?.model;
 
-  String? manufacturer() => androidDeviceInfo?.manufacturer;
-
-  String? release() => androidDeviceInfo?.version.release;
-
   bool? isLowRamDevice() => androidDeviceInfo?.isLowRamDevice;
 }

@@ -1,5 +1,3 @@
-import 'package:d_sdk/core/code_generator.dart';
-import 'package:d_sdk/core/common/geometry.dart';
 import 'package:d_sdk/core/exception/d_error.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/util/list_extensions.dart';
@@ -36,32 +34,6 @@ class FormSubmissions extends _$FormSubmissions {
     await future;
   }
 
-  /// injecting the arguments from the context
-  Future<DataInstance> createNewSubmission(
-      {required String assignmentId,
-      required String team,
-      required String form,
-      required String formVersion,
-      // required int version,
-      Map<String, dynamic> formData = const {},
-      Geometry? geometry}) async {
-    final submission = await _db.managers.dataInstances.createReturning(
-        (o) => o(
-            id: CodeGenerator.generateUid(),
-            formTemplate: form,
-            templateVersion: formVersion,
-            assignment: Value(assignmentId),
-            syncState: InstanceSyncStatus.draft,
-            // team: Value(team),
-            isToUpdate: false,
-            formData: Value(formData)),
-        mode: InsertMode.replace);
-
-    ref.invalidateSelf();
-    await future;
-    return submission;
-  }
-
   Future<DataInstance?> getSubmission(String uid) async {
     final finishedInitState = (await future);
     return finishedInitState.firstOrNullWhere((s) => s.id == uid);
@@ -94,12 +66,6 @@ class FormSubmissions extends _$FormSubmissions {
       logError('# DataRun Error: ${e.toString()}');
       return false;
     }
-  }
-
-  Future<void> syncEntities(List<String> uids) async {
-    await DSdk.db.dataInstancesDao.upload(uids);
-    ref.invalidateSelf();
-    await future;
   }
 }
 

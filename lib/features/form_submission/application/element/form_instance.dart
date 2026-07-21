@@ -243,12 +243,6 @@ class FormInstance {
     }
   }
 
-  bool hasAnyNestedRepeat(elementPath) {
-    return formFlatTemplate
-        .where(elementPath, (template) => template.repeatable)
-        .isNotEmpty;
-  }
-
   bool _hasFocusableFieldNext(String elementPath) {
     // 3) ask FormInstance for the next visible field’s path
     final nextElement = _getNextVisibleField(elementPath);
@@ -296,103 +290,6 @@ class FormInstance {
           stackTrace: st);
     }
   }
-
-///////////////
-
-// void onAddRepeatedItem(RepeatInstance parentTableInstance) {
-//   final elementFormGroupControl =
-//   ElementControlBuilder.forSection(parentTableInstance.template);
-//   final RepeatItemInstance elementInstance =
-//   ElementInstanceBuilder.forRepeatItem(
-//       forFlatTemplate, parentTableInstance.template);
-//   final parentArray =
-//   form.control(parentTableInstance.elementPath!) as FormArray;
-//
-//   parentArray.add(elementFormGroupControl, emitEvent: false);
-//   parentTableInstance.add(elementInstance,
-//       updateParent: true, emitEvent: false);
-//   elementInstance
-//     ..resolveDependencies()
-//     ..evaluate(emitEvent: false);
-// }
-
-// bool onSaveRepeatedItem(
-//     RepeatInstance parentTableInstance, RepeatItemInstance elementInstance) {
-//   final parentArray =
-//   form.control(parentTableInstance.elementPath!) as FormArray;
-//   final elementFormGroupControl =
-//   parentArray.control(elementInstance.name) as FormGroup;
-//   if (elementFormGroupControl.valid) {
-//     parentArray.markAsTouched();
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-// bool onRepeatItemAddCancel(
-//     RepeatInstance parentTableInstance, RepeatItemInstance elementInstance,
-//     {required bool isNew}) {
-//   final elementFormGroupControl = parentTableInstance.elementControl
-//       .control(elementInstance.name) as FormGroup;
-//   if (isNew) {
-//     if (elementFormGroupControl.valid) {
-//       parentTableInstance.elementControl.markAsTouched();
-//       return true;
-//     }
-//     parentTableInstance.elementControl.markAsTouched();
-//     return false;
-//   } else if (elementFormGroupControl.dirty) {
-//     if (elementFormGroupControl.valid) {
-//       parentTableInstance.elementControl.markAsTouched();
-//       return true;
-//     }
-//     parentTableInstance.elementControl.markAsTouched();
-//     return false;
-//   } else {
-//     if (elementFormGroupControl.valid) {
-//       return true;
-//     }
-//     return false;
-//   }
-// }
-
-//
-// ElementExtendedControl createNewItemExtendedControl(
-//     RepeatInstance repeatInstance) {
-//   final parentArrayControl =
-//   form.control(repeatInstance.elementPath!) as FormArray;
-//   final itemControl =
-//   ElementControlBuilder.forSection(repeatInstance.template);
-//   final itemInstance = ElementInstanceBuilder.forRepeatItem(
-//       forFlatTemplate, repeatInstance.template);
-//   parentArrayControl.add(itemControl);
-//   repeatInstance
-//     ..add(itemInstance)
-//     ..resolveDependencies()
-//     ..evaluate();
-//   return ElementExtendedControl(itemControl, itemInstance);
-// }
-
-// ElementExtendedControl getNextItemExtendedControl(
-//     RepeatInstance repeatInstance,
-//     {required int currentIndex}) {
-//   final parentArrayControl =
-//   form.control(repeatInstance.elementPath!) as FormArray;
-//
-//   final nextIndex = currentIndex + 1;
-//   if (parentArrayControl.contains('$nextIndex') &&
-//       repeatInstance.contains('$nextIndex')) {
-//     final nextItemControl =
-//     parentArrayControl.control('$nextIndex') as FormGroup;
-//
-//     final nextItemInstance =
-//     repeatInstance.element('$nextIndex') as RepeatItemInstance;
-//     return ElementExtendedControl(nextItemControl, nextItemInstance);
-//   } else {
-//     return createNewItemExtendedControl(
-//         repeatInstance); // No more items to edit
-//   }
 }
 
 const List<String> metadata = [

@@ -33,20 +33,6 @@ enum FormPermission {
    */
   DELETE_SUBMISSIONS_FROM_USERS;
 
-  static List<FormPermission> canViewPermissions() => [
-        VIEW_SUBMISSIONS,
-        VIEW_SUBMISSIONS_FROM_USERS,
-        EDIT_SUBMISSIONS,
-        EDIT_SUBMISSIONS_FROM_USERS,
-        APPROVE_SUBMISSIONS,
-        DELETE_SUBMISSIONS,
-        DELETE_SUBMISSIONS_FROM_USERS
-      ];
-
-  bool canViewSubmission() {
-    return canViewPermissions().contains(this);
-  }
-
   static FormPermission? getType(String? value) {
     switch (value) {
       case 'VIEW_SUBMISSIONS':

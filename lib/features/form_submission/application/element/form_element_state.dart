@@ -1,7 +1,6 @@
 import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class FormElementState<T> with EquatableMixin {
@@ -40,9 +39,6 @@ class FormElementState<T> with EquatableMixin {
 
   FormElementState<T> AddError(MapEntry<String, dynamic> newErrors) => copyWith(
       errors: Map<String, dynamic>.of(errors)..addEntries([newErrors]));
-
-  FormElementState<T> mergeErrors(Map<String, dynamic> newErrors) => copyWith(
-      errors: Map<String, dynamic>.of(errors).lock.addMap(newErrors).unlock);
 
   FormElementState<T> setErrors(Map<String, dynamic> newErrors) =>
       copyWith(errors: newErrors);

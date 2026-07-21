@@ -2,7 +2,6 @@ import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/exception/d_exception.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/datasource/find_by_and_update_extension_example.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
@@ -53,8 +52,10 @@ class FormFlowBootstrapperVm extends BaseViewModel {
           assignmentId: assignmentId,
         );
       } else {
-        dataInstance =
-            await _db.dataInstances.findById(submissionId).getSingle();
+        dataInstance = await _db.dataInstancesDao.getById(submissionId);
+        if (dataInstance == null) {
+          throw StateError('Submission not found: $submissionId');
+        }
       }
 
       if (appLocator.currentScopeName == dataInstance.id) {

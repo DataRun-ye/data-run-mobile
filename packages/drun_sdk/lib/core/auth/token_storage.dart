@@ -26,8 +26,7 @@ class TokenStorage {
         await _storage.read(CacheKeys.getAccessTokenKey(userId));
     final refreshToken =
         await _storage.read(CacheKeys.getRefreshTokenKey(userId));
-    if (accessToken == null ||
-        refreshToken == null) {
+    if (accessToken == null || refreshToken == null) {
       return null;
     }
     return (accessToken: accessToken, refreshToken: refreshToken);
@@ -56,10 +55,5 @@ class TokenStorage {
       }
     }
     return userIds.toList();
-  }
-
-  // Clear all tokens (e.g., app reset)
-  Future<void> clearAllTokens() async {
-    await _storage.deleteAll();
   }
 }

@@ -43,7 +43,5 @@ extension StringNullExtension on String? {
     return date;
   }
 
-  double toDouble() => double.parse(this!);
-
   int toInt({int? radix}) => int.parse(this!, radix: radix);
 }

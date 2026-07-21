@@ -3,7 +3,6 @@ import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:d_sdk/database/shared/form_permission.dart';
 import 'package:d_sdk/database/shared/option_set.entity.dart';
-import 'package:d_sdk/database/shared/team_form_permission.dart';
 import 'package:d_sdk/database/shared/translations.dart';
 import 'package:drift/drift.dart';
 
@@ -36,10 +35,6 @@ class CustomSerializer extends ValueSerializer {
       return (json as List<dynamic>?)
           ?.map<FormPermission>((e) => FormPermission.getType(e)!)
           .toList() as T;
-    } else if (typeList is List<List<TeamFormPermission>?>) {
-      return (json as List<dynamic>?)
-          ?.map<TeamFormPermission>((e) => TeamFormPermission.fromJson(e))
-          .toList() as T;
     } else if (typeList is List<List<Template>?>) {
       return (json as List<dynamic>?)
           ?.map<Template>((e) => Template.fromJsonFactory(e))
@@ -65,8 +60,6 @@ class CustomSerializer extends ValueSerializer {
     } else if (value is List<FormOption>) {
       return value.map((e) => e.toJson()).toList();
     } else if (value is List<DOptionSet>) {
-      return value.map((e) => e.toJson()).toList();
-    } else if (value is List<TeamFormPermission>) {
       return value.map((e) => e.toJson()).toList();
     } else if (value is List<Template>) {
       return value.map((e) => Template.toJsonFactory(e)).toList();

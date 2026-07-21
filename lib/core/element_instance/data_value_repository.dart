@@ -20,13 +20,6 @@ class DataValueRepository {
         : null;
   }
 
-  Future<DataElement?> getDataElement(String dataElementUid) async {
-    final DataElement? orgUnit = await db.managers.dataElements
-        .filter((f) => f.id(dataElementUid))
-        .getSingleOrNull();
-    return orgUnit;
-  }
-
   Future<String?> getTeamById(String teamUid) async {
     final String? team = await db.managers.teams
         .filter((f) => f.id(teamUid))
@@ -34,14 +27,6 @@ class DataValueRepository {
         .getSingleOrNull();
 
     return team;
-  }
-
-  Future<String?> getOptionById(String optionUid) async {
-    final DataOption? dataOption = await db.managers.dataOptions
-        .filter((f) => f.id(optionUid) | f.code(optionUid) | f.name(optionUid))
-        .getSingleOrNull();
-    return getItemLocalString(dataOption?.label,
-        defaultString: dataOption?.code ?? dataOption?.name);
   }
 
   Future<String> getOptionsByIds(List<String> optionUids) async {

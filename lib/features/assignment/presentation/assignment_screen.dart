@@ -1,5 +1,4 @@
 import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/entity_scope.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/active_filters_widget.dart';
@@ -74,13 +73,11 @@ class AssignmentScreen extends HookConsumerWidget {
                       filterQueryProvider.select((value) => value.isCardView))
                   ? AssignmentsCardView(
                       key: const ValueKey('cardView'),
-                      scope: EntityScope.Assigned,
                       onViewDetails: (assignment) =>
                           _navigateToDetails(context, assignment),
                     )
                   : AssignmentTableView(
                       key: const ValueKey('tableView'),
-                      scope: EntityScope.Assigned,
                       onViewDetails: (assignment) =>
                           _navigateToDetails(context, assignment),
                     ),

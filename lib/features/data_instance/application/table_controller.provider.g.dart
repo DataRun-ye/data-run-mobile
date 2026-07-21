@@ -13,7 +13,7 @@ part of 'table_controller.provider.dart';
 final tableControllerProvider = TableControllerProvider._();
 
 final class TableControllerProvider
-    extends $AsyncNotifierProvider<TableController, TableState> {
+    extends $AsyncNotifierProvider<TableController, void> {
   TableControllerProvider._()
       : super(
           from: null,
@@ -33,17 +33,17 @@ final class TableControllerProvider
   TableController create() => TableController();
 }
 
-String _$tableControllerHash() => r'3133d13bc53d843441f3bb67b775493ba6cb88e6';
+String _$tableControllerHash() => r'5b25b438a4e1a0d05fe0d16d5ff06a2cf6bb7de4';
 
-abstract class _$TableController extends $AsyncNotifier<TableState> {
-  FutureOr<TableState> build();
+abstract class _$TableController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<TableState>, TableState>;
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
     final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<TableState>, TableState>,
-        AsyncValue<TableState>,
+        AnyNotifier<AsyncValue<void>, void>,
+        AsyncValue<void>,
         Object?,
         Object?>;
     element.handleCreate(ref, build);

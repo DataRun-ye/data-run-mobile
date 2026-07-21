@@ -4,11 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'preference.provider.g.dart';
 
-enum DirectionOfSpeedDial {
-  Up,
-  Normal,
-}
-
 enum Preference {
   shouldShowWalkthrough('should_show_walkthrough', true),
   language('language', 'NA'),

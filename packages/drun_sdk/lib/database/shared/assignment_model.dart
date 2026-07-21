@@ -3,7 +3,6 @@ import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:d_sdk/database/shared/collections.dart';
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
 
 class AssignmentModel with EquatableMixin {
   AssignmentModel({
@@ -36,22 +35,6 @@ class AssignmentModel with EquatableMixin {
 
   List<Pair<AssignmentForm, bool>> get availableForms =>
       userForms.where((form) => form.second).toList();
-
-  static int calculateStartDay(
-      String activityStartDate, String assignmentStartDate) {
-    final dateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    final activityStart = dateFormat.parse(activityStartDate);
-    final assignmentStart = dateFormat.parse(assignmentStartDate);
-
-    return assignmentStart.difference(activityStart).inDays + 1;
-  }
-
-  static DateTime? calculateAssignmentDate(
-      DateTime? activityStartDate, int? startDay) {
-    return activityStartDate != null
-        ? activityStartDate.toLocal().add(Duration(days: (startDay ?? 1) - 1))
-        : null;
-  }
 
   @override
   List<Object?> get props => [

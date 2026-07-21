@@ -48,67 +48,6 @@ class FormTemplateListService {
     return availableAssignedForms;
   }
 
-  // Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
-  //     {String? assignment}) async {
-  //   List<AssignmentForm> assignmentForms = [];
-  //   var query = DSdk.db.managers.assignmentForms;
-  //
-  //   if (assignment.isNotNullOrEmpty) {
-  //     query = query
-  //       ..filter((f) =>
-  //       f.assignment.id(assignment) & f.assignment.disabled.not(true));
-  //   }
-  //
-  //   assignmentForms.addAll(await query.get());
-  //
-  //   final userForm = assignmentForms.map((a) => a.form);
-  //   final List<FormTemplate> availableFormTemplates = await DSdk
-  //       .db.managers.formTemplates
-  //       .filter((f) => f.id.isIn(userForm))
-  //       .get();
-  //
-  //   final List<String> availableForms =
-  //   availableFormTemplates.map((f) => f.id).toList();
-  //
-  //   final availableAssignedForms = assignmentForms
-  //       .map((fp) => Pair(fp, availableForms.contains(fp.form)))
-  //       .toList();
-  //
-  //   return availableAssignedForms;
-  // }
-
-  // Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(
-  //     String assignment) async {
-  //   List<AssignmentForm> assignmentForms =
-  //       await _fetchAssignmentForms(assignment);
-  //   final List<String> userForms = assignmentForms.map((a) => a.form).toList();
-  //
-  //   final List<FormTemplate> availableFormTemplates = await DSdk
-  //       .db.managers.formTemplates
-  //       .filter((f) => f.id.isIn(userForms))
-  //       .get();
-  //
-  //   final List<String> availableForms =
-  //       availableFormTemplates.map((f) => f.id).toList();
-  //
-  //   final availableAssignedForms = assignmentForms
-  //       .map((fp) => Pair(fp, availableForms.contains(fp.form)))
-  //       .toList();
-  //
-  //   return availableAssignedForms;
-  // }
-
-  Future<List<AssignmentForm>> _fetchAssignmentForms(
-      String assignmentId) async {
-    final db = appLocator<DbManager>().db;
-    final userForms =
-        appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
-
-    return db.managers.assignmentForms
-        .filter((f) => f.assignment.id(assignmentId))
-        .get();
-  }
-
   Future<List<FormTemplate>> fetchByAssignment(assignmentId) async {
     final db = appLocator<DbManager>().db;
     final userForms =
@@ -135,8 +74,6 @@ class FormTemplateListService {
   Future<List<FormOption>> mergeOptions(List<FormOption> formOptions) async {
     final optionIdsMap = IMap.fromIterable(formOptions,
         keyMapper: (o) => o.id, valueMapper: (o) => o);
-
-    final List<FormOption> options = [];
 
     if (optionIdsMap.isNotEmpty) {
       final mergedOptions = (await DSdk.db.managers.dataOptions
@@ -173,11 +110,9 @@ class FormTemplateListService {
           .withReferences((prefetch) => prefetch(template: true));
 
       if (versionId != null) {
-        query = query.filter((f) =>
-            f.id(versionId));
+        query = query.filter((f) => f.id(versionId));
       } else {
-        query = query.filter((f) =>
-            f.template.id(templateId));
+        query = query.filter((f) => f.template.id(templateId));
       }
 
       final List<(FormTemplateVersion, $$FormTemplateVersionsTableReferences)>

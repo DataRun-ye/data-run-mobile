@@ -6,7 +6,6 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_chip_option.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/reactive_choice_chips.dart';
-import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -54,47 +53,13 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
                   children: <Widget>[
                     buildStatusBadge(status),
                     const SizedBox(width: 20),
-                    Expanded(child: Text(Intl.message(status.name.toLowerCase()), overflow: TextOverflow.ellipsis,))
+                    Expanded(
+                        child: Text(
+                      Intl.message(status.name.toLowerCase()),
+                      overflow: TextOverflow.ellipsis,
+                    ))
                   ]),
             ))
         .toList();
-  }
-
-  Future<void> _confirmDelete(
-      BuildContext context, String? status, WidgetRef ref) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(S.of(context).confirm),
-          content: Text(S.of(context).confirmationWarning),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text(S.of(context).cancel),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              child: Text(S.of(context).confirm),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (confirmed == true) {
-      // final formInstance = ref
-      //     .watch(formInstanceProvider(
-      //         formMetadata: FormMetadataWidget.of(context)))
-      //     .requireValue;
-      final formInstance = appLocator<FormInstance>();
-
-      formInstance.updateSubmissionStatus(AssignmentStatus.getType(status));
-      // ref.read(assignmentsProvider.notifier).updateAssignmentStatus(
-      //     AssignmentStatus.getType(status),
-      //     formInstance.formMetadata.assignmentModel.id);
-    }
   }
 }

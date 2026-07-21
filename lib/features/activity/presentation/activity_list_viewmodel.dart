@@ -1,6 +1,5 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/dao/activities_dao.dart';
 import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:d_sdk/core/util/string_extension.dart';
@@ -8,8 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 class ActivityListViewModel extends BaseViewModel {
-  final ActivitiesDao _dao = DSdk.activity;
-
   List<ActivityModel> activities = [];
 
   Future<List<IdentifiableModel>> teams({String? activity}) async {
@@ -52,10 +49,10 @@ class ActivityListViewModel extends BaseViewModel {
     final List<IdentifiableModel> assignedTeams = await teams();
     final List<IdentifiableModel> managed = await managedTeams();
 
-    final List<Activity> userEnabledActivities = await DSdk
-        .db.managers.activities
-        // .filter((f) => f.disabled.not(true))
-        .get();
+    final List<Activity> userEnabledActivities =
+        await DSdk.db.managers.activities
+            // .filter((f) => f.disabled.not(true))
+            .get();
 
     final List<ActivityModel> userActivities = [];
 
@@ -63,8 +60,9 @@ class ActivityListViewModel extends BaseViewModel {
       final activityAssignedTeam = assignedTeams
           .where((t) => t.properties['activity'] == activity.id)
           .firstOrNull;
-      final List<IdentifiableModel> activityManagedTeams =
-          managed.where((t) => t.properties['activity'] == activity.id).toList();
+      final List<IdentifiableModel> activityManagedTeams = managed
+          .where((t) => t.properties['activity'] == activity.id)
+          .toList();
       final List<Assignment> assignedAssignment = await DSdk
           .db.managers.assignments
           .filter((f) => f.team.id(activityAssignedTeam?.id))
@@ -73,14 +71,6 @@ class ActivityListViewModel extends BaseViewModel {
       final List<Assignment> managedAssignments = await DSdk
           .db.managers.assignments
           .filter((f) => f.team.id.isIn(managed.map((t) => t.id)))
-          .get();
-
-      final assignedOrgUnits = await DSdk.db.managers.orgUnits
-          .filter((f) => f.id.isIn(assignedAssignment.map((a) => a.orgUnit)))
-          .get();
-
-      final managedOrgUnits = await DSdk.db.managers.orgUnits
-          .filter((f) => f.id.isIn(managedAssignments.map((a) => a.orgUnit)))
           .get();
 
       userActivities.add(

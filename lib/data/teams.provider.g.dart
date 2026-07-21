@@ -147,7 +147,7 @@ final class TeamsProvider extends $FunctionalProvider<
   }
 }
 
-String _$teamsHash() => r'17c914c54bb0c42b261af697d8f0a379b72c92a9';
+String _$teamsHash() => r'd1d6bda1fc54540adb4442b3ddc9cf9d4c24d051';
 
 final class TeamsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<IdentifiableModel>>, String?> {

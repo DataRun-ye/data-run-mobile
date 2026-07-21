@@ -55,8 +55,8 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `assignment_forms` | ACTIVE | ACTIVE | Used by available forms, assignment detail access, edit permissions, and form list filtering. This is the active form-access table. |
 | `sync_summaries` | ACTIVE in `03` | SUPPORTING-USED | `BaseDataSource` writes summaries. The unreachable `SyncSummaryCard` UI was removed; core sync completion uses progress/global state and SharedPreferences flags. |
 | `DataValueRepository` display helper | Partially active in `01`, LEGACY-RISK in `02` | SUPPORTING-USED | `DataValueRepository` is used by `MapValueToDisplay`, but this is display support, not current capture persistence. |
-| `data_values` table/DAO as capture storage | Partially active in `01`, LEGACY-RISK in `02` | LEGACY-RISK | Active form save writes `data_instances.formData`, not per-field `data_values`. |
-| `repeat_instances` table/DAO | LEGACY-RISK in `02`, inactive-looking in `01` | LEGACY-RISK | Table/DAO exist, but active repeat rows are stored in `data_instances.formData` as nested JSON lists. |
+| `data_values` table as capture storage | Previously partially active/LEGACY-RISK | INACTIVE-SCHEMA | DAO/datasource/CRUD callers are removed; active form save writes `data_instances.formData`. The table awaits a tested migration. |
+| `repeat_instances` table | Previously LEGACY-RISK | INACTIVE-SCHEMA | DAO/datasource are removed and no non-generated table access remains. Repeat rows live in nested submission JSON. |
 | `metadata_submissions` and `systemMetadataSubmissionsProvider` | Inactive/incomplete in `01`/`03`, incomplete in `04` | INCOMPLETE | The comment-only SDK table/datasource artifacts were removed. Reference widgets can still watch the provider, but it currently returns `[]` after commented DB logic. Production use depends on forms containing `ValueType.Reference`. |
 | `partyResolverProvider` and party/manifest tables | Mixed/uncertain in `03`, INCOMPLETE in `04` | INCOMPLETE | Provider contains placeholder user/team/party IDs and no static production consumer was found. |
 | Form route/load/save/repeat core in `02` | ACTIVE | ACTIVE | `FormFlowBootstrapperVm`, `FormTemplateRepository`, `FormElementControlBuilder`, `FormElementBuilder`, `FormInstance`, repeat models/widgets, and `DataInstancesDao.updateData` pass the strict test. |
@@ -157,7 +157,7 @@ Do not delete these yet, but they are strong candidates for demotion/removal aft
 - `lib/core/sync_manager/sync_service.provider.dart`
 - `packages/drun_sdk/lib/di/injection.config.dart` generated `initActiveSessionContextScope(...)`
 - `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart`
-- `repeat_instances` table/DAO/datasource
+- `repeat_instances` schema table
 - `data_values` capture datasource
 - `metadata_submissions` table/datasource
 - `party`/manifest provider and tables, unless a future runtime pass proves production use

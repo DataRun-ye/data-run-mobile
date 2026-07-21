@@ -43,8 +43,8 @@ Active:
 - `lib/app/di/injection.dart:18-32` configures app dependencies, then calls `setupSdkLocator()`.
 - `packages/drun_sdk/lib/di/injection.dart:23` initializes SDK GetIt registrations.
 - `lib/core/auth/auth_manager.dart:144-163` creates the per-user app scope, opens the SDK Drift database, registers `AppDatabase`, registers `DbManager`, then calls `registerUserSdkDeps(appLocator)`.
-- `packages/drun_sdk/lib/di/init_active_session_scope.dart:33-60` registers active SDK data sources for the user session. Registered resources include projects, activities, org units, option sets, data elements, form templates, teams, user form access, assignments, and data submissions.
-- `packages/drun_sdk/lib/d_sdk.dart:9` exposes the `DSdk` facade over `DbManager`; app code uses `DSdk.db` and DAO accessors in form and submission flows.
+- `packages/drun_sdk/lib/di/init_active_session_scope.dart` registers active SDK configuration data sources for the user session, from projects through assignments. Submission pull is excluded.
+- `packages/drun_sdk/lib/d_sdk.dart` exposes `DSdk.db` over `DbManager`; the obsolete per-DAO facade getters were removed.
 - `packages/drun_sdk/lib/database/db_factory/database_factory.dart` and `packages/drun_sdk/lib/database/db_factory/platform_app.dart` open per-user Drift database files.
 
 Uncertain:
@@ -188,17 +188,15 @@ Active:
 Inactive or incomplete-looking:
 
 - `repeat_instances`:
-  - Table and DAO exist: `packages/drun_sdk/lib/database/app_database.dart:23,50`, `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart:6`.
+  - The table remains in the Drift schema for migration compatibility; its unused DAO and datasource were removed.
   - App repeat rendering/editing does not use the table; repeats are stored inside `DataInstance.formData` as nested JSON lists.
-  - The unregistered repeat-instance datasource was removed.
-  - `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart:43` comments out `repeatInstance`.
-  - Classification: inactive/incomplete-looking for current capture flow.
+  - No non-generated runtime read or write remains.
+  - Classification: schema-only inactive; removal requires a tested database migration.
 - `data_values`:
-  - Table and DAO exist: `packages/drun_sdk/lib/database/app_database.dart:24,49`, `packages/drun_sdk/lib/database/tables/data_values.table.dart:4`.
+  - The table remains in the Drift schema for migration compatibility; its unused DAO, datasource, and CRUD facade were removed.
   - Active capture save does not write `data_values`; it writes `data_instances.formData`.
-  - `lib/core/element_instance/data_value_repository.dart` can read/write `db.dataValues`, but current form capture does not call it.
-  - `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart:6-8` has commented `@Order` and `@Injectable`, and it is not registered in `registerUserSdkDeps`.
-  - Classification: not active for capture/save; partially active for display/value mapping support through `DataValueRepository`.
+  - `DataValueRepository` remains active only for org-unit/team/option display lookup; it no longer presents inactive per-field persistence methods.
+  - Classification: schema-only inactive as persistence; removal requires a tested database migration.
 - `metadata_submissions`:
   - `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart:6` is commented out.
   - `packages/drun_sdk/lib/database/tables/tables.dart` exports it, but `AppDatabase` does not include an active `MetadataSubmissions` table.

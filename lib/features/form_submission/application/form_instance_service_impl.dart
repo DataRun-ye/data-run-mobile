@@ -44,7 +44,6 @@ class FormInstanceServiceImpl extends FormInstanceService {
             sortAscending: sortAscending,
             sortColumn: sortColumn)
         .get();
-    final len = result.length;
     return PaginatedResult(items: result, totalCount: totalCount);
   }
 

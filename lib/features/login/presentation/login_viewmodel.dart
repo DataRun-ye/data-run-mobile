@@ -30,7 +30,7 @@ class LoginViewModel extends BaseViewModel {
 
     form.markAsDisabled();
     try {
-      final userDetails = await _authManager.login(
+      await _authManager.login(
           username: usernameControl.value!, password: passwordControl.value!);
       _navigationService.replaceWithSyncResourcesView();
     } catch (e, s) {
@@ -54,7 +54,7 @@ class LoginViewModel extends BaseViewModel {
 
     form.markAsDisabled();
     try {
-      final userDetails = await _authManager.login(
+      await _authManager.login(
           username: usernameControl.value!, password: passwordControl.value!);
       _navigationService.replaceWithSyncResourcesView();
     } catch (e, s) {

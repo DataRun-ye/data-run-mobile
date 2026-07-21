@@ -39,54 +39,46 @@ class QReactiveSingleSelectField extends ConsumerWidget {
     final double consistentWidth =
         textPainter.width + labelPadding + chipPadding;
 
-    // If the calculated width is too small, provide a minimum
-    const double minWidth = 100.0;
-    final double finalWidth =
-        consistentWidth > minWidth ? consistentWidth : minWidth;
-
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final spacing = 4.0;
-        int chipsPerRow = 1;
-        for (int i = 1; i <= element.visibleOption.length; i++) {
-          final totalSpacingWidth = (i - 1) * spacing;
-          final availableWidth = constraints.maxWidth - totalSpacingWidth;
-          final calculatedChipWidth = availableWidth / i;
+        builder: (BuildContext context, BoxConstraints constraints) {
+      final spacing = 4.0;
+      int chipsPerRow = 1;
+      for (int i = 1; i <= element.visibleOption.length; i++) {
+        final totalSpacingWidth = (i - 1) * spacing;
+        final availableWidth = constraints.maxWidth - totalSpacingWidth;
+        final calculatedChipWidth = availableWidth / i;
 
-          // Check if the calculated width is sufficient for the longest label
-          if (calculatedChipWidth >= consistentWidth) {
-            chipsPerRow = i;
-          } else {
-            // We've found the max number of chips per row that works
-            break;
-          }
+        // Check if the calculated width is sufficient for the longest label
+        if (calculatedChipWidth >= consistentWidth) {
+          chipsPerRow = i;
+        } else {
+          // We've found the max number of chips per row that works
+          break;
         }
-
-        final double chipWidth =
-            (constraints.maxWidth - (chipsPerRow - 1) * spacing) /
-                chipsPerRow;
-
-
-        return ReactiveChoiceChips<String>(
-          visualDensity: VisualDensity.compact,
-          elevation: 2,
-          pressElevation: 2,
-          spacing: spacing,
-          runSpacing: spacing,
-          alignment: WrapAlignment.center,
-          runAlignment: WrapAlignment.start,
-          formControl: formInstance.form.control(element.elementPath!)
-              as FormControl<String>,
-          confirmChangingValue: element.dependents.length > 0,
-          validationMessages: validationMessages(),
-          options: _getChipOptions(element.visibleOption, chipWidth),
-          decoration: InputDecoration(
-            enabled: element.elementControl.enabled,
-            labelText: element.label,
-          ),
-        );
       }
-    );
+
+      final double chipWidth =
+          (constraints.maxWidth - (chipsPerRow - 1) * spacing) / chipsPerRow;
+
+      return ReactiveChoiceChips<String>(
+        visualDensity: VisualDensity.compact,
+        elevation: 2,
+        pressElevation: 2,
+        spacing: spacing,
+        runSpacing: spacing,
+        alignment: WrapAlignment.center,
+        runAlignment: WrapAlignment.start,
+        formControl: formInstance.form.control(element.elementPath!)
+            as FormControl<String>,
+        confirmChangingValue: element.dependents.length > 0,
+        validationMessages: validationMessages(),
+        options: _getChipOptions(element.visibleOption, chipWidth),
+        decoration: InputDecoration(
+          enabled: element.elementControl.enabled,
+          labelText: element.label,
+        ),
+      );
+    });
   }
 
   List<ReactiveChipOption<String>> _getChipOptions(
@@ -95,7 +87,8 @@ class QReactiveSingleSelectField extends ConsumerWidget {
         .map((FormOption option) => ReactiveChipOption<String>(
               value: option.code,
               child: SizedBox(
-                width: consistentWidth - 20, // Use the calculated consistent width
+                width:
+                    consistentWidth - 20, // Use the calculated consistent width
                 child: Text(
                   getItemLocalString(option.label),
                   textAlign: TextAlign.center,

@@ -93,9 +93,6 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
     });
 
     ref.listenManual<ISet<String>>(selectedItemsProvider, (prev, next) {
-      final updateSelectedItems = prev != next;
-      // logDebug(
-      //     'SelectedItems Listener, source, update selectedIds? $updateSelectedItems');
       if (prev != next) {
         _updateSelectedItems();
       }

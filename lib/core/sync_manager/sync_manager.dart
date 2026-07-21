@@ -4,7 +4,6 @@ import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
 import 'package:d_sdk/datasource/abstract_datasource.dart';
 import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
 import 'package:datarunmobile/core/sync_manager/sync_progress_global_state.dart';
 import 'package:dio/dio.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -13,19 +12,17 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class SyncManager extends Disposable {
-  SyncManager(ConnectivityService connectivityService)
+  SyncManager()
       : _remoteDataSourcesMap = IMap.fromIterable(
           appLocator.getAll<AbstractDatasource<dynamic>>(),
           keyMapper: (resource) => resource.resourceName,
           valueMapper: (resource) => resource,
-        ),
-        _connectivityService = connectivityService;
+        );
 
   final IMap<String, AbstractDatasource<dynamic>> _remoteDataSourcesMap;
 
   int get totalResources => _remoteDataSourcesMap.length;
   int _currentResource = 0;
-  final ConnectivityService _connectivityService;
 
   /// A stream controller for progress events.
   final StreamController<SyncProgressEvent> _progressController =
@@ -50,8 +47,7 @@ class SyncManager extends Disposable {
       globalState = globalState.addSyncStatus(
         syncStatus: event.syncProgressState,
         overallPercentage: overallProgress,
-        currentMessage:
-            '${event.resourceName}',
+        currentMessage: '${event.resourceName}',
         completedResources: _currentResource,
         syncedItems: event.resources,
       );
@@ -68,13 +64,8 @@ class SyncManager extends Disposable {
     for (var remoteDataSource in _remoteDataSourcesMap.keys) {
       resourceIndex++;
 
-      // Calculate the base percentage completed before this resource.
-      final basePercentage = ((resourceIndex - 1) / totalResources) * 100;
-
       try {
-        final onlineData = await syncEntity(remoteDataSource);
-
-        final overallProgress = (resourceIndex / totalResources) * 100;
+        await syncEntity(remoteDataSource);
       } on DioException catch (e) {
         final overallProgress = (resourceIndex / totalResources) * 100;
         _progressController.add(SyncProgressEvent(

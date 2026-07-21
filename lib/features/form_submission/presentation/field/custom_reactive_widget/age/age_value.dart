@@ -13,7 +13,6 @@ class AgeValue {
   }
 
   int months(DateTime ref) {
-    final y = years(ref);
     final totalMonths =
         (ref.year - dateOfBirth.year) * 12 + ref.month - dateOfBirth.month;
     if (ref.day < dateOfBirth.day) return totalMonths - 1;

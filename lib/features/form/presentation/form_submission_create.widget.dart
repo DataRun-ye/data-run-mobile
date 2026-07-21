@@ -7,10 +7,9 @@ import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class FormSubmissionCreate extends HookConsumerWidget {
+class FormSubmissionCreate extends ConsumerWidget {
   const FormSubmissionCreate(
       {super.key, this.assignmentId, required this.onTap});
 
@@ -20,10 +19,8 @@ class FormSubmissionCreate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cs = Theme.of(context).colorScheme;
     final availableFormsAsync =
         ref.watch(userAvailableFormsProvider(assignment: assignmentId));
-    final isEnabled = useState(true);
 
     return AsyncValueWidget(
       value: availableFormsAsync,
@@ -117,7 +114,6 @@ class _FormListItem extends ConsumerWidget {
     final theme = Theme.of(context);
     final metadataStyle =
         theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade700);
-    final cs = Theme.of(context).colorScheme;
     return AsyncValueWidget(
       value: formTemplateAsync,
       valueBuilder: (formTemplate) {

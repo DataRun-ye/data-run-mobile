@@ -119,7 +119,8 @@ class FilterDrawer extends ConsumerWidget {
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       dense: true,
-                      title: Text(S.of(context).hiddenSpeedDialIssueChangeDirection),
+                      title: Text(
+                          S.of(context).hiddenSpeedDialIssueChangeDirection),
                       value: tableAppearance.upwardDirectionOfSpeedDial,
                       onChanged: (value) {
                         ref
@@ -140,8 +141,9 @@ class FilterDrawer extends ConsumerWidget {
 
               Text(S.of(context).filters,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w600, )),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  )),
               const SizedBox(height: 16),
               Card(
                 elevation: 0,
@@ -169,7 +171,7 @@ class FilterDrawer extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -182,16 +184,16 @@ class FilterDrawer extends ConsumerWidget {
                         runSpacing: 8,
                         children: InstanceSyncStatus.values
                             .where((v) =>
-                        v.isFilterIcon &&
-                            // hide the Synced chip when hideSynced is enabled
-                            !(tableAppearance.hideSynced &&
-                                v.name.toLowerCase() == 'synced'))
+                                v.isFilterIcon &&
+                                // hide the Synced chip when hideSynced is enabled
+                                !(tableAppearance.hideSynced &&
+                                    v.name.toLowerCase() == 'synced'))
                             .map((status) {
                           final isSelected = filter.syncStates.contains(status);
                           return FilterChip(
                             showCheckmark: false,
                             materialTapTargetSize:
-                            MaterialTapTargetSize.shrinkWrap,
+                                MaterialTapTargetSize.shrinkWrap,
                             tooltip: Intl.message(status.name),
                             labelPadding: const EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 8),
@@ -201,7 +203,7 @@ class FilterDrawer extends ConsumerWidget {
                             backgroundColor: colorScheme.surface,
                             side: isSelected
                                 ? BorderSide(
-                                color: colorScheme.primary, width: 1)
+                                    color: colorScheme.primary, width: 1)
                                 : BorderSide(color: colorScheme.outline),
                             labelStyle: theme.textTheme.bodySmall?.copyWith(
                                 color: isSelected
@@ -211,9 +213,9 @@ class FilterDrawer extends ConsumerWidget {
                               // toggle membership in the set
                               ref
                                   .read(dataInstanceFilterProvider(
-                                  formId: formId,
-                                  assignmentId: assignmentId)
-                                  .notifier)
+                                          formId: formId,
+                                          assignmentId: assignmentId)
+                                      .notifier)
                                   .toggleSyncStatus(status);
                               // Navigator.pop(context);
                             },
@@ -235,8 +237,8 @@ class FilterDrawer extends ConsumerWidget {
                     onPressed: () {
                       ref
                           .read(dataInstanceFilterProvider(
-                          formId: formId, assignmentId: assignmentId)
-                          .notifier)
+                                  formId: formId, assignmentId: assignmentId)
+                              .notifier)
                           .clear();
                       Navigator.pop(context);
                     },
@@ -283,26 +285,6 @@ class FilterDrawer extends ConsumerWidget {
             .toggleDateBand(value);
         // Navigator.pop(context);
       },
-    );
-  }
-
-  Widget _buildIncludeDeletedCheckbox(
-      BuildContext context, SubmissionsFilter filter, WidgetRef ref) {
-    return CheckboxListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-      dense: true,
-      title: Text(S.of(context).includeDeleted),
-      value: filter.includeDeleted,
-      onChanged: (value) {
-        ref
-            .read(dataInstanceFilterProvider(
-                    formId: formId, assignmentId: assignmentId)
-                .notifier)
-            .toggleIncludeDeleted(value);
-        Navigator.pop(context);
-      },
-      controlAffinity: ListTileControlAffinity.leading,
-      visualDensity: VisualDensity.compact,
     );
   }
 }

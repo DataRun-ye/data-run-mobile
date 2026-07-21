@@ -18,16 +18,13 @@ class DemoLoginSubmitButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final form = ReactiveForm.of(context);
-    final formIsValid = form!.valid;
     final isOnlineAsync = ref.watch(isOnlineProvider);
 
     return AsyncValueWidget(
       value: isOnlineAsync,
       valueBuilder: (bool isOnline) => FilledButton(
-        child: isOnline
-            ? Text(label)
-            : Text(S.of(context).noConnection),
-        onPressed: isOnline && form.enabled ? onPressed : null,
+        child: isOnline ? Text(label) : Text(S.of(context).noConnection),
+        onPressed: isOnline && form!.enabled ? onPressed : null,
       ),
     );
   }

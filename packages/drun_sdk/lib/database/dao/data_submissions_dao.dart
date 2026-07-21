@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/data_instance/form_data_util.dart';
 import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
+import 'package:d_sdk/core/http/http_client.dart';
 import 'package:d_sdk/core/sync/sync_summary_model.dart';
 import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/dao/base_dao_extension.dart';
 import 'package:d_sdk/database/dao/data_submissions_dao_expression_extension.dart';
 import 'package:d_sdk/database/domain/filter.dart';
 import 'package:d_sdk/database/extensions/data_submission.extension.dart';
@@ -16,6 +16,7 @@ import 'package:d_sdk/database/shared/submission_summary.dart';
 import 'package:d_sdk/database/shared/submission_sync_status_model.dart';
 import 'package:d_sdk/database/shared/submissions_filter.dart';
 import 'package:d_sdk/database/tables/data_submissions.table.dart';
+import 'package:d_sdk/di/injection.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
@@ -23,36 +24,10 @@ part 'data_submissions_dao.g.dart';
 
 @DriftAccessor(tables: [DataInstances])
 class DataInstancesDao extends DatabaseAccessor<AppDatabase>
-    with _$DataInstancesDaoMixin, BaseDaoMixin<DataInstance> {
+    with _$DataInstancesDaoMixin {
   DataInstancesDao(AppDatabase db) : super(db);
 
-  @override
-  String get resourceName => 'dataSubmission';
-
-  @override
-  String get resourcePath => '$resourceName/objects?paged=false';
-
-  @override
-  DataInstance fromApiJson(Map<String, dynamic> data,
-      {ValueSerializer? serializer}) {
-    final form = data['form'];
-    final version = data['version'];
-    final String formId = form != null && version != null
-        ? '${form}_$version'
-        : data['formVersion'];
-    final assignment = data['assignment'];
-    final orgUnit = data['orgUnit'];
-    final team = data['team'];
-    return DataInstance.fromJson({
-      ...data,
-      'status': InstanceSyncStatus.synced.name,
-      'progressStatus': data['status'],
-      'form': formId,
-      'assignment': assignment,
-      'orgUnit': orgUnit,
-      'team': team,
-    }, serializer: serializer);
-  }
+  HttpClient<dynamic> get _apiClient => rSdkLocator<HttpClient<dynamic>>();
 
   /// Upload a batch of submissions and update DB statuses inside a transaction.
   Future<ImportSummaryModel> upload(Iterable<String> ids) async {
@@ -75,10 +50,10 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     await markUploading(submissions.map((s) => s.id));
 
     final uploadPayload = submissions.map((s) => s.toUpload()).toList();
-    final resource = '$resourceName/bulk';
+    const resource = 'dataSubmission/bulk';
 
     try {
-      final response = await apiClient.request(
+      final response = await _apiClient.request(
         resourceName: resource,
         data: uploadPayload,
         method: 'post',
@@ -244,16 +219,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     return row;
   }
 
-  Future<int> insert(Insertable<DataInstance> entry) {
-    return into(dataInstances).insert(entry);
-  }
-
-  Future<bool> updateObject(DataInstancesCompanion item) {
-    final now = Value(DateTime.now().toUtc());
-    return update(dataInstances)
-        .replace(item.copyWith(lastModifiedDate: now, updatedAtClient: now));
-  }
-
   Future<void> updateData(String id, {Map<String, dynamic>? data}) async {
     final now = Value(DateTime.now().toUtc());
     await (update(dataInstances)..where((t) => t.id.equals(id))).write(
@@ -301,46 +266,8 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     );
   }
 
-  /// softDelete
-  Future<int> deleteObject(DataInstance submission) {
-    return deleteById(submission.id);
-  }
-
-  /// softDelete
   Future<int> deleteById(String id) async {
     return _softDelete(id);
-  }
-
-  Future<int> deleteAllIds(Iterable<String> id) async {
-    final now = Value(DateTime.now().toUtc());
-    // soft delete synced
-    final softDeleted = await (update(dataInstances)
-          ..where((tbl) => tbl.id.isIn(id) & tbl.isToUpdate.equals(true)))
-        .write(DataInstancesCompanion(
-            deleted: Value(true),
-            finishedEntryTime: now,
-            lastModifiedDate: now,
-            updatedAtClient: now));
-
-    // hard delete draft
-    final hardDeleted = await (delete(dataInstances)
-          ..where((tbl) => tbl.id.isIn(id) & tbl.isToUpdate.isNotValue(true)))
-        .go();
-
-    return softDeleted + hardDeleted;
-  }
-
-  Future<int> softDeleteIds(Iterable<String> id) async {
-    final now = Value(DateTime.now().toUtc());
-    // soft delete synced
-    final softDeleted = await (update(dataInstances)
-          ..where((tbl) => tbl.id.isIn(id) & tbl.isToUpdate.equals(true)))
-        .write(DataInstancesCompanion(
-            deleted: Value(true),
-            finishedEntryTime: now,
-            lastModifiedDate: now,
-            updatedAtClient: now));
-    return softDeleted;
   }
 
   Future<int> hardDeleteIds(Iterable<String> id) async {
@@ -364,22 +291,12 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     if (id == null) return 0;
     final submissionToDelete = await getById(id);
     if (submissionToDelete == null) return 0;
-    if (isSoftDelete(submissionToDelete)) {
+    if (submissionToDelete.isToUpdate) {
       await markDeleted(id);
       return 1;
     } else {
       return await _hardDeleteObject(submissionToDelete);
     }
-  }
-
-  /// was already in server and only updates are sent
-  bool isSoftDelete(DataInstance? submission) {
-    return submission?.isToUpdate == true;
-  }
-
-  /// still local and not yet in server
-  bool isToPost(DataInstance submission) {
-    return !submission.isToUpdate;
   }
 
   /// watch the status of submission belonging to an
@@ -433,7 +350,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
   JoinedSelectStatement<HasResultSet, dynamic> getFilterQuery(
       {Iterable<FilterCondition>? filters}) {
-    table;
     List<Expression<bool>> filterExpressions = [];
     // Apply each filter
     if (filters != null) {
@@ -441,13 +357,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
         filterExpressions.add(f.toExpression());
       }
     }
-
-    // final count =
-    //     dataInstances.id.count(filter: Expression.and(filterExpressions));
-    // final a = alias(assignments, 'a');
-    // final ou = alias(orgUnits, 'ou');
-    // final f = alias(formTemplates, 'f');
-    // final fv = alias(formTemplateVersions, 'fv');
 
     final JoinedSelectStatement<HasResultSet, dynamic> base =
         select(dataInstances).join([
@@ -460,42 +369,12 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
           formTemplates.id.equalsExp(formTemplateVersions.template)),
     ]);
 
-    // ..where(Expression.and(filterExpressions));
     if (filterExpressions.isNotEmpty) {
       base.where(Expression.and(filterExpressions));
     }
     return base;
   }
 
-  /// Returns a Selectable that, when run, gives you each TableItem
-  Selectable<SubmissionSummary> selectItems({
-    Iterable<FilterCondition>? filters,
-    String? sortColumn,
-    bool sortAscending = true,
-    int page = 0,
-    int pageSize = 20,
-  }) {
-    final query = getFilterQuery(filters: filters);
-    if (sortColumn != null) {
-      final col = table.$columns
-          .cast<GeneratedColumn>()
-          .firstWhere((c) => c.$name == sortColumn);
-      query.orderBy([
-        OrderingTerm(
-          expression: col,
-          mode: sortAscending ? OrderingMode.asc : OrderingMode.desc,
-        )
-      ]);
-    }
-
-    query.limit(pageSize, offset: page * pageSize);
-
-    // submissions for different formTemplates, not for particular on Template.
-    return query.map(SubmissionSummary.fromDrift);
-  }
-
-  /// Returns a Selectable that, when run, gives you each TableItem
-  /// plus the *same* totalCount on every row.
   Selectable<SubmissionSummary> selectSubmissions(
     SubmissionsFilter filterModel, {
     String? sortColumn,
@@ -542,32 +421,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     return query.map(SubmissionSummary.fromDrift);
   }
 
-  // Selectable<int> countSubmissions(SubmissionsFilter filterModel,
-  //     {Iterable<FilterCondition>? filters}) {
-  //   final effectiveFilters = [
-  //     FilterCondition.equals(dataInstances.formTemplate, filterModel.formId),
-  //     if (filterModel.assignmentId != null)
-  //       FilterCondition.equals(
-  //           dataInstances.assignment, filterModel.assignmentId!),
-  //     if (filterModel.syncState != null)
-  //       FilterCondition.equals(
-  //           dataInstances.syncState, filterModel.syncState!.name),
-  //     if (!filterModel.includeDeleted)
-  //       FilterCondition.equals(dataInstances.deleted, false),
-  //     if (filterModel.dateFilterBand != null)
-  //       FilterCondition.between(
-  //           dataInstances.createdDate,
-  //           getDateRangeFromBand(filterModel.dateFilterBand!).$1,
-  //           getDateRangeFromBand(filterModel.dateFilterBand!).$2),
-  //     ...?filters
-  //   ];
-  //   var countQuery = getFilterQuery(filters: effectiveFilters);
-  //   countQuery = countQuery..addColumns([countAll()]);
-  //
-  //   return countQuery.map((row) => row.read(countAll()) ?? 0);
-  // }
-
-  @override
   $DataInstancesTable get table => dataInstances;
 
   // Helper method to calculate the date range based on the enum
@@ -626,7 +479,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     Iterable<FilterCondition>? filters,
     bool paged = true,
   }) {
-    // final sub = alias(dataInstances, 's');
     final a = alias(assignments, 'a');
     final ou = alias(orgUnits, 'ou');
     final f = alias(formTemplates, 'f');
@@ -648,21 +500,10 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
       }
     }
 
-    // Apply sorting based on the filter or default
-    // if (sortModel != null && sortModel.sortColumn != null) {
-    //   query.orderBy([
-    //     OrderingTerm(
-    //       expression: getColumnExpression(sortModel.sortColumn!),
-    //       mode: sortModel.sortAscending ? OrderingMode.asc : OrderingMode.desc,
-    //     ),
-    //   ]);
-    // } else {
     query.orderBy([
       OrderingTerm(
           expression: db.dataInstances.createdDate, mode: OrderingMode.desc)
     ]);
-    // }
-
     if (paged) {
       query.limit(pageSize, offset: page * pageSize);
     }
@@ -694,7 +535,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
           createdDate: submission.createdDate,
           lastModifiedDate: submission.lastModifiedDate,
           lastSyncMessage: submission.lastSyncMessage,
-          // dataMap: (submission.formData ?? {}).lock,
           deleted: submission.deleted,
           formData: FormDataUtil.extractTemplateValue(
                   submission.formData ?? {}, formVersion.fields,
@@ -722,11 +562,8 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
       final (startDate, endDate) =
           getDateRangeFromBand(filterModel.dateFilterBand!);
 
-      // NOTE: isBetween is inclusive of both the start and end dates.
       filter = filter &
           dataInstances.createdDate.isBetweenValues(startDate, endDate);
-      // a combination of greater than and less than
-      // query.where(sub.createdDate.isBiggerOrEqual(startDate) & sub.createdDate.isSmallerThan(endDate));
     }
 
     if (!filterModel.includeDeleted) {
@@ -737,7 +574,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
   }
 
   Selectable<int> countSubmissions(SubmissionsFilter? filterModel) {
-    // final sub = alias(dataInstances, 's');
     final a = alias(assignments, 'a');
     final ou = alias(orgUnits, 'ou');
     final f = alias(formTemplates, 'f');
@@ -763,38 +599,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
     return countQuery.map((row) => row.read(countAll()) ?? 0);
   }
-
-// Expression<bool> _buildFilter(SubmissionsFilter filterModel) {
-//   Expression<bool> filter =
-//       dataInstances.formTemplate.equals(filterModel.formId);
-//
-//   if (filterModel.assignmentId != null) {
-//     filter =
-//         filter & dataInstances.assignment.equals(filterModel.assignmentId!);
-//   }
-//
-//   if (filterModel.syncState != null) {
-//     filter =
-//         filter & dataInstances.syncState.equals(filterModel.syncState!.name);
-//   }
-//
-//   if (filterModel.dateFilterBand != null) {
-//     final (startDate, endDate) =
-//         _getDateRangeFromBand(filterModel.dateFilterBand!);
-//
-//     // NOTE: isBetween is inclusive of both the start and end dates.
-//     filter = filter &
-//         dataInstances.createdDate.isBetweenValues(startDate, endDate);
-//     // a combination of greater than and less than
-//     // query.where(sub.createdDate.isBiggerOrEqual(startDate) & sub.createdDate.isSmallerThan(endDate));
-//   }
-//
-//   if (!filterModel.includeDeleted) {
-//     filter = filter & dataInstances.deleted.equals(false);
-//   }
-//
-//   return filter;
-// }
 }
 
 // small helper DTO so we don't accidentally carry an `id` Value into the write companion

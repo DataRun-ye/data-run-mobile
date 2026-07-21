@@ -31,11 +31,6 @@ class TableScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // final _isDialOpen = useValueNotifier(false);
     final cs = Theme.of(context).colorScheme;
-    final filter = ref.watch(dataInstanceFilterProvider(
-      formId: formId,
-      assignmentId: assignmentId,
-    ));
-
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).userSavedInstances),
@@ -48,12 +43,7 @@ class TableScreen extends HookConsumerWidget {
         children: [
           Consumer(
             builder: (context, ref, child) {
-              final formAsync =
-                  ref.watch(formTemplateProvider(formId: formId));
-              final filters = ref.watch(dataInstanceFilterProvider(
-                formId: formId,
-                assignmentId: assignmentId,
-              ));
+              final formAsync = ref.watch(formTemplateProvider(formId: formId));
               return AsyncValueWidget(
                 value: formAsync,
                 valueBuilder: (templateModel) {

@@ -14,7 +14,6 @@ class StatusIcon extends StatefulWidget {
 class _StatusIconState extends State<StatusIcon>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  InstanceSyncStatus? _lastParsed;
 
   @override
   void initState() {
@@ -45,7 +44,6 @@ class _StatusIconState extends State<StatusIcon>
         _controller.reset();
       }
     }
-    _lastParsed = parsed;
   }
 
   @override
@@ -76,8 +74,7 @@ class _StatusIconState extends State<StatusIcon>
           case InstanceSyncStatus.uploading:
             return RotationTransition(
               turns: _controller,
-              child: Icon(Icons.sync,
-                  color: cs.primaryContainer, size: 20),
+              child: Icon(Icons.sync, color: cs.primaryContainer, size: 20),
             );
           default:
             return const SizedBox.shrink();

@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-
-const double _graphicSize = 60;
-
 class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
   const InfoAlertDialog({
     Key? key,

@@ -5,7 +5,6 @@ import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
 import 'package:d_sdk/core/sync/sync_logger.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/converters/custom_serializer.dart';
-import 'package:d_sdk/database/dao/dao.dart';
 import 'package:d_sdk/database/dao/sync_summaries_dao.dart';
 import 'package:d_sdk/database/dbManager.dart';
 import 'package:d_sdk/database/shared/sync_error.dart';
@@ -228,50 +227,3 @@ class CompanionInsert<T extends Table, D extends DataClass> {
 
   CompanionInsert(this.table, this.entity);
 }
-
-// ## What is a “Hook”?
-//
-// A **hook** is simply an extension point in an algorithm where subclasses (or clients) can plug in custom behavior without having to re‑write the entire algorithm. In code terms it’s:
-//
-// 1. **A protected (or abstract) method** declared in the base class.
-// 2. **Called at a well‑defined spot** inside the template method.
-// 3. **Overridden by subclasses** to customize just that one piece.
-//
-// Your `BaseDataSource.syncWithRemote()` is the **template method**—it defines the overall steps:
-//
-// 1. Fetch raw JSON
-// 2. Ask for “extra” inserts
-// 3. Map + collect IDs
-// 4. Batch‑write main table
-// 5. Batch‑write extras
-// 6. Disable stale rows
-//
-// Each of those numbered steps is a potential hook. Subclasses simply override the hook(s) they need:
-//
-// * `extractExtraEntities(...)` to pull in child tables
-// * `mapRemoteItem(...)` or `fromApiJson(...)` to tweak per‑row mapping
-// * `disableStale(...)` to soft‑delete their own rows
-//
-// Everything else—transaction boundaries, progress callbacks, batched upserts—remains central and un‑duplicated.
-//
-// ---
-//
-// ## Why Hooks Matter
-//
-// * **DRY**: You avoid copy‑pasting the same transaction logic in every datasource.
-// * **Separation of Concerns**: The base class cares about *how* to sync (the steps), and subclasses care only about *what* data they need to pull or modify at each step.
-// * **Evolvability**: If you ever need to change “how” you upsert or disable stale rows, you do it once in the base—not in dozens of datasources.
-//
-// ---
-//
-// ## The Hook Pattern in Other Contexts
-//
-// You’ll see hooks everywhere, for example:
-//
-// * **UI frameworks** (React’s `useEffect` or Flutter hooks) expose lifecycle hooks so you can run code on mount/unmount.
-// * **Logging libraries** let you hook into “before log” or “after log” events to add context or filter messages.
-// * **Web frameworks** often have request lifecycle hooks (e.g. “onRequest”, “onResponse”) so you can inject authentication, metrics, etc.
-//
-// At heart it’s all the same idea: **“I’ll call you here if you need to do something extra.”**
-//
-// that’s exactly what people mean when they talk about “hooks” or “hook points” in an application.

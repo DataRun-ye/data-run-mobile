@@ -104,9 +104,7 @@ Treat these as inactive, incomplete, or legacy-risk unless runtime evidence prov
 
 - `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart`
 - `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
-- `packages/drun_sdk/lib/database/dao/repeat_instances_dao.dart`
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart` as active capture storage
-- `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
 - `lib/data/metadata_submission_update.provider.dart` and its reference-field UI remain reachable but incomplete; do not infer active persistence from their names.
 
 The closed legacy repository/value-store/evaluation/UI-model architecture formerly

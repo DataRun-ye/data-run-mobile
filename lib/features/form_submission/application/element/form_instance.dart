@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
@@ -67,7 +66,6 @@ class FormInstance {
   // final Ref _ref;
   final Map<String, FormElementInstance<dynamic>> _forElementMap = {};
   final Section _formSection;
-  AssignmentStatus? _assignmentStatus;
   final FieldContextRegistry fieldKeysRegistery;
 
   final _db = DSdk.db;
@@ -158,10 +156,6 @@ class FormInstance {
   //       await formSubmissionList.updateSubmission(formSubmission);
   //   return updatedSubmission;
   // }
-
-  void updateSubmissionStatus(AssignmentStatus? status) async {
-    _assignmentStatus = status;
-  }
 
   RepeatItemInstance onAddRepeatedItem(RepeatSection parent) {
     final itemFormGroup = FormElementControlBuilder.createSectionFormGroup(

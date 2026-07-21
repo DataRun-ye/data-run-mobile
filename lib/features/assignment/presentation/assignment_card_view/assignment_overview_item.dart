@@ -27,9 +27,6 @@ class AssignmentOverviewItem extends ConsumerWidget {
         ref.watch(filterQueryProvider.select((value) => value.searchQuery));
     // final activityModel = ActivityInheritedWidget.of(context);
     final assignment = ref.watch(assignmentProvider);
-    final List<Pair<AssignmentForm, bool>> userForms = assignment.userForms;
-    final List<Pair<AssignmentForm, bool>> availableLocally =
-        assignment.availableForms;
 
     return Card(
       margin: const EdgeInsets.all(16.0),

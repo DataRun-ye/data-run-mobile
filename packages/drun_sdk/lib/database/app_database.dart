@@ -38,23 +38,10 @@ part 'app_database.g.dart';
   UserFormPermissions,
   SyncSummaries,
 ], daos: [
-  UsersDao,
-  OrgUnitsDao,
-  ActivitiesDao,
-  TeamsDao,
   AssignmentsDao,
-  FormTemplatesDao,
-  DataElementsDao,
   FormTemplateVersionsDao,
-  DataOptionSetsDao,
-  DataOptionsDao,
   DataInstancesDao,
-  DataValuesDao,
-  RepeatInstancesDao,
   SyncSummariesDao,
-  OuLevelsDao,
-  ProjectsDao,
-  UserFormPermissionsDao,
 ])
 class AppDatabase extends _$AppDatabase {
   String userId;
@@ -68,45 +55,19 @@ class AppDatabase extends _$AppDatabase {
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onUpgrade: (Migrator m, int from, int to) async {
-          //----------------------------------------------------
-          // If you prefer SQL, you can also use
-          // `await customStatement('ALTER TABLE form_template_versions ADD COLUMN options TEXT;');`
-          // — but prefer m.addColumn(...) since it uses generated column
-          // definition and is less error prone.
           if (from < 2) {
-            // add the new nullable column in a safe, Drift-native way
             await m.addColumn(formTemplateVersions,
                 formTemplateVersions.options as GeneratedColumn);
           }
-          // or without the cast:
-          // if (from < 2) {
-          //   final col = formTemplateVersions.$columns
-          //       .firstWhere((c) => c.$name == 'options'); // $name is the column name
-          //   await m.addColumn(formTemplateVersions, col);
-          // }
-          //----------------------------------------------------
           if (from < 3) {
-            // add the new nullable column in a safe, Drift-native way
             await m.addColumn(
                 dataOptions, dataOptions.deletedAt as GeneratedColumn);
             await m.addColumn(
                 dataOptionSets, dataOptionSets.deletedAt as GeneratedColumn);
           }
-          //----------------------------------------------------
           if (from < 4) {
-            // add the new nullable column in a safe, Drift-native way
             await m.addColumn(syncSummaries,
                 syncSummaries.lastSuccessfulSync as GeneratedColumn);
-          }
-          //----------------------------------------------------
-
-          // future upgrades can be chained here...
-        },
-
-        // Optional but useful if you ship a prepopulated DB
-        beforeOpen: (details) async {
-          if (details.wasCreated) {
-            // populate initial seed data if needed
           }
         },
       );

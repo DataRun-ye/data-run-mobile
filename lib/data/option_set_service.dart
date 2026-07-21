@@ -22,7 +22,6 @@ class OptionSetService {
         keyMapper: (o) => o.id,
         valueMapper: (o) => o);
 
-    final List<DataOptionSet> formOptionSets = [];
     if (optionSets.isNotEmpty) {
       final IList<FormOption> elementsOptions = (await DSdk
               .db.managers.dataOptions
@@ -46,28 +45,6 @@ class OptionSetService {
 
     return optionLists;
   }
-
-  //
-  // Future<List<FormOption>> mergeOptions(
-  //     Iterable<FormOption> formOptions) async {
-  //   final optionIdsMap = IMap.fromIterable(formOptions,
-  //       keyMapper: (o) => o.id, valueMapper: (o) => o);
-  //
-  //   final List<FormOption> options = [];
-  //
-  //   if (optionIdsMap.isNotEmpty) {
-  //     final mergedOptions = (await DSdk.db.managers.dataOptions
-  //             .filter((f) => f.id.isIn(optionIdsMap.keys))
-  //             .get())
-  //         .map((o) => optionIdsMap.get(o.id)?.fromDataOption(o))
-  //         .whereType<FormOption>()
-  //         .toList();
-  //
-  //     return mergedOptions;
-  //   }
-  //
-  //   return [];
-  // }
 
   Future<Map<String, DataOptionSet>> getOptionSets(
       FormTemplateModel? template) async {

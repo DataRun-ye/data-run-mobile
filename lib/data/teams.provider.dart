@@ -46,7 +46,6 @@ Future<List<IdentifiableModel>> teams(Ref ref, {String? activity}) async {
     query = query..filter((f) => f.activity.id(activity));
   }
 
-  final ts = await query.get();
   return query
       .map((t) => IdentifiableModel(
           id: t.id,

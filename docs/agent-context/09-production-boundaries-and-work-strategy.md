@@ -116,7 +116,7 @@ Required multi-choice fields now reject empty lists in new and edited repeat row
 |---|---|---|---|
 | Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `form_flow_bootstrapper_vm.dart` and `submission_list.provider.dart` use `canEditSubmissions || !isSynced` | Confirm deployed assignment values and define one edit gate |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
-| `user_form_permissions` is fetched/stored but no active authorization read was proven | `REACHABLE-INCOMPLETE` | `UserFormAccessesDatasource` registration and table/DAO references | Trace or test intended consumer before activation or removal |
+| `user_form_permissions` is fetched/stored but no active authorization read was proven | `REACHABLE-INCOMPLETE` | `UserFormAccessesDatasource` registration and table references | Trace or test intended consumer before activation or removal |
 
 ## Inactive And Misleading Surface Policy
 
@@ -165,7 +165,7 @@ Remove unused registrations and generated alternatives after a registration-leve
 
 ### 4. Migrate Schema-Backed Dead Features
 
-Only after production DB version evidence and migration tests exist, remove unused tables/DAOs such as inactive repeat/data-value structures. Source deletion and database table deletion are separate decisions.
+The inactive repeat/data-value DAOs and callers are removed. Their schema tables must be removed separately with production schema-3 migration coverage.
 
 ### 5. Consolidate Boundaries Mechanically
 

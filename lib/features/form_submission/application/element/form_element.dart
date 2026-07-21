@@ -269,7 +269,6 @@ sealed class FormElementInstance<T> {
   static final Set<String> _evaluationStack = {};
 
   List<RuleAction> get effectiveRuleEffects {
-    final rules = elementRuleActions;
     final effectiveRules = elementRuleActions
         .map((ruleAction) =>
             ruleAction.copyWith(applyEffect: ruleAction.evaluate(evalContext)))
@@ -346,30 +345,6 @@ sealed class FormElementInstance<T> {
 
   String _getDebugState([FormElementState<T>? state]) =>
       'state(${(state ?? _elementState).hidden ? 'Hidden' : 'Visible'}), mandatory($mandatory)';
-
-  void _setInitialStatus() {
-    logDebug('1/2.$elementPath, _setInitialStatus: ${_getDebugState()}.');
-    if (allElementsHidden()) {
-      _elementState = _elementState.copyWith(
-        hidden: true,
-        errors: {},
-        mandatory: false,
-        warning: '',
-      );
-    } else {
-      _elementState = _elementState.copyWith(
-        hidden: false,
-        mandatory: _template.mandatory,
-      );
-    }
-    logDebug('2/2.$elementPath, _setInitialStatus: ${_getDebugState()}.');
-  }
-
-  void _updateAncestors(bool updateParent) {
-    if (updateParent) {
-      parentSection?.decideState(updateParent: updateParent);
-    }
-  }
 
   bool hasVisibilityRules() {
     return effectiveRuleEffects.any((rule) => rule.action.isVisibility);

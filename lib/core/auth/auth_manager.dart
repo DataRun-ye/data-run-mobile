@@ -125,7 +125,7 @@ class AuthManager extends ChangeNotifier {
 
   /// Restores a session from previously stored tokens.
   Future<void> _restoreSession(UserSession userSession) async {
-    final tokens = await _authStorage.getActiveUserToken();
+    await _authStorage.getActiveUserToken();
     await _activateUserSession(userSession);
   }
 
@@ -214,7 +214,6 @@ Future<UserSession> initializeApp() async {
   String userActiveUserId = appLocator<AuthStorage>().getActiveUserId();
   // Load tokens securely
   TokenPair tokenPair = await appLocator<AuthStorage>().getActiveUserToken();
-  final expiry = tokenPair.accessToken.expirationTime;
   if (!tokenPair.accessToken.isAccessTokenValid) {
     final isOnline = await appLocator<ConnectivityService>().isOnline;
     throwIfNot(isOnline,

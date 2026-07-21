@@ -92,7 +92,6 @@ Implementation should stay in the active whole-JSON path:
 Do not base this work on these inactive or legacy-risk paths unless a later runtime pass proves they are active:
 
 - `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
-- `packages/drun_sdk/lib/database/dao/repeat_instances_dao.dart`
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart` as capture storage
 
 The old app-side `FormRepositoryImpl`/`FormValueStore` path was removed after it

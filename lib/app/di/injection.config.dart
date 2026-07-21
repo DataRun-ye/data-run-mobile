@@ -100,6 +100,7 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i64.AuthApi>(() => _i64.AuthApi());
   gh.factory<_i730.DataValueRepository>(() => _i730.DataValueRepository());
   gh.factory<_i683.ResourceManager>(() => const _i683.ResourceManager());
+  gh.factory<_i602.SyncManager>(() => _i602.SyncManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
   gh.factory<_i415.RuleEffectStateFactory>(
       () => _i415.RuleEffectStateFactory());
@@ -131,8 +132,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       ));
   gh.factory<_i325.TableRepository>(() => _i128.DriftTableRepository());
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
-  gh.factory<_i602.SyncManager>(
-      () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
   gh.factory<_i492.SyncMetadataRepository>(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
   gh.factory<_i139.SessionStorage>(

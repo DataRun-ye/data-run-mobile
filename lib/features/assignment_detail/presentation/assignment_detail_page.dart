@@ -124,7 +124,6 @@ class AssignmentDetailPage extends ConsumerWidget {
 
 Future<void> showFormSelectionBottomSheet(
     BuildContext context, String assignmentId) async {
-  final cs = Theme.of(context).colorScheme;
   try {
     await showModalBottomSheet(
       isScrollControlled: true,

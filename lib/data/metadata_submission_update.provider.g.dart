@@ -76,7 +76,7 @@ final class SystemMetadataSubmissionsProvider extends $FunctionalProvider<
 }
 
 String _$systemMetadataSubmissionsHash() =>
-    r'f5922f0a29d7f1854a41322170ccaee6138cff8d';
+    r'7147267cb9b872d08f33c67b5327c2920e1d3975';
 
 final class SystemMetadataSubmissionsFamily extends $Family
     with

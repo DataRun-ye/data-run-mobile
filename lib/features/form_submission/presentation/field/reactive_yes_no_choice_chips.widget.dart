@@ -53,19 +53,4 @@ class ReactiveYesNoChoiceChips extends ConsumerWidget {
       );
     }).toList();
   }
-
-  List<ReactiveChipOption<bool>> _getOptions(BuildContext context) {
-    return [true, false]
-        .map((option) => ReactiveChipOption<bool>(
-              value: option,
-              child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(option ? S.of(context).yes : S.of(context).no),
-                    ],
-                  )),
-            ))
-        .toList();
-  }
 }

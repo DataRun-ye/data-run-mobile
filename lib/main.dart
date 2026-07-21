@@ -116,11 +116,6 @@ class App extends ConsumerWidget {
     final colorSeed = ColorSeed.values[seed];
     final themeMode = ThemeMode.values[mode];
 
-    final cs = ColorScheme.fromSeed(
-        seedColor: colorSeed.color,
-        brightness: Brightness.light,
-        contrastLevel: 0.1);
-
     return MaterialApp(
       restorationScopeId: 'Test__',
       navigatorKey: StackedService.navigatorKey,
@@ -224,10 +219,6 @@ class App extends ConsumerWidget {
         seedColor: colorSeed.color, brightness: brightness, contrastLevel: 0.5);
 
     final bool isDark = brightness == Brightness.dark;
-
-    // For surfaces that use primary color in light themes and surface color in dark
-    final Color primarySurfaceColor = isDark ? cs.surface : cs.primary;
-    final Color onPrimarySurfaceColor = isDark ? cs.onSurface : cs.onPrimary;
 
     final barBg = isDark ? cs.surface : cs.primary;
     final barFg = isDark ? cs.onSurface : cs.onPrimary;

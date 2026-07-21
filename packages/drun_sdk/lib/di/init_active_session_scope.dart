@@ -5,8 +5,6 @@ import 'package:d_sdk/datasource/remote_data_sources/assignment_datasource.dart'
     as _i90;
 import 'package:d_sdk/datasource/remote_data_sources/data_element_datasource.dart'
     as _i827;
-import 'package:d_sdk/datasource/remote_data_sources/data_submission_datasource.dart'
-    as _i646;
 import 'package:d_sdk/datasource/remote_data_sources/form_template_datasource.dart'
     as _i569;
 import 'package:d_sdk/datasource/remote_data_sources/option_set_datasource.dart'
@@ -57,7 +55,6 @@ _i174.GetIt registerUserSdkDeps(
   gh.factory<_i277.AbstractDatasource>(
       () => _i588.UserFormAccessesDatasource());
   gh.factory<_i277.AbstractDatasource>(() => _i90.AssignmentDatasource());
-  gh.factory<_i277.AbstractDatasource>(() => _i646.DataInstanceDatasource());
 
   return getIt;
 }

@@ -1,15 +1,14 @@
-import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/shared/submission_status.dart';
-import 'package:d_sdk/datasource/abstract_datasource.dart';
 import 'package:d_sdk/datasource/base_datasource.dart';
 import 'package:d_sdk/datasource/metadata_datasource.dart';
-import 'package:d_sdk/datasource/remote_datasource_order_map.dart';
 import 'package:drift/drift.dart';
-import 'package:injectable/injectable.dart';
 
-@Order(DSOrder.dataInstance)
-@Injectable(as: AbstractDatasource, scope: UserSession.activeSessionScope)
+/// Dormant submission-pull implementation.
+///
+/// Production submission synchronization is push-only through
+/// `DataInstancesDao.upload()`, so this datasource must not be registered in
+/// the active session synchronization list.
 class DataInstanceDatasource
     extends BaseDataSource<$DataInstancesTable, DataInstance>
     implements MetaDataSource<DataInstance> {

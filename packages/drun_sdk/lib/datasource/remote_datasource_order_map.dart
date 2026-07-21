@@ -1,7 +1,6 @@
 import 'package:d_sdk/datasource/remote_data_sources/activity_datasource.dart';
 import 'package:d_sdk/datasource/remote_data_sources/assignment_datasource.dart';
 import 'package:d_sdk/datasource/remote_data_sources/data_element_datasource.dart';
-import 'package:d_sdk/datasource/remote_data_sources/data_submission_datasource.dart';
 import 'package:d_sdk/datasource/remote_data_sources/data_value_datasource.dart';
 import 'package:d_sdk/datasource/remote_data_sources/form_template_datasource.dart';
 import 'package:d_sdk/datasource/remote_data_sources/option_set_datasource.dart';
@@ -30,8 +29,6 @@ class DSOrder {
   static const int assignment = 1400;
 
   // static const int assignmentForms = 1450;
-  static const int dataInstance = 1500;
-
   // static const int repeatInstance = 1600;
   static const int dataValue = 1700;
   static const int metadataSubmission = 1800;
@@ -48,7 +45,6 @@ class DSOrder {
     team: TeamDatasource,
     userFormAccess: UserFormAccessesDatasource,
     assignment: AssignmentDatasource,
-    dataInstance: DataInstanceDatasource,
     dataValue: DataValueDatasource,
   };
 }

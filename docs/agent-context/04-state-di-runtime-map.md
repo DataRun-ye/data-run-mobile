@@ -53,7 +53,7 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | `get_it`, `injectable`, `injectable_generator` | ACTIVE | Declared in app and SDK pubspecs; `appLocator`, generated `injection.config.dart`, SDK `injection.config.dart`, user scopes, and form scopes are active. | High | Core services, DB, SDK datasources, and form instances are runtime-located through GetIt. |
 | `reactive_forms` | ACTIVE | Declared in `pubspec.yaml`; login form and form submission form use `FormGroup`, `FormArray`, `FormControl`, `ReactiveForm`, and reactive field widgets. | High | Active form value state and repeat rows live in reactive controls. |
 | `ChangeNotifier` | ACTIVE | `AuthManager extends ChangeNotifier`; `LocaleService extends ChangeNotifier`; `ref_extension.provider.dart` wraps them for Riverpod. | High | Changing notifier ownership can break root auth/locale updates. |
-| `StateNotifierProvider` / `StateProvider` old Riverpod style | LEGACY-RISK | Used in `lib/features/team/application/team_state.dart` and `expanded_team_state.dart`; reachable only through `ManageTeamsScreen`, which is not in generated Stacked routes and has only a commented dashboard import. | Medium | Compiles, but route reachability is not proven. Treat as a removal candidate only after runtime/menu confirmation. |
+| `StateNotifierProvider` / `StateProvider` old Riverpod style | OBSOLETE-REMOVED for team management | The isolated team-management state and hard-coded demo screen were removed after confirming they had no active route or consumer. | High | This does not classify other legacy Riverpod providers; each still requires consumer evidence. |
 | Old `go_router` path | OBSOLETE-REMOVED | The unimported `lib/app/app_routes/` experiment was removed; production `lib/main.dart` uses the generated Stacked router. | High | Navigation evidence must come from the active Stacked route registration and callers. |
 | `rxdart` `BehaviorSubject` sync progress stack | LEGACY-RISK | `SyncProgressNotifier`, `SyncExecutor`, and `SyncCoordinator` are injectable, but routed sync screen uses `SyncManager` directly. References outside generated DI are not proven active. | Medium | There appear to be two sync progress stacks. Changing the inactive-looking one may not affect production sync. |
 
@@ -165,7 +165,7 @@ Why it matters: datasource registration order and type shape affect config fetch
 | INACTIVE | `lib/data/org_unit/ou_picker_data_source.provider.dart` | Obsolete-looking path: fully commented provider referencing older data model paths. | High | Not active org-unit selection state. |
 | OBSOLETE-REMOVED | Commented form-state adjunct providers/widgets | Element-properties, submission-creation, popup-section, old org-unit field, and old repeat edit-panel files had no executable implementation or consumer. | High | Active draft creation, form rendering, org-unit fields, and repeat editing use separate paths. |
 | INACTIVE | `lib/features/form_submission/presentation/field/date_time_main.dart` | Demo path: contains its own `runApp(const MyApp())`; static search found no import/use from production entrypoint. | High | Demo/test entrypoint, not production date field path. |
-| LEGACY-RISK | `lib/features/team/presentation/managed_team_screen.dart`, `lib/features/team/application/team_state.dart`, `expanded_team_state.dart` | `ManageTeamsScreen` uses local fake `teamSummaries`; not in Stacked routes; only external reference found is commented dashboard import. | Medium | Team state exists but active team data for assignments uses `lib/data/teams.provider.dart`. |
+| OBSOLETE-REMOVED | Old team-management feature and dashboard demo | The screen used hard-coded team summaries, had no route, and was referenced only by a comment-only dashboard. | High | Active assignment/team behavior continues through SDK team persistence and `lib/data/teams.provider.dart`. |
 | LEGACY-RISK | `lib/core/sync/sync_coordinator.dart`, `sync_executor.dart`, `sync_progress_notifier.dart` | Injectable registrations exist, but active `SyncResourcesViewModel` uses `SyncManager`; no routed call to `SyncCoordinator` found. | Medium | Duplicate sync state path can confuse refactors. |
 | INCOMPLETE | `lib/core/party/providers/party_resolver.provider.dart` | Placeholder user/team/party IDs; generated provider exists but no static use outside generated file. | High | Party resolution appears not production-ready. |
 | INCOMPLETE | `lib/data/metadata_submission_update.provider.dart` | Provider is used by Reference field widgets but currently returns empty list after commented metadata-submission lookup; production form JSON use of `ValueType.Reference` was not confirmed. | High | Reference fields are reachable by value type, but data backing is incomplete and not proven core-active. |
@@ -183,7 +183,7 @@ These are observations only; no removal is recommended yet.
 | Form/field state | Active `reactive_forms`/`FormInstance`; obsolete Riverpod provider sketches removed | Active form bootstrap builds `FormGroup` and `Section`. |
 | Sync orchestration | `SyncManager`/`SyncResourcesViewModel` vs `SyncCoordinator`/`SyncExecutor`/`SyncProgressNotifier` vs `SyncService` provider | Routed sync uses `SyncManager`; other stacks are injectable/provider code but not proven routed. |
 | SDK datasource registration | Manual `registerUserSdkDeps(...)` vs generated `initActiveSessionContextScope(...)` | Active auth manager calls manual function; generated function not called by static refs. |
-| Team state | `lib/data/teams.provider.dart` vs `features/team/application/team_state.dart` | Assignment filtering uses `lib/data/teams.provider.dart`; management screen state not routed. |
+| Team state | `lib/data/teams.provider.dart`; obsolete demo state removed | Assignment-scoped team selection uses `lib/data/teams.provider.dart`. |
 
 ## Risk Map For Refactoring
 
@@ -260,10 +260,9 @@ Sync/runtime duplication:
 3. Does `GetIt.getAll<AbstractDatasource<dynamic>>()` return the manual raw datasource registrations in the expected order after every login/session restore?
 4. Is generated `initActiveSessionContextScope(...)` ever called indirectly by generated code or build tooling, or is it fully dead?
 5. Are `SyncCoordinator`/`SyncExecutor` used by any background task, settings action, or future route not visible in static route scans?
-6. Is `ManageTeamsScreen` reachable through any manual `Navigator.push` or feature flag outside the generated Stacked route list?
-7. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
-8. Does form scope disposal always run when the user leaves a form through Android back, app backgrounding, route replacement, or completion dialog actions?
-9. After the tooling branch is merged, do generated Riverpod/injectable/Stacked outputs still match this map?
+6. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
+7. Does form scope disposal always run when the user leaves a form through Android back, app backgrounding, route replacement, or completion dialog actions?
+8. After the tooling branch is merged, do generated Riverpod/injectable/Stacked outputs still match this map?
 
 ## Next Investigation Step
 

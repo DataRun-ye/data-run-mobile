@@ -41,7 +41,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `EditRowScreen` generated Stacked route | ACTIVE in `02` | LEGACY-RISK | The generated `navigateToEditRowScreen` route was not proven required because the active repeat edit path constructs the widget through `navigateToView(...)`. |
 | `EditRowPanel` and dialog repeat edit path | LEGACY-RISK in `02` | LEGACY-RISK | `showEditDialog(...)` exists and builds `EditRowPanel`, but active `_showEditPanel(...)` always takes the `if (true)` branch and navigates to `EditRowScreen`. |
 | Riverpod as a library | ACTIVE | ACTIVE | Root `ProviderScope` and many providers are active, but every provider still needs per-provider evidence. Generated `*.provider.g.dart` files are not active unless their provider is watched by a core path. |
-| Old team `StateNotifierProvider` files | Active-looking Riverpod state | LEGACY-RISK | `ManageTeamsScreen` is not in Stacked routes and only had a commented dashboard reference. Active assignment filtering uses `lib/data/teams.provider.dart`, not `features/team/application/team_state.dart`. |
+| Old team `StateNotifierProvider` files | Active-looking Riverpod state | OBSOLETE-REMOVED | The only screen used hard-coded demo data, had no active route, and was referenced only by a comment-only dashboard. Active assignment filtering remains in `lib/data/teams.provider.dart`. |
 | `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | LEGACY-RISK | They are in generated DI, but active sync route uses `SyncResourcesViewModel` plus `SyncManager`. No routed call to `SyncCoordinator` was found. |
 | `syncServiceProvider` | Provider exists | LEGACY-RISK | `performSync` does not perform the real download; active config sync uses `SyncManager.syncAll()`. Constants may still be referenced by old services. |
 | SDK `initActiveSessionContextScope(...)` | Generated active session scope | LEGACY-RISK | Generated typed datasource registration exists, but active auth calls manual `registerUserSdkDeps(appLocator)`. Do not refactor the generated scope assuming production uses it. |
@@ -154,9 +154,6 @@ These are used or plausible, but should not be treated as core-active without mo
 
 Do not delete these yet, but they are strong candidates for demotion/removal after runtime confirmation.
 
-- `lib/features/team/presentation/managed_team_screen.dart`
-- `lib/features/team/application/team_state.dart`
-- `lib/features/team/application/expanded_team_state.dart`
 - `lib/data/controller.provider.dart`
 - `lib/data/org_unit/ou_picker_data_source.provider.dart`
 - `lib/features/form_submission/presentation/field/date_time_main.dart`

@@ -110,13 +110,14 @@ Template-required fields were confirmed to stop blocking validation while hidden
 
 Team form fields now resolve managed-team choices only from the current assignment's manager team and activity. The previous provider discarded Drift's returned filtered query through cascade syntax, and the widget passed an assignment UID as a team UID. Missing or unknown assignment context now returns no choices. `test/dev/managed_teams_scope_test.dart` covers cross-activity and cross-manager rows.
 
+Required multi-choice fields now reject empty lists in new and edited repeat rows. The validator remains synchronized with hidden/visible and rule-driven mandatory state. `test/dev/repeat_multi_choice_validation_test.dart` and `test/dev/form_element_visibility_validation_test.dart` cover the active row-validity boundary.
+
 | Finding | Classification | Evidence | Required next proof |
 |---|---|---|---|
 | Pulled submission mapping does not satisfy the current generated Drift `DataInstance.fromJson` contract | `REACHABLE-INCOMPLETE` | `data_submission_datasource.dart` mapping differs from required Drift fields | Focused mapping test only if pull is later designed; do not repair it implicitly now |
 | Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `form_flow_bootstrapper_vm.dart` and `submission_list.provider.dart` use `canEditSubmissions || !isSynced` | Confirm deployed assignment values and define one edit gate |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
 | `user_form_permissions` is fetched/stored but no active authorization read was proven | `REACHABLE-INCOMPLETE` | `UserFormAccessesDatasource` registration and table/DAO references | Trace or test intended consumer before activation or removal |
-| A required multi-choice field inside a repeat can fail to block row/form completion while empty | `ACTIVE-CORE` reported bug | Observed production behavior; `SelectMulti` control construction conditionally installs `required` from the initial value | Characterize new-empty and populated-then-cleared repeat rows through row save and form completion |
 
 ## Inactive And Misleading Surface Policy
 
@@ -151,11 +152,7 @@ This is an ordering framework, not a commitment to months of infrastructure work
 
 ### 1. Stabilize Known Contracts
 
-Use small behavior PRs for confirmed conflicts that can affect live data or repeatedly mislead investigation:
-
-- characterize and fix required multi-choice validation inside repeats.
-
-Each slice must add the smallest characterization check that proves the bug and the fix. Do not combine these changes.
+Use small behavior PRs for confirmed conflicts that can affect live data or repeatedly mislead investigation. Each slice must add the smallest characterization check that proves the bug and the fix. Do not combine these changes.
 
 ### 2. Remove Low-Risk Misleading Source
 

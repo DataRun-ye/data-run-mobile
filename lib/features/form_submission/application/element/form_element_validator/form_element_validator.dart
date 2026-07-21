@@ -16,7 +16,7 @@ class FieldValidators {
     if (element.type == ValueType.FullName)
       validators.add(const ArEnFullNameValidator());
 
-    if (element.mandatory) validators.add(Validators.required);
+    if (element.mandatory) validators.add(const RequiredFieldValidator());
     if (element.type == ValueType.Email) validators.add(Validators.email);
     if (element.type.isInteger) validators.add(Validators.number());
     if (element.type == ValueType.IntegerZeroOrPositive)
@@ -58,6 +58,20 @@ class FieldValidators {
     }
 
     return messages;
+  }
+}
+
+class RequiredFieldValidator extends RequiredValidator {
+  const RequiredFieldValidator();
+
+  @override
+  Map<String, dynamic>? validate(AbstractControl<dynamic> control) {
+    final value = control.value;
+    if (value is Iterable && value.isEmpty) {
+      return <String, dynamic>{ValidationMessage.required: true};
+    }
+
+    return super.validate(control);
   }
 }
 

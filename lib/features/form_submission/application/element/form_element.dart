@@ -16,6 +16,7 @@ import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/rule.extension.dart';
 import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
@@ -237,7 +238,7 @@ sealed class FormElementInstance<T> {
         .where((validator) => validator is! RequiredValidator)
         .toList();
     if (required) {
-      validators.add(Validators.required);
+      validators.add(const RequiredFieldValidator());
     }
     elementControl!.setValidators(
       validators,

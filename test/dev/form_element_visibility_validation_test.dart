@@ -3,6 +3,7 @@ import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -82,6 +83,35 @@ void main() {
     expect(control.validators.whereType<RequiredValidator>(), isEmpty);
     expect(control.hasError(ValidationMessage.email), isTrue);
   });
+
+  test('required multi-choice is ignored while hidden and required again', () {
+    final (:field, :control) = _buildMultiField(templateMandatory: true);
+
+    expect(control.hasError(ValidationMessage.required), isTrue);
+
+    field.markAsHidden(emitEvent: false);
+
+    expect(field.form.valid, isTrue);
+
+    field.markAsVisible(emitEvent: false);
+
+    expect(control.hasError(ValidationMessage.required), isTrue);
+    expect(field.form.invalid, isTrue);
+  });
+
+  test('rule-driven mandatory validation rejects empty multi-choice', () {
+    final (:field, :control) = _buildMultiField(templateMandatory: false);
+
+    expect(control.valid, isTrue);
+
+    field.markAsMandatory(emitEvent: false);
+
+    expect(control.hasError(ValidationMessage.required), isTrue);
+
+    control.updateValue(['choice-a']);
+
+    expect(control.valid, isTrue);
+  });
 }
 
 ({FieldInstance<String> field, FormControl<String> control}) _buildField({
@@ -104,6 +134,33 @@ void main() {
     form: form,
     template: template,
     elementProperties: FieldElementState<String>(
+      mandatory: templateMandatory,
+    ),
+  );
+
+  return (field: field, control: control);
+}
+
+({FieldInstance<List<String>> field, FormControl<List<String>> control})
+    _buildMultiField({required bool templateMandatory}) {
+  final control = FormControl<List<String>>(
+    value: const [],
+    validators: templateMandatory ? [const RequiredFieldValidator()] : const [],
+  );
+  final form = FormGroup({
+    'field': control,
+    'other': FormControl<String>(value: 'present'),
+  });
+  final template = FieldTemplate(
+    id: 'field-id',
+    name: 'field',
+    type: ValueType.SelectMulti,
+    mandatory: templateMandatory,
+  );
+  final field = FieldInstance<List<String>>(
+    form: form,
+    template: template,
+    elementProperties: FieldElementState<List<String>>(
       mandatory: templateMandatory,
     ),
   );

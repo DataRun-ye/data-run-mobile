@@ -1,7 +1,6 @@
 import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
 import 'package:d_sdk/core/form/element_template/section_template.entity.dart';
 import 'package:d_sdk/core/form/element_template/template.dart';
-import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
@@ -149,16 +148,10 @@ class FormElementControlBuilder {
                 ? initialValue.cast<String>()
                 : <String>[initialValue]
             : <String>[];
-        final multiValidator = <Validator<dynamic>>[];
         return FormControl<List<String>>(
-            value: initialValue != null
-                ? (initialValue is List)
-                    ? initialValue.cast<String>()
-                    : <String>[initialValue]
-                : <String>[],
-            validators: multiValidator
-              ..addIf(value.isEmpty && elementTemplate.mandatory,
-                  Validators.required));
+          value: value,
+          validators: validators,
+        );
       case ValueType.Reference:
         return FormControl<String>(value: initValue, validators: validators);
       case ValueType.ScannedCode:

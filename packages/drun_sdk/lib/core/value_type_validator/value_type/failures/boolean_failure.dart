@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 
 /// Failure types for Boolean validation
 sealed class BooleanFailure extends DException {

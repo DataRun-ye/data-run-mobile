@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
 
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 import 'package:flutter/foundation.dart';
 
 typedef LogWriterCallback = void Function(String message,

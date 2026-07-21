@@ -1,7 +1,6 @@
 import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:datarunmobile/data/metadata_submission_update.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'metadata_submission_update.provider.g.dart';

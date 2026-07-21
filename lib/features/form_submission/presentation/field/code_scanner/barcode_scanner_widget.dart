@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/shared/scanned_code_properties.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';

@@ -1,8 +1,12 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart' show getItemLocalString;
+import 'package:d_sdk/core/form/element_template/section_template.entity.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/core/form/template_util/element_tree_service.dart';
 import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.dialogs.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';

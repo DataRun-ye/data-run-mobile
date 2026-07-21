@@ -1,4 +1,5 @@
-import 'exception.dart';
+import 'package:d_sdk/core/exception/d_error.dart';
+import 'package:d_sdk/core/exception/d_error_code.dart';
 
 class NoCachedAuthenticatedUser extends DError {
   NoCachedAuthenticatedUser({

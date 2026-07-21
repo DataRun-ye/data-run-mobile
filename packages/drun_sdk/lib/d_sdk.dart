@@ -1,6 +1,7 @@
 library d_sdk;
 
-import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/dbManager.dart';
 import 'package:d_sdk/di/injection.dart';
 
 import 'database/dao/dao.dart';

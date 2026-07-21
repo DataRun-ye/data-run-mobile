@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/option_set.entity.dart';
 import 'package:drift/drift.dart';
 
 /// Converts a List<DOptionSet> to/from a JSON String.

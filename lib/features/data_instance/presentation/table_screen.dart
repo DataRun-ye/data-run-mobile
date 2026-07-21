@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/http_errors.dart';
 import 'package:d_sdk/core/http/http_client.dart';
 import 'package:d_sdk/di/app_environment.dart';
 import 'package:dio/dio.dart';

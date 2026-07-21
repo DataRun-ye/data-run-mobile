@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/dao/data_submissions_dao.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
 
 extension DataInstancesDaoExpressionExtension on DataInstancesDao {
   Future<FormTemplateModel> getTemplateByVersionOrLatest(

@@ -1,7 +1,8 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:d_sdk/core/form/element_template/section_template.entity.dart';
 import 'package:d_sdk/core/form/section_rendering_type.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/validation_strategy.dart';
 import 'package:datarunmobile/core/form/data/data_entry_repository.dart';
 import 'package:datarunmobile/core/form/model/field_ui_model.dart';
 import 'package:datarunmobile/core/form/ui/field_view_model_factory.dart';

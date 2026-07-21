@@ -1,5 +1,6 @@
 import 'package:d_sdk/core/code_generator.dart';
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';

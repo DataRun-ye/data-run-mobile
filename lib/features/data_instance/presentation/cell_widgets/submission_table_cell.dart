@@ -1,5 +1,6 @@
 import 'package:d_sdk/core/data_instance/field_value.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/multi_option_cell.dart';

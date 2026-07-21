@@ -1,8 +1,8 @@
 import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/dao/dao.dart';
-import 'package:d_sdk/database/database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
-import 'package:d_sdk/database/tables/tables.dart';
+import 'package:d_sdk/database/dao/party_resolution_dao.dart';
+import 'package:d_sdk/database/app_database.dart';
+import 'package:d_sdk/database/shared/party/party_resolution_params.dart';
+import 'package:d_sdk/database/tables/parties.table.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'party_resolver.provider.g.dart';

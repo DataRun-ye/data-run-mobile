@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 

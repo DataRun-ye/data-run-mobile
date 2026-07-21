@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/metadata_resource_type.dart';
 
 class MetadataSubmissionUpdate {
   // final DateTime createdAt;

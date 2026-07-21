@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/database.dart';
+import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/datasource/base_datasource.dart';
 import 'package:d_sdk/datasource/metadata_datasource.dart';
 import 'package:drift/drift.dart';

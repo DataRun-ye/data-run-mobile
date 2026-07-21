@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/full_name_validator.dart';
 import 'package:datarunmobile/generated/l10n.dart';

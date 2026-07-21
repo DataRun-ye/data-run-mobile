@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 
 abstract class NumberFailure extends DException {
   const NumberFailure([super.message]);

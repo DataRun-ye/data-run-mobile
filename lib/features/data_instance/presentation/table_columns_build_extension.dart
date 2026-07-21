@@ -1,5 +1,5 @@
 import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:datarunmobile/features/data_instance/application/models.dart';
 import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/table_header_label.dart';

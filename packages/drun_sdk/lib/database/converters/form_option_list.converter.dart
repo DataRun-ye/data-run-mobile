@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:drift/drift.dart';
 
 /// Converts a List<FormOption> to/from a JSON String.

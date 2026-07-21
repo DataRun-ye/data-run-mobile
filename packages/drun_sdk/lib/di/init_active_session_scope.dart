@@ -1,4 +1,4 @@
-import 'package:d_sdk/datasource/datasource.dart' as _i277;
+import 'package:d_sdk/datasource/abstract_datasource.dart' as _i277;
 import 'package:d_sdk/datasource/remote_data_sources/activity_datasource.dart'
     as _i434;
 import 'package:d_sdk/datasource/remote_data_sources/assignment_datasource.dart'

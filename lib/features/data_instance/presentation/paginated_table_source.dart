@@ -1,4 +1,5 @@
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
+import 'package:d_sdk/database/shared/submission_summary.dart';
 import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/edit_action_icon_cell.dart';
 import 'package:datarunmobile/features/data_instance/presentation/cell_widgets/table_widgets.dart';
 import 'package:flutter/material.dart';

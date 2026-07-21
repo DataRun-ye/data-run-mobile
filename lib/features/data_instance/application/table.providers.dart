@@ -1,12 +1,12 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
+import 'package:d_sdk/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/data_instance/application/models.dart';
 import 'package:datarunmobile/features/data_instance/data/table_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'table.providers.g.dart';

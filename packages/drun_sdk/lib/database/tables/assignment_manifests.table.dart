@@ -1,6 +1,6 @@
 import 'package:d_sdk/database/converters/assignment_binding_list.converter.dart';
 import 'package:d_sdk/database/converters/list.converter.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
 import 'package:drift/drift.dart';
 
 /// The "Manifest": Everything the client needs to initialize

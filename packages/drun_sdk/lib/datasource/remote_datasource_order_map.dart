@@ -1,4 +1,16 @@
-import 'package:d_sdk/datasource/remote_data_sources/remote_data_sources.dart';
+import 'package:d_sdk/datasource/remote_data_sources/activity_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/assignment_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/data_element_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/data_submission_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/data_value_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/form_template_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/option_set_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/org_unit_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/ou_level_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/project_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/team_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/user_datasource.dart';
+import 'package:d_sdk/datasource/remote_data_sources/user_form_permission_datasource.dart';
 
 class DSOrder {
   static const int user = 100;
@@ -31,17 +43,12 @@ class DSOrder {
     ouLevel: OuLevelDatasource,
     orgUnit: OrgUnitDatasource,
     optionSet: OptionSetDatasource,
-    // option: OptionDatasource,
     dataElement: DataElementDatasource,
     formTemplate: DataFormTemplateDatasource,
-    // formVersion: FormVersionDatasource,
     team: TeamDatasource,
-    // managedTeam: ManagedTeamDatasource,
     userFormAccess: UserFormAccessesDatasource,
     assignment: AssignmentDatasource,
     dataInstance: DataInstanceDatasource,
-    // repeatInstance: RepeatInstanceDatasource,
     dataValue: DataValueDatasource,
-    // metadataSubmission: MetadataSubmissionDatasource,
   };
 }

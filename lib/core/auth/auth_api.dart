@@ -1,5 +1,7 @@
 import 'package:d_sdk/core/auth/auth_response.dart';
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/authentication_exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
+import 'package:d_sdk/core/exception/http_errors.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:d_sdk/di/app_environment.dart';

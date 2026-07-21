@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/team_form_permission.dart';
 import 'package:drift/drift.dart';
 
 /// Converter for List<TeamFormPermission> <-> JSON String.

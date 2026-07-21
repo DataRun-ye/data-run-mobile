@@ -1,4 +1,5 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_error.dart';
+import 'package:d_sdk/core/exception/d_error_code.dart';
 
 class UserFileException extends DError {
   UserFileException(

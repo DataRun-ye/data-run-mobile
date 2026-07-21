@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:d_sdk/core/code_generator.dart';
 import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:d_sdk/core/form/element_template/section_template.entity.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/core/form/rule/action.dart';
 import 'package:d_sdk/core/form/rule/calculated_Expression.dart';
 import 'package:d_sdk/core/form/rule/choice_filter.dart';

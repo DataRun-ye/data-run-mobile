@@ -1,5 +1,5 @@
 import 'package:d_sdk/core/value_type_validator/value_type/failures/pattern_failure.dart';
-import 'package:d_sdk/core/value_type_validator/value_type/validators/validators.dart';
+import 'package:d_sdk/core/value_type_validator/value_type/validators/value_type_validator.dart';
 import 'package:multiple_result/multiple_result.dart';
 
 class FullNameValidator extends ValueTypeValidator<FullNameFailure> {

@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/converters/converters.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:d_sdk/database/tables/tables.dart';
 import 'package:drift/drift.dart';
 

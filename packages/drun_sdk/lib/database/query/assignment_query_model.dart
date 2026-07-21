@@ -1,5 +1,6 @@
 import 'package:d_sdk/database/query/query_model.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/entity_scope.dart';
 
 class AssignmentQueryModel extends QueryModel {
   AssignmentQueryModel(

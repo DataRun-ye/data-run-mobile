@@ -2,7 +2,7 @@ import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/exception/d_exception.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/datasource/datasource.dart';
+import 'package:d_sdk/datasource/find_by_and_update_extension_example.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
@@ -32,7 +32,7 @@ class FormFlowBootstrapperVm extends BaseViewModel {
   final String? versionId;
   final String? assignmentId;
 
-  final _db = DSdk.db;
+  AppDatabase get _db => DSdk.db;
 
   final NavigationService _navigationService = appLocator<NavigationService>();
 

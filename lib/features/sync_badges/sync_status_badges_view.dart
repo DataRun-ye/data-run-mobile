@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/status_icon.dart';
 import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -10,9 +10,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:d_sdk/core/util/user_file_manager.dart' as _i629;
-import 'package:d_sdk/database/database.dart' as _i210;
+import 'package:d_sdk/database/app_database.dart' as _i648;
 import 'package:d_sdk/database/db_factory/database_factory.dart' as _i320;
-import 'package:d_sdk/datasource/datasource.dart' as _i277;
+import 'package:d_sdk/datasource/abstract_datasource.dart' as _i458;
 import 'package:d_sdk/datasource/remote_data_sources/activity_datasource.dart'
     as _i434;
 import 'package:d_sdk/datasource/remote_data_sources/assignment_datasource.dart'
@@ -79,27 +79,27 @@ _i174.GetIt initActiveSessionContextScope(
       gh.factory<_i659.ManifestService>(() => _i659.ManifestService(
           manifestRepository: gh<_i385.ManifestRepository>()));
       gh.factory<_i822.UserDatasource>(() => _i822.UserDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.Project>>(
+      gh.factory<_i458.AbstractDatasource<_i648.Project>>(
           () => _i589.ProjectDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.Activity>>(
+      gh.factory<_i458.AbstractDatasource<_i648.Activity>>(
           () => _i434.ActivityDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.OuLevel>>(
+      gh.factory<_i458.AbstractDatasource<_i648.OuLevel>>(
           () => _i790.OuLevelDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.OrgUnit>>(
+      gh.factory<_i458.AbstractDatasource<_i648.OrgUnit>>(
           () => _i185.OrgUnitDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.DataOptionSet>>(
+      gh.factory<_i458.AbstractDatasource<_i648.DataOptionSet>>(
           () => _i756.OptionSetDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.DataElement>>(
+      gh.factory<_i458.AbstractDatasource<_i648.DataElement>>(
           () => _i827.DataElementDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.FormTemplate>>(
+      gh.factory<_i458.AbstractDatasource<_i648.FormTemplate>>(
           () => _i569.DataFormTemplateDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.Team>>(
+      gh.factory<_i458.AbstractDatasource<_i648.Team>>(
           () => _i143.TeamDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.UserFormPermission>>(
+      gh.factory<_i458.AbstractDatasource<_i648.UserFormPermission>>(
           () => _i588.UserFormAccessesDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.Assignment>>(
+      gh.factory<_i458.AbstractDatasource<_i648.Assignment>>(
           () => _i90.AssignmentDatasource());
-      gh.factory<_i277.AbstractDatasource<_i210.DataInstance>>(
+      gh.factory<_i458.AbstractDatasource<_i648.DataInstance>>(
           () => _i646.DataInstanceDatasource());
     },
   );

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:built_collection/built_collection.dart';
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/database/shared/form_option.dart';
 import 'package:d_sdk/database/shared/form_template_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';

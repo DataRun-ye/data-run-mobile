@@ -1,5 +1,6 @@
 import 'package:d_sdk/database/domain/filter.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_template_model.dart';
+import 'package:d_sdk/database/shared/submissions_filter.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';

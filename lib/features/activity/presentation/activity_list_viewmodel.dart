@@ -1,6 +1,6 @@
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/dao/dao.dart';
+import 'package:d_sdk/database/dao/activities_dao.dart';
 import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:d_sdk/core/util/string_extension.dart';

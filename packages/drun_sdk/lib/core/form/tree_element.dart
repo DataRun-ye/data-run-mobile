@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 
 mixin TreeElement {
   String get id;

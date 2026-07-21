@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/section_template.entity.dart';
 import 'package:datarunmobile/core/element_instance/element_state_factory.dart';
 import 'package:datarunmobile/core/element_instance/sction_instance/section_state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

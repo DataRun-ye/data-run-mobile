@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 
 /// PhoneNumber Failure
 sealed class PhoneNumberFailure extends DException {

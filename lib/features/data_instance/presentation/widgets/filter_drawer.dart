@@ -2,7 +2,8 @@ import 'dart:math' as math;
 
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/domain/filter.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
+import 'package:d_sdk/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
 import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -268,7 +269,7 @@ class FilterDrawer extends ConsumerWidget {
           borderSide: BorderSide(color: colorScheme.outline),
         ),
       ),
-      value: filter.dateFilterBand,
+      initialValue: filter.dateFilterBand,
       items: [
         DropdownMenuItem(value: null, child: Text(S.of(context).allDates)),
         ...DateFilterBand.values.map((band) => DropdownMenuItem(

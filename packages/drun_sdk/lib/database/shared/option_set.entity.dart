@@ -1,5 +1,5 @@
 import 'package:d_sdk/core/util/parsing_helpers.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
 
 class DOptionSet {
   final String listName;

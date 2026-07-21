@@ -1,11 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
-import 'package:datarunmobile/data/data.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/collections.dart';
+import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/features/activity/application/activity.provider.dart';
 import 'package:drift/drift.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assignment_model.provider.g.dart';

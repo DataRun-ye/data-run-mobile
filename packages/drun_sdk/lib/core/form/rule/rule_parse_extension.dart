@@ -1,4 +1,5 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/core/form/rule/action.dart';
 
 extension FieldTemplateDependencies on Template {

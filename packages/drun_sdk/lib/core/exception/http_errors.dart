@@ -1,4 +1,5 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_error_code.dart';
+import 'package:d_sdk/core/exception/network_exceptions.dart';
 import 'package:dio/dio.dart';
 
 class RevokeTokenException extends DioException {

@@ -1,4 +1,6 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
+import 'package:d_sdk/core/form/element_template/section_template.entity.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:datarunmobile/core/element_instance/element_state.dart';
 import 'package:datarunmobile/core/element_instance/field_state/field_state.dart';
 import 'package:datarunmobile/core/element_instance/repeat_instance/repeat_state.dart';

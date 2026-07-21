@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
 
 abstract class ValidationService {

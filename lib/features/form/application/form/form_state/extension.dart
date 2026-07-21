@@ -1,5 +1,6 @@
 //
-// import 'package:d_sdk/core/form/element_template/element_template.dart';
+// import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
+
 // import 'package:datarunmobile/core/element_instance/form_state.dart';
 //
 // extension FormStateExtension on FormState {

@@ -1,11 +1,10 @@
 import 'dart:io';
 
 import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:datarunmobile/features/activity/application/activity.provider.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_model.provider.dart';
-import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assignment_filter.provider.g.dart';

@@ -128,6 +128,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
         gh<_i460.SharedPreferences>(),
       ));
   gh.factory<_i34.FormInstanceService>(() => _i756.FormInstanceServiceImpl());
+  gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
+      optionSetService: gh<_i158.OptionSetService>()));
   gh.factoryParam<_i747.FormMetadataService, _i54.FormMetadata, dynamic>((
     formMetadata,
     _,
@@ -146,8 +148,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
   gh.factory<_i139.SessionStorage>(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
-  gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
-      optionSetService: gh<_i158.OptionSetService>()));
   gh.factory<_i775.UserSessionService>(
       () => _i775.UserSessionService(gh<_i460.SharedPreferences>()));
   gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(

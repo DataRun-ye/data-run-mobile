@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/d_identifiable_model.dart';
 import 'package:flutter/material.dart';
 
 class TeamDisplay extends StatelessWidget {

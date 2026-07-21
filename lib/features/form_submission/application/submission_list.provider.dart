@@ -5,11 +5,10 @@ import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/d_sdk.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:datarunmobile/features/form_submission/application/form_submission_repository.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submission_list.provider.g.dart';

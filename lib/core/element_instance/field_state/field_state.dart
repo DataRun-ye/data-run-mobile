@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:datarunmobile/core/element_instance/element_state.dart';
 import 'package:datarunmobile/core/element_instance/element_vistor/element_vistor.dart';
 

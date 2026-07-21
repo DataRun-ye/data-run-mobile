@@ -1,5 +1,4 @@
-import 'package:d_sdk/database/shared/shared.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:d_sdk/database/shared/activity_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'activity.provider.g.dart';

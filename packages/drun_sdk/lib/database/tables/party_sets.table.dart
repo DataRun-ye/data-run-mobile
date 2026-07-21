@@ -1,5 +1,5 @@
 import 'package:d_sdk/database/converters/party_set_spec.converter.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/party/party_set_kind.dart';
 import 'package:d_sdk/database/tables/tables.dart';
 import 'package:drift/drift.dart';
 

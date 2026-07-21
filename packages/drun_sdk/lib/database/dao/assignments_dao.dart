@@ -1,7 +1,10 @@
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/database/converters/custom_serializer.dart';
 import 'package:d_sdk/database/dao/base_dao_extension.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:d_sdk/database/shared/d_identifiable_model.dart';
+import 'package:d_sdk/database/shared/submission_status.dart';
 import 'package:d_sdk/database/tables/tables.dart';
 import 'package:d_sdk/datasource/base_datasource.dart';
 import 'package:drift/drift.dart';

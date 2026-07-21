@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
-import 'package:d_sdk/datasource/datasource.dart';
+import 'package:d_sdk/datasource/abstract_datasource.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
 import 'package:datarunmobile/core/sync_manager/sync_progress_global_state.dart';

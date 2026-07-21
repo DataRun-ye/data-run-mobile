@@ -1,6 +1,10 @@
-import 'package:d_sdk/core/form/element_template/element_template.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
+import 'package:d_sdk/database/shared/form_permission.dart';
+import 'package:d_sdk/database/shared/option_set.entity.dart';
+import 'package:d_sdk/database/shared/team_form_permission.dart';
+import 'package:d_sdk/database/shared/translations.dart';
 import 'package:drift/drift.dart';
 
 class CustomSerializer extends ValueSerializer {

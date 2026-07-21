@@ -1,14 +1,18 @@
 import 'dart:convert';
 
-import 'package:d_sdk/core/form/attribute_type.dart';
-import 'package:d_sdk/core/form/element_template/element_template.dart';
 import 'package:d_sdk/core/data_instance/form_data_aggregator.dart';
+import 'package:d_sdk/core/form/attribute_type.dart';
+import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:d_sdk/core/form/element_template/template.dart';
 import 'package:d_sdk/core/form/rule/rule.dart';
 import 'package:d_sdk/core/form/rule/validation_rule.dart';
 import 'package:d_sdk/core/form/value_type_rendering_type.dart';
 import 'package:d_sdk/core/util/list_extensions.dart';
 import 'package:d_sdk/core/util/parsing_helpers.dart';
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/form_option.dart';
+import 'package:d_sdk/database/shared/metadata_resource_type.dart';
+import 'package:d_sdk/database/shared/scanned_code_properties.dart';
+import 'package:d_sdk/database/shared/value_type.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FieldTemplate extends Template {

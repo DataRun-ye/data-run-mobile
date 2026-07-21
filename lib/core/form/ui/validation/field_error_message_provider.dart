@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 import 'package:d_sdk/core/value_type_validator/value_type/failures/boolean_failure.dart';
 import 'package:d_sdk/core/value_type_validator/value_type/failures/coordinate_failure.dart';
 import 'package:d_sdk/core/value_type_validator/value_type/failures/date_failure.dart';

@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/exception/exception.dart';
+import 'package:d_sdk/core/exception/d_exception.dart';
 
 /// LongText Failure (No validation errors; placeholder type)
 abstract class LongTextFailure extends DException {

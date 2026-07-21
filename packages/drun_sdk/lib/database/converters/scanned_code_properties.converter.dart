@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:d_sdk/database/shared/shared.dart';
+import 'package:d_sdk/database/shared/scanned_code_properties.dart';
 import 'package:drift/drift.dart';
 
 /// Converter for ScannedCodeProperties <-> String (assumes a toJson/fromJson API)

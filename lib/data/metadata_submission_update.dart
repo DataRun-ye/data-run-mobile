@@ -3,15 +3,11 @@ import 'dart:convert';
 import 'package:d_sdk/database/shared/metadata_resource_type.dart';
 
 class MetadataSubmissionUpdate {
-  // final DateTime createdAt;
-  // final String avatar;
-
   MetadataSubmissionUpdate({
     required this.submissionId,
     required this.metadataSubmission,
     required this.resourceId,
     required this.resourceType,
-    // required this.parentId,
     required this.id,
     required this.updated,
     required this.created,
@@ -40,7 +36,6 @@ class MetadataSubmissionUpdate {
       resourceId: json['resourceId'],
       submissionId: json['submissionId'],
       resourceType: resourceType,
-      // parentId: json['parentId'],
       updated: json['updated'] ?? false,
       created: json['created'] ?? false,
       id: json['id'],

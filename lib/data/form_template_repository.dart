@@ -43,8 +43,6 @@ class FormTemplateRepository {
         optionSets: optionSets);
   }
 
-  // final FormTemplate _formTemplate;
-  // final FormTemplateVersion _formTemplateVersion;
   final FormTemplateModel _formTemplateModel;
   final Map<String, List<FormOption>> optionMap;
   final Map<String, DataOptionSet> optionSets;

@@ -5,11 +5,12 @@ import 'package:reactive_forms/reactive_forms.dart';
 /// space, merges connectors (e.g. 'عبد', 'ibn', 'de', 'van') and requires
 /// at least [minParts] name parts (default 4).
 class ArEnFullNameValidator extends Validator<dynamic> {
-  final int minParts;
-  final int minLettersPerPart;
 
   const ArEnFullNameValidator({this.minParts = 4, this.minLettersPerPart = 2})
       : super();
+
+  final int minParts;
+  final int minLettersPerPart;
 
   // Unicode-aware: \p{L} matches any kind of letter from any language.
   static final RegExp _validChars =

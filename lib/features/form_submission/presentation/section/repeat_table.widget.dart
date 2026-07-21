@@ -40,10 +40,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   int defaultRowsPerPage = 5;
 
   Future<void> onEdit(int index) async {
-    // final formInstance = ref
-    //     .read(
-    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-    //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
     final itemInstance = _dataSource.elements[index];
@@ -51,10 +47,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
   }
 
   void onDelete(int index) {
-    // final formInstance = ref
-    //     .read(
-    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-    //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
     final removed = formInstance.onRemoveRepeatedItem(index, _repeatInstance);
@@ -87,10 +79,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   @override
   Widget build(BuildContext context) {
-    // final formInstance = ref
-    //     .watch(
-    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-    //     .requireValue;
+
     final formInstance = appLocator<FormInstance>();
 
     final List<FieldTemplate> tableColumns = useMemoized(() {

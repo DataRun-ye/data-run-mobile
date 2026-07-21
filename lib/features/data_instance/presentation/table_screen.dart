@@ -29,7 +29,6 @@ class TableScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final _isDialOpen = useValueNotifier(false);
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +77,6 @@ class TableScreen extends HookConsumerWidget {
         ],
       ),
       floatingActionButton: ActionFAB(
-        // openCloseDial: _isDialOpen,
         onAddNew: () {
           appLocator<NavigationService>().navigateToFormFlowBootstrapper(
               formId: formId, assignmentId: assignmentId);

@@ -49,7 +49,7 @@ Future<void> main() async {
 
       // Visual Debugging (The "Secret Sauce")
       options.attachScreenshot = true;
-      options.attachViewHierarchy = true;
+      // options.attachViewHierarchy = true;
       options.maxAttachmentSize = 1 * 1024 * 1024;
       // Performance (Keep it low to save your VM RAM/Disk)
       options.tracesSampleRate = 0.01;
@@ -106,7 +106,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Sentry.captureMessage('DATARUN-APP, Glitch is working, again!');
+    if (AppEnvironment.isDev) Sentry.captureMessage('DATARUN-APP, Glitch is working!');
     final authManager = ref.watch(authProvider);
     final language =
         ref.watch(preferenceProvider(Preference.language)) as String;
@@ -291,7 +291,6 @@ class App extends ConsumerWidget {
       dividerTheme: DividerThemeData(
         color: cs.primary,
         thickness: 0.3,
-        // space: 3,
         indent: 16,
         endIndent: 16,
       ),
@@ -353,28 +352,8 @@ class App extends ConsumerWidget {
           borderRadius: BorderRadius.circular(5),
           side: BorderSide(color: cs.outline.withValues(alpha: .3)),
         ),
-        // labelPadding: const EdgeInsets.symmetric(horizontal: 8),
       ),
       splashColor: cs.primary.withValues(alpha: 0.08),
-      // highlightColor: cs.primary.withValues(alpha:0.1),
-      //
-      // filterChipTheme: FilterChipThemeData(
-      //   selectedColor: cs.primary.withValues(alpha:0.16),
-      //   checkmarkColor: cs.primary,
-      //   backgroundColor: cs.surfaceVariant,
-      //   disabledColor: cs.onSurface.withValues(alpha:0.12),
-      //   labelStyle: base.textTheme.bodyMedium!,
-      //   secondaryLabelStyle:
-      //       base.textTheme.bodyMedium!.copyWith(color: cs.onPrimary),
-      //   side: BorderSide(color: cs.outline),
-      //   selectedShadowColor: cs.primary.withValues(alpha:0.24),
-      //   elevation: 0,
-      //   pressElevation: 2,
-      //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(8),
-      //   ),
-      // ),
     );
   }
 

@@ -18,10 +18,7 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final formInstance = ref
-    //     .watch(
-    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-    //     .requireValue;
+
     final formInstance = appLocator<FormInstance>();
 
     final managedTeamsAsync = ref.watch(managedTeamsProvider(

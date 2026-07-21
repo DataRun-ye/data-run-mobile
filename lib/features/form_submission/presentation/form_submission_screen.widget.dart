@@ -104,9 +104,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     final scrollController =
         useScrollControllerForAnimation(hideFabAnimController);
 
-    // final formInstance = ref
-    //     .watch(formInstanceProvider(submissionId: widget.submissionId))
-    //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
     final _buildBody = <Widget>[
@@ -212,9 +209,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   }
 
   Future<void> _showBottomSheet(FormInstance formInstance) async {
-    // final formInstance = ref
-    //     .watch(formInstanceProvider(submissionId: widget.submissionId))
-    //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
     final configurator = const ConfigureFormCompletionDialog();

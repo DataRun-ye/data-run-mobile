@@ -208,7 +208,9 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
   }
 
   /// Hook4: disable (soft‑delete) any rows not in [liveIds].
-  /// Subclasses must implement this, because only they know their `isDisabled` column.
+  /// disables any authoritative enabled items, if they are no longer in current sync scope
+  ///
+  /// Subclasses must implement this, because only they know their `disable/soft delete` column.
   @protected
   Future<void> disableStale(List<Object> liveIds) async {
     // override in entities with disabling requirements

@@ -21,10 +21,7 @@ class QDropDownWithSearchField extends HookConsumerWidget {
 
   getAutoComplete(
       List<FormOption> options, BuildContext context, WidgetRef ref) {
-    // final formInstance = ref
-    //     .watch(
-    //         formInstanceProvider(formMetadata: FormMetadataWidget.of(context)))
-    //     .requireValue;
+
     final formInstance = appLocator<FormInstance>();
 
     return ReactiveDropdownSearch<String, String>(

@@ -102,7 +102,7 @@ The repeat/data-value relational-looking tables are not the active form capture 
 
 These are bounded correctness or cleanup candidates, not settled architecture:
 
-Closed on `develop`: submission pull is excluded from the active manual and generated session registrations. `DataInstanceDatasource` remains an explicitly dormant implementation, while submission upload continues through `DataInstancesDao.upload()`. `test/dev/active_session_sync_registration_test.dart` locks the push-only registration boundary.
+Closed on `develop`: submission pull is excluded from the active manual and generated session registrations, and the unreferenced `DataInstanceDatasource` implementation has been removed. Submission upload continues through `DataInstancesDao.upload()`. `test/dev/active_session_sync_registration_test.dart` locks the push-only registration boundary.
 
 Draft saves now preserve `finishedEntryTime` instead of creating or advancing it; `markFinal()` remains the normal completion-time writer. `test/dev/data_submission_lifecycle_test.dart` characterizes both transitions.
 
@@ -114,7 +114,6 @@ Required multi-choice fields now reject empty lists in new and edited repeat row
 
 | Finding | Classification | Evidence | Required next proof |
 |---|---|---|---|
-| Pulled submission mapping does not satisfy the current generated Drift `DataInstance.fromJson` contract | `REACHABLE-INCOMPLETE` | `data_submission_datasource.dart` mapping differs from required Drift fields | Focused mapping test only if pull is later designed; do not repair it implicitly now |
 | Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `form_flow_bootstrapper_vm.dart` and `submission_list.provider.dart` use `canEditSubmissions || !isSynced` | Confirm deployed assignment values and define one edit gate |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
 | `user_form_permissions` is fetched/stored but no active authorization read was proven | `REACHABLE-INCOMPLETE` | `UserFormAccessesDatasource` registration and table/DAO references | Trace or test intended consumer before activation or removal |

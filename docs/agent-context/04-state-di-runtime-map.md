@@ -104,7 +104,6 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 8. `TeamDatasource`
 9. `UserFormAccessesDatasource`
 10. `AssignmentDatasource`
-11. `DataInstanceDatasource`
 
 Evidence: `SyncManager` builds its resource map from `appLocator.getAll<AbstractDatasource<dynamic>>()`; `SyncResourcesViewModel` calls `SyncManager.syncAll()`.
 

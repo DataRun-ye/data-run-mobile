@@ -58,7 +58,7 @@ Status legend:
 | Whole JSON update | ACTIVE | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | `updateData` starts at line 198 and writes `syncState: draft`, `formData`, timestamps, and client update time. | High | Editing a synced record likely rewrites it as draft while keeping existing `isToUpdate`; confirm server update semantics at runtime. |
 | Final sync upload | ACTIVE | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | `upload` starts at line 51; payload is `submissions.map((s) => s.toUpload())` at line 68; success sets `syncState: synced` and `isToUpdate: true` at lines 93-96. | High | Sync sends the whole JSON payload, including repeats as nested data. |
 | Upload payload shape | ACTIVE | `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart` | `toUpload()` includes `formData` directly at line 19 plus submission metadata. | High | No separate repeat row payload was found in active upload path. |
-| Remote submission import | ACTIVE | `packages/drun_sdk/lib/datasource/remote_data_sources/data_submission_datasource.dart` and `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | Data submission datasource is active injectable; DAO `fromApiJson` starts at line 29. Base datasource marks remote rows `isToUpdate: true` in `packages/drun_sdk/lib/datasource/base_datasource.dart:204`. | Medium | Server-submitted records arrive as whole `formData`; editing them again depends on preserving nested repeat row identity in that JSON. |
+| Remote submission import | INACTIVE | The dormant `DataInstanceDatasource` was removed after confirming it had no runtime imports or DI registration. `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` still contains an unused `fromApiJson` mapping inherited from its DAO mixin. | High | Production synchronization is push-only. Do not infer that server submissions are pulled into local form state from the remaining DAO parser. |
 | Submission table summaries | ACTIVE | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | `selectable` starts at line 562 and extracts display field values with `FormDataUtil.extractTemplateValue(...)` at lines 641-642. | High | Large repeat values can also affect list/table display, because summary extraction walks nested form data. |
 | Summary form data utility | ACTIVE | `packages/drun_sdk/lib/core/data_instance/form_data_util.dart` | `extractTemplateValue` reads nested form data and aggregates values. | High | Repeat-heavy submissions can have display cost before opening the form. |
 | Summary aggregation | ACTIVE | `packages/drun_sdk/lib/core/data_instance/form_data_aggregator.dart` | Used by `FormDataUtil`; contains example/debug main code too. | Medium | Active through summary extraction, but example code in the file is not evidence of runtime behavior. |
@@ -121,22 +121,22 @@ Confidence: high for static evidence; medium for runtime impact because a runtim
 
 Why this matters: server-submitted records with repeat rows can only preserve stable client row identity if the row UID survives load, edit, save, and upload. Static evidence shows UID read/set points exist, but the central save reduction path appears not to include it.
 
-## Server-Submitted Record Edit Map
+## Synced Local Record Edit Map
 
 Active path:
 
-1. Remote submissions are imported by active `DataInstanceDatasource`/DAO mapping into `DataInstance`.
-2. Base datasource marks remote items `isToUpdate: true`.
-3. Edit routes load the existing `DataInstance` by `submissionId`.
+1. A locally created submission is uploaded through `DataInstancesDao.upload()`.
+2. A successful upload leaves the local row in `synced` state with `isToUpdate: true`.
+3. Edit routes load that existing local `DataInstance` by `submissionId`.
 4. `FormFlowBootstrapperVm` builds the form from existing `instance.formData`.
 5. `FormSubmissionScreen` checks `submissionEditStatusProvider`.
 6. `FormInstance.saveFormData()` writes the edited whole JSON back through `dataInstancesDao.updateData`.
-7. `markSubmissionAsFinal()` makes it eligible for upload.
+7. `markSubmissionAsFinal()` makes it eligible for another upload.
 8. Upload sends one whole payload and marks successful records synced/updateable.
 
 Classification: ACTIVE.
 
-Confidence: medium-high. Static call paths are clear, but edit permissions and server update semantics need runtime confirmation with a real synced record.
+Confidence: high for the local save/upload path; medium for edit permissions and server update semantics, which still need runtime confirmation with a synced local record. There is no active server-submission pull path.
 
 Why this matters: editing a synced repeat-heavy record can rebuild and resave all repeat rows. If repeat UIDs are missing from saved JSON, update matching may be unstable on the server.
 

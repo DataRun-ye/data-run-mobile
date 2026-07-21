@@ -220,7 +220,7 @@ Observations only:
   - `lib/features/data_instance/application/table.providers.dart` and `table_controller.provider.dart` manage current table filters, selection, delete, and sync.
 - Repeat row editing uses `EditRowScreen`; the unreachable dialog/panel path was removed.
 - Value/display mapping has multiple layers:
-  - `MapValueToDisplay`, `ValueTypeValueDisplay`, `SubmissionTableCell`, `DataValueRepository`, and field-level user-friendly value helpers overlap in responsibility.
+  - `MapValueToDisplay`, `ValueTypeValueDisplay`, `SubmissionTableCell`, `DisplayValueLookup`, and field-level user-friendly value helpers overlap in responsibility.
 
 ## 9. Risk map for large forms with 200-300 repeat rows
 
@@ -309,7 +309,7 @@ Treat these as high-risk files until the active paths above are fully understood
 
 Also do not delete these until their old/partial roles are explicitly resolved:
 
-- `lib/core/element_instance/data_value_repository.dart`
+- `lib/core/element_instance/display_value_lookup.dart`
 - `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart`
 - `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
 - `packages/drun_sdk/lib/datasource/remote_data_sources/metadata_submission_datasource.dart`

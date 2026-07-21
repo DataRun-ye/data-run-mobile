@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
 @injectable
-class DataValueRepository {
+class DisplayValueLookup {
   static AppDatabase get db => DSdk.db;
 
   Future<String?> getOrgUnitById(String orgUnitUid) async {

@@ -20,8 +20,8 @@ import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
 import 'package:datarunmobile/core/auth/auth_storage.dart' as _i324;
 import 'package:datarunmobile/core/auth/token_refresher.dart' as _i48;
 import 'package:datarunmobile/core/common/confirmation_service.dart' as _i18;
-import 'package:datarunmobile/core/element_instance/data_value_repository.dart'
-    as _i730;
+import 'package:datarunmobile/core/element_instance/display_value_lookup.dart'
+    as _i735;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
     as _i595;
 import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
@@ -94,7 +94,7 @@ Future<_i174.GetIt> setupGlobalDependencies(
     preResolve: true,
   );
   gh.factory<_i64.AuthApi>(() => _i64.AuthApi());
-  gh.factory<_i730.DataValueRepository>(() => _i730.DataValueRepository());
+  gh.factory<_i735.DisplayValueLookup>(() => _i735.DisplayValueLookup());
   gh.factory<_i602.SyncManager>(() => _i602.SyncManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
   gh.factory<_i415.RuleEffectStateFactory>(
@@ -104,8 +104,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i658.ConnectivityService());
   gh.lazySingleton<_i342.FieldContextRegistry>(
       () => _i342.FieldContextRegistry());
-  gh.factory<_i244.MapValueToDisplay>(() =>
-      _i244.MapValueToDisplay(repository: gh<_i730.DataValueRepository>()));
   gh.factory<_i935.AssignmentService>(() => _i1027.AssignmentServiceImpl());
   gh.factory<_i258.FormTemplateService>(() => _i489.FormTemplateServiceImpl());
   gh.factory<_i537.StorageService>(() => sdkModule.getStorageService(
@@ -115,6 +113,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i34.FormInstanceService>(() => _i756.FormInstanceServiceImpl());
   gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
       optionSetService: gh<_i158.OptionSetService>()));
+  gh.factory<_i244.MapValueToDisplay>(
+      () => _i244.MapValueToDisplay(lookup: gh<_i735.DisplayValueLookup>()));
   gh.factoryParam<_i747.FormMetadataService, _i54.FormMetadata, dynamic>((
     formMetadata,
     _,

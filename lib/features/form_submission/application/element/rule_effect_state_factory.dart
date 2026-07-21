@@ -12,7 +12,6 @@ class RuleEffectStateFactory {
     // required bool applyForEvent,
     required FormElementState<T> elementState,
     required List<RuleAction> calcResult,
-    // DataValueRepository? valueStore,
   }) {
     unsupportedRuleActions.clear();
     FormElementState<T> formElementState = elementState.copyWith();

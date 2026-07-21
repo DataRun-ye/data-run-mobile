@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:d_sdk/core/data_instance/field_value.dart';
 import 'package:d_sdk/core/util/string_extension.dart';
 import 'package:d_sdk/database/shared/value_type.dart';
-import 'package:datarunmobile/core/element_instance/data_value_repository.dart';
+import 'package:datarunmobile/core/element_instance/display_value_lookup.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_date_time_picker/custom_date_pickers.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -12,9 +12,9 @@ import 'package:intl/intl.dart';
 
 @injectable
 class MapValueToDisplay {
-  MapValueToDisplay({required this.repository});
+  MapValueToDisplay({required this.lookup});
 
-  final DataValueRepository repository;
+  final DisplayValueLookup lookup;
 
   FutureOr<String?> map(ValueType type, dynamic value) {
     return switch (type) {
@@ -27,15 +27,15 @@ class MapValueToDisplay {
                 : Intl.message('no')
             : value.toString(),
       ValueType.OrganisationUnit => value is String && value.isNotNullOrEmpty
-          ? repository.getOrgUnitById(value)
+          ? lookup.getOrgUnitById(value)
           : value.toString(),
       ValueType.Team => value is String && value.isNotNullOrEmpty
-          ? repository.getTeamById(value)
+          ? lookup.getTeamById(value)
           : value.toString(),
       ValueType.SelectOne || ValueType.SelectMulti => value is String
-          ? repository.getOptionsByIds(value.split(','))
+          ? lookup.getOptionsByIds(value.split(','))
           : (value is List
-              ? repository.getOptionsByIds(value.cast<String>())
+              ? lookup.getOptionsByIds(value.cast<String>())
               : value?.toString()),
       _ => value,
     };

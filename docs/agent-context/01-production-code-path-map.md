@@ -51,9 +51,9 @@ Uncertain:
 
 - `packages/drun_sdk/lib/di/injection.config.dart:69` defines `initActiveSessionContextScope`, but this scan only found app calls to `registerUserSdkDeps` and `setupSdkLocator`.
 
-Obsolete-looking:
-
-- `packages/drun_sdk/lib/datasource/remote_data_sources/form_template_version_datasource.dart:6-7` has inactive/commented Injectable annotations. Form versions are loaded by `DataFormTemplateDatasource` instead.
+Obsolete SDK form/sync/query utilities and unregistered datasources were removed
+after app-plus-SDK import, DI, sync-registration, and test closure checks. Form
+versions continue through `DataFormTemplateDatasource`.
 
 ## 3. Active form-loading path
 
@@ -190,7 +190,7 @@ Inactive or incomplete-looking:
 - `repeat_instances`:
   - Table and DAO exist: `packages/drun_sdk/lib/database/app_database.dart:23,50`, `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart:6`.
   - App repeat rendering/editing does not use the table; repeats are stored inside `DataInstance.formData` as nested JSON lists.
-  - `packages/drun_sdk/lib/datasource/remote_data_sources/repeat_instance_datasource.dart:6-8` has commented `@Order` and `@Injectable`.
+  - The unregistered repeat-instance datasource was removed.
   - `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart:43` comments out `repeatInstance`.
   - Classification: inactive/incomplete-looking for current capture flow.
 - `data_values`:
@@ -325,7 +325,6 @@ Also do not delete these until their old/partial roles are explicitly resolved:
 - `packages/drun_sdk/lib/database/tables/repeat_instances.table.dart`
 - `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart`
 - `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/repeat_instance_datasource.dart`
 - `packages/drun_sdk/lib/datasource/remote_data_sources/metadata_submission_datasource.dart`
 
 ## Suggested next investigation step

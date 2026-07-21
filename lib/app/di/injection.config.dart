@@ -32,8 +32,6 @@ import 'package:datarunmobile/core/network/reactive_connectivity_service.dart'
     as _i658;
 import 'package:datarunmobile/core/resources/resource_manager.provider.dart'
     as _i683;
-import 'package:datarunmobile/core/services/user_session_manager.service.dart'
-    as _i775;
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart' as _i492;
 import 'package:datarunmobile/core/sync/sync_scheduler.dart' as _i658;
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart' as _i602;
@@ -139,8 +137,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
   gh.factory<_i139.SessionStorage>(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
-  gh.factory<_i775.UserSessionService>(
-      () => _i775.UserSessionService(gh<_i460.SharedPreferences>()));
   gh.factory<_i244.MapValueToDisplay>(() => _i244.MapValueToDisplay(
         resources: gh<_i683.ResourceManager>(),
         repository: gh<_i730.DataValueRepository>(),

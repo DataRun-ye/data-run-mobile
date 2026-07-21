@@ -138,8 +138,7 @@ Why it matters: datasource registration order and type shape affect config fetch
 | User org unit provider | OBSOLETE-REMOVED | Its only found consumer was the removed comment-only org-unit widget; the provider and generated family were then removed. | High | Active org-unit metadata and display paths do not use this provider. |
 | Party resolver provider | INCOMPLETE | `lib/core/party/providers/party_resolver.provider.dart` | Generated provider exists; static usage found only generated code. Implementation contains placeholder principals and placeholder party IDs. | High | Party/manifest tables should not be treated as active assignment/form availability until runtime proves this provider is used. |
 | Form integrity provider | UNKNOWN | `lib/data/form_integrity_check_notifier.provider.dart` | Generated provider exists; static usage found only generated code. | Medium | It may be intended for validation UI, but not proven active. |
-| NMC worker sync progress provider | UNKNOWN | `lib/core/sync_manager/nmc_worker/sync_progress.provider.dart` | Generated provider exists; static usage found only generated code. | Medium | Do not confuse with active `SyncResourcesViewModel`/`SyncManager` path. |
-| Riverpod sync service provider | LEGACY-RISK | `lib/core/sync_manager/sync_service.provider.dart` | `SyncService.performSync(...)` has real provider code but the actual download is commented and active sync route uses `SyncManager`. Constants are referenced by old user-session manager code. | Medium | This looks like an older sync facade, not the active config download path. |
+| Old Riverpod sync service and NMC worker providers | OBSOLETE-REMOVED | No watcher, worker/plugin registration, or active call existed. The facade only checked connectivity and wrote preference flags. | High | Active config fetching remains `SyncResourcesViewModel` plus `SyncManager`. |
 
 ## Active Stacked Surface
 
@@ -181,7 +180,7 @@ These are observations only; no removal is recommended yet.
 | Login UI | `LoginView` vs `LoginScreen` | `LoginView` is routed; `LoginScreen` is only self-referenced and commented old-router referenced. |
 | Form instance state | Scoped GetIt `FormInstance`; obsolete Riverpod provider removed | Active screen uses `appLocator<FormInstance>()`. |
 | Form/field state | Active `reactive_forms`/`FormInstance`; obsolete Riverpod provider sketches removed | Active form bootstrap builds `FormGroup` and `Section`. |
-| Sync orchestration | `SyncManager`/`SyncResourcesViewModel` vs `SyncService` provider | Routed sync uses `SyncManager`; the duplicate injectable stack was removed, while the provider remains unproven. |
+| Sync orchestration | `SyncManager`/`SyncResourcesViewModel` | Routed sync uses this path; both alternate app-side sync stacks were removed. |
 | SDK datasource registration | Manual `registerUserSdkDeps(...)` vs generated `initActiveSessionContextScope(...)` | Active auth manager calls manual function; generated function not called by static refs. |
 | Team state | `lib/data/teams.provider.dart`; obsolete demo state removed | Assignment-scoped team selection uses `lib/data/teams.provider.dart`. |
 
@@ -194,7 +193,7 @@ These are observations only; no removal is recommended yet.
 | Multiple registrations of same type | ACTIVE | High risk: datasources require `enableRegisteringMultipleInstancesOfOneType()` and raw `AbstractDatasource` registrations. Typed vs untyped changes can alter `getAll(...)` results. | `auth_manager.dart`, `init_active_session_scope.dart`, `sync_manager.dart` |
 | Form state ownership | ACTIVE | High risk: form widgets are Riverpod/Hook widgets, but active form data lives in `FormInstance` and `reactive_forms` controls from GetIt scope. | `form_flow_bootstrapper_vm.dart`, `form_instance.dart`, `field.widget.dart`, repeat widgets |
 | Field key registry | ACTIVE | High risk: `FieldContextRegistry` is app-level lazy singleton but cleared during form screen init and used by form instance focus/scroll. | `field_context_registry.dart`, `form_submission_screen.widget.dart`, `form_instance.dart` |
-| Sync stack duplication | LEGACY-RISK | The duplicate injectable stack was removed. `sync_service.provider.dart` remains an unproven alternate abstraction. | `sync_resources_viewmodel.dart`, `sync_manager.dart`, `sync_service.provider.dart` |
+| Sync stack duplication | RESOLVED | Duplicate app-side injectable, Riverpod, and NMC worker stacks were removed. | `sync_resources_viewmodel.dart`, `sync_manager.dart` |
 | Generated files | ACTIVE | High risk: Stacked, injectable, Riverpod, and Drift generated files influence runtime. Manual edits may be overwritten; stale generated code can mislead scans. | `app.router.dart`, `app.locator.dart`, `injection.config.dart`, active `*.provider.g.dart`, Drift generated DB files |
 | Conditional provider paths | INCOMPLETE | Reference field metadata path is only exercised by forms containing `ValueType.Reference`; static route reachability alone cannot prove production usage frequency. | `form_widget_factory.dart`, `q_reference_drop_down_search_field.widget.dart`, `metadata_submission_update.provider.dart` |
 
@@ -248,7 +247,6 @@ Sync/runtime duplication:
 
 - `lib/core/sync_manager/sync_manager.dart`
 - `lib/features/sync/presentation/sync_resources_viewmodel.dart`
-- `lib/core/sync_manager/sync_service.provider.dart`
 
 ## Questions Requiring Runtime Confirmation
 

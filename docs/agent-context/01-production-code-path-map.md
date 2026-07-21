@@ -175,7 +175,7 @@ Inactive or obsolete-looking:
 
 - The commented Riverpod form-instance/element/provider experiments were removed.
 - `lib/core/form/form_state/form_state.provider.dart` remains a commented/incomplete alternate form-state approach.
-- Several `StateProvider`/`StateNotifier` form-state files under `lib/features/form/application/form/form_state/` look experimental or commented.
+- The entirely commented `lib/features/form/application/form/form_state/` experiment was removed; active form state remains under `features/form_submission`.
 
 ## 7. Form-related DB tables/code paths that appear inactive or incomplete
 

@@ -104,10 +104,11 @@ These are bounded correctness or cleanup candidates, not settled architecture:
 
 Closed on `develop`: submission pull is excluded from the active manual and generated session registrations. `DataInstanceDatasource` remains an explicitly dormant implementation, while submission upload continues through `DataInstancesDao.upload()`. `test/dev/active_session_sync_registration_test.dart` locks the push-only registration boundary.
 
+Draft saves now preserve `finishedEntryTime` instead of creating or advancing it; `markFinal()` remains the normal completion-time writer. `test/dev/data_submission_lifecycle_test.dart` characterizes both transitions.
+
 | Finding | Classification | Evidence | Required next proof |
 |---|---|---|---|
 | Pulled submission mapping does not satisfy the current generated Drift `DataInstance.fromJson` contract | `REACHABLE-INCOMPLETE` | `data_submission_datasource.dart` mapping differs from required Drift fields | Focused mapping test only if pull is later designed; do not repair it implicitly now |
-| Draft `updateData()` writes `finishedEntryTime` | `ACTIVE-CORE` contract bug | `data_submissions_dao.dart`; `FormInstance.saveFormData()` calls it for ordinary save | DAO characterization for draft save and completion transition |
 | Hidden required validator lifecycle does not reliably implement the stated policy | `ACTIVE-CORE` contract bug | `form_element.dart`: value clearing is active, but required-validator removal/reapplication is inconsistent | Focused hide/show/required test before changing expression or form architecture |
 | Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `form_flow_bootstrapper_vm.dart` and `submission_list.provider.dart` use `canEditSubmissions || !isSynced` | Confirm deployed assignment values and define one edit gate |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
@@ -148,7 +149,6 @@ This is an ordering framework, not a commitment to months of infrastructure work
 
 Use small behavior PRs for confirmed conflicts that can affect live data or repeatedly mislead investigation:
 
-- correct draft/completion `finishedEntryTime` semantics;
 - correct hidden required validator hide/show behavior;
 - return to the known team-scoping bug as its own slice.
 

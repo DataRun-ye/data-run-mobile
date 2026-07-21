@@ -260,7 +260,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
       DataInstancesCompanion(
           syncState: Value(InstanceSyncStatus.draft),
           formData: Value.absentIfNull(data),
-          finishedEntryTime: now,
           lastModifiedDate: now,
           updatedAtClient: now),
     );

@@ -24,11 +24,9 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
     //     .requireValue;
     final formInstance = appLocator<FormInstance>();
 
-    final managedTeamsAsync = ref.watch(
-        managedTeamsProvider(team: formInstance.formMetadata.assignmentId));
-
-    // final managedTeamsAsync = ref.watch(managedTeamsProvider(
-    //     team: formInstance.formMetadata.assignmentModel.team.id));
+    final managedTeamsAsync = ref.watch(managedTeamsProvider(
+      assignmentId: formInstance.formMetadata.assignmentId,
+    ));
 
     return AsyncValueWidget(
       value: managedTeamsAsync,

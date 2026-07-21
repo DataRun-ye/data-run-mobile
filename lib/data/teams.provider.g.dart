@@ -180,13 +180,7 @@ final class ManagedTeamsProvider extends $FunctionalProvider<
         $FutureModifier<List<IdentifiableModel>>,
         $FutureProvider<List<IdentifiableModel>> {
   ManagedTeamsProvider._(
-      {required ManagedTeamsFamily super.from,
-      required ({
-        String? team,
-        String? activity,
-        String? assignmentId,
-      })
-          super.argument})
+      {required ManagedTeamsFamily super.from, required String? super.argument})
       : super(
           retry: null,
           name: r'managedTeamsProvider',
@@ -202,7 +196,7 @@ final class ManagedTeamsProvider extends $FunctionalProvider<
   String toString() {
     return r'managedTeamsProvider'
         ''
-        '$argument';
+        '($argument)';
   }
 
   @$internal
@@ -213,16 +207,10 @@ final class ManagedTeamsProvider extends $FunctionalProvider<
 
   @override
   FutureOr<List<IdentifiableModel>> create(Ref ref) {
-    final argument = this.argument as ({
-      String? team,
-      String? activity,
-      String? assignmentId,
-    });
+    final argument = this.argument as String?;
     return managedTeams(
       ref,
-      team: argument.team,
-      activity: argument.activity,
-      assignmentId: argument.assignmentId,
+      assignmentId: argument,
     );
   }
 
@@ -237,17 +225,10 @@ final class ManagedTeamsProvider extends $FunctionalProvider<
   }
 }
 
-String _$managedTeamsHash() => r'c0a5f287963ee04bfff4bee467ee5a32358cc2e8';
+String _$managedTeamsHash() => r'260a82886e29c06f02bb61ffc370871f3220d347';
 
 final class ManagedTeamsFamily extends $Family
-    with
-        $FunctionalFamilyOverride<
-            FutureOr<List<IdentifiableModel>>,
-            ({
-              String? team,
-              String? activity,
-              String? assignmentId,
-            })> {
+    with $FunctionalFamilyOverride<FutureOr<List<IdentifiableModel>>, String?> {
   ManagedTeamsFamily._()
       : super(
           retry: null,
@@ -258,15 +239,9 @@ final class ManagedTeamsFamily extends $Family
         );
 
   ManagedTeamsProvider call({
-    String? team,
-    String? activity,
     String? assignmentId,
   }) =>
-      ManagedTeamsProvider._(argument: (
-        team: team,
-        activity: activity,
-        assignmentId: assignmentId,
-      ), from: this);
+      ManagedTeamsProvider._(argument: assignmentId, from: this);
 
   @override
   String toString() => r'managedTeamsProvider';

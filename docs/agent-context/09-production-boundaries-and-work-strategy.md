@@ -14,7 +14,7 @@ When sources disagree, use this order:
 4. Focused maps in this directory as evidence snapshots.
 5. Names, comments, generated registrations, old tests, and old documentation.
 
-The earlier numbered maps remain useful evidence. Their classification or implementation status may be stale where this document records a later finding. In particular, `07-repeat-uid-contract.md` describes the backend-compatible repeat metadata shape, but its "planned implementation" status is stale: compatible repeat metadata generation is now present on `main`. Revalidate the touched call path before changing it.
+The earlier numbered maps remain useful evidence. Their classification or implementation status may be stale where this document records a later finding. In particular, `07-repeat-uid-contract.md` describes the backend-compatible repeat metadata shape, but its "planned implementation" status is stale: compatible repeat metadata generation is now present on `develop`. Revalidate the touched call path before changing it.
 
 ## Classification Legend
 

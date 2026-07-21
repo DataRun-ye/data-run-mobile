@@ -113,7 +113,7 @@ Treat these as inactive, incomplete, or legacy-risk unless runtime evidence prov
 - `packages/drun_sdk/lib/datasource/remote_data_sources/repeat_instance_datasource.dart`
 - `packages/drun_sdk/lib/database/tables/data_values.table.dart` as active capture storage
 - `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
-- `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart`
+- `lib/data/metadata_submission_update.provider.dart` and its reference-field UI remain reachable but incomplete; do not infer active persistence from their names.
 - old `go_router` files under `lib/app/app_routes/`
 
 These files may contain useful ideas or stale design intent, but they are not authority for current behavior.

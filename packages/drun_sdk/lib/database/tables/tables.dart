@@ -10,7 +10,6 @@ export 'form_template_versions.table.dart';
 export 'form_templates.table.dart';
 export 'identifiable.entity.mixin.dart';
 export 'managed_teams.table.dart';
-export 'metadata_submissions.table.dart';
 export 'option_sets.table.dart';
 export 'options.table.dart';
 export 'org_units.table.dart';

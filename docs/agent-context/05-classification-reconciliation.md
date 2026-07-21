@@ -42,7 +42,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `EditRowPanel` and dialog repeat edit path | LEGACY-RISK in `02` | LEGACY-RISK | `showEditDialog(...)` exists and builds `EditRowPanel`, but active `_showEditPanel(...)` always takes the `if (true)` branch and navigates to `EditRowScreen`. |
 | Riverpod as a library | ACTIVE | ACTIVE | Root `ProviderScope` and many providers are active, but every provider still needs per-provider evidence. Generated `*.provider.g.dart` files are not active unless their provider is watched by a core path. |
 | Old team `StateNotifierProvider` files | Active-looking Riverpod state | OBSOLETE-REMOVED | The only screen used hard-coded demo data, had no active route, and was referenced only by a comment-only dashboard. Active assignment filtering remains in `lib/data/teams.provider.dart`. |
-| `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | LEGACY-RISK | They are in generated DI, but active sync route uses `SyncResourcesViewModel` plus `SyncManager`. No routed call to `SyncCoordinator` was found. |
+| `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | OBSOLETE-REMOVED | Generated DI was their only outside reference. The duplicate stack and private progress models were removed; active sync remains `SyncResourcesViewModel` plus `SyncManager`. |
 | `syncServiceProvider` | Provider exists | LEGACY-RISK | `performSync` does not perform the real download; active config sync uses `SyncManager.syncAll()`. Constants may still be referenced by old services. |
 | SDK `initActiveSessionContextScope(...)` | Generated active session scope | LEGACY-RISK | Generated typed datasource registration exists, but active auth calls manual `registerUserSdkDeps(appLocator)`. Do not refactor the generated scope assuming production uses it. |
 | `UserDatasource` | Mixed/uncertain in `03` | LEGACY-RISK | It is registered as concrete `UserDatasource`, not collected by `SyncManager.getAll<AbstractDatasource>()`; active profile fetch is `AuthApi.getUserProfile`. |
@@ -157,9 +157,6 @@ Do not delete these yet, but they are strong candidates for demotion/removal aft
 - `lib/data/controller.provider.dart`
 - `lib/data/org_unit/ou_picker_data_source.provider.dart`
 - `lib/features/form_submission/presentation/field/date_time_main.dart`
-- `lib/core/sync/sync_coordinator.dart`
-- `lib/core/sync/sync_executor.dart`
-- `lib/core/sync/sync_progress_notifier.dart`
 - `lib/core/sync_manager/sync_service.provider.dart`
 - `packages/drun_sdk/lib/di/injection.config.dart` generated `initActiveSessionContextScope(...)`
 - `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart`
@@ -172,11 +169,10 @@ Do not delete these yet, but they are strong candidates for demotion/removal aft
 
 1. Do real production forms contain `ValueType.Reference` fields? If yes, the reference widget path is reachable, but its provider still appears incomplete.
 2. Are `user_form_permissions` ever used for active access decisions, or is `assignment_forms` the only active permission gate?
-3. Can `SyncCoordinator` or `SyncExecutor` be triggered by background work not visible in static route scans?
-4. Does the generated SDK `initActiveSessionContextScope(...)` ever run after code generation or through tests, or is manual `registerUserSdkDeps(...)` the only production path?
-5. Which synced resources are semantically required for current production forms, beyond being registered in the sync loop?
-6. Are Stacked `SnackbarService` or `BottomSheetService` used by any runtime feature outside static Dart references?
-7. Should `sync_summaries` remain a core table, or is it supporting/debug sync telemetry?
+3. Does the generated SDK `initActiveSessionContextScope(...)` ever run after code generation or through tests, or is manual `registerUserSdkDeps(...)` the only production path?
+4. Which synced resources are semantically required for current production forms, beyond being registered in the sync loop?
+5. Are Stacked `SnackbarService` or `BottomSheetService` used by any runtime feature outside static Dart references?
+6. Should `sync_summaries` remain a core table, or is it supporting/debug sync telemetry?
 
 ## Next Step
 

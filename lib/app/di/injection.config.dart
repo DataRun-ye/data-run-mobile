@@ -34,10 +34,7 @@ import 'package:datarunmobile/core/resources/resource_manager.provider.dart'
     as _i683;
 import 'package:datarunmobile/core/services/user_session_manager.service.dart'
     as _i775;
-import 'package:datarunmobile/core/sync/sync_coordinator.dart' as _i432;
-import 'package:datarunmobile/core/sync/sync_executor.dart' as _i148;
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart' as _i492;
-import 'package:datarunmobile/core/sync/sync_progress_notifier.dart' as _i28;
 import 'package:datarunmobile/core/sync/sync_scheduler.dart' as _i658;
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart' as _i602;
 import 'package:datarunmobile/core/user_session/session_storage.dart' as _i139;
@@ -111,10 +108,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());
-  gh.lazySingleton<_i28.SyncProgressNotifier>(
-    () => _i28.SyncProgressNotifier(),
-    dispose: (i) => i.dispose(),
-  );
   gh.lazySingleton<_i939.TableSelectionRepository>(
     () => _i939.TableSelectionRepository(),
     dispose: (i) => i.dispose(),
@@ -140,8 +133,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
       ));
   gh.factory<_i325.TableRepository>(() => _i128.DriftTableRepository());
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
-  gh.factory<_i148.SyncExecutor>(() =>
-      _i148.SyncExecutor(progressNotifier: gh<_i28.SyncProgressNotifier>()));
   gh.factory<_i602.SyncManager>(
       () => _i602.SyncManager(gh<_i658.ConnectivityService>()));
   gh.factory<_i492.SyncMetadataRepository>(
@@ -166,11 +157,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i658.SyncScheduler>(() => _i658.SyncScheduler(
         metadataRepo: gh<_i492.SyncMetadataRepository>(),
         connectivity: gh<_i658.ConnectivityService>(),
-      ));
-  gh.factory<_i432.SyncCoordinator>(() => _i432.SyncCoordinator(
-        gh<_i492.SyncMetadataRepository>(),
-        gh<_i658.SyncScheduler>(),
-        gh<_i148.SyncExecutor>(),
       ));
   gh.factory<_i656.AuthInterceptor>(
       () => _i656.AuthInterceptor(authStorage: gh<_i324.AuthStorage>()));

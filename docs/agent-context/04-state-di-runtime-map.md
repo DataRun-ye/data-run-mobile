@@ -55,7 +55,7 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | `ChangeNotifier` | ACTIVE | `AuthManager extends ChangeNotifier`; `LocaleService extends ChangeNotifier`; `ref_extension.provider.dart` wraps them for Riverpod. | High | Changing notifier ownership can break root auth/locale updates. |
 | `StateNotifierProvider` / `StateProvider` old Riverpod style | OBSOLETE-REMOVED for team management | The isolated team-management state and hard-coded demo screen were removed after confirming they had no active route or consumer. | High | This does not classify other legacy Riverpod providers; each still requires consumer evidence. |
 | Old `go_router` path | OBSOLETE-REMOVED | The unimported `lib/app/app_routes/` experiment was removed; production `lib/main.dart` uses the generated Stacked router. | High | Navigation evidence must come from the active Stacked route registration and callers. |
-| `rxdart` `BehaviorSubject` sync progress stack | LEGACY-RISK | `SyncProgressNotifier`, `SyncExecutor`, and `SyncCoordinator` are injectable, but routed sync screen uses `SyncManager` directly. References outside generated DI are not proven active. | Medium | There appear to be two sync progress stacks. Changing the inactive-looking one may not affect production sync. |
+| `rxdart` `BehaviorSubject` sync progress stack | OBSOLETE-REMOVED | `SyncProgressNotifier`, `SyncExecutor`, and `SyncCoordinator` were wired only to each other by generated DI and had no runtime retrieval. | High | Active synchronization continues through `SyncManager` and SDK progress events. |
 
 ## Active DI And Scope Map
 
@@ -166,7 +166,7 @@ Why it matters: datasource registration order and type shape affect config fetch
 | OBSOLETE-REMOVED | Commented form-state adjunct providers/widgets | Element-properties, submission-creation, popup-section, old org-unit field, and old repeat edit-panel files had no executable implementation or consumer. | High | Active draft creation, form rendering, org-unit fields, and repeat editing use separate paths. |
 | INACTIVE | `lib/features/form_submission/presentation/field/date_time_main.dart` | Demo path: contains its own `runApp(const MyApp())`; static search found no import/use from production entrypoint. | High | Demo/test entrypoint, not production date field path. |
 | OBSOLETE-REMOVED | Old team-management feature and dashboard demo | The screen used hard-coded team summaries, had no route, and was referenced only by a comment-only dashboard. | High | Active assignment/team behavior continues through SDK team persistence and `lib/data/teams.provider.dart`. |
-| LEGACY-RISK | `lib/core/sync/sync_coordinator.dart`, `sync_executor.dart`, `sync_progress_notifier.dart` | Injectable registrations exist, but active `SyncResourcesViewModel` uses `SyncManager`; no routed call to `SyncCoordinator` found. | Medium | Duplicate sync state path can confuse refactors. |
+| OBSOLETE-REMOVED | Duplicate coordinator/executor/progress sync stack | Generated DI was its only outside reference; the stack and its private progress models were removed. `SyncScheduler` and `SyncMetadataRepository` remain active. | High | Sync ownership is now clearer without changing the active fetch path. |
 | INCOMPLETE | `lib/core/party/providers/party_resolver.provider.dart` | Placeholder user/team/party IDs; generated provider exists but no static use outside generated file. | High | Party resolution appears not production-ready. |
 | INCOMPLETE | `lib/data/metadata_submission_update.provider.dart` | Provider is used by Reference field widgets but currently returns empty list after commented metadata-submission lookup; production form JSON use of `ValueType.Reference` was not confirmed. | High | Reference fields are reachable by value type, but data backing is incomplete and not proven core-active. |
 | LEGACY-RISK | `packages/drun_sdk/lib/di/injection.config.dart` generated `initActiveSessionContextScope(...)` | Generated typed datasource registration exists but no call was found; active user scope calls manual `registerUserSdkDeps(...)`. | Medium | Future DI regeneration could revive or alter this path. |
@@ -181,7 +181,7 @@ These are observations only; no removal is recommended yet.
 | Login UI | `LoginView` vs `LoginScreen` | `LoginView` is routed; `LoginScreen` is only self-referenced and commented old-router referenced. |
 | Form instance state | Scoped GetIt `FormInstance`; obsolete Riverpod provider removed | Active screen uses `appLocator<FormInstance>()`. |
 | Form/field state | Active `reactive_forms`/`FormInstance`; obsolete Riverpod provider sketches removed | Active form bootstrap builds `FormGroup` and `Section`. |
-| Sync orchestration | `SyncManager`/`SyncResourcesViewModel` vs `SyncCoordinator`/`SyncExecutor`/`SyncProgressNotifier` vs `SyncService` provider | Routed sync uses `SyncManager`; other stacks are injectable/provider code but not proven routed. |
+| Sync orchestration | `SyncManager`/`SyncResourcesViewModel` vs `SyncService` provider | Routed sync uses `SyncManager`; the duplicate injectable stack was removed, while the provider remains unproven. |
 | SDK datasource registration | Manual `registerUserSdkDeps(...)` vs generated `initActiveSessionContextScope(...)` | Active auth manager calls manual function; generated function not called by static refs. |
 | Team state | `lib/data/teams.provider.dart`; obsolete demo state removed | Assignment-scoped team selection uses `lib/data/teams.provider.dart`. |
 
@@ -191,10 +191,10 @@ These are observations only; no removal is recommended yet.
 | --- | --- | --- | --- |
 | Locator identity | UNKNOWN | App `appLocator` comes from `StackedLocator.instance.locator`; SDK uses `GetIt.instance`. They appear to cooperate in the current app, but static scan should be confirmed at runtime. | `lib/app/di/injection.dart`, `packages/drun_sdk/lib/di/injection.dart` |
 | Scope nesting | ACTIVE | High risk: user scope and form submission scope are both GetIt scopes. A service lookup may resolve from current form scope, user scope, or root scope depending on current stack. | `lib/core/auth/auth_manager.dart`, `form_flow_bootstrapper_vm.dart`, `form_submission_screen.widget.dart` |
-| Multiple registrations of same type | ACTIVE | High risk: datasources require `enableRegisteringMultipleInstancesOfOneType()` and raw `AbstractDatasource` registrations. Typed vs untyped changes can alter `getAll(...)` results. | `auth_manager.dart`, `init_active_session_scope.dart`, `sync_manager.dart`, `sync_executor.dart` |
+| Multiple registrations of same type | ACTIVE | High risk: datasources require `enableRegisteringMultipleInstancesOfOneType()` and raw `AbstractDatasource` registrations. Typed vs untyped changes can alter `getAll(...)` results. | `auth_manager.dart`, `init_active_session_scope.dart`, `sync_manager.dart` |
 | Form state ownership | ACTIVE | High risk: form widgets are Riverpod/Hook widgets, but active form data lives in `FormInstance` and `reactive_forms` controls from GetIt scope. | `form_flow_bootstrapper_vm.dart`, `form_instance.dart`, `field.widget.dart`, repeat widgets |
 | Field key registry | ACTIVE | High risk: `FieldContextRegistry` is app-level lazy singleton but cleared during form screen init and used by form instance focus/scroll. | `field_context_registry.dart`, `form_submission_screen.widget.dart`, `form_instance.dart` |
-| Sync stack duplication | LEGACY-RISK | There are multiple sync abstractions; active config fetching uses one, but generated DI registers another. | `sync_resources_viewmodel.dart`, `sync_manager.dart`, `sync_coordinator.dart`, `sync_executor.dart`, `sync_service.provider.dart` |
+| Sync stack duplication | LEGACY-RISK | The duplicate injectable stack was removed. `sync_service.provider.dart` remains an unproven alternate abstraction. | `sync_resources_viewmodel.dart`, `sync_manager.dart`, `sync_service.provider.dart` |
 | Generated files | ACTIVE | High risk: Stacked, injectable, Riverpod, and Drift generated files influence runtime. Manual edits may be overwritten; stale generated code can mislead scans. | `app.router.dart`, `app.locator.dart`, `injection.config.dart`, active `*.provider.g.dart`, Drift generated DB files |
 | Conditional provider paths | INCOMPLETE | Reference field metadata path is only exercised by forms containing `ValueType.Reference`; static route reachability alone cannot prove production usage frequency. | `form_widget_factory.dart`, `q_reference_drop_down_search_field.widget.dart`, `metadata_submission_update.provider.dart` |
 
@@ -248,9 +248,6 @@ Sync/runtime duplication:
 
 - `lib/core/sync_manager/sync_manager.dart`
 - `lib/features/sync/presentation/sync_resources_viewmodel.dart`
-- `lib/core/sync/sync_coordinator.dart`
-- `lib/core/sync/sync_executor.dart`
-- `lib/core/sync/sync_progress_notifier.dart`
 - `lib/core/sync_manager/sync_service.provider.dart`
 
 ## Questions Requiring Runtime Confirmation
@@ -259,10 +256,9 @@ Sync/runtime duplication:
 2. What is the exact scope stack after login, after opening a form, after saving, after back navigation, and after logout?
 3. Does `GetIt.getAll<AbstractDatasource<dynamic>>()` return the manual raw datasource registrations in the expected order after every login/session restore?
 4. Is generated `initActiveSessionContextScope(...)` ever called indirectly by generated code or build tooling, or is it fully dead?
-5. Are `SyncCoordinator`/`SyncExecutor` used by any background task, settings action, or future route not visible in static route scans?
-6. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
-7. Does form scope disposal always run when the user leaves a form through Android back, app backgrounding, route replacement, or completion dialog actions?
-8. After the tooling branch is merged, do generated Riverpod/injectable/Stacked outputs still match this map?
+5. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
+6. Does form scope disposal always run when the user leaves a form through Android back, app backgrounding, route replacement, or completion dialog actions?
+7. After the tooling branch is merged, do generated Riverpod/injectable/Stacked outputs still match this map?
 
 ## Next Investigation Step
 

@@ -115,6 +115,8 @@ Required multi-choice fields now reject empty lists in new and edited repeat row
 
 Large-repeat rule fan-out now caches parsed rule expressions, skips elements with no rule actions, and avoids constructing discarded debug context in release mode. The live indoor-surveillance 300-row harness reduced one outside-field rule update from about 167 ms to 20-34 ms on the development machine. Live nested, sibling-to-repeat, row-local, hide/show, validation, and save checks pass, and signed build 33 passed Redmi upgrade/startup and manual form smoke. This does not solve eager control creation: every stored repeat row still receives a full reactive control and element graph before first render.
 
+Form template construction now reuses `FormTemplateModel.elementTree` through one stable repository root. The previous repository getter rebuilt the tree on every access and appended duplicate child links, causing controls and elements to be constructed repeatedly and then overwritten. On the 300-row harness, removing that accidental work reduced total construction from about 957 ms to 449-558 ms and control construction from about 708 ms to 215-282 ms on the development machine. Signed build 35 passed Redmi load/edit smoke for indoor-surveillance and nested-lab forms. The remaining graph is still eager.
+
 Submission-table selection and bulk commands now share one form-and-assignment-scoped Riverpod owner. A release-upgrade tablet smoke exposed the former command provider reading its disposed `Ref` after delete confirmation; `test/dev/submission_table_controller_test.dart` now covers scope isolation and disposal while deletion is awaiting.
 
 | Finding | Classification | Evidence | Required next proof |
@@ -195,7 +197,7 @@ The implementation preserves these invariants: hidden required fields cannot blo
 
 ### 8. Redesign Eager Form Graph Construction
 
-After visibility/value ownership is settled, reduce the duplicate eager cost of creating a `reactive_forms` control graph and a parallel element graph for every stored repeat row. Do not restore the placeholder-`FormGroup` hydration experiment: it changed validation, expression, edit, and save invariants.
+After visibility/value ownership is settled, reduce the remaining eager cost of creating a `reactive_forms` control graph and a parallel element graph for every stored repeat row. The old empty-`FormGroup` hydration experiment failed because dormant rows had no explicit value/validation owner and save forced full rematerialization; that implementation is failure evidence, not a ban on lazy row materialization. Lazy rows remain a candidate if one authoritative row state and explicit edit, rule, validation, save, nested-repeat, and disposal behavior are defined.
 
 Use the existing 50/150/300-row harness and current live dependency fixtures as acceptance gates. A candidate design must show a clear first-open and memory improvement on a slower Android device while preserving save JSON, hidden-value policy, nested dependencies, row-local expressions, validation, repeat metadata, and edit/reopen behavior. Keep the current production path until a candidate meets those checks; a measurement-only or structurally risky change is not a completed slice.
 

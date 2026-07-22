@@ -75,6 +75,8 @@ Status legend:
 
 This is the current ownership boundary after removing the duplicate rule-effect path and duplicate field-value state. Do not add field values or control validity back to element state.
 
+This table describes the active implementation; it is not a requirement to preserve the current dual graph or `reactive_forms` control lifetime forever. A replacement may move value or validation ownership when it defines one authority, explicit editor commit/cancel behavior, and equivalent persisted JSON, identity, rule, validation, and offline behavior. Do not preserve implementation debt by calling it an invariant.
+
 | Component | Sole responsibility | Explicitly not owned here |
 | --- | --- | --- |
 | Form template JSON | Declarative field, section, rule, calculation, and choice-filter intent. | Runtime value, validity, visibility, or persistence state. |

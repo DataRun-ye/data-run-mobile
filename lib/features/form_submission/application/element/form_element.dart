@@ -19,6 +19,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/rule.extension.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 import 'package:gs1_barcode_parser/gs1_barcode_parser.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -132,6 +133,11 @@ sealed class FormElementInstance<T> {
 
   @protected
   FormElementInstance<dynamic>? findElement(String path);
+
+  void bindControlReferences() {
+    elementControl;
+    forEachChild((element) => element.bindControlReferences());
+  }
 
   // void validate({bool updateParent = true, bool emitEvent = true}) {}
 

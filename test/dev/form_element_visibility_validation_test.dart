@@ -142,7 +142,7 @@ void main() {
         name: 'source',
         type: ValueType.Text,
       ),
-      elementProperties: FieldElementState<String>(value: 'no'),
+      elementProperties: FieldElementState<String>(),
     );
     var targetEvaluationCount = 0;
     final targetAction = _CountingRuleAction(
@@ -176,7 +176,9 @@ void main() {
         'source': source,
         'container': container,
       },
-    )..resolveDependencies();
+    )
+      ..bindControlReferences()
+      ..resolveDependencies();
 
     target.evaluate(emitEvent: false);
     expect(target.hidden, isTrue);
@@ -214,6 +216,7 @@ void main() {
       form: form,
       elements: FormElementBuilder.buildFormElements(form, repository),
     )
+      ..bindControlReferences()
       ..resolveDependencies()
       ..evaluate(emitEvent: false);
     final mainSection = root.element('mcase') as Section;
@@ -229,7 +232,8 @@ void main() {
     expect(testResultControl.disabled, isTrue);
     expect(testResultControl.hasError(ValidationMessage.required), isFalse);
 
-    performed.updateValue('yes', emitEvent: false);
+    performed.elementControl.updateValue('yes', emitEvent: false);
+    performed.handleControlValueChanged('yes');
 
     expect(testSection.visible, isTrue);
     expect(testResult.visible, isTrue);
@@ -237,16 +241,40 @@ void main() {
     expect(testResultControl.disabled, isFalse);
     expect(testResultControl.hasError(ValidationMessage.required), isTrue);
 
-    performed.updateValue('no', emitEvent: false);
+    performed.elementControl.updateValue('no', emitEvent: false);
+    performed.handleControlValueChanged('no');
     expect(testSection.hidden, isTrue);
     expect(testResultControl.hasError(ValidationMessage.required), isFalse);
 
-    performed.updateValue('yes', emitEvent: false);
+    performed.elementControl.updateValue('yes', emitEvent: false);
+    performed.handleControlValueChanged('yes');
     expect(testResult.visible, isTrue);
     expect(testResult.mandatory, isTrue);
     expect(testResultControl.hasError(ValidationMessage.required), isTrue);
 
     root.dispose();
+  });
+
+  test('form controls remain authoritative without a mounted field widget', () {
+    final control = FormControl<String>(value: 'initial');
+    final field = FieldInstance<String>(
+      form: FormGroup({'field': control}),
+      template: FieldTemplate(
+        id: 'field-id',
+        name: 'field',
+        type: ValueType.Text,
+      ),
+      elementProperties: FieldElementState<String>(),
+    );
+
+    control.updateValue('edited');
+    expect(field.value, 'edited');
+
+    field.markAsHidden(emitEvent: false);
+    expect(field.value, isNull);
+
+    field.markAsVisible(emitEvent: false);
+    expect(field.value, isNull);
   });
 }
 

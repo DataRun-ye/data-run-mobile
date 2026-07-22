@@ -39,26 +39,44 @@ class FieldInstance<T> extends FormElementInstance<T> {
         // if (filterExpressionDependencies.isEmpty) ...filterDependencies
       ];
 
-  @override
-  T? reduceValue() => elementState.value;
+  Object? _lastNotifiedControlValue = _uninitializedControlValue;
+  static final Object _uninitializedControlValue = Object();
 
   @override
-  FormControl<T> get elementControl =>
+  T? reduceValue() => elementControl.value;
+
+  @override
+  FormControl<T> get elementControl => _elementControl;
+
+  late final FormControl<T> _elementControl =
       form.control(elementPath!) as FormControl<T>;
 
   @override
   void updateValue(T? value,
       {bool updateParent = true, bool emitEvent = true}) {
-    if (value == this.value) {
+    if (_sameValue(value, elementControl.value)) {
       return;
     }
 
-    updateStatus(elementState.reset(value: value));
     elementControl.updateValue(
       value,
       updateParent: updateParent,
       emitEvent: emitEvent,
     );
+    _notifyControlValueChanged(value, emitEvent: emitEvent);
+  }
+
+  void handleControlValueChanged(T? value) {
+    _notifyControlValueChanged(value);
+  }
+
+  void _notifyControlValueChanged(T? value, {bool emitEvent = true}) {
+    if (_sameValue(value, _lastNotifiedControlValue)) {
+      return;
+    }
+
+    _lastNotifiedControlValue = value is List ? List.of(value) : value;
+    notifySubscribers(emitEvent: emitEvent);
   }
 
   @override
@@ -82,30 +100,55 @@ class FieldInstance<T> extends FormElementInstance<T> {
         updateParent: updateParent,
         emitEvent: emitEvent);
     if (filterExpressionDependencies.isNotEmpty) {
-      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
-      logDebug(
-          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.resetValueFromVisibleOptions(
-          visibleOptions: visibleOptionsUpdate);
-      logDebug(
-          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
+      _applyChoiceFilter(updateParent: updateParent, emitEvent: emitEvent);
     } else if (choiceFilter?.expression != null) {
-      final visibleOptionsUpdate = choiceFilter!.evaluate(evalContext);
-      logDebug(
-          'all field options: ${choiceFilter!.options.map((o) => o.name)}');
-      logDebug('only result: ${visibleOptionsUpdate.map((o) => o.name)}');
-      final oldState = elementState.copyWith(); // clone
-      final newState = elementState.resetValueFromVisibleOptions(
-          visibleOptions: visibleOptionsUpdate);
-      logDebug(
-          '$name, option changed: ${oldState.value != newState.value},  ${oldState.value} => ${newState.value}');
-      updateStatus(newState /* notify: oldState.value != newState.value*/);
-      elementControl.updateValue(newState.value);
+      _applyChoiceFilter(updateParent: updateParent, emitEvent: emitEvent);
     }
+  }
+
+  void _applyChoiceFilter({
+    required bool updateParent,
+    required bool emitEvent,
+  }) {
+    final visibleOptions = choiceFilter!.evaluate(evalContext);
+    logDebug('all field options: ${choiceFilter!.options.map((o) => o.name)}');
+    logDebug('only result: ${visibleOptions.map((o) => o.name)}');
+
+    if (!listEquals(elementState.visibleOptions, visibleOptions)) {
+      updateStatus(
+        elementState.copyWith(visibleOptions: visibleOptions),
+        emitEvent: emitEvent,
+      );
+    }
+
+    final retainedValue = _retainValueFromVisibleOptions(visibleOptions);
+    if (!_sameValue(elementControl.value, retainedValue)) {
+      updateValue(
+        retainedValue,
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
+    }
+  }
+
+  T? _retainValueFromVisibleOptions(List<FormOption> visibleOptions) {
+    final currentValue = elementControl.value;
+    if (currentValue is List<String>) {
+      return currentValue
+          .map((selectedValue) =>
+              findFormOptionByValue(visibleOptions, selectedValue)?.code)
+          .whereType<String>()
+          .toList() as T;
+    }
+
+    return findFormOptionByValue(visibleOptions, currentValue)?.code as T?;
+  }
+
+  bool _sameValue(Object? left, Object? right) {
+    if (left is List && right is List) {
+      return listEquals(left, right);
+    }
+    return left == right;
   }
 }
 

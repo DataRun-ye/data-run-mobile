@@ -2,12 +2,14 @@ import 'package:built_collection/built_collection.dart';
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/section_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/template.dart';
+import 'package:datarunmobile/core/form/rule/choice_filter.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/form_template_model.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/q_reactive_multi_select_field.widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -46,15 +48,27 @@ void main() {
   test('choice filtering preserves selected option codes', () {
     final optionA = _option(code: 'choice-a', name: 'Choice A');
     final optionB = _option(code: 'choice-b', name: 'Choice B');
-    final state = FieldElementState<List<String>>(
-      value: ['choice-a'],
-      visibleOptions: [optionA, optionB],
+    final control = FormControl<List<String>>(value: ['choice-a']);
+    final field = FieldInstance<List<String>>(
+      form: FormGroup({'choices': control}),
+      template: FieldTemplate(
+        id: 'choices-id',
+        name: 'choices',
+        type: ValueType.SelectMulti,
+      ),
+      choiceFilter: ChoiceFilter(
+        expression: "code == 'choice-a'",
+        options: [optionA, optionB],
+      ),
+      elementProperties: FieldElementState<List<String>>(
+        visibleOptions: [optionA, optionB],
+      ),
     );
 
-    final filtered =
-        state.resetValueFromVisibleOptions(visibleOptions: [optionA]);
+    field.evaluate(emitEvent: false);
 
-    expect(filtered.value, ['choice-a']);
+    expect(field.visibleOption, [optionA]);
+    expect(field.value, ['choice-a']);
   });
 
   test('legacy names and translated labels reopen as canonical option codes',

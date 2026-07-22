@@ -137,7 +137,6 @@ void main() {
     expect(nestedRepeat.elements, isEmpty);
     expect(repeatRow.parentSection, isNull);
     expect(nestedRow.parentSection, isNull);
-    expect(instance.forElementMap, isEmpty);
   });
 }
 

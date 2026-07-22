@@ -47,6 +47,7 @@ void main() {
           initialFormValue: initialValue,
         ),
       )
+        ..bindControlReferences()
         ..resolveDependencies()
         ..evaluate(emitEvent: false);
 

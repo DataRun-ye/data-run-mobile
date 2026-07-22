@@ -37,16 +37,8 @@ class FormInstance {
       // AssignmentStatus? assignmentStatus,
       Map<String, Object?> initialValue = const {},
       required Section rootSection,
-      Map<String, FormElementInstance<dynamic>> elements = const {},
       required this.enabled})
       : _formSection = rootSection {
-    var formElementMap = {
-      for (var x
-          in getFormElementIterator<FormElementInstance<dynamic>>(rootSection)
-              .where((e) => e.elementPath != null))
-        x.elementPath!: x
-    };
-    _forElementMap.addAll(formElementMap);
     _initialValue.addAll({...initialValue});
     if (!enabled) {
       form.markAsDisabled();
@@ -64,7 +56,6 @@ class FormInstance {
   final bool enabled;
 
   // final Ref _ref;
-  final Map<String, FormElementInstance<dynamic>> _forElementMap = {};
   final Section _formSection;
   final FieldContextRegistry fieldKeysRegistery;
 
@@ -72,9 +63,6 @@ class FormInstance {
   bool _disposed = false;
 
   // final FormConfiguration formConfiguration;
-
-  Map<String, FormElementInstance<dynamic>> get forElementMap =>
-      Map.unmodifiable(_forElementMap);
 
   Section get formSection => _formSection;
 
@@ -163,10 +151,8 @@ class FormInstance {
 
     final itemInstance = FormElementBuilder.buildRepeatItem(
         form, formFlatTemplate, parent.template);
-    parent..add(itemInstance)
-        // ..resolveDependencies()
-        // ..evaluate()
-        ;
+    parent.add(itemInstance);
+    itemInstance.bindControlReferences();
     itemInstance.resolveDependencies();
     itemInstance.evaluate(emitEvent: false);
     // parent.elementControl.markAsDirty(updateParent: false);
@@ -296,7 +282,6 @@ class FormInstance {
 
     _formSection.dispose();
     form.dispose();
-    _forElementMap.clear();
   }
 }
 

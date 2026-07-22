@@ -1,6 +1,5 @@
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:equatable/equatable.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 class FormElementState<T> with EquatableMixin {
   FormElementState({
@@ -48,7 +47,6 @@ class FormElementState<T> with EquatableMixin {
     bool? mandatory,
     String? warning,
     Map<String, dynamic>? errors,
-    T? value,
   }) {
     return FormElementState(
       hidden: hidden ?? this.hidden,
@@ -73,10 +71,8 @@ class FieldElementState<T> extends FormElementState<T> {
     // super.error,
     super.errors,
     this.visibleOptions = const [],
-    this.value,
   });
 
-  final T? value;
   final List<FormOption> visibleOptions;
 
   // Map<String, dynamic>? validationErrors() {
@@ -97,7 +93,6 @@ class FieldElementState<T> extends FormElementState<T> {
       bool? mandatory,
       String? warning,
       Map<String, dynamic>? errors,
-      T? value,
       List<FormOption>? visibleOptions}) {
     return FieldElementState<T>(
       hidden: hidden ?? this.hidden,
@@ -105,47 +100,10 @@ class FieldElementState<T> extends FormElementState<T> {
       readOnly: readOnly ?? this.readOnly,
       errors: errors ?? this.errors,
       warning: warning ?? this.warning,
-      value: value ?? this.value,
       visibleOptions: visibleOptions ?? this.visibleOptions,
     );
   }
 
-  FieldElementState<T> reset({T? value}) {
-    return FieldElementState<T>(
-      hidden: this.hidden,
-      mandatory: this.mandatory,
-      errors: this.errors,
-      warning: this.warning,
-      // error: this.error,
-      value: value,
-      visibleOptions: this.visibleOptions,
-    );
-  }
-
-  FieldElementState<T> resetValueFromVisibleOptions(
-      {required List<FormOption> visibleOptions}) {
-    if (!const DeepCollectionEquality.unordered()
-        .equals(this.visibleOptions, visibleOptions)) {
-      final currentValue = value;
-      if (currentValue is List<String>) {
-        final selectedValues = currentValue
-            .map((selectedValue) =>
-                findFormOptionByValue(visibleOptions, selectedValue)?.code)
-            .whereType<String>()
-            .toList();
-        return copyWith(visibleOptions: visibleOptions)
-            .reset(value: selectedValues as T);
-      } else {
-        final String? newValue =
-            findFormOptionByValue(visibleOptions, value)?.code;
-
-        return copyWith(visibleOptions: visibleOptions)
-            .reset(value: newValue as T?);
-      }
-    }
-    return this;
-  }
-
   @override
-  List<Object?> get props => super.props..addAll([...visibleOptions, value]);
+  List<Object?> get props => super.props..addAll(visibleOptions);
 }

@@ -38,8 +38,7 @@ class FormElementBuilder {
           initialFormValue: initialFormValue);
     } else {
       return buildFieldInstance(
-          form, formFlatTemplate, template as FieldTemplate,
-          initialValue: initialFormValue);
+          form, formFlatTemplate, template as FieldTemplate);
     }
   }
 
@@ -100,9 +99,7 @@ class FormElementBuilder {
   }
 
   static FieldInstance<dynamic> buildFieldInstance(FormGroup rootFormControl,
-      FormTemplateRepository formFlatTemplate, FieldTemplate elementTemplate,
-      {dynamic initialValue}) {
-    final initValue = initialValue ?? elementTemplate.defaultValue;
+      FormTemplateRepository formFlatTemplate, FieldTemplate elementTemplate) {
     switch (elementTemplate.type) {
       case ValueType.Text:
       case ValueType.LongText:
@@ -116,7 +113,6 @@ class FormElementBuilder {
             form: rootFormControl,
             elementProperties: FieldElementState<String>(
                 readOnly: elementTemplate.readOnly,
-                value: initValue,
                 mandatory: elementTemplate.mandatory),
             template: elementTemplate);
       case ValueType.Date:
@@ -126,7 +122,6 @@ class FormElementBuilder {
             form: rootFormControl,
             elementProperties: FieldElementState<String>(
                 readOnly: elementTemplate.readOnly,
-                value: initialValue,
                 mandatory: elementTemplate.mandatory),
             template: elementTemplate);
 
@@ -135,41 +130,27 @@ class FormElementBuilder {
             form: rootFormControl,
             calculatedExpression: CalculatedExpression(
                 expression: elementTemplate.calculationExpression!),
-            elementProperties: FieldElementState<dynamic>(
-                readOnly: true, value: initialValue, mandatory: false),
+            elementProperties:
+                FieldElementState<dynamic>(readOnly: true, mandatory: false),
             template: elementTemplate);
       case ValueType.Integer:
       case ValueType.IntegerPositive:
       case ValueType.IntegerNegative:
       case ValueType.IntegerZeroOrPositive:
-        final initValue = initialValue ??
-            (elementTemplate.defaultValue != null
-                ? elementTemplate.defaultValue is int
-                    ? elementTemplate.defaultValue
-                    : int.tryParse(elementTemplate.defaultValue)
-                : null);
         return FieldInstance<int>(
             form: rootFormControl,
             elementProperties: FieldElementState<int>(
                 readOnly: elementTemplate.readOnly,
-                value: initValue,
                 mandatory: elementTemplate.mandatory),
             template: elementTemplate);
 
       case ValueType.Number:
       case ValueType.UnitInterval:
       case ValueType.Percentage:
-        final initValue = initialValue ??
-            (elementTemplate.defaultValue != null
-                ? elementTemplate.defaultValue is int
-                    ? elementTemplate.defaultValue
-                    : double.tryParse(elementTemplate.defaultValue)
-                : null);
         return FieldInstance<double>(
           form: rootFormControl,
           elementProperties: FieldElementState<double>(
               readOnly: elementTemplate.readOnly,
-              value: initValue,
               mandatory: elementTemplate.mandatory),
           template: elementTemplate,
         );
@@ -180,7 +161,6 @@ class FormElementBuilder {
           form: rootFormControl,
           elementProperties: FieldElementState<bool>(
               readOnly: elementTemplate.readOnly,
-              value: initialValue ?? elementTemplate.defaultValue,
               mandatory: elementTemplate.mandatory),
           template: elementTemplate,
         );
@@ -197,7 +177,6 @@ class FormElementBuilder {
               : null,
           elementProperties: FieldElementState<String>(
               readOnly: elementTemplate.readOnly,
-              value: initValue,
               mandatory: elementTemplate.mandatory,
               visibleOptions: formFlatTemplate
                       .optionMap[elementTemplate.optionSet!]
@@ -218,11 +197,6 @@ class FormElementBuilder {
                 : null,
             elementProperties: FieldElementState<List<String>>(
                 readOnly: elementTemplate.readOnly,
-                value: initialValue != null
-                    ? (initialValue is List)
-                        ? initialValue.cast<String>()
-                        : <String>[initialValue]
-                    : <String>[],
                 mandatory: elementTemplate.mandatory,
                 visibleOptions: formFlatTemplate
                         .optionMap[elementTemplate.optionSet!]
@@ -234,7 +208,6 @@ class FormElementBuilder {
           form: rootFormControl,
           elementProperties: FieldElementState<String>(
               readOnly: elementTemplate.readOnly,
-              value: initialValue,
               mandatory: elementTemplate.mandatory),
           template: elementTemplate,
         );
@@ -243,7 +216,6 @@ class FormElementBuilder {
           form: rootFormControl,
           elementProperties: FieldElementState<String>(
               readOnly: elementTemplate.readOnly,
-              value: initialValue,
               mandatory: elementTemplate.mandatory),
           template: elementTemplate,
         );

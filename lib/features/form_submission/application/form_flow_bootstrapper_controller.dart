@@ -139,6 +139,7 @@ class FormFlowBootstrapperController {
       elements: elements,
       form: form,
     )
+      ..bindControlReferences()
       ..resolveDependencies()
       ..evaluate(emitEvent: false);
     evaluateWatch.stop();
@@ -181,7 +182,6 @@ class FormFlowBootstrapperController {
       entryStarted: instance.startEntryTime.toLocal(),
       enabled: editStatus,
       initialValue: {...?initialFormValue, ...attributeMap},
-      elements: elements,
       formMetadata: formMetadata,
       fieldKeysRegistery: fieldContextRegistry,
       form: form,

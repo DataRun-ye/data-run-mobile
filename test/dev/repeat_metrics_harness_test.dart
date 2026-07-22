@@ -77,6 +77,7 @@ RepeatProfileMetrics _profileFormBuildAndReduce({
     elements: elements,
     form: form,
   )
+    ..bindControlReferences()
     ..resolveDependencies()
     ..evaluate(emitEvent: false);
   evaluateWatch.stop();

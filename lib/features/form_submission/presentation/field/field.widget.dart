@@ -27,11 +27,7 @@ class FieldWidget extends HookConsumerWidget {
 
     useEffect(() {
       final subscription = control.valueChanges.listen((value) {
-        if (value == null) {
-          element.updateValue(value);
-        } else {
-          element.updateValue(value);
-        }
+        element.handleControlValueChanged(value);
       });
 
       logDebug('call use effect: ${element.name}, unsubscribe');

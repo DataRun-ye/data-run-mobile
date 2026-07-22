@@ -1,14 +1,22 @@
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/template.dart';
 import 'package:datarunmobile/core/form/rule/action.dart';
+import 'package:datarunmobile/core/form/rule/rule_action.dart';
 
 extension FieldTemplateDependencies on Template {
   List<String> get dependencies {
     List<String> dependencySet = [];
+    final validationRule =
+        this is FieldTemplate ? (this as FieldTemplate).validationRule : null;
     for (final rule in rules?.unlockView ?? []) {
+      if (validationRule != null &&
+          rule.ruleAction.action == RuleActionType.Error) {
+        continue;
+      }
       final ruleDependencies = rule.ruleAction.dependencies;
       dependencySet.addAll(ruleDependencies);
     }
+    dependencySet.addAll(validationRule?.dependencies ?? const []);
     return dependencySet.toSet().toList();
   }
 

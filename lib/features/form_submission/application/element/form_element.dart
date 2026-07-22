@@ -64,6 +64,10 @@ sealed class FormElementInstance<T> {
 
   Iterable<RuleAction> get elementRuleActions => _template.ruleActions();
 
+  bool get usesRuleErrorValidator => elementRuleActions.any(
+        (ruleAction) => ruleAction.action == RuleActionType.Error,
+      );
+
   final Set<FormElementInstance<dynamic>> _dependents = Set();
   final Set<FormElementInstance<dynamic>> _resolvedDependencies = Set();
 
@@ -141,9 +145,7 @@ sealed class FormElementInstance<T> {
     final control = elementControl;
     if (control != null &&
         _ruleErrorsValidator == null &&
-        elementRuleActions.any(
-          (ruleAction) => ruleAction.action == RuleActionType.Error,
-        )) {
+        usesRuleErrorValidator) {
       final validator = RuleErrorsValidator(() => errors);
       _ruleErrorsValidator = validator;
       control.setValidators(

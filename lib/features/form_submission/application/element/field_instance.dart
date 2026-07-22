@@ -15,10 +15,23 @@ class FieldInstance<T> extends FormElementInstance<T> {
 
   FieldTemplate get template => _template as FieldTemplate;
 
+  @override
+  Iterable<RuleAction> get elementRuleActions => template.validationRule == null
+      ? super.elementRuleActions
+      : super
+          .elementRuleActions
+          .where((action) => action.action != RuleActionType.Error);
+
+  @override
+  bool get usesRuleErrorValidator =>
+      template.validationRule != null || super.usesRuleErrorValidator;
+
   FieldElementState<T> get elementState =>
       _elementState as FieldElementState<T>;
 
   final Map<String, ValidationMessageFunction> validationMessages = {};
+
+  String? _activeValidationRuleError;
 
   String? get listName => template.listName;
 
@@ -89,8 +102,64 @@ class FieldInstance<T> extends FormElementInstance<T> {
         changedDependency: changedDependency,
         updateParent: updateParent,
         emitEvent: emitEvent);
+    _evaluateValidationRule(
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
     if (choiceFilter?.hasFilters == true) {
       _applyChoiceFilter(updateParent: updateParent, emitEvent: emitEvent);
+    }
+  }
+
+  @override
+  void restoreVisibilityAfterParentShown({
+    bool updateParent = true,
+    bool emitEvent = true,
+  }) {
+    super.restoreVisibilityAfterParentShown(
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
+    _evaluateValidationRule(
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
+  }
+
+  void _evaluateValidationRule({
+    required bool updateParent,
+    required bool emitEvent,
+  }) {
+    final validationRule = template.validationRule;
+    if (validationRule == null) {
+      return;
+    }
+
+    final error = validationRule.displayMessage;
+    if (_activeValidationRuleError != null &&
+        _activeValidationRuleError != error) {
+      removeRuleError(
+        _activeValidationRuleError!,
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
+    }
+
+    if (visible && validationRule.evaluate(evalContext)) {
+      _activeValidationRuleError = error;
+      setRuleError(
+        error,
+        error,
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
+    } else {
+      removeRuleError(
+        error,
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
+      _activeValidationRuleError = null;
     }
   }
 

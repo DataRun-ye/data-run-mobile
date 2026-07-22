@@ -37,11 +37,12 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
     _elements.asMap().entries.forEach((entry) {
       final element = entry.value;
       final name = entry.key.toString();
-      if (element.visible && element.hasErrors) {
+      final elementErrors = element.errors;
+      if (element.visible && elementErrors.isNotEmpty) {
         allErrors.update(
           name,
-          (_) => element.errors,
-          ifAbsent: () => element.errors,
+          (_) => elementErrors,
+          ifAbsent: () => elementErrors,
         );
       }
     });
@@ -104,6 +105,10 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
         .map((element) => element.value)
         .toList();
   }
+
+  @override
+  List<Map<String, Object?>?> get retainedValue =>
+      _elements.map((element) => element.retainedValue).toList();
 
   void insert(
     int index,
@@ -208,8 +213,14 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
       _elements.forEach(callback);
 
   @override
+  FormArray<Map<String, Object?>>? get mountedControl {
+    final control = super.mountedControl;
+    return control is FormArray<Map<String, Object?>> ? control : null;
+  }
+
+  @override
   FormArray<Map<String, Object?>> get elementControl =>
-      form.control(elementPath!) as FormArray<Map<String, Object?>>;
+      mountedControl ?? (throw FormControlNotFoundException());
 
   @override
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {

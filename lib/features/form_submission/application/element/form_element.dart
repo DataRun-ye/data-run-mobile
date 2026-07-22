@@ -96,7 +96,9 @@ sealed class FormElementInstance<T> {
 
   FormElementState<T> get elementState => _elementState;
 
-  Map<String, dynamic> get errors => _elementState.errors;
+  Map<String, dynamic> get ruleErrors => _elementState.errors;
+
+  Map<String, dynamic> get errors => ruleErrors;
 
   bool get hasErrors => errors.isNotEmpty;
 
@@ -113,6 +115,12 @@ sealed class FormElementInstance<T> {
 
   T? get value => reduceValue();
 
+  /// The current editing value, including values temporarily hidden by rules.
+  ///
+  /// [value] is the save projection and may omit hidden descendants. Repeat
+  /// rows use this projection when swapping dormant snapshots and edit controls.
+  T? get retainedValue => value;
+
   Object? getError(String errorCode, [String? path]) {
     final control = path != null ? findElement(path) : this;
     return control!.errors[errorCode];
@@ -120,17 +128,22 @@ sealed class FormElementInstance<T> {
 
   T? reduceValue();
 
-  AbstractControl<dynamic>? get elementControl =>
-      elementPath != null ? form.control(elementPath!) : null;
+  AbstractControl<dynamic>? get mountedControl {
+    final path = elementPath;
+    if (path == null) {
+      return null;
+    }
 
-  bool get controlExist {
     try {
-      form.control(elementPath!);
-      return true;
-    } catch (e) {
-      return false;
+      return form.control(path);
+    } on FormControlNotFoundException {
+      return null;
     }
   }
+
+  AbstractControl<dynamic>? get elementControl => mountedControl;
+
+  bool get controlExist => mountedControl != null;
 
   void updateValue(T? value, {bool updateParent = true, bool emitEvent = true});
 
@@ -142,20 +155,33 @@ sealed class FormElementInstance<T> {
   FormElementInstance<dynamic>? findElement(String path);
 
   void bindControlReferences() {
-    final control = elementControl;
-    if (control != null &&
-        _ruleErrorsValidator == null &&
-        usesRuleErrorValidator) {
-      final validator = RuleErrorsValidator(() => errors);
-      _ruleErrorsValidator = validator;
-      control.setValidators(
-        [...control.validators, validator],
-        autoValidate: true,
+    final control = mountedControl;
+    if (control != null) {
+      if (_ruleErrorsValidator == null && usesRuleErrorValidator) {
+        final validator = RuleErrorsValidator(() => ruleErrors);
+        _ruleErrorsValidator = validator;
+        control.setValidators(
+          [...control.validators, validator],
+          autoValidate: true,
+          updateParent: false,
+          emitEvent: false,
+        );
+      }
+      _syncRequiredValidator(
+        mandatory,
         updateParent: false,
         emitEvent: false,
       );
+      if (hidden && control.enabled) {
+        control.markAsDisabled(updateParent: false, emitEvent: false);
+      }
     }
     forEachChild((element) => element.bindControlReferences());
+  }
+
+  void releaseControlReferences() {
+    _ruleErrorsValidator = null;
+    forEachChild((element) => element.releaseControlReferences());
   }
 
   // void validate({bool updateParent = true, bool emitEvent = true}) {}
@@ -178,8 +204,11 @@ sealed class FormElementInstance<T> {
     );
     // Visibility is temporary editing state. The visible-value projection
     // excludes this control when saving; disabling must not destroy its value.
-    elementControl!
-        .markAsDisabled(updateParent: updateParent, emitEvent: emitEvent);
+    mountedControl?.markAsDisabled(
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
+    onValidationStateChanged();
 
     logDebugLazy(
         () => '2.${elementPath}, markAsHidden, marked: ${_getDebugState()}.');
@@ -210,8 +239,11 @@ sealed class FormElementInstance<T> {
       updateParent: false,
       emitEvent: false,
     );
-    elementControl!
-        .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
+    mountedControl?.markAsEnabled(
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
+    onValidationStateChanged();
     logDebugLazy(
         () => '2.${elementPath}, markAsVisible, marked: ${_getDebugState()}.');
   }
@@ -228,6 +260,7 @@ sealed class FormElementInstance<T> {
       updateParent: updateParent,
       emitEvent: emitEvent,
     );
+    onValidationStateChanged();
     logDebug('2.${elementPath}, markAsMandatory, marked: ${_getDebugState()}.');
   }
 
@@ -245,25 +278,32 @@ sealed class FormElementInstance<T> {
       updateParent: updateParent,
       emitEvent: emitEvent,
     );
+    onValidationStateChanged();
     logDebug(
         '2.${elementPath}, markAsUnMandatory, marked: ${_getDebugState()}.');
   }
 
-  bool get _hasRequiredValidator => elementControl!.validators
-      .any((validator) => validator is RequiredValidator);
+  bool get _hasRequiredValidator =>
+      mountedControl?.validators
+          .any((validator) => validator is RequiredValidator) ??
+      mandatory;
 
   void _syncRequiredValidator(
     bool required, {
     required bool updateParent,
     required bool emitEvent,
   }) {
-    final validators = elementControl!.validators
+    final control = mountedControl;
+    if (control == null) {
+      return;
+    }
+    final validators = control.validators
         .where((validator) => validator is! RequiredValidator)
         .toList();
     if (required) {
       validators.add(const RequiredFieldValidator());
     }
-    elementControl!.setValidators(
+    control.setValidators(
       validators,
       autoValidate: true,
       updateParent: updateParent,
@@ -277,11 +317,11 @@ sealed class FormElementInstance<T> {
     bool updateParent = true,
     bool emitEvent = true,
   }) {
-    if (errors[key] == value) {
+    if (ruleErrors[key] == value) {
       return;
     }
     _updateRuleErrors(
-      {...errors, key: value},
+      {...ruleErrors, key: value},
       updateParent: updateParent,
       emitEvent: emitEvent,
     );
@@ -292,11 +332,11 @@ sealed class FormElementInstance<T> {
     bool updateParent = true,
     bool emitEvent = true,
   }) {
-    if (!errors.containsKey(key)) {
+    if (!ruleErrors.containsKey(key)) {
       return;
     }
     _updateRuleErrors(
-      {...errors}..remove(key),
+      {...ruleErrors}..remove(key),
       updateParent: updateParent,
       emitEvent: emitEvent,
     );
@@ -311,7 +351,7 @@ sealed class FormElementInstance<T> {
       _elementState.copyWith(errors: errors),
       emitEvent: emitEvent,
     );
-    elementControl?.updateValueAndValidity(
+    mountedControl?.updateValueAndValidity(
       updateParent: updateParent,
       emitEvent: emitEvent,
     );
@@ -412,6 +452,13 @@ sealed class FormElementInstance<T> {
   }
 
   List<String> get dependencies => template.dependencies;
+
+  @protected
+  void onValidationStateChanged() {}
+
+  void captureMountedValues() {
+    forEachChild((element) => element.captureMountedValues());
+  }
 
   List<String> get resolvedDependencyNames =>
       _resolvedDependencies.map((dependency) => dependency.name!).toList();

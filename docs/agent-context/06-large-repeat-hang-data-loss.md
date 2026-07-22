@@ -10,7 +10,7 @@ Scope: active large-repeat performance and possible unsaved-work loss in the cur
 
 This is still pre-refactor mapping. No persistence format change, repeat renderer rewrite, expression-engine rewrite, or data model migration is assumed here.
 
-Update 2026-07-22: save callers now await persistence, field subscriptions cancel on disposal, and backend-compatible repeat metadata is generated/preserved locally. Those correctness slices reduce data-loss/identity risk but do not solve eager large-repeat loading, expression cost, whole-JSON save cost, or device memory pressure.
+Update 2026-07-23: the retained-control hypothesis in this document is now closed. Dormant repeat rows use one map control and materialize field controls only while edited; the 300-row retained-heap probe fell from about 20.9 MB to 2.6 MB. The eager element/dependency graph, linear rule fan-out, and whole-JSON save remain active considerations. Use `09-production-boundaries-and-work-strategy.md` for the current implementation and acceptance evidence; the older hypothesis rows below are retained as historical investigation evidence.
 
 ## Validation Legend
 

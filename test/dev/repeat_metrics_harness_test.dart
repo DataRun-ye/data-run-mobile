@@ -59,6 +59,7 @@ void main() {
 
       expect(metrics.repeatRowCount, rowCount);
       expect(metrics.elementCount, greaterThan(rowCount));
+      expect(metrics.controlCount, lessThan(rowCount * 2));
       expect(metrics.jsonBytes, greaterThan(0));
     }
   });
@@ -191,6 +192,10 @@ RepeatProfileMetrics _profileFormBuildAndReduce({
   final allElements = getFormElementIterator<FormElementInstance<dynamic>>(root)
       .toList(growable: false);
 
+  final validationWatch = Stopwatch()..start();
+  final hasErrors = root.hasErrors;
+  validationWatch.stop();
+
   final reduceWatch = Stopwatch()..start();
   final reduced = root.value;
   reduceWatch.stop();
@@ -200,13 +205,15 @@ RepeatProfileMetrics _profileFormBuildAndReduce({
   jsonWatch.stop();
   totalWatch.stop();
 
-  return RepeatProfileMetrics(
+  final metrics = RepeatProfileMetrics(
     totalMs: totalWatch.elapsedMilliseconds,
     controlBuildMs: controlWatch.elapsedMilliseconds,
     elementBuildMs: elementBuildWatch.elapsedMilliseconds,
     bindControlMs: bindWatch.elapsedMilliseconds,
     dependencyResolveMs: resolveWatch.elapsedMilliseconds,
     ruleEvaluateMs: evaluateWatch.elapsedMilliseconds,
+    validationMs: validationWatch.elapsedMilliseconds,
+    hasErrors: hasErrors,
     reduceMs: reduceWatch.elapsedMilliseconds,
     jsonEncodeMs: jsonWatch.elapsedMilliseconds,
     elementCount: allElements.length,
@@ -216,7 +223,28 @@ RepeatProfileMetrics _profileFormBuildAndReduce({
         .whereType<RepeatSection>()
         .fold<int>(0, (total, repeat) => total + repeat.elements.length),
     jsonBytes: jsonBytes,
+    controlCount: _countControls(form),
   );
+  root.dispose();
+  return metrics;
+}
+
+int _countControls(AbstractControl<dynamic> control) {
+  if (control is FormGroup) {
+    return 1 +
+        control.controls.values.fold<int>(
+          0,
+          (count, child) => count + _countControls(child),
+        );
+  }
+  if (control is FormArray) {
+    return 1 +
+        control.controls.fold<int>(
+          0,
+          (count, child) => count + _countControls(child),
+        );
+  }
+  return 1;
 }
 
 Map<String, Object?> _withRepeatRows(
@@ -256,6 +284,8 @@ class RepeatProfileMetrics {
     required this.bindControlMs,
     required this.dependencyResolveMs,
     required this.ruleEvaluateMs,
+    required this.validationMs,
+    required this.hasErrors,
     required this.reduceMs,
     required this.jsonEncodeMs,
     required this.elementCount,
@@ -263,6 +293,7 @@ class RepeatProfileMetrics {
     required this.repeatSectionCount,
     required this.repeatRowCount,
     required this.jsonBytes,
+    required this.controlCount,
   });
 
   final int totalMs;
@@ -271,6 +302,8 @@ class RepeatProfileMetrics {
   final int bindControlMs;
   final int dependencyResolveMs;
   final int ruleEvaluateMs;
+  final int validationMs;
+  final bool hasErrors;
   final int reduceMs;
   final int jsonEncodeMs;
   final int elementCount;
@@ -278,6 +311,7 @@ class RepeatProfileMetrics {
   final int repeatSectionCount;
   final int repeatRowCount;
   final int jsonBytes;
+  final int controlCount;
 
   Map<String, Object?> toJson() => {
         'totalMs': totalMs,
@@ -286,6 +320,8 @@ class RepeatProfileMetrics {
         'bindControlMs': bindControlMs,
         'dependencyResolveMs': dependencyResolveMs,
         'ruleEvaluateMs': ruleEvaluateMs,
+        'validationMs': validationMs,
+        'hasErrors': hasErrors,
         'reduceMs': reduceMs,
         'jsonEncodeMs': jsonEncodeMs,
         'elementCount': elementCount,
@@ -293,5 +329,6 @@ class RepeatProfileMetrics {
         'repeatSectionCount': repeatSectionCount,
         'repeatRowCount': repeatRowCount,
         'jsonBytes': jsonBytes,
+        'controlCount': controlCount,
       };
 }

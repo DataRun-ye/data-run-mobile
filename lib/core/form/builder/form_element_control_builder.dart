@@ -52,11 +52,15 @@ class FormElementControlBuilder {
   static FormArray<Map<String, Object?>> createRepeatFormArray(
       FormTemplateRepository formFlatTemplate, SectionTemplate fieldTemplate,
       {dynamic initialValue}) {
-    final formArray = FormArray<Map<String, Object?>>((initialValue ?? [])
-        .map<FormGroup>((e) => createSectionFormGroup(
-            formFlatTemplate, fieldTemplate,
-            initialValue: e))
-        .toList());
+    final formArray = FormArray<Map<String, Object?>>(
+      (initialValue ?? [])
+          .map<AbstractControl<Map<String, Object?>>>(
+            (value) => FormControl<Map<String, Object?>>(
+              value: Map<String, Object?>.from(value as Map),
+            ),
+          )
+          .toList(),
+    );
 
     return formArray;
   }
@@ -64,7 +68,7 @@ class FormElementControlBuilder {
   static AbstractControl<dynamic> createFieldFormControl(
       FormTemplateRepository formFlatTemplate, FieldTemplate elementTemplate,
       {initialValue}) {
-    final initValue = initialValue ?? elementTemplate.defaultValue;
+    final initValue = initialFieldValue(elementTemplate, initialValue);
     final validators = FieldValidators.getValidators(elementTemplate);
     switch (elementTemplate.type) {
       case ValueType.Text:
@@ -115,24 +119,12 @@ class FormElementControlBuilder {
       case ValueType.IntegerPositive:
       case ValueType.IntegerNegative:
       case ValueType.IntegerZeroOrPositive:
-        final initValue = initialValue ??
-            (elementTemplate.defaultValue != null
-                ? elementTemplate.defaultValue is int
-                    ? elementTemplate.defaultValue
-                    : int.tryParse(elementTemplate.defaultValue)
-                : null);
         return FormControl<int>(
           value: initValue,
           validators: validators,
         );
       case ValueType.Number:
       case ValueType.Percentage:
-        final initValue = initialValue ??
-            (elementTemplate.defaultValue != null
-                ? elementTemplate.defaultValue is int
-                    ? elementTemplate.defaultValue
-                    : double.tryParse(elementTemplate.defaultValue)
-                : null);
         return FormControl<double>(
           value: initValue,
           validators: validators,
@@ -143,13 +135,8 @@ class FormElementControlBuilder {
           validators: validators,
         );
       case ValueType.SelectMulti:
-        final value = initialValue != null
-            ? (initialValue is List)
-                ? initialValue.cast<String>()
-                : <String>[initialValue]
-            : <String>[];
         return FormControl<List<String>>(
-          value: value,
+          value: initValue,
           validators: validators,
         );
       case ValueType.Reference:
@@ -162,6 +149,42 @@ class FormElementControlBuilder {
       default:
         throw UnsupportedError(
             'Template: ${elementTemplate.name}, unsupported element type: ${elementTemplate.type}');
+    }
+  }
+
+  static dynamic initialFieldValue(
+    FieldTemplate elementTemplate,
+    dynamic initialValue,
+  ) {
+    switch (elementTemplate.type) {
+      case ValueType.Integer:
+      case ValueType.IntegerPositive:
+      case ValueType.IntegerNegative:
+      case ValueType.IntegerZeroOrPositive:
+        if (initialValue != null) {
+          return initialValue;
+        }
+        final defaultValue = elementTemplate.defaultValue;
+        return defaultValue == null || defaultValue is int
+            ? defaultValue
+            : int.tryParse(defaultValue.toString());
+      case ValueType.Number:
+      case ValueType.Percentage:
+        if (initialValue != null) {
+          return initialValue;
+        }
+        final defaultValue = elementTemplate.defaultValue;
+        return defaultValue == null || defaultValue is int
+            ? defaultValue
+            : double.tryParse(defaultValue.toString());
+      case ValueType.SelectMulti:
+        return initialValue == null
+            ? <String>[]
+            : initialValue is List
+                ? initialValue.cast<String>()
+                : <String>[initialValue];
+      default:
+        return initialValue ?? elementTemplate.defaultValue;
     }
   }
 }

@@ -144,10 +144,10 @@ class FormInstance {
   // }
 
   RepeatItemInstance onAddRepeatedItem(RepeatSection parent) {
-    final itemFormGroup = FormElementControlBuilder.createSectionFormGroup(
-        formFlatTemplate, parent.template);
-
-    parent.elementControl.add(itemFormGroup, emitEvent: false);
+    parent.elementControl.add(
+      FormControl<Map<String, Object?>>(value: const {}),
+      emitEvent: false,
+    );
 
     final itemInstance = FormElementBuilder.buildRepeatItem(
         form, formFlatTemplate, parent.template);
@@ -160,23 +160,104 @@ class FormInstance {
     return itemInstance;
   }
 
+  void materializeRepeatItem(RepeatItemInstance item) {
+    final parent = item.parentSection as RepeatSection;
+    final index =
+        parent.sectionIndexWhere((element) => identical(element, item));
+    if (index < 0) {
+      throw StateError('Cannot materialize a repeat row outside its parent');
+    }
+    final array = parent.mountedControl;
+    if (array == null) {
+      throw StateError('Cannot materialize a row while its parent is dormant');
+    }
+    if (array.controls[index] is FormGroup) {
+      return;
+    }
+
+    final dormantControl = array.removeAt(
+      index,
+      emitEvent: false,
+      updateParent: false,
+    );
+    final itemFormGroup = FormElementControlBuilder.createSectionFormGroup(
+      formFlatTemplate,
+      parent.template,
+      initialValue: item.retainedValue,
+    );
+    if (dormantControl.dirty) {
+      itemFormGroup.markAsDirty(updateParent: false, emitEvent: false);
+    }
+    if (dormantControl.touched) {
+      itemFormGroup.markAsTouched(updateParent: false, emitEvent: false);
+    }
+    array.insert(
+      index,
+      itemFormGroup,
+      emitEvent: false,
+      updateParent: true,
+    );
+    dormantControl.dispose();
+
+    item.bindControlReferences();
+    item.evaluate(emitEvent: false);
+  }
+
+  void dematerializeRepeatItem(RepeatItemInstance item) {
+    final parent = item.parentSection;
+    if (parent is! RepeatSection) {
+      return;
+    }
+    final index =
+        parent.sectionIndexWhere((element) => identical(element, item));
+    final array = parent.mountedControl;
+    if (index < 0 || array == null || index >= array.controls.length) {
+      return;
+    }
+    final itemControl = array.controls[index];
+    if (itemControl is! FormGroup) {
+      return;
+    }
+
+    item.captureMountedValues();
+    item.releaseControlReferences();
+    final dormantControl = FormControl<Map<String, Object?>>(
+      value: item.retainedValue,
+      disabled: item.hidden,
+    );
+    if (itemControl.dirty) {
+      dormantControl.markAsDirty(updateParent: false, emitEvent: false);
+    }
+    if (itemControl.touched) {
+      dormantControl.markAsTouched(updateParent: false, emitEvent: false);
+    }
+    array.removeAt(index, emitEvent: false, updateParent: false);
+    array.insert(
+      index,
+      dormantControl,
+      emitEvent: false,
+      updateParent: true,
+    );
+    itemControl.dispose();
+  }
+
   RepeatItemInstance onRemoveRepeatedItem(int index, RepeatSection parent) {
-    final removedItem = parent.removeAt(index);
-    parent.elementControl.removeAt(index);
+    final removedItem = parent.elements[index];
+    removedItem.dispose();
+    parent.elementControl.removeAt(index).dispose();
+    parent.removeAt(index);
     parent.evaluate(emitEvent: true);
     return removedItem;
   }
 
   RepeatItemInstance? onRemoveLastItem(RepeatSection parent) {
     try {
-      final parentArray = form.control(parent.elementPath!) as FormArray;
-      final lastParentItem = parent.elements.last;
-      final itemFormGroup = form.control(lastParentItem.elementPath!);
-      parent.remove(lastParentItem);
-      parent.evaluate();
-      parentArray.remove(itemFormGroup);
+      final removed = onRemoveRepeatedItem(
+        parent.elements.length - 1,
+        parent,
+      );
       logDebug('last Item deleted');
-      return lastParentItem;
+      return removed;
     } catch (e) {
       logError('last Item not exist');
       return null;
@@ -272,6 +353,21 @@ class FormInstance {
       logError('Element With Path: $elementPath, not found: $e',
           stackTrace: st);
     }
+  }
+
+  void markElementAsTouched(String elementPath) {
+    final element = formSection.element(elementPath);
+    final control = element.mountedControl;
+    if (control != null) {
+      control.markAsTouched();
+      return;
+    }
+
+    SectionElement<dynamic>? parent = element.parentSection;
+    while (parent != null && parent is! RepeatItemInstance) {
+      parent = parent.parentSection;
+    }
+    parent?.parentSection?.mountedControl?.markAsTouched();
   }
 
   void dispose() {

@@ -13,19 +13,18 @@ class ConfigureFormCompletionDialog {
   const ConfigureFormCompletionDialog();
 
   FormCompletionDialog call(Section rootSection) {
-    final FormCompletionButton mainButton = _getMainButton(rootSection);
-    final FormCompletionButton secondaryButton =
-    _getSecondaryButton(rootSection);
+    final hasErrors = rootSection.hasErrors;
+    final FormCompletionButton mainButton = _getMainButton(hasErrors);
+    final FormCompletionButton secondaryButton = _getSecondaryButton(hasErrors);
 
     final DialogContentModel bottomSheetDialogUiModel = DialogContentModel(
-        title: rootSection.form.hasErrors
-            ? S.current.formContainsSomeErrors
-            : S.current.finalData,
-        subtitle: rootSection.form.hasErrors
+        title:
+            hasErrors ? S.current.formContainsSomeErrors : S.current.finalData,
+        subtitle: hasErrors
             ? S.current.fieldsWithErrorInfo
             : S.current.markAsFinalData,
-        icon: rootSection.form.hasErrors ? Icons.error : Icons.check_circle,
-        body: _getBody(rootSection));
+        icon: hasErrors ? Icons.error : Icons.check_circle,
+        body: _getBody(rootSection, hasErrors));
 
     return FormCompletionDialog(
         bottomSheetContentModel: bottomSheetDialogUiModel,
@@ -33,11 +32,11 @@ class ConfigureFormCompletionDialog {
         secondaryButton: secondaryButton);
   }
 
-  FormCompletionButton _getMainButton(Section rootSection) {
-    if (rootSection.form.hasErrors) {
+  FormCompletionButton _getMainButton(bool hasErrors) {
+    if (hasErrors) {
       return FormCompletionButton(
           buttonStyle:
-          DialogButtonStyle.mainButton(text: S.current.reviewFormData),
+              DialogButtonStyle.mainButton(text: S.current.reviewFormData),
           action: FormBottomDialogActionType.CheckFields);
     } else {
       return FormCompletionButton(
@@ -46,8 +45,8 @@ class ConfigureFormCompletionDialog {
     }
   }
 
-  FormCompletionButton _getSecondaryButton(Section rootSection) {
-    if (rootSection.form.hasErrors) {
+  FormCompletionButton _getSecondaryButton(bool hasErrors) {
+    if (hasErrors) {
       return FormCompletionButton(
           buttonStyle: DialogButtonStyle.secondaryButton(
               text: S.current.checkFieldsLater),
@@ -55,21 +54,20 @@ class ConfigureFormCompletionDialog {
     } else {
       return FormCompletionButton(
           buttonStyle:
-          DialogButtonStyle.secondaryButton(text: S.current.notNow),
+              DialogButtonStyle.secondaryButton(text: S.current.notNow),
           action: FormBottomDialogActionType.NotNow);
     }
   }
 
-  BottomSheetBodyModel _getBody(Section rootSection) {
-    bool controlHasErrors = rootSection.form.hasErrors;
+  BottomSheetBodyModel _getBody(Section rootSection, bool hasErrors) {
     // bool elementHasErrors = rootSection.elementState.errors.isNotEmpty;
     // final elementErrors =rootSection.elementState.errors;
-    return controlHasErrors
+    return hasErrors
         ? BottomSheetBodyModel.errorsBody(
-        message: S.current.fieldsWithErrorInfo,
-        fieldsWithIssues: _getFieldsWithIssues(rootSection))
+            message: S.current.fieldsWithErrorInfo,
+            fieldsWithIssues: _getFieldsWithIssues(rootSection))
         : BottomSheetBodyModel.messageBody(
-        message: S.current.makeFormFinalOrSaveBody);
+            message: S.current.makeFormFinalOrSaveBody);
   }
 
   Map<String, dynamic> flattenErrorMap(Map<String, dynamic> errorMap,
@@ -101,8 +99,8 @@ class ConfigureFormCompletionDialog {
     // logDebug('formErrorsMap: $formErrors');
     // logDebug('formErrorsMapFlatt: $formErrorsFlatt');
     final Iterable<FieldInstance<dynamic>> fieldsWithErrors =
-    getFormElementIterator<FieldInstance<dynamic>>(rootSection)
-        .where((field) => field.elementControl.hasErrors && field.visible);
+        getFormElementIterator<FieldInstance<dynamic>>(rootSection)
+            .where((field) => field.hasErrors && field.visible);
     final fieldsIssues = fieldsWithErrors.map((element) => FieldWithIssue(
         parent: element.parentSection?.label,
         fieldPath: element.elementPath,
@@ -116,11 +114,11 @@ class ConfigureFormCompletionDialog {
   }
 
   String _getErrorMessage(FieldInstance<dynamic> field) {
-    final errorKey = field.elementControl.errors.keys.first;
+    final errorKey = field.errors.keys.first;
     final validationMessage = _findValidationMessage(errorKey);
 
     return validationMessage != null
-        ? validationMessage(field.elementControl.getError(errorKey)!)
+        ? validationMessage(field.errors[errorKey])
         : errorKey;
   }
 

@@ -56,6 +56,18 @@ class RepeatItemInstance extends Section {
     return map;
   }
 
+  @override
+  Map<String, Object?> get retainedValue {
+    final map = <String, Object?>{
+      for (final entry in elements.entries)
+        entry.key: entry.value.retainedValue,
+    };
+    if (_uid != null) {
+      map[RepeatMetadataNormalizer.idKey] = _uid;
+    }
+    return map;
+  }
+
   String pathBuilder(String pathItem) {
     if (parentSection == null) {
       throw StateError('RepeatItemInstance\'s Parent should not be null');

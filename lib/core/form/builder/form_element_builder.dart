@@ -1,4 +1,5 @@
 import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
+import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/section_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/template.dart';
@@ -38,7 +39,11 @@ class FormElementBuilder {
           initialFormValue: initialFormValue);
     } else {
       return buildFieldInstance(
-          form, formFlatTemplate, template as FieldTemplate);
+        form,
+        formFlatTemplate,
+        template as FieldTemplate,
+        initialFormValue: initialFormValue,
+      );
     }
   }
 
@@ -99,7 +104,12 @@ class FormElementBuilder {
   }
 
   static FieldInstance<dynamic> buildFieldInstance(FormGroup rootFormControl,
-      FormTemplateRepository formFlatTemplate, FieldTemplate elementTemplate) {
+      FormTemplateRepository formFlatTemplate, FieldTemplate elementTemplate,
+      {dynamic initialFormValue}) {
+    final retainedValue = FormElementControlBuilder.initialFieldValue(
+      elementTemplate,
+      initialFormValue,
+    );
     switch (elementTemplate.type) {
       case ValueType.Text:
       case ValueType.LongText:
@@ -111,6 +121,7 @@ class FormElementBuilder {
       case ValueType.Age:
         return FieldInstance<String>(
             form: rootFormControl,
+            initialValue: retainedValue,
             elementProperties: FieldElementState<String>(
                 readOnly: elementTemplate.readOnly,
                 mandatory: elementTemplate.mandatory),
@@ -120,6 +131,7 @@ class FormElementBuilder {
       case ValueType.DateTime:
         return FieldInstance<String>(
             form: rootFormControl,
+            initialValue: retainedValue,
             elementProperties: FieldElementState<String>(
                 readOnly: elementTemplate.readOnly,
                 mandatory: elementTemplate.mandatory),
@@ -128,6 +140,7 @@ class FormElementBuilder {
       case ValueType.Calculated:
         return CalculatedFieldInstance<dynamic>(
             form: rootFormControl,
+            initialValue: retainedValue,
             calculatedExpression: CalculatedExpression(
                 expression: elementTemplate.calculationExpression!),
             elementProperties:
@@ -139,6 +152,7 @@ class FormElementBuilder {
       case ValueType.IntegerZeroOrPositive:
         return FieldInstance<int>(
             form: rootFormControl,
+            initialValue: retainedValue,
             elementProperties: FieldElementState<int>(
                 readOnly: elementTemplate.readOnly,
                 mandatory: elementTemplate.mandatory),
@@ -149,6 +163,7 @@ class FormElementBuilder {
       case ValueType.Percentage:
         return FieldInstance<double>(
           form: rootFormControl,
+          initialValue: retainedValue,
           elementProperties: FieldElementState<double>(
               readOnly: elementTemplate.readOnly,
               mandatory: elementTemplate.mandatory),
@@ -159,6 +174,7 @@ class FormElementBuilder {
       case ValueType.YesNo:
         return FieldInstance<bool>(
           form: rootFormControl,
+          initialValue: retainedValue,
           elementProperties: FieldElementState<bool>(
               readOnly: elementTemplate.readOnly,
               mandatory: elementTemplate.mandatory),
@@ -167,6 +183,7 @@ class FormElementBuilder {
       case ValueType.SelectOne:
         return FieldInstance<String>(
           form: rootFormControl,
+          initialValue: retainedValue,
           choiceFilter: elementTemplate.choiceFilter != null
               ? ChoiceFilter(
                   expression: elementTemplate.choiceFilter,
@@ -187,6 +204,7 @@ class FormElementBuilder {
       case ValueType.SelectMulti:
         return FieldInstance<List<String>>(
             form: rootFormControl,
+            initialValue: retainedValue,
             choiceFilter: elementTemplate.choiceFilter != null
                 ? ChoiceFilter(
                     expression: elementTemplate.choiceFilter,
@@ -206,6 +224,7 @@ class FormElementBuilder {
       case ValueType.Reference:
         return FieldInstance<String>(
           form: rootFormControl,
+          initialValue: retainedValue,
           elementProperties: FieldElementState<String>(
               readOnly: elementTemplate.readOnly,
               mandatory: elementTemplate.mandatory),
@@ -214,6 +233,7 @@ class FormElementBuilder {
       case ValueType.ScannedCode:
         return FieldInstance<String>(
           form: rootFormControl,
+          initialValue: retainedValue,
           elementProperties: FieldElementState<String>(
               readOnly: elementTemplate.readOnly,
               mandatory: elementTemplate.mandatory),

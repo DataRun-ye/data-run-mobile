@@ -79,7 +79,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   @override
   Widget build(BuildContext context) {
-
     final formInstance = appLocator<FormInstance>();
 
     final List<FieldTemplate> tableColumns = useMemoized(() {
@@ -165,36 +164,42 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
 
   Future<void> _showEditPanel(BuildContext context, FormInstance formInstance,
       RepeatItemInstance repeatItem) async {
-    appLocator<NavigationService>().navigateToView(
-        preventDuplicates: false,
-        FormMetadataWidget(
-            formMetadata: formInstance.formMetadata,
-            child: ReactiveForm(
-              formGroup: repeatItem.elementControl,
-              child: Builder(builder: (context) {
-                final title =
-                    '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
+    formInstance.materializeRepeatItem(repeatItem);
+    try {
+      await appLocator<NavigationService>().navigateToView(
+          preventDuplicates: false,
+          FormMetadataWidget(
+              formMetadata: formInstance.formMetadata,
+              child: ReactiveForm(
+                formGroup: repeatItem.elementControl,
+                child: Builder(builder: (context) {
+                  final title =
+                      '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
 
-                return EditRowScreen(
-                  title: title,
-                  repeatInstance: _repeatInstance,
-                  item: repeatItem,
-                  onRemoveItem: _dataSource.removeItem,
-                  onSave: (formGroup, action) async {
-                    _repeatInstance.elementControl.markAsTouched();
-                    await formInstance.saveFormData();
-                    if (!context.mounted) {
-                      return;
-                    }
-                    _dataSource.updateItems(_repeatInstance.elements);
-                    if (formGroup.valid) {
-                      await _handleSave(
-                          context, formInstance, repeatItem, action);
-                    }
-                  },
-                );
-              }),
-            )));
+                  return EditRowScreen(
+                    title: title,
+                    repeatInstance: _repeatInstance,
+                    item: repeatItem,
+                    onRemoveItem: _dataSource.removeItem,
+                    onSave: (formGroup, action) async {
+                      _repeatInstance.elementControl.markAsTouched();
+                      await formInstance.saveFormData();
+                      if (!context.mounted) {
+                        return;
+                      }
+                      _dataSource.updateItems(_repeatInstance.elements);
+                      if (formGroup.valid) {
+                        await _handleSave(
+                            context, formInstance, repeatItem, action);
+                      }
+                    },
+                  );
+                }),
+              )));
+    } finally {
+      formInstance.dematerializeRepeatItem(repeatItem);
+      _dataSource.updateItems(_repeatInstance.elements);
+    }
   }
 
   Future<void> _handleSave(BuildContext context, FormInstance formInstance,

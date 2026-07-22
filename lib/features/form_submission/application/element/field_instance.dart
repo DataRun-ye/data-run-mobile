@@ -5,9 +5,11 @@ class FieldInstance<T> extends FormElementInstance<T> {
     required FieldElementState<T> elementProperties,
     required super.form,
     required super.template,
+    T? initialValue,
     this.choiceFilter,
     Map<String, ValidationMessageFunction> validationMessages = const {},
-  }) : super(elementState: elementProperties) {
+  })  : _retainedValue = initialValue,
+        super(elementState: elementProperties) {
     this.validationMessages.addAll(validationMessages);
   }
 
@@ -33,6 +35,9 @@ class FieldInstance<T> extends FormElementInstance<T> {
 
   String? _activeValidationRuleError;
 
+  T? _retainedValue;
+  Map<String, dynamic>? _dormantValidationErrors;
+
   String? get listName => template.listName;
 
   dynamic get defaultValue => template.defaultValue;
@@ -46,22 +51,41 @@ class FieldInstance<T> extends FormElementInstance<T> {
   static final Object _uninitializedControlValue = Object();
 
   @override
-  T? reduceValue() => elementControl.value;
+  T? reduceValue() => mountedControl?.value ?? _retainedValue;
 
   @override
-  FormControl<T> get elementControl => _elementControl;
+  T? get retainedValue => mountedControl?.value ?? _retainedValue;
 
-  late final FormControl<T> _elementControl =
-      form.control(elementPath!) as FormControl<T>;
+  @override
+  Map<String, dynamic> get errors {
+    if (hidden) {
+      return const {};
+    }
+
+    final controlErrors = mountedControl?.errors ?? _validateDormantValue();
+    return <String, dynamic>{...controlErrors, ...ruleErrors};
+  }
+
+  @override
+  FormControl<T>? get mountedControl {
+    final control = super.mountedControl;
+    return control is FormControl<T> ? control : null;
+  }
+
+  @override
+  FormControl<T> get elementControl =>
+      mountedControl ?? (throw FormControlNotFoundException());
 
   @override
   void updateValue(T? value,
       {bool updateParent = true, bool emitEvent = true}) {
-    if (_sameValue(value, elementControl.value)) {
+    if (_sameValue(value, retainedValue)) {
       return;
     }
 
-    elementControl.updateValue(
+    _retainedValue = _copyRetainedValue(value);
+    _invalidateDormantValidation();
+    mountedControl?.updateValue(
       value,
       updateParent: updateParent,
       emitEvent: emitEvent,
@@ -70,6 +94,8 @@ class FieldInstance<T> extends FormElementInstance<T> {
   }
 
   void handleControlValueChanged(T? value) {
+    _retainedValue = _copyRetainedValue(value);
+    _invalidateDormantValidation();
     _notifyControlValueChanged(value);
   }
 
@@ -80,6 +106,51 @@ class FieldInstance<T> extends FormElementInstance<T> {
 
     _lastNotifiedControlValue = value is List ? List.of(value) : value;
     notifySubscribers(emitEvent: emitEvent);
+  }
+
+  @override
+  void captureMountedValues() {
+    final control = mountedControl;
+    if (control != null) {
+      final value = control.value;
+      _retainedValue = _copyRetainedValue(value);
+      _invalidateDormantValidation();
+    }
+  }
+
+  @override
+  void onValidationStateChanged() => _invalidateDormantValidation();
+
+  void _invalidateDormantValidation() {
+    _dormantValidationErrors = null;
+  }
+
+  T? _copyRetainedValue(T? value) {
+    if (template.type == ValueType.SelectMulti && value is Iterable) {
+      return value.cast<String>().toList() as T;
+    }
+    return value;
+  }
+
+  Map<String, dynamic> _validateDormantValue() {
+    final cached = _dormantValidationErrors;
+    if (cached != null) {
+      return cached;
+    }
+
+    final validators = FieldValidators.getValidators(template)
+        .where((validator) => validator is! RequiredValidator)
+        .toList();
+    if (mandatory) {
+      validators.add(const RequiredFieldValidator());
+    }
+    final validationControl = FormControl<dynamic>(
+      value: _retainedValue,
+      validators: validators,
+    );
+    final errors = Map<String, dynamic>.of(validationControl.errors);
+    validationControl.dispose();
+    return _dormantValidationErrors = errors;
   }
 
   @override
@@ -186,7 +257,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
     }
 
     final retainedValue = _retainValueFromVisibleOptions(visibleOptions);
-    if (!_sameValue(elementControl.value, retainedValue)) {
+    if (!_sameValue(this.retainedValue, retainedValue)) {
       updateValue(
         retainedValue,
         updateParent: updateParent,
@@ -196,7 +267,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
   }
 
   T? _retainValueFromVisibleOptions(List<FormOption> visibleOptions) {
-    final currentValue = elementControl.value;
+    final currentValue = retainedValue;
     if (currentValue is List<String>) {
       return currentValue
           .map((selectedValue) =>
@@ -221,6 +292,7 @@ class CalculatedFieldInstance<T> extends FieldInstance<T> {
     required super.elementProperties,
     required super.form,
     required super.template,
+    super.initialValue,
     this.calculatedExpression,
   });
 

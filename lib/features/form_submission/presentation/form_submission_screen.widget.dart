@@ -197,7 +197,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   }
 
   Future<void> backButtonPressed(FormInstance formInstance) async {
-    if (formInstance.form.hasErrors || formInstance.form.dirty) {
+    if (formInstance.formSection.hasErrors || formInstance.form.dirty) {
       await _saveAndShowBottomSheet(formInstance);
     } else {
       await _leaveForm();
@@ -244,7 +244,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   ) {
     formInstance.onErrorTap(elementPath);
     Navigator.pop(context);
-    formInstance.form.control(elementPath).markAsTouched();
+    formInstance.markElementAsTouched(elementPath);
   }
 
   Future<void> _onCompletionDialogButtonClicked(

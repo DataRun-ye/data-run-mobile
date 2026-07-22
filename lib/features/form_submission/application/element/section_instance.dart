@@ -16,11 +16,27 @@ class Section extends SectionElement<Map<String, Object?>> {
   Map<String, FormElementInstance<dynamic>> get elements =>
       Map.unmodifiable(_elements);
 
+  FormGroup? get mountedControl {
+    if (elementPath == null) {
+      return form;
+    }
+    final control = super.mountedControl;
+    return control is FormGroup ? control : null;
+  }
+
   FormGroup get elementControl =>
-      elementPath != null ? form.control(elementPath!) as FormGroup : form;
+      mountedControl ?? (throw FormControlNotFoundException());
 
   @override
   Map<String, Object?> get value => Map.unmodifiable(reduceValue()!);
+
+  @override
+  Map<String, Object?> get retainedValue => Map.unmodifiable(
+        <String, Object?>{
+          for (final entry in _elements.entries)
+            entry.key: entry.value.retainedValue,
+        },
+      );
 
   /// Appends all [elements] to the group.
   void addAll(Map<String, FormElementInstance<dynamic>> elements) {
@@ -34,11 +50,12 @@ class Section extends SectionElement<Map<String, Object?>> {
   Map<String, dynamic> get errors {
     final allErrors = Map<String, dynamic>.of(super.errors);
     elements.forEach((name, element) {
-      if (element.visible && element.hasErrors) {
+      final elementErrors = element.errors;
+      if (element.visible && elementErrors.isNotEmpty) {
         allErrors.update(
           name,
-          (final _) => element.errors,
-          ifAbsent: () => element.errors,
+          (final _) => elementErrors,
+          ifAbsent: () => elementErrors,
         );
       }
     });

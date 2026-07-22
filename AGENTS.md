@@ -21,7 +21,7 @@ Core rules:
 Known high-risk form areas:
 
 - active form state is scoped `GetIt` `FormInstance` plus `reactive_forms`, not the old commented Riverpod form providers.
-- form loading builds the full form JSON, full control tree, and full element tree eagerly.
+- form loading builds the full form JSON and element/rule graph eagerly, but stored repeat rows retain lightweight map controls; a row's field controls exist only while its editor is open.
 - submissions are saved as one whole `formData` JSON object.
 - large repeats, expressions, field subscriptions, and repeat metadata persistence are known risk areas; use `09-production-boundaries-and-work-strategy.md` as the current decision overlay and `07-repeat-uid-contract.md` for repeat metadata evidence.
 

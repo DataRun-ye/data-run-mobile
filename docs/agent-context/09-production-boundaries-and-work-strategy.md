@@ -1,6 +1,6 @@
 # Production Boundaries And Working Strategy
 
-Validated: 2026-07-22
+Validated: 2026-07-23
 
 Purpose: define the current production contracts and the safest investigation and cleanup order. This is the current decision overlay for the earlier repository maps. It does not replace runtime evidence.
 
@@ -59,7 +59,7 @@ Evidence: `lib/core/code_generator.dart`, `lib/datasource/base_datasource.dart`,
 
 ### Form And Offline Behavior
 
-- Current implementation clears field and repeat values as soon as their element becomes hidden. This is observed behavior, not the desired long-term product contract. The backlog contract is to retain working values across temporary hide/show toggles, keep hidden elements out of validation, and sanitize hidden values only at an explicit save boundary. Whether a successful save also purges the still-open control state remains a product decision; do not change `markAsHidden()` in isolation.
+- Temporary hide/show transitions retain field, repeat-row, and repeat metadata values in the active editing graph. Hidden elements are disabled, excluded from validation and the form-value projection, and therefore omitted from the whole-JSON save. Reopening uses the sanitized saved projection, so values hidden at save time do not return. Filtered choices retain their value while hidden and reconcile against the active filter when shown again.
 - Whenever a previously hidden field becomes visible, mandatory and type validation must apply again.
 - New submissions use the latest locally available form version.
 - Existing submissions load the exact stored `templateVersion`, allowing old local submissions to continue using an older cached form version.
@@ -187,11 +187,11 @@ Where same-layer methods or services implement the same responsibility in scatte
 
 Then address form engine/expression simplification, synchronization boundaries, access policy, metadata ownership, and larger repeat performance as independently characterized domains.
 
-### 7. Separate Visibility From Value Destruction
+### 7. Separate Visibility From Value Destruction (Completed)
 
-Treat temporary visibility and persisted-data sanitization as different responsibilities. Hiding a field, section, repeat, or nested repeat should control presentation, enabled state, and validation without immediately destroying the user's working values. The save projection should omit or clear hidden data according to one explicit policy, without relying on confirmation dialogs attached to every controlling choice.
+Completed on `develop`: temporary visibility and persisted-data sanitization are separate responsibilities. Hiding a field, section, repeat, or nested repeat controls presentation, enabled state, validation, and save projection without destroying the active editing values. The save projection omits hidden data, and reopening reconstructs the graph from that sanitized JSON. The obsolete confirmation attached to controlling choice changes was removed; explicit destructive actions retain their own confirmations.
 
-This slice must preserve the current invariants: hidden required fields cannot block save; shown fields regain required/type/rule validation; parent visibility dominates descendants; repeat and nested-repeat dependencies remain row-scoped; repeat metadata and existing row identity survive ordinary hide/show toggles. Characterization must cover hide-show without save, hide-save-reopen, outside-to-repeat rules, nested repeats, and both draft and completed saves. Keep the whole-JSON persistence format and database schema unchanged.
+The implementation preserves these invariants: hidden required fields cannot block save; shown fields regain required/type/rule validation; parent visibility dominates descendants; repeat and nested-repeat dependencies remain row-scoped; and repeat metadata and existing row identity survive ordinary hide/show toggles. `test/dev/form_hidden_value_persistence_test.dart` and the form/repeat characterization suites cover hide/show, save/reopen, filtered choices, and nested-repeat identity. Signed build 34 passed in-place Redmi smoke for malaria fields and indoor-surveillance repeats. The whole-JSON persistence format and database schema are unchanged.
 
 ### 8. Redesign Eager Form Graph Construction
 

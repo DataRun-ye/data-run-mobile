@@ -1,4 +1,3 @@
-import 'package:datarunmobile/core/util/list_extensions.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -127,17 +126,18 @@ class FieldElementState<T> extends FormElementState<T> {
       {required List<FormOption> visibleOptions}) {
     if (!const DeepCollectionEquality.unordered()
         .equals(this.visibleOptions, visibleOptions)) {
-      if (T is List<String>) {
-        final selectedValues = (value as List<String>)
-            .where((selectedValue) => visibleOptions.contains(selectedValue))
+      final currentValue = value;
+      if (currentValue is List<String>) {
+        final selectedValues = currentValue
+            .map((selectedValue) =>
+                findFormOptionByValue(visibleOptions, selectedValue)?.code)
+            .whereType<String>()
             .toList();
-        visibleOptions.where((option) => option.name == this.value).toList();
         return copyWith(visibleOptions: visibleOptions)
             .reset(value: selectedValues as T);
       } else {
-        final String? newValue = visibleOptions
-            .firstOrNullWhere((option) => option.name == this.value)
-            ?.name;
+        final String? newValue =
+            findFormOptionByValue(visibleOptions, value)?.code;
 
         return copyWith(visibleOptions: visibleOptions)
             .reset(value: newValue as T?);

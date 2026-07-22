@@ -1,31 +1,27 @@
-import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
-import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
+import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_dropdown_search/reactive_dropdown_search.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class QReactiveMultiSelectSearchField extends HookConsumerWidget {
+class QReactiveMultiSelectSearchField extends StatelessWidget {
   const QReactiveMultiSelectSearchField({super.key, required this.element});
 
   final FieldInstance<List<String>> element;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-
+  Widget build(BuildContext context) {
     final formInstance = appLocator<FormInstance>();
 
-    return ReactiveDropdownSearchMultiSelection<String, String>(
+    return ReactiveDropdownSearchMultiSelection<String, FormOption>(
       formControl: formInstance.form.control(element.elementPath!)
           as FormControl<List<String>>,
       validationMessages: validationMessages(),
-      // clearButtonProps: const ClearButtonProps(isVisible: true),
-      // valueAccessor: NameToLabelValueAccessor(options: element.visibleOption),
+      valueAccessor: FormOptionMultiSelectionValueAccessor(),
       dropdownDecoratorProps: DropDownDecoratorProps(
         decoration: InputDecoration(
             labelText: element.label,
@@ -34,46 +30,28 @@ class QReactiveMultiSelectSearchField extends HookConsumerWidget {
             hintText: appLocator<HintProvider>().provideHint(element.type)),
       ),
       popupProps: const PopupPropsMultiSelection.menu(
-        showSelectedItems: false,
+        showSelectedItems: true,
       ),
-      compareFn: (item, selectedItem) => item == selectedItem,
-      items: (String filter, LoadProps? loadProps) {
-        return element.visibleOption
-            .map((option) => getItemLocalString(option.label))
-            .toSet()
-            .toList();
-      },
-      // showClearButton: true,
+      compareFn: (item, selectedItem) => item.code == selectedItem.code,
+      itemAsString: (option) => option.displayName,
+      items: (String filter, LoadProps? loadProps) => element.visibleOption,
     );
   }
 }
 
-class NameToLabelValueAccessor
-    extends DropDownSearchMultiSelectionValueAccessor<String, String> {
-  NameToLabelValueAccessor({this.items = const [], this.options = const []});
-
-  final List<String> items;
-  final List<DataOption> options;
-
+class FormOptionMultiSelectionValueAccessor
+    extends DropDownSearchMultiSelectionValueAccessor<String, FormOption> {
   @override
-  List<String>? modelToViewValue(List<String> items, List<String>? modelValue) {
-    return options
-        .where((option) =>
-            (modelValue?.contains(option.code) == true) ||
-            (modelValue?.contains(option.name) ?? false))
-        .map((option) =>
-            getItemLocalString(option.label, defaultString: option.name))
+  List<FormOption>? modelToViewValue(
+      List<FormOption> items, List<String>? modelValue) {
+    return modelValue
+        ?.map((value) => findFormOptionByValue(items, value))
+        .whereType<FormOption>()
         .toList();
   }
 
   @override
-  List<String>? viewToModelValue(List<String> items, List<String>? modelValue) {
-    return options
-        .where((option) =>
-            modelValue?.contains(
-                getItemLocalString(option.label, defaultString: option.name)) ==
-            true)
-        .map((option) => option.code)
-        .toList();
-  }
+  List<String>? viewToModelValue(
+          List<FormOption> items, List<FormOption>? viewValue) =>
+      viewValue?.map((option) => option.code).toList();
 }

@@ -88,7 +88,6 @@ class FormOption with EquatableMixin {
     );
   }
 
-
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     return {
       'id': id,
@@ -166,4 +165,19 @@ class FormOption with EquatableMixin {
       properties: properties ?? this.properties,
     );
   }
+}
+
+FormOption? findFormOptionByValue(Iterable<FormOption> options, Object? value) {
+  if (value is! String) return null;
+  final candidates = options.toList(growable: false);
+  for (final option in candidates) {
+    if (option.code == value) return option;
+  }
+  for (final option in candidates) {
+    if (option.name == value) return option;
+  }
+  for (final option in candidates) {
+    if (option.label.values.contains(value)) return option;
+  }
+  return null;
 }

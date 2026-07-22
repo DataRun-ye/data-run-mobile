@@ -1,7 +1,6 @@
-import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/core/util/date_helper.dart';
-import 'package:datarunmobile/core/util/list_extensions.dart';
 import 'package:datarunmobile/database/shared/assignment_status.dart';
+import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
@@ -149,9 +148,14 @@ class RepeatTableDataSource extends DataTableSource {
         cellContent = Text(value ?? '-');
         break;
       case ValueType.SelectMulti:
-        cellContent = Text(field.visibleOption
-            .where((option) => option.name == field.value)
-            .whereType<String>()
+        final selectedValues = field.value is Iterable
+            ? (field.value as Iterable).whereType<String>()
+            : const <String>[];
+        cellContent = Text(selectedValues
+            .map((value) =>
+                findFormOptionByValue(field.visibleOption, value)
+                    ?.displayName ??
+                value)
             .join(', '));
         break;
       case ValueType.SelectOne:
@@ -161,11 +165,10 @@ class RepeatTableDataSource extends DataTableSource {
             style: const TextStyle(color: Colors.red),
           );
         } else {
-          cellContent = Text(getItemLocalString(
-              field.visibleOption
-                  .firstOrNullWhere((option) => option.name == field.value)
-                  ?.label,
-              defaultString: '-'));
+          cellContent = Text(
+              findFormOptionByValue(field.visibleOption, field.value)
+                      ?.displayName ??
+                  '-');
         }
         break;
       default:

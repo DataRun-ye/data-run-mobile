@@ -37,7 +37,7 @@ Primary active config store:
 | Area | Classification | File path | Evidence | Confidence | Why it matters |
 | --- | --- | --- | --- | --- | --- |
 | Login-triggered initial sync | ACTIVE | `lib/features/login/presentation/login_viewmodel.dart` | Successful `AuthManager.login(...)` is followed by `replaceWithSyncResourcesView()` at lines 33-35 and 57-59. | High | Fresh login always enters metadata/config sync before home. |
-| Startup-triggered sync | ACTIVE | `lib/features/startup/presentation/splash_viewmodel.dart` | `runStartupLogic()` calls `_syncScheduler.shouldSync()` and routes to `SyncResourcesView` at lines 18-24. | High | Existing users refresh config when online and due. |
+| Startup-triggered sync | ACTIVE | `lib/features/startup/application/startup_coordinator.dart` | `run()` calls `_syncScheduler.shouldSync()` after auth initialization and routes to `SyncResourcesView` when due. | High | Existing users refresh config when online and due. |
 | Manual refresh | ACTIVE | `lib/features/home/presentation/drawer/app_drawer_sync_item.dart` | Drawer item calls `replaceWithSyncResourcesView()` at line 53 when online. | High | Users can explicitly refresh offline config. |
 | Sync due decision | ACTIVE | `lib/core/sync/sync_scheduler.dart` | `shouldSync()` returns false when offline, true when initial sync is missing, or true when interval elapsed at lines 16-22. | High | Offline startup does not force config fetch; existing local DB remains the source. |
 | Sync screen autostart | ACTIVE | `lib/features/sync/presentation/sync_resources_view.dart` | `onViewModelReady` schedules `viewModel.triggerSync()` at lines 77-79. | High | The sync route automatically starts the server fetch. |

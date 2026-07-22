@@ -26,7 +26,7 @@ Active:
 - `lib/main.dart:174` uses `StackedRouter().onGenerateRoute`.
 - `lib/main.dart:180` sets `Routes.splashView` as the initial route.
 - `lib/app/stacked/app.dart:19-29` registers current Stacked routes: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `AssignmentScreen`, `EditRowScreen`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`.
-- `lib/features/startup/presentation/splash_viewmodel.dart:20-25` routes authenticated users to sync or home, and unauthenticated users to login.
+- `lib/features/startup/application/startup_coordinator.dart` routes authenticated users to sync or home, and unauthenticated users to login.
 - `lib/features/home/presentation/home_wrapper_page.dart:19` shows `ActivityListView` as the home body.
 - `lib/features/activity/presentation/activity_list_view.dart:38` opens `AssignmentScreen` from an activity card.
 

@@ -116,6 +116,12 @@ void logDebug(String message,
   logger.logDebug(message, data: data, source: source, stackTrace: stackTrace);
 }
 
+void logDebugLazy(String Function() message) {
+  if (logger.isLogEnabled) {
+    logger.logDebug(message());
+  }
+}
+
 void logInfo(String message,
     {Map<String, dynamic>? data, Object? source, StackTrace? stackTrace}) {
   logger.logInfo(message, data: data, source: source, stackTrace: stackTrace);

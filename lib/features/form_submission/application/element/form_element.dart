@@ -161,9 +161,10 @@ sealed class FormElementInstance<T> {
   // void validate({bool updateParent = true, bool emitEvent = true}) {}
 
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('1.${elementPath}, markAsHidden: ${_getDebugState()}.');
+    logDebugLazy(() => '1.${elementPath}, markAsHidden: ${_getDebugState()}.');
     if (hidden) {
-      logDebug('_.${elementPath}, markAsHidden, return: already hidden.');
+      logDebugLazy(
+          () => '_.${elementPath}, markAsHidden, return: already hidden.');
       return;
     }
     updateStatus(
@@ -178,21 +179,23 @@ sealed class FormElementInstance<T> {
     elementControl!.reset(
         disabled: true, updateParent: updateParent, emitEvent: emitEvent);
 
-    logDebug('2.${elementPath}, markAsHidden, marked: ${_getDebugState()}.');
+    logDebugLazy(
+        () => '2.${elementPath}, markAsHidden, marked: ${_getDebugState()}.');
 
     // updateValueAndValidity(updateParent: true, emitEvent: false);
     // updateValueAndValidity(updateParent: updateParent, emitEvent: emitEvent);
   }
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
-    logDebug('1.${elementPath}, markAsVisible: ${_getDebugState()}.');
+    logDebugLazy(() => '1.${elementPath}, markAsVisible: ${_getDebugState()}.');
     if (parentSection?.hidden == true) {
-      logDebug(
+      logDebugLazy(() =>
           '_.${elementPath}, markAsVisible, return: parent section is hidden.');
       return;
     }
     if (visible) {
-      logDebug('_.${elementPath}, markAsVisible, return: already visible.');
+      logDebugLazy(
+          () => '_.${elementPath}, markAsVisible, return: already visible.');
       return;
     }
 
@@ -207,7 +210,8 @@ sealed class FormElementInstance<T> {
     );
     elementControl!
         .markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
-    logDebug('2.${elementPath}, markAsVisible, marked: ${_getDebugState()}.');
+    logDebugLazy(
+        () => '2.${elementPath}, markAsVisible, marked: ${_getDebugState()}.');
   }
 
   void markAsMandatory({bool updateParent = true, bool emitEvent = true}) {
@@ -315,23 +319,28 @@ sealed class FormElementInstance<T> {
       {String? changedDependency,
       bool updateParent = true,
       bool emitEvent = true}) {
-    logDebug(
+    final ruleActions = elementRuleActions;
+    if (ruleActions.isEmpty) {
+      return;
+    }
+    logDebugLazy(() =>
         '1/4.${elementPath ?? 'root'}, evaluate: due to $changedDependency.');
-    logDebug(
+    logDebugLazy(() =>
         '2/4.${elementPath ?? 'root'}, evaluate, start: ${_getDebugState()}, context(${evalContext}).');
     // if (hidden) {
     //   logDebug('_.${elementPath}, evaluate, return,no eval: is hidden.');
     //   return;
     // }
     if (_isEvaluating) {
-      logDebug('_.${elementPath}, evaluate, return, no eval: _isEvaluating.');
+      logDebugLazy(
+          () => '_.${elementPath}, evaluate, return, no eval: _isEvaluating.');
       return;
     }
 
     try {
       _isEvaluating = true;
       _evaluateRuleActions(
-        elementRuleActions,
+        ruleActions,
         updateParent: updateParent,
         emitEvent: emitEvent,
       );
@@ -382,10 +391,10 @@ sealed class FormElementInstance<T> {
     required bool emitEvent,
   }) {
     for (final ruleAction in ruleActions) {
-      logDebug(
+      logDebugLazy(() =>
           '3/4.$elementPath, evaluate, expression: ${ruleAction.expression}.');
       final applies = ruleAction.evaluate(evalContext);
-      logDebug('4/4.$elementPath, evaluate, result: $applies.');
+      logDebugLazy(() => '4/4.$elementPath, evaluate, result: $applies.');
       applies
           ? ruleAction.apply(
               this,

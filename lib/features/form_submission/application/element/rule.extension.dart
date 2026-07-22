@@ -32,11 +32,13 @@ extension ApplyAction on RuleAction {
       //   }
       //   break;
       case RuleActionType.Show:
-        logDebug('${element.elementPath}, apply: ${RuleActionType.Show}');
+        logDebugLazy(
+            () => '${element.elementPath}, apply: ${RuleActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Hide:
-        logDebug('${element.elementPath}, apply: ${RuleActionType.Hide}');
+        logDebugLazy(
+            () => '${element.elementPath}, apply: ${RuleActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Error:
@@ -97,11 +99,13 @@ extension ApplyAction on RuleAction {
       //   }
       //   break;
       case RuleActionType.Show:
-        logDebug('${element.elementPath}, reset: ${RuleActionType.Hide}');
+        logDebugLazy(
+            () => '${element.elementPath}, reset: ${RuleActionType.Hide}');
         element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Hide:
-        logDebug('${element.elementPath}, reset: ${RuleActionType.Show}');
+        logDebugLazy(
+            () => '${element.elementPath}, reset: ${RuleActionType.Show}');
         element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Error:

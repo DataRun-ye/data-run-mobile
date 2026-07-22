@@ -52,9 +52,9 @@ class RuleAction
     };
   }
 
-  Expression getExpression() {
-    return Expression.parse(evalExpression);
-  }
+  late final Expression _parsedExpression = Expression.parse(evalExpression);
+
+  Expression getExpression() => _parsedExpression;
 
   List<String> get dependencies {
     final fieldPattern = RegExp(r'#\{(.*?)\}');

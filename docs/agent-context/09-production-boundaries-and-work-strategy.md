@@ -159,9 +159,9 @@ Use small behavior PRs for confirmed conflicts that can affect live data or repe
 
 Use focused maps and reference searches to remove source-dead form providers, old routes, abandoned synchronization coordinators, and other no-consumer code by domain. Update the relevant map status when the slice closes.
 
-### 3. Clean Runtime Registration And Ownership
+### 3. Clean Runtime Registration Prerequisites
 
-Remove unused registrations and generated alternatives after a registration-level check. Establish one owner for each lifecycle or state, but do not require one state-management library everywhere. Ownership clarity is the goal.
+Remove unused registrations and generated alternatives after a registration-level check. Clarify current lifecycle ownership only as far as required to preserve behavior during consolidation; broad state-management or service redesign belongs after the physical SDK move.
 
 ### 4. Migrate Schema-Backed Dead Features
 
@@ -170,6 +170,14 @@ The inactive repeat/data-value DAOs, callers, and schema tables are removed. Mig
 ### 5. Consolidate Boundaries Mechanically
 
 Collapsing `drun_sdk` into the application is reasonable because this app is its only live consumer and the in-repo copy is authoritative. Do it as a behavior-preserving physical move after surviving SDK responsibilities and inactive surfaces are classified. Do not mix the move with API redesign, state consolidation, database changes, or form-engine changes.
+
+### 6. Reorganize By Proven Ownership
+
+After the SDK is physically part of the app and its behavior baseline still passes, organize folders by proven responsibility, lifecycle, and dependency direction. Keep file moves separate from behavioral changes where practical; directory names must describe established ownership rather than invent it.
+
+Map each active state to its owner, lifetime, consumers, and persistence effects before consolidating Riverpod, GetIt, Stacked, reactive forms, or other state mechanisms. Migrate one bounded feature at a time. The goal is one coherent state owner per responsibility, not forcing one library into every concern. Remove a state library only when no active path still depends on it.
+
+Where same-layer methods or services implement the same responsibility in scattered places, consolidate them only after their callers and database/network effects are characterized. Move consumers to one minimal owner, prove equivalent behavior, and then remove the superseded paths; do not create generic utility collections that preserve the ambiguity under a new name.
 
 Then address form engine/expression simplification, synchronization boundaries, access policy, metadata ownership, and larger repeat performance as independently characterized domains.
 

@@ -66,10 +66,28 @@ Status legend:
 | Dependency lookup in repeats | ACTIVE | `lib/features/form_submission/application/element/element_dependency.extension.dart` | Builds `evalContext` at line 4, normalizes values at line 11, notifies dependents at line 72, and resolves dependency names from parent sections at line 77. | High | Repeat correctness depends on resolving dependencies to the current repeat row/section rather than another row or global field. |
 | Section rule traversal | ACTIVE | `lib/features/form_submission/application/element/section_instance.dart` | `resolveDependencies` and `evaluate` recurse children at lines 49-71. | High | Eager recursive traversal can be costly on large nested repeat forms. |
 | Repeat rule traversal | ACTIVE | `lib/features/form_submission/application/element/repeat_section.dart` | `resolveDependencies` and `evaluate` recurse through each repeat item. | High | Large repeat rows multiply rule evaluation cost. |
-| Field choice filters | ACTIVE | `lib/features/form_submission/application/element/field_instance.dart` | `filterDependencies` at line 27; `evaluate` calls `choiceFilter!.evaluate(evalContext)` at lines 76-99. | High | Choice filtering inside repeats can reevaluate option visibility per row. |
-| Rule parsing | ACTIVE | `lib/core/form/rule/rule_parse_extension.dart` | Extracts dependencies, visibility rules, filter dependencies, and calculation dependencies. | High | Determines which fields subscribe to which other fields, including repeat-local dependencies. |
-| Rule expression evaluation | ACTIVE | `lib/core/form/rule/action.dart` and `choice_filter.dart` | `RuleAction.evaluate` is at line 90; `ChoiceFilter.evaluate` is at line 18. | High | Runtime expression cost increases with dependency graph size and repeat row count. |
+| Field choice filters | ACTIVE | `lib/features/form_submission/application/element/field_instance.dart`, `lib/core/form/rule/choice_filter.dart` | `FieldInstance.dependencies` includes the filter's dependencies and `evaluate()` projects `ChoiceFilter.evaluate(evalContext)` into `FieldElementState.visibleOptions`. | High | Choice filtering inside repeats is reactive and row-local when the dependency resolves inside that row; option-heavy fields can still multiply expression cost. |
+| Rule dependency parsing | ACTIVE | `lib/core/form/rule/rule_parse_extension.dart`, `lib/core/form/rule/choice_filter.dart` | Template rule and calculation dependencies are parsed by `rule_parse_extension.dart`; choice-filter normalization and dependency extraction are owned by `ChoiceFilter`. | High | Keeping dependency ownership explicit prevents filters and rule actions from registering different graphs for the same expression. |
+| Rule expression evaluation | ACTIVE | `lib/core/form/rule/action.dart`, `lib/core/form/rule/choice_filter.dart` | `RuleAction` owns rule-action expression evaluation; `ChoiceFilter` owns option-filter expression evaluation. | High | Runtime expression cost increases with dependency graph size and repeat row count. |
 | UID generation helper | ACTIVE | `lib/core/code_generator.dart` | Used for submission ids and referenced by repeat UID code. | High | Any repeat UID fix must separate submission id behavior from repeat row identity behavior. |
+
+## Active Form State Ownership Contract
+
+This is the current ownership boundary after removing the duplicate rule-effect path and duplicate field-value state. Do not add field values or control validity back to element state.
+
+| Component | Sole responsibility | Explicitly not owned here |
+| --- | --- | --- |
+| Form template JSON | Declarative field, section, rule, calculation, and choice-filter intent. | Runtime value, validity, visibility, or persistence state. |
+| `FormElementState` | Presentation/rule projection for one element: hidden, read-only, mandatory indicator, warning, and rule errors. | Field value, enabled state, validator installation, control errors, or form validity. |
+| `FieldElementState` | `FormElementState` plus the currently visible choice options produced by `ChoiceFilter`. | Selected value or selection validity. |
+| `reactive_forms` `FormControl`/`FormGroup`/`FormArray` | Authoritative field values, enabled/disabled state, installed validators, control errors, and validity. These controls are reduced into submission JSON. | Rule dependency graph or presentation-only warnings. |
+| `FormElementInstance` tree | Runtime element hierarchy, dependency links, rule-action application, element-state projection, and notifications to dependent elements. Rule actions update both the projection and corresponding control behavior through this boundary. | A second value or validity store. |
+| `FieldInstance` | Exact control binding, dependency notification bridge, and choice-filter projection for a field. | Independent field-value storage; `reduceValue()` reads the bound control. |
+| `Section`/`RepeatSection`/`RepeatItemInstance` | Section and repeat hierarchy, repeat-row lifecycle, traversal, reduction, and repeat metadata preservation. | Per-field value or validation authority. |
+| `FormInstance` | Per-submission form lifecycle, repeat add/remove orchestration, whole-form reduction, and persistence. | Per-widget presentation state or a parallel form-value store. |
+| Form widgets | Render controls and element-state projections and forward raw user control changes into dependency notification. | Durable form state or business-rule authority. |
+
+The removed `RuleEffectStateFactory` path and former `FieldElementState.value` storage are obsolete and must not be recreated. Calculated-field assignment remains incomplete and is not part of this established ownership contract until its product semantics are characterized.
 
 ## Inactive, Incomplete, Or Legacy-Risk Form-Looking Files
 

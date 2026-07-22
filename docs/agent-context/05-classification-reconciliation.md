@@ -44,8 +44,8 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | Old team `StateNotifierProvider` files | Active-looking Riverpod state | OBSOLETE-REMOVED | The only screen used hard-coded demo data, had no active route, and was referenced only by a comment-only dashboard. Active assignment filtering remains in `lib/data/teams.provider.dart`. |
 | `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | OBSOLETE-REMOVED | Generated DI was their only outside reference. The duplicate stack and private progress models were removed; active sync remains `SyncResourcesViewModel` plus `SyncManager`. |
 | `syncServiceProvider` and NMC worker providers | Provider exists | OBSOLETE-REMOVED | No active watcher/worker registration existed; `performSync` did not perform the real download. The unused facade, worker models, and dependent legacy session service were removed. |
-| Former generated datasource registration | Generated active session scope | OBSOLETE-REMOVED | The generated typed alternative had no active caller and was removed. Active auth calls the explicit manual `registerUserSdkDeps(appLocator)` list, whose membership is covered by a focused test. |
-| `UserDatasource` | Mixed/uncertain in `03` | LEGACY-RISK | It is registered as concrete `UserDatasource`, not collected by `SyncManager.getAll<AbstractDatasource>()`; active profile fetch is `AuthApi.getUserProfile`. |
+| Former generated datasource registration | Generated active session scope | OBSOLETE-REMOVED | The generated typed alternative had no active caller and was removed. Active auth calls the explicit `registerUserConfigurationDatasources(appLocator)` list, whose membership is covered by a focused test. |
+| `UserDatasource` | Mixed/uncertain in `03` | OBSOLETE-REMOVED | It was registered only as concrete `UserDatasource`, had no resolver/caller, and was never collected by `SyncManager.getAll<AbstractDatasource>()`. Active profile fetch remains `AuthApi.getUserProfile`. |
 | Abandoned manifest service / party persistence attempt | INCOMPLETE in `03` | OBSOLETE-REMOVED | No runtime consumer, incomplete persistence, placeholder resolver, and no tables in the Play schema-3 database. Removed from active DI/schema declarations; no table-drop migration is performed. |
 | Bulk `AbstractDatasource` list | ACTIVE | ACTIVE | The 10 raw `AbstractDatasource` registrations in `init_active_session_scope.dart` are core to current config sync because `SyncManager` collects them. Submission pull is intentionally excluded. |
 | `DataElementDatasource` | ACTIVE in `01`/`03` | ACTIVE | The datasource is in the `AbstractDatasource` sync loop. |
@@ -89,7 +89,7 @@ Sync/offline cache:
 - `lib/core/sync_manager/sync_manager.dart`
 - `lib/datasource/base_datasource.dart`
 - `lib/di/init_active_session_scope.dart`
-- Active `AbstractDatasource` implementations registered by `registerUserSdkDeps(...)`
+- Active `AbstractDatasource` implementations registered by `registerUserConfigurationDatasources(...)`
 - `lib/database/db_factory/database_factory.dart`
 - `lib/database/db_factory/platform_app.dart`
 - `lib/database/app_database.dart`

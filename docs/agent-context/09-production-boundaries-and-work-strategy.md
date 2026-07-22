@@ -81,16 +81,16 @@ Evidence: `lib/features/form_submission/application/element/form_element.dart`, 
 `lib/main.dart`
 -> `lib/app/di/injection.dart`
 -> `lib/core/auth/auth_manager.dart`
--> `registerUserSdkDeps()` in `lib/di/init_active_session_scope.dart`
+-> `registerUserConfigurationDatasources()` in `lib/di/init_active_session_scope.dart`
 -> `lib/core/sync_manager/sync_manager.dart`
 -> sequential `AbstractDatasource` instances
 -> API clients and Drift DAOs.
 
-`registerUserSdkDeps()` is hand-maintained active behavior. Its raw, non-generic `AbstractDatasource` registrations allow `SyncManager` to retrieve one list and invoke each datasource sequentially. The former generated scoped registration alternative has been removed; the manual list is the only active registration path.
+`registerUserConfigurationDatasources()` is hand-maintained active behavior. Its explicit `AbstractDatasource<dynamic>` registrations allow `SyncManager` to retrieve one list and invoke each datasource sequentially. The former generated scoped registration alternative has been removed; this list is the only active registration path.
 
-The legacy-named `rSdkLocator` and app locator resolve to the same `GetIt.instance`. The application owns composition, including storage, token storage, HTTP, form, assignment, table, database, and datasource services. Names and former package origin do not define ownership.
+`lib/di/injection.dart` owns the single `appLocator = GetIt.instance`; `lib/app/di/injection.dart` re-exports it for existing app imports. A focused test locks this locator identity. The application owns composition, including storage, token storage, HTTP, form, assignment, table, database, and datasource services.
 
-`UserDatasource` is registered as its concrete type, not as an `AbstractDatasource`; it is not part of the sequential bulk configuration list. Login fetches the user profile through `AuthApi` before creating the user scope.
+The unreachable concrete `UserDatasource` registration and class were removed. Login fetches the user profile through `AuthApi` before creating the user scope; it is not part of bulk configuration sync.
 
 ### Form Capture And Submission Upload
 

@@ -27,7 +27,7 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     with _$DataInstancesDaoMixin {
   DataInstancesDao(AppDatabase db) : super(db);
 
-  HttpClient<dynamic> get _apiClient => rSdkLocator<HttpClient<dynamic>>();
+  HttpClient<dynamic> get _apiClient => appLocator<HttpClient<dynamic>>();
 
   /// Upload a batch of submissions and update DB statuses inside a transaction.
   Future<ImportSummaryModel> upload(Iterable<String> ids) async {

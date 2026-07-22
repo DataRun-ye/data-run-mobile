@@ -1,9 +1,9 @@
 import 'package:datarunmobile/database/db_factory/database_factory.dart';
 import 'package:get_it/get_it.dart';
 
-GetIt rSdkLocator = GetIt.instance;
+final GetIt appLocator = GetIt.instance;
 
-GetIt registerSdkRootDependencies(GetIt getIt) {
+GetIt registerDatabaseDependencies(GetIt getIt) {
   getIt.registerLazySingleton<DatabaseFactory>(
     DatabaseFactory.new,
     dispose: (factory) => factory.close(),

@@ -4,11 +4,9 @@ import 'package:datarunmobile/app/stacked/app.dialogs.dart';
 import 'package:datarunmobile/app/stacked/app.locator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:stacked/stacked_annotations.dart';
 import 'package:datarunmobile/app/di/injection.config.dart';
 
-// final appLocator = GetIt.instance;
-final appLocator = StackedLocator.instance.locator;
+export 'package:datarunmobile/di/injection.dart' show appLocator;
 
 @InjectableInit(
   initializerName: 'setupGlobalDependencies', // default
@@ -28,7 +26,6 @@ Future<GetIt> configureDependencies() async {
   final getIt = await setupGlobalDependencies(appLocator);
   //
 
-  // sdk
-  registerSdkRootDependencies(appLocator);
+  registerDatabaseDependencies(appLocator);
   return getIt;
 }

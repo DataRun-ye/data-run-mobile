@@ -15,12 +15,12 @@ import 'package:flutter/foundation.dart';
 
 abstract class BaseDataSource<T extends TableInfo<T, D>,
     D extends Insertable<D>> extends AbstractDatasource<D> {
-  HttpClient get apiClient => rSdkLocator<HttpClient<dynamic>>();
+  HttpClient get apiClient => appLocator<HttpClient<dynamic>>();
 
   T get table;
 
   AppDatabase get db {
-    final instance = rSdkLocator<AppDatabase>();
+    final instance = appLocator<AppDatabase>();
     return instance;
   }
 

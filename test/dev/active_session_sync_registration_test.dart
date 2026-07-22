@@ -2,15 +2,16 @@ import 'package:datarunmobile/database/db_factory/database_factory.dart';
 import 'package:datarunmobile/datasource/abstract_datasource.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/di/init_active_session_scope.dart';
+import 'package:datarunmobile/app/di/injection.dart' as app_di;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
 void main() {
-  test('SDK root dependencies use the supplied locator', () async {
+  test('database dependencies use the supplied locator', () async {
     final getIt = GetIt.asNewInstance();
     addTearDown(getIt.reset);
 
-    registerSdkRootDependencies(getIt);
+    registerDatabaseDependencies(getIt);
 
     expect(getIt.isRegistered<DatabaseFactory>(), isTrue);
     expect(getIt<DatabaseFactory>(), same(getIt<DatabaseFactory>()));
@@ -21,7 +22,7 @@ void main() {
       ..enableRegisteringMultipleInstancesOfOneType();
     addTearDown(getIt.reset);
 
-    registerUserSdkDeps(getIt);
+    registerUserConfigurationDatasources(getIt);
 
     final resourceNames = getIt
         .getAll<AbstractDatasource<dynamic>>()
@@ -44,5 +45,9 @@ void main() {
       }),
     );
     expect(resourceNames, isNot(contains('dataSubmission')));
+  });
+
+  test('app layers share one locator instance', () {
+    expect(app_di.appLocator, same(appLocator));
   });
 }

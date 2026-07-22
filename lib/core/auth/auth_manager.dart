@@ -158,7 +158,7 @@ class AuthManager extends ChangeNotifier {
       },
     );
 
-    await registerUserSdkDeps(appLocator);
+    registerUserConfigurationDatasources(appLocator);
 
     logDebug('New user session scope pushed: ${sessionUserId}');
 

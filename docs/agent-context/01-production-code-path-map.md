@@ -40,9 +40,9 @@ Obsolete-looking or inactive:
 Active:
 
 - `pubspec.yaml` now declares the database, datasource, and utility dependencies directly; there is no local `d_sdk` package dependency.
-- `lib/app/di/injection.dart` configures app dependencies, then calls `registerSdkRootDependencies(appLocator)`.
-- `lib/di/injection.dart` explicitly registers the root `DatabaseFactory` dependency. The legacy `rSdkLocator` name remains an alias for `GetIt.instance`.
-- `lib/core/auth/auth_manager.dart` creates the per-user app scope, opens the Drift database, registers `AppDatabase` as the single user-database owner, then calls `registerUserSdkDeps(appLocator)`.
+- `lib/app/di/injection.dart` configures app dependencies, then calls `registerDatabaseDependencies(appLocator)`.
+- `lib/di/injection.dart` owns the single application locator and explicitly registers the root `DatabaseFactory` dependency.
+- `lib/core/auth/auth_manager.dart` creates the per-user app scope, opens the Drift database, registers `AppDatabase` as the single user-database owner, then calls `registerUserConfigurationDatasources(appLocator)`.
 - `lib/di/init_active_session_scope.dart` registers active configuration data sources for the user session, from projects through assignments. Submission pull is excluded.
 - The zero-behavior `DSdk` and `DbManager` facades were removed. Active consumers resolve the scoped `AppDatabase` directly.
 - `lib/database/db_factory/database_factory.dart` and `lib/database/db_factory/platform_app.dart` open per-user Drift database files.

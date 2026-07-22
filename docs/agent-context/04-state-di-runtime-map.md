@@ -25,7 +25,7 @@ Active app runtime is a hybrid:
 4. `runApp(...)` wraps the app with a root Riverpod `ProviderScope`.
 5. `MaterialApp` uses generated Stacked routing from `lib/app/stacked/app.router.dart`.
 6. `AuthManager` creates a per-user GetIt scope after login/session restore.
-7. Configuration datasource registrations are added to the active user scope by `registerUserSdkDeps(...)`.
+7. Configuration datasource registrations are added to the active user scope by `registerUserConfigurationDatasources(...)`.
 8. Opening a form creates a per-submission GetIt scope containing `FormTemplateRepository` and `FormInstance`.
 9. Form widgets use Riverpod for widget-level async/selection/preference state, but active form state is held in `FormInstance`, `reactive_forms` controls, and scoped GetIt.
 
@@ -39,9 +39,8 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | App root state bridge | ACTIVE | `lib/main.dart` | `App extends ConsumerWidget` and watches `authNotifierProvider` plus preference providers for language/theme. | High | Riverpod is active at the root; it is not only feature-local. |
 | Generated Stacked routing | ACTIVE | `lib/main.dart`, `lib/app/stacked/app.router.dart` | `MaterialApp.onGenerateRoute` is `StackedRouter().onGenerateRoute`; initial route is `Routes.splashView`. | High | Route registration determines reachability more strongly than file names. |
 | Stacked app registration | ACTIVE | `lib/app/stacked/app.dart` | `@StackedApp` lists routed pages: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `AssignmentScreen`, `EditRowScreen`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`. | High | Screens not in this route list need separate proof of reachability. |
-| Dependency bootstrap | ACTIVE | `lib/app/di/injection.dart` | `configureDependencies()` calls `setupLocator()`, `setupDialogUi()`, `setupBottomSheetUi()`, `setupGlobalDependencies(appLocator)`, then `registerSdkRootDependencies(appLocator)`. | High | This is the production DI order. |
-| App locator | ACTIVE | `lib/app/di/injection.dart` | `appLocator = StackedLocator.instance.locator`; old `GetIt.instance` line is commented. | High | Runtime service lookups use Stacked's locator facade. |
-| Legacy locator alias | ACTIVE | `lib/di/injection.dart` | `rSdkLocator = GetIt.instance`; `registerSdkRootDependencies(appLocator)` explicitly registers `DatabaseFactory` into the app locator. | High | Former SDK code still performs lookups through the legacy-named alias; locator identity remains a prerequisite for scope behavior. |
+| Dependency bootstrap | ACTIVE | `lib/app/di/injection.dart` | `configureDependencies()` calls `setupLocator()`, `setupDialogUi()`, `setupBottomSheetUi()`, `setupGlobalDependencies(appLocator)`, then `registerDatabaseDependencies(appLocator)`. | High | This is the production DI order. |
+| App locator | ACTIVE | `lib/di/injection.dart`, `lib/app/di/injection.dart` | `appLocator = GetIt.instance` is defined once and re-exported through the existing app DI entrypoint; a focused test asserts identity. | High | Runtime service lookups and nested user/form scopes use one locator. |
 
 ## State And Runtime Libraries Found
 
@@ -75,7 +74,7 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 
 | Registration area | Classification | File path | Evidence | Confidence | Why it matters |
 | --- | --- | --- | --- | --- | --- |
-| Explicit database factory | ACTIVE | `lib/di/injection.dart` | `registerSdkRootDependencies(...)` registers `DatabaseFactory` as a lazy singleton with disposal. | High | Per-user DB opening depends on this registration. The former generated root/session registration files were removed. |
+| Explicit database factory | ACTIVE | `lib/di/injection.dart` | `registerDatabaseDependencies(...)` registers `DatabaseFactory` as a lazy singleton with disposal. | High | Per-user DB opening depends on this registration. The former generated root/session registration files were removed. |
 
 ### User Scope
 
@@ -85,13 +84,13 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | Multiple datasource registration | ACTIVE | `lib/core/auth/auth_manager.dart` | Scope init calls `getIt.enableRegisteringMultipleInstancesOfOneType()`. | High | Required because many datasources register as the same abstract type. |
 | User DB registration | ACTIVE | `lib/core/auth/auth_manager.dart` | Opens `DatabaseFactory.openForUser(username)` and registers one scoped `AppDatabase`. | High | Offline config/form data resolves directly through this owner. The former `DSdk`/`DbManager` wrapper chain was removed. |
 | Active user session | ACTIVE | `lib/core/auth/auth_manager.dart` | Registers `UserSession` with instance name `'activeUser'`. | High | Services/widgets rely on active user context. |
-| User datasource dependencies | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/di/init_active_session_scope.dart` | After pushing the scope, `AuthManager` calls `registerUserSdkDeps(appLocator)`. | High | This is the active datasource registration path for sync. |
+| Configuration datasource dependencies | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/di/init_active_session_scope.dart` | After pushing the scope, `AuthManager` calls `registerUserConfigurationDatasources(appLocator)`. | High | This is the active datasource registration path for sync. |
 | Locale service | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/core/auth/ref_extension.provider.dart` | `LocaleService` is registered after user activation and exposed via Riverpod `localeNotifier`. | High | Root locale resolution depends on this user-scoped service after login. |
 | User scope disposal | ACTIVE | `lib/core/auth/auth_manager.dart` | Login/logout use `popScopesTill(username)` when a matching scope exists. | Medium | Scope pop behavior should be runtime-confirmed before changing login/logout or multi-user support. |
 
 ### Active Configuration Datasource Registrations
 
-`lib/di/init_active_session_scope.dart` registers these as untyped `AbstractDatasource` factories:
+`lib/di/init_active_session_scope.dart` registers these as `AbstractDatasource<dynamic>` factories:
 
 1. `ProjectDatasource`
 2. `ActivityDatasource`
@@ -177,16 +176,16 @@ These are observations only; no removal is recommended yet.
 | Form instance state | Scoped GetIt `FormInstance`; obsolete Riverpod provider removed | Active screen uses `appLocator<FormInstance>()`. |
 | Form/field state | Active `reactive_forms`/`FormInstance`; obsolete Riverpod provider sketches removed | Active form bootstrap builds `FormGroup` and `Section`. |
 | Sync orchestration | `SyncManager`/`SyncResourcesViewModel` | Routed sync uses this path; both alternate app-side sync stacks were removed. |
-| Datasource registration | Manual `registerUserSdkDeps(...)` only | The unused generated alternative was removed and a registration test now locks list membership and submission-pull exclusion. |
+| Datasource registration | Explicit `registerUserConfigurationDatasources(...)` only | The unused generated alternative and unreachable concrete user datasource were removed; a registration test locks list membership and submission-pull exclusion. |
 | Team state | `lib/data/teams.provider.dart`; obsolete demo state removed | Assignment-scoped team selection uses `lib/data/teams.provider.dart`. |
 
 ## Risk Map For Refactoring
 
 | Risk area | Classification | Why it is risky | Files to understand first |
 | --- | --- | --- | --- |
-| Locator identity | UNKNOWN | App `appLocator` comes from `StackedLocator.instance.locator`; former SDK code still looks up through the legacy `rSdkLocator = GetIt.instance` alias. They cooperate in current checks, but scope identity should be confirmed before renaming or replacing either locator. | `lib/app/di/injection.dart`, `lib/di/injection.dart` |
+| Locator identity | RESOLVED | All active code resolves through the single `appLocator = GetIt.instance`; the app DI entrypoint re-exports it and a focused test asserts identity. | `lib/app/di/injection.dart`, `lib/di/injection.dart` |
 | Scope nesting | ACTIVE | High risk: user scope and form submission scope are both GetIt scopes. A service lookup may resolve from current form scope, user scope, or root scope depending on current stack. | `lib/core/auth/auth_manager.dart`, `form_flow_bootstrapper_vm.dart`, `form_submission_screen.widget.dart` |
-| Multiple registrations of same type | ACTIVE | High risk: datasources require `enableRegisteringMultipleInstancesOfOneType()` and raw `AbstractDatasource` registrations. Typed vs untyped changes can alter `getAll(...)` results. | `auth_manager.dart`, `init_active_session_scope.dart`, `sync_manager.dart` |
+| Multiple registrations of same type | ACTIVE | High risk: datasources require `enableRegisteringMultipleInstancesOfOneType()` and explicit `AbstractDatasource<dynamic>` registrations. Registration type changes can alter `getAll(...)` results. | `auth_manager.dart`, `init_active_session_scope.dart`, `sync_manager.dart` |
 | Form state ownership | ACTIVE | High risk: form widgets are Riverpod/Hook widgets, but active form data lives in `FormInstance` and `reactive_forms` controls from GetIt scope. | `form_flow_bootstrapper_vm.dart`, `form_instance.dart`, `field.widget.dart`, repeat widgets |
 | Field key registry | ACTIVE | High risk: `FieldContextRegistry` is app-level lazy singleton but cleared during form screen init and used by form instance focus/scroll. | `field_context_registry.dart`, `form_submission_screen.widget.dart`, `form_instance.dart` |
 | Sync stack duplication | RESOLVED | Duplicate app-side injectable, Riverpod, and NMC worker stacks were removed. | `sync_resources_viewmodel.dart`, `sync_manager.dart` |
@@ -244,10 +243,9 @@ Sync/runtime duplication:
 
 ## Questions Requiring Runtime Confirmation
 
-1. Does `StackedLocator.instance.locator` resolve to the same underlying GetIt instance as the legacy `rSdkLocator = GetIt.instance` alias on all supported platforms?
-2. What is the exact scope stack after login, after opening a form, after saving, after back navigation, and after logout?
-3. Does `GetIt.getAll<AbstractDatasource<dynamic>>()` return the manual raw datasource registrations in the expected order after every login/session restore?
-4. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
+1. What is the exact scope stack after login, after opening a form, after saving, after back navigation, and after logout?
+2. Does `GetIt.getAll<AbstractDatasource<dynamic>>()` return the explicit datasource registrations in the expected order after every login/session restore?
+3. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
 5. Does form scope disposal always run when the user leaves a form through Android back, app backgrounding, route replacement, or completion dialog actions?
 6. Do generated Riverpod/injectable/Stacked outputs still match this map after each ownership move?
 

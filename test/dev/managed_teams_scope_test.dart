@@ -11,12 +11,12 @@ void main() {
   late ProviderContainer container;
 
   setUp(() async {
-    await rSdkLocator.reset();
+    await appLocator.reset();
     db = AppDatabase(
       executor: NativeDatabase.memory(),
       userId: 'test-user',
     );
-    rSdkLocator.registerSingleton<AppDatabase>(db);
+    appLocator.registerSingleton<AppDatabase>(db);
     container = ProviderContainer();
 
     await db.into(db.assignments).insert(
@@ -52,7 +52,7 @@ void main() {
   tearDown(() async {
     container.dispose();
     await db.close();
-    await rSdkLocator.reset();
+    await appLocator.reset();
   });
 
   test('returns only managed teams for the assignment team and activity',

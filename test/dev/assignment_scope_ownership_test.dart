@@ -19,17 +19,17 @@ void main() {
   late AppDatabase db;
 
   setUp(() async {
-    await rSdkLocator.reset();
+    await appLocator.reset();
     db = AppDatabase(
       executor: NativeDatabase.memory(),
       userId: 'test-user',
     );
-    rSdkLocator.registerSingleton<AppDatabase>(db);
+    appLocator.registerSingleton<AppDatabase>(db);
   });
 
   tearDown(() async {
     await db.close();
-    await rSdkLocator.reset();
+    await appLocator.reset();
   });
 
   test('assignment providers are keyed by activity id', () async {

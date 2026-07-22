@@ -43,12 +43,12 @@ Primary active config store:
 | Sync screen autostart | ACTIVE | `lib/features/sync/presentation/sync_resources_view.dart` | `onViewModelReady` schedules `viewModel.triggerSync()` at lines 77-79. | High | The sync route automatically starts the server fetch. |
 | Sync completion flags | ACTIVE | `lib/features/sync/presentation/sync_resources_viewmodel.dart` | On completed global state, updates `SYNC_DONE` and `LAST_SYNC_TIME` at lines 31-33, then routes home at lines 35-37. | High | These SharedPreferences flags control future startup sync decisions. |
 | User profile fetch | ACTIVE-SEPARATE | `lib/core/auth/auth_api.dart` | Login posts to `/api/v1/authenticate`; profile fetch reads `/api/v1/myDetails` and converts authorities before `UserSession.fromJson`. | High | User/session config is fetched before bulk sync and saved outside the bulk datasource list. |
-| User session activation | ACTIVE | `lib/core/auth/auth_manager.dart` | Login gets the user profile, activates the session, stores session/tokens, opens and registers the user-scoped `AppDatabase`, then calls `registerUserSdkDeps`. | High | Bulk sync only works after the per-user DB and configuration datasources are registered. `AppDatabase` is the single database owner; the former `DSdk`/`DbManager` wrappers were removed. |
+| User session activation | ACTIVE | `lib/core/auth/auth_manager.dart` | Login gets the user profile, activates the session, stores session/tokens, opens and registers the user-scoped `AppDatabase`, then calls `registerUserConfigurationDatasources`. | High | Bulk sync only works after the per-user DB and configuration datasources are registered. `AppDatabase` is the single database owner; the former `DSdk`/`DbManager` wrappers were removed. |
 | Per-user database file | ACTIVE | `lib/database/db_factory/platform_app.dart` | Opens `UserFileManager(userId).getUserFile('datarun_$userId.db')` and uses a background Drift connection. | High | Offline metadata is scoped by username. |
 
 ## Active Bulk Sync Registration
 
-The active datasource list is generated in `lib/di/init_active_session_scope.dart:33-60`.
+The active datasource list is explicitly registered in `lib/di/init_active_session_scope.dart`.
 
 Registered as `AbstractDatasource` and therefore collected by `SyncManager`:
 
@@ -63,11 +63,9 @@ Registered as `AbstractDatasource` and therefore collected by `SyncManager`:
 9. `UserFormAccessesDatasource`
 10. `AssignmentDatasource`
 
-Registered but not part of `SyncManager.getAll<AbstractDatasource>()`:
+The former concrete `UserDatasource` registration had no resolver/caller and was removed. Login still fetches the user profile through `AuthApi.getUserProfile()` before this list is registered.
 
-- `UserDatasource` as a concrete registration.
-
-Why this matters: changing registration order or converting a concrete registration into `AbstractDatasource` changes what the app fetches during config sync. Some tables have foreign keys, so order is not just cosmetic.
+Why this matters: changing registration order or list membership changes what the app fetches during config sync. Some tables have foreign keys, so order is not just cosmetic.
 
 ## Generic Fetch-Parse-Persist Algorithm
 
@@ -144,7 +142,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 | OBSOLETE-REMOVED | Former datasource order annotations/map | Ordering metadata did not determine active registration membership. The explicit order in `init_active_session_scope.dart` is now the only active source and is covered by a registration test. | Prevents generated annotations from being mistaken for sync membership. |
 | OBSOLETE-REMOVED | Unregistered data-value, repeat-instance, metadata-submission, form-version, and option datasources | No active `AbstractDatasource` registration or runtime caller existed. | Their names no longer imply active fetch paths. |
 | OBSOLETE-REMOVED | Old Riverpod sync service and NMC worker providers | No active watcher or worker registration existed; the facade did not perform the real download. | Active config fetching remains `SyncResourcesViewModel` plus `SyncManager`. |
-| ACTIVE-SEPARATE/UNKNOWN | `UserDatasource` | Registered as concrete `UserDatasource`, not as `AbstractDatasource`; active profile fetch is through `AuthApi.getUserProfile`. | It may be usable manually, but it is not part of `SyncManager.syncAll()` based on current registrations. |
+| OBSOLETE-REMOVED | `UserDatasource` | Its concrete registration had no resolver/caller and it was never part of `SyncManager.syncAll()`; active profile fetch remains `AuthApi.getUserProfile`. | Removes a false second user-profile fetch/persistence path from architectural reasoning. |
 
 ## Risks And Questions For Next Pass
 

@@ -7,7 +7,6 @@ import 'package:datarunmobile/database/shared/form_template_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/data/form_template_list_service.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class FormTemplateRepository {
   FormTemplateRepository._(
@@ -56,15 +55,11 @@ class FormTemplateRepository {
   List<Template> get repeatSections =>
       template.sections.where((s) => s.repeatable).toList();
 
-  SectionTemplate get rootSection => _root != null
-      ? _root!
-      : SectionTemplate(
-          id: template.id,
-          path: '',
-          children: List.unmodifiable(_buildTree(fieldsAndSections: [
-            ...template.fields,
-            ...template.sections,
-          ])));
+  SectionTemplate get rootSection => _root ??= SectionTemplate(
+        id: template.id,
+        path: '',
+        children: template.elementTree,
+      );
 
   /// Get ImmediateChildren of a specific path
   List<T> getChildrenOfType<T extends TreeElement>(String path) {
@@ -107,35 +102,5 @@ class FormTemplateRepository {
       return Map.unmodifiable(_rootsFlatCache);
     }
     return Map.unmodifiable(_rootsFlatCache);
-  }
-
-  List<Template> _buildTree({required Iterable<Template> fieldsAndSections}) {
-    // a lookup of all nodes by their id:
-    final IMap<String, Template> lookup = IMap.fromIterable(fieldsAndSections,
-        keyMapper: (template) => template.id,
-        valueMapper: (template) => template);
-
-    // Link children into parents:
-    final List<Template> roots = [];
-    lookup.forEach((id, node) {
-      if (node.parent == null || !lookup.containsKey(node.parent)) {
-        // no parent in our data ⇒ this is a root
-        roots.add(node);
-      } else {
-        lookup[node.parent!]!.children.add(node);
-      }
-    });
-
-    // 3) Optional: sort each node’s children by the `order` property:
-    void sortRecursively(List<Template> list) {
-      list.sort((a, b) => a.order.compareTo(b.order));
-      for (var n in list) {
-        if (n.children.isNotEmpty) sortRecursively(n.children);
-      }
-    }
-
-    sortRecursively(roots);
-
-    return roots;
   }
 }

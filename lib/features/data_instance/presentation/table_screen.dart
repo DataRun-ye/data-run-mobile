@@ -4,7 +4,6 @@ import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
-import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
 import 'package:datarunmobile/features/data_instance/application/table_controller.provider.dart';
 import 'package:datarunmobile/features/data_instance/presentation/table_widget.dart';
 import 'package:datarunmobile/features/data_instance/presentation/widgets/action_fab.dart';
@@ -77,6 +76,8 @@ class TableScreen extends HookConsumerWidget {
         ],
       ),
       floatingActionButton: ActionFAB(
+        formId: formId,
+        assignmentId: assignmentId,
         onAddNew: () {
           appLocator<NavigationService>().navigateToFormFlowBootstrapper(
               formId: formId, assignmentId: assignmentId);
@@ -85,16 +86,26 @@ class TableScreen extends HookConsumerWidget {
           appLocator<ConfirmationService>().confirmAndExecute(
               context: context,
               title: S.of(context).confirm,
-              body: S.of(context).confirmDeleteItemsSelected(
-                  ref.read(selectedItemsProvider).length),
+              body: S.of(context).confirmDeleteItemsSelected(ref
+                  .read(tableControllerProvider(
+                    formId: formId,
+                    assignmentId: assignmentId,
+                  ))
+                  .length),
               confirmLabel: S.of(context).delete,
               action: () => ref
-                  .read(tableControllerProvider.notifier)
+                  .read(tableControllerProvider(
+                    formId: formId,
+                    assignmentId: assignmentId,
+                  ).notifier)
                   .deleteSelectedItems());
         },
         onBulkSync: () {
           ref
-              .read(tableControllerProvider.notifier)
+              .read(tableControllerProvider(
+                formId: formId,
+                assignmentId: assignmentId,
+              ).notifier)
               .syncSelectedFinalizedItems();
         },
       ),

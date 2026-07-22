@@ -180,7 +180,7 @@ final class TotalItemsStreamProvider
   }
 }
 
-String _$totalItemsStreamHash() => r'3af0341bc7c0495859ed213d12ed353aa8c1c0bb';
+String _$totalItemsStreamHash() => r'61d818a9cd3d3c64ed658b6bee517b9736c758d5';
 
 final class TotalItemsStreamFamily extends $Family
     with $FunctionalFamilyOverride<Stream<int>, SubmissionsFilter> {
@@ -201,90 +201,6 @@ final class TotalItemsStreamFamily extends $Family
   @override
   String toString() => r'totalItemsStreamProvider';
 }
-
-@ProviderFor(SelectedItems)
-final selectedItemsProvider = SelectedItemsProvider._();
-
-final class SelectedItemsProvider
-    extends $NotifierProvider<SelectedItems, ISet<String>> {
-  SelectedItemsProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'selectedItemsProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
-
-  @override
-  String debugGetCreateSourceHash() => _$selectedItemsHash();
-
-  @$internal
-  @override
-  SelectedItems create() => SelectedItems();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ISet<String> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<ISet<String>>(value),
-    );
-  }
-}
-
-String _$selectedItemsHash() => r'3c7872ba2db8afb7d5d9e6b47f3971f6c092fe14';
-
-abstract class _$SelectedItems extends $Notifier<ISet<String>> {
-  ISet<String> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final ref = this.ref as $Ref<ISet<String>, ISet<String>>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<ISet<String>, ISet<String>>,
-        ISet<String>,
-        Object?,
-        Object?>;
-    element.handleCreate(ref, build);
-  }
-}
-
-@ProviderFor(selectedFinalizedItem)
-final selectedFinalizedItemProvider = SelectedFinalizedItemProvider._();
-
-final class SelectedFinalizedItemProvider extends $FunctionalProvider<
-        AsyncValue<ISet<String>>, ISet<String>, FutureOr<ISet<String>>>
-    with $FutureModifier<ISet<String>>, $FutureProvider<ISet<String>> {
-  SelectedFinalizedItemProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'selectedFinalizedItemProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
-
-  @override
-  String debugGetCreateSourceHash() => _$selectedFinalizedItemHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<ISet<String>> $createElement(
-          $ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<ISet<String>> create(Ref ref) {
-    return selectedFinalizedItem(ref);
-  }
-}
-
-String _$selectedFinalizedItemHash() =>
-    r'351b2c427818867cd0e6edd2a87de565ee4ce0ad';
 
 @ProviderFor(TableAppearanceController)
 final tableAppearanceControllerProvider = TableAppearanceControllerProvider._();

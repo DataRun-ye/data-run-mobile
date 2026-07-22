@@ -5,7 +5,6 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/data_instance/application/models.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'table.providers.g.dart';
@@ -63,39 +62,6 @@ Stream<int> totalItemsStream(Ref ref,
         // filters: filters,
       )
       .watchSingle();
-}
-
-@riverpod
-class SelectedItems extends _$SelectedItems {
-  @override
-  ISet<String> build() {
-    return ISet();
-  }
-
-  void toggleSelection(String id) {
-    if (state.contains(id)) {
-      state = state.remove(id);
-    } else {
-      state = state.add(id);
-    }
-  }
-
-  void validateSelections(Iterable<String> ids) {
-    state = state.removeWhere((id) => !ids.contains(id));
-  }
-
-  void clear() {
-    state = state.clear();
-  }
-}
-
-@riverpod
-Future<ISet<String>> selectedFinalizedItem(Ref ref) async {
-  final selectedIds = ref.watch(selectedItemsProvider);
-  if (selectedIds.isEmpty) return const ISet.empty();
-  final syncableIds =
-      await appLocator<SubmissionTableService>().getSyncableIds(selectedIds);
-  return ISet(syncableIds);
 }
 
 @riverpod

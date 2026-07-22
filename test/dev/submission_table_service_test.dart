@@ -67,8 +67,6 @@ void main() {
     ]);
 
     expect(await service.getSyncableIds(ids), ['submission-final']);
-    expect(await service.getInstances(ids), hasLength(3));
-
     expect(await service.delete(['submission-old']), 1);
     expect(await db.dataInstancesDao.getById('submission-old'), isNull);
   });

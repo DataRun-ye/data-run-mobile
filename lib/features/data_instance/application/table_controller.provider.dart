@@ -1,8 +1,7 @@
 import 'package:datarunmobile/core/sync/sync_summary_model.dart';
-import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
-import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'table_controller.provider.g.dart';
@@ -12,23 +11,45 @@ class TableController extends _$TableController {
   SubmissionTableService get _service => appLocator<SubmissionTableService>();
 
   @override
-  Future<void> build() async {}
+  ISet<String> build({required String formId, String? assignmentId}) => ISet();
 
-  Future<List<DataInstance>> deleteSelectedItems() async {
-    final selectedIds = ref.read(selectedItemsProvider);
-    if (selectedIds.isEmpty) return [];
-    final toDeleteInstance = await _service.getInstances(selectedIds);
+  void toggleSelection(String id) {
+    state = state.contains(id) ? state.remove(id) : state.add(id);
+  }
+
+  void retainOnly(Iterable<String> ids) {
+    state = state.removeWhere((id) => !ids.contains(id));
+  }
+
+  void clearSelection() {
+    state = state.clear();
+  }
+
+  Future<void> deleteSelectedItems() async {
+    final selectedIds = state;
+    if (selectedIds.isEmpty) return;
     await _service.delete(selectedIds);
-    ref.read(selectedItemsProvider.notifier).clear();
-    await future;
-    return toDeleteInstance;
+    if (ref.mounted) clearSelection();
   }
 
   Future<ImportSummaryModel?> syncSelectedFinalizedItems() async {
-    final selectedIds = [...ref.read(selectedItemsProvider)];
-    ref.read(selectedItemsProvider.notifier).clear();
+    final selectedIds = state;
     if (selectedIds.isEmpty) return null;
+    clearSelection();
     final syncSummary = await _service.sync(selectedIds);
     return syncSummary;
   }
+}
+
+@riverpod
+Future<ISet<String>> selectedFinalizedItem(Ref ref,
+    {required String formId, String? assignmentId}) async {
+  final selectedIds = ref.watch(tableControllerProvider(
+    formId: formId,
+    assignmentId: assignmentId,
+  ));
+  if (selectedIds.isEmpty) return const ISet.empty();
+  final syncableIds =
+      await appLocator<SubmissionTableService>().getSyncableIds(selectedIds);
+  return ISet(syncableIds);
 }

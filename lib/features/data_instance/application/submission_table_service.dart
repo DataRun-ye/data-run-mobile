@@ -33,10 +33,6 @@ class SubmissionTableService {
   Selectable<int> countByFilter(SubmissionsFilter filter) =>
       _db.dataInstancesDao.countSubmissions(filter);
 
-  Future<List<DataInstance>> getInstances(Iterable<String> ids) {
-    return _db.managers.dataInstances.filter((f) => f.id.isIn(ids)).get();
-  }
-
   Future<List<String>> getSyncableIds(ISet<String> ids) async {
     final items = await _db.managers.dataInstances
         .filter((f) =>

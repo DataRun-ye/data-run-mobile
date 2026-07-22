@@ -112,8 +112,12 @@ Team form fields now resolve managed-team choices only from the current assignme
 
 Required multi-choice fields now reject empty lists in new and edited repeat rows. The validator remains synchronized with hidden/visible and rule-driven mandatory state. `test/dev/repeat_multi_choice_validation_test.dart` and `test/dev/form_element_visibility_validation_test.dart` cover the active row-validity boundary.
 
+Submission-table selection and bulk commands now share one form-and-assignment-scoped Riverpod owner. A release-upgrade tablet smoke exposed the former command provider reading its disposed `Ref` after delete confirmation; `test/dev/submission_table_controller_test.dart` now covers scope isolation and disposal while deletion is awaiting.
+
 | Finding | Classification | Evidence | Required next proof |
 |---|---|---|---|
+| A populated multi-choice field in a repeat can reopen without showing its selected values and can keep the form invalid | `ACTIVE-CORE` correctness defect | Observed on the release-upgrade tablet after the empty-required validation fix; this is a value rehydration/UI projection path, not proof that the required validator should be relaxed | Characterize stored JSON, repeat-row control value, widget option identity, and reduced value for new and reopened rows |
+| Locale selection is not durable and initial locale behavior is inconsistent with Arabic as the product default | `ACTIVE-SUPPORT` correctness defect | Release-upgrade tablet opened in English; a user-selected locale applied until restart, then fell back to Arabic | Trace `LocaleService`, `localeNotifierProvider`, preference keys, startup scope timing, and add a restart-level preference check |
 | Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `submission_edit_access.dart` is the single tested owner of `canEditSubmissions || !isSynced`; bootstrap and screen provider both delegate to it | Confirm deployed assignment values and define the final edit policy |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
 | `user_form_permissions` is fetched/stored but no active authorization read was proven | `REACHABLE-INCOMPLETE` | `UserFormAccessesDatasource` registration and table references | Trace or test intended consumer before activation or removal |

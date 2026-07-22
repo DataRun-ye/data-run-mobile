@@ -12,7 +12,6 @@ class PaginatedTableSource extends DataTableSource {
     this.assignmentId,
     this.onFailedSyncClicked,
     this.onSelectedItem,
-    this.isSelected,
   });
 
   List<SubmissionSummary> _data = [];
@@ -21,10 +20,9 @@ class PaginatedTableSource extends DataTableSource {
   final Function(SubmissionSummary submission)? onEdit;
   final Function(SubmissionSummary submission)? onFailedSyncClicked;
   final Function(String submission)? onSelectedItem;
-  final bool Function(String submission)? isSelected;
   final WidgetStateProperty<Color?>? disabledCellColor;
 
-  List<String> _selectedItems = [];
+  Set<String> _selectedItems = {};
 
   int get _selectedCount => _selectedItems.length;
   int _totalRowCount = 0;
@@ -43,8 +41,8 @@ class PaginatedTableSource extends DataTableSource {
   }
 
   /// A helper to update backing data and notify the table
-  void updateSelectedItems({required List<String> ids}) {
-    _selectedItems = ids;
+  void updateSelectedItems({required Iterable<String> ids}) {
+    _selectedItems = ids.toSet();
     notifyListeners();
   }
 
@@ -70,7 +68,7 @@ class PaginatedTableSource extends DataTableSource {
       color:
           item.deleted && disabledCellColor != null ? disabledCellColor : null,
       index: item.id.hashCode,
-      selected: isSelected?.call(item.id) ?? false,
+      selected: _selectedItems.contains(item.id),
       onSelectChanged: (selected) => onSelectedItem?.call(item.id),
       cells: [
         _getStatusCell(item),

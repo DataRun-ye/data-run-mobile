@@ -6,6 +6,7 @@ import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
+import 'package:datarunmobile/features/data_instance/application/table_controller.provider.dart';
 import 'package:datarunmobile/features/data_instance/presentation/paginated_table_source.dart';
 import 'package:datarunmobile/features/data_instance/presentation/table_columns_build_extension.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -43,6 +44,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
   // Track the last‐seen values
   int? _lastFirstRow;
   int? _lastPageSize;
+  int _loadGeneration = 0;
 
   @override
   void initState() {
@@ -69,8 +71,12 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
             confirmLabel: S.current.ok,
             action: () {});
       },
-      onSelectedItem: ref.read(selectedItemsProvider.notifier).toggleSelection,
-      isSelected: (id) => ref.read(selectedItemsProvider).contains(id),
+      onSelectedItem: ref
+          .read(tableControllerProvider(
+            formId: widget.templateModel.id,
+            assignmentId: widget.assignmentId,
+          ).notifier)
+          .toggleSelection,
     );
 
     // Only call our handler when real page/size changes occur
@@ -81,14 +87,21 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
         dataInstanceFilterProvider(
             formId: widget.templateModel.id,
             assignmentId: widget.assignmentId), (_, __) async {
-      // logDebug('**********************        _filters Listener');
-      if (_paginator.isAttached) _paginator.goToFirstPage();
-      await _onPageOrSizeChanged();
+      if (!_paginator.isAttached) return;
+      if (_paginator.currentRowIndex == 0) {
+        await _reloadCurrentPage(force: true);
+      } else {
+        _paginator.goToFirstPage();
+      }
     });
 
-    ref.listenManual<ISet<String>>(selectedItemsProvider, (prev, next) {
+    ref.listenManual<ISet<String>>(
+        tableControllerProvider(
+          formId: widget.templateModel.id,
+          assignmentId: widget.assignmentId,
+        ), (prev, next) {
       if (prev != next) {
-        _updateSelectedItems();
+        _source.updateSelectedItems(ids: next);
       }
     });
 
@@ -98,7 +111,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
                 formId: widget.templateModel.id,
                 assignmentId: widget.assignmentId)), (prev, next) {
       next.whenData((count) {
-        _onPageOrSizeChanged1();
+        _reloadCurrentPage(force: true);
       });
     });
 
@@ -109,24 +122,33 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
   }
 
   void _maybeLoadPage() {
-    // logDebug('**********************        _maybeLoadPage');
+    if (!_paginator.isAttached) return;
     final firstRow = _paginator.currentRowIndex;
     final pageSize = _paginator.rowsPerPage;
 
     // If neither value changed, bail out
     if (firstRow == _lastFirstRow && pageSize == _lastPageSize) return;
 
-    // remember them and fetch
-    _lastFirstRow = firstRow;
-    _lastPageSize = pageSize;
-    _onPageOrSizeChanged();
+    _reloadCurrentPage();
   }
 
-  Future<void> _onPageOrSizeChanged() async {
-    // logDebug('Real page/size change detected → fetching');
-
-    final firstRow = _lastFirstRow!;
-    final pageSize = _lastPageSize!;
+  Future<void> _reloadCurrentPage({
+    bool force = false,
+    int? firstRowOverride,
+    int? pageSizeOverride,
+  }) async {
+    if (!_paginator.isAttached &&
+        (firstRowOverride == null || pageSizeOverride == null)) {
+      return;
+    }
+    final firstRow = firstRowOverride ?? _paginator.currentRowIndex;
+    final pageSize = pageSizeOverride ?? _paginator.rowsPerPage;
+    if (!force && firstRow == _lastFirstRow && pageSize == _lastPageSize) {
+      return;
+    }
+    _lastFirstRow = firstRow;
+    _lastPageSize = pageSize;
+    final loadGeneration = ++_loadGeneration;
     final pageIndex = firstRow ~/ pageSize;
 
     final filter = ref.read(dataInstanceFilterProvider(
@@ -138,8 +160,8 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
       page: pageIndex,
       pageSize: pageSize,
     );
+    if (!mounted || loadGeneration != _loadGeneration) return;
 
-    // Clamp if deletes shrank the dataset
     final total = result.totalCount;
     final lastFirstRow = (total - 1).clamp(0, total) ~/ pageSize * pageSize;
     if (firstRow > lastFirstRow && _paginator.isAttached) {
@@ -147,7 +169,6 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
       return;
     }
 
-    // Update the table source
     _source.update(
       pageData: result.items.toList(),
       total: total,
@@ -155,50 +176,18 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
     );
 
     ref
-        .read(selectedItemsProvider.notifier)
-        .validateSelections(result.items.map((e) => e.id));
-  }
-
-  Future<void> _onPageOrSizeChanged1() async {
-    final firstRow = _paginator.currentRowIndex;
-    final pageSize = _paginator.rowsPerPage;
-    final pageIndex = firstRow ~/ pageSize;
-
-    final filter = ref.read(dataInstanceFilterProvider(
-      formId: widget.templateModel.id,
-      assignmentId: widget.assignmentId,
-    ));
-    final svc = appLocator<SubmissionTableService>();
-    final result = await svc.fetchByFilter(
-      filter,
-      page: pageIndex,
-      pageSize: pageSize,
-    );
-
-    final total = result.totalCount;
-    final lastFirstRow = (total - 1).clamp(0, total) ~/ pageSize * pageSize;
-    if (firstRow > lastFirstRow && _paginator.isAttached) {
-      // jump to last valid page
-      _paginator.goToRow(lastFirstRow);
-    }
-
-    _source.update(
-      pageData: result.items.toList(),
-      total: result.totalCount,
-      offset: pageIndex * pageSize,
-    );
-  }
-
-  Future<void> _updateSelectedItems() async {
-    final ISet<String> selectedIds = ref.read(selectedItemsProvider);
-    // Push the new slice into your DataTableSource
-    _source.updateSelectedItems(ids: selectedIds.toList());
+        .read(tableControllerProvider(
+          formId: widget.templateModel.id,
+          assignmentId: widget.assignmentId,
+        ).notifier)
+        .retainOnly(result.items.map((e) => e.id));
   }
 
   @override
   void dispose() {
     // logDebug('4.**********************        dispose');
-    _paginator.removeListener(_onPageOrSizeChanged);
+    _loadGeneration++;
+    _paginator.removeListener(_maybeLoadPage);
     _paginator.dispose();
     _source.dispose();
     super.dispose();
@@ -226,7 +215,11 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
             _lastPageSize = newSize;
             _lastFirstRow = 0;
           });
-          _onPageOrSizeChanged();
+          _reloadCurrentPage(
+            force: true,
+            firstRowOverride: 0,
+            pageSizeOverride: newSize,
+          );
         }
       },
       fixedTopRows: 1,

@@ -1,6 +1,6 @@
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
-import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
+import 'package:datarunmobile/features/data_instance/application/table_controller.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -9,11 +9,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class ActionFAB extends ConsumerWidget {
   const ActionFAB(
       {super.key,
+      required this.formId,
+      this.assignmentId,
       required this.onAddNew,
       required this.onDelete,
       required this.onBulkSync,
       this.openCloseDial});
 
+  final String formId;
+  final String? assignmentId;
   final VoidCallback? onAddNew;
   final VoidCallback? onDelete;
   final VoidCallback? onBulkSync;
@@ -39,9 +43,16 @@ class ActionFAB extends ConsumerWidget {
 
     return Consumer(
       builder: (context, ref, child) {
-        final selectedItems = ref.watch(selectedItemsProvider);
-        final selectedFinalizedItemsAsync =
-            ref.watch(selectedFinalizedItemProvider);
+        final selectedItems = ref.watch(tableControllerProvider(
+          formId: formId,
+          assignmentId: assignmentId,
+        ));
+        final selectedFinalizedItemsAsync = ref.watch(
+          selectedFinalizedItemProvider(
+            formId: formId,
+            assignmentId: assignmentId,
+          ),
+        );
         return AnimatedSwitcher(
           duration: Duration(milliseconds: 300),
           transitionBuilder: (child, anim) {

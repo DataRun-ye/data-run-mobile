@@ -6,12 +6,10 @@ class QBottomSheetDialog extends StatelessWidget {
   const QBottomSheetDialog({
     super.key,
     required this.completionDialogModel,
-    this.onButtonClicked,
     this.onItemWithErrorClicked,
   });
 
   final FormCompletionDialog completionDialogModel;
-  final Function(FormBottomDialogActionType? action)? onButtonClicked;
   final Function(String? path)? onItemWithErrorClicked;
 
   @override
@@ -118,8 +116,7 @@ class QBottomSheetDialog extends StatelessWidget {
   Widget _buildButton(BuildContext context, FormCompletionButton button) {
     return ElevatedButton.icon(
       onPressed: () {
-        onButtonClicked?.call(button.action);
-        Navigator.pop(context);
+        Navigator.pop(context, button.action);
       },
       icon: button.buttonStyle.iconData != null
           ? Icon(button.buttonStyle.iconData)

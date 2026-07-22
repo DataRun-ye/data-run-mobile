@@ -18,7 +18,6 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
 class FormSubmissionScreen extends StatefulHookConsumerWidget {
   const FormSubmissionScreen({
@@ -214,14 +213,12 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     final configurator = const ConfigureFormCompletionDialog();
     final bottomSheetUiModel = configurator(formInstance.formSection);
 
-    await showModalBottomSheet(
+    final action = await showModalBottomSheet<FormBottomDialogActionType>(
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         return QBottomSheetDialog(
           completionDialogModel: bottomSheetUiModel,
-          onButtonClicked: (action) =>
-              _onCompletionDialogButtonClicked(formInstance.form, action),
           onItemWithErrorClicked: (path) {
             logDebug('${path} clicked');
             _onErrorTap(path!, formInstance);
@@ -229,6 +226,10 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         );
       },
     );
+
+    if (context.mounted && action != null) {
+      await _onCompletionDialogButtonClicked(action);
+    }
   }
 
   void _onErrorTap(
@@ -241,7 +242,8 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   }
 
   Future<void> _onCompletionDialogButtonClicked(
-      FormGroup form, FormBottomDialogActionType? action) async {
+    FormBottomDialogActionType action,
+  ) async {
     switch (action) {
       case FormBottomDialogActionType.NotNow:
         Navigator.pop(context);
@@ -258,7 +260,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
         }
         break;
       case FormBottomDialogActionType.CheckFields:
-      case null:
         return;
     }
   }

@@ -114,7 +114,7 @@ Required multi-choice fields now reject empty lists in new and edited repeat row
 
 | Finding | Classification | Evidence | Required next proof |
 |---|---|---|---|
-| Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `form_flow_bootstrapper_vm.dart` and `submission_list.provider.dart` use `canEditSubmissions || !isSynced` | Confirm deployed assignment values and define one edit gate |
+| Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `submission_edit_access.dart` is the single tested owner of `canEditSubmissions || !isSynced`; bootstrap and screen provider both delegate to it | Confirm deployed assignment values and define the final edit policy |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
 | `user_form_permissions` is fetched/stored but no active authorization read was proven | `REACHABLE-INCOMPLETE` | `UserFormAccessesDatasource` registration and table references | Trace or test intended consumer before activation or removal |
 

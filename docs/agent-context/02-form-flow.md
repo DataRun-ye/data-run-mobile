@@ -50,7 +50,7 @@ Status legend:
 | Repeat table data source | ACTIVE | `lib/features/form_submission/presentation/section/repeat_table_rows_source.dart` | Extends `DataTableSource` at line 15; `updateItems` at line 38; `getRow` at line 62 iterates fields for a repeat row. | High | For large repeats, row rendering scans row fields. `updateItems` appears suspicious because its predicate compares `item.elementPath == item.elementPath`; runtime behavior should be verified before changing performance. |
 | Form instance save | ACTIVE | `lib/features/form_submission/application/element/form_instance.dart` | `saveFormData` at line 85 reads existing submission, computes `formSection.value`, preserves metadata keys, and calls `_db.dataInstancesDao.updateData(...)`. | High | Every save writes one whole `formData` map. Repeat changes are not saved as separate row/value records. |
 | Mark final | ACTIVE | `lib/features/form_submission/application/element/form_instance.dart` | `markSubmissionAsFinal` delegates to DAO at line 176. | High | Finalization changes sync eligibility after whole JSON save. |
-| Submission edit status | ACTIVE | `lib/features/form_submission/application/submission_list.provider.dart` | `submissionEditStatusProvider` starts at line 118 and is watched by form screen and edit icons. | Medium | Determines whether synced server submissions can be edited again. There is also bootstrapper-local edit-status logic, so this is duplicated decision logic. |
+| Submission edit status | ACTIVE | `lib/features/form_submission/application/submission_edit_access.dart`, `submission_list.provider.dart` | `submissionEditStatusProvider` and form bootstrap both delegate to the same `canEditSubmission(...)` query. Focused tests cover local submissions and synced submissions with and without server edit permission. | High for local rule, medium for final product policy | Determines whether synced server submissions can be edited again without allowing bootstrap and screen state to diverge. |
 | Data instance table | ACTIVE | `lib/database/tables/data_submissions.table.dart` | `formData` is a single nullable text column mapped through `NullAwareMapConverter` at lines 39-40; `syncState` and `isToUpdate` are also stored. | High | Confirms active submission persistence is whole JSON per submission. |
 | JSON map converter | ACTIVE | `lib/database/converters/null_aware_map.converter.dart` | Converts maps through JSON encode/decode. | High | Repeat rows are persisted inside one encoded map; partial repeat row persistence is not active here. |
 | Draft creation | ACTIVE | `lib/database/dao/data_submissions_dao.dart` | `createDraft` starts at line 162, creates a submission id with `CodeGenerator.generateUid()` at line 171, sets `syncState: draft` and `isToUpdate: false`. | High | Submission id generation is separate from repeat row UID generation. |
@@ -150,7 +150,7 @@ Inactive or not active for capture:
 | Repeat identity server round trip | Local save/upload preserves backend metadata, but synced editing is not a validated production workflow. | REACHABLE-INCOMPLETE | Medium | Enabling synced edits requires proof that existing IDs survive and only new nested rows receive new IDs. |
 | Suspicious data source update predicate | `RepeatTableDataSource.updateItems` uses a self-comparison predicate. | UNKNOWN | Medium | Row updates may be broader or less precise than intended; verify behavior before optimizing. |
 | Field subscription churn | `FieldWidget` subscribes to `control.valueChanges` and explicitly cancels from hook cleanup. | ACTIVE | Medium | Leaking is no longer the static concern, but many simultaneously mounted fields still create listener and rebuild cost. |
-| Duplicate edit-status logic | Bootstrapper and `submissionEditStatusProvider` both compute editability. | LEGACY-RISK | Medium | A synced submission may be editable in one layer and disabled in another if logic diverges. |
+| Submission edit-status ownership | RESOLVED | Bootstrap and `submissionEditStatusProvider` delegate to `submission_edit_access.dart`. | High | The temporary permission rule now has one executable owner; the final synced-edit product policy is still open. |
 
 ## Smallest Set To Understand Before Changing Repeat Performance Or Repeat UID Behavior
 
@@ -191,7 +191,7 @@ Treat these as the minimum "do not touch until understood" set for repeat perfor
 ## Questions Requiring Runtime Confirmation
 
 1. Does a server round trip preserve existing repeat metadata when synced editing is eventually enabled, including nested repeats and newly added rows?
-2. Does `submissionEditStatusProvider` always agree with the bootstrapper's local `submissionEditStatus` logic for synced, draft, finalized, and failed records?
+2. Should finalized and failed-but-unsynced records remain editable under the current `not synced` rule, or should editability distinguish each submission state?
 3. Does `RepeatTableDataSource.updateItems` behave correctly despite the self-comparison predicate?
 4. For nested repeats or repeated field names, does `findElementInParentSection` resolve dependencies to the intended row-local field every time?
 5. How long does bootstrap take on a real form with 200-300 repeat rows and representative choice filters/calculated fields?

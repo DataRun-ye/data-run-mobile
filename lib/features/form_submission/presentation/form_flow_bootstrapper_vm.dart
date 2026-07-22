@@ -12,7 +12,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_metadata_service.dart';
-import 'package:drift/drift.dart';
+import 'package:datarunmobile/features/form_submission/application/submission_edit_access.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -167,23 +167,6 @@ class FormFlowBootstrapperVm extends BaseViewModel {
   }
 
   Future<bool> submissionEditStatus({required String submissionId}) async {
-    final db = appLocator<AppDatabase>();
-
-    final submission = await db.managers.dataInstances
-        .filter((f) => f.id(submissionId))
-        .getSingleOrNull();
-
-    if (submission == null) return false;
-
-    final isSynced = submission.syncState.isSynced == true;
-
-    final assignmentForm = await db.managers.assignmentForms
-        .filter((f) =>
-            f.assignment.id(submission.assignment) &
-            f.form.id(submission.formTemplate))
-        .getSingleOrNull();
-    if (assignmentForm == null) return false;
-    final editable = assignmentForm.canEditSubmissions == true || !isSynced;
-    return editable;
+    return canEditSubmission(_db, submissionId: submissionId);
   }
 }

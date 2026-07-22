@@ -59,7 +59,8 @@ Evidence: `lib/core/code_generator.dart`, `lib/datasource/base_datasource.dart`,
 
 ### Form And Offline Behavior
 
-- Hidden field values are cleared. If a field becomes visible again, mandatory validation must apply again.
+- Current implementation clears field and repeat values as soon as their element becomes hidden. This is observed behavior, not the desired long-term product contract. The backlog contract is to retain working values across temporary hide/show toggles, keep hidden elements out of validation, and sanitize hidden values only at an explicit save boundary. Whether a successful save also purges the still-open control state remains a product decision; do not change `markAsHidden()` in isolation.
+- Whenever a previously hidden field becomes visible, mandatory and type validation must apply again.
 - New submissions use the latest locally available form version.
 - Existing submissions load the exact stored `templateVersion`, allowing old local submissions to continue using an older cached form version.
 - An expired token can return the app to an unauthenticated state, while the per-user local database remains on disk. The next login requires connectivity and reuses/resynchronizes that local context.
@@ -111,6 +112,8 @@ Template-required fields stop blocking validation while hidden and become requir
 Team form fields now resolve managed-team choices only from the current assignment's manager team and activity. The previous provider discarded Drift's returned filtered query through cascade syntax, and the widget passed an assignment UID as a team UID. Missing or unknown assignment context now returns no choices. `test/dev/managed_teams_scope_test.dart` covers cross-activity and cross-manager rows.
 
 Required multi-choice fields now reject empty lists in new and edited repeat rows. Reopened and choice-filtered repeat values use option codes as canonical identity while accepting legacy codes, names, and translated labels; the dropdown and repeat table project those values from the same `FormOption`. The validator remains synchronized with hidden/visible and rule-driven mandatory state. `test/dev/repeat_multi_choice_validation_test.dart` and `test/dev/form_element_visibility_validation_test.dart` cover the active row-validity boundary, and an in-place release build 26 tablet smoke covered reopen, popup selection, repeat save, whole-form save, and reopen again.
+
+Large-repeat rule fan-out now caches parsed rule expressions, skips elements with no rule actions, and avoids constructing discarded debug context in release mode. The live indoor-surveillance 300-row harness reduced one outside-field rule update from about 167 ms to 20-34 ms on the development machine. Live nested, sibling-to-repeat, row-local, hide/show, validation, and save checks pass, and signed build 33 passed Redmi upgrade/startup and manual form smoke. This does not solve eager control creation: every stored repeat row still receives a full reactive control and element graph before first render.
 
 Submission-table selection and bulk commands now share one form-and-assignment-scoped Riverpod owner. A release-upgrade tablet smoke exposed the former command provider reading its disposed `Ref` after delete confirmation; `test/dev/submission_table_controller_test.dart` now covers scope isolation and disposal while deletion is awaiting.
 
@@ -183,6 +186,18 @@ Map each active state to its owner, lifetime, consumers, and persistence effects
 Where same-layer methods or services implement the same responsibility in scattered places, consolidate them only after their callers and database/network effects are characterized. Move consumers to one minimal owner, prove equivalent behavior, and then remove the superseded paths; do not create generic utility collections that preserve the ambiguity under a new name.
 
 Then address form engine/expression simplification, synchronization boundaries, access policy, metadata ownership, and larger repeat performance as independently characterized domains.
+
+### 7. Separate Visibility From Value Destruction
+
+Treat temporary visibility and persisted-data sanitization as different responsibilities. Hiding a field, section, repeat, or nested repeat should control presentation, enabled state, and validation without immediately destroying the user's working values. The save projection should omit or clear hidden data according to one explicit policy, without relying on confirmation dialogs attached to every controlling choice.
+
+This slice must preserve the current invariants: hidden required fields cannot block save; shown fields regain required/type/rule validation; parent visibility dominates descendants; repeat and nested-repeat dependencies remain row-scoped; repeat metadata and existing row identity survive ordinary hide/show toggles. Characterization must cover hide-show without save, hide-save-reopen, outside-to-repeat rules, nested repeats, and both draft and completed saves. Keep the whole-JSON persistence format and database schema unchanged.
+
+### 8. Redesign Eager Form Graph Construction
+
+After visibility/value ownership is settled, reduce the duplicate eager cost of creating a `reactive_forms` control graph and a parallel element graph for every stored repeat row. Do not restore the placeholder-`FormGroup` hydration experiment: it changed validation, expression, edit, and save invariants.
+
+Use the existing 50/150/300-row harness and current live dependency fixtures as acceptance gates. A candidate design must show a clear first-open and memory improvement on a slower Android device while preserving save JSON, hidden-value policy, nested dependencies, row-local expressions, validation, repeat metadata, and edit/reopen behavior. Keep the current production path until a candidate meets those checks; a measurement-only or structurally risky change is not a completed slice.
 
 ## Closure Rule For Every Slice
 

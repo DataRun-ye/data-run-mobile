@@ -1,14 +1,9 @@
 import 'package:d_sdk/core/sync/model/sync_config.dart';
-import 'package:d_sdk/core/user_session/user_session.dart';
 import 'package:d_sdk/database/app_database.dart';
 import 'package:d_sdk/datasource/base_datasource.dart';
 import 'package:d_sdk/datasource/metadata_datasource.dart';
-import 'package:d_sdk/datasource/remote_datasource_order_map.dart';
 import 'package:drift/drift.dart';
-import 'package:injectable/injectable.dart';
 
-@Order(DSOrder.user)
-@Injectable(scope: UserSession.activeSessionScope)
 class UserDatasource extends BaseDataSource<$UsersTable, User>
     implements MetaDataSource<User> {
   @override

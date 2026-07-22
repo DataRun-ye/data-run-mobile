@@ -1,10 +1,8 @@
 import 'package:d_sdk/core/logging/new_app_logging.dart';
 import 'package:d_sdk/database/db_factory/platform.dart';
 import 'package:drift/drift.dart';
-import 'package:injectable/injectable.dart';
 import 'package:synchronized/synchronized.dart';
 
-@lazySingleton
 class DatabaseFactory {
   DatabaseFactory();
 
@@ -26,13 +24,11 @@ class DatabaseFactory {
       final executor = _instances.remove(userId);
       if (executor != null) {
         await executor.close();
-        logDebug('Closed database connection for user: $userId',
-            source: this);
+        logDebug('Closed database connection for user: $userId', source: this);
       }
     });
   }
 
-  @disposeMethod
   Future<void> close() async {
     logDebug('Closing all database connections', source: 'DatabaseFactory');
     for (final executor in _instances.values) {

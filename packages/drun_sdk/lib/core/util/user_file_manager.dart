@@ -3,13 +3,11 @@ import 'dart:io';
 import 'package:d_sdk/core/exception/d_error_code.dart';
 import 'package:d_sdk/core/exception/user_file_exception.dart';
 import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-@injectable
 class UserFileManager {
-  UserFileManager(@factoryParam this.userId);
+  UserFileManager(this.userId);
 
   final String userId;
 

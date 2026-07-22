@@ -29,6 +29,6 @@ Future<GetIt> configureDependencies() async {
   //
 
   // sdk
-  setupSdkLocator();
+  registerSdkRootDependencies(appLocator);
   return getIt;
 }

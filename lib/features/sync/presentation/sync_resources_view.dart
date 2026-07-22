@@ -1,22 +1,35 @@
 import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
-import 'package:datarunmobile/app/di/injection.dart';
-import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/sync_manager/sync_resource_status.dart';
+import 'package:datarunmobile/features/sync/application/sync_resources.controller.dart';
 import 'package:datarunmobile/features/sync/presentation/sync_progress_circular_indicator.dart';
-import 'package:datarunmobile/features/sync/presentation/sync_resources_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
-class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
+class SyncResourcesView extends ConsumerStatefulWidget {
+  const SyncResourcesView({super.key});
+
   @override
-  Widget builder(
-      BuildContext context, SyncResourcesViewModel viewModel, Widget? child) {
-    final items = viewModel.resourceStates.values.toList();
-    final global = viewModel.globalState;
+  ConsumerState<SyncResourcesView> createState() => _SyncResourcesViewState();
+}
+
+class _SyncResourcesViewState extends ConsumerState<SyncResourcesView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        ref.read(syncResourcesControllerProvider.notifier).triggerSync();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(syncResourcesControllerProvider);
+    final items = state.resourceStates.values.toList();
+    final global = state.globalState;
     final cs = Theme.of(context).colorScheme;
     final ButtonStyle overrideFocusColor = ButtonStyle(
       backgroundColor:
@@ -43,11 +56,9 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
                 ),
                 ElevatedButton(
                   style: overrideFocusColor,
-                  onPressed: () {
-                    appLocator<NavigationService>().clearStackAndShow(
-                      Routes.homeWrapperPage,
-                    );
-                  },
+                  onPressed: ref
+                      .read(syncResourcesControllerProvider.notifier)
+                      .leaveSync,
                   child: Text(S.of(context).cancelSyncing),
                 ),
               ],
@@ -67,16 +78,6 @@ class SyncResourcesView extends StackedView<SyncResourcesViewModel> {
         ),
       ),
     );
-  }
-
-  @override
-  SyncResourcesViewModel viewModelBuilder(BuildContext context) =>
-      SyncResourcesViewModel();
-
-  @override
-  void onViewModelReady(SyncResourcesViewModel viewModel) {
-    SchedulerBinding.instance
-        .addPostFrameCallback((_) => viewModel.triggerSync());
   }
 }
 

@@ -151,9 +151,12 @@ Active:
   - Active screens/widgets include `HookConsumerWidget`, `StatefulHookConsumerWidget`, and `ConsumerStatefulWidget` under form and table UI.
 - Stacked:
   - `lib/app/stacked/app.dart:19-29` defines Stacked routes.
-  - `lib/features/startup/presentation/splash_view.dart` and `lib/features/form_submission/presentation/form_flow_bootstrapper.dart` are `StackedView`s.
+  - The generated Stacked router and navigation/dialog services remain active.
+  - `lib/features/form_submission/presentation/form_flow_bootstrapper.dart` is the remaining `StackedView`.
   - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:21` uses `BaseViewModel`.
-  - `lib/features/sync/presentation/sync_resources_viewmodel.dart:13` uses `StreamViewModel`.
+  - Startup, login, settings, activity loading, sync badges, and configuration-sync presentation state no longer use Stacked viewmodels.
+- Configuration sync presentation:
+  - `lib/features/sync/application/sync_resources.controller.dart` subscribes to `SyncManager.progressStream`, projects per-resource/global status through an auto-dispose Riverpod notifier, records completion metadata, and navigates home.
 - GetIt/Stacked locator:
   - `lib/app/di/injection.dart` sets `appLocator`.
   - `lib/core/auth/auth_manager.dart:144-163` manages per-user database scope.

@@ -18,7 +18,7 @@ Status legend:
 Active sync path:
 
 1. Login or startup routes the user to `SyncResourcesView`.
-2. `SyncResourcesViewModel.triggerSync()` calls `SyncManager.syncAll()`.
+2. `SyncResourcesController.triggerSync()` calls `SyncManager.syncAll()`.
 3. `SyncManager` collects all registered `AbstractDatasource` instances from the active user scope.
 4. Each registered datasource fetches one server resource through `BaseDataSource.syncWithRemote()`.
 5. The base datasource maps JSON into Drift row objects, upserts rows in a transaction, optionally writes child tables, optionally disables stale rows, and writes a `sync_summaries` row.
@@ -40,8 +40,8 @@ Primary active config store:
 | Startup-triggered sync | ACTIVE | `lib/features/startup/application/startup_coordinator.dart` | `run()` calls `_syncScheduler.shouldSync()` after auth initialization and routes to `SyncResourcesView` when due. | High | Existing users refresh config when online and due. |
 | Manual refresh | ACTIVE | `lib/features/home/presentation/drawer/app_drawer_sync_item.dart` | Drawer item calls `replaceWithSyncResourcesView()` at line 53 when online. | High | Users can explicitly refresh offline config. |
 | Sync due decision | ACTIVE | `lib/core/sync/sync_scheduler.dart` | `shouldSync()` returns false when offline, true when initial sync is missing, or true when interval elapsed at lines 16-22. | High | Offline startup does not force config fetch; existing local DB remains the source. |
-| Sync screen autostart | ACTIVE | `lib/features/sync/presentation/sync_resources_view.dart` | `onViewModelReady` schedules `viewModel.triggerSync()` at lines 77-79. | High | The sync route automatically starts the server fetch. |
-| Sync completion flags | ACTIVE | `lib/features/sync/presentation/sync_resources_viewmodel.dart` | On completed global state, updates `SYNC_DONE` and `LAST_SYNC_TIME` at lines 31-33, then routes home at lines 35-37. | High | These SharedPreferences flags control future startup sync decisions. |
+| Sync screen autostart | ACTIVE | `lib/features/sync/presentation/sync_resources_view.dart` | The routed `ConsumerStatefulWidget` triggers `SyncResourcesController.triggerSync()` after its first frame. | High | The sync route automatically starts the server fetch. |
+| Sync completion flags | ACTIVE | `lib/features/sync/application/sync_resources.controller.dart` | The controller subscribes to `SyncManager.progressStream`; once global state completes, it updates `SYNC_DONE` and `LAST_SYNC_TIME`, then routes home after the existing delay. The subscription and pending navigation are cancelled when the screen state is disposed. | High | These SharedPreferences flags control future startup sync decisions. |
 | User profile fetch | ACTIVE-SEPARATE | `lib/core/auth/auth_api.dart` | Login posts to `/api/v1/authenticate`; profile fetch reads `/api/v1/myDetails` and converts authorities before `UserSession.fromJson`. | High | User/session config is fetched before bulk sync and saved outside the bulk datasource list. |
 | User session activation | ACTIVE | `lib/core/auth/auth_manager.dart` | Login gets the user profile, activates the session, stores session/tokens, opens and registers the user-scoped `AppDatabase`, then calls `registerUserConfigurationDatasources`. | High | Bulk sync only works after the per-user DB and configuration datasources are registered. `AppDatabase` is the single database owner; the former `DSdk`/`DbManager` wrappers were removed. |
 | Per-user database file | ACTIVE | `lib/database/db_factory/platform_app.dart` | Opens `UserFileManager(userId).getUserFile('datarun_$userId.db')` and uses a background Drift connection. | High | Offline metadata is scoped by username. |
@@ -141,7 +141,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 | OBSOLETE-REMOVED | Duplicate DAO `syncWithRemote` mixin and metadata DAO wrappers | The active `SyncManager` calls registered `AbstractDatasource.syncWithRemote`; the duplicate DAO implementation and unused DAO wrappers were removed without changing tables. | Configuration sync now has one implementation path. |
 | OBSOLETE-REMOVED | Former datasource order annotations/map | Ordering metadata did not determine active registration membership. The explicit order in `init_active_session_scope.dart` is now the only active source and is covered by a registration test. | Prevents generated annotations from being mistaken for sync membership. |
 | OBSOLETE-REMOVED | Unregistered data-value, repeat-instance, metadata-submission, form-version, and option datasources | No active `AbstractDatasource` registration or runtime caller existed. | Their names no longer imply active fetch paths. |
-| OBSOLETE-REMOVED | Old Riverpod sync service and NMC worker providers | No active watcher or worker registration existed; the facade did not perform the real download. | Active config fetching remains `SyncResourcesViewModel` plus `SyncManager`. |
+| OBSOLETE-REMOVED | Old Riverpod sync service and NMC worker providers | No active watcher or worker registration existed; the facade did not perform the real download. | Active config fetching remains `SyncResourcesController` plus `SyncManager`; the controller is a presentation projection over the real manager, not a second sync implementation. |
 | OBSOLETE-REMOVED | `UserDatasource` | Its concrete registration had no resolver/caller and it was never part of `SyncManager.syncAll()`; active profile fetch remains `AuthApi.getUserProfile`. | Removes a false second user-profile fetch/persistence path from architectural reasoning. |
 
 ## Risks And Questions For Next Pass
@@ -154,7 +154,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 
 ## Do Not Touch Until Understood
 
-- `lib/features/sync/presentation/sync_resources_viewmodel.dart`
+- `lib/features/sync/application/sync_resources.controller.dart`
 - `lib/core/sync_manager/sync_manager.dart`
 - `lib/datasource/base_datasource.dart`
 - `lib/di/init_active_session_scope.dart`

@@ -42,7 +42,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `EditRowPanel` and dialog repeat edit path | LEGACY-RISK in `02` | OBSOLETE-REMOVED | The active path always navigated to `EditRowScreen`; the unreachable `if (true)` alternative, `showEditDialog(...)`, and panel widget were removed. |
 | Riverpod as a library | ACTIVE | ACTIVE | Root `ProviderScope` and many providers are active, but every provider still needs per-provider evidence. Generated `*.provider.g.dart` files are not active unless their provider is watched by a core path. |
 | Old team `StateNotifierProvider` files | Active-looking Riverpod state | OBSOLETE-REMOVED | The only screen used hard-coded demo data, had no active route, and was referenced only by a comment-only dashboard. Active assignment filtering remains in `lib/data/teams.provider.dart`. |
-| `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | OBSOLETE-REMOVED | Generated DI was their only outside reference. The duplicate stack and private progress models were removed; active sync remains `SyncResourcesViewModel` plus `SyncManager`. |
+| `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | OBSOLETE-REMOVED | Generated DI was their only outside reference. The duplicate stack and private progress models were removed; active sync remains `SyncResourcesController` plus `SyncManager`. |
 | `syncServiceProvider` and NMC worker providers | Provider exists | OBSOLETE-REMOVED | No active watcher/worker registration existed; `performSync` did not perform the real download. The unused facade, worker models, and dependent legacy session service were removed. |
 | Former generated datasource registration | Generated active session scope | OBSOLETE-REMOVED | The generated typed alternative had no active caller and was removed. Active auth calls the explicit `registerUserConfigurationDatasources(appLocator)` list, whose membership is covered by a focused test. |
 | `UserDatasource` | Mixed/uncertain in `03` | OBSOLETE-REMOVED | It was registered only as concrete `UserDatasource`, had no resolver/caller, and was never collected by `SyncManager.getAll<AbstractDatasource>()`. Active profile fetch remains `AuthApi.getUserProfile`. |
@@ -85,7 +85,7 @@ App/session/bootstrap:
 Sync/offline cache:
 
 - `lib/features/sync/presentation/sync_resources_view.dart`
-- `lib/features/sync/presentation/sync_resources_viewmodel.dart`
+- `lib/features/sync/application/sync_resources.controller.dart`
 - `lib/core/sync_manager/sync_manager.dart`
 - `lib/datasource/base_datasource.dart`
 - `lib/di/init_active_session_scope.dart`

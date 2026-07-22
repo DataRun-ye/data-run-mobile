@@ -1,39 +1,32 @@
 import 'package:datarunmobile/core/main_constants.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
-import 'package:datarunmobile/features/settings/presentation/settings_viewmodel.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:stacked/stacked.dart';
 
-class AppearanceTab extends ViewModelWidget<SettingsViewmodel> {
-  const AppearanceTab({super.key}) : super(reactive: false);
+class AppearanceTab extends ConsumerWidget {
+  const AppearanceTab({super.key});
 
   @override
-  Widget build(BuildContext context, SettingsViewmodel model) {
-    return Consumer(
-      builder: (context, ref, child) {
-        return ListView(
-          children: [
-            ListTile(
-              title: Text(S.of(context).toggleBrightness),
-              trailing: Switch(
-                value: Theme.of(context).brightness == Brightness.light,
-                onChanged: (value) {
-                  ref
-                      .read(preferenceProvider(Preference.themeMode).notifier)
-                      .update(
-                          value ? ThemeMode.light.index : ThemeMode.dark.index);
-                },
-              ),
-            ),
-            ListTile(
-              title: Text(S.of(context).selectColorTheme),
-              trailing: const _ColorSeedButton(),
-            ),
-          ],
-        );
-      },
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListView(
+      children: [
+        ListTile(
+          title: Text(S.of(context).toggleBrightness),
+          trailing: Switch(
+            value: Theme.of(context).brightness == Brightness.light,
+            onChanged: (value) {
+              ref
+                  .read(preferenceProvider(Preference.themeMode).notifier)
+                  .update(value ? ThemeMode.light.index : ThemeMode.dark.index);
+            },
+          ),
+        ),
+        ListTile(
+          title: Text(S.of(context).selectColorTheme),
+          trailing: const _ColorSeedButton(),
+        ),
+      ],
     );
   }
 }

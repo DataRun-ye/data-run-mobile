@@ -1,13 +1,31 @@
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/submission_sync_status_model.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/status_icon.dart';
-import 'package:datarunmobile/features/sync_badges/sync_badges_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-String ValueOrEmpty(String? value) => value ?? '';
+typedef _SyncBadgeScope = ({
+  String? formId,
+  String? assignmentId,
+  String? submissionId,
+});
 
-class SyncStatusBadgesView extends StatelessWidget {
-  SyncStatusBadgesView({
+final _syncStatusBadgesProvider = StreamProvider.autoDispose
+    .family<List<SubmissionSyncStatusModel>, _SyncBadgeScope>((ref, scope) {
+  return appLocator<AppDatabase>()
+      .dataInstancesDao
+      .selectStatusByLevel(
+        formId: scope.formId,
+        assignmentId: scope.assignmentId,
+        submissionId: scope.submissionId,
+      )
+      .watch();
+});
+
+class SyncStatusBadgesView extends ConsumerWidget {
+  const SyncStatusBadgesView({
     super.key,
     this.formId,
     this.assignmentId,
@@ -21,33 +39,32 @@ class SyncStatusBadgesView extends StatelessWidget {
   final bool showCount;
 
   @override
-  Widget build(BuildContext context) {
-    return ViewModelBuilder<SyncBadgesViewModel>.reactive(
-      builder: (context, model, child) => model.isBusy
-          ? const Center(
-              heightFactor: 3,
-              widthFactor: 3,
-              child: CircularProgressIndicator(),
-            )
-          : Wrap(
-              spacing: 2,
-              runSpacing: 2,
-              // alignment: WrapAlignment.end,
-              children: model.data
-                      ?.where((e) => e.count > 0)
-                      .map<Widget>((e) => _SyncStatusBadge(
-                            submissionId: submissionId,
-                            syncStatus: e.syncState,
-                            count: e.count,
-                            showCount: showCount,
-                          ))
-                      .toList() ??
-                  [],
-            ),
-      viewModelBuilder: () => SyncBadgesViewModel(
-        formId: formId,
-        assignmentId: assignmentId,
-        submissionId: submissionId,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final badges = ref.watch(_syncStatusBadgesProvider((
+      formId: formId,
+      assignmentId: assignmentId,
+      submissionId: submissionId,
+    )));
+
+    return badges.when(
+      loading: () => const Center(
+        heightFactor: 3,
+        widthFactor: 3,
+        child: CircularProgressIndicator(),
+      ),
+      error: (_, __) => const SizedBox.shrink(),
+      data: (items) => Wrap(
+        spacing: 2,
+        runSpacing: 2,
+        children: items
+            .where((item) => item.count > 0)
+            .map((item) => _SyncStatusBadge(
+                  submissionId: submissionId,
+                  syncStatus: item.syncState,
+                  count: item.count,
+                  showCount: showCount,
+                ))
+            .toList(),
       ),
     );
   }

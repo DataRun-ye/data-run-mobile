@@ -1,12 +1,9 @@
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:datarunmobile/features/common_ui_element/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet_model.dart';
-
-class NoticeSheet extends StackedView<NoticeSheetModel> {
+class NoticeSheet extends StatelessWidget {
   const NoticeSheet({
     Key? key,
     required this.completer,
@@ -16,11 +13,7 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
   final SheetRequest<dynamic> request;
 
   @override
-  Widget builder(
-    BuildContext context,
-    NoticeSheetModel viewModel,
-    Widget? child,
-  ) {
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: const BoxDecoration(
@@ -50,7 +43,4 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
       ),
     );
   }
-
-  @override
-  NoticeSheetModel viewModelBuilder(BuildContext context) => NoticeSheetModel();
 }

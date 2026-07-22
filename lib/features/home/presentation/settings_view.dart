@@ -2,21 +2,18 @@ import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/about_page.dart';
 import 'package:datarunmobile/features/settings/presentation/appearance_tab.dart';
-import 'package:datarunmobile/features/settings/presentation/settings_viewmodel.dart';
 import 'package:datarunmobile/features/settings/presentation/sync_tab_view.dart';
 import 'package:datarunmobile/features/settings/presentation/user_settings_tab_view.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:stacked/stacked.dart';
 
-class SettingsView extends StackedView<SettingsViewmodel> {
+class SettingsView extends StatelessWidget {
   const SettingsView();
 
   @override
-  Widget builder(
-      BuildContext context, SettingsViewmodel viewModel, Widget? child) {
+  Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -65,8 +62,4 @@ class SettingsView extends StackedView<SettingsViewmodel> {
       ),
     );
   }
-
-  @override
-  SettingsViewmodel viewModelBuilder(BuildContext context) =>
-      SettingsViewmodel();
 }

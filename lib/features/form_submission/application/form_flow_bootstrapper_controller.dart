@@ -12,6 +12,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_metadata_service.dart';
+import 'package:datarunmobile/features/form_submission/application/form_scope.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_edit_access.dart';
 import 'package:flutter/foundation.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -55,7 +56,7 @@ class FormFlowBootstrapperController {
       }
 
       if (appLocator.currentScopeName == dataInstance.id) {
-        await appLocator.dropScope(dataInstance.id);
+        await closeFormScope(dataInstance.id);
       }
       await appLocator.pushNewScopeAsync(
         scopeName: dataInstance.id,
@@ -86,7 +87,7 @@ class FormFlowBootstrapperController {
     } catch (_) {
       if (dataInstance?.id != null &&
           appLocator.currentScopeName == dataInstance!.id) {
-        await appLocator.dropScope(dataInstance.id);
+        await closeFormScope(dataInstance.id);
       }
       rethrow;
     }

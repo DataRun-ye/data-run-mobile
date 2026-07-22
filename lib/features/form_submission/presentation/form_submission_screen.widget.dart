@@ -7,6 +7,7 @@ import 'package:datarunmobile/features/form_submission/application/configure_for
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
+import 'package:datarunmobile/features/form_submission/application/form_scope.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_entry_view_silver.widget.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_initial_view.widget.dart';
@@ -165,7 +166,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
                 if (widget.enabled) {
                   await _saveAndShowBottomSheet(formInstance);
                 } else {
-                  Navigator.pop(context);
+                  await _leaveForm();
                 }
               },
             ),
@@ -193,8 +194,7 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     if (formInstance.form.hasErrors || formInstance.form.dirty) {
       await _saveAndShowBottomSheet(formInstance);
     } else {
-      Navigator.pop(context);
-      await appLocator.popScopesTill(widget.submissionId);
+      await _leaveForm();
     }
   }
 
@@ -246,18 +246,10 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   ) async {
     switch (action) {
       case FormBottomDialogActionType.NotNow:
-        Navigator.pop(context);
-        if (appLocator.currentScopeName == widget.submissionId) {
-          await appLocator.dropScope(widget.submissionId);
-        }
+        await _leaveForm();
       case FormBottomDialogActionType.MarkAsFinal:
         await _markEntityAsFinal(context);
-        if (context.mounted) {
-          Navigator.pop(context);
-        }
-        if (appLocator.currentScopeName == widget.submissionId) {
-          await appLocator.dropScope(widget.submissionId);
-        }
+        await _leaveForm();
         break;
       case FormBottomDialogActionType.CheckFields:
         return;
@@ -268,5 +260,11 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
     final formInstance = appLocator<FormInstance>();
 
     return formInstance.markSubmissionAsFinal();
+  }
+
+  Future<void> _leaveForm() async {
+    final submissionId = widget.submissionId;
+    if (mounted) Navigator.pop(context);
+    await closeFormScope(submissionId);
   }
 }

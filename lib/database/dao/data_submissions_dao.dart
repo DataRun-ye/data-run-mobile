@@ -3,19 +3,16 @@ import 'dart:convert';
 import 'package:datarunmobile/core/code_generator.dart';
 import 'package:datarunmobile/core/data_instance/form_data_util.dart';
 import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
-import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/core/util/string_extension.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/dao/data_submissions_dao_expression_extension.dart';
-import 'package:datarunmobile/database/extensions/data_submission.extension.dart';
 import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/database/shared/submission_summary.dart';
 import 'package:datarunmobile/database/shared/submission_sync_status_model.dart';
 import 'package:datarunmobile/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/database/tables/data_submissions.table.dart';
-import 'package:datarunmobile/di/injection.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
@@ -26,10 +23,7 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     with _$DataInstancesDaoMixin {
   DataInstancesDao(AppDatabase db) : super(db);
 
-  HttpClient<dynamic> get _apiClient => appLocator<HttpClient<dynamic>>();
-
-  /// Upload a batch of submissions and update DB statuses inside a transaction.
-  Future<ImportSummaryModel> upload(Iterable<String> ids) async {
+  Future<List<DataInstance>> prepareUpload(Iterable<String> ids) async {
     var submissions = await (select(dataInstances)
           ..where((f) =>
               f.id.isIn(ids) &
@@ -40,101 +34,78 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
         .get();
 
     if (submissions.isEmpty) {
-      return ImportSummaryModel.empty();
+      return const [];
     }
 
     submissions = await _persistRepeatMetadataBeforeUpload(submissions);
-
-    // mark as uploading so UI can react
     await markUploading(submissions.map((s) => s.id));
+    return submissions;
+  }
 
-    final uploadPayload = submissions.map((s) => s.toUpload()).toList();
-    const resource = 'dataSubmission/bulk';
+  Future<void> applyUploadResult(
+    List<DataInstance> submissions,
+    ImportSummaryModel summary,
+  ) async {
+    final now = DateTime.now().toUtc();
+    final updates = <_PerRowUpdate>[];
 
-    try {
-      final response = await _apiClient.request(
-        resourceName: resource,
-        data: uploadPayload,
-        method: 'post',
-      );
+    for (final submission in submissions) {
+      final id = submission.id;
+      final failedMessage = summary.failed[id];
+      final succeeded =
+          summary.created.contains(id) || summary.updated.contains(id);
 
-      final ImportSummaryModel summary =
-          ImportSummaryModel.fromJson(response.data);
-      final now = DateTime.now().toUtc();
-
-      // Build a list of updates (not complete companions for insertion)
-      final List<_PerRowUpdate> updates = [];
-      for (final s in submissions) {
-        final id = s.id;
-        final failedMsg = summary.failed[id];
-        final isCreated = summary.created.contains(id);
-        final isUpdated = summary.updated.contains(id);
-
-        if (isCreated || isUpdated) {
-          updates.add(_PerRowUpdate(
-            id: id,
-            syncState: InstanceSyncStatus.synced,
-            lastSyncMessage: null,
-            lastSyncDate: now,
-            isToUpdate: true,
-          ));
-        } else if (failedMsg != null) {
-          updates.add(_PerRowUpdate(
-            id: id,
-            syncState: InstanceSyncStatus.syncFailed,
-            lastSyncMessage: failedMsg,
-            lastSyncDate: now,
-            isToUpdate: false,
-          ));
-        }
+      if (succeeded) {
+        updates.add(_PerRowUpdate(
+          id: id,
+          syncState: InstanceSyncStatus.synced,
+          lastSyncMessage: null,
+          lastSyncDate: now,
+          isToUpdate: true,
+        ));
+      } else if (failedMessage != null) {
+        updates.add(_PerRowUpdate(
+          id: id,
+          syncState: InstanceSyncStatus.syncFailed,
+          lastSyncMessage: failedMessage,
+          lastSyncDate: now,
+          isToUpdate: false,
+        ));
       }
-
-      if (updates.isNotEmpty) {
-        await transaction(() async {
-          for (final u in updates) {
-            final companion = DataInstancesCompanion(
-              syncState: Value(u.syncState),
-              lastSyncMessage: Value(u.lastSyncMessage),
-              lastSyncDate: Value(u.lastSyncDate),
-              isToUpdate: Value(u.isToUpdate),
-            );
-
-            await (update(dataInstances)..where((t) => t.id.equals(u.id)))
-                .write(companion);
-          }
-        });
-      }
-
-      return summary;
-    } catch (error) {
-      // network or unexpected error -> mark all affected submissions as failed
-      final now = DateTime.now().toUtc();
-      final errMsg = error.toString();
-
-      final failUpdates = submissions.map((s) => _PerRowUpdate(
-            id: s.id,
-            syncState: InstanceSyncStatus.syncFailed,
-            lastSyncMessage: errMsg,
-            lastSyncDate: now,
-            isToUpdate: false,
-          ));
-
-      await transaction(() async {
-        for (final u in failUpdates) {
-          final companion = DataInstancesCompanion(
-            syncState: Value(u.syncState),
-            lastSyncMessage: Value(u.lastSyncMessage),
-            lastSyncDate: Value(u.lastSyncDate),
-            isToUpdate: Value(u.isToUpdate),
-          );
-          await (update(dataInstances)..where((t) => t.id.equals(u.id)))
-              .write(companion);
-        }
-      });
-
-      // or: rethrow if the caller needs to know the upload failed
-      return ImportSummaryModel.empty();
     }
+
+    await _applyRowUpdates(updates);
+  }
+
+  Future<void> markUploadFailed(
+    List<DataInstance> submissions,
+    Object error,
+  ) async {
+    final now = DateTime.now().toUtc();
+    await _applyRowUpdates(submissions.map((submission) => _PerRowUpdate(
+          id: submission.id,
+          syncState: InstanceSyncStatus.syncFailed,
+          lastSyncMessage: error.toString(),
+          lastSyncDate: now,
+          isToUpdate: false,
+        )));
+  }
+
+  Future<void> _applyRowUpdates(Iterable<_PerRowUpdate> updates) async {
+    if (updates.isEmpty) return;
+
+    await transaction(() async {
+      for (final updateValue in updates) {
+        await (update(dataInstances)
+              ..where((table) => table.id.equals(updateValue.id)))
+            .write(DataInstancesCompanion(
+          syncState: Value(updateValue.syncState),
+          lastSyncMessage: Value(updateValue.lastSyncMessage),
+          lastSyncDate: Value(updateValue.lastSyncDate),
+          isToUpdate: Value(updateValue.isToUpdate),
+        ));
+      }
+    });
   }
 
   Future<List<DataInstance>> _persistRepeatMetadataBeforeUpload(

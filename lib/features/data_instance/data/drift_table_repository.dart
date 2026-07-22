@@ -1,7 +1,9 @@
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_upload_service.dart';
 import 'package:datarunmobile/features/data_instance/data/table_repository.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/src/iset/iset.dart';
@@ -11,6 +13,10 @@ import 'package:injectable/injectable.dart';
 class DriftTableRepository implements TableRepository {
   final AppDatabase _db = appLocator<AppDatabase>();
   late final dao = _db.dataInstancesDao;
+  late final SubmissionUploadService _uploadService = SubmissionUploadService(
+    database: _db,
+    apiClient: appLocator<HttpClient<dynamic>>(),
+  );
 
   @override
   Future<int> delete(Iterable<String> ids) async {
@@ -19,7 +25,7 @@ class DriftTableRepository implements TableRepository {
 
   @override
   Future<ImportSummaryModel> sync(Iterable<String> ids) async {
-    return dao.upload(ids);
+    return _uploadService.upload(ids);
   }
 
   @override

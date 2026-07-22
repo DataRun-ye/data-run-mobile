@@ -102,7 +102,7 @@ The repeat/data-value relational-looking tables are not the active form capture 
 
 These are bounded correctness or cleanup candidates, not settled architecture:
 
-Closed on `develop`: submission pull is excluded from the active manual and generated session registrations, and the unreferenced `DataInstanceDatasource` implementation has been removed. Submission upload continues through `DataInstancesDao.upload()`. `test/dev/active_session_sync_registration_test.dart` locks the push-only registration boundary.
+Closed on `develop`: submission pull is excluded from the active session registrations, and the unreferenced `DataInstanceDatasource` implementation has been removed. Submission upload is push-only through `SubmissionUploadService`; `DataInstancesDao` owns row selection, repeat-metadata persistence, and sync-state transitions. Focused registration and upload tests lock both boundaries.
 
 Draft saves now preserve `finishedEntryTime` instead of creating or advancing it; `markFinal()` remains the normal completion-time writer. `test/dev/data_submission_lifecycle_test.dart` characterizes both transitions.
 

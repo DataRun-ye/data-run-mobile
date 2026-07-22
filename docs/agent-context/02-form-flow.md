@@ -97,7 +97,7 @@ Observed active behavior:
 2. New rows receive a 26-character ULID; an existing non-null row ID cannot be changed by `RepeatItemInstance.setUid()`.
 3. `RepeatItemInstance.reduceValue()` writes `_id` into the row map.
 4. `FormInstance.saveFormData()` normalizes `_id`, `_index`, `_parentId`, and `_submissionUid` before persisting the whole `formData` JSON object.
-5. `DataInstancesDao.upload()` normalizes older local JSON before upload and persists any compatibility additions locally.
+5. `SubmissionUploadService.upload()` asks `DataInstancesDao.prepareUpload()` to normalize older local JSON, persist compatibility additions, and mark eligible rows uploading before POST.
 
 Classification: ACTIVE for local create/save/upload identity behavior. Synced server-record editing remains product-incomplete and requires a round-trip smoke before production enablement.
 
@@ -107,7 +107,7 @@ Confidence: high for code paths and characterization tests; medium for future se
 
 Active path:
 
-1. A locally created submission is uploaded through `DataInstancesDao.upload()`.
+1. A locally created submission is uploaded through `SubmissionUploadService.upload()`; the DAO retains all local persistence and sync-state transitions.
 2. A successful upload leaves the local row in `synced` state with `isToUpdate: true`.
 3. Edit routes load that existing local `DataInstance` by `submissionId`.
 4. `FormFlowBootstrapperVm` builds the form from existing `instance.formData`.

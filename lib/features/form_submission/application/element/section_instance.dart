@@ -166,18 +166,17 @@ class Section extends SectionElement<Map<String, Object?>> {
     // should let children decide and only mark myself visible, may children decides their visibility
     super.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
     _elements.forEach((_, element) {
-      element.decideState(
-          emitEvent: emitEvent, updateParent: updateParent);
+      element.decideState(emitEvent: emitEvent, updateParent: updateParent);
     });
   }
 
   @override
   void dispose() {
-    // forEachChild((element) {
-    //   element.parentSection = null;
-    //   element.dispose();
-    // });
-    // elementControl.closeCollectionEvents();
+    for (final element in _elements.values) {
+      element.dispose();
+      element.parentSection = null;
+    }
+    _elements.clear();
     super.dispose();
   }
 }

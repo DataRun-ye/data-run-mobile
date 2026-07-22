@@ -68,7 +68,7 @@ Current active form entry/edit flow:
 5. It builds the full `reactive_forms` `FormGroup` through `FormElementControlBuilder`.
 6. It builds the full app-side form element tree through `FormElementBuilder`.
 7. It wraps the tree in a root `Section`, resolves dependencies, evaluates rules, and registers `FormInstance`.
-8. `FormSubmissionScreen` renders the active form using scoped `FormInstance`.
+8. `FormSubmissionScreen` renders the active form using scoped `FormInstance`; route disposal closes that scope and disposes the element/control graph.
 9. Sections render through `SectionWidget`.
 10. Fields render through `FieldWidget` and `FieldFactory`.
 11. Repeats render through `RepeatTableSliver`, `RepeatTable`, and `RepeatTableDataSource`.

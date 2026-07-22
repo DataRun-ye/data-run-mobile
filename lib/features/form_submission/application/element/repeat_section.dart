@@ -222,9 +222,10 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
   @override
   void dispose() {
     forEachChild((element) {
-      element.parentSection = null;
       element.dispose();
+      element.parentSection = null;
     });
+    _elements.clear();
     closeCollectionEvents();
     super.dispose();
   }

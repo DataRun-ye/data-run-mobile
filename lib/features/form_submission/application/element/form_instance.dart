@@ -69,6 +69,7 @@ class FormInstance {
   final FieldContextRegistry fieldKeysRegistery;
 
   final _db = appLocator<AppDatabase>();
+  bool _disposed = false;
 
   // final FormConfiguration formConfiguration;
 
@@ -286,6 +287,18 @@ class FormInstance {
       logError('Element With Path: $elementPath, not found: $e',
           stackTrace: st);
     }
+  }
+
+  void dispose() {
+    if (_disposed) {
+      return;
+    }
+    _disposed = true;
+
+    _formSection.dispose();
+    form.dispose();
+    fieldKeysRegistery.clear();
+    _forElementMap.clear();
   }
 }
 

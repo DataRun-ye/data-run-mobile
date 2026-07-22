@@ -437,15 +437,19 @@ sealed class FormElementInstance<T> {
   }
 
   void dispose() {
-    // elementControl?.dispose();
     logDebug('${elementPath ?? 'root'} disposeMethod.');
-    if (_resolvedDependencies.isNotEmpty)
-      // propertiesChangedSubject?.close();
-      _resolvedDependencies.forEach((FormElementInstance<dynamic> d) {
-        logDebug(
-            '${elementPath ?? 'root'}: unsubscribing from ${d.name ?? 'root'}.');
-        d._dependents.remove(this);
-      });
+    for (final dependency in _resolvedDependencies) {
+      logDebug(
+          '${elementPath ?? 'root'}: unsubscribing from ${dependency.name ?? 'root'}.');
+      dependency._dependents.remove(this);
+    }
     _resolvedDependencies.clear();
+    _dependents.clear();
+
+    final subject = propertiesChangedSubject;
+    propertiesChangedSubject = null;
+    if (subject != null) {
+      unawaited(subject.close());
+    }
   }
 }

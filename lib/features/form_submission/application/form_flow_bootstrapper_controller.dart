@@ -73,6 +73,7 @@ class FormFlowBootstrapperController {
               instance: dataInstance,
               templateRepository: templateRepository,
             ),
+            dispose: (instance) => instance.dispose(),
           );
         },
       );

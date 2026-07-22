@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/app/di/injection.dart';
@@ -41,6 +43,12 @@ class FormSubmissionScreen extends StatefulHookConsumerWidget {
 }
 
 class FormSubmissionScreenState extends ConsumerState<FormSubmissionScreen> {
+  @override
+  void dispose() {
+    unawaited(closeFormScope(widget.submissionId));
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // final FormMetadata formMetadata = FormMetadataWidget.of(context);
@@ -263,8 +271,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   }
 
   Future<void> _leaveForm() async {
-    final submissionId = widget.submissionId;
     if (mounted) Navigator.pop(context);
-    await closeFormScope(submissionId);
   }
 }

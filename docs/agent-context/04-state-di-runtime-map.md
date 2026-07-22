@@ -113,9 +113,9 @@ Why it matters: datasource registration order and type shape affect config fetch
 | --- | --- | --- | --- | --- | --- |
 | Per-submission scope creation | ACTIVE | `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` | `bootstrapFlow(...)` creates or loads a `DataInstance`, then `pushNewScopeAsync(scopeName: dataInstance.id, init: ...)`. | High | Each open form gets scoped form services. |
 | `FormTemplateRepository` | ACTIVE | `form_flow_bootstrapper_controller.dart` | Registers `FormTemplateRepository.create(versionUid: dataInstance.templateVersion)` in the form scope. | High | Active form rendering uses the loaded flat template from this repository. |
-| `FormInstance` | ACTIVE | `form_flow_bootstrapper_controller.dart` | Registers a built `FormInstance` after creating controls, elements, section tree, metadata attributes, and edit status. | High | This is the active form state object. |
+| `FormInstance` | ACTIVE | `form_flow_bootstrapper_controller.dart` | Registers a built `FormInstance` with a GetIt disposer after creating controls, elements, section tree, metadata attributes, and edit status. | High | This is the active form state object and the owner of form-graph/control cleanup. |
 | Scope replacement for same submission | ACTIVE | `form_flow_bootstrapper_controller.dart`, `form_scope.dart` | Bootstrap closes an existing current submission scope before creating a replacement, and closes a partially built scope on failure. | High | Repeat/edit changes can be affected by stale scoped state. |
-| Scope close on form exit | ACTIVE | `lib/features/form_submission/presentation/form_submission_screen.widget.dart`, `widgets/bottom_sheet.widget.dart`, `lib/features/form_submission/application/form_scope.dart` | Typed completion actions, clean back, and the read-only FAB all route through `closeFormScope`; a focused test proves registered GetIt disposers run. | High for explicit exits | One teardown boundary now exists; the scoped `FormInstance` still needs an actual disposer registration. |
+| Route-owned form scope | ACTIVE | `lib/features/form_submission/presentation/form_submission_screen.widget.dart`, `lib/features/form_submission/application/form_scope.dart` | `FormSubmissionScreenState.dispose()` closes the named submission scope after child widgets unmount. GetIt invokes the registered `FormInstance` disposer, which recursively closes element/repeat streams, removes dependency links, disposes the root reactive form, and clears field keys. Focused tests cover route removal and nested repeats. | High | Back, save exit, read-only exit, route replacement, and external route removal share one lifecycle boundary without tearing down controls during transition. |
 
 ## Active Riverpod Surface
 
@@ -249,8 +249,7 @@ Sync runtime ownership:
 1. What is the exact scope stack after login, after opening a form, after saving, after back navigation, and after logout?
 2. Does `GetIt.getAll<AbstractDatasource<dynamic>>()` return the explicit datasource registrations in the expected order after every login/session restore?
 3. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
-5. Which form-graph resources must be disposed when `closeFormScope` runs, and should any external route-removal path close the scope independently of screen actions?
-6. Do generated Riverpod/injectable/Stacked outputs still match this map after each ownership move?
+4. Do generated Riverpod/injectable/Stacked outputs still match this map after each ownership move?
 
 ## Next Investigation Step
 

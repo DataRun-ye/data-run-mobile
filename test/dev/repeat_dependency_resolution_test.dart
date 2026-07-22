@@ -72,6 +72,16 @@ void main() {
     expect(firstTestResult.hidden, isTrue);
     expect(secondTestResult.visible, isTrue);
 
+    final beforeHide = root.value;
+    final firstPatientBeforeHide =
+        (beforeHide['patients'] as List).first as Map<String, Object?>;
+    final investigationsBeforeHide =
+        firstPatientBeforeHide['investigations'] as List;
+    final nestedIdsBeforeHide = investigationsBeforeHide
+        .cast<Map<String, Object?>>()
+        .map((row) => row['_id'])
+        .toList();
+
     final secondPerformed =
         secondPatient.element('is_test_preformed') as FieldInstance<String>;
     secondPerformed.updateValue('yes', emitEvent: false);
@@ -85,6 +95,30 @@ void main() {
 
     expect(firstInvestigations.hidden, isTrue);
     expect(secondInvestigations.visible, isTrue);
+    expect(firstLabType.value, 'none');
+    expect(secondLabType.value, 'microscopy');
+    final whileHidden = root.value;
+    final firstPatientWhileHidden =
+        (whileHidden['patients'] as List).first as Map<String, Object?>;
+    expect(firstPatientWhileHidden, isNot(contains('investigations')));
+
+    firstPerformed.updateValue('yes', emitEvent: false);
+
+    expect(firstInvestigations.visible, isTrue);
+    expect(firstInvestigations.elements, hasLength(2));
+    expect(firstLabType.value, 'none');
+    expect(secondLabType.value, 'microscopy');
+    final afterShow = root.value;
+    final firstPatientAfterShow =
+        (afterShow['patients'] as List).first as Map<String, Object?>;
+    final investigationsAfterShow =
+        firstPatientAfterShow['investigations'] as List;
+    expect(
+      investigationsAfterShow
+          .cast<Map<String, Object?>>()
+          .map((row) => row['_id']),
+      nestedIdsBeforeHide,
+    );
     root.dispose();
   });
 
@@ -181,17 +215,17 @@ void main() {
     surveillanceType.updateValue('AdultAndLarval', emitEvent: false);
 
     expect(adult.visible, isTrue);
-    expect(adultPresent.value, isNull);
-    expect(classifications.hidden, isTrue);
-    expect(firstSpecies.hidden, isTrue);
-    expect(larval.visible, isTrue);
-    expect(habitats.visible, isTrue);
-
-    adultPresent.updateValue('yes', emitEvent: false);
-
+    expect(adultPresent.value, 'yes');
     expect(classifications.visible, isTrue);
     expect(classifications.elements[0].visible, isTrue);
     expect(classifications.elements[1].visible, isTrue);
+    expect(firstSpecies.visible, isTrue);
+    expect(firstSpecies.value, 'OtherSpecies');
+    expect(secondSpecies.value, 'Anopheles');
+    expect(firstOtherSpecies.visible, isTrue);
+    expect(secondOtherSpecies.hidden, isTrue);
+    expect(larval.visible, isTrue);
+    expect(habitats.visible, isTrue);
     expect(
       firstSpecies.resolvedDependencies.map((element) => element.elementPath),
       containsAll(<String>[
@@ -203,7 +237,6 @@ void main() {
         firstSpecies.evalContext['Indoor_Surveillance_Type'], 'AdultAndLarval');
     expect(firstSpecies.evalContext['adult_mosquito_present'], 'yes');
     expect(firstSpecies.visible, isTrue);
-    expect(firstOtherSpecies.hidden, isTrue);
     expect(secondOtherSpecies.hidden, isTrue);
     root.dispose();
   });

@@ -124,6 +124,9 @@ class FieldInstance<T> extends FormElementInstance<T> {
       updateParent: updateParent,
       emitEvent: emitEvent,
     );
+    if (choiceFilter?.hasFilters == true) {
+      _applyChoiceFilter(updateParent: updateParent, emitEvent: emitEvent);
+    }
   }
 
   void _evaluateValidationRule({
@@ -176,6 +179,10 @@ class FieldInstance<T> extends FormElementInstance<T> {
         elementState.copyWith(visibleOptions: visibleOptions),
         emitEvent: emitEvent,
       );
+    }
+
+    if (hidden) {
+      return;
     }
 
     final retainedValue = _retainValueFromVisibleOptions(visibleOptions);

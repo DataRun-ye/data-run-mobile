@@ -176,8 +176,10 @@ sealed class FormElementInstance<T> {
       updateParent: false,
       emitEvent: false,
     );
-    elementControl!.reset(
-        disabled: true, updateParent: updateParent, emitEvent: emitEvent);
+    // Visibility is temporary editing state. The visible-value projection
+    // excludes this control when saving; disabling must not destroy its value.
+    elementControl!
+        .markAsDisabled(updateParent: updateParent, emitEvent: emitEvent);
 
     logDebugLazy(
         () => '2.${elementPath}, markAsHidden, marked: ${_getDebugState()}.');

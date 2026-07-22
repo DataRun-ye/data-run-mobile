@@ -18,7 +18,6 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final formInstance = appLocator<FormInstance>();
 
     final progressStatuses =
@@ -27,7 +26,6 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
     return ReactiveChoiceChips<String>(
       formControl: formInstance.form.control(element.elementPath!)
           as FormControl<String>,
-      confirmChangingValue: element.dependents.length > 0,
       validationMessages: validationMessages(),
       options: _getChipOptions(progressStatuses),
       decoration: InputDecoration(

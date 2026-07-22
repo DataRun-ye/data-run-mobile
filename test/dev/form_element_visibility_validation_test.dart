@@ -550,26 +550,40 @@ void main() {
     root.dispose();
   });
 
-  test('form controls remain authoritative without a mounted field widget', () {
+  test('hidden fields retain working values but leave the form projection', () {
     final control = FormControl<String>(value: 'initial');
+    final form = FormGroup({'field': control});
     final field = FieldInstance<String>(
-      form: FormGroup({'field': control}),
+      form: form,
       template: FieldTemplate(
         id: 'field-id',
         name: 'field',
         type: ValueType.Text,
+        mandatory: true,
       ),
-      elementProperties: FieldElementState<String>(),
+      elementProperties: FieldElementState<String>(mandatory: true),
+    );
+    final root = Section(
+      form: form,
+      template: SectionTemplate(id: 'root-id', path: ''),
+      elements: {'field': field},
     );
 
     control.updateValue('edited');
     expect(field.value, 'edited');
+    expect(root.value, {'field': 'edited'});
 
     field.markAsHidden(emitEvent: false);
-    expect(field.value, isNull);
+    expect(field.value, 'edited');
+    expect(control.disabled, isTrue);
+    expect(root.value, isNot(contains('field')));
 
     field.markAsVisible(emitEvent: false);
-    expect(field.value, isNull);
+    expect(field.value, 'edited');
+    expect(control.enabled, isTrue);
+    expect(control.valid, isTrue);
+    expect(root.value, {'field': 'edited'});
+    root.dispose();
   });
 }
 

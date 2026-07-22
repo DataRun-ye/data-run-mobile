@@ -18,7 +18,6 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final formInstance = appLocator<FormInstance>();
 
     final managedTeamsAsync = ref.watch(managedTeamsProvider(
@@ -31,7 +30,6 @@ class QReactiveTeamSelectChip extends ConsumerWidget {
         return ReactiveChoiceChips<String>(
             formControl: formInstance.form.control(element.elementPath!)
                 as FormControl<String>,
-            confirmChangingValue: element.dependents.length > 0,
             validationMessages: validationMessages(),
             selectedColor: Theme.of(context).colorScheme.error.withAlpha(100),
             options: _getChipOptions(teams),

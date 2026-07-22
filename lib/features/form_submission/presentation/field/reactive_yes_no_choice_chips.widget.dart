@@ -22,7 +22,6 @@ class ReactiveYesNoChoiceChips extends ConsumerWidget {
       formControl:
           formInstance.form.control(element.elementPath!) as FormControl<bool>,
       validationMessages: validationMessages(),
-      confirmChangingValue: element.dependents.length > 0,
       options: _getChipOptions(context),
       decoration: InputDecoration(
         labelText: element.label,

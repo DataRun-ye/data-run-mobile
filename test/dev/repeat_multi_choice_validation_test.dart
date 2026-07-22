@@ -127,6 +127,75 @@ void main() {
     root.dispose();
   });
 
+  test('choice filters do not trim selections while the field is hidden', () {
+    final optionA = _option(code: 'choice-a', name: 'Choice A');
+    final optionB = _option(code: 'choice-b', name: 'Choice B');
+    final sourceControl = FormControl<String>(value: 'choice-a');
+    final choicesControl = FormControl<List<String>>(value: ['choice-a']);
+    final form = FormGroup({
+      'source': sourceControl,
+      'choices': choicesControl,
+    });
+    final source = FieldInstance<String>(
+      form: form,
+      template: FieldTemplate(
+        id: 'source-id',
+        name: 'source',
+        type: ValueType.SelectOne,
+      ),
+      elementProperties: FieldElementState<String>(),
+    );
+    final choices = FieldInstance<List<String>>(
+      form: form,
+      template: FieldTemplate(
+        id: 'choices-id',
+        name: 'choices',
+        type: ValueType.SelectMulti,
+      ),
+      choiceFilter: ChoiceFilter(
+        expression: '#{source} == code',
+        options: [optionA, optionB],
+      ),
+      elementProperties: FieldElementState<List<String>>(
+        visibleOptions: [optionA, optionB],
+      ),
+    );
+    final root = Section(
+      form: form,
+      template: SectionTemplate(id: 'root-id', path: ''),
+      elements: {
+        'source': source,
+        'choices': choices,
+      },
+    )
+      ..bindControlReferences()
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+
+    choices.markAsHidden(emitEvent: false);
+    source.updateValue('choice-b', emitEvent: false);
+
+    expect(choices.hidden, isTrue);
+    expect(choices.visibleOption, [optionB]);
+    expect(choices.value, ['choice-a']);
+
+    source.updateValue('choice-a', emitEvent: false);
+    choices.restoreVisibilityAfterParentShown(emitEvent: false);
+
+    expect(choices.visible, isTrue);
+    expect(choices.visibleOption, [optionA]);
+    expect(choices.value, ['choice-a']);
+
+    choices.markAsHidden(emitEvent: false);
+    source.updateValue('choice-b', emitEvent: false);
+    choices.restoreVisibilityAfterParentShown(emitEvent: false);
+
+    expect(choices.visible, isTrue);
+    expect(choices.visibleOption, [optionB]);
+    expect(choices.value, isEmpty);
+    root.dispose();
+  });
+
   test('options without an option filter remain visible', () {
     final filteredOption = _option(
       code: 'filtered',

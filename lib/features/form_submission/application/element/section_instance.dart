@@ -132,14 +132,13 @@ class Section extends SectionElement<Map<String, Object?>> {
   @override
   void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.$elementPath Section, markAsHidden');
-    if (hidden) {
-      logDebug('_.$elementPath Section, markAsHidden, return: already hidden');
-      return;
+    if (!hidden) {
+      logDebug(
+          '2.$elementPath Section, markAsHidden: mark hidden and hide children');
+      super.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+    } else {
+      logDebug('2.$elementPath Section, markAsHidden: enforce hidden children');
     }
-    // just hide all children
-    logDebug(
-        '2.$elementPath Section, markAsHidden: mark hidden and hide children');
-    super.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
     _elements.forEach((_, element) {
       element.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
     });

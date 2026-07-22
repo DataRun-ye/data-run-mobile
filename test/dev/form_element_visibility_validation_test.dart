@@ -9,6 +9,7 @@ import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -124,6 +125,91 @@ void main() {
 
     expect(evaluationCount, 1);
     expect(field.hidden, isTrue);
+  });
+
+  test('expression errors preserve required validation when applied and reset',
+      () {
+    const ruleError = 'rule-error';
+    final sourceControl = FormControl<String>(value: 'valid');
+    final targetControl = FormControl<String>(
+      validators: const [RequiredFieldValidator()],
+    );
+    final form = FormGroup({
+      'source': sourceControl,
+      'target': targetControl,
+    });
+    final source = FieldInstance<String>(
+      form: form,
+      template: FieldTemplate(
+        id: 'source-id',
+        name: 'source',
+        type: ValueType.Text,
+      ),
+      elementProperties: FieldElementState<String>(),
+    );
+    final target = FieldInstance<String>(
+      form: form,
+      template: FieldTemplate(
+        id: 'target-id',
+        name: 'target',
+        type: ValueType.Text,
+        mandatory: true,
+        rules: [
+          _ruleFor(
+            'target',
+            RuleAction(
+              action: RuleActionType.Error,
+              expression: "#{source} == 'invalid'",
+              message: const IMapConst({'en': ruleError, 'ar': ruleError}),
+            ),
+          ),
+        ],
+      ),
+      elementProperties: FieldElementState<String>(mandatory: true),
+    );
+    final root = Section(
+      form: form,
+      template: SectionTemplate(id: 'root-id', path: ''),
+      elements: {'source': source, 'target': target},
+    )
+      ..bindControlReferences()
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+
+    expect(targetControl.hasError(ValidationMessage.required), isTrue);
+
+    source.updateValue('invalid', emitEvent: false);
+
+    expect(targetControl.hasError(ruleError), isTrue);
+    expect(targetControl.hasError(ValidationMessage.required), isTrue);
+
+    source.updateValue('valid', emitEvent: false);
+
+    expect(targetControl.hasError(ruleError), isFalse);
+    expect(targetControl.hasError(ValidationMessage.required), isTrue);
+    expect(targetControl.invalid, isTrue);
+
+    target.updateValue('not-an-email', emitEvent: false);
+    targetControl.setValidators(
+      [...targetControl.validators, Validators.email],
+      autoValidate: true,
+      emitEvent: false,
+    );
+    source.updateValue('invalid', emitEvent: false);
+
+    expect(targetControl.hasError(ruleError), isTrue);
+    expect(targetControl.hasError(ValidationMessage.email), isTrue);
+
+    target.updateValue('still-not-an-email', emitEvent: false);
+
+    expect(targetControl.hasError(ruleError), isTrue);
+    expect(targetControl.hasError(ValidationMessage.email), isTrue);
+
+    source.updateValue('valid', emitEvent: false);
+
+    expect(targetControl.hasError(ruleError), isFalse);
+    expect(targetControl.hasError(ValidationMessage.email), isTrue);
+    root.dispose();
   });
 
   test('section restore and dependency updates use the same visibility rules',
@@ -248,6 +334,219 @@ void main() {
     expect(testResult.mandatory, isTrue);
     expect(testResultControl.hasError(ValidationMessage.required), isTrue);
 
+    root.dispose();
+  });
+
+  test('first-entry negative malaria result clears activated required fields',
+      () async {
+    final repository = formRepositoryFromJson(await readJsonMap(
+      'test/fixtures/live_forms/KcsA3KETRbY-v24.json',
+    ));
+    final form = FormGroup(
+      FormElementControlBuilder.formDataControls(repository, const {}),
+    );
+    final root = Section(
+      template: repository.rootSection,
+      form: form,
+      elements: FormElementBuilder.buildFormElements(form, repository),
+    )
+      ..bindControlReferences()
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+    final main = root.element('mcase') as Section;
+    final testDetails = root.element('testDetails') as Section;
+    final testResult =
+        testDetails.element('testResult') as FieldInstance<String>;
+    final detectionType =
+        testDetails.element('detectionType') as FieldInstance<String>;
+    final severity = testDetails.element('severity') as FieldInstance<String>;
+    final caseManagement = root.element('cm') as Section;
+
+    (main.element('name') as FieldInstance<String>)
+        .updateValue('John Doe Smith Brown', emitEvent: false);
+    (main.element('visitDate') as FieldInstance<String>)
+        .updateValue('2026-07-22', emitEvent: false);
+    (main.element('age') as FieldInstance<String>)
+        .updateValue('2000-01-01', emitEvent: false);
+    (main.element('gender') as FieldInstance<String>)
+        .updateValue('MALE', emitEvent: false);
+    (main.element('is_test_preformed') as FieldInstance<String>)
+        .updateValue('yes', emitEvent: false);
+
+    expect(testResult.visible, isTrue);
+    expect(detectionType.visible, isTrue);
+    expect(severity.visible, isTrue);
+    expect(caseManagement.visible, isTrue);
+    expect(detectionType.elementControl.invalid, isTrue);
+    expect(severity.elementControl.invalid, isTrue);
+
+    testResult.updateValue('negative', emitEvent: false);
+
+    expect(detectionType.hidden, isTrue);
+    expect(detectionType.elementControl.disabled, isTrue);
+    expect(
+      detectionType.elementControl.hasError(ValidationMessage.required),
+      isFalse,
+    );
+    expect(severity.hidden, isTrue);
+    expect(severity.elementControl.disabled, isTrue);
+    expect(
+      severity.elementControl.hasError(ValidationMessage.required),
+      isFalse,
+    );
+    expect(caseManagement.hidden, isTrue);
+    expect(caseManagement.elementControl.disabled, isTrue);
+    expect(form.valid, isTrue);
+    expect(form.hasErrors, isFalse);
+    root.dispose();
+  });
+
+  test('first-entry no-test malaria path keeps hidden children disabled',
+      () async {
+    final repository = formRepositoryFromJson(await readJsonMap(
+      'test/fixtures/live_forms/KcsA3KETRbY-v24.json',
+    ));
+    final form = FormGroup(
+      FormElementControlBuilder.formDataControls(repository, const {}),
+    );
+    final root = Section(
+      template: repository.rootSection,
+      form: form,
+      elements: FormElementBuilder.buildFormElements(form, repository),
+    )
+      ..bindControlReferences()
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+    final main = root.element('mcase') as Section;
+    final performed =
+        main.element('is_test_preformed') as FieldInstance<String>;
+    final testDetails = root.element('testDetails') as Section;
+    final testResult =
+        testDetails.element('testResult') as FieldInstance<String>;
+    final detectionType =
+        testDetails.element('detectionType') as FieldInstance<String>;
+    final severity = testDetails.element('severity') as FieldInstance<String>;
+    final testResultSubscription = testResult.elementControl.valueChanges
+        .listen(testResult.handleControlValueChanged);
+
+    (main.element('name') as FieldInstance<String>)
+        .updateValue('John Doe Smith Brown', emitEvent: false);
+    (main.element('visitDate') as FieldInstance<String>)
+        .updateValue('2026-07-22', emitEvent: false);
+    (main.element('age') as FieldInstance<String>)
+        .updateValue('2000-01-01', emitEvent: false);
+    (main.element('gender') as FieldInstance<String>)
+        .updateValue('MALE', emitEvent: false);
+    performed.updateValue('no');
+
+    await Future<void>.delayed(Duration.zero);
+
+    expect(testDetails.hidden, isTrue);
+    expect(detectionType.hidden, isTrue);
+    expect(detectionType.elementControl.disabled, isTrue);
+    expect(severity.hidden, isTrue);
+    expect(severity.elementControl.disabled, isTrue);
+    expect(form.valid, isTrue);
+    expect(form.hasErrors, isFalse);
+
+    performed.updateValue('yes');
+
+    await Future<void>.delayed(Duration.zero);
+
+    expect(testDetails.visible, isTrue);
+    expect(testResult.visible, isTrue);
+    expect(testResult.mandatory, isTrue);
+    expect(testResult.elementControl.enabled, isTrue);
+    expect(
+      testResult.elementControl.hasError(ValidationMessage.required),
+      isTrue,
+    );
+    expect(detectionType.visible, isTrue);
+    expect(detectionType.mandatory, isTrue);
+    expect(detectionType.elementControl.enabled, isTrue);
+    expect(
+      detectionType.elementControl.hasError(ValidationMessage.required),
+      isTrue,
+    );
+    expect(severity.visible, isTrue);
+    expect(severity.mandatory, isTrue);
+    expect(severity.elementControl.enabled, isTrue);
+    expect(
+      severity.elementControl.hasError(ValidationMessage.required),
+      isTrue,
+    );
+    expect(form.invalid, isTrue);
+    expect(form.hasErrors, isTrue);
+
+    performed.updateValue('no');
+
+    await Future<void>.delayed(Duration.zero);
+
+    expect(testDetails.hidden, isTrue);
+    expect(detectionType.hidden, isTrue);
+    expect(detectionType.elementControl.disabled, isTrue);
+    expect(severity.hidden, isTrue);
+    expect(severity.elementControl.disabled, isTrue);
+    expect(form.valid, isTrue);
+    expect(form.hasErrors, isFalse);
+    await testResultSubscription.cancel();
+    root.dispose();
+  });
+
+  test('reopened negative malaria result keeps hidden fields disabled',
+      () async {
+    final repository = formRepositoryFromJson(await readJsonMap(
+      'test/fixtures/live_forms/KcsA3KETRbY-v24.json',
+    ));
+    final initialValue = <String, Object?>{
+      'mcase': <String, Object?>{
+        'name': 'John Doe Smith Brown',
+        'visitDate': '2026-07-22',
+        'age': '2000-01-01',
+        'gender': 'MALE',
+        'is_test_preformed': 'yes',
+      },
+      'testDetails': <String, Object?>{
+        'testResult': 'negative',
+      },
+      'cm': <String, Object?>{},
+    };
+    final form = FormGroup(
+      FormElementControlBuilder.formDataControls(repository, initialValue),
+    );
+    final root = Section(
+      template: repository.rootSection,
+      form: form,
+      elements: FormElementBuilder.buildFormElements(
+        form,
+        repository,
+        initialFormValue: initialValue,
+      ),
+    )
+      ..bindControlReferences()
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+    final testDetails = root.element('testDetails') as Section;
+    final detectionType =
+        testDetails.element('detectionType') as FieldInstance<String>;
+    final severity = testDetails.element('severity') as FieldInstance<String>;
+    final caseManagement = root.element('cm') as Section;
+
+    expect(detectionType.hidden, isTrue);
+    expect(detectionType.elementControl.disabled, isTrue);
+    expect(
+      detectionType.elementControl.hasError(ValidationMessage.required),
+      isFalse,
+    );
+    expect(severity.hidden, isTrue);
+    expect(severity.elementControl.disabled, isTrue);
+    expect(
+      severity.elementControl.hasError(ValidationMessage.required),
+      isFalse,
+    );
+    expect(caseManagement.hidden, isTrue);
+    expect(caseManagement.elementControl.disabled, isTrue);
+    expect(form.valid, isTrue);
     root.dispose();
   });
 

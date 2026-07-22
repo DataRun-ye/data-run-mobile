@@ -41,10 +41,13 @@ extension ApplyAction on RuleAction {
         break;
       case RuleActionType.Error:
         if (element.visible) {
-          final currentElementErrors = {...element.errors};
-          currentElementErrors[getItemLocalString(message.unlockView)] =
-              getItemLocalString(message.unlockView);
-          element.setErrors(currentElementErrors);
+          final error = getItemLocalString(message.unlockView);
+          element.setRuleError(
+            error,
+            error,
+            updateParent: updateParent,
+            emitEvent: emitEvent,
+          );
         }
         break;
       case RuleActionType.Mandatory:
@@ -102,7 +105,11 @@ extension ApplyAction on RuleAction {
         element.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
         break;
       case RuleActionType.Error:
-        element.removeError(getItemLocalString(message.unlockView));
+        element.removeRuleError(
+          getItemLocalString(message.unlockView),
+          updateParent: updateParent,
+          emitEvent: emitEvent,
+        );
         break;
       case RuleActionType.Mandatory:
         element.markAsUnMandatory(

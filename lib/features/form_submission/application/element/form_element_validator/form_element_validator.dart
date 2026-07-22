@@ -46,6 +46,18 @@ class RequiredFieldValidator extends RequiredValidator {
   }
 }
 
+class RuleErrorsValidator extends Validator<dynamic> {
+  RuleErrorsValidator(this._errors);
+
+  final Map<String, dynamic> Function() _errors;
+
+  @override
+  Map<String, dynamic>? validate(AbstractControl<dynamic> control) {
+    final errors = _errors();
+    return errors.isEmpty ? null : Map<String, dynamic>.of(errors);
+  }
+}
+
 Map<String, ValidationMessageFunction> validationMessages() => {
       // 'pattern': (error) => S.current.fullNameIsRequired,
       'fullName': (error) {

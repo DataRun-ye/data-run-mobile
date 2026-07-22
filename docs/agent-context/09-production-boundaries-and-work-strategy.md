@@ -106,7 +106,7 @@ Closed on `develop`: submission pull is excluded from the active session registr
 
 Draft saves now preserve `finishedEntryTime` instead of creating or advancing it; `markFinal()` remains the normal completion-time writer. `test/dev/data_submission_lifecycle_test.dart` characterizes both transitions.
 
-Template-required fields were confirmed to stop blocking validation while hidden and become required when shown again. The actual defects were rule-driven mandatory removal and stale required validators on optional fields after hide/show; both are fixed and characterized in `test/dev/form_element_visibility_validation_test.dart`.
+Template-required fields stop blocking validation while hidden and become required when shown again. A hidden section now remains authoritative over child Show rules, including the live malaria `test performed = no` path, and restoring the section restores each visible child's required validator. Compatibility Error rules now contribute through control validation instead of replacing required/type errors. These transitions are characterized in `test/dev/form_element_visibility_validation_test.dart`.
 
 Team form fields now resolve managed-team choices only from the current assignment's manager team and activity. The previous provider discarded Drift's returned filtered query through cascade syntax, and the widget passed an assignment UID as a team UID. Missing or unknown assignment context now returns no choices. `test/dev/managed_teams_scope_test.dart` covers cross-activity and cross-manager rows.
 

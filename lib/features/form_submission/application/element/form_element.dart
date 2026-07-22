@@ -9,6 +9,7 @@ import 'package:datarunmobile/core/form/element_template/template.dart';
 import 'package:datarunmobile/core/form/rule/action.dart';
 import 'package:datarunmobile/core/form/rule/calculated_Expression.dart';
 import 'package:datarunmobile/core/form/rule/choice_filter.dart';
+import 'package:datarunmobile/core/form/rule/rule_action.dart';
 import 'package:datarunmobile/core/form/rule/rule_parse_extension.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
@@ -58,6 +59,8 @@ sealed class FormElementInstance<T> {
   FormGroup form;
 
   bool _isEvaluating = false;
+
+  RuleErrorsValidator? _ruleErrorsValidator;
 
   Iterable<RuleAction> get elementRuleActions => _template.ruleActions();
 
@@ -135,7 +138,21 @@ sealed class FormElementInstance<T> {
   FormElementInstance<dynamic>? findElement(String path);
 
   void bindControlReferences() {
-    elementControl;
+    final control = elementControl;
+    if (control != null &&
+        _ruleErrorsValidator == null &&
+        elementRuleActions.any(
+          (ruleAction) => ruleAction.action == RuleActionType.Error,
+        )) {
+      final validator = RuleErrorsValidator(() => errors);
+      _ruleErrorsValidator = validator;
+      control.setValidators(
+        [...control.validators, validator],
+        autoValidate: true,
+        updateParent: false,
+        emitEvent: false,
+      );
+    }
     forEachChild((element) => element.bindControlReferences());
   }
 
@@ -167,6 +184,11 @@ sealed class FormElementInstance<T> {
 
   void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
     logDebug('1.${elementPath}, markAsVisible: ${_getDebugState()}.');
+    if (parentSection?.hidden == true) {
+      logDebug(
+          '_.${elementPath}, markAsVisible, return: parent section is hidden.');
+      return;
+    }
     if (visible) {
       logDebug('_.${elementPath}, markAsVisible, return: already visible.');
       return;
@@ -241,22 +263,50 @@ sealed class FormElementInstance<T> {
     );
   }
 
-  void setErrors(Map<String, dynamic> errors, {bool markAsDirty = true}) {
-    // if (visible) {
-    updateStatus(_elementState.copyWith(errors: errors));
-    // _updateControlsErrors();
-    elementControl?.setErrors(errors, markAsDirty: markAsDirty);
-    // }
+  void setRuleError(
+    String key,
+    dynamic value, {
+    bool updateParent = true,
+    bool emitEvent = true,
+  }) {
+    if (errors[key] == value) {
+      return;
+    }
+    _updateRuleErrors(
+      {...errors, key: value},
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
   }
 
-  void removeError(String key,
-      {bool updateParent = true, bool emitEvent = true}) {
-    // if (visible) {
-    updateStatus(_elementState.copyWith(errors: {...errors}..remove(key)),
-        emitEvent: emitEvent);
-    // _updateControlsErrors();
-    elementControl?.removeError(key);
-    // }
+  void removeRuleError(
+    String key, {
+    bool updateParent = true,
+    bool emitEvent = true,
+  }) {
+    if (!errors.containsKey(key)) {
+      return;
+    }
+    _updateRuleErrors(
+      {...errors}..remove(key),
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
+  }
+
+  void _updateRuleErrors(
+    Map<String, dynamic> errors, {
+    required bool updateParent,
+    required bool emitEvent,
+  }) {
+    updateStatus(
+      _elementState.copyWith(errors: errors),
+      emitEvent: emitEvent,
+    );
+    elementControl?.updateValueAndValidity(
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
   }
 
   void evaluate(

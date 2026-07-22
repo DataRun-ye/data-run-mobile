@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';

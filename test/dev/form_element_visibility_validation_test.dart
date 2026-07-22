@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/form/element_template/field_template.entity.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';

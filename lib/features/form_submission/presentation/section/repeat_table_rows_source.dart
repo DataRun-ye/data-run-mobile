@@ -1,8 +1,8 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/core/util/date_helper.dart';
-import 'package:d_sdk/core/util/list_extensions.dart';
-import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/core/util/date_helper.dart';
+import 'package:datarunmobile/core/util/list_extensions.dart';
+import 'package:datarunmobile/database/shared/assignment_status.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form/presentation/widgets/value_type_value_display.dart';

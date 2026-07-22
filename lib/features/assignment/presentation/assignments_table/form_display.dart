@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/form/application/form_provider.dart';
 import 'package:flutter/material.dart';

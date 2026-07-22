@@ -1,6 +1,6 @@
 # Production Boundaries And Working Strategy
 
-Validated: 2026-07-21
+Validated: 2026-07-22
 
 Purpose: define the current production contracts and the safest investigation and cleanup order. This is the current decision overlay for the earlier repository maps. It does not replace runtime evidence.
 
@@ -55,7 +55,7 @@ These are product decisions unless marked `UNKNOWN` or contradicted by current c
 - Repeat-row metadata is a separate contract: repeat `_id` is a 26-character ULID, with `_index`, `_parentId`, and `_submissionUid` preserved or populated as defined in `07-repeat-uid-contract.md`.
 - Compatibility guards that accept both `id` and `uid` may be retired only endpoint by endpoint after DTO and persisted-data checks. Do not remove them mechanically.
 
-Evidence: `packages/drun_sdk/lib/core/code_generator.dart`, `packages/drun_sdk/lib/datasource/base_datasource.dart`, `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`, and the active submission v1 DTO/service in the server repository.
+Evidence: `lib/core/code_generator.dart`, `lib/datasource/base_datasource.dart`, `lib/database/dao/data_submissions_dao.dart`, and the active submission v1 DTO/service in the server repository.
 
 ### Form And Offline Behavior
 
@@ -65,7 +65,7 @@ Evidence: `packages/drun_sdk/lib/core/code_generator.dart`, `packages/drun_sdk/l
 - An expired token can return the app to an unauthenticated state, while the per-user local database remains on disk. The next login requires connectivity and reuses/resynchronizes that local context.
 - Configuration resources such as forms are intended to be idempotently resynchronized. Submission pull is excluded from that contract.
 
-Evidence: `lib/features/form_submission/application/element/form_element.dart`, `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart`, `packages/drun_sdk/lib/database/dao/data_submissions_dao_expression_extension.dart`, and `lib/core/auth/auth_manager.dart`.
+Evidence: `lib/features/form_submission/application/element/form_element.dart`, `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart`, `lib/database/dao/data_submissions_dao_expression_extension.dart`, and `lib/core/auth/auth_manager.dart`.
 
 ### Access And Deletion
 
@@ -81,14 +81,14 @@ Evidence: `lib/features/form_submission/application/element/form_element.dart`, 
 `lib/main.dart`
 -> `lib/app/di/injection.dart`
 -> `lib/core/auth/auth_manager.dart`
--> `registerUserSdkDeps()` in `packages/drun_sdk/lib/di/init_active_session_scope.dart`
+-> `registerUserSdkDeps()` in `lib/di/init_active_session_scope.dart`
 -> `lib/core/sync_manager/sync_manager.dart`
 -> sequential `AbstractDatasource` instances
--> SDK API clients and Drift DAOs.
+-> API clients and Drift DAOs.
 
-`registerUserSdkDeps()` is hand-maintained active behavior. Its raw, non-generic `AbstractDatasource` registrations allow `SyncManager` to retrieve one list and invoke each datasource sequentially. The generated scoped function in `packages/drun_sdk/lib/di/injection.config.dart` has no proven call site and is `REGISTERED-UNUSED`.
+`registerUserSdkDeps()` is hand-maintained active behavior. Its raw, non-generic `AbstractDatasource` registrations allow `SyncManager` to retrieve one list and invoke each datasource sequentially. The former generated scoped registration alternative has been removed; the manual list is the only active registration path.
 
-The SDK `rSdkLocator` and app locator resolve to the same `GetIt.instance`. The application owns most composition: SDK interfaces such as storage, token storage, HTTP, form, assignment, and table services are implemented or provided from app DI. Directory names do not define that ownership.
+The legacy-named `rSdkLocator` and app locator resolve to the same `GetIt.instance`. The application owns composition, including storage, token storage, HTTP, form, assignment, table, database, and datasource services. Names and former package origin do not define ownership.
 
 `UserDatasource` is registered as its concrete type, not as an `AbstractDatasource`; it is not part of the sequential bulk configuration list. Login fetches the user profile through `AuthApi` before creating the user scope.
 
@@ -132,7 +132,7 @@ Do not create one repository-wide dead-code PR. Each cleanup must name the remov
 
 ## Production Compatibility Boundary
 
-Before any SDK move, state-management consolidation, persistence refactor, or table removal, preserve and test:
+Before ownership reorganization, state-management consolidation, persistence refactoring, or table removal, preserve and test:
 
 - Android application ID, signing identity, upgrade path, and local signing configuration outside git;
 - per-user database location/name and secure/shared storage keys;
@@ -161,7 +161,7 @@ Use focused maps and reference searches to remove source-dead form providers, ol
 
 ### 3. Clean Runtime Registration Prerequisites
 
-Remove unused registrations and generated alternatives after a registration-level check. Clarify current lifecycle ownership only as far as required to preserve behavior during consolidation; broad state-management or service redesign belongs after the physical SDK move.
+Remove unused registrations and generated alternatives after a registration-level check. This prerequisite is complete: root database registration and the active per-user datasource list are explicit and covered by `test/dev/active_session_sync_registration_test.dart`.
 
 ### 4. Migrate Schema-Backed Dead Features
 
@@ -169,11 +169,11 @@ The inactive repeat/data-value DAOs, callers, and schema tables are removed. Mig
 
 ### 5. Consolidate Boundaries Mechanically
 
-Collapsing `drun_sdk` into the application is reasonable because this app is its only live consumer and the in-repo copy is authoritative. Do it as a behavior-preserving physical move after surviving SDK responsibilities and inactive surfaces are classified. Do not mix the move with API redesign, state consolidation, database changes, or form-engine changes.
+Completed on `develop`: surviving `drun_sdk` sources were moved mechanically into the root `datarunmobile` package. Package imports and direct dependencies were updated without changing the Drift schema, database filename, upload shape, sync registration order, or form engine behavior. The former package license is preserved in `docs/licenses/drun-sdk-LGPL-3.0.txt`.
 
 ### 6. Reorganize By Proven Ownership
 
-After the SDK is physically part of the app and its behavior baseline still passes, organize folders by proven responsibility, lifecycle, and dependency direction. Keep file moves separate from behavioral changes where practical; directory names must describe established ownership rather than invent it.
+Next, organize folders by proven responsibility, lifecycle, and dependency direction. Keep file moves separate from behavioral changes where practical; directory names must describe established ownership rather than invent it.
 
 Map each active state to its owner, lifetime, consumers, and persistence effects before consolidating Riverpod, GetIt, Stacked, reactive forms, or other state mechanisms. Migrate one bounded feature at a time. The goal is one coherent state owner per responsibility, not forcing one library into every concern. Remove a state library only when no active path still depends on it.
 

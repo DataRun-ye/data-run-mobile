@@ -1,10 +1,10 @@
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/dbManager.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/assignment_status.dart';
-import 'package:d_sdk/database/shared/collections.dart';
-import 'package:d_sdk/database/shared/d_identifiable_model.dart';
+import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/dbManager.dart';
+import 'package:datarunmobile/database/shared/assignment_model.dart';
+import 'package:datarunmobile/database/shared/assignment_status.dart';
+import 'package:datarunmobile/database/shared/collections.dart';
+import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/data/form_template_list_service.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_service.dart';

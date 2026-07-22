@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
+import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/sync_manager/sync_resource_status.dart';

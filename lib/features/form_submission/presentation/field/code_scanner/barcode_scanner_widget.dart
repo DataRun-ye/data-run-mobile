@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/database/shared/scanned_code_properties.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/database/shared/scanned_code_properties.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/code_scanner/scanned_items_table.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/code_scanner/scanner_button_widgets.dart';

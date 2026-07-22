@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:injectable/injectable.dart';

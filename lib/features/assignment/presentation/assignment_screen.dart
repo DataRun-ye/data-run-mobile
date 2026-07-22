@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:datarunmobile/database/shared/assignment_model.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/active_filters_widget.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignment_card_view/assignments_card_view.dart';

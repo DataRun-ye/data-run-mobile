@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:d_sdk/core/auth/token_storage.dart';
-import 'package:d_sdk/core/secure_storage/storage_service.dart';
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/core/auth/token_storage.dart';
+import 'package:datarunmobile/core/secure_storage/storage_service.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/core/secure_storage/prefs_storage_service.dart';
 import 'package:datarunmobile/core/secure_storage/secure_storage_service.dart';
 import 'package:flutter/foundation.dart';

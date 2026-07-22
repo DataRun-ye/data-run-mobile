@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/core/auth/auth_interceptor.dart';
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart';
 import 'package:device_info_plus/device_info_plus.dart';

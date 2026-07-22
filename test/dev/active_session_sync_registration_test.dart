@@ -1,7 +1,7 @@
-import 'package:d_sdk/database/db_factory/database_factory.dart';
-import 'package:d_sdk/datasource/abstract_datasource.dart';
-import 'package:d_sdk/di/injection.dart';
-import 'package:d_sdk/di/init_active_session_scope.dart';
+import 'package:datarunmobile/database/db_factory/database_factory.dart';
+import 'package:datarunmobile/datasource/abstract_datasource.dart';
+import 'package:datarunmobile/di/injection.dart';
+import 'package:datarunmobile/di/init_active_session_scope.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 

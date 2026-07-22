@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:d_sdk/core/exception/session_expired_exception.dart';
-import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/core/user_session/user_session.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/dbManager.dart';
-import 'package:d_sdk/database/db_factory/database_factory.dart';
-import 'package:d_sdk/di/app_environment.dart';
-import 'package:d_sdk/di/init_active_session_scope.dart';
+import 'package:datarunmobile/core/exception/session_expired_exception.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/user_session/user_session.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/dbManager.dart';
+import 'package:datarunmobile/database/db_factory/database_factory.dart';
+import 'package:datarunmobile/di/app_environment.dart';
+import 'package:datarunmobile/di/init_active_session_scope.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_api.dart';

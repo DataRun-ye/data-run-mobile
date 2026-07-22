@@ -1,6 +1,6 @@
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/collections.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/assignment_model.dart';
+import 'package:datarunmobile/database/shared/collections.dart';
 import 'package:datarunmobile/commons/custom_widgets/copy_to_clipboard.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon.dart';

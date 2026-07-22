@@ -32,43 +32,43 @@ Status legend:
 | Form element tree build | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` | Calls `FormElementBuilder.buildFormElements(...)` at line 107, wraps it in a root `Section`, then calls `resolveDependencies()` and `evaluate(emitEvent: false)` before navigation. | High | Repeat trees, dependencies, and initial rule evaluation are all eager. |
 | Form template repository | ACTIVE | `lib/data/form_template_repository.dart` | `create` loads template, options, and option sets at lines 18-27; `rootSection` builds a tree from template fields and sections. | High | Template flattening/tree construction is central to repeat path names and dependency lookup. |
 | Template local query service | ACTIVE | `lib/data/form_template_list_service.dart` | `fetchByFilter` uses `formTemplateVersionsDao.selectFormTemplatesWithRefs(...)` at line 154; `getTemplateByVersionOrLatest` loads version data at lines 166-197. | High | This is the active local cache layer for form JSON before rendering. |
-| Template storage table | ACTIVE | `packages/drun_sdk/lib/database/tables/form_template_versions.table.dart` | Stores `fields`, `sections`, and `options` as text columns with converters. | High | Confirms active form definition is stored as JSON-like blobs, not normalized per field table reads at render time. |
-| Template sync datasource | ACTIVE | `packages/drun_sdk/lib/datasource/remote_data_sources/form_template_datasource.dart` | Injectable active datasource at lines 9-10; extracts `formTemplateVersions` at lines 18 and 35-49. | High | This is the sync path that populates the local template version JSON used by forms. |
+| Template storage table | ACTIVE | `lib/database/tables/form_template_versions.table.dart` | Stores `fields`, `sections`, and `options` as text columns with converters. | High | Confirms active form definition is stored as JSON-like blobs, not normalized per field table reads at render time. |
+| Template sync datasource | ACTIVE | `lib/datasource/remote_data_sources/form_template_datasource.dart` | Injectable active datasource at lines 9-10; extracts `formTemplateVersions` at lines 18 and 35-49. | High | This is the sync path that populates the local template version JSON used by forms. |
 | Form screen | ACTIVE | `lib/features/form_submission/presentation/form_submission_screen.widget.dart` | `FormSubmissionScreen` is active at line 23; watches `submissionEditStatusProvider` at lines 48-49; uses `FormInstanceEntryViewSliver` at line 114; save calls `appLocator<FormInstance>().saveFormData()` at line 211; final submit calls `markSubmissionAsFinal()` at line 275. | High | This is the main rendering/save host. It mixes Riverpod edit status with GetIt-held form instance state. |
 | Root rendering sliver | ACTIVE | `lib/features/form_submission/presentation/form_entry_view_silver.widget.dart` | Reads `appLocator<FormInstance>()` and maps root elements to `SectionWidget`, `RepeatTableSliver`, or `FieldWidget` at lines 11-41. | High | Rendering starts by iterating all root elements. Repeats are rendered as tables, not virtualized row forms. |
 | Section rendering | ACTIVE | `lib/features/form_submission/presentation/section/section.widget.dart` | Watches `element.propertiesChanged`; recursively renders `SectionWidget`, `RepeatTableSliver`, and `FieldWidget` at lines 13-85. | High | Hidden/visible rules and repeat nesting trigger rebuilds through `propertiesChanged`. |
-| Field rendering | ACTIVE | `lib/features/form_submission/presentation/field/field.widget.dart` | `FieldWidget` is active at line 12; subscribes to control value changes and renders `FieldFactory.fromType(element)` at line 55. | High | Every field inside every repeat row can attach value-change behavior. Static scan found cleanup code that returns the subscription object rather than clearly cancelling it; runtime confirmation needed. |
+| Field rendering | ACTIVE | `lib/features/form_submission/presentation/field/field.widget.dart` | `FieldWidget` subscribes to control value changes and renders `FieldFactory.fromType(element)`. Its hook cleanup returns `subscription.cancel`. | High | Every field inside every open repeat-row editor attaches value-change behavior; cancellation is explicit, but lifecycle churn remains relevant to performance. |
 | Field widget factory | ACTIVE | `lib/features/form_submission/application/form_widget_factory.dart` | `FieldFactory` is called by `FieldWidget`; maps field `ValueType` to concrete reactive widgets. | High | Large repeat row cost depends on the number and type of fields created per row. |
 | Repeat controls build | ACTIVE | `lib/core/form/builder/form_element_control_builder.dart` | Repeatable sections create a `FormArray<Map<String,Object?>>`; existing initial rows map through `createSectionFormGroup(...)` at lines 51-58. | High | All initial repeat rows become controls up front. This is a primary performance and memory pressure point. |
 | Repeat element tree build | ACTIVE | `lib/core/form/builder/form_element_builder.dart` | `buildRepeatSection` maps every initial list row into a `RepeatItemInstance`; `buildRepeatItem` reads the row ID through `RepeatMetadataNormalizer`. | High | Client/server repeat identity depends on preserving the metadata read here. |
 | Repeat section model | ACTIVE | `lib/features/form_submission/application/element/repeat_section.dart` | `RepeatSection` owns `BehaviorSubject<List<RepeatItemInstance>>`, `addAll`, `reduceValue`, `resolveDependencies`, and `evaluate`. | High | Repeat collection changes and rule evaluation are centralized here. Large repeats may emit and evaluate many rows. |
-| Repeat row model | ACTIVE | `lib/features/form_submission/application/element/repeat_item_instance.dart` | Has `_uid`, `uid`, `setUid`, index-based `name`, and `reduceValue`; `map['repeatUid'] = _uid ?? CodeGenerator.generateUid()` is commented out at line 47. | High | Static evidence shows repeat UIDs can be read and set, but are not currently written back by `reduceValue`. This is the central repeat UID risk. |
-| Add/remove repeat rows | ACTIVE | `lib/features/form_submission/application/element/form_instance.dart` | `onAddRepeatedItem` creates a new row control/tree and evaluates it at lines 134-149; `onRemoveRepeatedItem` removes from model and `FormArray` at lines 153-157. | High | Add/remove is index-based. Without persisted repeat UIDs, editing server-submitted rows may not preserve stable row identity. |
+| Repeat row model | ACTIVE | `lib/features/form_submission/application/element/repeat_item_instance.dart` | Reads an existing row ID, prevents changing a non-null ID, generates a ULID when missing, and writes `_id` in `reduceValue()`. | High | Stable repeat identity is now part of the active reduced JSON rather than a UI-only `repeatUid` marker. |
+| Add/remove repeat rows | ACTIVE | `lib/features/form_submission/application/element/form_instance.dart` | `onAddRepeatedItem` creates a new row control/tree and evaluates it; `onRemoveRepeatedItem` removes from model and `FormArray`. | High | Collection position still drives rendering and `_index`, while `_id` supplies stable identity across saves. |
 | Repeat table sliver | ACTIVE | `lib/features/form_submission/presentation/section/repeat_table_sliver.dart` | Wraps `RepeatTable` and watches repeat properties. | High | This is the active repeat rendering bridge. |
 | Repeat table | ACTIVE | `lib/features/form_submission/presentation/section/repeat_table.widget.dart` | Initializes `RepeatTableDataSource` at line 69; renders `PaginatedDataTable` at line 108; add calls `onAddRepeatedItem` at line 116; row edit opens `_showEditPanel`; save calls `formInstance.saveFormData()` at line 200. | High | Repeats are displayed through `PaginatedDataTable`, but the data source still holds all rows. Add/save inside row edit writes the whole form JSON. |
-| Repeat row edit screen | ACTIVE | `lib/features/form_submission/presentation/section/edit_row_screen.dart` | Active routed widget; wraps row `ReactiveForm` at line 114; sets repeat UID with `CodeGenerator.generateUid()` around line 184 when saving a new row. | High | UID generation appears to happen in UI save flow, but persistence is uncertain because row `reduceValue` does not write `repeatUid`. |
+| Repeat row edit screen | ACTIVE | `lib/features/form_submission/presentation/section/edit_row_screen.dart` | Active routed widget; wraps the row `ReactiveForm` and assigns `CodeGenerator.generateUlid()` only when a row has no ID. | High | Existing row IDs are preserved; newly created rows receive a backend-compatible ULID before reduction. |
 | Repeat table data source | ACTIVE | `lib/features/form_submission/presentation/section/repeat_table_rows_source.dart` | Extends `DataTableSource` at line 15; `updateItems` at line 38; `getRow` at line 62 iterates fields for a repeat row. | High | For large repeats, row rendering scans row fields. `updateItems` appears suspicious because its predicate compares `item.elementPath == item.elementPath`; runtime behavior should be verified before changing performance. |
 | Form instance save | ACTIVE | `lib/features/form_submission/application/element/form_instance.dart` | `saveFormData` at line 85 reads existing submission, computes `formSection.value`, preserves metadata keys, and calls `_db.dataInstancesDao.updateData(...)`. | High | Every save writes one whole `formData` map. Repeat changes are not saved as separate row/value records. |
 | Mark final | ACTIVE | `lib/features/form_submission/application/element/form_instance.dart` | `markSubmissionAsFinal` delegates to DAO at line 176. | High | Finalization changes sync eligibility after whole JSON save. |
 | Submission edit status | ACTIVE | `lib/features/form_submission/application/submission_list.provider.dart` | `submissionEditStatusProvider` starts at line 118 and is watched by form screen and edit icons. | Medium | Determines whether synced server submissions can be edited again. There is also bootstrapper-local edit-status logic, so this is duplicated decision logic. |
-| Data instance table | ACTIVE | `packages/drun_sdk/lib/database/tables/data_submissions.table.dart` | `formData` is a single nullable text column mapped through `NullAwareMapConverter` at lines 39-40; `syncState` and `isToUpdate` are also stored. | High | Confirms active submission persistence is whole JSON per submission. |
-| JSON map converter | ACTIVE | `packages/drun_sdk/lib/database/converters/null_aware_map.converter.dart` | Converts maps through JSON encode/decode. | High | Repeat rows are persisted inside one encoded map; partial repeat row persistence is not active here. |
-| Draft creation | ACTIVE | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | `createDraft` starts at line 162, creates a submission id with `CodeGenerator.generateUid()` at line 171, sets `syncState: draft` and `isToUpdate: false`. | High | Submission id generation is separate from repeat row UID generation. |
-| Whole JSON update | ACTIVE | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | `updateData` starts at line 198 and writes `syncState: draft`, `formData`, timestamps, and client update time. | High | Editing a synced record likely rewrites it as draft while keeping existing `isToUpdate`; confirm server update semantics at runtime. |
-| Final sync upload | ACTIVE | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | `upload` starts at line 51; payload is `submissions.map((s) => s.toUpload())` at line 68; success sets `syncState: synced` and `isToUpdate: true` at lines 93-96. | High | Sync sends the whole JSON payload, including repeats as nested data. |
-| Upload payload shape | ACTIVE | `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart` | `toUpload()` includes `formData` directly at line 19 plus submission metadata. | High | No separate repeat row payload was found in active upload path. |
+| Data instance table | ACTIVE | `lib/database/tables/data_submissions.table.dart` | `formData` is a single nullable text column mapped through `NullAwareMapConverter` at lines 39-40; `syncState` and `isToUpdate` are also stored. | High | Confirms active submission persistence is whole JSON per submission. |
+| JSON map converter | ACTIVE | `lib/database/converters/null_aware_map.converter.dart` | Converts maps through JSON encode/decode. | High | Repeat rows are persisted inside one encoded map; partial repeat row persistence is not active here. |
+| Draft creation | ACTIVE | `lib/database/dao/data_submissions_dao.dart` | `createDraft` starts at line 162, creates a submission id with `CodeGenerator.generateUid()` at line 171, sets `syncState: draft` and `isToUpdate: false`. | High | Submission id generation is separate from repeat row UID generation. |
+| Whole JSON update | ACTIVE | `lib/database/dao/data_submissions_dao.dart` | `updateData` starts at line 198 and writes `syncState: draft`, `formData`, timestamps, and client update time. | High | Editing a synced record likely rewrites it as draft while keeping existing `isToUpdate`; confirm server update semantics at runtime. |
+| Final sync upload | ACTIVE | `lib/database/dao/data_submissions_dao.dart` | `upload` starts at line 51; payload is `submissions.map((s) => s.toUpload())` at line 68; success sets `syncState: synced` and `isToUpdate: true` at lines 93-96. | High | Sync sends the whole JSON payload, including repeats as nested data. |
+| Upload payload shape | ACTIVE | `lib/database/extensions/data_submission.extension.dart` | `toUpload()` includes `formData` directly at line 19 plus submission metadata. | High | No separate repeat row payload was found in active upload path. |
 | Remote submission import | INACTIVE | The dormant `DataInstanceDatasource`, duplicate DAO sync mixin, and unused submission `fromApiJson` parser were removed after confirming they had no runtime caller or DI registration. | High | Production synchronization is push-only. |
-| Submission table summaries | ACTIVE | `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` | `selectable` starts at line 562 and extracts display field values with `FormDataUtil.extractTemplateValue(...)` at lines 641-642. | High | Large repeat values can also affect list/table display, because summary extraction walks nested form data. |
-| Summary form data utility | ACTIVE | `packages/drun_sdk/lib/core/data_instance/form_data_util.dart` | `extractTemplateValue` reads nested form data and aggregates values. | High | Repeat-heavy submissions can have display cost before opening the form. |
-| Summary aggregation | ACTIVE | `packages/drun_sdk/lib/core/data_instance/form_data_aggregator.dart` | Used by `FormDataUtil`; contains example/debug main code too. | Medium | Active through summary extraction, but example code in the file is not evidence of runtime behavior. |
+| Submission table summaries | ACTIVE | `lib/database/dao/data_submissions_dao.dart` | `selectable` starts at line 562 and extracts display field values with `FormDataUtil.extractTemplateValue(...)` at lines 641-642. | High | Large repeat values can also affect list/table display, because summary extraction walks nested form data. |
+| Summary form data utility | ACTIVE | `lib/core/data_instance/form_data_util.dart` | `extractTemplateValue` reads nested form data and aggregates values. | High | Repeat-heavy submissions can have display cost before opening the form. |
+| Summary aggregation | ACTIVE | `lib/core/data_instance/form_data_aggregator.dart` | Used by `FormDataUtil`; contains example/debug main code too. | Medium | Active through summary extraction, but example code in the file is not evidence of runtime behavior. |
 | Rule action evaluation | ACTIVE | `lib/features/form_submission/application/element/form_element.dart` | `elementRuleActions` are derived from template rules at line 61; `evaluate` starts at line 243; `resolveDependencies` starts at line 397. | High | Dependency resolution/evaluation can run for every element in every repeat row. |
 | Dependency lookup in repeats | ACTIVE | `lib/features/form_submission/application/element/element_dependency.extension.dart` | Builds `evalContext` at line 4, normalizes values at line 11, notifies dependents at line 72, and resolves dependency names from parent sections at line 77. | High | Repeat correctness depends on resolving dependencies to the current repeat row/section rather than another row or global field. |
 | Section rule traversal | ACTIVE | `lib/features/form_submission/application/element/section_instance.dart` | `resolveDependencies` and `evaluate` recurse children at lines 49-71. | High | Eager recursive traversal can be costly on large nested repeat forms. |
 | Repeat rule traversal | ACTIVE | `lib/features/form_submission/application/element/repeat_section.dart` | `resolveDependencies` and `evaluate` recurse through each repeat item. | High | Large repeat rows multiply rule evaluation cost. |
 | Field choice filters | ACTIVE | `lib/features/form_submission/application/element/field_instance.dart` | `filterDependencies` at line 27; `evaluate` calls `choiceFilter!.evaluate(evalContext)` at lines 76-99. | High | Choice filtering inside repeats can reevaluate option visibility per row. |
-| Rule parsing | ACTIVE | `packages/drun_sdk/lib/core/form/rule/rule_parse_extension.dart` | Extracts dependencies, visibility rules, filter dependencies, and calculation dependencies. | High | Determines which fields subscribe to which other fields, including repeat-local dependencies. |
-| Rule expression evaluation | ACTIVE | `packages/drun_sdk/lib/core/form/rule/action.dart` and `choice_filter.dart` | `RuleAction.evaluate` is at line 90; `ChoiceFilter.evaluate` is at line 18. | High | Runtime expression cost increases with dependency graph size and repeat row count. |
-| UID generation helper | ACTIVE | `packages/drun_sdk/lib/core/code_generator.dart` | Used for submission ids and referenced by repeat UID code. | High | Any repeat UID fix must separate submission id behavior from repeat row identity behavior. |
+| Rule parsing | ACTIVE | `lib/core/form/rule/rule_parse_extension.dart` | Extracts dependencies, visibility rules, filter dependencies, and calculation dependencies. | High | Determines which fields subscribe to which other fields, including repeat-local dependencies. |
+| Rule expression evaluation | ACTIVE | `lib/core/form/rule/action.dart` and `choice_filter.dart` | `RuleAction.evaluate` is at line 90; `ChoiceFilter.evaluate` is at line 18. | High | Runtime expression cost increases with dependency graph size and repeat row count. |
+| UID generation helper | ACTIVE | `lib/core/code_generator.dart` | Used for submission ids and referenced by repeat UID code. | High | Any repeat UID fix must separate submission id behavior from repeat row identity behavior. |
 
 ## Inactive, Incomplete, Or Legacy-Risk Form-Looking Files
 
@@ -76,8 +76,7 @@ Status legend:
 | --- | --- | --- | --- | --- |
 | OBSOLETE-REMOVED | Commented Riverpod form-instance, element-state, and table-state provider experiments | Their implementations were entirely commented and had no executable references. Active form state remains scoped GetIt `FormInstance` plus `reactive_forms`. | High | These alternate state sketches can no longer be mistaken for repeat rendering or persistence paths. |
 | OBSOLETE-REMOVED | Commented element-properties/submission-creation providers and popup/org-unit/repeat-edit widgets | The files contained only commented implementations and had no executable consumers. | High | Active element rebuilding, draft creation, org-unit fields, and repeat editing use different paths mapped above. |
-| INACTIVE | `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart` | Implementation class is commented. | High | Old per-field/value submission logic should not be assumed active. |
-| LEGACY-RISK | `lib/features/form_submission/application/repository/submission_capture_repository.dart` | Interface exists, but no active implementation was found in current form flow. | Medium | Could mislead future work toward a repository abstraction not used by current saves. |
+| OBSOLETE-REMOVED | Former per-field `submission_capture_repository` interface/implementation | Both had no active implementation/caller and were removed. | High | Active save ownership is the whole-JSON `FormInstance`/DAO path. |
 | OBSOLETE-REMOVED | Unrouted submission-list demos, the replaced assignment-detail submissions table, alternate repeat dialog/panel paths, and other unreachable UI experiments | None had an incoming production import, route, navigation call, DI registration, or test consumer. The active assignment detail now opens `TableScreen`; repeat editing uses `EditRowScreen`. | High | These alternate form and repeat screens can no longer distort the active rendering/edit map. |
 | SUPPORTING-USED | `lib/core/element_instance/display_value_lookup.dart` | Registered in DI and used by `MapValueToDisplay` to resolve org-unit, team, and option labels. It has no form-capture persistence methods. | High | This is display-only lookup support and must not be mistaken for submission or repeat storage. |
 | OBSOLETE-REMOVED | Legacy `lib/core/form` repository/value-store, alternate evaluation engine, UI model/intent, dependency graph, scan helper, and commented builder trees | No production source imported these closed trees, no active DI registration existed, and the sole external data-integrity provider had no consumers. They were removed after analyzer and form-test validation. | High | These alternate form, validation, and expression implementations can no longer be confused with the active whole-JSON form engine. |
@@ -85,27 +84,24 @@ Status legend:
 | OBSOLETE-REMOVED | Normalized `repeat_instances` persistence path | No runtime read/write remained. Table, DAO, and datasource were removed; schema migration 5 drops populated legacy tables from schema 3/4. | High | Repeat rows are persisted only inside whole submission JSON. |
 | OBSOLETE-REMOVED | Repeat-instance datasource | It had no active annotation, order registration, import, or consumer and was removed. | High | Repeat instance sync is not part of the active whole-JSON capture path. |
 | OBSOLETE-REMOVED | Normalized `data_values` persistence path | No runtime read/write remained. Table, DAO, datasource, and inactive CRUD facade were removed; schema migration 5 covers schema 3/4. | High | Field values are persisted only inside whole submission JSON. |
-| INACTIVE | `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart` | `@Injectable` annotation is commented. | High | Data value sync is not part of active form capture sync. |
-| INACTIVE | `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart` and `remote_data_sources/metadata_submission_datasource.dart` | Table and datasource are commented. | High | Not active local persistence before sync. |
+| OBSOLETE-REMOVED | Former data-value and metadata-submission datasource/table artifacts | No active registration or persistence path existed, and the source artifacts were removed. | High | They cannot be mistaken for active local capture or sync. The reference-field provider remains separately incomplete. |
 | OBSOLETE-REMOVED | Alternate form-template-version datasource | It had no registration or consumer and was removed. Active template sync remains in `DataFormTemplateDatasource`. | High | It can no longer be mistaken for the active form JSON sync path. |
 | INCOMPLETE | `lib/features/form_submission/application/element/field_instance.dart` | `CalculatedFieldInstance.evaluate` contains commented calculation assignment logic at lines 135-143. | High | Calculated fields may declare dependencies but not update values, which matters inside repeat rows. |
-| INCOMPLETE | `lib/features/form_submission/application/element/repeat_item_instance.dart` | `repeatUid` writeback in `reduceValue` is commented at line 47. | High | This is the main incomplete-looking repeat UID persistence point. |
+| ACTIVE | `lib/core/data_instance/repeat_metadata_normalizer.dart`, `repeat_item_instance.dart`, `form_instance.dart`, `data_submissions_dao.dart` | Existing `_id`/legacy `repeatUid` values are preserved, new rows receive ULIDs, full metadata is normalized before save, and upload normalizes old local data as a compatibility guard. | High | This is the current repeat identity contract; server round-trip editing remains a separate product-policy validation. |
 
 ## Repeat UID Behavior Map
 
 Observed active behavior:
 
-1. Existing repeat row JSON may be read from `initialFormValue?['repeatUid']` in `lib/core/form/builder/form_element_builder.dart:69`.
-2. New rows can receive a generated UID in UI save paths in `edit_row_screen.dart` and `repeat_table.widget.dart`.
-3. `RepeatItemInstance.reduceValue()` currently does not write `repeatUid` back into the saved row map because the write line is commented.
-4. `FormInstance.saveFormData()` persists `formSection.value` into one whole `dataInstances.formData` JSON object.
-5. Upload sends that whole `formData` through `DataInstance.toUpload()`.
+1. `FormElementBuilder` reads `_id` and accepts legacy `_uid`/`repeatUid` values for compatibility.
+2. New rows receive a 26-character ULID; an existing non-null row ID cannot be changed by `RepeatItemInstance.setUid()`.
+3. `RepeatItemInstance.reduceValue()` writes `_id` into the row map.
+4. `FormInstance.saveFormData()` normalizes `_id`, `_index`, `_parentId`, and `_submissionUid` before persisting the whole `formData` JSON object.
+5. `DataInstancesDao.upload()` normalizes older local JSON before upload and persists any compatibility additions locally.
 
-Classification: INCOMPLETE for persisted repeat UID behavior.
+Classification: ACTIVE for local create/save/upload identity behavior. Synced server-record editing remains product-incomplete and requires a round-trip smoke before production enablement.
 
-Confidence: high for static evidence; medium for runtime impact because a runtime save test is still needed to prove whether any other layer injects `repeatUid`.
-
-Why this matters: server-submitted records with repeat rows can only preserve stable client row identity if the row UID survives load, edit, save, and upload. Static evidence shows UID read/set points exist, but the central save reduction path appears not to include it.
+Confidence: high for code paths and characterization tests; medium for future server round-trip editing behavior.
 
 ## Synced Local Record Edit Map
 
@@ -137,7 +133,7 @@ Active local layers:
 
 Inactive or not active for capture:
 
-- `metadata_submissions`.
+- the removed metadata-submission table/datasource artifacts; the reference-field provider remains incomplete and returns no records.
 - The removed `FormValueStore` and `FormRepositoryImpl` capture path was not active.
 
 ## Large Repeat Risk Map
@@ -151,9 +147,9 @@ Inactive or not active for capture:
 | Choice filters per row | `FieldInstance.evaluate` reevaluates choice filters from `evalContext`. | ACTIVE | High | Option-heavy fields inside repeats can multiply expression cost. |
 | Paginated UI with full data source | `RepeatTable` uses `PaginatedDataTable`, but `RepeatTableDataSource` holds all row instances. | ACTIVE | High | Pagination may reduce visible rows but not build/load memory cost. |
 | Whole JSON save on row edit | Repeat row save calls `formInstance.saveFormData()`. | ACTIVE | High | Editing one row serializes and writes the whole form object. |
-| Repeat UID not persisted by reducer | `repeat_item_instance.dart` comments out `repeatUid` writeback. | INCOMPLETE | High | Server updates may not be able to match repeat rows reliably after edit. |
+| Repeat identity server round trip | Local save/upload preserves backend metadata, but synced editing is not a validated production workflow. | REACHABLE-INCOMPLETE | Medium | Enabling synced edits requires proof that existing IDs survive and only new nested rows receive new IDs. |
 | Suspicious data source update predicate | `RepeatTableDataSource.updateItems` uses a self-comparison predicate. | UNKNOWN | Medium | Row updates may be broader or less precise than intended; verify behavior before optimizing. |
-| Possible field subscription cleanup issue | `FieldWidget` subscribes to `control.valueChanges`; static scan did not prove cancellation. | UNKNOWN | Medium | Repeated row edit/open cycles may leak listeners if cleanup is wrong. |
+| Field subscription churn | `FieldWidget` subscribes to `control.valueChanges` and explicitly cancels from hook cleanup. | ACTIVE | Medium | Leaking is no longer the static concern, but many simultaneously mounted fields still create listener and rebuild cost. |
 | Duplicate edit-status logic | Bootstrapper and `submissionEditStatusProvider` both compute editability. | LEGACY-RISK | Medium | A synced submission may be editable in one layer and disabled in another if logic diverges. |
 
 ## Smallest Set To Understand Before Changing Repeat Performance Or Repeat UID Behavior
@@ -182,34 +178,32 @@ Treat these as the minimum "do not touch until understood" set for repeat perfor
 - `lib/features/form_submission/application/submission_list.provider.dart`
 - `lib/data/form_template_repository.dart`
 - `lib/data/form_template_list_service.dart`
-- `packages/drun_sdk/lib/database/tables/data_submissions.table.dart`
-- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`
-- `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart`
-- `packages/drun_sdk/lib/database/converters/null_aware_map.converter.dart`
-- `packages/drun_sdk/lib/core/form/rule/action.dart`
-- `packages/drun_sdk/lib/core/form/rule/choice_filter.dart`
-- `packages/drun_sdk/lib/core/form/rule/rule_parse_extension.dart`
-- `packages/drun_sdk/lib/core/data_instance/form_data_util.dart`
-- `packages/drun_sdk/lib/core/data_instance/form_data_aggregator.dart`
+- `lib/database/tables/data_submissions.table.dart`
+- `lib/database/dao/data_submissions_dao.dart`
+- `lib/database/extensions/data_submission.extension.dart`
+- `lib/database/converters/null_aware_map.converter.dart`
+- `lib/core/form/rule/action.dart`
+- `lib/core/form/rule/choice_filter.dart`
+- `lib/core/form/rule/rule_parse_extension.dart`
+- `lib/core/data_instance/form_data_util.dart`
+- `lib/core/data_instance/form_data_aggregator.dart`
 
 ## Questions Requiring Runtime Confirmation
 
-1. When a new repeat row is saved, does `repeatUid` appear in `data_instances.formData`, or is it lost because `RepeatItemInstance.reduceValue()` does not write it?
-2. When a server-submitted record with repeat rows is edited and re-uploaded, how does the server match repeat rows without a persisted `repeatUid`?
-3. Does `submissionEditStatusProvider` always agree with the bootstrapper's local `submissionEditStatus` logic for synced, draft, finalized, and failed records?
-4. Does `FieldWidget` correctly cancel `control.valueChanges` subscriptions when fields inside repeat edit screens are disposed?
-5. Does `RepeatTableDataSource.updateItems` behave correctly despite the self-comparison predicate?
-6. For nested repeats or repeated field names, does `findElementInParentSection` resolve dependencies to the intended row-local field every time?
-7. How long does bootstrap take on a real form with 200-300 repeat rows and representative choice filters/calculated fields?
-8. Does `PaginatedDataTable` create only visible row widgets, or do row/cell builders still cause expensive traversal across all repeat elements during refresh?
-10. Are calculated fields expected to work in production forms, given that `CalculatedFieldInstance.evaluate` calculation writeback is commented?
+1. Does a server round trip preserve existing repeat metadata when synced editing is eventually enabled, including nested repeats and newly added rows?
+2. Does `submissionEditStatusProvider` always agree with the bootstrapper's local `submissionEditStatus` logic for synced, draft, finalized, and failed records?
+3. Does `RepeatTableDataSource.updateItems` behave correctly despite the self-comparison predicate?
+4. For nested repeats or repeated field names, does `findElementInParentSection` resolve dependencies to the intended row-local field every time?
+5. How long does bootstrap take on a real form with 200-300 repeat rows and representative choice filters/calculated fields?
+6. Does `PaginatedDataTable` create only visible row widgets, or do row/cell builders still cause expensive traversal across all repeat elements during refresh?
+7. Are calculated fields expected to work in production forms, given that `CalculatedFieldInstance.evaluate` calculation writeback is commented?
 
 ## Next Investigation Step
 
 Run one instrumented manual/runtime pass with a real example form containing repeats:
 
-1. Create a draft with two repeat rows, save, and inspect the exact `formData` JSON for `repeatUid`.
-2. Import or use a synced submission with repeat rows, edit one row, save/finalize/upload, and inspect local `formData` plus server response.
-3. Record bootstrap time, number of repeat rows, number of field instances, and whether field subscriptions are disposed after row edit navigation.
+1. Use a server-submitted fixture when synced editing is enabled, edit one existing row, add one nested row, save/finalize/upload, and compare metadata before and after.
+2. Record bootstrap time, number of repeat rows, number of field instances, and mounted listener counts during row edit navigation.
+3. Exercise nested visibility, mandatory, and expression dependencies against a representative large form.
 
 Do this before any refactor or optimization so the static map can be corrected with runtime facts.

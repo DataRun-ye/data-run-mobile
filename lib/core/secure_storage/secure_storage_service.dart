@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/secure_storage/storage_service.dart';
+import 'package:datarunmobile/core/secure_storage/storage_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageService implements StorageService {

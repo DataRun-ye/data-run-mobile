@@ -1,7 +1,7 @@
-import 'package:d_sdk/core/sync/sync_summary_model.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/domain/filter.dart';
-import 'package:d_sdk/database/shared/submission_summary.dart';
+import 'package:datarunmobile/core/sync/sync_summary_model.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/domain/filter.dart';
+import 'package:datarunmobile/database/shared/submission_summary.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/src/iset/iset.dart';
 

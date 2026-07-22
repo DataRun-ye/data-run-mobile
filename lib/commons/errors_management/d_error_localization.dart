@@ -1,6 +1,6 @@
-import 'package:d_sdk/core/exception/d_error.dart';
-import 'package:d_sdk/core/exception/d_error_code.dart';
-import 'package:d_sdk/core/exception/d_exception.dart';
+import 'package:datarunmobile/core/exception/d_error.dart';
+import 'package:datarunmobile/core/exception/d_error_code.dart';
+import 'package:datarunmobile/core/exception/d_exception.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:dio/dio.dart';
 

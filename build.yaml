@@ -33,6 +33,9 @@ targets:
           - lib/core/**/*.provider.dart
           - lib/data/*.provider.dart
           - lib/data/**/*.provider.dart
+      drift_dev:
+        options:
+          store_date_time_values_as_text: true
       injectable_generator|injectable_builder:
         enabled: true
         generate_for:

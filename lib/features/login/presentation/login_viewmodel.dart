@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';

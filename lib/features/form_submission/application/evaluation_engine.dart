@@ -1,5 +1,5 @@
 import 'package:expressions/expressions.dart';
-import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
 
 const evaluationEngine = const EvaluationEngine();
 

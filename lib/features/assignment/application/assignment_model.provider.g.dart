@@ -65,7 +65,7 @@ final class AssignmentsProvider extends $FunctionalProvider<
   }
 }
 
-String _$assignmentsHash() => r'b3b8671e18a6f089c9a75dea091a44d05c739c75';
+String _$assignmentsHash() => r'2d300ef09c4714ab680b3d3c2c597c3745d1702d';
 
 final class AssignmentsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<AssignmentModel>>, String> {

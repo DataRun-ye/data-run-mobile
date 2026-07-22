@@ -20,7 +20,7 @@ Active sync path:
 1. Login or startup routes the user to `SyncResourcesView`.
 2. `SyncResourcesViewModel.triggerSync()` calls `SyncManager.syncAll()`.
 3. `SyncManager` collects all registered `AbstractDatasource` instances from the active user scope.
-4. Each SDK datasource fetches one server resource through `BaseDataSource.syncWithRemote()`.
+4. Each registered datasource fetches one server resource through `BaseDataSource.syncWithRemote()`.
 5. The base datasource maps JSON into Drift row objects, upserts rows in a transaction, optionally writes child tables, optionally disables stale rows, and writes a `sync_summaries` row.
 6. Offline screens later read only local Drift tables through DAOs/managers.
 
@@ -43,12 +43,12 @@ Primary active config store:
 | Sync screen autostart | ACTIVE | `lib/features/sync/presentation/sync_resources_view.dart` | `onViewModelReady` schedules `viewModel.triggerSync()` at lines 77-79. | High | The sync route automatically starts the server fetch. |
 | Sync completion flags | ACTIVE | `lib/features/sync/presentation/sync_resources_viewmodel.dart` | On completed global state, updates `SYNC_DONE` and `LAST_SYNC_TIME` at lines 31-33, then routes home at lines 35-37. | High | These SharedPreferences flags control future startup sync decisions. |
 | User profile fetch | ACTIVE-SEPARATE | `lib/core/auth/auth_api.dart` | Login posts to `/api/v1/authenticate`; profile fetch reads `/api/v1/myDetails` and converts authorities before `UserSession.fromJson`. | High | User/session config is fetched before bulk sync and saved outside the bulk datasource list. |
-| User session activation | ACTIVE | `lib/core/auth/auth_manager.dart` | Login gets user profile at lines 101-105, activates session at line 107, writes session/tokens at lines 109-113, opens user DB and registers `DbManager` at lines 144-159, then calls `registerUserSdkDeps` at line 163. | High | Bulk sync only works after the per-user DB and SDK datasources are registered. |
-| Per-user database file | ACTIVE | `packages/drun_sdk/lib/database/db_factory/platform_app.dart` | Opens `UserFileManager(userId).getUserFile('datarun_$userId.db')` and uses a background Drift connection. | High | Offline metadata is scoped by username. |
+| User session activation | ACTIVE | `lib/core/auth/auth_manager.dart` | Login gets user profile at lines 101-105, activates session at line 107, writes session/tokens at lines 109-113, opens user DB and registers `DbManager` at lines 144-159, then calls `registerUserSdkDeps` at line 163. | High | Bulk sync only works after the per-user DB and configuration datasources are registered. |
+| Per-user database file | ACTIVE | `lib/database/db_factory/platform_app.dart` | Opens `UserFileManager(userId).getUserFile('datarun_$userId.db')` and uses a background Drift connection. | High | Offline metadata is scoped by username. |
 
 ## Active Bulk Sync Registration
 
-The active datasource list is generated in `packages/drun_sdk/lib/di/init_active_session_scope.dart:33-60`.
+The active datasource list is generated in `lib/di/init_active_session_scope.dart:33-60`.
 
 Registered as `AbstractDatasource` and therefore collected by `SyncManager`:
 
@@ -71,7 +71,7 @@ Why this matters: changing registration order or converting a concrete registrat
 
 ## Generic Fetch-Parse-Persist Algorithm
 
-Active implementation: `packages/drun_sdk/lib/datasource/base_datasource.dart`.
+Active implementation: `lib/datasource/base_datasource.dart`.
 
 | Step | Evidence | Behavior |
 | --- | --- | --- |
@@ -109,26 +109,26 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 
 | Local table | Evidence | Stored shape |
 | --- | --- | --- |
-| `form_templates` | `packages/drun_sdk/lib/database/tables/form_templates.table.dart:4-25` | One row per form template with current version UID/number, name, label JSON map, description, disabled. |
-| `form_template_versions` | `packages/drun_sdk/lib/database/tables/form_template_versions.table.dart:8-23` | One row per form version. `fields`, `sections`, and `options` are JSON/text columns mapped by `TemplateListConverter` and `FormOptionListConverter`. |
-| `assignments` | `packages/drun_sdk/lib/database/tables/assignments.table.dart:6-28` | One row per assignment, linked to activity/team/org unit, with instance date, sync state, assignment status, completed date, client update time, disabled. |
-| `assignment_forms` | `packages/drun_sdk/lib/database/tables/assignment_forms.table.dart:4-25` | Join/access table between assignment and form with add/view/edit/delete booleans. |
-| `org_units` | `packages/drun_sdk/lib/database/tables/org_units.table.dart:8-18` | Org unit hierarchy with name/code/path/level/parent. |
-| `activities` | `packages/drun_sdk/lib/database/tables/activities.table.dart:5-18` | Activity rows linked to project and disabled/date/description fields. |
-| `teams` and `managed_teams` | `packages/drun_sdk/lib/database/tables/teams.table.dart:6-12`; `managed_teams.table.dart:5-12` | Team rows linked to activity; managed teams linked to managing team and activity. |
+| `form_templates` | `lib/database/tables/form_templates.table.dart:4-25` | One row per form template with current version UID/number, name, label JSON map, description, disabled. |
+| `form_template_versions` | `lib/database/tables/form_template_versions.table.dart:8-23` | One row per form version. `fields`, `sections`, and `options` are JSON/text columns mapped by `TemplateListConverter` and `FormOptionListConverter`. |
+| `assignments` | `lib/database/tables/assignments.table.dart:6-28` | One row per assignment, linked to activity/team/org unit, with instance date, sync state, assignment status, completed date, client update time, disabled. |
+| `assignment_forms` | `lib/database/tables/assignment_forms.table.dart:4-25` | Join/access table between assignment and form with add/view/edit/delete booleans. |
+| `org_units` | `lib/database/tables/org_units.table.dart:8-18` | Org unit hierarchy with name/code/path/level/parent. |
+| `activities` | `lib/database/tables/activities.table.dart:5-18` | Activity rows linked to project and disabled/date/description fields. |
+| `teams` and `managed_teams` | `lib/database/tables/teams.table.dart:6-12`; `managed_teams.table.dart:5-12` | Team rows linked to activity; managed teams linked to managing team and activity. |
 | `data_option_sets` and `data_options` | `option_sets.table.dart:6-11`; `options.table.dart:6-20` | Option sets and options, including option order, code/name, option-set FK, deletedAt. |
 | `data_elements` | `data_elements.table.dart:7-33` | Metadata for value type, option set, defaults, scanning properties, and resource metadata schema. |
 | `user_form_permissions` | `user_form_permissions.dart:6-20` | Team/form permission rows with converted permissions list. |
 | `data_instances` | `data_submissions.table.dart:9-56` | Offline submission data and synced server submissions as one whole `formData` JSON map plus sync flags. |
 | `sync_summaries` | `sync_summaries.dart:4-20` | Per-resource sync status, counts, serialized errors, and timestamps. |
 
-`AppDatabase` registers both active and inactive-looking tables in one Drift database at `packages/drun_sdk/lib/database/app_database.dart:11-36`; table presence alone does not prove active sync use.
+`AppDatabase` registers both active and inactive-looking tables in one Drift database at `lib/database/app_database.dart:11-36`; table presence alone does not prove active sync use.
 
 ## Offline Consumption After Sync
 
 | Consumer | Evidence | Local rows required |
 | --- | --- | --- |
-| Assignment list | `packages/drun_sdk/lib/database/dao/assignments_dao.dart:97-132` reads non-disabled assignments with prefetched forms, team, activity, and org unit. | `assignments`, `assignment_forms`, `teams`, `activities`, `org_units`. |
+| Assignment list | `lib/database/dao/assignments_dao.dart:97-132` reads non-disabled assignments with prefetched forms, team, activity, and org unit. | `assignments`, `assignment_forms`, `teams`, `activities`, `org_units`. |
 | Assignment detail/access checks | `lib/features/assignment/application/assignment_service_impl.dart:43-83` fetches assignment with org/team/activity/forms; lines 98-142 check assignment form permissions and synced/local submission state. | `assignments`, `assignment_forms`, `form_templates`, `data_instances`. |
 | Available forms | `lib/data/form_template_list_service.dart:23-47` reads `assignmentForms`, then `formTemplates`; lines 111-131 further filter by active user forms and `canAddSubmissions`. | `assignment_forms`, `form_templates`, user session form ids. |
 | Form list/latest version | `lib/data/form_template_list_service.dart:154-180` and `form_template_versions_dao.dart:30-100` join form templates, form versions, and assignment forms to produce `FormTemplateModel`. | `form_templates`, `form_template_versions`, `assignment_forms`. |
@@ -141,7 +141,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 | --- | --- | --- | --- |
 | OBSOLETE-REMOVED | Abandoned manifest services, party resolver, and `assignment_manifests`/party table declarations | No runtime consumer existed; persistence was TODO/comment-only; the resolver returned placeholders; the Play schema-3 database has none of these tables. Removed from active DI/schema declarations without a `DROP TABLE` migration. | Existing databases that happen to contain these unowned tables retain them, but active code no longer presents them as a production capability. |
 | OBSOLETE-REMOVED | Duplicate DAO `syncWithRemote` mixin and metadata DAO wrappers | The active `SyncManager` calls registered `AbstractDatasource.syncWithRemote`; the duplicate DAO implementation and unused DAO wrappers were removed without changing tables. | Configuration sync now has one implementation path. |
-| SUPPORTING | `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart` | Defines only `DSOrder` constants used by datasource annotations. Active registration remains `init_active_session_scope.dart`. | It affects ordering metadata, not registration membership. |
+| OBSOLETE-REMOVED | Former datasource order annotations/map | Ordering metadata did not determine active registration membership. The explicit order in `init_active_session_scope.dart` is now the only active source and is covered by a registration test. | Prevents generated annotations from being mistaken for sync membership. |
 | OBSOLETE-REMOVED | Unregistered data-value, repeat-instance, metadata-submission, form-version, and option datasources | No active `AbstractDatasource` registration or runtime caller existed. | Their names no longer imply active fetch paths. |
 | OBSOLETE-REMOVED | Old Riverpod sync service and NMC worker providers | No active watcher or worker registration existed; the facade did not perform the real download. | Active config fetching remains `SyncResourcesViewModel` plus `SyncManager`. |
 | ACTIVE-SEPARATE/UNKNOWN | `UserDatasource` | Registered as concrete `UserDatasource`, not as `AbstractDatasource`; active profile fetch is through `AuthApi.getUserProfile`. | It may be usable manually, but it is not part of `SyncManager.syncAll()` based on current registrations. |
@@ -158,23 +158,23 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 
 - `lib/features/sync/presentation/sync_resources_viewmodel.dart`
 - `lib/core/sync_manager/sync_manager.dart`
-- `packages/drun_sdk/lib/datasource/base_datasource.dart`
-- `packages/drun_sdk/lib/di/init_active_session_scope.dart`
+- `lib/datasource/base_datasource.dart`
+- `lib/di/init_active_session_scope.dart`
 - `lib/core/auth/auth_manager.dart`
 - `lib/core/auth/auth_api.dart`
 - `lib/core/auth/auth_storage.dart`
-- `packages/drun_sdk/lib/database/db_factory/database_factory.dart`
-- `packages/drun_sdk/lib/database/db_factory/platform_app.dart`
-- `packages/drun_sdk/lib/database/app_database.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/form_template_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/assignment_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/option_set_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/team_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/org_unit_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/data_element_datasource.dart`
+- `lib/database/db_factory/database_factory.dart`
+- `lib/database/db_factory/platform_app.dart`
+- `lib/database/app_database.dart`
+- `lib/datasource/remote_data_sources/form_template_datasource.dart`
+- `lib/datasource/remote_data_sources/assignment_datasource.dart`
+- `lib/datasource/remote_data_sources/option_set_datasource.dart`
+- `lib/datasource/remote_data_sources/team_datasource.dart`
+- `lib/datasource/remote_data_sources/org_unit_datasource.dart`
+- `lib/datasource/remote_data_sources/data_element_datasource.dart`
 - `lib/data/form_template_list_service.dart`
 - `lib/data/form_template_repository.dart`
 - `lib/data/option_set_service.dart`
 - `lib/features/assignment/application/assignment_service_impl.dart`
-- `packages/drun_sdk/lib/database/dao/form_template_versions_dao.dart`
-- `packages/drun_sdk/lib/database/dao/assignments_dao.dart`
+- `lib/database/dao/form_template_versions_dao.dart`
+- `lib/database/dao/assignments_dao.dart`

@@ -21,11 +21,11 @@ Active app runtime is a hybrid:
 
 1. `lib/main.dart` is the production entrypoint.
 2. `main()` calls `configureDependencies()` before `runApp(...)`.
-3. `configureDependencies()` registers Stacked services, app-level injectable services, and SDK-level injectable services.
+3. `configureDependencies()` registers Stacked services, app-level injectable services, and the explicit root database dependency.
 4. `runApp(...)` wraps the app with a root Riverpod `ProviderScope`.
 5. `MaterialApp` uses generated Stacked routing from `lib/app/stacked/app.router.dart`.
 6. `AuthManager` creates a per-user GetIt scope after login/session restore.
-7. SDK datasource registrations are added to the active user scope by `registerUserSdkDeps(...)`.
+7. Configuration datasource registrations are added to the active user scope by `registerUserSdkDeps(...)`.
 8. Opening a form creates a per-submission GetIt scope containing `FormTemplateRepository` and `FormInstance`.
 9. Form widgets use Riverpod for widget-level async/selection/preference state, but active form state is held in `FormInstance`, `reactive_forms` controls, and scoped GetIt.
 
@@ -39,9 +39,9 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | App root state bridge | ACTIVE | `lib/main.dart` | `App extends ConsumerWidget` and watches `authNotifierProvider` plus preference providers for language/theme. | High | Riverpod is active at the root; it is not only feature-local. |
 | Generated Stacked routing | ACTIVE | `lib/main.dart`, `lib/app/stacked/app.router.dart` | `MaterialApp.onGenerateRoute` is `StackedRouter().onGenerateRoute`; initial route is `Routes.splashView`. | High | Route registration determines reachability more strongly than file names. |
 | Stacked app registration | ACTIVE | `lib/app/stacked/app.dart` | `@StackedApp` lists routed pages: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `AssignmentScreen`, `EditRowScreen`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`. | High | Screens not in this route list need separate proof of reachability. |
-| Dependency bootstrap | ACTIVE | `lib/app/di/injection.dart` | `configureDependencies()` calls `setupLocator()`, `setupDialogUi()`, `setupBottomSheetUi()`, `setupGlobalDependencies(appLocator)`, then `setupSdkLocator()`. | High | This is the production DI order. |
+| Dependency bootstrap | ACTIVE | `lib/app/di/injection.dart` | `configureDependencies()` calls `setupLocator()`, `setupDialogUi()`, `setupBottomSheetUi()`, `setupGlobalDependencies(appLocator)`, then `registerSdkRootDependencies(appLocator)`. | High | This is the production DI order. |
 | App locator | ACTIVE | `lib/app/di/injection.dart` | `appLocator = StackedLocator.instance.locator`; old `GetIt.instance` line is commented. | High | Runtime service lookups use Stacked's locator facade. |
-| SDK locator | ACTIVE | `packages/drun_sdk/lib/di/injection.dart` | `rSdkLocator = GetIt.instance`; `setupSdkLocator()` calls `$initSdkGetIt(rSdkLocator)`. | Medium | Static scan proves the SDK registers into `GetIt.instance`; runtime equivalence with `StackedLocator.instance.locator` should be confirmed before altering locator setup. |
+| Legacy locator alias | ACTIVE | `lib/di/injection.dart` | `rSdkLocator = GetIt.instance`; `registerSdkRootDependencies(appLocator)` explicitly registers `DatabaseFactory` into the app locator. | High | Former SDK code still performs lookups through the legacy-named alias; locator identity remains a prerequisite for scope behavior. |
 
 ## State And Runtime Libraries Found
 
@@ -50,7 +50,7 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | `flutter_riverpod`, `hooks_riverpod`, `riverpod_annotation` | ACTIVE | Declared in `pubspec.yaml`; root `ProviderScope` in `lib/main.dart`; active `@riverpod` providers are used by startup/auth shell, assignment lists, submission tables, form list lookups, and form/submission permissions. | High | Riverpod is active, but each provider still needs separate reachability evidence. |
 | `flutter_hooks` | ACTIVE | Declared in `pubspec.yaml`; active screens/widgets such as `FormSubmissionScreen`, repeat widgets, table screens, assignment screens import hooks. | High | Hook lifecycle interacts with form widgets and scroll/controllers. |
 | `stacked`, `stacked_services`, `stacked_generator` | ACTIVE | Declared in `pubspec.yaml`; `@StackedApp`, generated `app.router.dart`/`app.locator.dart`, Stacked `ViewModelBuilder`, `StackedView`, `BaseViewModel`, and `NavigationService` are active. | High | Navigation and several screen viewmodels depend on this stack. |
-| `get_it`, `injectable`, `injectable_generator` | ACTIVE | Declared in app and SDK pubspecs; `appLocator`, generated `injection.config.dart`, SDK `injection.config.dart`, user scopes, and form scopes are active. | High | Core services, DB, SDK datasources, and form instances are runtime-located through GetIt. |
+| `get_it`, `injectable`, `injectable_generator` | ACTIVE | Declared in the root `pubspec.yaml`; `appLocator`, generated app `injection.config.dart`, explicit database registration, user scopes, and form scopes are active. | High | Core services, DB, datasources, and form instances are runtime-located through GetIt. |
 | `reactive_forms` | ACTIVE | Declared in `pubspec.yaml`; login form and form submission form use `FormGroup`, `FormArray`, `FormControl`, `ReactiveForm`, and reactive field widgets. | High | Active form value state and repeat rows live in reactive controls. |
 | `ChangeNotifier` | ACTIVE | `AuthManager extends ChangeNotifier`; `LocaleService extends ChangeNotifier`; `ref_extension.provider.dart` wraps them for Riverpod. | High | Changing notifier ownership can break root auth/locale updates. |
 | `StateNotifierProvider` / `StateProvider` old Riverpod style | OBSOLETE-REMOVED for team management | The isolated team-management state and hard-coded demo screen were removed after confirming they had no active route or consumer. | High | This does not classify other legacy Riverpod providers; each still requires consumer evidence. |
@@ -67,32 +67,31 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 | Stacked dialog/snackbar/bottom-sheet services | UNKNOWN | `lib/app/stacked/app.locator.dart`, `lib/app/stacked/app.dart` | Generated setup registers `DialogService`, `SnackbarService`, and `BottomSheetService`; exact core use sites were not mapped in this pass. | Medium | Registration exists, but strict ACTIVE requires proving a core path uses each service. |
 | App injectables | ACTIVE | `lib/app/di/injection.config.dart` | `setupGlobalDependencies(...)` registers SharedPreferences, storage, Auth APIs/storage, sync services, repositories, form services, table services, `FieldContextRegistry`, `Dio`, `AuthManager`, and network adapters. | High | This is the main singleton/factory registration source. |
 | Third-party module | ACTIVE | `lib/app/di/third_party_services.module.dart` | Provides `Dio`, `SharedPreferences`, `FlutterSecureStorage`, and Android device info for injectable registrations. | High | API, auth storage, preferences, and form metadata depend on it. |
-| SDK bridge module | ACTIVE | `lib/app/di/sdk_module.dart` | Provides SDK `StorageService` and `TokenStorage` using secure storage or SharedPreferences depending on platform/config. | High | Token/session behavior depends on this bridge. |
+| Storage bridge module | ACTIVE | `lib/app/di/sdk_module.dart` | Provides `StorageService` and `TokenStorage` using secure storage or SharedPreferences depending on platform/config. | High | Token/session behavior depends on this bridge; the filename retains former SDK terminology. |
 | `FieldContextRegistry` | ACTIVE | `lib/app/di/injection.config.dart`, `lib/features/form_submission/application/field_context_registry.dart` | Registered as lazy singleton; cleared on form screen init; used by `FormInstance` focus/scroll behavior. | High | It is global-looking but used by per-form UI state; repeat and field key changes are risky. |
 | `FormMetadataService` factory param | ACTIVE | `lib/app/di/injection.config.dart`, `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` | Registered with `factoryParam<FormMetadataService, FormMetadata, dynamic>`; form bootstrap resolves it with `param1: formMetadata`. | High | Form metadata/attributes depend on factory-parameter DI. |
 
-### SDK Base Scope
+### Root Database Scope
 
 | Registration area | Classification | File path | Evidence | Confidence | Why it matters |
 | --- | --- | --- | --- | --- | --- |
-| SDK base injectables | ACTIVE | `packages/drun_sdk/lib/di/injection.dart`, `packages/drun_sdk/lib/di/injection.config.dart` | `setupSdkLocator()` registers `DatabaseFactory` and parameterized `UserFileManager`. | High | Per-user DB opening depends on this registration. |
-| Generated active session scope | LEGACY-RISK | `packages/drun_sdk/lib/di/injection.config.dart` | Generated `initActiveSessionContextScope(...)` registers typed `AbstractDatasource<T>` instances under `'activeSessionContext'`, but static search found no call to it. | Medium | Looks intended, but active app calls manual `registerUserSdkDeps(...)` instead. |
+| Explicit database factory | ACTIVE | `lib/di/injection.dart` | `registerSdkRootDependencies(...)` registers `DatabaseFactory` as a lazy singleton with disposal. | High | Per-user DB opening depends on this registration. The former generated root/session registration files were removed. |
 
 ### User Scope
 
 | Registration area | Classification | File path | Evidence | Confidence | Why it matters |
 | --- | --- | --- | --- | --- | --- |
-| Per-user scope creation | ACTIVE | `lib/core/auth/auth_manager.dart` | `_activateUserSession(...)` calls `appLocator.pushNewScopeAsync(scopeName: username, init: ...)`. | High | User-scoped DB and SDK datasources live under this scope. |
-| Multiple datasource registration | ACTIVE | `lib/core/auth/auth_manager.dart` | Scope init calls `getIt.enableRegisteringMultipleInstancesOfOneType()`. | High | Required because many SDK datasources register as the same abstract type. |
+| Per-user scope creation | ACTIVE | `lib/core/auth/auth_manager.dart` | `_activateUserSession(...)` calls `appLocator.pushNewScopeAsync(scopeName: username, init: ...)`. | High | User-scoped DB and configuration datasources live under this scope. |
+| Multiple datasource registration | ACTIVE | `lib/core/auth/auth_manager.dart` | Scope init calls `getIt.enableRegisteringMultipleInstancesOfOneType()`. | High | Required because many datasources register as the same abstract type. |
 | User DB registration | ACTIVE | `lib/core/auth/auth_manager.dart` | Opens `DatabaseFactory.openForUser(username)` and registers `AppDatabase` plus `DbManager`. | High | Offline config/form data resolves through the active user scope. |
 | Active user session | ACTIVE | `lib/core/auth/auth_manager.dart` | Registers `UserSession` with instance name `'activeUser'`. | High | Services/widgets rely on active user context. |
-| User SDK deps | ACTIVE | `lib/core/auth/auth_manager.dart`, `packages/drun_sdk/lib/di/init_active_session_scope.dart` | After pushing the scope, `AuthManager` calls `registerUserSdkDeps(appLocator)`. | High | This is the active datasource registration path for sync. |
+| User datasource dependencies | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/di/init_active_session_scope.dart` | After pushing the scope, `AuthManager` calls `registerUserSdkDeps(appLocator)`. | High | This is the active datasource registration path for sync. |
 | Locale service | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/core/auth/ref_extension.provider.dart` | `LocaleService` is registered after user activation and exposed via Riverpod `localeNotifier`. | High | Root locale resolution depends on this user-scoped service after login. |
 | User scope disposal | ACTIVE | `lib/core/auth/auth_manager.dart` | Login/logout use `popScopesTill(username)` when a matching scope exists. | Medium | Scope pop behavior should be runtime-confirmed before changing login/logout or multi-user support. |
 
-### Active SDK Datasource Registrations
+### Active Configuration Datasource Registrations
 
-`packages/drun_sdk/lib/di/init_active_session_scope.dart` registers these as untyped `AbstractDatasource` factories:
+`lib/di/init_active_session_scope.dart` registers these as untyped `AbstractDatasource` factories:
 
 1. `ProjectDatasource`
 2. `ActivityDatasource`
@@ -107,7 +106,7 @@ Core risk: the app does not have one state system. Riverpod, Stacked viewmodels,
 
 Evidence: `SyncManager` builds its resource map from `appLocator.getAll<AbstractDatasource<dynamic>>()`; `SyncResourcesViewModel` calls `SyncManager.syncAll()`.
 
-Why it matters: datasource registration order and type shape affect config fetching and offline tables. The generated `initActiveSessionContextScope(...)` registers typed `AbstractDatasource<T>` instances, while the active manual function registers raw `AbstractDatasource`. Do not change one assuming it changes the other.
+Why it matters: datasource registration order and type shape affect config fetching and offline tables. The manual raw `AbstractDatasource` list is now the sole registration path; its membership and order are covered by `test/dev/active_session_sync_registration_test.dart`.
 
 ### Form Submission Scope
 
@@ -131,12 +130,12 @@ Why it matters: datasource registration order and type shape affect config fetch
 | Activity model override | ACTIVE | `lib/features/activity/application/activity.provider.dart` | `ActivityListView` creates nested `ProviderScope` overriding `activityModelProvider`; assignment providers depend on it. | High | Nested ProviderScopes are active and affect assignment filtering. |
 | Assignment list/filter | ACTIVE | `lib/features/assignment/application/assignment_model.provider.dart`, `assignment_filter.provider.dart` | Assignment widgets watch `filterAssignmentsProvider`, `assignmentProvider`, and generated assignment providers; route `AssignmentScreen` is active. | High | Assignment state and form availability depend on these providers. |
 | Teams list for assignment filtering | ACTIVE | `lib/data/teams.provider.dart` | `filterAssignmentsProvider` awaits `teamsProvider().future`. | High | This provider is active through assignment filtering, separate from the old team management screen. |
-| Form list/template providers | ACTIVE | `lib/features/form/application/form_provider.dart` | Form screens and assignment detail/table widgets watch `formListItemsProvider`, `formTemplateProvider`, and `availableUserFormTemplatesProvider`. | High | Form availability and labels are active Riverpod lookups into GetIt services. |
+| Form list/template providers | ACTIVE | `lib/features/form/application/form_provider.dart`, `lib/data/teams.provider.dart` | Form screens and assignment widgets watch `formListItemsProvider`, `formTemplateProvider`, and `userAvailableFormsProvider`. | High | Form availability and labels are active Riverpod lookups into GetIt services. The unconsumed `availableUserFormTemplatesProvider` was removed during package consolidation. |
 | Submission edit/status providers | ACTIVE | `lib/features/form_submission/application/submission_list.provider.dart` | `FormSubmissionScreen` and table edit cells watch `submissionEditStatusProvider`. | High | Edit permissions and synced record behavior depend on this provider. |
 | Data instance table providers | ACTIVE | `lib/features/data_instance/application/table.providers.dart`, `table_controller.provider.dart` | `TableScreen`, `PaginatedItemsTable`, and action widgets watch pagination, selection, selected finalized items, appearance, and controller providers. | High | Bulk selection/edit/delete/sync table behavior depends on this state. |
 | Reference-field metadata provider | INCOMPLETE | `lib/data/metadata_submission_update.provider.dart`, `q_reference_drop_down_search_field.widget.dart` | `ValueType.Reference` fields render `QReferenceDropDownSearchField`, which watches `systemMetadataSubmissionsProvider`; provider currently returns `[]` after commented metadata-submission logic. Production use depends on synced form JSON containing `ValueType.Reference`. | High for code state, low for runtime frequency | Do not classify as ACTIVE until a production form proves this field type is exercised. |
 | User org unit provider | OBSOLETE-REMOVED | Its only found consumer was the removed comment-only org-unit widget; the provider and generated family were then removed. | High | Active org-unit metadata and display paths do not use this provider. |
-| Party resolver provider | INCOMPLETE | `lib/core/party/providers/party_resolver.provider.dart` | Generated provider exists; static usage found only generated code. Implementation contains placeholder principals and placeholder party IDs. | High | Party/manifest tables should not be treated as active assignment/form availability until runtime proves this provider is used. |
+| Party resolver provider | OBSOLETE-REMOVED | Former placeholder resolver and generated provider had no runtime consumer and were removed with the abandoned party/manifest persistence attempt. | High | Party naming no longer presents a false active access boundary. |
 | Form integrity provider | UNKNOWN | `lib/data/form_integrity_check_notifier.provider.dart` | Generated provider exists; static usage found only generated code. | Medium | It may be intended for validation UI, but not proven active. |
 | Old Riverpod sync service and NMC worker providers | OBSOLETE-REMOVED | No watcher, worker/plugin registration, or active call existed. The facade only checked connectivity and wrote preference flags. | High | Active config fetching remains `SyncResourcesViewModel` plus `SyncManager`. |
 
@@ -165,9 +164,7 @@ Why it matters: datasource registration order and type shape affect config fetch
 | OBSOLETE-REMOVED | Standalone date/time demo entrypoint | It had its own `runApp` and no production importer. | High | Active date/time fields continue through `CustomReactiveDateTimePicker`. |
 | OBSOLETE-REMOVED | Old team-management feature and dashboard demo | The screen used hard-coded team summaries, had no route, and was referenced only by a comment-only dashboard. | High | Active assignment/team behavior continues through SDK team persistence and `lib/data/teams.provider.dart`. |
 | OBSOLETE-REMOVED | Duplicate coordinator/executor/progress sync stack | Generated DI was its only outside reference; the stack and its private progress models were removed. `SyncScheduler` and `SyncMetadataRepository` remain active. | High | Sync ownership is now clearer without changing the active fetch path. |
-| INCOMPLETE | `lib/core/party/providers/party_resolver.provider.dart` | Placeholder user/team/party IDs; generated provider exists but no static use outside generated file. | High | Party resolution appears not production-ready. |
 | INCOMPLETE | `lib/data/metadata_submission_update.provider.dart` | Provider is used by Reference field widgets but currently returns empty list after commented metadata-submission lookup; production form JSON use of `ValueType.Reference` was not confirmed. | High | Reference fields are reachable by value type, but data backing is incomplete and not proven core-active. |
-| LEGACY-RISK | `packages/drun_sdk/lib/di/injection.config.dart` generated `initActiveSessionContextScope(...)` | Generated typed datasource registration exists but no call was found; active user scope calls manual `registerUserSdkDeps(...)`. | Medium | Future DI regeneration could revive or alter this path. |
 
 ## Candidate Duplicate Runtime Paths
 
@@ -180,14 +177,14 @@ These are observations only; no removal is recommended yet.
 | Form instance state | Scoped GetIt `FormInstance`; obsolete Riverpod provider removed | Active screen uses `appLocator<FormInstance>()`. |
 | Form/field state | Active `reactive_forms`/`FormInstance`; obsolete Riverpod provider sketches removed | Active form bootstrap builds `FormGroup` and `Section`. |
 | Sync orchestration | `SyncManager`/`SyncResourcesViewModel` | Routed sync uses this path; both alternate app-side sync stacks were removed. |
-| SDK datasource registration | Manual `registerUserSdkDeps(...)` vs generated `initActiveSessionContextScope(...)` | Active auth manager calls manual function; generated function not called by static refs. |
+| Datasource registration | Manual `registerUserSdkDeps(...)` only | The unused generated alternative was removed and a registration test now locks list membership and submission-pull exclusion. |
 | Team state | `lib/data/teams.provider.dart`; obsolete demo state removed | Assignment-scoped team selection uses `lib/data/teams.provider.dart`. |
 
 ## Risk Map For Refactoring
 
 | Risk area | Classification | Why it is risky | Files to understand first |
 | --- | --- | --- | --- |
-| Locator identity | UNKNOWN | App `appLocator` comes from `StackedLocator.instance.locator`; SDK uses `GetIt.instance`. They appear to cooperate in the current app, but static scan should be confirmed at runtime. | `lib/app/di/injection.dart`, `packages/drun_sdk/lib/di/injection.dart` |
+| Locator identity | UNKNOWN | App `appLocator` comes from `StackedLocator.instance.locator`; former SDK code still looks up through the legacy `rSdkLocator = GetIt.instance` alias. They cooperate in current checks, but scope identity should be confirmed before renaming or replacing either locator. | `lib/app/di/injection.dart`, `lib/di/injection.dart` |
 | Scope nesting | ACTIVE | High risk: user scope and form submission scope are both GetIt scopes. A service lookup may resolve from current form scope, user scope, or root scope depending on current stack. | `lib/core/auth/auth_manager.dart`, `form_flow_bootstrapper_vm.dart`, `form_submission_screen.widget.dart` |
 | Multiple registrations of same type | ACTIVE | High risk: datasources require `enableRegisteringMultipleInstancesOfOneType()` and raw `AbstractDatasource` registrations. Typed vs untyped changes can alter `getAll(...)` results. | `auth_manager.dart`, `init_active_session_scope.dart`, `sync_manager.dart` |
 | Form state ownership | ACTIVE | High risk: form widgets are Riverpod/Hook widgets, but active form data lives in `FormInstance` and `reactive_forms` controls from GetIt scope. | `form_flow_bootstrapper_vm.dart`, `form_instance.dart`, `field.widget.dart`, repeat widgets |
@@ -208,17 +205,16 @@ Runtime bootstrap and registration:
 - `lib/app/stacked/app.dart`
 - `lib/app/stacked/app.router.dart`
 - `lib/app/stacked/app.locator.dart`
-- `packages/drun_sdk/lib/di/injection.dart`
-- `packages/drun_sdk/lib/di/injection.config.dart`
-- `packages/drun_sdk/lib/di/init_active_session_scope.dart`
+- `lib/di/injection.dart`
+- `lib/di/init_active_session_scope.dart`
 
 Session and DB scope:
 
 - `lib/core/auth/auth_manager.dart`
 - `lib/core/auth/ref_extension.provider.dart`
 - `lib/core/user_session/preference.provider.dart`
-- `packages/drun_sdk/lib/database/db_factory/database_factory.dart`
-- `packages/drun_sdk/lib/database/db_factory/platform_app.dart`
+- `lib/database/db_factory/database_factory.dart`
+- `lib/database/db_factory/platform_app.dart`
 
 Form/repeat state:
 
@@ -248,13 +244,12 @@ Sync/runtime duplication:
 
 ## Questions Requiring Runtime Confirmation
 
-1. Does `StackedLocator.instance.locator` resolve to the same underlying GetIt instance as SDK `GetIt.instance` on all supported platforms?
+1. Does `StackedLocator.instance.locator` resolve to the same underlying GetIt instance as the legacy `rSdkLocator = GetIt.instance` alias on all supported platforms?
 2. What is the exact scope stack after login, after opening a form, after saving, after back navigation, and after logout?
 3. Does `GetIt.getAll<AbstractDatasource<dynamic>>()` return the manual raw datasource registrations in the expected order after every login/session restore?
-4. Is generated `initActiveSessionContextScope(...)` ever called indirectly by generated code or build tooling, or is it fully dead?
-5. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
-6. Does form scope disposal always run when the user leaves a form through Android back, app backgrounding, route replacement, or completion dialog actions?
-7. After the tooling branch is merged, do generated Riverpod/injectable/Stacked outputs still match this map?
+4. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
+5. Does form scope disposal always run when the user leaves a form through Android back, app backgrounding, route replacement, or completion dialog actions?
+6. Do generated Riverpod/injectable/Stacked outputs still match this map after each ownership move?
 
 ## Next Investigation Step
 

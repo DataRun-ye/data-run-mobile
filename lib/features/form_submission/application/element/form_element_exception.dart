@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/exception/d_exception.dart';
+import 'package:datarunmobile/core/exception/d_exception.dart';
 import 'package:flutter/material.dart';
 
 class CircularDependencyException extends FormElementException {

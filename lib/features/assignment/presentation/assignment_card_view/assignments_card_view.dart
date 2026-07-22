@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:datarunmobile/database/shared/assignment_model.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/assignment/application/assignment_filter.provider.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignment_card_view/assignment_overview_item.dart';

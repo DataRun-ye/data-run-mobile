@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';

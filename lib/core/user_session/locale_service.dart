@@ -1,6 +1,6 @@
 // services/locale_service.dart
-import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:flutter/material.dart';

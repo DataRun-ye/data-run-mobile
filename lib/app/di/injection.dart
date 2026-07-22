@@ -1,4 +1,4 @@
-import 'package:d_sdk/di/injection.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.bottomsheets.dart';
 import 'package:datarunmobile/app/stacked/app.dialogs.dart';
 import 'package:datarunmobile/app/stacked/app.locator.dart';

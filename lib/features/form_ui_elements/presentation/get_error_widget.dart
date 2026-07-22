@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/commons/custom_widgets/exception_indicators/exception_indicator.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';

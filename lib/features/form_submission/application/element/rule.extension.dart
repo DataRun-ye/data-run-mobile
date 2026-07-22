@@ -1,8 +1,8 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/core/form/element_template/template.dart';
-import 'package:d_sdk/core/form/rule/action.dart';
-import 'package:d_sdk/core/form/rule/rule_action.dart';
-import 'package:d_sdk/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/core/form/element_template/template.dart';
+import 'package:datarunmobile/core/form/rule/action.dart';
+import 'package:datarunmobile/core/form/rule/rule_action.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 
 extension RuleHandler on Template {

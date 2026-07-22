@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:datarunmobile/database/shared/assignment_status.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';

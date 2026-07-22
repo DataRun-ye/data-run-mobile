@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:d_sdk/core/exception/http_errors.dart';
-import 'package:d_sdk/core/http/http_client.dart';
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/core/exception/http_errors.dart';
+import 'package:datarunmobile/core/http/http_client.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 

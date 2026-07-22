@@ -1,17 +1,28 @@
 import 'package:collection/collection.dart';
-import 'package:d_sdk/core/util/string_extension.dart';
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/collections.dart';
-import 'package:d_sdk/database/shared/d_identifiable_model.dart';
+import 'package:datarunmobile/core/util/string_extension.dart';
+import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'teams.provider.g.dart';
 
+class AssignmentFormAvailability {
+  const AssignmentFormAvailability({
+    required this.assignmentForm,
+    required this.isAvailableLocally,
+  });
+
+  final AssignmentForm assignmentForm;
+  final bool isAvailableLocally;
+}
+
 @riverpod
-Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(Ref ref,
-    {String? assignment}) async {
+Future<List<AssignmentFormAvailability>> userAvailableForms(
+  Ref ref, {
+  String? assignment,
+}) async {
   List<AssignmentForm> assignmentForms = [];
   if (assignment.isNotNullOrEmpty) {
     assignmentForms.addAll(await DSdk.db.managers.assignmentForms
@@ -31,8 +42,11 @@ Future<List<Pair<AssignmentForm, bool>>> userAvailableForms(Ref ref,
       availableFormTemplates.map((f) => f.id).toList();
 
   final availableAssignedForms = assignmentForms
-      .map((fp) => Pair(fp, availableForms.contains(fp.form)))
-      .sorted((a, b) => a.first.form.compareTo(b.first.form))
+      .map((assignmentForm) => AssignmentFormAvailability(
+            assignmentForm: assignmentForm,
+            isAvailableLocally: availableForms.contains(assignmentForm.form),
+          ))
+      .sorted((a, b) => a.assignmentForm.form.compareTo(b.assignmentForm.form))
       .toList();
 
   return availableAssignedForms;

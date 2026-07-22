@@ -1,4 +1,4 @@
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/commons/custom_widgets/connectivity_builder.dart';
 import 'package:datarunmobile/commons/custom_widgets/exception_indicators/no_connection_indicator.dart';
 import 'package:datarunmobile/generated/l10n.dart';

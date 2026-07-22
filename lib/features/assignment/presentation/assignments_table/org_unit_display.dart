@@ -1,5 +1,5 @@
-import 'package:d_sdk/database/shared/d_identifiable_model.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
 import 'package:datarunmobile/features/form/application/value_display.provider.dart';

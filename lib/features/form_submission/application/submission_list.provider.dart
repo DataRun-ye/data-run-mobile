@@ -1,83 +1,8 @@
-import 'package:d_sdk/core/exception/d_error.dart';
-import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/core/util/list_extensions.dart';
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/submission_status.dart';
-import 'package:datarunmobile/features/form_submission/application/form_submission_repository.dart';
+import 'package:datarunmobile/d_sdk.dart';
 import 'package:drift/drift.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submission_list.provider.g.dart';
-
-@riverpod
-FormSubmissionRepository formSubmissionRepository(Ref ref) {
-  return FormSubmissionRepository();
-}
-
-@riverpod
-class FormSubmissions extends _$FormSubmissions {
-  Future<IList<DataInstance>> build(String form) async {
-    final submissions =
-        await ref.watch(formSubmissionRepositoryProvider).getSubmissions(form);
-    return submissions;
-  }
-
-  AppDatabase get _db => DSdk.db;
-
-  Future<void> markSubmissionAsFinal(String uid) async {
-    await _db.managers.dataInstances.filter((f) => f.id(uid)).update(
-        (o) => o.call(syncState: const Value(InstanceSyncStatus.finalized)));
-
-    ref.invalidateSelf();
-    await future;
-  }
-
-  Future<DataInstance?> getSubmission(String uid) async {
-    final finishedInitState = (await future);
-    return finishedInitState.firstOrNullWhere((s) => s.id == uid);
-  }
-
-  Future<DataInstance> updateSubmission(DataInstance submission) async {
-    DataInstance toUpdate = submission.copyWith();
-    if (submission.syncState.isSynced) {
-      toUpdate = submission.copyWith(isToUpdate: true);
-    } else {
-      toUpdate = submission.copyWith(syncState: InstanceSyncStatus.draft);
-    }
-    await _db.update(_db.dataInstances).replace(toUpdate);
-    ref.invalidateSelf();
-    await future;
-
-    return toUpdate;
-  }
-
-  Future<bool> deleteSubmission(Iterable<String> syncableIds) async {
-    try {
-      await (_db.delete(_db.dataInstances)
-            ..where((tbl) => tbl.id.isIn(syncableIds)))
-          .go();
-
-      ref.invalidateSelf();
-      await future;
-      return true;
-    } on DError catch (e) {
-      logError('# DataRun Error: ${e.toString()}');
-      return false;
-    }
-  }
-}
-
-@riverpod
-Future<DataInstance> dataInstance(Ref ref, {required String id}) async {
-  final db = DSdk.db;
-
-  final submission =
-      await db.managers.dataInstances.filter((f) => f.id(id)).getSingle();
-
-  return submission;
-}
 
 @riverpod
 Future<bool> submissionEditStatus(Ref ref,

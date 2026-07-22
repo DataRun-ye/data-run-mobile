@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/data_instance/repeat_metadata_normalizer.dart';
+import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

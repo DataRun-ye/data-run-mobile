@@ -1,8 +1,8 @@
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/activity_model.dart';
-import 'package:d_sdk/database/shared/d_identifiable_model.dart';
-import 'package:d_sdk/core/util/string_extension.dart';
+import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/activity_model.dart';
+import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
+import 'package:datarunmobile/core/util/string_extension.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 

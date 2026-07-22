@@ -44,7 +44,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | Old team `StateNotifierProvider` files | Active-looking Riverpod state | OBSOLETE-REMOVED | The only screen used hard-coded demo data, had no active route, and was referenced only by a comment-only dashboard. Active assignment filtering remains in `lib/data/teams.provider.dart`. |
 | `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | OBSOLETE-REMOVED | Generated DI was their only outside reference. The duplicate stack and private progress models were removed; active sync remains `SyncResourcesViewModel` plus `SyncManager`. |
 | `syncServiceProvider` and NMC worker providers | Provider exists | OBSOLETE-REMOVED | No active watcher/worker registration existed; `performSync` did not perform the real download. The unused facade, worker models, and dependent legacy session service were removed. |
-| SDK `initActiveSessionContextScope(...)` | Generated active session scope | LEGACY-RISK | Generated typed datasource registration exists, but active auth calls manual `registerUserSdkDeps(appLocator)`. Do not refactor the generated scope assuming production uses it. |
+| Former generated datasource registration | Generated active session scope | OBSOLETE-REMOVED | The generated typed alternative had no active caller and was removed. Active auth calls the explicit manual `registerUserSdkDeps(appLocator)` list, whose membership is covered by a focused test. |
 | `UserDatasource` | Mixed/uncertain in `03` | LEGACY-RISK | It is registered as concrete `UserDatasource`, not collected by `SyncManager.getAll<AbstractDatasource>()`; active profile fetch is `AuthApi.getUserProfile`. |
 | Abandoned manifest service / party persistence attempt | INCOMPLETE in `03` | OBSOLETE-REMOVED | No runtime consumer, incomplete persistence, placeholder resolver, and no tables in the Play schema-3 database. Removed from active DI/schema declarations; no table-drop migration is performed. |
 | Bulk `AbstractDatasource` list | ACTIVE | ACTIVE | The 10 raw `AbstractDatasource` registrations in `init_active_session_scope.dart` are core to current config sync because `SyncManager` collects them. Submission pull is intentionally excluded. |
@@ -58,7 +58,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `data_values` table as capture storage | Previously partially active/LEGACY-RISK | OBSOLETE-REMOVED | DAO/datasource/CRUD callers and table are removed; migration 5 preserves active whole submission JSON. |
 | `repeat_instances` table | Previously LEGACY-RISK | OBSOLETE-REMOVED | DAO/datasource/table are removed; migration 5 preserves repeats in nested submission JSON. |
 | `metadata_submissions` and `systemMetadataSubmissionsProvider` | Inactive/incomplete in `01`/`03`, incomplete in `04` | INCOMPLETE | The comment-only SDK table/datasource artifacts were removed. Reference widgets can still watch the provider, but it currently returns `[]` after commented DB logic. Production use depends on forms containing `ValueType.Reference`. |
-| `partyResolverProvider` and party/manifest tables | Mixed/uncertain in `03`, INCOMPLETE in `04` | INCOMPLETE | Provider contains placeholder user/team/party IDs and no static production consumer was found. |
+| `partyResolverProvider` and party/manifest tables | Mixed/uncertain in early scans | OBSOLETE-REMOVED | The placeholder provider, DI services, and schema declarations had no production consumer and were removed without dropping unknown tables from existing databases. |
 | Form route/load/save/repeat core in `02` | ACTIVE | ACTIVE | `FormFlowBootstrapperVm`, `FormTemplateRepository`, `FormElementControlBuilder`, `FormElementBuilder`, `FormInstance`, repeat models/widgets, and `DataInstancesDao.updateData` pass the strict test. |
 | Form summary utilities | ACTIVE in `02` | ACTIVE | `FormDataUtil`/`FormDataAggregator` are active through submission table summaries, but not part of form load/save/repeat persistence. |
 | `CodeGenerator` | ACTIVE in `02` | ACTIVE | Active for submission IDs and referenced by old repeat UID UI code. Backend validation later proved mobile should write repeat metadata, not `repeatUid`; see `07-repeat-uid-contract.md`. |
@@ -87,12 +87,12 @@ Sync/offline cache:
 - `lib/features/sync/presentation/sync_resources_view.dart`
 - `lib/features/sync/presentation/sync_resources_viewmodel.dart`
 - `lib/core/sync_manager/sync_manager.dart`
-- `packages/drun_sdk/lib/datasource/base_datasource.dart`
-- `packages/drun_sdk/lib/di/init_active_session_scope.dart`
+- `lib/datasource/base_datasource.dart`
+- `lib/di/init_active_session_scope.dart`
 - Active `AbstractDatasource` implementations registered by `registerUserSdkDeps(...)`
-- `packages/drun_sdk/lib/database/db_factory/database_factory.dart`
-- `packages/drun_sdk/lib/database/db_factory/platform_app.dart`
-- `packages/drun_sdk/lib/database/app_database.dart`
+- `lib/database/db_factory/database_factory.dart`
+- `lib/database/db_factory/platform_app.dart`
+- `lib/database/app_database.dart`
 
 Assignment/form access and listing:
 
@@ -102,7 +102,7 @@ Assignment/form access and listing:
 - `lib/data/teams.provider.dart`
 - `lib/data/form_template_list_service.dart`
 - `lib/features/form/application/form_provider.dart`
-- `packages/drun_sdk/lib/database/dao/assignments_dao.dart`
+- `lib/database/dao/assignments_dao.dart`
 - `assignment_forms` table and access queries
 
 Form/repeat/save:
@@ -121,9 +121,9 @@ Form/repeat/save:
 - `lib/features/form_submission/presentation/section/repeat_table.widget.dart`
 - `lib/features/form_submission/presentation/section/repeat_table_rows_source.dart`
 - `lib/features/form_submission/presentation/section/edit_row_screen.dart`
-- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`
-- `packages/drun_sdk/lib/database/tables/data_submissions.table.dart`
-- `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart`
+- `lib/database/dao/data_submissions_dao.dart`
+- `lib/database/tables/data_submissions.table.dart`
+- `lib/database/extensions/data_submission.extension.dart`
 
 Submission table:
 
@@ -132,7 +132,7 @@ Submission table:
 - `lib/features/data_instance/data/drift_table_repository.dart`
 - `lib/features/data_instance/presentation/table_screen.dart`
 - `lib/features/data_instance/presentation/table_widget.dart`
-- `packages/drun_sdk/lib/core/data_instance/form_data_util.dart`
+- `lib/core/data_instance/form_data_util.dart`
 
 ## Supporting Or Conditional Paths
 
@@ -155,19 +155,15 @@ These are used or plausible, but should not be treated as core-active without mo
 Do not delete these yet, but they are strong candidates for demotion/removal after runtime confirmation.
 
 - `lib/core/sync_manager/sync_service.provider.dart`
-- `packages/drun_sdk/lib/di/injection.config.dart` generated `initActiveSessionContextScope(...)`
-- `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart`
-- `metadata_submissions` table/datasource
-- `party`/manifest provider and tables, unless a future runtime pass proves production use
+- `systemMetadataSubmissionsProvider` and its reference-field UI path, if production forms use `ValueType.Reference`
 
 ## Open Reconciliation Questions
 
 1. Do real production forms contain `ValueType.Reference` fields? If yes, the reference widget path is reachable, but its provider still appears incomplete.
 2. Are `user_form_permissions` ever used for active access decisions, or is `assignment_forms` the only active permission gate?
-3. Does the generated SDK `initActiveSessionContextScope(...)` ever run after code generation or through tests, or is manual `registerUserSdkDeps(...)` the only production path?
-4. Which synced resources are semantically required for current production forms, beyond being registered in the sync loop?
-5. Are Stacked `SnackbarService` or `BottomSheetService` used by any runtime feature outside static Dart references?
-6. Should `sync_summaries` remain a core table, or is it supporting/debug sync telemetry?
+3. Which synced resources are semantically required for current production forms, beyond being registered in the sync loop?
+4. Are Stacked `SnackbarService` or `BottomSheetService` used by any runtime feature outside static Dart references?
+5. Should `sync_summaries` remain a core table, or is it supporting/debug sync telemetry?
 
 ## Next Step
 
@@ -178,4 +174,4 @@ Before the next feature/refactor pass, update future maps to use this strict leg
 - Use `03` as the strongest static source for active sync fetch registration, but separate "synced resource" from "core offline consumer."
 - Use `04` for state/DI ownership, with the DialogService correction recorded above.
 
-The next runtime confirmation pass should focus on GetIt scope behavior, datasource registration order, real form JSON value types, repeat UID persistence, and whether supporting tables/providers are actually touched during normal production workflows.
+The next runtime confirmation pass should focus on GetIt scope behavior, datasource registration order, real form JSON value types, future repeat-metadata server round trips, and whether supporting tables/providers are actually touched during normal production workflows.

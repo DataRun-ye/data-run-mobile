@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/submission_status.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:flutter/material.dart';
 
 Widget buildStatusIcon(InstanceSyncStatus? status, [double size = 18.0]) {

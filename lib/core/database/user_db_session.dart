@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/user_session/user_session.dart';
+import 'package:datarunmobile/core/user_session/user_session.dart';
 import 'package:equatable/equatable.dart';
 
 class UserDbSession with EquatableMixin {

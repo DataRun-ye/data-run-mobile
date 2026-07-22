@@ -1,6 +1,6 @@
-import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/database/shared/submission_status.dart';
-import 'package:d_sdk/database/shared/submissions_filter.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
+import 'package:datarunmobile/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/data_instance/application/models.dart';

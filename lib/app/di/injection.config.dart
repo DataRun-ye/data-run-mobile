@@ -9,9 +9,6 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:d_sdk/core/auth/token_storage.dart' as _i765;
-import 'package:d_sdk/core/http/http_client.dart' as _i8;
-import 'package:d_sdk/core/secure_storage/storage_service.dart' as _i537;
 import 'package:datarunmobile/app/di/sdk_module.dart' as _i567;
 import 'package:datarunmobile/app/di/third_party_services.module.dart' as _i427;
 import 'package:datarunmobile/core/auth/auth_api.dart' as _i64;
@@ -19,6 +16,7 @@ import 'package:datarunmobile/core/auth/auth_interceptor.dart' as _i656;
 import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
 import 'package:datarunmobile/core/auth/auth_storage.dart' as _i324;
 import 'package:datarunmobile/core/auth/token_refresher.dart' as _i48;
+import 'package:datarunmobile/core/auth/token_storage.dart' as _i702;
 import 'package:datarunmobile/core/common/confirmation_service.dart' as _i18;
 import 'package:datarunmobile/core/element_instance/display_value_lookup.dart'
     as _i735;
@@ -27,9 +25,12 @@ import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart'
 import 'package:datarunmobile/core/form/ui/factories/hint_provider_impl.dart'
     as _i1066;
 import 'package:datarunmobile/core/http/default_http_adapter.dart' as _i832;
+import 'package:datarunmobile/core/http/http_client.dart' as _i680;
 import 'package:datarunmobile/core/network/network_util.dart' as _i537;
 import 'package:datarunmobile/core/network/reactive_connectivity_service.dart'
     as _i658;
+import 'package:datarunmobile/core/secure_storage/storage_service.dart'
+    as _i550;
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart' as _i492;
 import 'package:datarunmobile/core/sync/sync_scheduler.dart' as _i658;
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart' as _i602;
@@ -106,7 +107,7 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i342.FieldContextRegistry());
   gh.factory<_i935.AssignmentService>(() => _i1027.AssignmentServiceImpl());
   gh.factory<_i258.FormTemplateService>(() => _i489.FormTemplateServiceImpl());
-  gh.factory<_i537.StorageService>(() => sdkModule.getStorageService(
+  gh.factory<_i550.StorageService>(() => sdkModule.getStorageService(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i460.SharedPreferences>(),
       ));
@@ -125,16 +126,14 @@ Future<_i174.GetIt> setupGlobalDependencies(
       ));
   gh.factory<_i325.TableRepository>(() => _i128.DriftTableRepository());
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
+  gh.factory<_i702.TokenStorage>(
+      () => sdkModule.getTokenStorage(gh<_i550.StorageService>()));
   gh.factory<_i492.SyncMetadataRepository>(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
   gh.factory<_i139.SessionStorage>(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
-  gh.factory<_i765.TokenStorage>(
-      () => sdkModule.getTokenStorage(gh<_i537.StorageService>()));
-  gh.factory<_i48.TokenRefresher>(
-      () => _i48.TokenRefresher(gh<_i765.TokenStorage>()));
   gh.factory<_i324.AuthStorage>(() => _i324.AuthStorage(
-        tokenStorage: gh<_i765.TokenStorage>(),
+        tokenStorage: gh<_i702.TokenStorage>(),
         sessionStorage: gh<_i139.SessionStorage>(),
         prefs: gh<_i460.SharedPreferences>(),
       ));
@@ -142,6 +141,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
         metadataRepo: gh<_i492.SyncMetadataRepository>(),
         connectivity: gh<_i658.ConnectivityService>(),
       ));
+  gh.factory<_i48.TokenRefresher>(
+      () => _i48.TokenRefresher(gh<_i702.TokenStorage>()));
   gh.factory<_i656.AuthInterceptor>(
       () => _i656.AuthInterceptor(authStorage: gh<_i324.AuthStorage>()));
   gh.lazySingleton<_i261.AuthManager>(() => _i261.AuthManager(
@@ -150,12 +151,12 @@ Future<_i174.GetIt> setupGlobalDependencies(
       ));
   gh.factory<_i361.Dio>(
       () => thirdPartyServicesModule.dio(gh<_i656.AuthInterceptor>()));
-  gh.factory<_i8.HttpClient<dynamic>>(
-      () => _i832.DefaultHttpAdapter(gh<_i361.Dio>()));
   gh.lazySingleton<_i537.NetworkUtil>(
     () => _i537.NetworkUtil(dio: gh<_i361.Dio>()),
     dispose: (i) => i.dispose(),
   );
+  gh.factory<_i680.HttpClient<dynamic>>(
+      () => _i832.DefaultHttpAdapter(gh<_i361.Dio>()));
   return getIt;
 }
 

@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/database/shared/form_option.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';

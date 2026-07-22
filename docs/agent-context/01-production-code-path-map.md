@@ -35,24 +35,21 @@ Obsolete-looking or inactive:
 - The older `lib/app/app_routes/*` experiment was removed after confirming it had no active importer. Current `MaterialApp` uses the Stacked router in `lib/main.dart`.
 - `lib/app/stacked/app.router.dart` is active generated route code, but should not be edited manually.
 
-## 2. SDK entrypoints and app consumption
+## 2. Former SDK entrypoints and current app consumption
 
 Active:
 
-- `pubspec.yaml:17-18` consumes `d_sdk` as a local path dependency: `./packages/drun_sdk`.
-- `lib/app/di/injection.dart:18-32` configures app dependencies, then calls `setupSdkLocator()`.
-- `packages/drun_sdk/lib/di/injection.dart:23` initializes SDK GetIt registrations.
-- `lib/core/auth/auth_manager.dart:144-163` creates the per-user app scope, opens the SDK Drift database, registers `AppDatabase`, registers `DbManager`, then calls `registerUserSdkDeps(appLocator)`.
-- `packages/drun_sdk/lib/di/init_active_session_scope.dart` registers active SDK configuration data sources for the user session, from projects through assignments. Submission pull is excluded.
-- `packages/drun_sdk/lib/d_sdk.dart` exposes `DSdk.db` over `DbManager`; the obsolete per-DAO facade getters were removed.
-- `packages/drun_sdk/lib/database/db_factory/database_factory.dart` and `packages/drun_sdk/lib/database/db_factory/platform_app.dart` open per-user Drift database files.
+- `pubspec.yaml` now declares the database, datasource, and utility dependencies directly; there is no local `d_sdk` package dependency.
+- `lib/app/di/injection.dart` configures app dependencies, then calls `registerSdkRootDependencies(appLocator)`.
+- `lib/di/injection.dart` explicitly registers the root `DatabaseFactory` dependency. The legacy `rSdkLocator` name remains an alias for `GetIt.instance`.
+- `lib/core/auth/auth_manager.dart` creates the per-user app scope, opens the Drift database, registers `AppDatabase`, registers `DbManager`, then calls `registerUserSdkDeps(appLocator)`.
+- `lib/di/init_active_session_scope.dart` registers active configuration data sources for the user session, from projects through assignments. Submission pull is excluded.
+- `lib/d_sdk.dart` exposes `DSdk.db` over `DbManager`; the obsolete per-DAO facade getters were removed.
+- `lib/database/db_factory/database_factory.dart` and `lib/database/db_factory/platform_app.dart` open per-user Drift database files.
 
-Uncertain:
-
-- `packages/drun_sdk/lib/di/injection.config.dart:69` defines `initActiveSessionContextScope`, but this scan only found app calls to `registerUserSdkDeps` and `setupSdkLocator`.
-
-Obsolete SDK form/sync/query utilities and unregistered datasources were removed
-after app-plus-SDK import, DI, sync-registration, and test closure checks. Form
+The former generated SDK root/session registration alternative was removed after
+registration checks. Obsolete form/sync/query utilities and unregistered datasources were removed
+after import, DI, sync-registration, and test closure checks. Form
 versions continue through `DataFormTemplateDatasource`.
 
 ## 3. Active form-loading path
@@ -77,7 +74,7 @@ Active evidence:
 - `lib/data/form_template_repository.dart:21-27` loads `FormTemplateModel`, options, and option sets.
 - `lib/data/form_template_list_service.dart:154` fetches form templates through `formTemplateVersionsDao.selectFormTemplatesWithRefs(...)`.
 - `lib/data/form_template_list_service.dart:166-197` loads a specific/latest `FormTemplateVersion` with `fields`, `sections`, and merged options.
-- `packages/drun_sdk/lib/database/tables/form_template_versions.table.dart:11-17` stores `fields`, `sections`, and `options` as converted text columns. This is the active "form JSON all at once" source.
+- `lib/database/tables/form_template_versions.table.dart:11-17` stores `fields`, `sections`, and `options` as converted text columns. This is the active "form JSON all at once" source.
 - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:103` builds the full `FormGroup`.
 - `lib/core/form/builder/form_element_control_builder.dart:51` creates repeat sections as full `FormArray` instances from the entire initial repeat list.
 - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:107` builds all form element instances.
@@ -86,10 +83,10 @@ Active evidence:
 
 Active sync source for template JSON:
 
-- `packages/drun_sdk/lib/datasource/remote_data_sources/form_template_datasource.dart:9-10` registers `DataFormTemplateDatasource`.
-- `packages/drun_sdk/lib/datasource/remote_data_sources/form_template_datasource.dart:18-21` extracts form version rows as extra entities.
-- `packages/drun_sdk/lib/datasource/remote_data_sources/form_template_datasource.dart:35-49` fetches `formTemplateVersions?paged=false` and maps them into `FormTemplateVersion`.
-- `packages/drun_sdk/lib/datasource/base_datasource.dart` performs fetch, map, and batch upsert for active SDK sync resources.
+- `lib/datasource/remote_data_sources/form_template_datasource.dart:9-10` registers `DataFormTemplateDatasource`.
+- `lib/datasource/remote_data_sources/form_template_datasource.dart:18-21` extracts form version rows as extra entities.
+- `lib/datasource/remote_data_sources/form_template_datasource.dart:35-49` fetches `formTemplateVersions?paged=false` and maps them into `FormTemplateVersion`.
+- `lib/datasource/base_datasource.dart` performs fetch, map, and batch upsert for active SDK sync resources.
 
 ## 4. Active submission-save path
 
@@ -101,15 +98,15 @@ Active:
 - `lib/features/form_submission/application/element/form_instance.dart:88` reduces `formSection.value` into a full nested map.
 - `lib/features/form_submission/application/element/form_instance.dart:97-100` merges the full form value into `formSubmission.formData`.
 - `lib/features/form_submission/application/element/form_instance.dart:103` writes through `_db.dataInstancesDao.updateData(...)`.
-- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart:198-207` overwrites `formData`, sets sync state to draft, and updates timestamps.
-- `packages/drun_sdk/lib/database/tables/data_submissions.table.dart:39-40` stores `formData` as a nullable JSON text column through `NullAwareMapConverter`.
-- `packages/drun_sdk/lib/database/converters/null_aware_map.converter.dart:6-18` converts the whole map to/from JSON.
+- `lib/database/dao/data_submissions_dao.dart:198-207` overwrites `formData`, sets sync state to draft, and updates timestamps.
+- `lib/database/tables/data_submissions.table.dart:39-40` stores `formData` as a nullable JSON text column through `NullAwareMapConverter`.
+- `lib/database/converters/null_aware_map.converter.dart:6-18` converts the whole map to/from JSON.
 - `lib/features/form_submission/application/element/form_instance.dart:177` marks a submission final through `dataInstancesDao.markFinal`.
-- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart:210-218` marks final by changing sync state and timestamps, not by normalizing form values.
+- `lib/database/dao/data_submissions_dao.dart:210-218` marks final by changing sync state and timestamps, not by normalizing form values.
 
 Inactive or obsolete-looking:
 
-- `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart` is fully commented and references old DHIS/D2 style APIs.
+- The fully commented per-field `submission_capture_repository` path was removed. Active capture remains whole-form JSON through `FormInstance` and `DataInstancesDao`.
 - The fully commented Riverpod `FormInstance` provider experiment was removed; the active `FormInstance` is registered in GetIt scope by the bootstrapper.
 
 ## 5. Active repeat-rendering/editing path
@@ -141,7 +138,7 @@ Uncertain:
 
 Important active repeat data detail:
 
-- `lib/features/form_submission/application/element/repeat_item_instance.dart:24-32` has a row uid field, but `reduceValue()` has the `repeatUid` write commented out. The saved form JSON appears to identify repeat rows by list position, not stable row id.
+- `lib/features/form_submission/application/element/repeat_item_instance.dart` preserves or creates a row `_id` during reduction, and `FormInstance.saveFormData()` normalizes `_id`, `_index`, `_parentId`, and `_submissionUid` before whole-JSON persistence. Upload repeats the normalization as a compatibility guard.
 
 ## 6. State management libraries found
 
@@ -188,21 +185,15 @@ Active:
 Inactive or incomplete-looking:
 
 - `repeat_instances` and `data_values`: obsolete normalized persistence tables, DAOs, datasources, and callers were removed. Schema migration 5 drops populated legacy tables while preserving active `data_instances.formData`; schema 3 and 4 upgrade fixtures cover the transition.
-- `metadata_submissions`:
-  - `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart:6` is commented out.
-  - `packages/drun_sdk/lib/database/tables/tables.dart` exports it, but `AppDatabase` does not include an active `MetadataSubmissions` table.
-  - `lib/data/metadata_submission_update.provider.dart:13` has the old DB query commented out and currently returns `[]`.
-  - `packages/drun_sdk/lib/datasource/remote_data_sources/metadata_submission_datasource.dart` is fully commented.
-  - Classification: obsolete-looking/incomplete.
-- `FormTemplateVersionDatasource`:
-  - Present but inactive-looking because its Injectable annotations are commented and versions are loaded via `DataFormTemplateDatasource.extractExtraEntities`.
+- `metadata_submissions` table/datasource artifacts were removed. `lib/data/metadata_submission_update.provider.dart` remains reachable from reference-field UI but returns `[]`; classify that UI/data path as incomplete until a production form proves the field type is used.
+- The alternate `FormTemplateVersionDatasource` was removed. Versions are loaded through `DataFormTemplateDatasource.extractExtraEntities`.
 
 ## 8. Candidate duplicated services/functions
 
 Observations only:
 
 - Template tree construction appears duplicated:
-  - `packages/drun_sdk/lib/database/shared/form_template_model.dart:22,33` builds a tree in `FormTemplateModel`.
+  - `lib/database/shared/form_template_model.dart:22,33` builds a tree in `FormTemplateModel`.
   - `lib/data/form_template_repository.dart:53,101` builds another tree/cache for runtime rendering.
 - Form instance construction appears duplicated:
   - Active: `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:103-127`.
@@ -214,7 +205,7 @@ Observations only:
 - Submission table/query responsibilities overlap:
   - `lib/features/form_submission/application/form_instance_service_impl.dart` fetches/counts paginated submissions through `DataInstancesDao.selectable/countSubmissions`.
   - `lib/features/data_instance/data/drift_table_repository.dart` also builds table queries and counts through `DataInstancesDao.getFilterQuery`.
-  - `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart` has both `selectSubmissions` and `selectable`, plus count methods.
+  - `lib/database/dao/data_submissions_dao.dart` has both `selectSubmissions` and `selectable`, plus count methods.
 - Submission list state overlaps:
   - `lib/features/form_submission/application/submission_list.provider.dart` manages form submissions and update/sync operations.
   - `lib/features/data_instance/application/table.providers.dart` and `table_controller.provider.dart` manage current table filters, selection, delete, and sync.
@@ -251,8 +242,8 @@ Medium risk:
   - Rule evaluation notifies dependents on value/status changes.
   - Impact depends on number of calculated/visibility/filter dependencies inside repeat rows.
 - Row identity:
-  - `RepeatItemInstance.uid` exists, but `repeatUid` persistence is commented out in `reduceValue()`.
-  - Impact: row identity is index/list-position based unless something else preserves identity outside this path.
+  - `RepeatItemInstance.reduceValue()` persists `_id`, and whole-form normalization supplies the remaining backend metadata while preserving existing IDs.
+  - Impact: future synced-edit enablement must prove IDs survive server round trips and that only newly created rows receive new IDs.
 - Scope lifetime:
   - The active form is a GetIt scope keyed by submission id. Back/save flows drop scopes in several places.
   - Impact: multiple open form routes or unusual navigation could leave stale `FormInstance`/registry state if scope transitions are wrong.
@@ -271,15 +262,14 @@ Treat these as high-risk files until the active paths above are fully understood
 - `lib/app/stacked/app.dart`
 - `lib/app/stacked/app.router.dart` (generated; do not edit directly)
 - `lib/core/auth/auth_manager.dart`
-- `packages/drun_sdk/lib/di/injection.dart`
-- `packages/drun_sdk/lib/di/init_active_session_scope.dart`
-- `packages/drun_sdk/lib/database/app_database.dart`
-- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`
-- `packages/drun_sdk/lib/database/tables/data_submissions.table.dart`
-- `packages/drun_sdk/lib/database/converters/null_aware_map.converter.dart`
-- `packages/drun_sdk/lib/datasource/base_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/form_template_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_datasource_order_map.dart`
+- `lib/di/injection.dart`
+- `lib/di/init_active_session_scope.dart`
+- `lib/database/app_database.dart`
+- `lib/database/dao/data_submissions_dao.dart`
+- `lib/database/tables/data_submissions.table.dart`
+- `lib/database/converters/null_aware_map.converter.dart`
+- `lib/datasource/base_datasource.dart`
+- `lib/datasource/remote_data_sources/form_template_datasource.dart`
 - `lib/data/form_template_repository.dart`
 - `lib/data/form_template_list_service.dart`
 - `lib/core/form/builder/form_element_control_builder.dart`
@@ -307,12 +297,7 @@ Treat these as high-risk files until the active paths above are fully understood
 - `lib/features/data_instance/data/drift_table_repository.dart`
 - `lib/features/data_instance/data/table_repository.dart`
 
-Also do not delete these until their old/partial roles are explicitly resolved:
-
-- `lib/core/element_instance/display_value_lookup.dart`
-- `packages/drun_sdk/lib/database/tables/metadata_submissions.table.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/data_value_datasource.dart`
-- `packages/drun_sdk/lib/datasource/remote_data_sources/metadata_submission_datasource.dart`
+Also do not delete `lib/core/element_instance/display_value_lookup.dart` until its active display-only consumers are understood.
 
 ## Suggested next investigation step
 

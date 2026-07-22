@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 

@@ -1,6 +1,6 @@
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/assignment_status.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/assignment_model.dart';
+import 'package:datarunmobile/database/shared/assignment_status.dart';
 
 abstract class AssignmentService {
   Future<AssignmentModel> fetchById(String id);

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:d_sdk/database/shared/metadata_resource_type.dart';
+import 'package:datarunmobile/database/shared/metadata_resource_type.dart';
 
 class MetadataSubmissionUpdate {
   MetadataSubmissionUpdate({

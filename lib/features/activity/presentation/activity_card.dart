@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/activity_model.dart';
+import 'package:datarunmobile/database/shared/activity_model.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

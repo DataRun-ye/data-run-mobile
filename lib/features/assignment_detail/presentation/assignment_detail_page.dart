@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/assignment_model.dart';
+import 'package:datarunmobile/database/shared/assignment_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';

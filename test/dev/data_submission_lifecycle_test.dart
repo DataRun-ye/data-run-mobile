@@ -1,5 +1,5 @@
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/submission_status.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';

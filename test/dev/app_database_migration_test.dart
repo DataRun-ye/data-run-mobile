@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:drift/drift.dart' show Variable;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';

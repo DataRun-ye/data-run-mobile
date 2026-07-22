@@ -1,7 +1,7 @@
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/dbManager.dart';
-import 'package:d_sdk/database/shared/submission_status.dart';
-import 'package:d_sdk/di/injection.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/dbManager.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
+import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

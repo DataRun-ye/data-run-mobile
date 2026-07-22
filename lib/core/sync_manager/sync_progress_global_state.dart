@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/common/standard_extensions.dart';
-import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
+import 'package:datarunmobile/core/common/standard_extensions.dart';
+import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 
 class SyncProgressGlobalState {
   factory SyncProgressGlobalState.initial({required int totalResources}) =>

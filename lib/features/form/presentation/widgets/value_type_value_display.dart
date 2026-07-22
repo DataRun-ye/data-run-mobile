@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/features/form/application/value_display.provider.dart';
 import 'package:flutter/material.dart';

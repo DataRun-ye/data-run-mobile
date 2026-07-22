@@ -1,6 +1,6 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/core/form/rule/action.dart';
-import 'package:d_sdk/core/form/rule/rule_action.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/core/form/rule/action.dart';
+import 'package:datarunmobile/core/form/rule/rule_action.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
 import 'package:injectable/injectable.dart';
 

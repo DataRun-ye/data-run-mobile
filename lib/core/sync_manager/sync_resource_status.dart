@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/sync/model/sync_progress_event.dart';
+import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 
 class SyncResourceStatus {
   factory SyncResourceStatus.fromEvent(SyncProgressEvent event) {

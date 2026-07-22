@@ -1,6 +1,6 @@
 # Agent Onboarding
 
-This repository contains the running production DataRun mobile/data-collection app and the local SDK package it consumes.
+This repository contains the running production DataRun mobile/data-collection app. The former local `drun_sdk` package has been consolidated into the root `datarunmobile` package; its surviving database, datasource, DI, and form utility code now lives under `lib/`.
 
 Before changing code, read:
 

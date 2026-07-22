@@ -1,6 +1,5 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/collections.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/commons/custom_widgets/expandable_text.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
@@ -24,9 +23,9 @@ class FormSubmissionCreate extends ConsumerWidget {
 
     return AsyncValueWidget(
       value: availableFormsAsync,
-      valueBuilder: (List<Pair<AssignmentForm, bool>> userForms) {
-        final List<Pair<AssignmentForm, bool>> availableLocally =
-            userForms.where((form) => form.second).toList();
+      valueBuilder: (List<AssignmentFormAvailability> userForms) {
+        final availableLocally =
+            userForms.where((form) => form.isAvailableLocally).toList();
         final cs = Theme.of(context).colorScheme;
 
         return FractionallySizedBox(
@@ -79,7 +78,7 @@ class FormSubmissionCreate extends ConsumerWidget {
                       ),
                       itemCount: availableLocally.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final form = availableLocally[index].first;
+                        final form = availableLocally[index].assignmentForm;
                         return _FormListItem(
                             index: index,
                             permission: form,

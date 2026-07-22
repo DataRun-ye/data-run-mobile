@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:d_sdk/database/shared/submission_status.dart';
-import 'package:d_sdk/database/shared/submissions_filter.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
+import 'package:datarunmobile/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
 import 'package:datarunmobile/features/form/presentation/sync_status_icon.dart';
 import 'package:datarunmobile/generated/l10n.dart';

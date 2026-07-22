@@ -10,9 +10,9 @@ Start with `09-production-boundaries-and-work-strategy.md`. It records the curre
 
 ## Repository Purpose
 
-This repo contains the DataRun mobile/data-collection app and the SDK code used by the app. It is a Flutter application for offline-capable field data collection, assignment-driven form access, local form entry, local submission storage, and sync/upload.
+This repo contains the DataRun mobile/data-collection app. It is a Flutter application for offline-capable field data collection, assignment-driven form access, local form entry, local submission storage, and sync/upload.
 
-The app and SDK live in one repository here, even though the SDK is conceptually a module and may also exist remotely. Current production behavior should be judged from this repo's active runtime paths.
+The surviving code from the former local `drun_sdk` package is consolidated into the root `datarunmobile` package. Current production behavior must be judged from this repo's active runtime paths; the stale remote SDK repository is not authoritative.
 
 ## Production Status
 
@@ -20,22 +20,20 @@ Treat this as a messy production repository for a running app. There is stale do
 
 Do not assume an implementation is active because its name sounds right. Some tables and files look form-related but are not part of the active form capture path.
 
-## App Vs SDK Boundary
+## Former SDK Boundary
 
-App code lives mainly under `lib/`.
-
-SDK code lives under `packages/drun_sdk/lib/`.
+All production Dart code now lives under `lib/`. The old physical app/SDK package boundary no longer exists; former SDK origin does not establish current ownership.
 
 Important boundary points:
 
 - `lib/main.dart` starts the production app.
 - app DI is configured from `lib/app/di/injection.dart` and generated `lib/app/di/injection.config.dart`.
 - Stacked routing is generated from `lib/app/stacked/app.dart`.
-- the app opens a user-scoped SDK database and registers active SDK datasources after login/session restore.
-- active SDK sync/data persistence goes through `packages/drun_sdk/lib/database`, `packages/drun_sdk/lib/datasource`, and the active datasource list in `packages/drun_sdk/lib/di/init_active_session_scope.dart`.
-- active form rendering uses app-side builders/models and SDK-stored form template JSON.
+- the app opens a user-scoped Drift database and registers active configuration datasources after login/session restore.
+- active sync/data persistence goes through `lib/database`, `lib/datasource`, and the active datasource list in `lib/di/init_active_session_scope.dart`.
+- active form rendering uses app builders/models and form template JSON stored in Drift.
 
-Do not edit SDK-looking code just because a form feature sounds related. First prove the active app path reaches it.
+Do not assign ownership based on a file's former package location. First prove the active app path, consumers, lifecycle, and persistence/network effects.
 
 ## Known Messy Areas
 
@@ -94,15 +92,15 @@ Core active files:
 - `lib/features/form_submission/presentation/section/repeat_table.widget.dart`
 - `lib/features/form_submission/presentation/section/repeat_table_rows_source.dart`
 - `lib/features/form_submission/presentation/section/edit_row_screen.dart`
-- `packages/drun_sdk/lib/database/dao/data_submissions_dao.dart`
-- `packages/drun_sdk/lib/database/tables/data_submissions.table.dart`
-- `packages/drun_sdk/lib/database/extensions/data_submission.extension.dart`
+- `lib/database/dao/data_submissions_dao.dart`
+- `lib/database/tables/data_submissions.table.dart`
+- `lib/database/extensions/data_submission.extension.dart`
 
 ## Known Inactive Or Incomplete Form-Related Areas
 
 Treat these as inactive, incomplete, or legacy-risk unless runtime evidence proves otherwise:
 
-- `lib/features/form_submission/application/repository/submission_capture_repository_impl.dart`
+- the obsolete per-field `submission_capture_repository` path was removed; do not recreate it beside the active whole-JSON save path.
 - `lib/data/metadata_submission_update.provider.dart` and its reference-field UI remain reachable but incomplete; do not infer active persistence from their names.
 
 The obsolete normalized repeat/data-value persistence path was removed in schema
@@ -266,18 +264,17 @@ Current known risks:
 - repeats with 200-300 rows can create large control/model trees;
 - rule/dependency evaluation walks sections and repeat rows;
 - expression evaluation parses expressions during evaluation;
-- `FieldWidget` value subscriptions appear to need cleanup review;
+- `FieldWidget` value subscriptions cancel on disposal, but listener/rebuild volume still scales with mounted repeat fields;
 - `saveFormData()` writes one whole `formData` JSON object;
-- active save call sites have had unawaited-save risk and need a focused fix;
-- repeat metadata persistence must match the backend V1 shape: `_id`, `_index`, `_parentId`, `_submissionUid`;
+- active save call sites now await persistence; failed-write and concurrent-tap behavior still need characterization;
+- repeat metadata persistence matches the backend V1 shape locally: `_id`, `_index`, `_parentId`, `_submissionUid`; server round-trip editing is not yet validated;
 - generated and old form-state paths can mislead agents into editing inactive code.
 
 Current recommended order for known work:
 
-1. Merge docs/context maps to `develop`.
-2. Implement repeat metadata contract based on `07-repeat-uid-contract.md`.
-3. Run repeat/save checks.
-4. Merge repeat-stability work to `develop`.
-5. Stop before `develop -> main` promotion to discuss production-style release build/signing/smoke.
-6. Return to the team-scoping bug: team selection currently shows all managed teams across activities instead of only managed teams for the same activity.
-7. Continue later with measured large-repeat profiling and targeted performance work.
+1. Complete and validate the behavior-preserving former-SDK package consolidation.
+2. Map each surviving service/state object's responsibility, owner, lifetime, consumers, and persistence/network effects.
+3. Reorganize folders and same-layer services by that proven ownership, keeping mechanical moves separate from behavioral changes.
+4. Consolidate state/DI mechanisms one bounded feature at a time; remove a library only after no active path depends on it.
+5. Revisit form engine/expression ownership and large-repeat performance using the existing harness and real form structures.
+6. Close incomplete access, synced edit/delete, and offline policy only after their contracts are explicit.

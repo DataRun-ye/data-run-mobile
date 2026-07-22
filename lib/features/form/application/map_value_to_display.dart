@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:d_sdk/core/data_instance/field_value.dart';
-import 'package:d_sdk/core/util/string_extension.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/core/data_instance/field_value.dart';
+import 'package:datarunmobile/core/util/string_extension.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/core/element_instance/display_value_lookup.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/reactive_date_time_picker/custom_date_pickers.dart';

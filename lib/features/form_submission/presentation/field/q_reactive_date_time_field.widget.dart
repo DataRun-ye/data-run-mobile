@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/util/date_helper.dart';
-import 'package:d_sdk/database/shared/value_type.dart';
+import 'package:datarunmobile/core/util/date_helper.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/ui/factories/hint_provider.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';

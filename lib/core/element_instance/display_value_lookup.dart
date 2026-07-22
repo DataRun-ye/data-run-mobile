@@ -1,6 +1,6 @@
-import 'package:d_sdk/core/form/element_template/get_item_local_string.dart';
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';

@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
-import 'package:d_sdk/database/shared/assignment_model.dart';
-import 'package:d_sdk/database/shared/collections.dart';
+import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/assignment_model.dart';
+import 'package:datarunmobile/database/shared/collections.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,12 +16,13 @@ Future<List<AssignmentModel>> assignments(
   final List<AssignmentModel> assignments =
       await DSdk.db.assignmentsDao.allAssignments(activityId: activityId);
 
-  final List<Pair<AssignmentForm, bool>> userForms =
+  final List<AssignmentFormAvailability> userForms =
       await ref.watch(userAvailableFormsProvider().future);
 
   return assignments.map((assignment) {
     final List<Pair<AssignmentForm, bool>> assignmentForms = userForms
-        .where((uf) => uf.first.assignment == assignment.id)
+        .where((uf) => uf.assignmentForm.assignment == assignment.id)
+        .map((uf) => Pair(uf.assignmentForm, uf.isAvailableLocally))
         .sorted((a, b) => a.first.form.compareTo(b.first.form))
         .toList();
     return assignment.copyWith(userForms: assignmentForms);

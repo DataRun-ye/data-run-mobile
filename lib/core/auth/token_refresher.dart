@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:d_sdk/core/auth/token_storage.dart';
-import 'package:d_sdk/core/user_session/user_session.dart';
-import 'package:d_sdk/di/app_environment.dart';
+import 'package:datarunmobile/core/auth/token_storage.dart';
+import 'package:datarunmobile/core/user_session/user_session.dart';
+import 'package:datarunmobile/di/app_environment.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 

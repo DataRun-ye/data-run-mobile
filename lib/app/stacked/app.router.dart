@@ -6,7 +6,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:d_sdk/core/user_session/user_session.dart' as _i12;
+import 'package:datarunmobile/core/user_session/user_session.dart' as _i12;
 import 'package:datarunmobile/features/data_instance/presentation/table_screen.dart'
     as _i10;
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart'

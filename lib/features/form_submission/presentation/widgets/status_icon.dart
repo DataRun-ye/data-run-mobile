@@ -1,4 +1,4 @@
-import 'package:d_sdk/database/shared/submission_status.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:flutter/material.dart';
 
 class StatusIcon extends StatefulWidget {

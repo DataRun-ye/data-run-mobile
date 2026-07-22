@@ -13,12 +13,12 @@ part of 'teams.provider.dart';
 final userAvailableFormsProvider = UserAvailableFormsFamily._();
 
 final class UserAvailableFormsProvider extends $FunctionalProvider<
-        AsyncValue<List<Pair<AssignmentForm, bool>>>,
-        List<Pair<AssignmentForm, bool>>,
-        FutureOr<List<Pair<AssignmentForm, bool>>>>
+        AsyncValue<List<AssignmentFormAvailability>>,
+        List<AssignmentFormAvailability>,
+        FutureOr<List<AssignmentFormAvailability>>>
     with
-        $FutureModifier<List<Pair<AssignmentForm, bool>>>,
-        $FutureProvider<List<Pair<AssignmentForm, bool>>> {
+        $FutureModifier<List<AssignmentFormAvailability>>,
+        $FutureProvider<List<AssignmentFormAvailability>> {
   UserAvailableFormsProvider._(
       {required UserAvailableFormsFamily super.from,
       required String? super.argument})
@@ -42,12 +42,12 @@ final class UserAvailableFormsProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $FutureProviderElement<List<Pair<AssignmentForm, bool>>> $createElement(
+  $FutureProviderElement<List<AssignmentFormAvailability>> $createElement(
           $ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Pair<AssignmentForm, bool>>> create(Ref ref) {
+  FutureOr<List<AssignmentFormAvailability>> create(Ref ref) {
     final argument = this.argument as String?;
     return userAvailableForms(
       ref,
@@ -67,11 +67,11 @@ final class UserAvailableFormsProvider extends $FunctionalProvider<
 }
 
 String _$userAvailableFormsHash() =>
-    r'b17420bd6ba2b577ab5166c8df786b474e0d1130';
+    r'8998646893c5b6498e98ca1cdc5d2ff1fc11f7b5';
 
 final class UserAvailableFormsFamily extends $Family
     with
-        $FunctionalFamilyOverride<FutureOr<List<Pair<AssignmentForm, bool>>>,
+        $FunctionalFamilyOverride<FutureOr<List<AssignmentFormAvailability>>,
             String?> {
   UserAvailableFormsFamily._()
       : super(

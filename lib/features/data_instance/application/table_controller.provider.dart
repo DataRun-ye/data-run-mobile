@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/sync/sync_summary_model.dart';
-import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/core/sync/sync_summary_model.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
 import 'package:datarunmobile/features/data_instance/data/table_repository.dart';

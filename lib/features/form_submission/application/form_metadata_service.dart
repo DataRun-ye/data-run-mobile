@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:d_sdk/core/form/attribute_type.dart';
-import 'package:d_sdk/core/util/date_helper.dart';
-import 'package:d_sdk/d_sdk.dart';
-import 'package:d_sdk/database/app_database.dart';
+import 'package:datarunmobile/core/form/attribute_type.dart';
+import 'package:datarunmobile/core/util/date_helper.dart';
+import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:injectable/injectable.dart';

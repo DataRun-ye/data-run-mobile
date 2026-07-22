@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/util/list_extensions.dart';
-import 'package:d_sdk/database/shared/form_option.dart';
+import 'package:datarunmobile/core/util/list_extensions.dart';
+import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

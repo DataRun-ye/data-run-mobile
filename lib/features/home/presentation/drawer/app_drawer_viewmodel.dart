@@ -1,5 +1,5 @@
-import 'package:d_sdk/core/logging/new_app_logging.dart';
-import 'package:d_sdk/core/user_session/user_session.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/user_session/user_session.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/network/network_util.dart';
 import 'package:datarunmobile/app/di/injection.dart';

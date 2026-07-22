@@ -1,5 +1,5 @@
-import 'package:d_sdk/database/shared/d_identifiable_model.dart';
-import 'package:d_sdk/database/shared/submission_sync_status_model.dart';
+import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
+import 'package:datarunmobile/database/shared/submission_sync_status_model.dart';
 
 class FormListItemModel extends IdentifiableModel {
   FormListItemModel({

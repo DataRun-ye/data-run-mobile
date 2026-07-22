@@ -1,4 +1,4 @@
-import 'package:d_sdk/core/code_generator.dart';
+import 'package:datarunmobile/core/code_generator.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';

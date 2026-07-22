@@ -14,9 +14,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('profile ITNs repeat form at multiple row counts', () async {
-    const formPath = 'example/ITNs Household Distribution Form.json';
+    const formPath =
+        'test/fixtures/legacy_forms/ITNs Household Distribution Form.json';
     const submissionPath =
-        'example/ITNs Household Distribution submission.json';
+        'test/fixtures/legacy_submissions/ITNs Household Distribution submission.json';
     const repeatPath = ['households_information', 'householdnames'];
     const rowCounts = [50, 150, 300];
 

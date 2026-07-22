@@ -1,0 +1,2440 @@
+{
+  "id": "rkwH5QNofRn",
+  "name": "health_facilities_supervision_laboratory_402",
+  "label": {
+    "ar": "الإشراف على المرافق الصحية (مخبري)",
+    "en": "Health Facility Supervision (Laboratory)"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "Y0UVcIutUWv",
+  "versionNumber": 8,
+  "fields": [
+    {
+      "id": "E0mkcxV1MAU",
+      "code": "DateAndTime",
+      "type": "DateTime",
+      "resourceType": null,
+      "order": 101,
+      "path": "main.E0mkcxV1MAU",
+      "name": "DateAndTime",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الوقت والتاريخ",
+        "en": "DateAndTime"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "ztV4iHHaNzF",
+      "code": "contact_name",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 105,
+      "path": "main.ztV4iHHaNzF",
+      "name": "contact_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم مسؤول المختبر",
+        "en": "contact_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "dzs71rsLPrt",
+      "code": "mobile_phone",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 106,
+      "path": "main.dzs71rsLPrt",
+      "name": "mobile_phone",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم تلفون مسؤول المختبر",
+        "en": "mobile_phone"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "eCWUsNAc8Ma",
+      "code": "lab_registers",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 107,
+      "path": "main.eCWUsNAc8Ma",
+      "name": "lab_registers",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "bh7ZbTM33rX",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "السجلات",
+        "en": "lab_registers"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "WPcJigF5d3c",
+      "code": "lab_posters",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 108,
+      "path": "main.WPcJigF5d3c",
+      "name": "lab_posters",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "LVPJtB1pcr7",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الملصقات",
+        "en": "lab_posters"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "UCkj09fyP6k",
+      "code": "mrdt_tested",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 202,
+      "path": "cases.UCkj09fyP6k",
+      "name": "mrdt_tested",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المفحوصين للملاريا (فحص سريع)",
+        "en": "mrdt_tested"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "wmPvpmUiLhM",
+      "code": "mrdt_pf",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 203,
+      "path": "cases.wmPvpmUiLhM",
+      "name": "mrdt_pf",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "mrdt_pf",
+          "expression": "#{mrdt_tested} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{mrdt_tested} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "PF",
+        "en": "mrdt_pf"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xoAeJZiHpS3",
+      "code": "mrdt_pv_pan_mixed",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 204,
+      "path": "cases.xoAeJZiHpS3",
+      "name": "mrdt_pv_pan_mixed",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "mrdt_pv_pan_mixed",
+          "expression": "#{mrdt_tested} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{mrdt_tested} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "PV/PAN/Mixed",
+        "en": "mrdt_pv_pan_mixed"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rMVnjcEOBdR",
+      "code": "mic_tested",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 205,
+      "path": "cases.rMVnjcEOBdR",
+      "name": "mic_tested",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المفحوصين بالمجهر",
+        "en": "mic_tested"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "nrV6is8GHit",
+      "code": "mic_pf",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 206,
+      "path": "cases.nrV6is8GHit",
+      "name": "mic_pf",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "mic_pf",
+          "expression": "#{mic_tested} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{mic_tested} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "PF",
+        "en": "mic_pf"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "oQbto93KT9E",
+      "code": "mic_pv_mixed_other",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 207,
+      "path": "cases.oQbto93KT9E",
+      "name": "mic_pv_mixed_other",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "mic_pv_mixed_other",
+          "expression": "#{mic_tested} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{mic_tested} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "PV/Mixed/Other",
+        "en": "mic_pv_mixed_other"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rOmzE8QozC7",
+      "code": "drdt_tested",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 208,
+      "path": "cases.rOmzE8QozC7",
+      "name": "drdt_tested",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المفحوصين للضنك",
+        "en": "drdt_tested"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rYqB5hxtYKH",
+      "code": "drdt_ns1",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 209,
+      "path": "cases.rYqB5hxtYKH",
+      "name": "drdt_ns1",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "drdt_ns1",
+          "expression": "#{drdt_tested} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{drdt_tested} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "NS1",
+        "en": "drdt_ns1"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "sN5iwFPUjO8",
+      "code": "drdt_igm",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 210,
+      "path": "cases.sN5iwFPUjO8",
+      "name": "drdt_igm",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "drdt_igm",
+          "expression": "#{drdt_tested} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{drdt_tested} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "IgM",
+        "en": "drdt_igm"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "zBGJVg0yqSv",
+      "code": "drdt_igg",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 211,
+      "path": "cases.zBGJVg0yqSv",
+      "name": "drdt_igg",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "drdt_igg",
+          "expression": "#{drdt_tested} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{drdt_tested} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "IgG",
+        "en": "drdt_igg"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "yMDltXGuqx4",
+      "code": "microscopy_applied",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 301,
+      "path": "quality.yMDltXGuqx4",
+      "name": "microscopy_applied",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "يتم فحص الملاريا بالمجهر",
+        "en": "microscopy_applied"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "YNgmEGrn23U",
+      "code": "mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 302,
+      "path": "quality.YNgmEGrn23U",
+      "name": "mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "mic_slides_evaluated",
+          "expression": "#{microscopy_applied} == 'yes'  || #{microscopy_applied} == 'Yes' || #{microscopy_applied} == true",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{microscopy_applied} == 'yes'  || #{microscopy_applied} == 'Yes' || #{microscopy_applied} == true",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "Microscopic slide حدد عدد",
+        "en": "mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "eGONKKTXYiu",
+      "code": "negative_mic_slides_lab",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 303,
+      "path": "quality.eGONKKTXYiu",
+      "name": "negative_mic_slides_lab",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Negative (بحسب نتائج المختبر)",
+        "en": "negative_mic_slides_lab"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "dARoBiyAR4j",
+      "code": "negative_mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 304,
+      "path": "quality.dARoBiyAR4j",
+      "name": "negative_mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Negative (بعد تقييم ضبط الجودة)",
+        "en": "negative_mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "k4nXyMzy2EA",
+      "code": "positive_mic_slides_lab",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 305,
+      "path": "quality.k4nXyMzy2EA",
+      "name": "positive_mic_slides_lab",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Positive (بحسب نتائج المختبر)",
+        "en": "positive_mic_slides_lab"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "mTOLMjDP8I2",
+      "code": "positive_mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 306,
+      "path": "quality.mTOLMjDP8I2",
+      "name": "positive_mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Positive (بعد تقييم ضبط الجودة)",
+        "en": "positive_mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "hufRMlBeind",
+      "code": "parasite_density_mic_slides_lab",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 307,
+      "path": "quality.hufRMlBeind",
+      "name": "parasite_density_mic_slides_lab",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Parasite Denisty (بحسب نتائج المختبر)",
+        "en": "parasite_density_mic_slides_lab"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xFkMvYaw28D",
+      "code": "parasite_density_mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 308,
+      "path": "quality.xFkMvYaw28D",
+      "name": "parasite_density_mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Parasite Denisty (بعد تقييم ضبط الجودة)",
+        "en": "parasite_density_mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "KMsPOC6YfLQ",
+      "code": "pf_mic_slides_lab",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 309,
+      "path": "quality.KMsPOC6YfLQ",
+      "name": "pf_mic_slides_lab",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "pf (بحسب نتائج المختبر)",
+        "en": "pf_mic_slides_lab"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "hyM3XFU2jGn",
+      "code": "pf_mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 310,
+      "path": "quality.hyM3XFU2jGn",
+      "name": "pf_mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "pf (بعد تقييم ضبط الجودة)",
+        "en": "pf_mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "mB6DBxK6fQ2",
+      "code": "pv_mic_slides_lab",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 311,
+      "path": "quality.mB6DBxK6fQ2",
+      "name": "pv_mic_slides_lab",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "pv (بحسب نتائج المختبر)",
+        "en": "pv_mic_slides_lab"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "lAsYUoYGfn1",
+      "code": "pv_mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 312,
+      "path": "quality.lAsYUoYGfn1",
+      "name": "pv_mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "pv (بعد تقييم ضبط الجودة)",
+        "en": "pv_mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "A8D9pk73zbG",
+      "code": "mixed_mic_slides_lab",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 313,
+      "path": "quality.A8D9pk73zbG",
+      "name": "mixed_mic_slides_lab",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Mixed (بحسب نتائج المختبر)",
+        "en": "mixed_mic_slides_lab"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "QUlPYRzKa2M",
+      "code": "mixed_mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 314,
+      "path": "quality.QUlPYRzKa2M",
+      "name": "mixed_mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Mixed (بعد تقييم ضبط الجودة)",
+        "en": "mixed_mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "hYMNELAzTGH",
+      "code": "pm_mic_slides_lab",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 315,
+      "path": "quality.hYMNELAzTGH",
+      "name": "pm_mic_slides_lab",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Pm (بحسب نتائج المختبر)",
+        "en": "pm_mic_slides_lab"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Iyy8aTjKF9E",
+      "code": "pm_mic_slides_evaluated",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 316,
+      "path": "quality.Iyy8aTjKF9E",
+      "name": "pm_mic_slides_evaluated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "Pm (بعد تقييم ضبط الجودة)",
+        "en": "pm_mic_slides_evaluated"
+      },
+      "properties": {},
+      "parent": "quality",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "vmJTcIl8cFL",
+      "code": "mrdt_testing",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 503,
+      "path": "training.trainee.vmJTcIl8cFL",
+      "name": "mrdt_testing",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الفحص السريع للملاريا",
+        "en": "mrdt_testing"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Pxcqc0tpGdL",
+      "code": "drdt_testing",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 503,
+      "path": "training.trainee.Pxcqc0tpGdL",
+      "name": "drdt_testing",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الفحص السريع للضنك",
+        "en": "drdt_testing"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "TICY5Y3Az2F",
+      "code": "pf_mic__identification",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 504,
+      "path": "training.trainee.TICY5Y3Az2F",
+      "name": "pf_mic__identification",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تشخيص PF بالمجهر",
+        "en": "pf_mic_identification"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DM5Sc5sxCH9",
+      "code": "pv_pm_mic_identification_trained",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 505,
+      "path": "training.trainee.DM5Sc5sxCH9",
+      "name": "pv_pm_mic_identification_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "التشخيص المجهري PV-PM",
+        "en": "pv_pm_mic_identification_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xfOBmpykXLD",
+      "code": "malaria_smear_staining",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 506,
+      "path": "training.trainee.xfOBmpykXLD",
+      "name": "malaria_smear_staining",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "مهارات الصبغ والتحضير",
+        "en": "malaria_smear_staining"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xYH8EJpjq5D",
+      "code": "mrdt_testing_trained",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 507,
+      "path": "training.trainee.xYH8EJpjq5D",
+      "name": "mrdt_testing_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الفحص السريع للملاريا",
+        "en": "mrdt_testing_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "PvlSjS8r3rB",
+      "code": "drdt_testing_trained",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 508,
+      "path": "training.trainee.PvlSjS8r3rB",
+      "name": "drdt_testing_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الفحص السريع للضنك",
+        "en": "drdt_testing_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "KnKQmfhRjCQ",
+      "code": "pf_mic_identification_trained",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 509,
+      "path": "training.trainee.KnKQmfhRjCQ",
+      "name": "pf_mic_identification_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "التشخيص المجهري PF",
+        "en": "pf_mic_identification_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IrTvgEEkCM4",
+      "code": "malaria_smear_staining_trained",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 510,
+      "path": "training.trainee.IrTvgEEkCM4",
+      "name": "malaria_smear_staining_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "مهارات الصبغ والتحضير",
+        "en": "malaria_smear_staining_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "HHUziixvBzD",
+      "code": "microscope_handling_trained",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 511,
+      "path": "training.trainee.HHUziixvBzD",
+      "name": "microscope_handling_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "التعامل مع المجهر الضوئي",
+        "en": "microscope_handling_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "HYZefhuTsyX",
+      "code": "lab_recording_trained",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 512,
+      "path": "training.trainee.HYZefhuTsyX",
+      "name": "lab_recording_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تنظيم سجل المختبر",
+        "en": "lab_recording_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "uHGNMg0yxaA",
+      "code": "other_lab_skills_trained",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 513,
+      "path": "training.trainee.uHGNMg0yxaA",
+      "name": "other_lab_skills_trained",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "مهارات اخرى",
+        "en": "other_lab_skills_trained"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "T7QqiTeFdHF",
+      "code": "month_name",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 201,
+      "path": "cases.T7QqiTeFdHF",
+      "name": "month_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "NN8fDdIJmCn",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الشهر",
+        "en": "month_name"
+      },
+      "properties": {},
+      "parent": "cases",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "WmJGlvdSW1c",
+      "code": "lab_staff_total",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 401,
+      "path": "training.WmJGlvdSW1c",
+      "name": "lab_staff_total",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المخولين بتقديم خدمات الفحص في المرفق الصحي",
+        "en": "lab_staff_total"
+      },
+      "properties": {},
+      "parent": "training",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "aro2zqKnqgg",
+      "code": "lab_staff_present",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 402,
+      "path": "training.aro2zqKnqgg",
+      "name": "lab_staff_present",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المتواجدين أثناء الزيارة",
+        "en": "lab_staff_present"
+      },
+      "properties": {},
+      "parent": "training",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "YtBEZsXvD5A",
+      "code": "name",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 501,
+      "path": "training.trainee.YtBEZsXvD5A",
+      "name": "name",
+      "description": "Name of the patient",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الاسم الرباعي",
+        "en": "name"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "EHIXCT3t3te",
+      "code": "phone",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 502,
+      "path": "training.trainee.EHIXCT3t3te",
+      "name": "phone",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم الهاتف",
+        "en": "phone"
+      },
+      "properties": {},
+      "parent": "trainee",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "cases",
+      "code": null,
+      "path": "cases",
+      "parent": null,
+      "name": "cases",
+      "description": null,
+      "order": 200,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "الحالات",
+        "en": "cases"
+      },
+      "properties": {}
+    },
+    {
+      "id": "trainee",
+      "code": null,
+      "path": "training.trainee",
+      "parent": "training",
+      "name": "trainee",
+      "description": null,
+      "order": 500,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "المدربين",
+        "en": "trainee"
+      },
+      "properties": {}
+    },
+    {
+      "id": "training",
+      "code": null,
+      "path": "training",
+      "parent": null,
+      "name": "training",
+      "description": null,
+      "order": 400,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "التدريب",
+        "en": "training"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "عام",
+        "en": "main"
+      },
+      "properties": {}
+    },
+    {
+      "id": "quality",
+      "code": null,
+      "path": "quality",
+      "parent": null,
+      "name": "quality",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "quality",
+          "expression": "#{mic_slides_evaluated} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{mic_slides_evaluated} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "ضبط جودة الفحص المجهري",
+        "en": "quality"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "LVPJtB1pcr7",
+      "displayName": "posters_lab",
+      "label": {},
+      "translations": [],
+      "name": "posters_lab",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "NN8fDdIJmCn",
+      "displayName": "monthnames",
+      "label": {},
+      "translations": [],
+      "name": "monthnames",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "bh7ZbTM33rX",
+      "displayName": "facility_registers_lab",
+      "label": {},
+      "translations": [],
+      "name": "facility_registers_lab",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "LVPJtB1pcr7": [
+      {
+        "id": "01K1EHH6BPZ6C0MRVMNEXMQWAC",
+        "displayName": "malaria_case_management",
+        "label": {
+          "ar": "ملصقات تدبير حالات الملاريا",
+          "en": "malaria_case_management"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_case_management"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ملصقات تدبير حالات الملاريا"
+          }
+        ],
+        "name": "malaria_case_management",
+        "code": "malaria_case_management",
+        "optionSet": "LVPJtB1pcr7",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K1EHJN98G1V9BWZZF5NF3XZ8",
+        "displayName": "mrdt_posters",
+        "label": {
+          "ar": "ملصقات فحص الملاري",
+          "en": "mrdt_posters"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ملصقات فحص الملاري"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "mrdt_posters"
+          }
+        ],
+        "name": "mrdt_posters",
+        "code": "mrdt_posters",
+        "optionSet": "LVPJtB1pcr7",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K1EHN2HG1ZQPN5DHXYH0ZDNE",
+        "displayName": "standard_case_difination",
+        "label": {
+          "ar": "ملصقات التعريف القياسي للأمراض",
+          "en": "standard_case_difination"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "standard_case_difination"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ملصقات التعريف القياسي للأمراض"
+          }
+        ],
+        "name": "standard_case_difination",
+        "code": "standard_case_difination",
+        "optionSet": "LVPJtB1pcr7",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K1EHP25XCYSC6SWW966QDF4R",
+        "displayName": "drdt_poster",
+        "label": {
+          "ar": "ملصق فحص الضنك",
+          "en": "drdt_poster"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "drdt_poster"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ملصق فحص الضنك"
+          }
+        ],
+        "name": "drdt_poster",
+        "code": "drdt_poster",
+        "optionSet": "LVPJtB1pcr7",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "NN8fDdIJmCn": [
+      {
+        "id": "01JZKZ1GZP8QYDGGF23E7FN5ZD",
+        "displayName": "January",
+        "label": {
+          "ar": "يناير",
+          "en": "January"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "January"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يناير"
+          }
+        ],
+        "name": "January",
+        "code": "January",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ2NHXYEWKJAXVDMKMETKY",
+        "displayName": "February",
+        "label": {
+          "ar": "فبراير",
+          "en": "February"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "February"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فبراير"
+          }
+        ],
+        "name": "February",
+        "code": "February",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ5P2YX638JA8EFC0QJ0WV",
+        "displayName": "March",
+        "label": {
+          "ar": "مارس",
+          "en": "March"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مارس"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "March"
+          }
+        ],
+        "name": "March",
+        "code": "March",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ6R027E4JAPV8NWBHQ94X",
+        "displayName": "April",
+        "label": {
+          "ar": "أبريل",
+          "en": "April"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أبريل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "April"
+          }
+        ],
+        "name": "April",
+        "code": "April",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ8P61C9AD6PK5RKWH3BV9",
+        "displayName": "May",
+        "label": {
+          "ar": "مايو",
+          "en": "May"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "May"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مايو"
+          }
+        ],
+        "name": "May",
+        "code": "May",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ9XK8X7A29P6R9F376KCK",
+        "displayName": "June",
+        "label": {
+          "ar": "يونيو",
+          "en": "June"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "June"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يونيو"
+          }
+        ],
+        "name": "June",
+        "code": "June",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZB2T25359A6DSDSMCCKE1",
+        "displayName": "July",
+        "label": {
+          "ar": "يوليو",
+          "en": "July"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يوليو"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "July"
+          }
+        ],
+        "name": "July",
+        "code": "July",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZC51M5ATZ7KF2D51S1M7M",
+        "displayName": "August",
+        "label": {
+          "ar": "أغسطس",
+          "en": "August"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "August"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أغسطس"
+          }
+        ],
+        "name": "August",
+        "code": "August",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZD1N3CCHV3EKXBS9A07QK",
+        "displayName": "September",
+        "label": {
+          "ar": "سبتمبر",
+          "en": "September"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سبتمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "September"
+          }
+        ],
+        "name": "September",
+        "code": "September",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZE624KEFTWWHBV2E0EA2D",
+        "displayName": "October",
+        "label": {
+          "ar": "أكتوبر",
+          "en": "October"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أكتوبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "October"
+          }
+        ],
+        "name": "October",
+        "code": "October",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZFDN7K7VTAA3WDJWY20Y8",
+        "displayName": "November",
+        "label": {
+          "ar": "نوفمبر",
+          "en": "November"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نوفمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "November"
+          }
+        ],
+        "name": "November",
+        "code": "November",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZGDJWHMKRTT52V1BWQP6N",
+        "displayName": "December",
+        "label": {
+          "ar": "ديسمبر",
+          "en": "December"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ديسمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "December"
+          }
+        ],
+        "name": "December",
+        "code": "December",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "bh7ZbTM33rX": [
+      {
+        "id": "01K1EH91PB7W3FC3VPVWBQK66B",
+        "displayName": "case register",
+        "label": {
+          "ar": "سجل الحالات",
+          "en": "case register"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سجل الحالات"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "case register"
+          }
+        ],
+        "name": "case_register",
+        "code": "case_register",
+        "optionSet": "bh7ZbTM33rX",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K1EH91PB95NNF31AA57YRZDM",
+        "displayName": "lab register",
+        "label": {
+          "ar": "سجل المختبر",
+          "en": "lab register"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سجل المختبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "lab register"
+          }
+        ],
+        "name": "lab_register",
+        "code": "lab_register",
+        "optionSet": "bh7ZbTM33rX",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K1EH91PBDJXW8EV5P7Q4EP4J",
+        "displayName": "supply register",
+        "label": {
+          "ar": "سجل الإمداد",
+          "en": "supply register"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "supply register"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سجل الإمداد"
+          }
+        ],
+        "name": "supply_register",
+        "code": "supply_register",
+        "optionSet": "bh7ZbTM33rX",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K1EH91PBST88AZRZ9KNF3561",
+        "displayName": "physcian register",
+        "label": {
+          "ar": "سجل الطبيب",
+          "en": "physcian register"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "physcian register"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سجل الطبيب"
+          }
+        ],
+        "name": "physcian_register",
+        "code": "physcian_register",
+        "optionSet": "bh7ZbTM33rX",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K1EH91PBKA5G0AEPRKYZEG19",
+        "displayName": "Surveillance form",
+        "label": {
+          "ar": "استمارات الترصد",
+          "en": "Surveillance form"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Surveillance form"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "استمارات الترصد"
+          }
+        ],
+        "name": "surveillance_form",
+        "code": "surveillance_form",
+        "optionSet": "bh7ZbTM33rX",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

@@ -5,7 +5,6 @@ import 'package:datarunmobile/core/form/builder/form_element_control_builder.dar
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/section_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/template.dart';
-import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -15,22 +14,20 @@ import 'support/form_template_fixture.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('example form templates build and evaluate with repeat rows', () async {
-    final files = Directory('example')
+  test('captured live form templates build and evaluate with repeat rows',
+      () async {
+    final files = Directory('test/fixtures/live_forms')
         .listSync()
         .whereType<File>()
         .where((file) => file.path.endsWith('.json'))
-        .where((file) => !file.path.toLowerCase().contains('submission'))
+        .where((file) => !file.path.endsWith('manifest.json'))
         .toList()
       ..sort((left, right) => left.path.compareTo(right.path));
 
     expect(files, isNotEmpty);
 
     for (final file in files) {
-      final template = formTemplateFromJson(await readJsonMap(file.path));
-      final repository = FormTemplateRepository.inMemory(
-        formTemplateModel: template,
-      );
+      final repository = formRepositoryFromJson(await readJsonMap(file.path));
       final initialValue = {
         for (final child in repository.rootSection.children)
           child.name!: _initialValueFor(child),

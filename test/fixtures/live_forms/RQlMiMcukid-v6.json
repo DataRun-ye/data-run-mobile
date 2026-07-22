@@ -1,0 +1,403 @@
+{
+  "id": "RQlMiMcukid",
+  "name": "جلسات التثقيف المجتمعي",
+  "label": {
+    "ar": "جلسات التثقيف المجتمعي",
+    "en": "Community Awareness Sessions"
+  },
+  "description": "Form to register information about community awareness sessions conducted by community health volunteers",
+  "disabled": false,
+  "versionUid": "wBQIssKTvtO",
+  "versionNumber": 6,
+  "fields": [
+    {
+      "id": "h9lLB6azsbz",
+      "code": "sessiondate",
+      "type": "Date",
+      "resourceType": null,
+      "order": 1,
+      "path": "sessionInfo.h9lLB6azsbz",
+      "name": "sessiondate",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تاريخ الجلسات",
+        "en": "Session date"
+      },
+      "properties": {},
+      "parent": "sessionInfo",
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "qIJ4NoG2i9m",
+      "code": "itns_usage_awareds",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 302,
+      "path": "itnusage.qIJ4NoG2i9m",
+      "name": "itns_usage_awareds",
+      "description": "itns_usage_awareds iccm chv itns usage",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المستفيدين",
+        "en": "itns_usage_awareds"
+      },
+      "properties": {},
+      "parent": "itnusage",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "PbwfREioFwp",
+      "code": "lsm_awareds",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 402,
+      "path": "lsms.PbwfREioFwp",
+      "name": "lsm_awareds",
+      "description": "lsm_awareds iccm chv breedingsource",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المستفيدين",
+        "en": "lsm_awareds"
+      },
+      "properties": {},
+      "parent": "lsms",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "gu3DDB7HiYc",
+      "code": "malaria_transmission_awareds",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 502,
+      "path": "malariaprevention.gu3DDB7HiYc",
+      "name": "malaria_transmission_awareds",
+      "description": "malaria_transmission_awareds iccm chv",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المستفيدين",
+        "en": "malaria_transmission_awareds"
+      },
+      "properties": {},
+      "parent": "malariaprevention",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "hYZTy4iBWsH",
+      "code": "chv_session_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 1,
+      "path": "sessionInfo.hYZTy4iBWsH",
+      "name": "chv_session_type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "bHFSj8zpJhh",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "موضوع الجلسة",
+        "en": "chv_session_type"
+      },
+      "properties": {},
+      "parent": "sessionInfo",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "itnusage",
+      "code": null,
+      "path": "itnusage",
+      "parent": null,
+      "name": "itnusage",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "itnusage",
+          "expression": "#{chv_session_type} == 'itns_usage'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_session_type} == 'itns_usage'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "الاستخدام الامثل للناموسيات",
+        "en": "itnusage"
+      },
+      "properties": {}
+    },
+    {
+      "id": "sessionInfo",
+      "code": null,
+      "path": "sessionInfo",
+      "parent": null,
+      "name": "sessionInfo",
+      "description": null,
+      "order": 2,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "تفاصيل الجلسات",
+        "en": "Sessions Information"
+      },
+      "properties": {}
+    },
+    {
+      "id": "lsms",
+      "code": null,
+      "path": "lsms",
+      "parent": null,
+      "name": "lsms",
+      "description": null,
+      "order": 400,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "lsms",
+          "expression": "#{chv_session_type} == 'lsm'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_session_type} == 'lsm'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "مكافحة مصادر التوالد",
+        "en": "lsms"
+      },
+      "properties": {}
+    },
+    {
+      "id": "malariaprevention",
+      "code": null,
+      "path": "malariaprevention",
+      "parent": null,
+      "name": "malariaprevention",
+      "description": null,
+      "order": 500,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "malariaprevention",
+          "expression": "#{chv_session_type} == 'malarial_transmission'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_session_type} == 'malarial_transmission'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "طرق انتقال الملاريا والوقاية منها",
+        "en": "malariaprevention"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "bHFSj8zpJhh",
+      "displayName": "community_education_session_types",
+      "label": {},
+      "translations": [],
+      "name": "community_education_session_types",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "bHFSj8zpJhh": [
+      {
+        "id": "01KAP7H6RD7A9V6PC4P5MD67GP",
+        "displayName": "itns_usage",
+        "label": {
+          "ar": "الاستخدام الامثل للناموسيات",
+          "en": "itns_usage"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "itns_usage"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "الاستخدام الامثل للناموسيات"
+          }
+        ],
+        "name": "itns_usage",
+        "code": "itns_usage",
+        "optionSet": "bHFSj8zpJhh",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01KAP7JQ7XZ9T3BW5J03YYWD37",
+        "displayName": "lsm",
+        "label": {
+          "ar": "مكافحة مصادر التوالد",
+          "en": "lsm"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مكافحة مصادر التوالد"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "lsm"
+          }
+        ],
+        "name": "lsm",
+        "code": "lsm",
+        "optionSet": "bHFSj8zpJhh",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01KAP7N64MKVMDQCNP45PRQTV0",
+        "displayName": "malarial_transmission",
+        "label": {
+          "ar": "طرق انتقال الملاريا والوقاية منها",
+          "en": "malarial_transmission"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "طرق انتقال الملاريا والوقاية منها"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malarial_transmission"
+          }
+        ],
+        "name": "malarial_transmission",
+        "code": "malarial_transmission",
+        "optionSet": "bHFSj8zpJhh",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

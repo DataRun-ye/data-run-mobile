@@ -1,0 +1,1921 @@
+{
+  "id": "BoEmHvJUEpb",
+  "name": "outdoor_larval_source_management_103v2",
+  "label": {
+    "ar": "مكافحة المصادر اليرقية خارج المنازل",
+    "en": "Outdoor Larval Source Management"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "FaFWE6NezXq",
+  "versionNumber": 5,
+  "fields": [
+    {
+      "id": "E0mkcxV1MAU",
+      "code": "DateAndTime",
+      "type": "DateTime",
+      "resourceType": null,
+      "order": 2,
+      "path": "main.E0mkcxV1MAU",
+      "name": "DateAndTime",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الوقت والتاريخ",
+        "en": "DateAndTime"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "K707nuFwPNQ",
+      "code": "entomological_control_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 3,
+      "path": "main.K707nuFwPNQ",
+      "name": "entomological_control_type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "yfy38amrdBu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المكافحة",
+        "en": "entomological_control_type"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "wZIDLQtSHL2",
+      "code": "NotificationNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 4,
+      "path": "main.wZIDLQtSHL2",
+      "name": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "NotificationNumber",
+          "expression": "#{entomological_control_type} == 'Emergency'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{entomological_control_type} == 'Emergency'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم البلاغ",
+        "en": "NotificationNumber"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "BIynIGHLO0u",
+      "code": "location_name",
+      "type": "Text",
+      "resourceType": null,
+      "order": 5,
+      "path": "main.BIynIGHLO0u",
+      "name": "location_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المكان\\الوادي",
+        "en": "location_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "w8VQRZmmz82",
+      "code": "serialNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 23,
+      "path": "larvalHabitats.w8VQRZmmz82",
+      "name": "serialNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الرقم التسلسلي",
+        "en": "serialNumber"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "XI9l2WkRPmT",
+      "code": "owner_name",
+      "type": "Text",
+      "resourceType": null,
+      "order": 24,
+      "path": "larvalHabitats.XI9l2WkRPmT",
+      "name": "owner_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم صاحب الموقع",
+        "en": "owner_name"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "HnT6A4HtrQh",
+      "code": "discreption",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 25,
+      "path": "larvalHabitats.HnT6A4HtrQh",
+      "name": "discreption",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "وصف الموقع",
+        "en": "discreption"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "mUu9BZx3QpC",
+      "code": "de_breeding_habitat_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 26,
+      "path": "larvalHabitats.mUu9BZx3QpC",
+      "name": "breeding_habitat_type",
+      "description": "نوع موطن التوالد اكتب رقم النوع بحسب التحديد أسفل الاستمارة",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "okB4N6tZJZO",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع موطن النوالد",
+        "en": "breeding_habitat_type"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "jJ4vaBhbQHp",
+      "code": "de_other_breeding_habitat",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 27,
+      "path": "larvalHabitats.jJ4vaBhbQHp",
+      "name": "other_breeding_habitat",
+      "description": "lsm other_breeding_habitat",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "other_breeding_habitat",
+          "expression": "#{breeding_habitat_type} == 'other_habitats'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{breeding_habitat_type} == 'other_habitats'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "موقع توالد اخر",
+        "en": "other_breeding_habitat"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "zqnPYStRoev",
+      "code": "de_breeding_habitats_count",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 28,
+      "path": "larvalHabitats.zqnPYStRoev",
+      "name": "breeding_habitats_count",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "غدد مصادرالتوالد",
+        "en": "breeding_habitats_count"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "mGHLQY04tN2",
+      "code": "length_meter",
+      "type": "Number",
+      "resourceType": null,
+      "order": 29,
+      "path": "larvalHabitats.mGHLQY04tN2",
+      "name": "length_meter",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "length_meter",
+        "en": "length_meter"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "uCKju0bDUUU",
+      "code": "width_meter",
+      "type": "Number",
+      "resourceType": null,
+      "order": 30,
+      "path": "larvalHabitats.uCKju0bDUUU",
+      "name": "width_meter",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "العرض (متر)",
+        "en": "width_meter"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DG3J4OdqRjJ",
+      "code": "depth_meter",
+      "type": "Number",
+      "resourceType": null,
+      "order": 31,
+      "path": "larvalHabitats.DG3J4OdqRjJ",
+      "name": "depth_meter",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "العمق (متر)",
+        "en": "depth_meter"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Q7u6K10eslq",
+      "code": "de_Larval_stage_presence",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 32,
+      "path": "larvalHabitats.Q7u6K10eslq",
+      "name": "Larval_stage_presence",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "وجود الطور اليرقي",
+        "en": "Larval_stage_presence"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "MQLS3HDQqNS",
+      "code": "MosquitoSpecies",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 33,
+      "path": "larvalHabitats.MQLS3HDQqNS",
+      "name": "MosquitoSpecies",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "z9VYq4N0OUF",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "MosquitoSpecies",
+          "expression": "#{Larval_stage_presence} == 'yes'  || #{Larval_stage_presence} == true || #{Larval_stage_presence} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{Larval_stage_presence} == 'yes'  || #{Larval_stage_presence} == true || #{Larval_stage_presence} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "تصنيف الطور اليرقي",
+        "en": "MosquitoSpecies"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "A3QIFLTnpjw",
+      "code": "lsm_main_type_no",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 34,
+      "path": "larvalHabitats.A3QIFLTnpjw",
+      "name": "lsm_main_type_no",
+      "description": "103 outdoor lsm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "q7Wp5iZjyAQ",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المكافحة اليرقية",
+        "en": "lsm_main_type"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "tS6p00Tz1t9",
+      "code": "limitor_grams",
+      "type": "Number",
+      "resourceType": null,
+      "order": 36,
+      "path": "larvalHabitats.tS6p00Tz1t9",
+      "name": "limitor_grams",
+      "description": "limitor_grams growth regulator",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "limitor_grams",
+          "expression": "#{lsm_main_type_no} == 'larviciding' || #{lsm_main_type_no} == 'reduction_and_larviciding'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lsm_main_type_no} == 'larviciding' || #{lsm_main_type_no} == 'reduction_and_larviciding'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "ليميتور(جرام)",
+        "en": "limitor_grams"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "G1m7BOobaK2",
+      "code": "de_temphos_ml",
+      "type": "Number",
+      "resourceType": null,
+      "order": 37,
+      "path": "larvalHabitats.G1m7BOobaK2",
+      "name": "temphos_ml",
+      "description": "lsm larviciding temphos_ml",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "temphos_ml",
+          "expression": "#{lsm_main_type_no} == 'larviciding' || #{lsm_main_type_no} == 'reduction_and_larviciding'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lsm_main_type_no} == 'larviciding' || #{lsm_main_type_no} == 'reduction_and_larviciding'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "تيميفوس(مل)",
+        "en": "temphos_ml"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rtzJqRG4pj7",
+      "code": "other_parties_participated",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 38,
+      "path": "larvalHabitats.rtzJqRG4pj7",
+      "name": "other_parties_participated",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "وجود مشاركة مجتمعية",
+        "en": "other_parties_participated"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "K5Y0xicRHdQ",
+      "code": "community_participants",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 39,
+      "path": "larvalHabitats.K5Y0xicRHdQ",
+      "name": "community_participants",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "community_participants",
+          "expression": "#{other_parties_participated} == 'yes' || #{other_parties_participated} == true",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{other_parties_participated} == 'yes' || #{other_parties_participated} == true",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المشاركين من المجتمع",
+        "en": "community_participants"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "LyK1TEyKmkl",
+      "code": "official_initiative_parties",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 39,
+      "path": "larvalHabitats.LyK1TEyKmkl",
+      "name": "official_initiative_parties",
+      "description": "lsm supervision",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "official_initiative_parties",
+          "expression": "#{other_parties_participated} == 'yes' || #{other_parties_participated} == true",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{other_parties_participated} == 'yes' || #{other_parties_participated} == true",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "الجهة المشاركة",
+        "en": "official_initiative_parties"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "dE0j3zR19UZ",
+      "code": "lsm_source_reduction_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 35,
+      "path": "larvalHabitats.dE0j3zR19UZ",
+      "name": "lsm_source_reduction_type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "ieX7XJhPYWI",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "lsm_source_reduction_type",
+          "expression": "#{lsm_main_type_no} == 'source_reduction' || #{lsm_main_type_no} == 'reduction_and_larviciding'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lsm_main_type_no} == 'source_reduction' || #{lsm_main_type_no} == 'reduction_and_larviciding'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع التدخل الهتدسي",
+        "en": "lsm_source_reduction_type"
+      },
+      "properties": {},
+      "parent": "larvalHabitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "larvalHabitats",
+      "code": null,
+      "path": "larvalHabitats",
+      "parent": null,
+      "name": "larvalHabitats",
+      "description": null,
+      "order": 18,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "مصادر التوالد",
+        "en": "larvalHabitats"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 1,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "بيانات عامة",
+        "en": "main"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "ieX7XJhPYWI",
+      "displayName": "lsm_source_reduction_type",
+      "label": {},
+      "translations": [],
+      "name": "lsm_source_reduction_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "okB4N6tZJZO",
+      "displayName": "breeding_habitats",
+      "label": {},
+      "translations": [],
+      "name": "breeding_habitats",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "q7Wp5iZjyAQ",
+      "displayName": "lsm_main_type_noother",
+      "label": {},
+      "translations": [],
+      "name": "lsm_main_type_noother",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "yfy38amrdBu",
+      "displayName": "EntomologicalControlType",
+      "label": {},
+      "translations": [],
+      "name": "EntomologicalControlType",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "z9VYq4N0OUF",
+      "displayName": "Mosquito Species",
+      "label": {
+        "ar": "أنواع البعوض",
+        "en": "Mosquito Species"
+      },
+      "translations": [
+        {
+          "locale": "ar",
+          "property": "name",
+          "value": "أنواع البعوض"
+        },
+        {
+          "locale": "en",
+          "property": "name",
+          "value": "Mosquito Species"
+        }
+      ],
+      "name": "MosquitoSpecies",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "ieX7XJhPYWI": [
+      {
+        "id": "01K16D87NWQCPD7WZQPX4A6GS5",
+        "displayName": "permanent",
+        "label": {
+          "ar": "ازالة دائمة",
+          "en": "permanent"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ازالة دائمة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "permanent"
+          }
+        ],
+        "name": "permanent",
+        "code": "permanent",
+        "optionSet": "ieX7XJhPYWI",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K16DAKPE4SZ4QYDYBFPNV0JM",
+        "displayName": "temporary",
+        "label": {
+          "ar": "تصريف مؤقت",
+          "en": "temporary"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "temporary"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تصريف مؤقت"
+          }
+        ],
+        "name": "temporary",
+        "code": "temporary",
+        "optionSet": "ieX7XJhPYWI",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "okB4N6tZJZO": [
+      {
+        "id": "01JZ45CAC9N0KJD7K4QBX6TZDN",
+        "displayName": "swamp",
+        "label": {
+          "ar": "مستنقع مائي",
+          "en": "swamp"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "swamp"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مستنقع مائي"
+          }
+        ],
+        "name": "swamp",
+        "code": "swamp",
+        "optionSet": "okB4N6tZJZO",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACB35KG0G6NC52WRR78",
+        "displayName": "Excavation, foundations, and man-made water storage barriers",
+        "label": {
+          "ar": "حفر واساسات بناء \\ حواجز تخزين مياه من صنع الانسان",
+          "en": "Excavation, foundations, and man-made water storage barriers"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Excavation, foundations, and man-made water storage barriers"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "حفر واساسات بناء \\ حواجز تخزين مياه من صنع الانسان"
+          }
+        ],
+        "name": "man_made_water_storages",
+        "code": "man_made_water_storages",
+        "optionSet": "okB4N6tZJZO",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACENJPGQTAVYGWBWQ16",
+        "displayName": "exposed water tanks",
+        "label": {
+          "ar": "خزانات مياه مكشوفة",
+          "en": "exposed water tanks"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "خزانات مياه مكشوفة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "exposed water tanks"
+          }
+        ],
+        "name": "exposed_water_tanks",
+        "code": "exposed_water_tanks",
+        "optionSet": "okB4N6tZJZO",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACKE2TX94J26SJCZCKY",
+        "displayName": "banks of a watercourse (valley)",
+        "label": {
+          "ar": "ضفاف مجرى مائي (وادي)",
+          "en": "banks of a watercourse (valley)"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "banks of a watercourse (valley)"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ضفاف مجرى مائي (وادي)"
+          }
+        ],
+        "name": "watercourses_valley",
+        "code": "watercourses_valley",
+        "optionSet": "okB4N6tZJZO",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACMHJKPZHWKENG11BMX",
+        "displayName": "pond",
+        "label": {
+          "ar": "بركة",
+          "en": "pond"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "pond"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بركة"
+          }
+        ],
+        "name": "pond",
+        "code": "pond",
+        "optionSet": "okB4N6tZJZO",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACNDXQZ0Z24CCD4WQKC",
+        "displayName": "tires",
+        "label": {
+          "ar": "إطارات",
+          "en": "tires"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إطارات"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "tires"
+          }
+        ],
+        "name": "tires",
+        "code": "tires",
+        "optionSet": "okB4N6tZJZO",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACPXTHSVF7GFX3E14VY",
+        "displayName": "sewage cesspool",
+        "label": {
+          "ar": "تجمع مجاري/بيارات",
+          "en": "sewage cesspool"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "sewage cesspool"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تجمع مجاري/بيارات"
+          }
+        ],
+        "name": "sewage_cesspool",
+        "code": "sewage_cesspool",
+        "optionSet": "okB4N6tZJZO",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACQGBK51X76AF4RVMQ8",
+        "displayName": "agricultural channels",
+        "label": {
+          "ar": "قنوات زراعية",
+          "en": "agricultural channels"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "قنوات زراعية"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "agricultural channels"
+          }
+        ],
+        "name": "agricultural_channels",
+        "code": "agricultural_channels",
+        "optionSet": "okB4N6tZJZO",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACR66VWK5A5Y5W7ZNYH",
+        "displayName": "water barriers",
+        "label": {
+          "ar": "حواجز مائية",
+          "en": "water barriers"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "حواجز مائية"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "water barriers"
+          }
+        ],
+        "name": "water_barriers",
+        "code": "water_barriers",
+        "optionSet": "okB4N6tZJZO",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACSBBV29GFTZ1A0ASZB",
+        "displayName": "Household water storage containers",
+        "label": {
+          "ar": "اوعية حفظ المياه في المنازل (دبب، اكواز، وغيرها)",
+          "en": "Household water storage containers"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Household water storage containers"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اوعية حفظ المياه في المنازل (دبب، اكواز، وغيرها)"
+          }
+        ],
+        "name": "Household_water_storage_containers",
+        "code": "Household_water_storage_containers",
+        "optionSet": "okB4N6tZJZO",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CACTYQFRXFR0A86W8A4N",
+        "displayName": "Other (specify)",
+        "label": {
+          "ar": "اخرى (حددها)",
+          "en": "Other (specify)"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى (حددها)"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Other (specify)"
+          }
+        ],
+        "name": "other_habitats",
+        "code": "other_habitats",
+        "optionSet": "okB4N6tZJZO",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "q7Wp5iZjyAQ": [
+      {
+        "id": "01K175YRK938HZKV7GBMGQYY5F",
+        "displayName": "source_reduction",
+        "label": {
+          "ar": "هندسي",
+          "en": "source_reduction"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "source_reduction"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "هندسي"
+          }
+        ],
+        "name": "source_reduction",
+        "code": "source_reduction",
+        "optionSet": "q7Wp5iZjyAQ",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K175YRK96HJ2KGYPM7Q4HGXE",
+        "displayName": "larviciding",
+        "label": {
+          "ar": "مبيد",
+          "en": "larviciding"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "larviciding"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مبيد"
+          }
+        ],
+        "name": "larviciding",
+        "code": "larviciding",
+        "optionSet": "q7Wp5iZjyAQ",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K175YRK9ZQ4NQ9KWED65DKM5",
+        "displayName": "reduction_and_larviciding",
+        "label": {
+          "ar": "هندسي مع رش مبيد",
+          "en": "reduction_and_larviciding"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "هندسي مع رش مبيد"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "reduction_and_larviciding"
+          }
+        ],
+        "name": "reduction_and_larviciding",
+        "code": "reduction_and_larviciding",
+        "optionSet": "q7Wp5iZjyAQ",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "yfy38amrdBu": [
+      {
+        "id": "01JZG5JE9F9PS8F9V03GXW9M8S",
+        "displayName": "Routine",
+        "label": {
+          "ar": "روتيني",
+          "en": "Routine"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "روتيني"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Routine"
+          }
+        ],
+        "name": "Routine",
+        "code": "Routine",
+        "optionSet": "yfy38amrdBu",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZG5N1EBT9KDC7ZPZJPHGQ7A",
+        "displayName": "Emergency",
+        "label": {
+          "ar": "طوارئ",
+          "en": "Emergency"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "طوارئ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Emergency"
+          }
+        ],
+        "name": "Emergency",
+        "code": "Emergency",
+        "optionSet": "yfy38amrdBu",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "z9VYq4N0OUF": [
+      {
+        "id": "01JZ45CANHBE7NHMPWMV3J8V7B",
+        "displayName": "Anopheles arabiensis",
+        "label": {
+          "ar": "Anopheles arabiensis",
+          "en": "Anopheles arabiensis"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Anopheles arabiensis"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Anopheles arabiensis"
+          }
+        ],
+        "name": "An.arabiensis",
+        "code": "An.arabiensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANJCJY8783F630RQN48",
+        "displayName": "Anopheles sergentii",
+        "label": {
+          "ar": "Anopheles sergentii",
+          "en": "Anopheles sergentii"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Anopheles sergentii"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Anopheles sergentii"
+          }
+        ],
+        "name": "An.sergentii",
+        "code": "An.sergentii",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANK86DFPSN9J0BK5TXY",
+        "displayName": "An. culicifacies",
+        "label": {
+          "ar": "An. culicifacies",
+          "en": "An. culicifacies"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. culicifacies"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. culicifacies"
+          }
+        ],
+        "name": "An.culicifacies",
+        "code": "An.culicifacies",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANK0748S5D9QGT5HJXH",
+        "displayName": "An. stephensi",
+        "label": {
+          "ar": "An. stephensi",
+          "en": "An. stephensi"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. stephensi"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. stephensi"
+          }
+        ],
+        "name": "An.stephensi",
+        "code": "An.stephensi",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANMJF1EN19TH8SP0DTF",
+        "displayName": "An. dthali",
+        "label": {
+          "ar": "An. dthali",
+          "en": "An. dthali"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. dthali"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. dthali"
+          }
+        ],
+        "name": "An.dthali",
+        "code": "An.dthali",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANMSR55D386R0RZ9DKB",
+        "displayName": "An.rhodesiensis",
+        "label": {
+          "ar": "An. rhodesiensis",
+          "en": "An.rhodesiensis"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. rhodesiensis"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An.rhodesiensis"
+          }
+        ],
+        "name": "An. rhodesiensis",
+        "code": "An. rhodesiensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANN7G29ZNFJ1ST31S76",
+        "displayName": "An. pretoriensis",
+        "label": {
+          "ar": "An. pretoriensis",
+          "en": "An. pretoriensis"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. pretoriensis"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. pretoriensis"
+          }
+        ],
+        "name": "An.pretoriensis",
+        "code": "An.pretoriensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANNXRF4BZVDXRXPEWQ0",
+        "displayName": "An.turkhudi",
+        "label": {
+          "ar": "An. turkhudi",
+          "en": "An.turkhudi"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. turkhudi"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An.turkhudi"
+          }
+        ],
+        "name": "An. turkhudi",
+        "code": "An. turkhudi",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANPE70T81E9VMAQKS89",
+        "displayName": "An. algeriensis",
+        "label": {
+          "ar": "An. algeriensis",
+          "en": "An. algeriensis"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. algeriensis"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. algeriensis"
+          }
+        ],
+        "name": "An.algeriensis",
+        "code": "An.algeriensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANPSGNKKG54EDZ4ENXX",
+        "displayName": "An. multicolor",
+        "label": {
+          "ar": "An. multicolor",
+          "en": "An. multicolor"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. multicolor"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. multicolor"
+          }
+        ],
+        "name": "An.multicolor",
+        "code": "An.multicolor",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANP8M2PRDN38AA7EZ92",
+        "displayName": "Ae. aegypti",
+        "label": {
+          "ar": "Ae. aegypti",
+          "en": "Ae. aegypti"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. aegypti"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. aegypti"
+          }
+        ],
+        "name": "Ae.aegypti",
+        "code": "Ae.aegypti",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANQXXDVNRCANKEJS64X",
+        "displayName": "Ae. vittatus",
+        "label": {
+          "ar": "Ae. vittatus",
+          "en": "Ae. vittatus"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. vittatus"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. vittatus"
+          }
+        ],
+        "name": "Ae.vittatus",
+        "code": "Ae.vittatus",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANQNJ9NZPBCBW0QS1JN",
+        "displayName": "Ae. vexans",
+        "label": {
+          "ar": "Ae. vexans",
+          "en": "Ae. vexans"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. vexans"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. vexans"
+          }
+        ],
+        "name": "Ae.vexans",
+        "code": "Ae.vexans",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 13,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANRGPJ2AW2KCPD1YVRX",
+        "displayName": "Ae. caspius",
+        "label": {
+          "ar": "Ae. caspius",
+          "en": "Ae. caspius"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. caspius"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. caspius"
+          }
+        ],
+        "name": "Ae.caspius",
+        "code": "Ae.caspius",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 14,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANRP392B5T4FASW0K6C",
+        "displayName": "Ae. albupictus",
+        "label": {
+          "ar": "Ae. albupictus",
+          "en": "Ae. albupictus"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. albupictus"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. albupictus"
+          }
+        ],
+        "name": "Ae.albupictus",
+        "code": "Ae.albupictus",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 15,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANS0243GZ2YRG0DRZGK",
+        "displayName": "CulexSpecies",
+        "label": {
+          "ar": "CulexSpecies",
+          "en": "CulexSpecies"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "CulexSpecies"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "CulexSpecies"
+          }
+        ],
+        "name": "CulexSpecies",
+        "code": "CulexSpecies",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 16,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANSYSXEK7ZMX79S51ZJ",
+        "displayName": "Other",
+        "label": {
+          "ar": "صنف آخر",
+          "en": "Other"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "صنف آخر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Other"
+          }
+        ],
+        "name": "OtherSpecies",
+        "code": "OtherSpecies",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 17,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

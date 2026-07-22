@@ -1,0 +1,1408 @@
+{
+  "id": "YLcsWJlB7uy",
+  "name": "emergency_investigation_and_response_lab_202",
+  "label": {
+    "ar": "التقصي والاستجابة الطارئة (مخبري)",
+    "en": "Emergency Investigation and Response (Laboratory)"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "Xo3tiwn1elJ",
+  "versionNumber": 4,
+  "fields": [
+    {
+      "id": "YSRmNhpN1ry",
+      "code": "emergency_team_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 101,
+      "path": "main.YSRmNhpN1ry",
+      "name": "emergency_team_type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "pb6PTAOtcZ5",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "فريق التدخل الطارئ",
+        "en": "emergency_team_type"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "scxTYkhsvwp",
+      "code": "other",
+      "type": "Text",
+      "resourceType": null,
+      "order": 102,
+      "path": "main.scxTYkhsvwp",
+      "name": "other",
+      "description": null,
+      "options": [],
+      "mandatory": false,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "other",
+          "expression": "#{emergency_team_type} == 'other_emr_team'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{emergency_team_type} == 'other_emr_team'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "أخرى",
+        "en": "other"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "wZIDLQtSHL2",
+      "code": "NotificationNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 103,
+      "path": "main.wZIDLQtSHL2",
+      "name": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم البلاغ الطارئ",
+        "en": "NotificationNumber"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "LyIGccZ5mna",
+      "code": "visitdate",
+      "type": "Date",
+      "resourceType": null,
+      "order": 104,
+      "path": "main.LyIGccZ5mna",
+      "name": "visitdate",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تاريخ الاستجابة",
+        "en": "visitdate"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "w8VQRZmmz82",
+      "code": "serialNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 201,
+      "path": "patients.w8VQRZmmz82",
+      "name": "serialNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الرقم التسلسلي",
+        "en": "serialNumber"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "hiBiDozHei7",
+      "code": "PatientId",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 202,
+      "path": "patients.hiBiDozHei7",
+      "name": "PatientId",
+      "description": "cpes Patient Id",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم المريض",
+        "en": "PatientId"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "KBmP3fPjrLG",
+      "code": "PatientName",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 203,
+      "path": "patients.KBmP3fPjrLG",
+      "name": "PatientName",
+      "description": "cpes Patient Name",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المريض",
+        "en": "PatientName"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "GQbku0J0BTA",
+      "code": "is_test_preformed",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 204,
+      "path": "patients.GQbku0J0BTA",
+      "name": "is_test_preformed",
+      "description": "test performed",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "zK7EdFCwpx9",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تم عمل فحوصات",
+        "en": "is_test_preformed"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "BqErQ3xrUex",
+      "code": "de_lab_test",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 301,
+      "path": "patients.investigations.BqErQ3xrUex",
+      "name": "lab_test_type",
+      "description": "test performed, rdt dengue malaria , microscopy, other test or none in mass treatment",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "PiGAyROTsAB",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الفحص",
+        "en": "lab_test_type"
+      },
+      "properties": {},
+      "parent": "investigations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "jLX69mxv8JJ",
+      "code": "de_test_result",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 302,
+      "path": "patients.investigations.jLX69mxv8JJ",
+      "name": "test_result",
+      "description": "test result, positve or negative",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "tQjriOFVC2T",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "test_result",
+          "expression": "#{lab_test_type} != 'none'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lab_test_type} != 'none'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نتيجة الفحص",
+        "en": "test_result"
+      },
+      "properties": {},
+      "parent": "investigations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IiDjTXKA9cY",
+      "code": "other_lab_test_type",
+      "type": "Text",
+      "resourceType": null,
+      "order": 307,
+      "path": "patients.investigations.IiDjTXKA9cY",
+      "name": "other_lab_test_type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "other_lab_test_type",
+          "expression": "#{lab_test_type} == 'other'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lab_test_type} == 'other'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الفحص الاخر",
+        "en": "other_lab_test_type"
+      },
+      "properties": {},
+      "parent": "investigations",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rxRO7xoeHq7",
+      "code": "other_lab_test_result",
+      "type": "Text",
+      "resourceType": null,
+      "order": 308,
+      "path": "patients.investigations.rxRO7xoeHq7",
+      "name": "other_lab_test_result",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "other_lab_test_result",
+          "expression": "#{lab_test_type} == 'other'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lab_test_type} == 'other'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نتيجة الفحص الاخر",
+        "en": "other_lab_test_result"
+      },
+      "properties": {},
+      "parent": "investigations",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "VfNoULcNZ0R",
+      "code": "mrdt_positive_types",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 304,
+      "path": "patients.investigations.VfNoULcNZ0R",
+      "name": "mrdt_positive_types",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "ISh7s9y1md4",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "mrdt_positive_types",
+          "expression": "#{lab_test_type} == 'mrdt' && #{test_result} == 'positive'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lab_test_type} == 'mrdt' && #{test_result} == 'positive'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الايجابي للملاريا فحص سريع",
+        "en": "mrdt_positive_types"
+      },
+      "properties": {},
+      "parent": "investigations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "LVvDwD3uK4H",
+      "code": "mic_positive_types",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 305,
+      "path": "patients.investigations.LVvDwD3uK4H",
+      "name": "mic_positive_types",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "YINY2NUHdPo",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "mic_positive_types",
+          "expression": "#{lab_test_type} == 'microscopy' && #{test_result} == 'positive'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lab_test_type} == 'microscopy' && #{test_result} == 'positive'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الايجابي للملاريا مجهريا",
+        "en": "mic_positive_types"
+      },
+      "properties": {},
+      "parent": "investigations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "t0xvnON73rJ",
+      "code": "drdt_positive_types",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 306,
+      "path": "patients.investigations.t0xvnON73rJ",
+      "name": "drdt_positive_types",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "ySRdItzNQH4",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "drdt_positive_types",
+          "expression": "#{lab_test_type} == 'drdt' && #{test_result} == 'positive'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{lab_test_type} == 'drdt' && #{test_result} == 'positive'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الايجابي للضنك",
+        "en": "drdt_positive_types"
+      },
+      "properties": {},
+      "parent": "investigations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "patients",
+      "code": null,
+      "path": "patients",
+      "parent": null,
+      "name": "patients",
+      "description": null,
+      "order": 200,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "الحالات",
+        "en": "patients"
+      },
+      "properties": {}
+    },
+    {
+      "id": "investigations",
+      "code": null,
+      "path": "patients.investigations",
+      "parent": "patients",
+      "name": "investigations",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "investigations",
+          "expression": "#{is_test_preformed} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{is_test_preformed} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "الفحوصات",
+        "en": "investigations"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "en": "main"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "ISh7s9y1md4",
+      "displayName": "Malaria RDT Positive Type",
+      "label": {
+        "ar": "نوع إيجابي اختبار الملاريا السريع",
+        "en": "Malaria RDT Positive Type"
+      },
+      "translations": [
+        {
+          "locale": "en",
+          "property": "name",
+          "value": "Malaria RDT Positive Type"
+        },
+        {
+          "locale": "ar",
+          "property": "name",
+          "value": "نوع إيجابي اختبار الملاريا السريع"
+        }
+      ],
+      "name": "mrdt_positive_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "PiGAyROTsAB",
+      "displayName": "rdt_micro_other_none",
+      "label": {},
+      "translations": [],
+      "name": "rdt_micro_other_none",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "YINY2NUHdPo",
+      "displayName": "Microscopy Positive Type",
+      "label": {
+        "ar": "نوع إيجابي الفحص المجهري",
+        "en": "Microscopy Positive Type"
+      },
+      "translations": [
+        {
+          "locale": "en",
+          "property": "name",
+          "value": "Microscopy Positive Type"
+        },
+        {
+          "locale": "ar",
+          "property": "name",
+          "value": "نوع إيجابي الفحص المجهري"
+        }
+      ],
+      "name": "mic_positive_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "pb6PTAOtcZ5",
+      "displayName": "emergency_team_type",
+      "label": {},
+      "translations": [],
+      "name": "emergency_team_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "tQjriOFVC2T",
+      "displayName": "negativepositive",
+      "label": {},
+      "translations": [],
+      "name": "negativepositive",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "ySRdItzNQH4",
+      "displayName": "Dengue RDT Positive Type",
+      "label": {
+        "ar": "نوع إيجابي اختبار حمى الضنك السريع",
+        "en": "Dengue RDT Positive Type"
+      },
+      "translations": [
+        {
+          "locale": "en",
+          "property": "name",
+          "value": "Dengue RDT Positive Type"
+        },
+        {
+          "locale": "ar",
+          "property": "name",
+          "value": "نوع إيجابي اختبار حمى الضنك السريع"
+        }
+      ],
+      "name": "drdt_positive_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "zK7EdFCwpx9",
+      "displayName": "yesno",
+      "label": {},
+      "translations": [],
+      "name": "yesno",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "ISh7s9y1md4": [
+      {
+        "id": "01K9CXTZ4BJKFVRXVDT8YMBZ0Q",
+        "displayName": "pf",
+        "label": {
+          "ar": "pf",
+          "en": "pf"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "pf"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "pf"
+          }
+        ],
+        "name": "pf",
+        "code": "pf",
+        "optionSet": "ISh7s9y1md4",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K9CXVJ854A9KSVGPEC7N4QP6",
+        "displayName": "pv",
+        "label": {
+          "ar": "pv",
+          "en": "pv"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "pv"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "pv"
+          }
+        ],
+        "name": "pv",
+        "code": "pv",
+        "optionSet": "ISh7s9y1md4",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K9CXX86C8CPTW6CC4ZM5AW28",
+        "displayName": "pan",
+        "label": {
+          "ar": "pan",
+          "en": "pan"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "pan"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "pan"
+          }
+        ],
+        "name": "pan",
+        "code": "pan",
+        "optionSet": "ISh7s9y1md4",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "PiGAyROTsAB": [
+      {
+        "id": "01JZ45C9ZP8DPAVGH6PW851S66",
+        "displayName": "mrdt",
+        "label": {
+          "ar": "فحص سريع للملاريا",
+          "en": "mrdt"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "mrdt"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فحص سريع للملاريا"
+          }
+        ],
+        "name": "mrdt",
+        "code": "mrdt",
+        "optionSet": "PiGAyROTsAB",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9ZSWT1JMAW9BZXG0B9X",
+        "displayName": "drdt",
+        "label": {
+          "ar": "فحص سريع للضنك",
+          "en": "drdt"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "drdt"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فحص سريع للضنك"
+          }
+        ],
+        "name": "drdt",
+        "code": "drdt",
+        "optionSet": "PiGAyROTsAB",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9ZWGSQDP9ZW6E080H55",
+        "displayName": "microscopy",
+        "label": {
+          "ar": "فحص مجهري",
+          "en": "microscopy"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فحص مجهري"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "microscopy"
+          }
+        ],
+        "name": "microscopy",
+        "code": "microscopy",
+        "optionSet": "PiGAyROTsAB",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9ZYAM5HJABGKPK6XJH9",
+        "displayName": "other",
+        "label": {
+          "ar": "اخرى",
+          "en": "other"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "other"
+          }
+        ],
+        "name": "other",
+        "code": "other",
+        "optionSet": "PiGAyROTsAB",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA09JCG5JV7E6ED72R3K",
+        "displayName": "none",
+        "label": {
+          "ar": "لا شيئ",
+          "en": "none"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا شيئ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "none"
+          }
+        ],
+        "name": "none",
+        "code": "none",
+        "optionSet": "PiGAyROTsAB",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "YINY2NUHdPo": [
+      {
+        "id": "01K9CY2P368Y7DFT7TKPQYVEJ8",
+        "displayName": "pf",
+        "label": {
+          "ar": "pf",
+          "en": "pf"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "pf"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "pf"
+          }
+        ],
+        "name": "pf",
+        "code": "pf",
+        "optionSet": "YINY2NUHdPo",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K9CY391Z90XFYBC9V1WF86MX",
+        "displayName": "pv",
+        "label": {
+          "ar": "pv",
+          "en": "pv"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "pv"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "pv"
+          }
+        ],
+        "name": "pv",
+        "code": "pv",
+        "optionSet": "YINY2NUHdPo",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K9CY3K01P2RTGP2H2Z21YB7N",
+        "displayName": "pm",
+        "label": {
+          "ar": "pm",
+          "en": "pm"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "pm"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "pm"
+          }
+        ],
+        "name": "pm",
+        "code": "pm",
+        "optionSet": "YINY2NUHdPo",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K9CY3X8DNA5JPX31NXMXE8X9",
+        "displayName": "po",
+        "label": {
+          "ar": "po",
+          "en": "po"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "po"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "po"
+          }
+        ],
+        "name": "po",
+        "code": "po",
+        "optionSet": "YINY2NUHdPo",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "pb6PTAOtcZ5": [
+      {
+        "id": "01JZT52FG2JYQBMY255VPNW96H",
+        "displayName": "malaria_unit",
+        "label": {
+          "ar": "وحدة الملاريا",
+          "en": "malaria_unit"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "وحدة الملاريا"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_unit"
+          }
+        ],
+        "name": "malaria_unit",
+        "code": "malaria_unit",
+        "optionSet": "pb6PTAOtcZ5",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT56SP7S1P97D11HR430YQW",
+        "displayName": "central",
+        "label": {
+          "ar": "(فريق مركزي (برنامج الملاريا",
+          "en": "central"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "central"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "(فريق مركزي (برنامج الملاريا"
+          }
+        ],
+        "name": "central",
+        "code": "central",
+        "optionSet": "pb6PTAOtcZ5",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT5CGCMA8C4MGMG51SF519Q",
+        "displayName": "other_emr_team",
+        "label": {
+          "ar": "اخرى",
+          "en": "other_emr_team"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "other_emr_team"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى"
+          }
+        ],
+        "name": "other_emr_team",
+        "code": "other_emr_team",
+        "optionSet": "pb6PTAOtcZ5",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "tQjriOFVC2T": [
+      {
+        "id": "01JZ45CAMD31W2610M513SZD4H",
+        "displayName": "negative",
+        "label": {
+          "ar": "negative",
+          "en": "negative"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "negative"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "negative"
+          }
+        ],
+        "name": "negative",
+        "code": "negative",
+        "optionSet": "tQjriOFVC2T",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAMFM1MZ0CJ7Q51G4B26",
+        "displayName": "positive",
+        "label": {
+          "ar": "positive",
+          "en": "positive"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "positive"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "positive"
+          }
+        ],
+        "name": "positive",
+        "code": "positive",
+        "optionSet": "tQjriOFVC2T",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "ySRdItzNQH4": [
+      {
+        "id": "01K9CXZP1YB1DXB2XMMJW4CSFT",
+        "displayName": "NS1",
+        "label": {
+          "ar": "NS1",
+          "en": "NS1"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "NS1"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "NS1"
+          }
+        ],
+        "name": "NS1",
+        "code": "NS1",
+        "optionSet": "ySRdItzNQH4",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K9CY05ZQ6PZSFV1YBC4VXS5V",
+        "displayName": "IgM",
+        "label": {
+          "ar": "IgM",
+          "en": "IgM"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "IgM"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "IgM"
+          }
+        ],
+        "name": "IgM",
+        "code": "IgM",
+        "optionSet": "ySRdItzNQH4",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K9CY0NQGCCFH79EPN4C9CA98",
+        "displayName": "IgG",
+        "label": {
+          "ar": "IgG",
+          "en": "IgG"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "IgG"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "IgG"
+          }
+        ],
+        "name": "IgG",
+        "code": "IgG",
+        "optionSet": "ySRdItzNQH4",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "zK7EdFCwpx9": [
+      {
+        "id": "01JZ45CAEZDBAYF4J5VSB5FT7J",
+        "displayName": "Yes",
+        "label": {
+          "ar": "نعم",
+          "en": "Yes"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نعم"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Yes"
+          }
+        ],
+        "name": "yes",
+        "code": "yes",
+        "optionSet": "zK7EdFCwpx9",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAF0HQHVP4WP6YG48MFT",
+        "displayName": "No",
+        "label": {
+          "ar": "لا",
+          "en": "No"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "No"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا"
+          }
+        ],
+        "name": "no",
+        "code": "no",
+        "optionSet": "zK7EdFCwpx9",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

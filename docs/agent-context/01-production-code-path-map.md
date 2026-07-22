@@ -300,7 +300,7 @@ Also do not delete `lib/core/element_instance/display_value_lookup.dart` until i
 
 Run a focused runtime trace on one real example form with a large repeat section:
 
-1. Seed or load a submission with 200-300 repeat rows from `example/`.
+1. Seed or load a submission with 200-300 repeat rows from the explicitly legacy ITNs stress fixture under `test/fixtures/legacy_forms/` and `legacy_submissions/`.
 2. Instrument only timings and sizes around:
    - `FormFlowBootstrapperController.bootstrapFlow`
    - `FormElementControlBuilder.formDataControls`

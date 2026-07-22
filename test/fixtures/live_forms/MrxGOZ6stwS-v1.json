@@ -1,0 +1,1554 @@
+{
+  "id": "MrxGOZ6stwS",
+  "name": "fog_spray_106",
+  "label": {
+    "ar": "الرش الضبابي",
+    "en": "Fog Spraying"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "Hb4vMDVgce6",
+  "versionNumber": 1,
+  "fields": [
+    {
+      "id": "wszolIHTuzW",
+      "code": "DateOnly",
+      "type": "Date",
+      "resourceType": null,
+      "order": 101,
+      "path": "main.wszolIHTuzW",
+      "name": "DateOnly",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "التاريخ",
+        "en": "DateOnly"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "K707nuFwPNQ",
+      "code": "entomological_control_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 103,
+      "path": "main.K707nuFwPNQ",
+      "name": "entomological_control_type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "yfy38amrdBu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المكافحة",
+        "en": "entomological_control_type"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "wZIDLQtSHL2",
+      "code": "NotificationNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 104,
+      "path": "main.wZIDLQtSHL2",
+      "name": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "NotificationNumber",
+          "expression": "#{entomological_control_type} == 'Emergency'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{entomological_control_type} == 'Emergency'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم البلاغ",
+        "en": "NotificationNumber"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "z1jbBOd7stF",
+      "code": "report_type_ds",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 102,
+      "path": "main.z1jbBOd7stF",
+      "name": "report_type_ds",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "zdRqNYH2tiv",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع التقرير",
+        "en": "report_type_ds"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "BIynIGHLO0u",
+      "code": "location_name",
+      "type": "Text",
+      "resourceType": null,
+      "order": 105,
+      "path": "main.BIynIGHLO0u",
+      "name": "location_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المكان",
+        "en": "location_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "jIMbVzxsQf9",
+      "code": "BuildingNumber",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 201,
+      "path": "foggingDetails.jIMbVzxsQf9",
+      "name": "BuildingNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم المبنى",
+        "en": "BuildingNumber"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "UvA1u3cSLFQ",
+      "code": "BuildingType",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 202,
+      "path": "foggingDetails.UvA1u3cSLFQ",
+      "name": "BuildingType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "YpY0vSHWume",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المبنى",
+        "en": "BuildingType"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "v99GuUSB30B",
+      "code": "OtherBuildingType",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 203,
+      "path": "foggingDetails.v99GuUSB30B",
+      "name": "OtherBuildingType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "OtherBuildingType",
+          "expression": "#{BuildingType} == 'OtherBuildingType'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{BuildingType} == 'OtherBuildingType'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع اخر",
+        "en": "OtherBuildingType"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "X2eA5Ysiljn",
+      "code": "BuildingOwner",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 204,
+      "path": "foggingDetails.X2eA5Ysiljn",
+      "name": "BuildingOwner",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "صاحب المبنى",
+        "en": "BuildingOwner"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "FqXaEwOeSpR",
+      "code": "population",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 205,
+      "path": "foggingDetails.FqXaEwOeSpR",
+      "name": "population",
+      "description": "Total population in the household.",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد السكان",
+        "en": "population"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "LMnNL016S47",
+      "code": "NumberOfRooms",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 206,
+      "path": "foggingDetails.LMnNL016S47",
+      "name": "NumberOfRooms",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الغرف",
+        "en": "NumberOfRooms"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "CQVnOa4HBIc",
+      "code": "foggingPesticideType",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 207,
+      "path": "foggingDetails.CQVnOa4HBIc",
+      "name": "foggingPesticideType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "oRAhm4SPbOO",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المبيد",
+        "en": "foggingPesticideType"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "cjY0oSUx6YI",
+      "code": "comment",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 208,
+      "path": "foggingDetails.cjY0oSUx6YI",
+      "name": "comment",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ملاحظات",
+        "en": "comment"
+      },
+      "properties": {},
+      "parent": "foggingDetails",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DBlG4GngUpT",
+      "code": "openSprayAreaType",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 301,
+      "path": "summary.DBlG4GngUpT",
+      "name": "openSprayAreaType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "jdBrCFjQxmp",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع منطقة الرش المفتوح",
+        "en": "openSprayAreaType"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "oASzm1yCvNO",
+      "code": "otherOpenSprayAreaType",
+      "type": "Text",
+      "resourceType": null,
+      "order": 302,
+      "path": "summary.oASzm1yCvNO",
+      "name": "otherOpenSprayAreaType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "otherOpenSprayAreaType",
+          "expression": "#{openSprayAreaType} == 'otherOpenSprayAreaType'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{openSprayAreaType} == 'otherOpenSprayAreaType'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "اخرى",
+        "en": "otherOpenSprayAreaType"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "b7yFd5Sff4B",
+      "code": "SprayedAreaLength_meters",
+      "type": "Number",
+      "resourceType": null,
+      "order": 303,
+      "path": "summary.b7yFd5Sff4B",
+      "name": "SprayedAreaLength_meters",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "طول المساحة المرشوشة بالمتر",
+        "en": "SprayedAreaLength_meters"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "wHiRZAZQMeC",
+      "code": "SprayedAreaWidth_meters",
+      "type": "Number",
+      "resourceType": null,
+      "order": 304,
+      "path": "summary.wHiRZAZQMeC",
+      "name": "SprayedAreaWidth_meters",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عرض المساحة المرشوشة بالمتر",
+        "en": "SprayedAreaWidth_meters"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "TP2h0P8KDTt",
+      "code": "sprayerType",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 305,
+      "path": "summary.TP2h0P8KDTt",
+      "name": "sprayerType",
+      "description": "fogging",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "AGaQDZQ425w",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المضخة المستخدمة",
+        "en": "sprayerType"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "dAqXoC7OIoZ",
+      "code": "diesel_ml",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 306,
+      "path": "summary.dAqXoC7OIoZ",
+      "name": "diesel_ml",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ديزل (مل)",
+        "en": "diesel_ml"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "lK6I0wVjJE1",
+      "code": "petrol_ml",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 307,
+      "path": "summary.lK6I0wVjJE1",
+      "name": "petrol_ml",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "بترول (مل)",
+        "en": "petrol_ml"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "mB3yjuRrvS2",
+      "code": "ThermalECPesticideQuantity",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 308,
+      "path": "summary.mB3yjuRrvS2",
+      "name": "ThermalECPesticideQuantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "كمية المبيد الساخن (EC)",
+        "en": "Thermal Emulsifiable Pesticide Concentrate (EC)"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "zi1iqxLFXhZ",
+      "code": "EWColdPesticideQuantity_ml",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 309,
+      "path": "summary.zi1iqxLFXhZ",
+      "name": "EWColdPesticideQuantity_ml",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "كمية المبيد البارد EW (مل)",
+        "en": "EWColdPesticideQuantity_ml"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "kRE9GVd7Ar0",
+      "code": "sprayWorkers",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 310,
+      "path": "summary.kRE9GVd7Ar0",
+      "name": "sprayWorkers",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عمال الرش",
+        "en": "sprayWorkers"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "TlKCVUB5zhZ",
+      "code": "sprayers",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 311,
+      "path": "summary.TlKCVUB5zhZ",
+      "name": "sprayers",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المضخات",
+        "en": "sprayers"
+      },
+      "properties": {},
+      "parent": "summary",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "summary",
+      "code": null,
+      "path": "summary",
+      "parent": null,
+      "name": "summary",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "summary",
+          "expression": "#{report_type_ds} == 'summary'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{report_type_ds} == 'summary'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "خلاصة",
+        "en": "summary"
+      },
+      "properties": {}
+    },
+    {
+      "id": "foggingDetails",
+      "code": null,
+      "path": "foggingDetails",
+      "parent": null,
+      "name": "foggingDetails",
+      "description": null,
+      "order": 200,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "foggingDetails",
+          "expression": "#{report_type_ds} == 'details'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{report_type_ds} == 'details'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تفاصيل",
+        "en": "foggingDetails"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "عام",
+        "en": "main"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "AGaQDZQ425w",
+      "displayName": "sprayerType",
+      "label": {},
+      "translations": [],
+      "name": "sprayerType",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "YpY0vSHWume",
+      "displayName": "BuildingType",
+      "label": {},
+      "translations": [],
+      "name": "BuildingType",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "jdBrCFjQxmp",
+      "displayName": "openSprayAreaTypes",
+      "label": {},
+      "translations": [],
+      "name": "openSprayAreaTypes",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "oRAhm4SPbOO",
+      "displayName": "foggingPesticideTypes",
+      "label": {},
+      "translations": [],
+      "name": "foggingPesticideTypes",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "yfy38amrdBu",
+      "displayName": "EntomologicalControlType",
+      "label": {},
+      "translations": [],
+      "name": "EntomologicalControlType",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "zdRqNYH2tiv",
+      "displayName": "details_summary",
+      "label": {},
+      "translations": [],
+      "name": "details_summary",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "AGaQDZQ425w": [
+      {
+        "id": "01K2NZBQ650E9X0EZVHZRQJXBD",
+        "displayName": "manual",
+        "label": {
+          "ar": "يدوية",
+          "en": "manual"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "manual"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يدوية"
+          }
+        ],
+        "name": "manual",
+        "code": "manual",
+        "optionSet": "AGaQDZQ425w",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K2NZG913QHCE3MV8H39581PD",
+        "displayName": "vehicleMounted",
+        "label": {
+          "ar": "محمولة بالسيارة",
+          "en": "vehicleMounted"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "vehicleMounted"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "محمولة بالسيارة"
+          }
+        ],
+        "name": "vehicleMounted",
+        "code": "vehicleMounted",
+        "optionSet": "AGaQDZQ425w",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "YpY0vSHWume": [
+      {
+        "id": "01JZ45CA1S830NPWVQAEYZGP35",
+        "displayName": "House",
+        "label": {
+          "ar": "منزل",
+          "en": "House"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "منزل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "House"
+          }
+        ],
+        "name": "House",
+        "code": "House",
+        "optionSet": "YpY0vSHWume",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA1VZAMSBWQJ87Z80Y0C",
+        "displayName": "School",
+        "label": {
+          "ar": "مدرسة",
+          "en": "School"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مدرسة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "School"
+          }
+        ],
+        "name": "School",
+        "code": "School",
+        "optionSet": "YpY0vSHWume",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA1XD56EH990YBY30HV0",
+        "displayName": "HealthFacility",
+        "label": {
+          "ar": "مرفق صحي",
+          "en": "HealthFacility"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مرفق صحي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "HealthFacility"
+          }
+        ],
+        "name": "HealthFacility",
+        "code": "HealthFacility",
+        "optionSet": "YpY0vSHWume",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA1ZXXW0WW1VA6P3RZW4",
+        "displayName": "GovernmentBuilding",
+        "label": {
+          "ar": "مبنى حكومي",
+          "en": "GovernmentBuilding"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مبنى حكومي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "GovernmentBuilding"
+          }
+        ],
+        "name": "GovernmentBuilding",
+        "code": "GovernmentBuilding",
+        "optionSet": "YpY0vSHWume",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA22K7GY5E0SD4SJ4WP1",
+        "displayName": "Mosque",
+        "label": {
+          "ar": "مسجد",
+          "en": "Mosque"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مسجد"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Mosque"
+          }
+        ],
+        "name": "Mosque",
+        "code": "Mosque",
+        "optionSet": "YpY0vSHWume",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA268HBFZ9V8YHC5VQDP",
+        "displayName": "Restaurant",
+        "label": {
+          "ar": "مطعم",
+          "en": "Restaurant"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مطعم"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Restaurant"
+          }
+        ],
+        "name": "Restaurant",
+        "code": "Restaurant",
+        "optionSet": "YpY0vSHWume",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA2CSJ6WTVX7D8NPP6DJ",
+        "displayName": "CarTiresRepairService",
+        "label": {
+          "ar": "بنشر",
+          "en": "CarTiresRepairService"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "CarTiresRepairService"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بنشر"
+          }
+        ],
+        "name": "CarTiresRepairService",
+        "code": "CarTiresRepairService",
+        "optionSet": "YpY0vSHWume",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA2E8GC0PNX7MZEGSX4R",
+        "displayName": "OtherBuildingType",
+        "label": {
+          "ar": "أخرى (حدد)",
+          "en": "OtherBuildingType"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "OtherBuildingType"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أخرى (حدد)"
+          }
+        ],
+        "name": "OtherBuildingType",
+        "code": "OtherBuildingType",
+        "optionSet": "YpY0vSHWume",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "jdBrCFjQxmp": [
+      {
+        "id": "01K2NZKXNSBP7BM2YBW6FZXNMA",
+        "displayName": "street",
+        "label": {
+          "ar": "شارع",
+          "en": "street"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "street"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "شارع"
+          }
+        ],
+        "name": "street",
+        "code": "street",
+        "optionSet": "jdBrCFjQxmp",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K2NZPK9R9RDF987ZRCRAAA4N",
+        "displayName": "neighborhood",
+        "label": {
+          "ar": "حارة",
+          "en": "neighborhood"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "neighborhood"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "حارة"
+          }
+        ],
+        "name": "neighborhood",
+        "code": "neighborhood",
+        "optionSet": "jdBrCFjQxmp",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K2NZR1CGWE25E2NEGYVAVGG5",
+        "displayName": "farm",
+        "label": {
+          "ar": "مزرعة",
+          "en": "farm"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "farm"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مزرعة"
+          }
+        ],
+        "name": "farm",
+        "code": "farm",
+        "optionSet": "jdBrCFjQxmp",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K2NZTJPK133QSGN9S1X6R8FF",
+        "displayName": "otherOpenSprayAreaType",
+        "label": {
+          "ar": "أخرى",
+          "en": "otherOpenSprayAreaType"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "otherOpenSprayAreaType"
+          }
+        ],
+        "name": "otherOpenSprayAreaType",
+        "code": "otherOpenSprayAreaType",
+        "optionSet": "jdBrCFjQxmp",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "oRAhm4SPbOO": [
+      {
+        "id": "01K2P00PNYZNACDZTZVHEJEDVX",
+        "displayName": "ThermalEC",
+        "label": {
+          "ar": "( EC) ساخن",
+          "en": "ThermalEC"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "ThermalEC"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "( EC) ساخن"
+          }
+        ],
+        "name": "ThermalEC",
+        "code": "ThermalEC",
+        "optionSet": "oRAhm4SPbOO",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K2P03P5MNBB5Y21HKHD1TNX4",
+        "displayName": "ColdWC",
+        "label": {
+          "ar": "بارد ( EW)",
+          "en": "ColdWC"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "ColdWC"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بارد ( EW)"
+          }
+        ],
+        "name": "ColdWC",
+        "code": "ColdWC",
+        "optionSet": "oRAhm4SPbOO",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "yfy38amrdBu": [
+      {
+        "id": "01JZG5JE9F9PS8F9V03GXW9M8S",
+        "displayName": "Routine",
+        "label": {
+          "ar": "روتيني",
+          "en": "Routine"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "روتيني"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Routine"
+          }
+        ],
+        "name": "Routine",
+        "code": "Routine",
+        "optionSet": "yfy38amrdBu",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZG5N1EBT9KDC7ZPZJPHGQ7A",
+        "displayName": "Emergency",
+        "label": {
+          "ar": "طوارئ",
+          "en": "Emergency"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "طوارئ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Emergency"
+          }
+        ],
+        "name": "Emergency",
+        "code": "Emergency",
+        "optionSet": "yfy38amrdBu",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "zdRqNYH2tiv": [
+      {
+        "id": "01K2Z04ANBY1SAHMQZ858E5RNY",
+        "displayName": "details",
+        "label": {
+          "ar": "تفاصيل",
+          "en": "details"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تفاصيل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "details"
+          }
+        ],
+        "name": "details",
+        "code": "details",
+        "optionSet": "zdRqNYH2tiv",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K2Z06DCNHZC9STFHFAPV92ZP",
+        "displayName": "summary",
+        "label": {
+          "ar": "خلاصة ",
+          "en": "summary"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "summary"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "خلاصة "
+          }
+        ],
+        "name": "summary",
+        "code": "summary",
+        "optionSet": "zdRqNYH2tiv",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

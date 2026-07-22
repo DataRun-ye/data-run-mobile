@@ -1,0 +1,4068 @@
+{
+  "id": "mpmjpJcMuas",
+  "name": "iccm_supervision_502",
+  "label": {
+    "ar": "الإشراف على المتطوعات 2",
+    "en": "iCCM Supervision II"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "eQ9tP1Y7gqy",
+  "versionNumber": 23,
+  "fields": [
+    {
+      "id": "E0mkcxV1MAU",
+      "code": "DateAndTime",
+      "type": "DateTime",
+      "resourceType": null,
+      "order": 101,
+      "path": "main.E0mkcxV1MAU",
+      "name": "DateAndTime",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الوقت والتاريخ",
+        "en": "DateAndTime"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "kbHsG2u2n8K",
+      "code": "iccm_supervision_team_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 102,
+      "path": "main.kbHsG2u2n8K",
+      "name": "iccm_supervision_team_type",
+      "description": "iccm supervision team type chv",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UDX20myLcFQ",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "فريق الاشراف",
+        "en": "iccm_supervision_team_type"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "irvOz2MYtbZ",
+      "code": "others",
+      "type": "Text",
+      "resourceType": null,
+      "order": 103,
+      "path": "main.irvOz2MYtbZ",
+      "name": "others",
+      "description": "Other",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "others",
+          "expression": "#{iccm_supervision_team_type} == 'other_iccm_supervision_team'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{iccm_supervision_team_type} == 'other_iccm_supervision_team'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "فريق اخر",
+        "en": "other_team_type"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "wZIDLQtSHL2",
+      "code": "NotificationNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 104,
+      "path": "main.wZIDLQtSHL2",
+      "name": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "NotificationNumber",
+          "expression": "#{iccm_supervision_team_type} == 'emergency_team'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{iccm_supervision_team_type} == 'emergency_team'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم البلاغ",
+        "en": "NotificationNumber"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "YZjCBLMSrCe",
+      "code": "chv_name",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 108,
+      "path": "main.YZjCBLMSrCe",
+      "name": "chv_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المتطوعة",
+        "en": "chv_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "tl7GFA8JsIT",
+      "code": "chv_id",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 109,
+      "path": "main.tl7GFA8JsIT",
+      "name": "chv_id",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "كود المتطوعة",
+        "en": "chv_id"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "QJad4RBGgkM",
+      "code": "chv_phone",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 110,
+      "path": "main.QJad4RBGgkM",
+      "name": "chv_phone",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم الهاتف",
+        "en": "chv_phone"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "bKPRrAXqRph",
+      "code": "month_name_with_visit",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 302,
+      "path": "consumption.bKPRrAXqRph",
+      "name": "month_name_with_visit",
+      "description": "chv super 501",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "Db0Bme8Ujqd",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الشهر",
+        "en": "month_name_with_visit"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "aSXPYhRtPE0",
+      "code": "suspected_malaria_cases",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 202,
+      "path": "matching.aSXPYhRtPE0",
+      "name": "suspected_malaria_cases",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الحالات المشتبهة لمرض الملاريا",
+        "en": "suspected_malaria_cases"
+      },
+      "properties": {},
+      "parent": "matching",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "pdyLAC9ABlP",
+      "code": "malaria_tested_cases",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 203,
+      "path": "matching.pdyLAC9ABlP",
+      "name": "malaria_tested_cases",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الحالات المفحوصة لمرض الملاريا",
+        "en": "malaria_tested_cases"
+      },
+      "properties": {},
+      "parent": "matching",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "VFxd0Xc5GhH",
+      "code": "malaria_positive_cases",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 204,
+      "path": "matching.VFxd0Xc5GhH",
+      "name": "malaria_positive_cases",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الحالات الإيجابية لمرض الملاريا",
+        "en": "malaria_positive_cases"
+      },
+      "properties": {},
+      "parent": "matching",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "kVtmOQd8n1A",
+      "code": "awareness_sessions",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 205,
+      "path": "matching.kVtmOQd8n1A",
+      "name": "awareness_sessions",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد جلسات التوعية",
+        "en": "awareness_sessions"
+      },
+      "properties": {},
+      "parent": "matching",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "T7QqiTeFdHF",
+      "code": "month_name",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 201,
+      "path": "matching.T7QqiTeFdHF",
+      "name": "month_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "NN8fDdIJmCn",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الشهر",
+        "en": "month_name"
+      },
+      "properties": {},
+      "parent": "matching",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "gFdPiymvk1m",
+      "code": "available_quantity",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 303,
+      "path": "consumption.gFdPiymvk1m",
+      "name": "available_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "متوفر",
+        "en": "available_quantity"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "MhCDftArY4c",
+      "code": "received_quantity",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 304,
+      "path": "consumption.MhCDftArY4c",
+      "name": "received_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "مستلم",
+        "en": "received_quantity"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "c9zG4B2k7LY",
+      "code": "expired_quantity",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 305,
+      "path": "consumption.c9zG4B2k7LY",
+      "name": "expired_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "منتهي",
+        "en": "expired_quantity"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IALEZP4BTGO",
+      "code": "consumed_quantity",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 306,
+      "path": "consumption.IALEZP4BTGO",
+      "name": "consumed_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "مستهلك",
+        "en": "consumed_quantity"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rtntGY93Fpn",
+      "code": "redistributed_quantity",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 307,
+      "path": "consumption.rtntGY93Fpn",
+      "name": "redistributed_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الكمية المعاد توزيعها",
+        "en": "redistributed_quantity"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DFfECZdsEZd",
+      "code": "stockout_days",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 308,
+      "path": "consumption.DFfECZdsEZd",
+      "name": "stockout_days",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "أيام نفاد المخزون",
+        "en": "stockout_days"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xumAdDFjab3",
+      "code": "gloves_delivered_packet",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 401,
+      "path": "supplies.xumAdDFjab3",
+      "name": "gloves_delivered_packet",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الكفوف الطبية",
+        "en": "gloves_delivered_packet"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DwmwIJxKDIz",
+      "code": "daily_case_register_delivered",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 402,
+      "path": "supplies.DwmwIJxKDIz",
+      "name": "daily_case_register_delivered",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "سجل الحالات (اليومي)",
+        "en": "daily_case_register_delivered"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "JamUyVzmvEj",
+      "code": "malaria_posters_delivered",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 403,
+      "path": "supplies.JamUyVzmvEj",
+      "name": "malaria_posters_delivered",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ملصقات الملاريا",
+        "en": "malaria_posters_delivered"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "vXtKlouGgyr",
+      "code": "chv_guide_delivered",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 405,
+      "path": "supplies.vXtKlouGgyr",
+      "name": "chv_guide_delivered",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "دليل المتطوعة",
+        "en": "chv_guide_delivered"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "vO4MVyAxBrL",
+      "code": "chv_bag",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 406,
+      "path": "supplies.vO4MVyAxBrL",
+      "name": "chv_bag",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UXTheTcoCZu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "حقيبة متطوعة صحة المجتمع",
+        "en": "chv_bag"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "EGddDk34Wae",
+      "code": "chv_stopwatch",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 407,
+      "path": "supplies.EGddDk34Wae",
+      "name": "chv_stopwatch",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UXTheTcoCZu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ساعة توقيت",
+        "en": "chv_stopwatch"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "J26a1DFtlQj",
+      "code": "chv_sharps_disposal",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 408,
+      "path": "supplies.J26a1DFtlQj",
+      "name": "chv_sharps_disposal",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UXTheTcoCZu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "صندوق حفظ الأدوات الحادة",
+        "en": "chv_sharps_disposal"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "o4hqPAye8kO",
+      "code": "chv_dose_timing_card",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 409,
+      "path": "supplies.o4hqPAye8kO",
+      "name": "chv_dose_timing_card",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UXTheTcoCZu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "كرت تحديد جرعة علاج الملاريا وتحديد أوقات اخذ الجرعات",
+        "en": "chv_dose_timing_card"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "b3UtCrVruC1",
+      "code": "chv_drug_keeping_box",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 410,
+      "path": "supplies.b3UtCrVruC1",
+      "name": "chv_drug_keeping_box",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UXTheTcoCZu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "صندوق حفظ علاجات الملاريا",
+        "en": "chv_drug_keeping_box"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Flmrrg0xWbL",
+      "code": "chv_rdt_disposal",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 410,
+      "path": "supplies.Flmrrg0xWbL",
+      "name": "chv_rdt_disposal",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UXTheTcoCZu",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اكياس بلاستيكية لحفظ شرائح الفحص RDTs المستخد",
+        "en": "chv_rdt_disposal"
+      },
+      "properties": {},
+      "parent": "supplies",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "A4SwX11cS0G",
+      "code": "malaria_transmission_knowledge",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 504,
+      "path": "kap.A4SwX11cS0G",
+      "name": "malaria_transmission_knowledge",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "طرق انتقال مرض الملاريا",
+        "en": "malaria_transmission_knowledge"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xPkJJPauoqD",
+      "code": "itns_usage_knowledge",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 505,
+      "path": "kap.xPkJJPauoqD",
+      "name": "itns_usage_knowledge",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الاستخدام الصحيح للناموسيات",
+        "en": "itns_usage_knowledge"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Bb7emJdFGDb",
+      "code": "malaria_prevention_knowledge",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 507,
+      "path": "kap.Bb7emJdFGDb",
+      "name": "malaria_prevention_knowledge",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "طرق الوقاية من مرض الملاريا",
+        "en": "malaria_prevention_knowledge"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "kAWnUvSP1Wq",
+      "code": "breeding_sources_knowledge",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 508,
+      "path": "kap.kAWnUvSP1Wq",
+      "name": "breeding_sources_knowledge",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "بؤر تكاثر وانتشار البعوض",
+        "en": "breeding_sources_knowledge"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "jiC8Nmm4Wup",
+      "code": "lsm_knowledge",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 509,
+      "path": "kap.jiC8Nmm4Wup",
+      "name": "lsm_knowledge",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "طرق التخلص من مواقع تكاثر يرقات البعوض",
+        "en": "lsm_knowledge"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "d3GZ124DS2Z",
+      "code": "mosquitoes entering prevention_practice",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 510,
+      "path": "kap.d3GZ124DS2Z",
+      "name": "mosquitoes entering prevention_practice",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تطبق وسائل منع دخول البعوض الى منزلها",
+        "en": "mosquitoes entering prevention_practice"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Qfv0AWabTAg",
+      "code": "owns_itns_practice",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 511,
+      "path": "kap.Qfv0AWabTAg",
+      "name": "owns_itns_practice",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تتوفر الناموسيات في منزلها",
+        "en": "owns_itns_practice"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "GgMlIvjQB5g",
+      "code": "itns_hung_practice",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 512,
+      "path": "kap.GgMlIvjQB5g",
+      "name": "itns_hung_practice",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الناموسيات معلقة في منزلها ويتم استخدامها",
+        "en": "itns_hung_practice"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "HnlWd5hTsmh",
+      "code": "breeding_source_absence_practice",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 513,
+      "path": "kap.HnlWd5hTsmh",
+      "name": "breeding_source_absence_practice",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "لا يوجد مصادر توالد للبعوض في منزلها",
+        "en": "breeding_source_absence_practice"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "gcMW7qOTwu6",
+      "code": "unexposed_water_containers_practice",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 514,
+      "path": "kap.gcMW7qOTwu6",
+      "name": "unexposed_water_containers_practice",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اوعية وخزانات حفظ المياه في منزلها مغلقة غير مكشوفة",
+        "en": "unexposed_water_containers_practice"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "nCTdp3sb1mN",
+      "code": "how_malaria_transmitted",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 515,
+      "path": "kap.nCTdp3sb1mN",
+      "name": "how_malaria_transmitted",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "HD6TEMa4Inh",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "كيف ينتقل مرض الملاريا",
+        "en": "how_malaria_transmitted"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "fjrBHy6nJfF",
+      "code": "itns_usage_benefit",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 516,
+      "path": "kap.fjrBHy6nJfF",
+      "name": "itns_usage_benefit",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "HD6TEMa4Inh",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ماهي الفائدة من النوم تحت الناموسية",
+        "en": "itns_usage_benefit"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "GfADUiCgPYC",
+      "code": "family_know_chv",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 701,
+      "path": "community.GfADUiCgPYC",
+      "name": "family_know_chv",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "هل تعرفت اسرة المنزل على المتطوعة:",
+        "en": "family_know_chv"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xj8MTK4JM1t",
+      "code": "chv_allowed_to_enter_the_house",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 702,
+      "path": "community.xj8MTK4JM1t",
+      "name": "chv_allowed_to_enter_the_house",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "هل تم السماح للمتطوعة بالدخول الى المنزل",
+        "en": "chv_allowed_to_enter_the_house"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "gUvULuVPwd6",
+      "code": "who_is_chv",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 718,
+      "path": "community.gUvULuVPwd6",
+      "name": "who_is_chv",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "HD6TEMa4Inh",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "من هي المتطوعة التي في القرية",
+        "en": "who_is_chv"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "dtrltFBdtyt",
+      "code": "chv_role",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 719,
+      "path": "community.dtrltFBdtyt",
+      "name": "chv_role",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "HD6TEMa4Inh",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ما هو دور المتطوعة والخدمات التي تقدمها",
+        "en": "chv_role"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "EXkV8IT6xCe",
+      "code": "iccm_super_notes",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 800,
+      "path": "EXkV8IT6xCe",
+      "name": "iccm_super_notes",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ملاحظات خاصة بالمشرف:",
+        "en": "iccm_super_notes"
+      },
+      "properties": {},
+      "parent": null,
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "vQwOBpdETmV",
+      "code": "how_malaria_transmitted_household",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 716,
+      "path": "community.vQwOBpdETmV",
+      "name": "how_malaria_transmitted_household",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "HD6TEMa4Inh",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "كيف ينتقل مرض الملاريا",
+        "en": "how_malaria_transmitted_household"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "RjJdSIg4cVN",
+      "code": "itns_benefits_household",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 717,
+      "path": "community.RjJdSIg4cVN",
+      "name": "itns_benefits_household",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "HD6TEMa4Inh",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ماهي الفائدة من النوم تحت الناموسية",
+        "en": "itns_benefits_household"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "iqpKMkgurCe",
+      "code": "chv_family_members",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 501,
+      "path": "kap.iqpKMkgurCe",
+      "name": "chv_family_members",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد افراد الاسرة للمتطوعة",
+        "en": "chv_family_members"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "p4jDv4iGsll",
+      "code": "chv_itns_have",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 502,
+      "path": "kap.p4jDv4iGsll",
+      "name": "chv_itns_have",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الناموسيات المتوفرة في المنزل",
+        "en": "chv_itns_have"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "hZAW4qS0oNx",
+      "code": "chv_hanged_itns",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 503,
+      "path": "kap.hZAW4qS0oNx",
+      "name": "chv_hanged_itns",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الناموسيات المعلقة",
+        "en": "chv_hanged_itns"
+      },
+      "properties": {},
+      "parent": "kap",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "M1583WVokIm",
+      "code": "volunteering_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 108,
+      "path": "main.M1583WVokIm",
+      "name": "volunteering_type",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "cn6FJVcBei2",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع التطوع",
+        "en": "volunteering_type"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "I5vk9g0eDbE",
+      "code": "distance_km",
+      "type": "Number",
+      "resourceType": null,
+      "order": 109,
+      "path": "main.I5vk9g0eDbE",
+      "name": "distance_km",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "المسافة بين المتطوعة وأقرب مرفق صحي عام",
+        "en": "distance_km"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "QCKXcI8pdtq",
+      "code": "visited_house_members",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 703,
+      "path": "community.QCKXcI8pdtq",
+      "name": "visited_house_members",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد افارد الاسرة في المنزل",
+        "en": "visited_house_members"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "sutfz9ESSIS",
+      "code": "itns_available_visited_house",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 704,
+      "path": "community.sutfz9ESSIS",
+      "name": "itns_available_visited_house",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الناموسيات المتوفرة في المنزل",
+        "en": "itns_available_visited_house"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "zGCXqDySbHP",
+      "code": "itns_hanged_visited_house",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 705,
+      "path": "community.zGCXqDySbHP",
+      "name": "itns_hanged_visited_house",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الناموسيات المعلقة",
+        "en": "itns_hanged_visited_house"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "HFqfe3J82oX",
+      "code": "malaria_transmission_knowledge_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 706,
+      "path": "community.HFqfe3J82oX",
+      "name": "malaria_transmission_knowledge_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "طرق انتقال مرض الملاريا",
+        "en": "malaria_transmission_knowledge_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "YoKrFXLuDIy",
+      "code": "itns_usage_knowledge_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 707,
+      "path": "community.YoKrFXLuDIy",
+      "name": "itns_usage_knowledge_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الاستخدام الصحيح للناموسيات",
+        "en": "itns_usage_knowledge_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "c5UCmM7U2FC",
+      "code": "malaria_prevention_knowledge_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 708,
+      "path": "community.c5UCmM7U2FC",
+      "name": "malaria_prevention_knowledge_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "طرق الوقاية من مرض الملاريا",
+        "en": "malaria_prevention_knowledge_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "CsZYVAKXGRI",
+      "code": "breeding_sources_knowledge_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 709,
+      "path": "community.CsZYVAKXGRI",
+      "name": "breeding_sources_knowledge_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "بؤر تكاثر وانتشار البعوض",
+        "en": "breeding_sources_knowledge_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "ZCmfsDb4wFp",
+      "code": "lsm_knowledge_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 710,
+      "path": "community.ZCmfsDb4wFp",
+      "name": "lsm_knowledge_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "طرق التخلص من مواقع تكاثر يرقات البعوض",
+        "en": "lsm_knowledge_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "j6S3PjSA4Nf",
+      "code": "mosquitoes entering prevention_practice_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 711,
+      "path": "community.j6S3PjSA4Nf",
+      "name": "mosquitoes entering prevention_practice_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تطبق وسائل منع دخول البعوض الى المنزل",
+        "en": "mosquitoes entering prevention_practice_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "LEDhs4ICzGH",
+      "code": "owns_itns_practice_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 712,
+      "path": "community.LEDhs4ICzGH",
+      "name": "owns_itns_practice_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تتوفر الناموسيات في المنزل",
+        "en": "owns_itns_practice_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "CIJ2bPZE5O8",
+      "code": "itns_hanged_practice_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 713,
+      "path": "community.CIJ2bPZE5O8",
+      "name": "itns_hanged_practice_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الناموسيات معلقة في المنزل ويتم استخدامها",
+        "en": "itns_hanged_practice_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "pY8g9XFXgVP",
+      "code": "breeding_source_absence_practice_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 714,
+      "path": "community.pY8g9XFXgVP",
+      "name": "breeding_source_absence_practice_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "لا يوجد مصادر توالد للبعوض في المنزل",
+        "en": "breeding_source_absence_practice_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "plE2q8UIxRl",
+      "code": "unexposed_water_containers_practice_community",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 715,
+      "path": "community.plE2q8UIxRl",
+      "name": "unexposed_water_containers_practice_community",
+      "description": "chv super 502",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اوعية وخزانات حفظ المياه في المنزل مغلقة غير مكشوفة",
+        "en": "unexposed_water_containers_practice_community"
+      },
+      "properties": {},
+      "parent": "community",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "kF3ESHsnDLq",
+      "code": "amds2iccm",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 301,
+      "path": "consumption.kF3ESHsnDLq",
+      "name": "amds2iccm",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "m9mq4De3If2",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الصنف",
+        "en": "amds2iccm"
+      },
+      "properties": {},
+      "parent": "consumption",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "U4bTsLGjDRu",
+      "code": "referral_hf_name",
+      "type": "Text",
+      "resourceType": null,
+      "order": 110,
+      "path": "main.U4bTsLGjDRu",
+      "name": "referral_hf_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المرفق الصحي الخاص بالاحالة",
+        "en": "referral_hf_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "doOd40MXLZ3",
+      "code": "chv_village_reached",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 106,
+      "path": "main.doOd40MXLZ3",
+      "name": "chv_village_reached",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تم الوصول الى قرية المتطوعة",
+        "en": "chv_village_reached"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "unaA4JhJwsq",
+      "code": "chv_interviewed",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 107,
+      "path": "main.unaA4JhJwsq",
+      "name": "chv_interviewed",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_interviewed",
+          "expression": "#{chv_village_reached} == true || #{chv_village_reached} =='yes'  || #{chv_village_reached} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_village_reached} == true || #{chv_village_reached} =='yes'  || #{chv_village_reached} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "تم مقابلة المتطوعة",
+        "en": "chv_interviewed"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IicK5mh871O",
+      "code": "chv_not_interviewed_reasons",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 108,
+      "path": "main.IicK5mh871O",
+      "name": "chv_not_interviewed_reasons",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_not_interviewed_reasons",
+          "expression": "#{chv_interviewed} == false|| #{chv_interviewed} == 'no' || #{chv_interviewed} == 'No'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == false|| #{chv_interviewed} == 'no' || #{chv_interviewed} == 'No'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "سبب عدم مقابلة المتطوعة",
+        "en": "chv_not_interviewed_reasons"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "supplies",
+      "code": null,
+      "path": "supplies",
+      "parent": null,
+      "name": "supplies",
+      "description": null,
+      "order": 400,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "supplies",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "المستلزمات والأدوات",
+        "en": "supplies"
+      },
+      "properties": {}
+    },
+    {
+      "id": "kap",
+      "code": null,
+      "path": "kap",
+      "parent": null,
+      "name": "kap",
+      "description": null,
+      "order": 500,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "kap",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "الوعي والممارسات",
+        "en": "kap"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "عام",
+        "en": "main"
+      },
+      "properties": {}
+    },
+    {
+      "id": "consumption",
+      "code": null,
+      "path": "consumption",
+      "parent": null,
+      "name": "consumption",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "consumption",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "الاستهلاك",
+        "en": "consumption"
+      },
+      "properties": {}
+    },
+    {
+      "id": "community",
+      "code": null,
+      "path": "community",
+      "parent": null,
+      "name": "community",
+      "description": null,
+      "order": 700,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "community",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تأثير جهود التوعية",
+        "en": "community"
+      },
+      "properties": {}
+    },
+    {
+      "id": "matching",
+      "code": null,
+      "path": "matching",
+      "parent": null,
+      "name": "matching",
+      "description": null,
+      "order": 200,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "matching",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes' || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تطابق البيانات",
+        "en": "matching"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "Db0Bme8Ujqd",
+      "displayName": "monthnames_withvist",
+      "label": {},
+      "translations": [],
+      "name": "monthnames_withvist",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "HD6TEMa4Inh",
+      "displayName": "correct_incorrect_answer",
+      "label": {},
+      "translations": [],
+      "name": "correct_incorrect_answer",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "NN8fDdIJmCn",
+      "displayName": "monthnames",
+      "label": {},
+      "translations": [],
+      "name": "monthnames",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "UDX20myLcFQ",
+      "displayName": "iccm_supervision_team_type",
+      "label": {},
+      "translations": [],
+      "name": "iccm_supervision_team_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "UXTheTcoCZu",
+      "displayName": "valid_damaged_unavailable",
+      "label": {},
+      "translations": [],
+      "name": "valid_damaged_unavailable",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "VKMsbXQ3wHH",
+      "displayName": "know_DontKnow",
+      "label": {},
+      "translations": [],
+      "name": "know_DontKnow",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "cn6FJVcBei2",
+      "displayName": "chv_type",
+      "label": {},
+      "translations": [],
+      "name": "chv_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "hvoE33sBe97",
+      "displayName": "Practiced_DonPracticed",
+      "label": {},
+      "translations": [],
+      "name": "Practiced_DonPracticed",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "m9mq4De3If2",
+      "displayName": "amds2iccm",
+      "label": {},
+      "translations": [],
+      "name": "amds2iccm",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "Db0Bme8Ujqd": [
+      {
+        "id": "01K0J7JES4V1W8ZC2NKCEX28VJ",
+        "displayName": "January",
+        "label": {
+          "ar": "يناير",
+          "en": "January"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "January"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يناير"
+          }
+        ],
+        "name": "January",
+        "code": "January",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4SJGES6ZQ5ZVFZ46Q",
+        "displayName": "February",
+        "label": {
+          "ar": "فبراير",
+          "en": "February"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "February"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فبراير"
+          }
+        ],
+        "name": "February",
+        "code": "February",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES45BJGXAJN770RGB37",
+        "displayName": "March",
+        "label": {
+          "ar": "مارس",
+          "en": "March"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مارس"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "March"
+          }
+        ],
+        "name": "March",
+        "code": "March",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4PGQ6Q3BPCDPRCWTZ",
+        "displayName": "April",
+        "label": {
+          "ar": "أبريل",
+          "en": "April"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أبريل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "April"
+          }
+        ],
+        "name": "April",
+        "code": "April",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4E41A80VEXRGP8Z3D",
+        "displayName": "May",
+        "label": {
+          "ar": "مايو",
+          "en": "May"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "May"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مايو"
+          }
+        ],
+        "name": "May",
+        "code": "May",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4834Y3FZ2W0F9R3MW",
+        "displayName": "June",
+        "label": {
+          "ar": "يونيو",
+          "en": "June"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "June"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يونيو"
+          }
+        ],
+        "name": "June",
+        "code": "June",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4A6574NHT7PC46RDF",
+        "displayName": "July",
+        "label": {
+          "ar": "يوليو",
+          "en": "July"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يوليو"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "July"
+          }
+        ],
+        "name": "July",
+        "code": "July",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4AT9S90A523Q5VVNE",
+        "displayName": "August",
+        "label": {
+          "ar": "أغسطس",
+          "en": "August"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "August"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أغسطس"
+          }
+        ],
+        "name": "August",
+        "code": "August",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4NJH5BCP14D2V0XJB",
+        "displayName": "September",
+        "label": {
+          "ar": "سبتمبر",
+          "en": "September"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سبتمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "September"
+          }
+        ],
+        "name": "September",
+        "code": "September",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES4M99A66H98NMQ7FHB",
+        "displayName": "October",
+        "label": {
+          "ar": "أكتوبر",
+          "en": "October"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أكتوبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "October"
+          }
+        ],
+        "name": "October",
+        "code": "October",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES479XPDA8BSPKZ82JT",
+        "displayName": "November",
+        "label": {
+          "ar": "نوفمبر",
+          "en": "November"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نوفمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "November"
+          }
+        ],
+        "name": "November",
+        "code": "November",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7JES48EJTJNR7K8JJK5KH",
+        "displayName": "December",
+        "label": {
+          "ar": "ديسمبر",
+          "en": "December"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ديسمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "December"
+          }
+        ],
+        "name": "December",
+        "code": "December",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J7P238WWYQQ67C9F3SQSBN",
+        "displayName": "duringvisit",
+        "label": {
+          "ar": "اثناء الزيارة",
+          "en": "duringvisit"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اثناء الزيارة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "duringvisit"
+          }
+        ],
+        "name": "duringvisit",
+        "code": "duringvisit",
+        "optionSet": "Db0Bme8Ujqd",
+        "order": 13,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "HD6TEMa4Inh": [
+      {
+        "id": "01K0J4WXZ7ZSSFHBQZAC985A1H",
+        "displayName": "correct",
+        "label": {
+          "ar": "إجابة صحيحة",
+          "en": "correct"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "correct"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إجابة صحيحة"
+          }
+        ],
+        "name": "correct",
+        "code": "correct",
+        "optionSet": "HD6TEMa4Inh",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J4Y6TSAVYBM038ZRXG8Z0N",
+        "displayName": "incorrect",
+        "label": {
+          "ar": "إجابة خاطئة",
+          "en": "incorrect"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إجابة خاطئة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "incorrect"
+          }
+        ],
+        "name": "incorrect",
+        "code": "incorrect",
+        "optionSet": "HD6TEMa4Inh",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "NN8fDdIJmCn": [
+      {
+        "id": "01JZKZ1GZP8QYDGGF23E7FN5ZD",
+        "displayName": "January",
+        "label": {
+          "ar": "يناير",
+          "en": "January"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "January"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يناير"
+          }
+        ],
+        "name": "January",
+        "code": "January",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ2NHXYEWKJAXVDMKMETKY",
+        "displayName": "February",
+        "label": {
+          "ar": "فبراير",
+          "en": "February"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "February"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فبراير"
+          }
+        ],
+        "name": "February",
+        "code": "February",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ5P2YX638JA8EFC0QJ0WV",
+        "displayName": "March",
+        "label": {
+          "ar": "مارس",
+          "en": "March"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مارس"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "March"
+          }
+        ],
+        "name": "March",
+        "code": "March",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ6R027E4JAPV8NWBHQ94X",
+        "displayName": "April",
+        "label": {
+          "ar": "أبريل",
+          "en": "April"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أبريل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "April"
+          }
+        ],
+        "name": "April",
+        "code": "April",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ8P61C9AD6PK5RKWH3BV9",
+        "displayName": "May",
+        "label": {
+          "ar": "مايو",
+          "en": "May"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "May"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مايو"
+          }
+        ],
+        "name": "May",
+        "code": "May",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ9XK8X7A29P6R9F376KCK",
+        "displayName": "June",
+        "label": {
+          "ar": "يونيو",
+          "en": "June"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "June"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يونيو"
+          }
+        ],
+        "name": "June",
+        "code": "June",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZB2T25359A6DSDSMCCKE1",
+        "displayName": "July",
+        "label": {
+          "ar": "يوليو",
+          "en": "July"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يوليو"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "July"
+          }
+        ],
+        "name": "July",
+        "code": "July",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZC51M5ATZ7KF2D51S1M7M",
+        "displayName": "August",
+        "label": {
+          "ar": "أغسطس",
+          "en": "August"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "August"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أغسطس"
+          }
+        ],
+        "name": "August",
+        "code": "August",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZD1N3CCHV3EKXBS9A07QK",
+        "displayName": "September",
+        "label": {
+          "ar": "سبتمبر",
+          "en": "September"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سبتمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "September"
+          }
+        ],
+        "name": "September",
+        "code": "September",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZE624KEFTWWHBV2E0EA2D",
+        "displayName": "October",
+        "label": {
+          "ar": "أكتوبر",
+          "en": "October"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أكتوبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "October"
+          }
+        ],
+        "name": "October",
+        "code": "October",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZFDN7K7VTAA3WDJWY20Y8",
+        "displayName": "November",
+        "label": {
+          "ar": "نوفمبر",
+          "en": "November"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نوفمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "November"
+          }
+        ],
+        "name": "November",
+        "code": "November",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZGDJWHMKRTT52V1BWQP6N",
+        "displayName": "December",
+        "label": {
+          "ar": "ديسمبر",
+          "en": "December"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ديسمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "December"
+          }
+        ],
+        "name": "December",
+        "code": "December",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "UDX20myLcFQ": [
+      {
+        "id": "01K0J2645GEZ60W6JPBJB52WHK",
+        "displayName": "malaria_unit",
+        "label": {
+          "ar": "وحدة الملاريا",
+          "en": "malaria_unit"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "وحدة الملاريا"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_unit"
+          }
+        ],
+        "name": "malaria_unit",
+        "code": "malaria_unit",
+        "optionSet": "UDX20myLcFQ",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J286V3ZKMMGRPKSRQJ28G5",
+        "displayName": "central_supervision_team",
+        "label": {
+          "ar": "فريق الإشراف المركزي",
+          "en": "central_supervision_team"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "central_supervision_team"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فريق الإشراف المركزي"
+          }
+        ],
+        "name": "central_supervision_team",
+        "code": "central_supervision_team",
+        "optionSet": "UDX20myLcFQ",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2A7YF8Y21WYWW7BTB0SFR",
+        "displayName": "malaria_coordinator",
+        "label": {
+          "ar": "منسق الملاريا",
+          "en": "malaria_coordinator"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "منسق الملاريا"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_coordinator"
+          }
+        ],
+        "name": "malaria_coordinator",
+        "code": "malaria_coordinator",
+        "optionSet": "UDX20myLcFQ",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2H94RN4XZYDYVF9K9QG03",
+        "displayName": "nmcp_tihama",
+        "label": {
+          "ar": "محور تهامة",
+          "en": "nmcp_tihama"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "nmcp_tihama"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "محور تهامة"
+          }
+        ],
+        "name": "nmcp_tihama",
+        "code": "nmcp_tihama",
+        "optionSet": "UDX20myLcFQ",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2K6ET70V31BMPE2J3SVCA",
+        "displayName": "emergency_team",
+        "label": {
+          "ar": "فريق الطوارئ",
+          "en": "emergency_team"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "emergency_team"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فريق الطوارئ"
+          }
+        ],
+        "name": "emergency_team",
+        "code": "emergency_team",
+        "optionSet": "UDX20myLcFQ",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2N0C9X8RBC7PPRA4G5XZR",
+        "displayName": "other_iccm_supervision_team",
+        "label": {
+          "ar": "اخرى",
+          "en": "other_iccm_supervision_team"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "other_iccm_supervision_team"
+          }
+        ],
+        "name": "other_iccm_supervision_team",
+        "code": "other_iccm_supervision_team",
+        "optionSet": "UDX20myLcFQ",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "UXTheTcoCZu": [
+      {
+        "id": "01K0J4KWZP516Y53B93DT90437",
+        "displayName": "valid",
+        "label": {
+          "ar": "صالح",
+          "en": "valid"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "صالح"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "valid"
+          }
+        ],
+        "name": "valid",
+        "code": "valid",
+        "optionSet": "UXTheTcoCZu",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J4MXMSXJNQGMT3CSW3CERC",
+        "displayName": "damaged",
+        "label": {
+          "ar": "تالف",
+          "en": "damaged"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تالف"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "damaged"
+          }
+        ],
+        "name": "damaged",
+        "code": "damaged",
+        "optionSet": "UXTheTcoCZu",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J4PBJR95XJ4GSG6YY4Q84Z",
+        "displayName": "unavailable",
+        "label": {
+          "ar": "غير متوفر",
+          "en": "unavailable"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "unavailable"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "غير متوفر"
+          }
+        ],
+        "name": "unavailable",
+        "code": "unavailable",
+        "optionSet": "UXTheTcoCZu",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "VKMsbXQ3wHH": [
+      {
+        "id": "01K0J71GJRJ1337DV07701GPWC",
+        "displayName": "know",
+        "label": {
+          "ar": "تعرف",
+          "en": "know"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "know"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تعرف"
+          }
+        ],
+        "name": "know",
+        "code": "know",
+        "optionSet": "VKMsbXQ3wHH",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J73D2GG2G3RCYW2QNYB90N",
+        "displayName": "Donknow",
+        "label": {
+          "ar": "لا تعرف",
+          "en": "Donknow"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Donknow"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا تعرف"
+          }
+        ],
+        "name": "Donknow",
+        "code": "Donknow",
+        "optionSet": "VKMsbXQ3wHH",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "cn6FJVcBei2": [
+      {
+        "id": "01K0J2XQV6HNG3V02N989F8YEQ",
+        "displayName": "chv",
+        "label": {
+          "ar": "متطوعة صحة مجتمع",
+          "en": "chv"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "متطوعة صحة مجتمع"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "chv"
+          }
+        ],
+        "name": "chv",
+        "code": "chv",
+        "optionSet": "cn6FJVcBei2",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J3007K20RGYJAZNAKBBE05",
+        "displayName": "chw",
+        "label": {
+          "ar": "عاملة صحية مجتمعية",
+          "en": "chw"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "عاملة صحية مجتمعية"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "chw"
+          }
+        ],
+        "name": "chw",
+        "code": "chw",
+        "optionSet": "cn6FJVcBei2",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J33RV868DD7XQ3X1ER5AB4",
+        "displayName": "malaria_trained _volunteer",
+        "label": {
+          "ar": "متطوعة تم تدريبها على الملاريا فقط",
+          "en": "malaria_trained _volunteer"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_trained _volunteer"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "متطوعة تم تدريبها على الملاريا فقط"
+          }
+        ],
+        "name": "malaria_trained _volunteer",
+        "code": "malaria_trained _volunteer",
+        "optionSet": "cn6FJVcBei2",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J36N3QGJF7J32RD0C35VZA",
+        "displayName": "health_education_volunteer",
+        "label": {
+          "ar": "متطوعة تثقيف صحي",
+          "en": "health_education_volunteer"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "health_education_volunteer"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "متطوعة تثقيف صحي"
+          }
+        ],
+        "name": "health_education_volunteer",
+        "code": "health_education_volunteer",
+        "optionSet": "cn6FJVcBei2",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "hvoE33sBe97": [
+      {
+        "id": "01K0J77NTFAH4HVYFAM7NYK9NX",
+        "displayName": "Practiced",
+        "label": {
+          "ar": "تطبق",
+          "en": "Practiced"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Practiced"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تطبق"
+          }
+        ],
+        "name": "Practiced",
+        "code": "Practiced",
+        "optionSet": "hvoE33sBe97",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J796ZCH3H88SNWMKG4J0AV",
+        "displayName": "DonPracticed",
+        "label": {
+          "ar": "لا تطبق",
+          "en": "DonPracticed"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا تطبق"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "DonPracticed"
+          }
+        ],
+        "name": "DonPracticed",
+        "code": "DonPracticed",
+        "optionSet": "hvoE33sBe97",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "m9mq4De3If2": [
+      {
+        "id": "01KAS06W77RGPCZ9ZPAWK92NMB",
+        "displayName": "mrdt_cassette",
+        "label": {
+          "ar": "الفحص السريع للملاريا_بالشريط",
+          "en": "mrdt_cassette"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "mrdt_cassette"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "الفحص السريع للملاريا_بالشريط"
+          }
+        ],
+        "name": "mrdt_cassette",
+        "code": "mrdt_cassette",
+        "optionSet": "m9mq4De3If2",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01KAS06W77S9K1BB5QYAPQRBKW",
+        "displayName": "act20_tape",
+        "label": {
+          "ar": "كوارتم_20_بالشريط",
+          "en": "act20_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_20_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act20_tape"
+          }
+        ],
+        "name": "act20_tape",
+        "code": "act20_tape",
+        "optionSet": "m9mq4De3If2",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01KAS06W770ZCCFJCPDTYR4HS7",
+        "displayName": "act40_tape",
+        "label": {
+          "ar": "كوارتم_40_بالشريط",
+          "en": "act40_tape"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act40_tape"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_40_بالشريط"
+          }
+        ],
+        "name": "act40_tape",
+        "code": "act40_tape",
+        "optionSet": "m9mq4De3If2",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01KAS06W77R58VE8Q6WW7AWWA0",
+        "displayName": "act60_tape",
+        "label": {
+          "ar": "كوارتم_60_بالشريط",
+          "en": "act60_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_60_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act60_tape"
+          }
+        ],
+        "name": "act60_tape",
+        "code": "act60_tape",
+        "optionSet": "m9mq4De3If2",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01KAS06W77VQNFK79CE7ST6Q5B",
+        "displayName": "act80_tape",
+        "label": {
+          "ar": "كوارتم_80_بالشريط",
+          "en": "act80_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_80_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act80_tape"
+          }
+        ],
+        "name": "act80_tape",
+        "code": "act80_tape",
+        "optionSet": "m9mq4De3If2",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01KAS0933YW3WDYJFFAJTDKWEW",
+        "displayName": "coartem",
+        "label": {
+          "ar": "كوارتم_اجمالي",
+          "en": "coartem"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_اجمالي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "coartem"
+          }
+        ],
+        "name": "coartem",
+        "code": "coartem",
+        "optionSet": "m9mq4De3If2",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

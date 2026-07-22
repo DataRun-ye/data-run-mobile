@@ -1,0 +1,2660 @@
+{
+  "id": "LaGeMmmCEtH",
+  "name": "iccm_chv_supporting_supervision_501",
+  "label": {
+    "ar": "الإشراف الداعم لمتطوعات صحة المجتمع 1",
+    "en": "iCCM CHV Supporting Supervision I"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "VWS5Gr9VGH8",
+  "versionNumber": 26,
+  "fields": [
+    {
+      "id": "kbHsG2u2n8K",
+      "code": "iccm_supervision_team_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 102,
+      "path": "main.kbHsG2u2n8K",
+      "name": "iccm_supervision_team_type",
+      "description": "iccm supervision team type chv",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "UDX20myLcFQ",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "فريق الاشراف",
+        "en": "iccm_supervision_team_type"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "CD2wK8Tzwgy",
+      "code": "other_iccm_supervision_team",
+      "type": "Text",
+      "resourceType": null,
+      "order": 103,
+      "path": "main.CD2wK8Tzwgy",
+      "name": "other_iccm_supervision_team",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "other_iccm_supervision_team",
+          "expression": "#{iccm_supervision_team_type} == 'other_iccm_supervision_team'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{iccm_supervision_team_type} == 'other_iccm_supervision_team'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "فريق اخر",
+        "en": "other_iccm_supervision_team"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "E0mkcxV1MAU",
+      "code": "DateAndTime",
+      "type": "DateTime",
+      "resourceType": null,
+      "order": 101,
+      "path": "main.E0mkcxV1MAU",
+      "name": "DateAndTime",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الوقت والتاريخ",
+        "en": "DateAndTime"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "YZjCBLMSrCe",
+      "code": "chv_name",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 108,
+      "path": "main.YZjCBLMSrCe",
+      "name": "chv_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_name",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المتطوعة",
+        "en": "chv_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "tl7GFA8JsIT",
+      "code": "chv_id",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 109,
+      "path": "main.tl7GFA8JsIT",
+      "name": "chv_id",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_id",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "كود المتطوعة",
+        "en": "chv_id"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "QJad4RBGgkM",
+      "code": "chv_phone",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 110,
+      "path": "main.QJad4RBGgkM",
+      "name": "chv_phone",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_phone",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم الهاتف",
+        "en": "chv_phone"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "M8aPaJfXGcm",
+      "code": "chv_education_level",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 111,
+      "path": "main.M8aPaJfXGcm",
+      "name": "chv_education_level",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "ZVRQtwgB08z",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_education_level",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "المستوى التعليمي للمتطوعة",
+        "en": "chv_education_level"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "ixo5YQgMbQo",
+      "code": "other_chv_education_level",
+      "type": "Text",
+      "resourceType": null,
+      "order": 112,
+      "path": "main.ixo5YQgMbQo",
+      "name": "other_chv_education_level",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "other_chv_education_level",
+          "expression": "#{chv_education_level} == 'other'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_education_level} == 'other'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "اخر",
+        "en": "other_chv_education_level"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "T1bVMBl4r6t",
+      "code": "knowledge_sample_collection",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 301,
+      "path": "rdt.T1bVMBl4r6t",
+      "name": "knowledge_sample_collection",
+      "description": "chv iccm supervision knowledge_sample_collection",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اخذ عينة الدم بالطريقة الصحيحة ووضعها بالكمية المحددة في الفتحة المناسبة",
+        "en": "knowledge_sample_collection"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "jyOqdkk4naf",
+      "code": "knowledge_rdt_buffer_application",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 302,
+      "path": "rdt.jyOqdkk4naf",
+      "name": "knowledge_rdt_buffer_application",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "وضع عدد قطرات المحلول المعادل المحددة في الفتحة المناسبة",
+        "en": "knowledge_rdt_buffer_application"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "sciAIMjgYp8",
+      "code": "knowledge_rdt_result_read_timing",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 303,
+      "path": "rdt.sciAIMjgYp8",
+      "name": "knowledge_rdt_result_read_timing",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "احتساب الوقت المحدد لقراءة نتيجة الفحص السريع",
+        "en": "knowledge_rdt_result_read_timing"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IwQNoixcYiY",
+      "code": "knowledge_read_rdt_result",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 304,
+      "path": "rdt.IwQNoixcYiY",
+      "name": "knowledge_read_rdt_result",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "قراءة نتائج الفحص السريع بشكل صحيح (استخدام كرت تقييم قراءة نتائج الفحص)",
+        "en": "knowledge_read_rdt_result"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "lW1TrqoDtGr",
+      "code": "knowledge_safety_protection_procedures",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 305,
+      "path": "rdt.lW1TrqoDtGr",
+      "name": "knowledge_safety_protection_procedures",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تنفذ إجراءات السلامة والامان",
+        "en": "knowledge_safety_protection_procedures"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "CIpSXY4sGmS",
+      "code": "practice_sample_collection",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 306,
+      "path": "rdt.CIpSXY4sGmS",
+      "name": "practice_sample_collection",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اخذ عينة الدم بالطريقة الصحيحة ووضعها بالكمية المحددة في الفتحة المناسبة",
+        "en": "practice_sample_collection"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DnEZfhC6JZJ",
+      "code": "practice_rdt_buffer_application",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 307,
+      "path": "rdt.DnEZfhC6JZJ",
+      "name": "practice_rdt_buffer_application",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "وضع عدد قطرات المحلول المعادل المحددة في الفتحة المناسبة",
+        "en": "practice_rdt_buffer_application"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "kyOoF3OCTwg",
+      "code": "practice_rdt_result_read_timing",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 308,
+      "path": "rdt.kyOoF3OCTwg",
+      "name": "practice_rdt_result_read_timing",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "احتساب الوقت المحدد لقراءة نتيجة الفحص السريع",
+        "en": "practice_rdt_result_read_timing"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "QQwapzOEqag",
+      "code": "practice_read_rdt_result",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 309,
+      "path": "rdt.QQwapzOEqag",
+      "name": "practice_read_rdt_result",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "قراءة نتائج الفحص السريع بشكل صحيح (استخدام كرت تقييم قراءة نتائج الفحص)",
+        "en": "practice_read_rdt_result"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DotwZCygFPz",
+      "code": "practice_safety_protection_procedures",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 310,
+      "path": "rdt.DotwZCygFPz",
+      "name": "practice_safety_protection_procedures",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تنفذ إجراءات السلامة والامان",
+        "en": "practice_safety_protection_procedures"
+      },
+      "properties": {},
+      "parent": "rdt",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "pbBVct5K29F",
+      "code": "knowledge_malaria_signs_symptoms",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 401,
+      "path": "treatment.pbBVct5K29F",
+      "name": "knowledge_malaria_signs_symptoms",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اعراض  وعلامات مرض الملاريا البسيطة و الوخيمة",
+        "en": "knowledge_malaria_signs_symptoms"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Lbt2BcA6bQb",
+      "code": "knowledge_antimalaria_giving",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 402,
+      "path": "treatment.Lbt2BcA6bQb",
+      "name": "knowledge_antimalaria_giving",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "إعطاء المريض جرعة دواء الملاريا بحسب الوزن والعمر",
+        "en": "knowledge_antimalaria_giving"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "iPiUTEwqJre",
+      "code": "knowledge_severe_malaria_referral",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 403,
+      "path": "treatment.iPiUTEwqJre",
+      "name": "knowledge_severe_malaria_referral",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "إجراءات الإحالة لمرضى الملاريا الوخيمة",
+        "en": "knowledge_severe_malaria_referral"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Vgg56Chdpxl",
+      "code": "knowledge_dealing_with_pv_malaria",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 404,
+      "path": "treatment.Vgg56Chdpxl",
+      "name": "knowledge_dealing_with_pv_malaria",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "كيفية التعامل مع حالات الملاريا النشطة PV",
+        "en": "knowledge_dealing_with_pv_malaria"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "JrqWhJivFx5",
+      "code": "knowledge_pregnant_and_childern_treatment",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 405,
+      "path": "treatment.JrqWhJivFx5",
+      "name": "knowledge_pregnant_and_childern_treatment",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اجراءات التعامل مع مرضى الملاريا (الحوامل والأطفال دون الخامسة)",
+        "en": "knowledge_pregnant_and_childern_treatment"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IEby77UCjoO",
+      "code": "practice_malaria_signs_symptoms",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 407,
+      "path": "treatment.IEby77UCjoO",
+      "name": "practice_malaria_signs_symptoms",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تطبيق إجراءات المعالجة والإحالة لمريض الملاريا الوخيمة",
+        "en": "practice_malaria_signs_symptoms"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "V913PXQyhIR",
+      "code": "practice_antimalaria_giving",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 408,
+      "path": "treatment.V913PXQyhIR",
+      "name": "practice_antimalaria_giving",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "معالجة مرضى الملاريا البسيطة باستخدام جرعة الدواء تتناسب مع الوزن والعمر",
+        "en": "practice_antimalaria_giving"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "zKkajA8ajAZ",
+      "code": "practice_pv_malaria_treatment",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 409,
+      "path": "treatment.zKkajA8ajAZ",
+      "name": "practice_pv_malaria_treatment",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "معالجة حالات الملاريا النشطة",
+        "en": "practice_pv_malaria_treatment"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "qB5RWR1nJbw",
+      "code": "practice_pregnant_and_childern_treatment",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 410,
+      "path": "treatment.qB5RWR1nJbw",
+      "name": "practice_pregnant_and_childern_treatment",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "معالجة واحالة مرضى الملاريا (الحوامل والأطفال دون الخامسة)",
+        "en": "practice_pregnant_and_childern_treatment"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "NsQlgsAQbxT",
+      "code": "practice_first_dose_giving",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 411,
+      "path": "treatment.NsQlgsAQbxT",
+      "name": "practice_first_dose_giving",
+      "description": "chv iccm",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تعطي الجرعة الأولى من الدواء المضاد للملاريا تحت الأشراف المباشر وتحدد مواعيد اخذ الجرعات التالية",
+        "en": "practice_first_dose_giving"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "y2flCigadIO",
+      "code": "other_chv_training",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 603,
+      "path": "training.y2flCigadIO",
+      "name": "other_chv_training",
+      "description": null,
+      "options": [],
+      "mandatory": false,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "أخرى",
+        "en": "other_chv_training"
+      },
+      "properties": {},
+      "parent": "training",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "vvDm51bfeMr",
+      "code": "chv_supervisor_notes",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 701,
+      "path": "notes.vvDm51bfeMr",
+      "name": "chv_supervisor_notes",
+      "description": null,
+      "options": [],
+      "mandatory": false,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ملاحظات خاصة بالمشرف",
+        "en": "chv_supervisor_notes"
+      },
+      "properties": {},
+      "parent": "notes",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "yKguPB5GJoO",
+      "code": "rdt_chv_training",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 601,
+      "path": "training.yKguPB5GJoO",
+      "name": "rdt_chv_training",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "Zgxbu0vQIuz",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "إجراءات أخذ العينة والفحص",
+        "en": "rdt_chv_training"
+      },
+      "properties": {},
+      "parent": "training",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "zgaw5AsCjjv",
+      "code": "treatment_chv_training",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 602,
+      "path": "training.zgaw5AsCjjv",
+      "name": "treatment_chv_training",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "fiCc6fQxP2A",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "إجراءات المعالجة والإحالة",
+        "en": "treatment_chv_training"
+      },
+      "properties": {},
+      "parent": "training",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "sYaCQlc7O5o",
+      "code": "past_peroid_records_keeping",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 501,
+      "path": "recording.sYaCQlc7O5o",
+      "name": "past_peroid_records_keeping",
+      "description": "chv practice iccm supervision",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الاحتفاظ بتقارير الفترات الماضية (لفترة التطوع )",
+        "en": "past_peroid_records_keeping"
+      },
+      "properties": {},
+      "parent": "recording",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "M81IS1YMTTS",
+      "code": "correctly_recording _data",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 502,
+      "path": "recording.M81IS1YMTTS",
+      "name": "correctly_recording _data",
+      "description": "chv practice iccm  supervision",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تدوين البيانات بالشكل الصحيح وفي المكان المناسب في سجل المتطوعة اليومي الخاص بتدبير حالات الملاريا",
+        "en": "correctly_recording _data"
+      },
+      "properties": {},
+      "parent": "recording",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "OLdDCwS0l3K",
+      "code": "correctly_implement_field_visits_awareness_sessions_plan",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 503,
+      "path": "recording.OLdDCwS0l3K",
+      "name": "correctly_implement_field_visits_awareness_sessions_plan",
+      "description": "chv practice iccm supervision",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تنفذ خطة الزيارات الميدانية وجلسات التوعية بطريقة صحيحة",
+        "en": "correctly_implement_field_visits_awareness_sessions_plan"
+      },
+      "properties": {},
+      "parent": "recording",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "lJw1A8wwQ0h",
+      "code": "household_survey_register_available_and_complete",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 504,
+      "path": "recording.lJw1A8wwQ0h",
+      "name": "household_survey_register_available_and_complete",
+      "description": "chv practice iccm supervision",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "hvoE33sBe97",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "سجل مسح الاسر في الزمام للمتطوعة متوفر ومكتمل",
+        "en": "household_survey_register_available_and_complete"
+      },
+      "properties": {},
+      "parent": "recording",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "HqT7RQXcjrN",
+      "code": "chv_residential_village_name",
+      "type": "Text",
+      "resourceType": null,
+      "order": 107,
+      "path": "main.HqT7RQXcjrN",
+      "name": "chv_residential_village_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_residential_village_name",
+          "expression": "#{chv_village_reached} == true || #{chv_village_reached} == 'yes' || #{chv_village_reached} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_village_reached} == true || #{chv_village_reached} == 'yes' || #{chv_village_reached} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "القرية التي تسكن فيها المتطوعة",
+        "en": "chv_residential_village_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "bxalyVRtscX",
+      "code": "chv_villages_names",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 201,
+      "path": "villages.bxalyVRtscX",
+      "name": "chv_villages_names",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "القرى التي تغطيها المتطوعة",
+        "en": "chv_villages_names"
+      },
+      "properties": {},
+      "parent": "villages",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "doOd40MXLZ3",
+      "code": "chv_village_reached",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 104,
+      "path": "main.doOd40MXLZ3",
+      "name": "chv_village_reached",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تم الوصول الى قرية المتطوعة",
+        "en": "chv_village_reached"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "unaA4JhJwsq",
+      "code": "chv_interviewed",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 105,
+      "path": "main.unaA4JhJwsq",
+      "name": "chv_interviewed",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_interviewed",
+          "expression": "#{chv_village_reached} == true || #{chv_village_reached} == 'Yes' || #{chv_village_reached} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_village_reached} == true || #{chv_village_reached} == 'Yes' || #{chv_village_reached} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "تم مقابلة المتطوعة",
+        "en": "chv_interviewed"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IicK5mh871O",
+      "code": "chv_not_interviewed_reasons",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 106,
+      "path": "main.IicK5mh871O",
+      "name": "chv_not_interviewed_reasons",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "chv_not_interviewed_reasons",
+          "expression": "#{chv_interviewed} == false|| #{chv_interviewed} == 'no'  || #{chv_interviewed} == 'No'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == false|| #{chv_interviewed} == 'no'  || #{chv_interviewed} == 'No'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "سبب عدم مقابلة المتطوعة",
+        "en": "chv_not_interviewed_reasons"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "zaQuNwrE5z5",
+      "code": "knowledge_active_surveillance",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 406,
+      "path": "treatment.zaQuNwrE5z5",
+      "name": "knowledge_active_surveillance",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "VKMsbXQ3wHH",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "معرفة المتطوعة بالبحث النشط",
+        "en": "knowledge_active_surveillance"
+      },
+      "properties": {},
+      "parent": "treatment",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "rdt",
+      "code": null,
+      "path": "rdt",
+      "parent": null,
+      "name": "rdt",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "rdt",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تقييم معارف وتطبيق إجراء الفحص السريع للملاريا",
+        "en": "rdt"
+      },
+      "properties": {}
+    },
+    {
+      "id": "notes",
+      "code": null,
+      "path": "notes",
+      "parent": null,
+      "name": "notes",
+      "description": null,
+      "order": 700,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "ملاحظات خاصة بالمشرف",
+        "en": "notes"
+      },
+      "properties": {}
+    },
+    {
+      "id": "villages",
+      "code": null,
+      "path": "villages",
+      "parent": null,
+      "name": "villages",
+      "description": null,
+      "order": 200,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "villages",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "القرى والمحلات التي تغطيها المتطوعة",
+        "en": "villages"
+      },
+      "properties": {}
+    },
+    {
+      "id": "recording",
+      "code": null,
+      "path": "recording",
+      "parent": null,
+      "name": "recording",
+      "description": null,
+      "order": 500,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "recording",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تقييم التسجيل وتدوين البيانات",
+        "en": "recording"
+      },
+      "properties": {}
+    },
+    {
+      "id": "training",
+      "code": null,
+      "path": "training",
+      "parent": null,
+      "name": "training",
+      "description": null,
+      "order": 600,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "training",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تحديد المهارات التي قمت بتدريب المتطوعة عليها",
+        "en": "training"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "بيانات عامة",
+        "en": "main"
+      },
+      "properties": {}
+    },
+    {
+      "id": "treatment",
+      "code": null,
+      "path": "treatment",
+      "parent": null,
+      "name": "treatment",
+      "description": null,
+      "order": 400,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "treatment",
+          "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_interviewed} == true || #{chv_interviewed} == 'yes'  || #{chv_interviewed} == 'Yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تقييم معارف وتطبيق  إجراءات المعالجة",
+        "en": "treatment"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "UDX20myLcFQ",
+      "displayName": "iccm_supervision_team_type",
+      "label": {},
+      "translations": [],
+      "name": "iccm_supervision_team_type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "VKMsbXQ3wHH",
+      "displayName": "know_DontKnow",
+      "label": {},
+      "translations": [],
+      "name": "know_DontKnow",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "ZVRQtwgB08z",
+      "displayName": "chv_education_level",
+      "label": {},
+      "translations": [],
+      "name": "chv_education_level",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "Zgxbu0vQIuz",
+      "displayName": "rdt_chv_training",
+      "label": {},
+      "translations": [],
+      "name": "rdt_chv_training",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "fiCc6fQxP2A",
+      "displayName": "treatment_chv_training",
+      "label": {},
+      "translations": [],
+      "name": "treatment_chv_training",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "hvoE33sBe97",
+      "displayName": "Practiced_DonPracticed",
+      "label": {},
+      "translations": [],
+      "name": "Practiced_DonPracticed",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "UDX20myLcFQ": [
+      {
+        "id": "01K0J2645GEZ60W6JPBJB52WHK",
+        "displayName": "malaria_unit",
+        "label": {
+          "ar": "وحدة الملاريا",
+          "en": "malaria_unit"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "وحدة الملاريا"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_unit"
+          }
+        ],
+        "name": "malaria_unit",
+        "code": "malaria_unit",
+        "optionSet": "UDX20myLcFQ",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J286V3ZKMMGRPKSRQJ28G5",
+        "displayName": "central_supervision_team",
+        "label": {
+          "ar": "فريق الإشراف المركزي",
+          "en": "central_supervision_team"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "central_supervision_team"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فريق الإشراف المركزي"
+          }
+        ],
+        "name": "central_supervision_team",
+        "code": "central_supervision_team",
+        "optionSet": "UDX20myLcFQ",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2A7YF8Y21WYWW7BTB0SFR",
+        "displayName": "malaria_coordinator",
+        "label": {
+          "ar": "منسق الملاريا",
+          "en": "malaria_coordinator"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "منسق الملاريا"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_coordinator"
+          }
+        ],
+        "name": "malaria_coordinator",
+        "code": "malaria_coordinator",
+        "optionSet": "UDX20myLcFQ",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2H94RN4XZYDYVF9K9QG03",
+        "displayName": "nmcp_tihama",
+        "label": {
+          "ar": "محور تهامة",
+          "en": "nmcp_tihama"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "nmcp_tihama"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "محور تهامة"
+          }
+        ],
+        "name": "nmcp_tihama",
+        "code": "nmcp_tihama",
+        "optionSet": "UDX20myLcFQ",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2K6ET70V31BMPE2J3SVCA",
+        "displayName": "emergency_team",
+        "label": {
+          "ar": "فريق الطوارئ",
+          "en": "emergency_team"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "emergency_team"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فريق الطوارئ"
+          }
+        ],
+        "name": "emergency_team",
+        "code": "emergency_team",
+        "optionSet": "UDX20myLcFQ",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J2N0C9X8RBC7PPRA4G5XZR",
+        "displayName": "other_iccm_supervision_team",
+        "label": {
+          "ar": "اخرى",
+          "en": "other_iccm_supervision_team"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "other_iccm_supervision_team"
+          }
+        ],
+        "name": "other_iccm_supervision_team",
+        "code": "other_iccm_supervision_team",
+        "optionSet": "UDX20myLcFQ",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "VKMsbXQ3wHH": [
+      {
+        "id": "01K0J71GJRJ1337DV07701GPWC",
+        "displayName": "know",
+        "label": {
+          "ar": "تعرف",
+          "en": "know"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "know"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تعرف"
+          }
+        ],
+        "name": "know",
+        "code": "know",
+        "optionSet": "VKMsbXQ3wHH",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J73D2GG2G3RCYW2QNYB90N",
+        "displayName": "Donknow",
+        "label": {
+          "ar": "لا تعرف",
+          "en": "Donknow"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Donknow"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا تعرف"
+          }
+        ],
+        "name": "Donknow",
+        "code": "Donknow",
+        "optionSet": "VKMsbXQ3wHH",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "ZVRQtwgB08z": [
+      {
+        "id": "01K0J3WMJRT1ZBKN31WXRPN2M3",
+        "displayName": "primary",
+        "label": {
+          "ar": "ابتدائي",
+          "en": "primary"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ابتدائي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "primary"
+          }
+        ],
+        "name": "primary",
+        "code": "primary",
+        "optionSet": "ZVRQtwgB08z",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J3YT8MDGKAQRGW2TCMCJ5T",
+        "displayName": "essential",
+        "label": {
+          "ar": "اساسي",
+          "en": "essential"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اساسي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "essential"
+          }
+        ],
+        "name": "essential",
+        "code": "essential",
+        "optionSet": "ZVRQtwgB08z",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J406E92M3J5PT6RTD1RPZF",
+        "displayName": "secondary",
+        "label": {
+          "ar": "ثانوي",
+          "en": "secondary"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ثانوي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "secondary"
+          }
+        ],
+        "name": "secondary",
+        "code": "secondary",
+        "optionSet": "ZVRQtwgB08z",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J41MVSRX3T1WJ9Y17T8HPW",
+        "displayName": "diploma",
+        "label": {
+          "ar": "دبلوم",
+          "en": "diploma"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "diploma"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "دبلوم"
+          }
+        ],
+        "name": "diploma",
+        "code": "diploma",
+        "optionSet": "ZVRQtwgB08z",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J435XNWAMPHPDPPEZZNEED",
+        "displayName": "university",
+        "label": {
+          "ar": "جامعي",
+          "en": "university"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "جامعي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "university"
+          }
+        ],
+        "name": "university",
+        "code": "university",
+        "optionSet": "ZVRQtwgB08z",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J44YTSYKY8N6ZN60G9ETE9",
+        "displayName": "other",
+        "label": {
+          "ar": "آخر",
+          "en": "other"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "other"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "آخر"
+          }
+        ],
+        "name": "other",
+        "code": "other",
+        "optionSet": "ZVRQtwgB08z",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "Zgxbu0vQIuz": [
+      {
+        "id": "01K0JNHNF71BGDBVX8CPBPD6FB",
+        "displayName": "collect_blood_sample_correctly",
+        "label": {
+          "ar": "أخذ عينة الدم بالطريقة الصحيحة ووضعها بالكمية المحددة في الفتحة المناسبة",
+          "en": "collect_blood_sample_correctly"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أخذ عينة الدم بالطريقة الصحيحة ووضعها بالكمية المحددة في الفتحة المناسبة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "collect_blood_sample_correctly"
+          }
+        ],
+        "name": "collect_blood_sample_correctly",
+        "code": "collect_blood_sample_correctly",
+        "optionSet": "Zgxbu0vQIuz",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNHNF71HZQHMT4A9K95D2M",
+        "displayName": "add_correct_buffer_drops",
+        "label": {
+          "ar": "وضع عدد قطرات المحلول المعادل المحددة في الفتحة المناسبة",
+          "en": "add_correct_buffer_drops"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "add_correct_buffer_drops"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "وضع عدد قطرات المحلول المعادل المحددة في الفتحة المناسبة"
+          }
+        ],
+        "name": "add_correct_buffer_drops",
+        "code": "add_correct_buffer_drops",
+        "optionSet": "Zgxbu0vQIuz",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNHNF7K4B36C4VAC5HCJ13",
+        "displayName": "calculate_test_reading_time",
+        "label": {
+          "ar": "احتساب الوقت المحدد لقراءة نتيجة الفحص السريع",
+          "en": "calculate_test_reading_time"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "calculate_test_reading_time"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "احتساب الوقت المحدد لقراءة نتيجة الفحص السريع"
+          }
+        ],
+        "name": "calculate_test_reading_time",
+        "code": "calculate_test_reading_time",
+        "optionSet": "Zgxbu0vQIuz",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNHNF75YCV3M8MPGE7H0T2",
+        "displayName": "interpret_rapid_test_results_correctly",
+        "label": {
+          "ar": "قراءة نتائج الفحص السريع بشكل صحيح (باستخدام كرت تقييم النتائج)",
+          "en": "interpret_rapid_test_results_correctly"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "interpret_rapid_test_results_correctly"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "قراءة نتائج الفحص السريع بشكل صحيح (باستخدام كرت تقييم النتائج)"
+          }
+        ],
+        "name": "interpret_rapid_test_results_correctly",
+        "code": "interpret_rapid_test_results_correctly",
+        "optionSet": "Zgxbu0vQIuz",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNHNF73EZAKYFBS12CC7C2",
+        "displayName": "follow_safety_procedures",
+        "label": {
+          "ar": "تنفيذ إجراءات السلامة والأمان",
+          "en": "follow_safety_procedures"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "follow_safety_procedures"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تنفيذ إجراءات السلامة والأمان"
+          }
+        ],
+        "name": "follow_safety_procedures",
+        "code": "follow_safety_procedures",
+        "optionSet": "Zgxbu0vQIuz",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "fiCc6fQxP2A": [
+      {
+        "id": "01K0JNCPZDZPH54PXFTDKY6QJQ",
+        "displayName": "identify_malaria_symptoms",
+        "label": {
+          "ar": "أعراض وعلامات مرض الملاريا البسيطة والوخيمة",
+          "en": "identify_malaria_symptoms"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "identify_malaria_symptoms"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أعراض وعلامات مرض الملاريا البسيطة والوخيمة"
+          }
+        ],
+        "name": "identify_malaria_symptoms",
+        "code": "identify_malaria_symptoms",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZEH7VGH8TKD2SEW0YM",
+        "displayName": "handle_active_pv_cases",
+        "label": {
+          "ar": "كيفية التعامل مع حالات الملاريا النشطة PV",
+          "en": "handle_active_pv_cases"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "handle_active_pv_cases"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كيفية التعامل مع حالات الملاريا النشطة PV"
+          }
+        ],
+        "name": "handle_active_pv_cases",
+        "code": "handle_active_pv_cases",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZE4K7JY7JY0K19WKN4",
+        "displayName": "manage_pregnant_and_children_cases",
+        "label": {
+          "ar": "إجراءات التعامل مع مرضى الملاريا (الحوامل والأطفال دون الخامسة)",
+          "en": "manage_pregnant_and_children_cases"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إجراءات التعامل مع مرضى الملاريا (الحوامل والأطفال دون الخامسة)"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "manage_pregnant_and_children_cases"
+          }
+        ],
+        "name": "manage_pregnant_and_children_cases",
+        "code": "manage_pregnant_and_children_cases",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZE3VZBNXAQNVR0VVS9",
+        "displayName": "apply_severe_malaria_treatment_and_referral",
+        "label": {
+          "ar": "تطبيق إجراءات المعالجة والإحالة لمريض الملاريا الوخيمة",
+          "en": "apply_severe_malaria_treatment_and_referral"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "apply_severe_malaria_treatment_and_referral"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تطبيق إجراءات المعالجة والإحالة لمريض الملاريا الوخيمة"
+          }
+        ],
+        "name": "apply_severe_malaria_treatment_and_referral",
+        "code": "apply_severe_malaria_treatment_and_referral",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZEGKAF24RE59KNTZEV",
+        "displayName": "dose_medication_by_weight_and_age",
+        "label": {
+          "ar": "إعطاء المريض جرعة دواء الملاريا بحسب الوزن والعمر",
+          "en": "dose_medication_by_weight_and_age"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "dose_medication_by_weight_and_age"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إعطاء المريض جرعة دواء الملاريا بحسب الوزن والعمر"
+          }
+        ],
+        "name": "dose_medication_by_weight_and_age",
+        "code": "dose_medication_by_weight_and_age",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZEHXDJR8ETKHD86YA4",
+        "displayName": "treat_simple_malaria_with_correct_dose",
+        "label": {
+          "ar": "معالجة مرضى الملاريا البسيطة باستخدام جرعة الدواء تتناسب مع الوزن والعمر",
+          "en": "treat_simple_malaria_with_correct_dose"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "treat_simple_malaria_with_correct_dose"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "معالجة مرضى الملاريا البسيطة باستخدام جرعة الدواء تتناسب مع الوزن والعمر"
+          }
+        ],
+        "name": "treat_simple_malaria_with_correct_dose",
+        "code": "treat_simple_malaria_with_correct_dose",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZE9SBPGPMYBNQSV8G6",
+        "displayName": "apply_severe_malaria_referral",
+        "label": {
+          "ar": "إجراءات الإحالة لمرضى الملاريا الوخيمة",
+          "en": "apply_severe_malaria_referral"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إجراءات الإحالة لمرضى الملاريا الوخيمة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "apply_severe_malaria_referral"
+          }
+        ],
+        "name": "apply_severe_malaria_referral",
+        "code": "apply_severe_malaria_referral",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZEY9PBTM4FG8R6H75D",
+        "displayName": "treat_and_refer_pregnant_and_children_cases",
+        "label": {
+          "ar": "معالجة واحالة مرضى الملاريا (الحوامل والأطفال دون الخامسة)",
+          "en": "treat_and_refer_pregnant_and_children_cases"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "treat_and_refer_pregnant_and_children_cases"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "معالجة واحالة مرضى الملاريا (الحوامل والأطفال دون الخامسة)"
+          }
+        ],
+        "name": "treat_and_refer_pregnant_and_children_cases",
+        "code": "treat_and_refer_pregnant_and_children_cases",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZFM6H5V4GE0ZQR5Z52",
+        "displayName": "supervise_first_dose_and_schedule_next",
+        "label": {
+          "ar": "إعطاء الجرعة الأولى من الدواء المضاد للملاريا تحت الإشراف المباشر وتحديد مواعيد الجرعات التالية",
+          "en": "supervise_first_dose_and_schedule_next"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إعطاء الجرعة الأولى من الدواء المضاد للملاريا تحت الإشراف المباشر وتحديد مواعيد الجرعات التالية"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "supervise_first_dose_and_schedule_next"
+          }
+        ],
+        "name": "supervise_first_dose_and_schedule_next",
+        "code": "supervise_first_dose_and_schedule_next",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0JNCPZF7KARKQNC7TVM3JZ3",
+        "displayName": "other_training",
+        "label": {
+          "ar": "أخرى (حدد):",
+          "en": "other_training"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أخرى (حدد):"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "other_training"
+          }
+        ],
+        "name": "other_training",
+        "code": "other_training",
+        "optionSet": "fiCc6fQxP2A",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "hvoE33sBe97": [
+      {
+        "id": "01K0J77NTFAH4HVYFAM7NYK9NX",
+        "displayName": "Practiced",
+        "label": {
+          "ar": "تطبق",
+          "en": "Practiced"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Practiced"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تطبق"
+          }
+        ],
+        "name": "Practiced",
+        "code": "Practiced",
+        "optionSet": "hvoE33sBe97",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0J796ZCH3H88SNWMKG4J0AV",
+        "displayName": "DonPracticed",
+        "label": {
+          "ar": "لا تطبق",
+          "en": "DonPracticed"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا تطبق"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "DonPracticed"
+          }
+        ],
+        "name": "DonPracticed",
+        "code": "DonPracticed",
+        "optionSet": "hvoE33sBe97",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

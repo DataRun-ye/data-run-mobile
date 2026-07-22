@@ -6,7 +6,6 @@ import 'package:datarunmobile/core/form/rule/action.dart';
 import 'package:datarunmobile/core/form/rule/rule.dart';
 import 'package:datarunmobile/core/form/rule/rule_action.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
-import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
@@ -202,12 +201,9 @@ void main() {
 
   test('real form restores required children whenever their section reappears',
       () async {
-    final template = formTemplateFromJson(await readJsonMap(
-      'example/Malaria Case Registration and Management Form.json',
+    final repository = formRepositoryFromJson(await readJsonMap(
+      'test/fixtures/live_forms/KcsA3KETRbY-v24.json',
     ));
-    final repository = FormTemplateRepository.inMemory(
-      formTemplateModel: template,
-    );
     final form = FormGroup(
       FormElementControlBuilder.formDataControls(repository, const {}),
     );

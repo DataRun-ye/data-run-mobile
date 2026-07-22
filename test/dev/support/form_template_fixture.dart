@@ -5,6 +5,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:datarunmobile/core/form/element_template/template.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/form_template_model.dart';
+import 'package:datarunmobile/data/form_template_repository.dart';
 
 Future<Map<String, dynamic>> readJsonMap(String path) async {
   return jsonDecode(await File(path).readAsString()) as Map<String, dynamic>;
@@ -30,7 +31,29 @@ FormTemplateModel formTemplateFromJson(Map<String, dynamic> json) {
           .cast<Map<String, dynamic>>()
           .map(Template.fromJsonFactory),
     ),
-    options: BuiltList<FormOption>(),
+    options: BuiltList<FormOption>(
+      ((normalized['options'] as List?) ?? const [])
+          .cast<Map<String, dynamic>>()
+          .map(FormOption.fromJson),
+    ),
+  );
+}
+
+FormTemplateRepository formRepositoryFromJson(Map<String, dynamic> json) {
+  final rawOptionMap = json['optionMap'] as Map<String, dynamic>? ?? const {};
+  final optionMap = rawOptionMap.map(
+    (optionSet, options) => MapEntry(
+      optionSet,
+      (options as List)
+          .cast<Map<String, dynamic>>()
+          .map(FormOption.fromJson)
+          .toList(),
+    ),
+  );
+
+  return FormTemplateRepository.inMemory(
+    formTemplateModel: formTemplateFromJson(json),
+    optionMap: optionMap,
   );
 }
 

@@ -1,0 +1,1964 @@
+{
+  "id": "ck2pHW93sk2",
+  "name": "emergency_investigation_and_response_physician_201",
+  "label": {
+    "ar": "التقصي والاستجابة الطارئة (طبيب)",
+    "en": "Emergency Investigation and Response (Physician)"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "Nvsp2XDPaTq",
+  "versionNumber": 15,
+  "fields": [
+    {
+      "id": "LyIGccZ5mna",
+      "code": "visitdate",
+      "type": "Date",
+      "resourceType": null,
+      "order": 2,
+      "path": "main.LyIGccZ5mna",
+      "name": "visitdate",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تاريخ الاستجابة",
+        "en": "visitdate"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "w8VQRZmmz82",
+      "code": "serialNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 15,
+      "path": "patients.w8VQRZmmz82",
+      "name": "serialNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الرقم التسلسلي",
+        "en": "serialNumber"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "KBmP3fPjrLG",
+      "code": "PatientName",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 16,
+      "path": "patients.KBmP3fPjrLG",
+      "name": "PatientName",
+      "description": "cpes Patient Name",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المريض",
+        "en": "PatientName"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "oFGuq5BgGSr",
+      "code": "age",
+      "type": "Age",
+      "resourceType": null,
+      "order": 17,
+      "path": "patients.oFGuq5BgGSr",
+      "name": "age",
+      "description": "Age in Years and (months for age less than 1 year)",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "العمر",
+        "en": "age"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "eCw9HcbcnW7",
+      "code": "gender",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 18,
+      "path": "patients.eCw9HcbcnW7",
+      "name": "gender",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "Bu2LhXFDicp",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الجنس",
+        "en": "gender"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "FjfKSsEWAYf",
+      "code": "de_ispregnant",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 19,
+      "path": "patients.FjfKSsEWAYf",
+      "name": "ispregnant",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "ispregnant",
+          "expression": "#{gender} == 'FEMALE'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{gender} == 'FEMALE'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "حامل",
+        "en": "ispregnant"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "aEjEOwZ9Mk0",
+      "code": "pregnancy_month",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 20,
+      "path": "patients.aEjEOwZ9Mk0",
+      "name": "pregnancy_month",
+      "description": "cpes pregnancy_month",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "pregnancy_month",
+          "expression": "#{ispregnant} == 'true'  || #{ispregnant} == true || #{ispregnant} == 'Yes' || #{ispregnant} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{ispregnant} == 'true'  || #{ispregnant} == true || #{ispregnant} == 'Yes' || #{ispregnant} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "شهر الحمل",
+        "en": "pregnancy_month"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "GzyNDOGyNUW",
+      "code": "lab_test",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 22,
+      "path": "patients.GzyNDOGyNUW",
+      "name": "lab_test",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "AxpBXSCqnDa",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الفحوصات المطلوبة",
+        "en": "lab_test"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "UiM4N3o8OiG",
+      "code": "de_diagnosed_disease_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 23,
+      "path": "patients.UiM4N3o8OiG",
+      "name": "diagnosed_disease_type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "AjpOXeUAqnQ",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "التشخيص",
+        "en": "diagnosed_disease_typ"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "MYZOyP37ilc",
+      "code": "de_other_diagnosed_disease_name",
+      "type": "Text",
+      "resourceType": null,
+      "order": 24,
+      "path": "patients.MYZOyP37ilc",
+      "name": "other_diagnosed_disease_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "other_diagnosed_disease_name",
+          "expression": "#{diagnosed_disease_type} == 'other'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{diagnosed_disease_type} == 'other'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "مرض اخر",
+        "en": "other_diagnosed_disease_name"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "W5QDhN3qanw",
+      "code": "de_cm_measures",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 40,
+      "path": "patients.W5QDhN3qanw",
+      "name": "cm_measures",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "vcYOprXCzar",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "التدابير",
+        "en": "cm_measures"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "BOGECC3MSLb",
+      "code": "de_referral_type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 41,
+      "path": "patients.BOGECC3MSLb",
+      "name": "referral_type",
+      "description": "referral_type, emergent through the team or autoreferral",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "PnCIWkhM47L",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "referral_type",
+          "expression": "#{cm_measures} == 'refferal'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{cm_measures} == 'refferal'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "إحالة",
+        "en": "referral_type"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IhR1E0E2BkO",
+      "code": "other_prescribeddrugs",
+      "type": "Text",
+      "resourceType": null,
+      "order": 32,
+      "path": "patients.IhR1E0E2BkO",
+      "name": "other_prescribeddrugs",
+      "description": null,
+      "options": [],
+      "mandatory": false,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "صنف اخر",
+        "en": "other_prescribeddrugs"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "EChCVEduGEK",
+      "code": "malariadrugs",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 31,
+      "path": "patients.EChCVEduGEK",
+      "name": "malariadrugs",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "YPubNKrnO1e",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "malariadrugs",
+          "expression": "#{diagnosed_disease_type} == 'malaria'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{diagnosed_disease_type} == 'malaria'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "أدوية الملاريا",
+        "en": "malariadrugs"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "pf1mzFIngOl",
+      "code": "symptomsv2",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 21,
+      "path": "patients.pf1mzFIngOl",
+      "name": "symptomsv2",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "HFccPl89PPX",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الاعراض والعلامات",
+        "en": "symptoms"
+      },
+      "properties": {},
+      "parent": "patients",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "patients",
+      "code": null,
+      "path": "patients",
+      "parent": null,
+      "name": "patients",
+      "description": null,
+      "order": 13,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "الحالة",
+        "en": "patients"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 1,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "عام",
+        "en": "main"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "AjpOXeUAqnQ",
+      "displayName": "malaria_dengue_other_none",
+      "label": {},
+      "translations": [],
+      "name": "malaria_dengue_other_none",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "AxpBXSCqnDa",
+      "displayName": "lab_test",
+      "label": {},
+      "translations": [],
+      "name": "lab_test",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "Bu2LhXFDicp",
+      "displayName": "genders",
+      "label": {},
+      "translations": [],
+      "name": "genders",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "HFccPl89PPX",
+      "displayName": "symptomsv2",
+      "label": {},
+      "translations": [],
+      "name": "symptomsv2",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "PnCIWkhM47L",
+      "displayName": "auto_emergent",
+      "label": {},
+      "translations": [],
+      "name": "auto_emergent",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "YPubNKrnO1e",
+      "displayName": "Malaria Drugs",
+      "label": {
+        "ar": "أدوية الملاريا",
+        "en": "Malaria Drugs"
+      },
+      "translations": [
+        {
+          "locale": "ar",
+          "property": "name",
+          "value": "أدوية الملاريا"
+        },
+        {
+          "locale": "en",
+          "property": "name",
+          "value": "Malaria Drugs"
+        }
+      ],
+      "name": "malariadrugs",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "vcYOprXCzar",
+      "displayName": "cm_measures_taken",
+      "label": {},
+      "translations": [],
+      "name": "cm_measures_taken",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "AjpOXeUAqnQ": [
+      {
+        "id": "01JZ45CAN08KDC37T02BEXANEP",
+        "displayName": "malaria",
+        "label": {
+          "ar": "ملاريا",
+          "en": "malaria"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ملاريا"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria"
+          }
+        ],
+        "name": "malaria",
+        "code": "malaria",
+        "optionSet": "AjpOXeUAqnQ",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAN1F4E1Q5WGSP9A2M1E",
+        "displayName": "dengue ",
+        "label": {
+          "ar": "ضنك",
+          "en": "dengue "
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "dengue "
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ضنك"
+          }
+        ],
+        "name": "dengue ",
+        "code": "dengue ",
+        "optionSet": "AjpOXeUAqnQ",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAN23QXC4BRMPRRNX5E9",
+        "displayName": "otherDisease",
+        "label": {
+          "ar": "مرض اخر",
+          "en": "otherDisease"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مرض اخر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "otherDisease"
+          }
+        ],
+        "name": "other",
+        "code": "other",
+        "optionSet": "AjpOXeUAqnQ",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAN3Q3ZABQ3EGKQRGTQD",
+        "displayName": "none",
+        "label": {
+          "ar": "لا شيئ",
+          "en": "none"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا شيئ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "none"
+          }
+        ],
+        "name": "none",
+        "code": "none",
+        "optionSet": "AjpOXeUAqnQ",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "AxpBXSCqnDa": [
+      {
+        "id": "01JZT6HPGNYXNTPWYTJ1SHG91A",
+        "displayName": "mrdt",
+        "label": {
+          "ar": "الفحص السريع للملاريا",
+          "en": "mrdt"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "mrdt"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "الفحص السريع للملاريا"
+          }
+        ],
+        "name": "mrdt",
+        "code": "mrdt",
+        "optionSet": "AxpBXSCqnDa",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT6NT1HFD718N2PRQD9YGPW",
+        "displayName": "malaria_microscopy",
+        "label": {
+          "ar": "فحص مجهري للملاريا",
+          "en": "malaria_microscopy"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "malaria_microscopy"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فحص مجهري للملاريا"
+          }
+        ],
+        "name": "malaria_microscopy",
+        "code": "malaria_microscopy",
+        "optionSet": "AxpBXSCqnDa",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT6V3DST5DC5M4P1KRSAS7G",
+        "displayName": "drdt_antibody",
+        "label": {
+          "ar": "IgG-IgM فحص الضنك",
+          "en": "drdt_antibody"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "drdt_antibody"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "IgG-IgM فحص الضنك"
+          }
+        ],
+        "name": "drdt_antibody",
+        "code": "drdt_antibody",
+        "optionSet": "AxpBXSCqnDa",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT6WNE3VXBZD0RNXC080RJ5",
+        "displayName": "drdt_ns1",
+        "label": {
+          "ar": "NS1 فحص الضنك",
+          "en": "drdt_ns1"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "NS1 فحص الضنك"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "drdt_ns1"
+          }
+        ],
+        "name": "drdt_ns1",
+        "code": "drdt_ns1",
+        "optionSet": "AxpBXSCqnDa",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT6ZNC77H853TD5TWCRPY48",
+        "displayName": "hgb",
+        "label": {
+          "ar": "هيموجلوبين",
+          "en": "hgb"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "هيموجلوبين"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "hgb"
+          }
+        ],
+        "name": "hgb",
+        "code": "hgb",
+        "optionSet": "AxpBXSCqnDa",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT70TBHCZ70CGX7C19M0CEB",
+        "displayName": "other_lab_test",
+        "label": {
+          "ar": "اخرى",
+          "en": "other_lab_test"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "other_lab_test"
+          }
+        ],
+        "name": "other_lab_test",
+        "code": "other_lab_test",
+        "optionSet": "AxpBXSCqnDa",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZT7428Y7EWEX1FNXKPZV2HX",
+        "displayName": "no_lab_test",
+        "label": {
+          "ar": "بدون فحص",
+          "en": "no_lab_test"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "no_lab_test"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بدون فحص"
+          }
+        ],
+        "name": "no_lab_test",
+        "code": "no_lab_test",
+        "optionSet": "AxpBXSCqnDa",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "Bu2LhXFDicp": [
+      {
+        "id": "01JZ45CAJWEGKHG3WVKGMCV066",
+        "displayName": "Male",
+        "label": {
+          "ar": "ذكر",
+          "en": "Male"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ذكر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Male"
+          }
+        ],
+        "name": "MALE",
+        "code": "MALE",
+        "optionSet": "Bu2LhXFDicp",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAJXS92W2BK6BMZAZVVE",
+        "displayName": "Female",
+        "label": {
+          "ar": "أنثى",
+          "en": "Female"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Female"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أنثى"
+          }
+        ],
+        "name": "FEMALE",
+        "code": "FEMALE",
+        "optionSet": "Bu2LhXFDicp",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "HFccPl89PPX": [
+      {
+        "id": "01K89XVCHEGQ6T2SQNY4RTAG89",
+        "displayName": "Fever",
+        "label": {
+          "ar": "حمى",
+          "en": "Fever"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Fever"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "حمى"
+          }
+        ],
+        "name": "fever",
+        "code": "fever",
+        "optionSet": "HFccPl89PPX",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHESY086KJXQGGR8HDE",
+        "displayName": "Chills",
+        "label": {
+          "ar": "قشعريرة",
+          "en": "Chills"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "قشعريرة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Chills"
+          }
+        ],
+        "name": "chills",
+        "code": "chills",
+        "optionSet": "HFccPl89PPX",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEVE7JM7BFZRVCTCKB",
+        "displayName": "Headache",
+        "label": {
+          "ar": "صداع",
+          "en": "Headache"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "صداع"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Headache"
+          }
+        ],
+        "name": "headache",
+        "code": "headache",
+        "optionSet": "HFccPl89PPX",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEYB02VZXBQWSAAJZK",
+        "displayName": "Muscle Aches",
+        "label": {
+          "ar": "آلام عضلية",
+          "en": "Muscle Aches"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Muscle Aches"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "آلام عضلية"
+          }
+        ],
+        "name": "muscle_aches",
+        "code": "muscle_aches",
+        "optionSet": "HFccPl89PPX",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEMJD1NR5J16D4ZHDX",
+        "displayName": "Joint Pain",
+        "label": {
+          "ar": "آلام المفاصل",
+          "en": "Joint Pain"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "آلام المفاصل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Joint Pain"
+          }
+        ],
+        "name": "joint_pain",
+        "code": "joint_pain",
+        "optionSet": "HFccPl89PPX",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEADJNXM9P4MKG8FJ3",
+        "displayName": "Sweats",
+        "label": {
+          "ar": "تعرق",
+          "en": "Sweats"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Sweats"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تعرق"
+          }
+        ],
+        "name": "sweats",
+        "code": "sweats",
+        "optionSet": "HFccPl89PPX",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEA7WR1RQK34M79BBG",
+        "displayName": "Nausea",
+        "label": {
+          "ar": "غثيان",
+          "en": "Nausea"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Nausea"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "غثيان"
+          }
+        ],
+        "name": "nausea",
+        "code": "nausea",
+        "optionSet": "HFccPl89PPX",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHE04JHXRDP6GVEX5VB",
+        "displayName": "Vomiting",
+        "label": {
+          "ar": "قيء",
+          "en": "Vomiting"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "قيء"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Vomiting"
+          }
+        ],
+        "name": "vomiting",
+        "code": "vomiting",
+        "optionSet": "HFccPl89PPX",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEW4RK1SF2HESXAFVH",
+        "displayName": "Fatigue",
+        "label": {
+          "ar": "تعب",
+          "en": "Fatigue"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Fatigue"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تعب"
+          }
+        ],
+        "name": "fatigue",
+        "code": "fatigue",
+        "optionSet": "HFccPl89PPX",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEZD9DHSC5S3393B46",
+        "displayName": "Diarrhea",
+        "label": {
+          "ar": "إسهال",
+          "en": "Diarrhea"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إسهال"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Diarrhea"
+          }
+        ],
+        "name": "diarrhea",
+        "code": "diarrhea",
+        "optionSet": "HFccPl89PPX",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHE54T3BT3AN3EBH3W7",
+        "displayName": "Jaundice",
+        "label": {
+          "ar": "اليرقان",
+          "en": "Jaundice"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اليرقان"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Jaundice"
+          }
+        ],
+        "name": "Jaundice",
+        "code": "Jaundice",
+        "optionSet": "HFccPl89PPX",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEHY0EQ27250WBFSQY",
+        "displayName": "Seizures",
+        "label": {
+          "ar": "تشنجات",
+          "en": "Seizures"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تشنجات"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Seizures"
+          }
+        ],
+        "name": "seizures",
+        "code": "seizures",
+        "optionSet": "HFccPl89PPX",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHED6AM0GRFZFP2MPJB",
+        "displayName": "Mental Confusion",
+        "label": {
+          "ar": "ارتباك ذهني",
+          "en": "Mental Confusion"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ارتباك ذهني"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Mental Confusion"
+          }
+        ],
+        "name": "mental_confusion",
+        "code": "mental_confusion",
+        "optionSet": "HFccPl89PPX",
+        "order": 13,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEZ9SV9P3HD5DX2F5K",
+        "displayName": "Coma",
+        "label": {
+          "ar": "غيبوبة",
+          "en": "Coma"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "غيبوبة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Coma"
+          }
+        ],
+        "name": "coma",
+        "code": "coma",
+        "optionSet": "HFccPl89PPX",
+        "order": 14,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHECMADM1V3VQFCEZMS",
+        "displayName": "Respiratory Failure",
+        "label": {
+          "ar": "فشل تنفسي",
+          "en": "Respiratory Failure"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Respiratory Failure"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فشل تنفسي"
+          }
+        ],
+        "name": "respiratory_failure",
+        "code": "respiratory_failure",
+        "optionSet": "HFccPl89PPX",
+        "order": 15,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHE2XXM5H4HGAY4JB96",
+        "displayName": "Bleeding",
+        "label": {
+          "ar": "نزيف",
+          "en": "Bleeding"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نزيف"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Bleeding"
+          }
+        ],
+        "name": "bleeding",
+        "code": "bleeding",
+        "optionSet": "HFccPl89PPX",
+        "order": 16,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEDTTEJ3NE3SH0NEW6",
+        "displayName": "Anemia",
+        "label": {
+          "ar": "فقر دم",
+          "en": "Anemia"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فقر دم"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Anemia"
+          }
+        ],
+        "name": "anemia",
+        "code": "anemia",
+        "optionSet": "HFccPl89PPX",
+        "order": 17,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEQ9A97D30323QHR53",
+        "displayName": "Splenomegaly",
+        "label": {
+          "ar": "تضخم الطحال",
+          "en": "Splenomegaly"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Splenomegaly"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تضخم الطحال"
+          }
+        ],
+        "name": "splenomegaly",
+        "code": "splenomegaly",
+        "optionSet": "HFccPl89PPX",
+        "order": 18,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XVCHEJZR5VX79P692S3EA",
+        "displayName": "Other Symptoms",
+        "label": {
+          "ar": "أعراض أخرى",
+          "en": "Other Symptoms"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أعراض أخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Other Symptoms"
+          }
+        ],
+        "name": "other_symptoms",
+        "code": "other_symptoms",
+        "optionSet": "HFccPl89PPX",
+        "order": 19,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89XYPBQC2KCE9F893AM6ER7",
+        "displayName": "Symptomless",
+        "label": {
+          "ar": "بدون أعراض",
+          "en": "Symptomless"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Symptomless"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بدون أعراض"
+          }
+        ],
+        "name": "symptomless",
+        "code": "symptomless",
+        "optionSet": "HFccPl89PPX",
+        "order": 20,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "PnCIWkhM47L": [
+      {
+        "id": "01JZ45CAN4JKBZQNJYB2X5ZBWW",
+        "displayName": "autoReferral",
+        "label": {
+          "ar": "ذاتية",
+          "en": "autoReferral"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "autoReferral"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ذاتية"
+          }
+        ],
+        "name": "auto",
+        "code": "auto",
+        "optionSet": "PnCIWkhM47L",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAN4J13F04BK9DTCN9NB",
+        "displayName": "emergentReferral",
+        "label": {
+          "ar": "طارئة عبر الفريق",
+          "en": "emergentReferral"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "emergentReferral"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "طارئة عبر الفريق"
+          }
+        ],
+        "name": "emergent",
+        "code": "emergent",
+        "optionSet": "PnCIWkhM47L",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "YPubNKrnO1e": [
+      {
+        "id": "01K89WKVR9B7214CJ4TKPRX3DG",
+        "displayName": "ACT 80 Tape",
+        "label": {
+          "ar": "شريط ACT 80",
+          "en": "ACT 80 Tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "شريط ACT 80"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "ACT 80 Tape"
+          }
+        ],
+        "name": "act80_tape",
+        "code": "act80_tape",
+        "optionSet": "YPubNKrnO1e",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89WKVR9W833ETZMW7V9J0EZ",
+        "displayName": "ACT 60 Tape",
+        "label": {
+          "ar": "شريط ACT 60",
+          "en": "ACT 60 Tape"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "ACT 60 Tape"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "شريط ACT 60"
+          }
+        ],
+        "name": "act60_tape",
+        "code": "act60_tape",
+        "optionSet": "YPubNKrnO1e",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89WKVR9WSYC8TZZADV0DC8D",
+        "displayName": "ACT 40 Tape",
+        "label": {
+          "ar": "شريط ACT 40",
+          "en": "ACT 40 Tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "شريط ACT 40"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "ACT 40 Tape"
+          }
+        ],
+        "name": "act40_tape",
+        "code": "act40_tape",
+        "optionSet": "YPubNKrnO1e",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89WKVR96ZS2NYVW9GWF289C",
+        "displayName": "ACT 20 Tape",
+        "label": {
+          "ar": "شريط ACT 20",
+          "en": "ACT 20 Tape"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "ACT 20 Tape"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "شريط ACT 20"
+          }
+        ],
+        "name": "act20_tape",
+        "code": "act20_tape",
+        "optionSet": "YPubNKrnO1e",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89WKVR9YX1N7CPJMJN50DK8",
+        "displayName": "Artesunate 60 mg Ampoule",
+        "label": {
+          "ar": "أمبول أرتيسونات 60 ملجم",
+          "en": "Artesunate 60 mg Ampoule"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Artesunate 60 mg Ampoule"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أمبول أرتيسونات 60 ملجم"
+          }
+        ],
+        "name": "Artesunate_60_mg_ampoule",
+        "code": "Artesunate_60_mg_ampoule",
+        "optionSet": "YPubNKrnO1e",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89WKVR97NW84RD5QJ1Y9VDA",
+        "displayName": "Primaquine 15 mg Tablet",
+        "label": {
+          "ar": "قرص بريماكوين 15 ملجم",
+          "en": "Primaquine 15 mg Tablet"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Primaquine 15 mg Tablet"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "قرص بريماكوين 15 ملجم"
+          }
+        ],
+        "name": "Primaquin_15_mg_tablet",
+        "code": "Primaquin_15_mg_tablet",
+        "optionSet": "YPubNKrnO1e",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K89WKVR9G5DXCAQMP98DBS8Q",
+        "displayName": "Primaquine 7.5 mg Tablet",
+        "label": {
+          "ar": "قرص بريماكوين 7.5 ملجم",
+          "en": "Primaquine 7.5 mg Tablet"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Primaquine 7.5 mg Tablet"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "قرص بريماكوين 7.5 ملجم"
+          }
+        ],
+        "name": "Primaquin_7.5_mg_tablet",
+        "code": "Primaquin_7.5_mg_tablet",
+        "optionSet": "YPubNKrnO1e",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "vcYOprXCzar": [
+      {
+        "id": "01JZ45CAFKP15ZQAZT97Z7C6KN",
+        "displayName": "treatment",
+        "label": {
+          "ar": "معالجة",
+          "en": "treatment"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "treatment"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "معالجة"
+          }
+        ],
+        "name": "treatment",
+        "code": "treatment",
+        "optionSet": "vcYOprXCzar",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAFM4S1F4AJV6JTPBZN8",
+        "displayName": "refferal",
+        "label": {
+          "ar": "احالة",
+          "en": "refferal"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "احالة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "refferal"
+          }
+        ],
+        "name": "refferal",
+        "code": "refferal",
+        "optionSet": "vcYOprXCzar",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAFMXZDF8RDFC7J9772T",
+        "displayName": "treatmentandrefferal",
+        "label": {
+          "ar": "معالجة واحالة",
+          "en": "treatmentandrefferal"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "معالجة واحالة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "treatmentandrefferal"
+          }
+        ],
+        "name": "treatmentandrefferal",
+        "code": "treatmentandrefferal",
+        "optionSet": "vcYOprXCzar",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAFNJBAXK4X1YNEGEW89",
+        "displayName": "none",
+        "label": {
+          "ar": "لا شيئ",
+          "en": "none"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا شيئ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "none"
+          }
+        ],
+        "name": "none",
+        "code": "none",
+        "optionSet": "vcYOprXCzar",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

@@ -41,7 +41,7 @@ Do not assign ownership based on a file's former package location. First prove t
 - Form state is not owned by one clean system.
 - Generated files are significant and can be stale or noisy.
 - There are old form-state, form-value, sync, data-value, repeat-instance, and metadata-submission paths that are not proven active for current form capture.
-- Example forms live under `example/`, but examples are evidence only, not production truth.
+- Current captured form fixtures live under `test/fixtures/live_forms/`; their manifest records the snapshot date and versions. Files under `test/fixtures/legacy_forms/` and `legacy_submissions/` are historical test inputs, not production truth.
 
 ## Existing Context Maps
 

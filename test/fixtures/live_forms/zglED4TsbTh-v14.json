@@ -1,0 +1,319 @@
+{
+  "id": "zglED4TsbTh",
+  "name": "تسجيل بيانات استخدام أدوية وشرائط الفحص",
+  "label": {
+    "ar": "استخدام الأدوية والفحص السريع",
+    "en": "Malaria Supply Usage"
+  },
+  "description": "Form used by community health volunteers to record monthly data on malaria medicine usage and rapid diagnostic test (RDT) supplies under the ICCM program",
+  "disabled": false,
+  "versionUid": "gNno4rMnbiA",
+  "versionNumber": 14,
+  "fields": [
+    {
+      "id": "SRtvqGkBWEd",
+      "code": "month",
+      "type": "Date",
+      "resourceType": null,
+      "order": 0,
+      "path": "SRtvqGkBWEd",
+      "name": "month",
+      "description": "Month",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الشهر",
+        "en": "Month"
+      },
+      "properties": {},
+      "parent": null,
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "cjY0oSUx6YI",
+      "code": "comment",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 10,
+      "path": "cjY0oSUx6YI",
+      "name": "comment",
+      "description": null,
+      "options": [],
+      "mandatory": false,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ملاحظات وتعليقات إن وجدت",
+        "en": "Comments"
+      },
+      "properties": {},
+      "parent": null,
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IvB892THABE",
+      "code": "amd_iccm",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 3,
+      "path": "movements.IvB892THABE",
+      "name": "amd_iccm",
+      "description": "amd_iccm chv",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "xDAaZ6BmjbX",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الصنف",
+        "en": "amd_iccm"
+      },
+      "properties": {},
+      "parent": "movements",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "dHXt6yT0O0t",
+      "code": "stocktake_quantity",
+      "type": "Number",
+      "resourceType": null,
+      "order": 11,
+      "path": "movements.dHXt6yT0O0t",
+      "name": "stocktake_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الكمية المتوفرة (جرد)",
+        "en": "stocktake_quantity"
+      },
+      "properties": {},
+      "parent": "movements",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "movements",
+      "code": null,
+      "path": "movements",
+      "parent": null,
+      "name": "movements",
+      "description": "Items Movements",
+      "order": 1,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "حركة الادوية",
+        "en": "Resources Movements"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "xDAaZ6BmjbX",
+      "displayName": "amdsiccm",
+      "label": {},
+      "translations": [],
+      "name": "amdsiccm",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "xDAaZ6BmjbX": [
+      {
+        "id": "01JZJTMEGDSV2AQ558JXY5FZDY",
+        "displayName": "mrdt_cassette",
+        "label": {
+          "ar": "الفحص السريع للملاريا_بالشريط",
+          "en": "mrdt_cassette"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "mrdt_cassette"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "الفحص السريع للملاريا_بالشريط"
+          }
+        ],
+        "name": "mrdt_cassette",
+        "code": "mrdt_cassette",
+        "optionSet": "xDAaZ6BmjbX",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZJTPDB0DTQVBYBZ47X6HTB7",
+        "displayName": "act20_tape",
+        "label": {
+          "ar": "كوارتم_20_بالشريط",
+          "en": "act20_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_20_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act20_tape"
+          }
+        ],
+        "name": "act20_tape",
+        "code": "act20_tape",
+        "optionSet": "xDAaZ6BmjbX",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZJTQRD9HSV64GRGFRA6VJRP",
+        "displayName": "act40_tape",
+        "label": {
+          "ar": "كوارتم_40_بالشريط",
+          "en": "act40_tape"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act40_tape"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_40_بالشريط"
+          }
+        ],
+        "name": "act40_tape",
+        "code": "act40_tape",
+        "optionSet": "xDAaZ6BmjbX",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZJTSB11BQDSNHSQJV7SBE7Z",
+        "displayName": "act60_tape",
+        "label": {
+          "ar": "كوارتم_60_بالشريط",
+          "en": "act60_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_60_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act60_tape"
+          }
+        ],
+        "name": "act60_tape",
+        "code": "act60_tape",
+        "optionSet": "xDAaZ6BmjbX",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZJTTC8HMXKS45XDV6X3APWW",
+        "displayName": "act80_tape",
+        "label": {
+          "ar": "كوارتم_80_بالشريط",
+          "en": "act80_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_80_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act80_tape"
+          }
+        ],
+        "name": "act80_tape",
+        "code": "act80_tape",
+        "optionSet": "xDAaZ6BmjbX",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

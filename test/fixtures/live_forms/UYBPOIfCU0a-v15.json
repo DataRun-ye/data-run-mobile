@@ -1,0 +1,1062 @@
+{
+  "id": "UYBPOIfCU0a",
+  "name": "facility_stock_reporting_801",
+  "label": {
+    "ar": "التقرير الشهري للمرافق الصحية",
+    "en": "Health Facility Monthly Stock Report"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "HFTejLdlRjX",
+  "versionNumber": 15,
+  "fields": [
+    {
+      "id": "SRtvqGkBWEd",
+      "code": "month",
+      "type": "Date",
+      "resourceType": null,
+      "order": 101,
+      "path": "main.SRtvqGkBWEd",
+      "name": "month",
+      "description": "Month",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "month",
+          "expression": "#{month} > now()",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{month} > now()",
+            "action": "Error",
+            "message": "{\"ar\":\"لا يمكن ان يكون اكبر من التاريخ الحالي\",\"en\":\"can not be greater than today\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"لا يمكن ان يكون اكبر من التاريخ الحالي\",\"en\":\"can not be greater than today\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "month",
+        "expression": "#{month} > now()",
+        "validationMessage": {
+          "ar": "لا يمكن ان يكون اكبر من التاريخ الحالي",
+          "en": "can not be greater than today"
+        }
+      },
+      "label": {
+        "ar": "(تاريخ)الشهر",
+        "en": "month"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "pHjMRAL4glF",
+      "code": "amd",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 201,
+      "path": "stocks.pHjMRAL4glF",
+      "name": "amd",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "sYiS5D2qeG8",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الصنف",
+        "en": "amd"
+      },
+      "properties": {},
+      "parent": "stocks",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rtntGY93Fpn",
+      "code": "redistributed_quantity",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 205,
+      "path": "stocks.rtntGY93Fpn",
+      "name": "redistributed_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الكمية المعاد توزيعها",
+        "en": "redistributed_quantity"
+      },
+      "properties": {},
+      "parent": "stocks",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DFfECZdsEZd",
+      "code": "stockout_days",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 209,
+      "path": "stocks.DFfECZdsEZd",
+      "name": "stockout_days",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "stockout_days",
+          "expression": "#{stockout_days} > 30",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{stockout_days} > 30",
+            "action": "Error",
+            "message": "{\"ar\":\"لا يمكن ان تكون فترة النغاذ اكبر من 30 يوما\",\"en\":\"less than equal 30 days\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"لا يمكن ان تكون فترة النغاذ اكبر من 30 يوما\",\"en\":\"less than equal 30 days\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        },
+        {
+          "field": "stockout_days",
+          "expression": "#{closingbalance} == 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{closingbalance} == 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "stockout_days",
+        "expression": "#{stockout_days} > 30",
+        "validationMessage": {
+          "ar": "لا يمكن ان تكون فترة النغاذ اكبر من 30 يوما",
+          "en": "less than equal 30 days"
+        }
+      },
+      "label": {
+        "ar": "أيام نفاد المخزون",
+        "en": "stockout_days"
+      },
+      "properties": {},
+      "parent": "stocks",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "cjY0oSUx6YI",
+      "code": "comment",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 210,
+      "path": "stocks.cjY0oSUx6YI",
+      "name": "comment",
+      "description": null,
+      "options": [],
+      "mandatory": false,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ملاحظات",
+        "en": "comment"
+      },
+      "properties": {},
+      "parent": "stocks",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "T7QqiTeFdHF",
+      "code": "month_name",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 102,
+      "path": "main.T7QqiTeFdHF",
+      "name": "month_name",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "NN8fDdIJmCn",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الشهر",
+        "en": "month_name"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "ORe8PAkGdiA",
+      "code": "closingbalance",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 208,
+      "path": "stocks.ORe8PAkGdiA",
+      "name": "closingbalance",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الرصيد نهاية الشهر",
+        "en": "closingbalance"
+      },
+      "properties": {},
+      "parent": "stocks",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "YtBEZsXvD5A",
+      "code": "name",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 206,
+      "path": "stocks.YtBEZsXvD5A",
+      "name": "name",
+      "description": "Name of the patient",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "name",
+          "expression": "#{redistributed_quantity} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{redistributed_quantity} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "مستلم الكمية",
+        "en": "name"
+      },
+      "properties": {},
+      "parent": "stocks",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "EHIXCT3t3te",
+      "code": "phone",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 207,
+      "path": "stocks.EHIXCT3t3te",
+      "name": "phone",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "phone",
+          "expression": "#{redistributed_quantity} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{redistributed_quantity} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم الهاتف",
+        "en": "phone"
+      },
+      "properties": {},
+      "parent": "stocks",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "الشهر",
+        "en": "main"
+      },
+      "properties": {}
+    },
+    {
+      "id": "stocks",
+      "code": null,
+      "path": "stocks",
+      "parent": null,
+      "name": "stocks",
+      "description": null,
+      "order": 200,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "حركة المخزون",
+        "en": "stocks"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "NN8fDdIJmCn",
+      "displayName": "monthnames",
+      "label": {},
+      "translations": [],
+      "name": "monthnames",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "sYiS5D2qeG8",
+      "displayName": "amds",
+      "label": {},
+      "translations": [],
+      "name": "amds",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "NN8fDdIJmCn": [
+      {
+        "id": "01JZKZ1GZP8QYDGGF23E7FN5ZD",
+        "displayName": "January",
+        "label": {
+          "ar": "يناير",
+          "en": "January"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "January"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يناير"
+          }
+        ],
+        "name": "January",
+        "code": "January",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ2NHXYEWKJAXVDMKMETKY",
+        "displayName": "February",
+        "label": {
+          "ar": "فبراير",
+          "en": "February"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "February"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "فبراير"
+          }
+        ],
+        "name": "February",
+        "code": "February",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ5P2YX638JA8EFC0QJ0WV",
+        "displayName": "March",
+        "label": {
+          "ar": "مارس",
+          "en": "March"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مارس"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "March"
+          }
+        ],
+        "name": "March",
+        "code": "March",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ6R027E4JAPV8NWBHQ94X",
+        "displayName": "April",
+        "label": {
+          "ar": "أبريل",
+          "en": "April"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أبريل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "April"
+          }
+        ],
+        "name": "April",
+        "code": "April",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ8P61C9AD6PK5RKWH3BV9",
+        "displayName": "May",
+        "label": {
+          "ar": "مايو",
+          "en": "May"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "May"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مايو"
+          }
+        ],
+        "name": "May",
+        "code": "May",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZ9XK8X7A29P6R9F376KCK",
+        "displayName": "June",
+        "label": {
+          "ar": "يونيو",
+          "en": "June"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "June"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يونيو"
+          }
+        ],
+        "name": "June",
+        "code": "June",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZB2T25359A6DSDSMCCKE1",
+        "displayName": "July",
+        "label": {
+          "ar": "يوليو",
+          "en": "July"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يوليو"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "July"
+          }
+        ],
+        "name": "July",
+        "code": "July",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZC51M5ATZ7KF2D51S1M7M",
+        "displayName": "August",
+        "label": {
+          "ar": "أغسطس",
+          "en": "August"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "August"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أغسطس"
+          }
+        ],
+        "name": "August",
+        "code": "August",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZD1N3CCHV3EKXBS9A07QK",
+        "displayName": "September",
+        "label": {
+          "ar": "سبتمبر",
+          "en": "September"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سبتمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "September"
+          }
+        ],
+        "name": "September",
+        "code": "September",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZE624KEFTWWHBV2E0EA2D",
+        "displayName": "October",
+        "label": {
+          "ar": "أكتوبر",
+          "en": "October"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أكتوبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "October"
+          }
+        ],
+        "name": "October",
+        "code": "October",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZFDN7K7VTAA3WDJWY20Y8",
+        "displayName": "November",
+        "label": {
+          "ar": "نوفمبر",
+          "en": "November"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نوفمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "November"
+          }
+        ],
+        "name": "November",
+        "code": "November",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKZGDJWHMKRTT52V1BWQP6N",
+        "displayName": "December",
+        "label": {
+          "ar": "ديسمبر",
+          "en": "December"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ديسمبر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "December"
+          }
+        ],
+        "name": "December",
+        "code": "December",
+        "optionSet": "NN8fDdIJmCn",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "sYiS5D2qeG8": [
+      {
+        "id": "01JZKY3DKH67FN69CPJ4EZJF2K",
+        "displayName": "act80_tape",
+        "label": {
+          "ar": "كوارتم_80_بالشريط",
+          "en": "act80_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_80_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act80_tape"
+          }
+        ],
+        "name": "act80_tape",
+        "code": "act80_tape",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKY577S2C34HK1B4MY1KECT",
+        "displayName": "act60_tape",
+        "label": {
+          "ar": "كوارتم_60_بالشريط",
+          "en": "act60_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_60_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act60_tape"
+          }
+        ],
+        "name": "act60_tape",
+        "code": "act60_tape",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKY68Q787C382KD51F486RS",
+        "displayName": "act40_tape",
+        "label": {
+          "ar": "كوارتم_40_بالشريط",
+          "en": "act40_tape"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act40_tape"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_40_بالشريط"
+          }
+        ],
+        "name": "act40_tape",
+        "code": "act40_tape",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKY79JKWV8711QCHJ99406E",
+        "displayName": "act20_tape",
+        "label": {
+          "ar": "كوارتم_20_بالشريط",
+          "en": "act20_tape"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم_20_بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "act20_tape"
+          }
+        ],
+        "name": "act20_tape",
+        "code": "act20_tape",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKYE8GZJ8YNJ6FFQWJ8MX31",
+        "displayName": "Artesunate_60_mg_ampoule",
+        "label": {
+          "ar": "حقن ارتيسونات ٦٠ مج بالامبولة",
+          "en": "Artesunate_60_mg_ampoule"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "حقن ارتيسونات ٦٠ مج بالامبولة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Artesunate_60_mg_ampoule"
+          }
+        ],
+        "name": "Artesunate_60_mg_ampoule",
+        "code": "Artesunate_60_mg_ampoule",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKYJK1WD2FWK5ECMTS2Q0J9",
+        "displayName": "Primaquin_15_mg_tablet",
+        "label": {
+          "ar": "بريماكوين ١٥ مجم بالقرص",
+          "en": "Primaquin_15_mg_tablet"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Primaquin_15_mg_tablet"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بريماكوين ١٥ مجم بالقرص"
+          }
+        ],
+        "name": "Primaquin_15_mg_tablet",
+        "code": "Primaquin_15_mg_tablet",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKYNST5PDZGBV17507Z0AKM",
+        "displayName": "Primaquin_7.5_mg_tablet",
+        "label": {
+          "ar": "بريماكوين ٧.٥ مجم بالقرص",
+          "en": "Primaquin_7.5_mg_tablet"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Primaquin_7.5_mg_tablet"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بريماكوين ٧.٥ مجم بالقرص"
+          }
+        ],
+        "name": "Primaquin_7.5_mg_tablet",
+        "code": "Primaquin_7.5_mg_tablet",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKYTYBGKHQ5TV1Q3651GHHQ",
+        "displayName": "mrdt_cassette",
+        "label": {
+          "ar": "الفحص السريع للملاريا - بالشريط",
+          "en": "mrdt_cassette"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "mrdt_cassette"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "الفحص السريع للملاريا - بالشريط"
+          }
+        ],
+        "name": "mrdt_cassette",
+        "code": "mrdt_cassette",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKYXAB8NB73HNTVXKNBY0Q5",
+        "displayName": "drdt_cassette",
+        "label": {
+          "ar": "الفحص السريع للضنك- بالشريط",
+          "en": "drdt_cassette"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "الفحص السريع للضنك- بالشريط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "drdt_cassette"
+          }
+        ],
+        "name": "drdt_cassette",
+        "code": "drdt_cassette",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZKYYKZ59YG2SGJCETZTRZHD",
+        "displayName": "otheramds",
+        "label": {
+          "ar": "اخرى",
+          "en": "otheramds"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "otheramds"
+          }
+        ],
+        "name": "otheramds",
+        "code": "otheramds",
+        "optionSet": "sYiS5D2qeG8",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

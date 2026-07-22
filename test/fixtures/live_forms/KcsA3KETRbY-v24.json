@@ -1,0 +1,1269 @@
+{
+  "id": "KcsA3KETRbY",
+  "name": "Malaria Case Registration and Management (تسجيل وتدبير حالة ملاريا)",
+  "label": {
+    "ar": "تسجيل وتدبير حالة ملاريا",
+    "en": "Malaria Case Registration and Management"
+  },
+  "description": "Register and manage malaria cases through a guided, rule-driven form, capturing patient demographics, clinical test outcomes, and recommended treatments.",
+  "disabled": false,
+  "versionUid": "CNgssCuJ0jX",
+  "versionNumber": 24,
+  "fields": [
+    {
+      "id": "YtBEZsXvD5A",
+      "code": "name",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 102,
+      "path": "mcase.YtBEZsXvD5A",
+      "name": "name",
+      "description": "Name of the patient",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم المريض",
+        "en": "Patient name"
+      },
+      "properties": {},
+      "parent": "mcase",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "LyIGccZ5mna",
+      "code": "visitdate",
+      "type": "Date",
+      "resourceType": null,
+      "order": 101,
+      "path": "mcase.LyIGccZ5mna",
+      "name": "visitDate",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تاريخ الزيارة",
+        "en": "Visit Date"
+      },
+      "properties": {},
+      "parent": "mcase",
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "oFGuq5BgGSr",
+      "code": "age",
+      "type": "Age",
+      "resourceType": null,
+      "order": 103,
+      "path": "mcase.oFGuq5BgGSr",
+      "name": "age",
+      "description": "Age in Years and (months for age less than 1 year)",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "age",
+          "expression": "#{age} > 150",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{age} > 150",
+            "action": "Error",
+            "message": "{\"ar\":\"العمر كبير جدا تأكد\",\"en\":\"Age is greater than normal\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"العمر كبير جدا تأكد\",\"en\":\"Age is greater than normal\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "age",
+        "expression": "#{age} <= 0 || #{age} > 100",
+        "validationMessage": {
+          "ar": "العمر كبير جدا تأكد",
+          "en": "Age is greater than normal"
+        }
+      },
+      "label": {
+        "ar": "العمر",
+        "en": "Age"
+      },
+      "properties": {},
+      "parent": "mcase",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "eCw9HcbcnW7",
+      "code": "gender",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 104,
+      "path": "mcase.eCw9HcbcnW7",
+      "name": "gender",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "Bu2LhXFDicp",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "الجنس",
+        "en": "Gender"
+      },
+      "properties": {},
+      "parent": "mcase",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "GnRrt4WUKFh",
+      "code": "pregnant",
+      "type": "Boolean",
+      "resourceType": null,
+      "order": 105,
+      "path": "mcase.GnRrt4WUKFh",
+      "name": "pregnant",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "pregnant",
+          "expression": "#{gender} == 'FEMALE' && #{age} >= 14",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{gender} == 'FEMALE' && #{age} >= 14",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "هل هي حامل؟",
+        "en": "Is pregnant?"
+      },
+      "properties": {},
+      "parent": "mcase",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "GQbku0J0BTA",
+      "code": "is_test_preformed",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 106,
+      "path": "mcase.GQbku0J0BTA",
+      "name": "is_test_preformed",
+      "description": "test performed",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "zK7EdFCwpx9",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "هل تم فحص الحالة؟",
+        "en": "is test performed?"
+      },
+      "properties": {},
+      "parent": "mcase",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "sivCZKkCZrL",
+      "code": "testresult",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 201,
+      "path": "testDetails.sivCZKkCZrL",
+      "name": "testResult",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "ue98fTGAZQ7",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "testResult",
+          "expression": "#{is_test_preformed} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{is_test_preformed} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نتيجة الفحص",
+        "en": "Test Result"
+      },
+      "properties": {},
+      "parent": "testDetails",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "IlTNbwXcnLI",
+      "code": "detectiontype",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 202,
+      "path": "testDetails.IlTNbwXcnLI",
+      "name": "detectionType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "FtwwG67U6Oj",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "detectionType",
+          "expression": "#{testResult} != 'negative'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{testResult} != 'negative'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الاكتشاف",
+        "en": "Detection Type"
+      },
+      "properties": {},
+      "parent": "testDetails",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "OCB4yi1EAPO",
+      "code": "severity",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 203,
+      "path": "testDetails.OCB4yi1EAPO",
+      "name": "severity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "RieZO0vRBtG",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "severity",
+          "expression": "#{testResult} != 'negative'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{testResult} != 'negative'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "تصنيف الحالة",
+        "en": "Severity"
+      },
+      "properties": {},
+      "parent": "testDetails",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "P0QGT7z5FYG",
+      "code": "treatment",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 303,
+      "path": "cm.P0QGT7z5FYG",
+      "name": "treatment",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "lsURbzwRd53",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "treatment",
+          "expression": "#{chv_cm_type_no} == 'treatment' || #{chv_cm_type_no}=='referral_with_first_dose' &&  ( #{pregnant} == 'no' || #{pregnant} == false )",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{chv_cm_type_no} == 'treatment' || #{chv_cm_type_no}=='referral_with_first_dose' &&  ( #{pregnant} == 'no' || #{pregnant} == false )",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "المعالجة",
+        "en": "Treatment"
+      },
+      "properties": {},
+      "parent": "cm",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "cjY0oSUx6YI",
+      "code": "comment",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 305,
+      "path": "cm.cjY0oSUx6YI",
+      "name": "comment",
+      "description": null,
+      "options": [],
+      "mandatory": false,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "ملاحظات وتعليقات",
+        "en": "Comments"
+      },
+      "properties": {},
+      "parent": "cm",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "up4yxPAuqGK",
+      "code": "prescribed_quantity",
+      "type": "Number",
+      "resourceType": null,
+      "order": 304,
+      "path": "cm.up4yxPAuqGK",
+      "name": "prescribed_quantity",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "prescribed_quantity",
+          "expression": "#{treatment} != 'stockout' && (\n   (#{age} > 3 && #{treatment} == 'act20') ||\n   (#{age} > 8 && #{treatment} == 'act40') ||\n   (#{age} > 13 && #{treatment} == 'act60')\n)",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{treatment} != 'stockout' && (\n   (#{age} > 3 && #{treatment} == 'act20') ||\n   (#{age} > 8 && #{treatment} == 'act40') ||\n   (#{age} > 13 && #{treatment} == 'act60')\n)",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "الكمية",
+        "en": "prescribed_quantity"
+      },
+      "properties": {},
+      "parent": "cm",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "fjUFQwmkDCF",
+      "code": "chv_cm_type_no",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 301,
+      "path": "cm.fjUFQwmkDCF",
+      "name": "chv_cm_type_no",
+      "description": "iccm chv",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "jSnemJ8SIAf",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "تدبير الحالة",
+        "en": "chv_cm_type_no"
+      },
+      "properties": {},
+      "parent": "cm",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "mcase",
+      "code": null,
+      "path": "mcase",
+      "parent": null,
+      "name": "mcase",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "بيانات الحالة",
+        "en": "mcase"
+      },
+      "properties": {}
+    },
+    {
+      "id": "cm",
+      "code": null,
+      "path": "cm",
+      "parent": null,
+      "name": "cm",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "cm",
+          "expression": "#{is_test_preformed} == 'yes' && #{testResult} != 'negative'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{is_test_preformed} == 'yes' && #{testResult} != 'negative'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تدبير الحالة",
+        "en": "cm"
+      },
+      "properties": {}
+    },
+    {
+      "id": "testDetails",
+      "code": null,
+      "path": "testDetails",
+      "parent": null,
+      "name": "testDetails",
+      "description": "Test Details",
+      "order": 200,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "testDetails",
+          "expression": "#{is_test_preformed} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{is_test_preformed} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "معلومات الفحص",
+        "en": "Test Details"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "Bu2LhXFDicp",
+      "displayName": "genders",
+      "label": {},
+      "translations": [],
+      "name": "genders",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "FtwwG67U6Oj",
+      "displayName": "detectiontypes",
+      "label": {},
+      "translations": [],
+      "name": "detectiontypes",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "RieZO0vRBtG",
+      "displayName": "severities",
+      "label": {},
+      "translations": [],
+      "name": "severities",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "jSnemJ8SIAf",
+      "displayName": "chv_cm_types_nother",
+      "label": {},
+      "translations": [],
+      "name": "chv_cm_types_nother",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "lsURbzwRd53",
+      "displayName": "treatments",
+      "label": {},
+      "translations": [],
+      "name": "treatments",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "ue98fTGAZQ7",
+      "displayName": "testresults",
+      "label": {},
+      "translations": [],
+      "name": "testresults",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "zK7EdFCwpx9",
+      "displayName": "yesno",
+      "label": {},
+      "translations": [],
+      "name": "yesno",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "Bu2LhXFDicp": [
+      {
+        "id": "01JZ45CAJWEGKHG3WVKGMCV066",
+        "displayName": "Male",
+        "label": {
+          "ar": "ذكر",
+          "en": "Male"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ذكر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Male"
+          }
+        ],
+        "name": "MALE",
+        "code": "MALE",
+        "optionSet": "Bu2LhXFDicp",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAJXS92W2BK6BMZAZVVE",
+        "displayName": "Female",
+        "label": {
+          "ar": "أنثى",
+          "en": "Female"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Female"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أنثى"
+          }
+        ],
+        "name": "FEMALE",
+        "code": "FEMALE",
+        "optionSet": "Bu2LhXFDicp",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "FtwwG67U6Oj": [
+      {
+        "id": "01JZ45CAK1CY5BHTAHVSDBS81K",
+        "displayName": "Active",
+        "label": {
+          "ar": "بحث نشط",
+          "en": "Active"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بحث نشط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Active"
+          }
+        ],
+        "name": "ACTIVE",
+        "code": "ACTIVE",
+        "optionSet": "FtwwG67U6Oj",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAK221N3QSDWRTA1368M",
+        "displayName": "Reactive",
+        "label": {
+          "ar": "زيارة روتينية",
+          "en": "Reactive"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "زيارة روتينية"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Reactive"
+          }
+        ],
+        "name": "REACTIVE",
+        "code": "REACTIVE",
+        "optionSet": "FtwwG67U6Oj",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "RieZO0vRBtG": [
+      {
+        "id": "01JZ45CAFS6625PHCYM7GW90ZZ",
+        "displayName": "Simple",
+        "label": {
+          "ar": "بسيطة",
+          "en": "Simple"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بسيطة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Simple"
+          }
+        ],
+        "name": "SIMPLE",
+        "code": "SIMPLE",
+        "optionSet": "RieZO0vRBtG",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAFTB8RY64FCD84TM80G",
+        "displayName": "Severe",
+        "label": {
+          "ar": "وخيمة",
+          "en": "Severe"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "وخيمة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Severe"
+          }
+        ],
+        "name": "SEVERE",
+        "code": "SEVERE",
+        "optionSet": "RieZO0vRBtG",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "jSnemJ8SIAf": [
+      {
+        "id": "01K329N8JE8RJ9RJS4T1FC7GA3",
+        "displayName": "treatment",
+        "label": {
+          "ar": "معالجة",
+          "en": "treatment"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "treatment"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "معالجة"
+          }
+        ],
+        "name": "treatment",
+        "code": "treatment",
+        "optionSet": "jSnemJ8SIAf",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K329N8JEFNXSKMEGJR3K0C93",
+        "displayName": "referral_with_first_dose",
+        "label": {
+          "ar": "الإحالة مع الجرعة الأولى",
+          "en": "referral_with_first_dose"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "referral_with_first_dose"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "الإحالة مع الجرعة الأولى"
+          }
+        ],
+        "name": "referral_with_first_dose",
+        "code": "referral_with_first_dose",
+        "optionSet": "jSnemJ8SIAf",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K329N8JEVGCQEJWCK9CV8HK6",
+        "displayName": "referral",
+        "label": {
+          "ar": "إحالة",
+          "en": "referral"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "referral"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إحالة"
+          }
+        ],
+        "name": "referral",
+        "code": "referral",
+        "optionSet": "jSnemJ8SIAf",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "lsURbzwRd53": [
+      {
+        "id": "01JZ45CAJ29PTHKQ44A0N1EJBF",
+        "displayName": "Act 20",
+        "label": {
+          "ar": "كوارتم 20",
+          "en": "Act 20"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم 20"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Act 20"
+          }
+        ],
+        "name": "act20",
+        "code": "act20",
+        "optionSet": "lsURbzwRd53",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAJ3AJDVAVYBVZD78071",
+        "displayName": "Act 40",
+        "label": {
+          "ar": "كوارتم 40",
+          "en": "Act 40"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Act 40"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم 40"
+          }
+        ],
+        "name": "act40",
+        "code": "act40",
+        "optionSet": "lsURbzwRd53",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAJ4K2YQPZ458YSY21WC",
+        "displayName": "Act 60",
+        "label": {
+          "ar": "كوارتم 60",
+          "en": "Act 60"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم 60"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Act 60"
+          }
+        ],
+        "name": "act60",
+        "code": "act60",
+        "optionSet": "lsURbzwRd53",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAJ5STXDQ4FPFQ65P6MX",
+        "displayName": "Act 80",
+        "label": {
+          "ar": "كوارتم 80",
+          "en": "Act 80"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Act 80"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "كوارتم 80"
+          }
+        ],
+        "name": "act80",
+        "code": "act80",
+        "optionSet": "lsURbzwRd53",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAJ6F6YN7T0R16KRXDE4",
+        "displayName": "Stock out",
+        "label": {
+          "ar": "نفاذ الدواء",
+          "en": "Stock out"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نفاذ الدواء"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Stock out"
+          }
+        ],
+        "name": "stockout",
+        "code": "stockout",
+        "optionSet": "lsURbzwRd53",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "ue98fTGAZQ7": [
+      {
+        "id": "01JZ45CAN5NWZA0PW3C7FSXJ2M",
+        "displayName": "Negative",
+        "label": {
+          "ar": "سلبي",
+          "en": "Negative"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سلبي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Negative"
+          }
+        ],
+        "name": "negative",
+        "code": "negative",
+        "optionSet": "ue98fTGAZQ7",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAN6F9TR2Z74TK96VEB6",
+        "displayName": "Pf",
+        "label": {
+          "ar": "Pf",
+          "en": "Pf"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Pf"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Pf"
+          }
+        ],
+        "name": "pf",
+        "code": "pf",
+        "optionSet": "ue98fTGAZQ7",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAN6018VC3G6PS5D0XHR",
+        "displayName": "Pv",
+        "label": {
+          "ar": "Pv",
+          "en": "Pv"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Pv"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Pv"
+          }
+        ],
+        "name": "pv",
+        "code": "pv",
+        "optionSet": "ue98fTGAZQ7",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAN75RN9Y8JGGT8BYA8N",
+        "displayName": "Mixed",
+        "label": {
+          "ar": "مختلط",
+          "en": "Mixed"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Mixed"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مختلط"
+          }
+        ],
+        "name": "mixed",
+        "code": "mixed",
+        "optionSet": "ue98fTGAZQ7",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "zK7EdFCwpx9": [
+      {
+        "id": "01JZ45CAEZDBAYF4J5VSB5FT7J",
+        "displayName": "Yes",
+        "label": {
+          "ar": "نعم",
+          "en": "Yes"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نعم"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Yes"
+          }
+        ],
+        "name": "yes",
+        "code": "yes",
+        "optionSet": "zK7EdFCwpx9",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAF0HQHVP4WP6YG48MFT",
+        "displayName": "No",
+        "label": {
+          "ar": "لا",
+          "en": "No"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "No"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا"
+          }
+        ],
+        "name": "no",
+        "code": "no",
+        "optionSet": "zK7EdFCwpx9",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

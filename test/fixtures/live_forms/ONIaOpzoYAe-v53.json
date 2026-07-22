@@ -1,0 +1,3815 @@
+{
+  "id": "ONIaOpzoYAe",
+  "name": "IndoorEntomologicalSurveillance101",
+  "label": {
+    "ar": "استمارة الترصد الحشري داخل المباني",
+    "en": "Indoor Entomological Surveillance"
+  },
+  "description": null,
+  "disabled": false,
+  "versionUid": "kyyTUWGBa1u",
+  "versionNumber": 53,
+  "fields": [
+    {
+      "id": "nyafDxFcteD",
+      "code": "ExecutionDate",
+      "type": "Date",
+      "resourceType": null,
+      "order": 101,
+      "path": "main.nyafDxFcteD",
+      "name": "ExecutionDate",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "التاريخ",
+        "en": "Execution Date"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "first",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "xju7KJcqQ4D",
+      "code": "EntomologicalSurveillanceType",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 102,
+      "path": "main.xju7KJcqQ4D",
+      "name": "EntomologicalSurveillanceType",
+      "description": "Indoor entomological surveillance",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "qFBG6dSJURm",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الترصد",
+        "en": "EntomologicalSurveillanceType"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "CFZDyFE3bhS",
+      "code": "FixedStationName",
+      "type": "Text",
+      "resourceType": null,
+      "order": 103,
+      "path": "main.CFZDyFE3bhS",
+      "name": "FixedStationName",
+      "description": "Indoor entomological surveillance",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "FixedStationName",
+          "expression": "#{EntomologicalSurveillanceType} == 'FixedStations'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{EntomologicalSurveillanceType} == 'FixedStations'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "إسم المحطة الثابتة",
+        "en": "FixedStationName"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "wZIDLQtSHL2",
+      "code": "NotificationNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 104,
+      "path": "main.wZIDLQtSHL2",
+      "name": "NotificationNumber",
+      "description": "Indoor entomological surveillance",
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "NotificationNumber",
+          "expression": "#{EntomologicalSurveillanceType} == 'Emergency'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{EntomologicalSurveillanceType} == 'Emergency'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم البلاغ",
+        "en": "NotificationNumber"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "mDaC20BdvDM",
+      "code": "TemperatureIndoor",
+      "type": "Number",
+      "resourceType": null,
+      "order": 105,
+      "path": "main.mDaC20BdvDM",
+      "name": "TemperatureIndoor",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "TemperatureIndoor",
+          "expression": "#{TemperatureIndoor} < -10 || #{TemperatureIndoor} > 70",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{TemperatureIndoor} < -10 || #{TemperatureIndoor} > 70",
+            "action": "Error",
+            "message": "{\"ar\":\"يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية\",\"en\":\"between -10 and 70 dc\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية\",\"en\":\"between -10 and 70 dc\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "TemperatureIndoor",
+        "expression": "#{TemperatureIndoor} < -10 || #{TemperatureIndoor} > 70",
+        "validationMessage": {
+          "ar": "يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية",
+          "en": "between -10 and 70 dc"
+        }
+      },
+      "label": {
+        "ar": "درجة الحرارة الداخلية",
+        "en": "TemperatureIndoor"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Q1CP33YzwJC",
+      "code": "TemperatureOutdoor",
+      "type": "Number",
+      "resourceType": null,
+      "order": 106,
+      "path": "main.Q1CP33YzwJC",
+      "name": "TemperatureOutdoor",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "TemperatureOutdoor",
+          "expression": "#{TemperatureOutdoor} < -10 || #{TemperatureOutdoor} > 70",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{TemperatureOutdoor} < -10 || #{TemperatureOutdoor} > 70",
+            "action": "Error",
+            "message": "{\"ar\":\"يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية\",\"en\":\"between -10 and 70 dc\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية\",\"en\":\"between -10 and 70 dc\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "TemperatureOutdoor",
+        "expression": "#{TemperatureOutdoor} < -10 || #{TemperatureOutdoor} > 70",
+        "validationMessage": {
+          "ar": "يجب ان تكون درجة الحرارة بين -10 و70 درحة مئوية",
+          "en": "between -10 and 70 dc"
+        }
+      },
+      "label": {
+        "ar": "درجة الحرارة الخارجية",
+        "en": "TemperatureOutdoor"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "yZ4qbZ5Mkk4",
+      "code": "HumidityIndoor",
+      "type": "Number",
+      "resourceType": null,
+      "order": 107,
+      "path": "main.yZ4qbZ5Mkk4",
+      "name": "HumidityIndoor",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "HumidityIndoor",
+          "expression": "#{HumidityIndoor} < 0 || #{HumidityIndoor} > 100",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{HumidityIndoor} < 0 || #{HumidityIndoor} > 100",
+            "action": "Error",
+            "message": "{\"ar\":\"يجب ان تكون الرطوبة النسبية بين 0 و% 100\",\"en\":\"between 0 and 100%\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"يجب ان تكون الرطوبة النسبية بين 0 و% 100\",\"en\":\"between 0 and 100%\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "HumidityIndoor",
+        "expression": "#{HumidityIndoor} < 0 || #{HumidityIndoor} > 100",
+        "validationMessage": {
+          "ar": "يجب ان تكون الرطوبة النسبية بين 0 و% 100",
+          "en": "between 0 and 100%"
+        }
+      },
+      "label": {
+        "ar": "الرطوبة الداخلية",
+        "en": "HumidityIndoor"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "RT54a2XNmdN",
+      "code": "HumidityOutdoor",
+      "type": "Number",
+      "resourceType": null,
+      "order": 108,
+      "path": "main.RT54a2XNmdN",
+      "name": "HumidityOutdoor",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "HumidityOutdoor",
+          "expression": "#{HumidityOutdoor} < 0 || #{HumidityOutdoor} > 100",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{HumidityOutdoor} < 0 || #{HumidityOutdoor} > 100",
+            "action": "Error",
+            "message": "{\"ar\":\"يجب ان تكون الرطوبة النسبية بين 0 و% 100\",\"en\":\"between 0 and 100%\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"يجب ان تكون الرطوبة النسبية بين 0 و% 100\",\"en\":\"between 0 and 100%\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "HumidityOutdoor",
+        "expression": "#{HumidityOutdoor} < 0 || #{HumidityOutdoor} > 100",
+        "validationMessage": {
+          "ar": "يجب ان تكون الرطوبة النسبية بين 0 و% 100",
+          "en": "between 0 and 100%"
+        }
+      },
+      "label": {
+        "ar": "الرطوبة الخارجية",
+        "en": "HumidityOutdoor"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "DoQqgm3bwqT",
+      "code": "WeatherStatus",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 109,
+      "path": "main.DoQqgm3bwqT",
+      "name": "WeatherStatus",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "ILADGng0Qv4",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "حالة الطقس",
+        "en": "WeatherStatus"
+      },
+      "properties": {},
+      "parent": "main",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "eMD6f4zy1Nu",
+      "code": "Indoor_Surveillance_Type",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 211,
+      "path": "locations.eMD6f4zy1Nu",
+      "name": "Indoor_Surveillance_Type",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "fI4Lebq3aH5",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع الترصد",
+        "en": "Indoor_Surveillance_Type"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "rVsGDgWPyPH",
+      "code": "MosquitoCollectionMethod",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 303,
+      "path": "adult.rVsGDgWPyPH",
+      "name": "MosquitoCollectionMethod",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "xCtgK5yavq3",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "MosquitoCollectionMethod",
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "طريقة الجمع (للبعوض البالغ)",
+        "en": "MosquitoCollectionMethod"
+      },
+      "properties": {},
+      "parent": "adult",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "jIMbVzxsQf9",
+      "code": "BuildingNumber",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 203,
+      "path": "locations.jIMbVzxsQf9",
+      "name": "BuildingNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "رقم المبنى",
+        "en": "BuildingNumber"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "UvA1u3cSLFQ",
+      "code": "BuildingType",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 204,
+      "path": "locations.UvA1u3cSLFQ",
+      "name": "BuildingType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "YpY0vSHWume",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المبنى",
+        "en": "BuildingType"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "X2eA5Ysiljn",
+      "code": "BuildingOwner",
+      "type": "FullName",
+      "resourceType": null,
+      "order": 205,
+      "path": "locations.X2eA5Ysiljn",
+      "name": "BuildingOwner",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "اسم صاحب المبنى",
+        "en": "BuildingOwner"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "v99GuUSB30B",
+      "code": "OtherBuildingType",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 206,
+      "path": "locations.v99GuUSB30B",
+      "name": "OtherBuildingType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "OtherBuildingType",
+          "expression": "#{BuildingType} == 'OtherBuildingType'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{BuildingType} == 'OtherBuildingType'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "أخرى (حدد)",
+        "en": "OtherBuildingType"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "VN0x80Igi2b",
+      "code": "RoomsNumber",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 207,
+      "path": "locations.VN0x80Igi2b",
+      "name": "RoomsNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الغرف",
+        "en": "RoomsNumber"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "k2eDaaIArf0",
+      "code": "MosquitoRestingPlace",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 302,
+      "path": "adult.k2eDaaIArf0",
+      "name": "MosquitoRestingPlace",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "aUXPRIolyEW",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "MosquitoRestingPlace",
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "مكان الراحة",
+        "en": "MosquitoRestingPlace"
+      },
+      "properties": {},
+      "parent": "adult",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "LAl3HvMRAPl",
+      "code": "NumberOfPeopleSlept",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 209,
+      "path": "locations.LAl3HvMRAPl",
+      "name": "NumberOfPeopleSlept",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد الاشخاص الذين ناموا",
+        "en": "NumberOfPeopleSlept"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "ik0NdzlkgC8",
+      "code": "AnimalShelterPresence",
+      "type": "YesNo",
+      "resourceType": null,
+      "order": 210,
+      "path": "locations.ik0NdzlkgC8",
+      "name": "AnimalShelterPresence",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "وجود ملجأ حيواني",
+        "en": "AnimalShelterPresence"
+      },
+      "properties": {},
+      "parent": "locations",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "ZUI8rNs5NVV",
+      "code": "IndoorHabitatType",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 601,
+      "path": "larval.habitats.ZUI8rNs5NVV",
+      "name": "IndoorHabitatType",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "aZuza8ag7Mg",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع المصدر داخل المبنى",
+        "en": "IndoorHabitatType"
+      },
+      "properties": {},
+      "parent": "habitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "mlQq0DNTbKM",
+      "code": "OtherIndoorHabitat",
+      "type": "LongText",
+      "resourceType": null,
+      "order": 602,
+      "path": "larval.habitats.mlQq0DNTbKM",
+      "name": "OtherIndoorHabitat",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "OtherIndoorHabitat",
+          "expression": "#{IndoorHabitatType} == 'OtherIndoorBreedingHabitat'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{IndoorHabitatType} == 'OtherIndoorBreedingHabitat'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "أخرى حدد",
+        "en": "OtherIndoorHabitat"
+      },
+      "properties": {},
+      "parent": "habitats",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "EO0ANA5AFjA",
+      "code": "HabitatsExplored",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 603,
+      "path": "larval.habitats.EO0ANA5AFjA",
+      "name": "HabitatsExplored",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد المصادر المستكشفة",
+        "en": "HabitatsExplored"
+      },
+      "properties": {},
+      "parent": "habitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "XTwzBe9TLnd",
+      "code": "HabitatsPositive",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 604,
+      "path": "larval.habitats.XTwzBe9TLnd",
+      "name": "HabitatsPositive",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "HabitatsPositive",
+          "expression": "#{HabitatsExplored} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{HabitatsExplored} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        },
+        {
+          "field": "HabitatsPositive",
+          "expression": "#{HabitatsExplored} > 0 &&  ( #{HabitatsExplored} < #{HabitatsPositive} )",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{HabitatsExplored} > 0 &&  ( #{HabitatsExplored} < #{HabitatsPositive} )",
+            "action": "Error",
+            "message": "{\"ar\":\"الايجابية اكثر من المستكشفة\",\"en\":\"greater than explored\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"الايجابية اكثر من المستكشفة\",\"en\":\"greater than explored\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "HabitatsPositive",
+        "expression": "#{HabitatsExplored} > 0 &&  ( #{HabitatsExplored} < #{HabitatsPositive} )",
+        "validationMessage": {
+          "ar": "الايجابية اكثر من المستكشفة",
+          "en": "greater than explored"
+        }
+      },
+      "label": {
+        "ar": "عدد المصادر الإيجابية",
+        "en": "HabitatsPositive"
+      },
+      "properties": {},
+      "parent": "habitats",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "AOQdFL9zbBa",
+      "code": "sample_collected",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 605,
+      "path": "larval.habitats.AOQdFL9zbBa",
+      "name": "sample_collected",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "zK7EdFCwpx9",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "sample_collected",
+          "expression": "#{HabitatsPositive} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{HabitatsPositive} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "تم جمع عينة",
+        "en": "sample_collected"
+      },
+      "properties": {},
+      "parent": "habitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "Ft6SgVi7RY1",
+      "code": "AdultMosquitoCollectionTime",
+      "type": "Time",
+      "resourceType": null,
+      "order": 304,
+      "path": "adult.Ft6SgVi7RY1",
+      "name": "AdultMosquitoCollectionTime",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "AdultMosquitoCollectionTime",
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "وقت جمع البعوض",
+        "en": "Adult Mosquito Collection Time"
+      },
+      "properties": {},
+      "parent": "adult",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "UqTcr7l61gG",
+      "code": "NumberOfMosquitoesCollected",
+      "type": "IntegerPositive",
+      "resourceType": null,
+      "order": 404,
+      "path": "adult.adultClassification.UqTcr7l61gG",
+      "name": "NumberOfMosquitoesCollected",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "NumberOfMosquitoesCollected",
+          "expression": "#{adult_mosquito_present} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{adult_mosquito_present} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد البعوض الذي تم جمعة",
+        "en": "NumberOfMosquitoesCollected"
+      },
+      "properties": {},
+      "parent": "adultClassification",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "bqIFs4pwqBB",
+      "code": "FeedMosquitoesNumber",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 405,
+      "path": "adult.adultClassification.bqIFs4pwqBB",
+      "name": "FeedMosquitoesNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "FeedMosquitoesNumber",
+          "expression": "#{NumberOfMosquitoesCollected} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{NumberOfMosquitoesCollected} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "عدد البعوض المتغذية",
+        "en": "FeedMosquitoesNumber"
+      },
+      "properties": {},
+      "parent": "adultClassification",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "O8ab6PUFslK",
+      "code": "GravidMosquitosNumber",
+      "type": "IntegerZeroOrPositive",
+      "resourceType": null,
+      "order": 406,
+      "path": "adult.adultClassification.O8ab6PUFslK",
+      "name": "GravidMosquitosNumber",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "GravidMosquitosNumber",
+          "expression": "#{NumberOfMosquitoesCollected} > 0",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{NumberOfMosquitoesCollected} > 0",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        },
+        {
+          "field": "GravidMosquitosNumber",
+          "expression": "#{NumberOfMosquitoesCollected} > 0  && #{NumberOfMosquitoesCollected} < #{FeedMosquitoesNumber} + #{GravidMosquitosNumber}",
+          "action": "Error",
+          "ruleAction": {
+            "expression": "#{NumberOfMosquitoesCollected} > 0  && #{NumberOfMosquitoesCollected} < #{FeedMosquitoesNumber} + #{GravidMosquitosNumber}",
+            "action": "Error",
+            "message": "{\"ar\":\"المتغذية+الحبلى اكبر من عدد البعوض الذي تم جمعه\",\"en\":\"gravid + feed > mosquitos collected\"}",
+            "assignedValue": null
+          },
+          "message": "{\"ar\":\"المتغذية+الحبلى اكبر من عدد البعوض الذي تم جمعه\",\"en\":\"gravid + feed > mosquitos collected\"}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": {
+        "field": "GravidMosquitosNumber",
+        "expression": "#{NumberOfMosquitoesCollected} > 0  && #{NumberOfMosquitoesCollected} < #{FeedMosquitoesNumber} + #{GravidMosquitosNumber}",
+        "validationMessage": {
+          "ar": "المتغذية+الحبلى اكبر من عدد البعوض الذي تم جمعه",
+          "en": "gravid + feed > mosquitos collected"
+        }
+      },
+      "label": {
+        "ar": "عدد البعوض الحبلى",
+        "en": "GravidMosquitosNumber"
+      },
+      "properties": {},
+      "parent": "adultClassification",
+      "appearance": [],
+      "aggregation": "sum",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "NxCDVpmf0Dd",
+      "code": "AdultMosquitoSpecies",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 401,
+      "path": "adult.adultClassification.NxCDVpmf0Dd",
+      "name": "AdultMosquitoSpecies",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "z9VYq4N0OUF",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "AdultMosquitoSpecies",
+          "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{adult_mosquito_present} == 'yes' &&  ( #{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval' )",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع البعوض",
+        "en": "AdultMosquitoSpecies"
+      },
+      "properties": {},
+      "parent": "adultClassification",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "q2E5KPZvZsm",
+      "code": "OtherAdultMosquitoSpecies",
+      "type": "Text",
+      "resourceType": null,
+      "order": 402,
+      "path": "adult.adultClassification.q2E5KPZvZsm",
+      "name": "OtherAdultMosquitoSpecies",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": null,
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "OtherAdultMosquitoSpecies",
+          "expression": "#{AdultMosquitoSpecies} == 'OtherSpecies'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{AdultMosquitoSpecies} == 'OtherSpecies'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "نوع البعوض الاخر",
+        "en": "OtherAdultMosquitoSpecies"
+      },
+      "properties": {},
+      "parent": "adultClassification",
+      "appearance": [],
+      "aggregation": "concat",
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "fkL9MDNpDnF",
+      "code": "adult_mosquito_present",
+      "type": "SelectOne",
+      "resourceType": null,
+      "order": 301,
+      "path": "adult.fkL9MDNpDnF",
+      "name": "adult_mosquito_present",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "zK7EdFCwpx9",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [],
+      "validationRule": null,
+      "label": {
+        "ar": "وجود بعوض بالغ",
+        "en": "adult_mosquito_present"
+      },
+      "properties": {},
+      "parent": "adult",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    },
+    {
+      "id": "uk30nxRGEkq",
+      "code": "MultiLarvalMosquitoSpecies",
+      "type": "SelectMulti",
+      "resourceType": null,
+      "order": 606,
+      "path": "larval.habitats.uk30nxRGEkq",
+      "name": "MultiLarvalMosquitoSpecies",
+      "description": null,
+      "options": [],
+      "mandatory": true,
+      "readOnly": false,
+      "mainField": false,
+      "showInSummary": false,
+      "listName": null,
+      "optionSet": "m9RlHply57i",
+      "choiceFilter": null,
+      "calculation": null,
+      "defaultValue": null,
+      "valueTypeRendering": "DEFAULT",
+      "resourceMetadataSchema": null,
+      "rules": [
+        {
+          "field": "MultiLarvalMosquitoSpecies",
+          "expression": "#{sample_collected} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{sample_collected} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "validationRule": null,
+      "label": {
+        "ar": "انواع البعوض",
+        "en": "MultiLarvalMosquitoSpecies"
+      },
+      "properties": {},
+      "parent": "habitats",
+      "appearance": [],
+      "aggregation": null,
+      "scannedCodeProperties": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "habitats",
+      "code": null,
+      "path": "larval.habitats",
+      "parent": "larval",
+      "name": "habitats",
+      "description": null,
+      "order": 600,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "habitats",
+          "expression": "#{Indoor_Surveillance_Type} == 'Larval' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{Indoor_Surveillance_Type} == 'Larval' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "المصادر",
+        "en": "habitats"
+      },
+      "properties": {}
+    },
+    {
+      "id": "larval",
+      "code": null,
+      "path": "larval",
+      "parent": null,
+      "name": "larval",
+      "description": null,
+      "order": 500,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "larval",
+          "expression": "#{Indoor_Surveillance_Type} == 'Larval' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{Indoor_Surveillance_Type} == 'Larval' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "يرقي",
+        "en": "larval"
+      },
+      "properties": {}
+    },
+    {
+      "id": "locations",
+      "code": null,
+      "path": "locations",
+      "parent": null,
+      "name": "locations",
+      "description": null,
+      "order": 200,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "المواقع",
+        "en": "locations"
+      },
+      "properties": {}
+    },
+    {
+      "id": "main",
+      "code": null,
+      "path": "main",
+      "parent": null,
+      "name": "main",
+      "description": null,
+      "order": 100,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [],
+      "label": {
+        "ar": "بيانات عامة",
+        "en": "main"
+      },
+      "properties": {}
+    },
+    {
+      "id": "adultClassification",
+      "code": null,
+      "path": "adult.adultClassification",
+      "parent": "adult",
+      "name": "adultClassification",
+      "description": null,
+      "order": 400,
+      "readOnly": false,
+      "repeatable": true,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "adultClassification",
+          "expression": "#{adult_mosquito_present} == 'yes'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{adult_mosquito_present} == 'yes'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "تصنيف البالغ",
+        "en": "adultClassification"
+      },
+      "properties": {}
+    },
+    {
+      "id": "adult",
+      "code": null,
+      "path": "adult",
+      "parent": null,
+      "name": "adult",
+      "description": null,
+      "order": 300,
+      "readOnly": false,
+      "repeatable": false,
+      "maxRepeats": null,
+      "minRepeats": null,
+      "children": [],
+      "rules": [
+        {
+          "field": "adult",
+          "expression": "#{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+          "action": "Show",
+          "ruleAction": {
+            "expression": "#{Indoor_Surveillance_Type} == 'Adult' || #{Indoor_Surveillance_Type} == 'AdultAndLarval'",
+            "action": "Show",
+            "message": "{}",
+            "assignedValue": null
+          },
+          "message": "{}",
+          "assignedValue": null,
+          "filterInfo": null
+        }
+      ],
+      "label": {
+        "ar": "بالغ",
+        "en": "adult"
+      },
+      "properties": {}
+    }
+  ],
+  "options": [],
+  "optionSets": [
+    {
+      "id": "ILADGng0Qv4",
+      "displayName": "WeatherStatus",
+      "label": {},
+      "translations": [],
+      "name": "WeatherStatus",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "YpY0vSHWume",
+      "displayName": "BuildingType",
+      "label": {},
+      "translations": [],
+      "name": "BuildingType",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "aUXPRIolyEW",
+      "displayName": "MosquitoRestingPlace",
+      "label": {},
+      "translations": [],
+      "name": "MosquitoRestingPlace",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "aZuza8ag7Mg",
+      "displayName": "IndoorHabitatType",
+      "label": {},
+      "translations": [],
+      "name": "IndoorHabitatType",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "fI4Lebq3aH5",
+      "displayName": "Indoor_Surveillance_Type",
+      "label": {},
+      "translations": [],
+      "name": "Indoor_Surveillance_Type",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "m9RlHply57i",
+      "displayName": "LarvalMosquitoSpecies",
+      "label": {},
+      "translations": [],
+      "name": "LarvalMosquitoSpecies",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "qFBG6dSJURm",
+      "displayName": "EntomologicalSurveillanceType",
+      "label": {},
+      "translations": [],
+      "name": "EntomologicalSurveillanceType",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "xCtgK5yavq3",
+      "displayName": "MosquitoCollectionMethod",
+      "label": {},
+      "translations": [],
+      "name": "MosquitoCollectionMethod",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "z9VYq4N0OUF",
+      "displayName": "Mosquito Species",
+      "label": {
+        "ar": "أنواع البعوض",
+        "en": "Mosquito Species"
+      },
+      "translations": [
+        {
+          "locale": "ar",
+          "property": "name",
+          "value": "أنواع البعوض"
+        },
+        {
+          "locale": "en",
+          "property": "name",
+          "value": "Mosquito Species"
+        }
+      ],
+      "name": "MosquitoSpecies",
+      "code": null,
+      "deletedAt": null
+    },
+    {
+      "id": "zK7EdFCwpx9",
+      "displayName": "yesno",
+      "label": {},
+      "translations": [],
+      "name": "yesno",
+      "code": null,
+      "deletedAt": null
+    }
+  ],
+  "optionMap": {
+    "ILADGng0Qv4": [
+      {
+        "id": "01JZ45CAMYJ2EQ4A7TE825EJ1N",
+        "displayName": "Clear Weather",
+        "label": {
+          "ar": "صحو",
+          "en": "Clear Weather"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Clear Weather"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "صحو"
+          }
+        ],
+        "name": "Clear",
+        "code": "Clear",
+        "optionSet": "ILADGng0Qv4",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAMZPTN2SKQTBJKB1A7A",
+        "displayName": "Rainy",
+        "label": {
+          "ar": "ممطر",
+          "en": "Rainy"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "ممطر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Rainy"
+          }
+        ],
+        "name": "Rainy",
+        "code": "Rainy",
+        "optionSet": "ILADGng0Qv4",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "YpY0vSHWume": [
+      {
+        "id": "01JZ45CA1S830NPWVQAEYZGP35",
+        "displayName": "House",
+        "label": {
+          "ar": "منزل",
+          "en": "House"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "منزل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "House"
+          }
+        ],
+        "name": "House",
+        "code": "House",
+        "optionSet": "YpY0vSHWume",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA1VZAMSBWQJ87Z80Y0C",
+        "displayName": "School",
+        "label": {
+          "ar": "مدرسة",
+          "en": "School"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مدرسة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "School"
+          }
+        ],
+        "name": "School",
+        "code": "School",
+        "optionSet": "YpY0vSHWume",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA1XD56EH990YBY30HV0",
+        "displayName": "HealthFacility",
+        "label": {
+          "ar": "مرفق صحي",
+          "en": "HealthFacility"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مرفق صحي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "HealthFacility"
+          }
+        ],
+        "name": "HealthFacility",
+        "code": "HealthFacility",
+        "optionSet": "YpY0vSHWume",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA1ZXXW0WW1VA6P3RZW4",
+        "displayName": "GovernmentBuilding",
+        "label": {
+          "ar": "مبنى حكومي",
+          "en": "GovernmentBuilding"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مبنى حكومي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "GovernmentBuilding"
+          }
+        ],
+        "name": "GovernmentBuilding",
+        "code": "GovernmentBuilding",
+        "optionSet": "YpY0vSHWume",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA22K7GY5E0SD4SJ4WP1",
+        "displayName": "Mosque",
+        "label": {
+          "ar": "مسجد",
+          "en": "Mosque"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مسجد"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Mosque"
+          }
+        ],
+        "name": "Mosque",
+        "code": "Mosque",
+        "optionSet": "YpY0vSHWume",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA268HBFZ9V8YHC5VQDP",
+        "displayName": "Restaurant",
+        "label": {
+          "ar": "مطعم",
+          "en": "Restaurant"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "مطعم"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Restaurant"
+          }
+        ],
+        "name": "Restaurant",
+        "code": "Restaurant",
+        "optionSet": "YpY0vSHWume",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA2CSJ6WTVX7D8NPP6DJ",
+        "displayName": "CarTiresRepairService",
+        "label": {
+          "ar": "بنشر",
+          "en": "CarTiresRepairService"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "CarTiresRepairService"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بنشر"
+          }
+        ],
+        "name": "CarTiresRepairService",
+        "code": "CarTiresRepairService",
+        "optionSet": "YpY0vSHWume",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA2E8GC0PNX7MZEGSX4R",
+        "displayName": "OtherBuildingType",
+        "label": {
+          "ar": "أخرى (حدد)",
+          "en": "OtherBuildingType"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "OtherBuildingType"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أخرى (حدد)"
+          }
+        ],
+        "name": "OtherBuildingType",
+        "code": "OtherBuildingType",
+        "optionSet": "YpY0vSHWume",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "aUXPRIolyEW": [
+      {
+        "id": "01JZ45CA4F4JKAHNECAZXMSE37",
+        "displayName": "Wall",
+        "label": {
+          "ar": "حائط",
+          "en": "Wall"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "حائط"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Wall"
+          }
+        ],
+        "name": "Wall",
+        "code": "Wall",
+        "optionSet": "aUXPRIolyEW",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA4GD985V70VZ9G0M6RC",
+        "displayName": "Roof",
+        "label": {
+          "ar": "سقف",
+          "en": "Roof"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سقف"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Roof"
+          }
+        ],
+        "name": "Roof",
+        "code": "Roof",
+        "optionSet": "aUXPRIolyEW",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA4JBZFM9P4K5M9E6J5J",
+        "displayName": "Furniture",
+        "label": {
+          "ar": "أثاث",
+          "en": "Furniture"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أثاث"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Furniture"
+          }
+        ],
+        "name": "Furniture",
+        "code": "Furniture",
+        "optionSet": "aUXPRIolyEW",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA4MPVS9EZRT7HSCK93T",
+        "displayName": "UnknownRestingPlace",
+        "label": {
+          "ar": "غير معروف",
+          "en": "UnknownRestingPlace"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "غير معروف"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "UnknownRestingPlace"
+          }
+        ],
+        "name": "UnknownRestingPlace",
+        "code": "UnknownRestingPlace",
+        "optionSet": "aUXPRIolyEW",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CA4N5HDKZF4PYN9J2269",
+        "displayName": "OtherRestingPlace",
+        "label": {
+          "ar": "اخرى",
+          "en": "OtherRestingPlace"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اخرى"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "OtherRestingPlace"
+          }
+        ],
+        "name": "OtherRestingPlace",
+        "code": "OtherRestingPlace",
+        "optionSet": "aUXPRIolyEW",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "aZuza8ag7Mg": [
+      {
+        "id": "01JZ45CAD0D6E8G9PRRXK5VR93",
+        "displayName": "BlasticBottles",
+        "label": {
+          "ar": "دبب",
+          "en": "BlasticBottles"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "دبب"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "BlasticBottles"
+          }
+        ],
+        "name": "BlasticBottles",
+        "code": "BlasticBottles",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD1TZPMNV9R9PR09KXS",
+        "displayName": "Cones",
+        "label": {
+          "ar": "اكواز",
+          "en": "Cones"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اكواز"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Cones"
+          }
+        ],
+        "name": "Cones",
+        "code": "Cones",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD29QQ8469PMQACHNNT",
+        "displayName": "WaterTank",
+        "label": {
+          "ar": "خزان مياه",
+          "en": "WaterTank"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "خزان مياه"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "WaterTank"
+          }
+        ],
+        "name": "WaterTank",
+        "code": "WaterTank",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD3QE10H0WY40742QE9",
+        "displayName": "Tires",
+        "label": {
+          "ar": "إطارات",
+          "en": "Tires"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Tires"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "إطارات"
+          }
+        ],
+        "name": "Tires",
+        "code": "Tires",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD4PXCM410P12HT1JWK",
+        "displayName": "Barrels",
+        "label": {
+          "ar": "براميل",
+          "en": "Barrels"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "براميل"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Barrels"
+          }
+        ],
+        "name": "Barrels",
+        "code": "Barrels",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD5G1VFX8TVAME4FVZH",
+        "displayName": "Siphons",
+        "label": {
+          "ar": "سيفونات",
+          "en": "Siphons"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "سيفونات"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Siphons"
+          }
+        ],
+        "name": "Siphons",
+        "code": "Siphons",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD66NAA723W609NPPQ9",
+        "displayName": "WaterStorageContainers",
+        "label": {
+          "ar": "اوعية حفظ المياه",
+          "en": "WaterStorageContainers"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "اوعية حفظ المياه"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "WaterStorageContainers"
+          }
+        ],
+        "name": "WaterStorageContainers",
+        "code": "WaterStorageContainers",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD8NXR5107RFWQPSZY7",
+        "displayName": "KitchenDrain",
+        "label": {
+          "ar": "تصريف مياه المطبخ",
+          "en": "KitchenDrain"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تصريف مياه المطبخ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "KitchenDrain"
+          }
+        ],
+        "name": "KitchenDrain",
+        "code": "KitchenDrain",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAD9JFSCCXH89EMAJSW4",
+        "displayName": "BathroomDrainage",
+        "label": {
+          "ar": "تصريف حمامات",
+          "en": "BathroomDrainage"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تصريف حمامات"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "BathroomDrainage"
+          }
+        ],
+        "name": "BathroomDrainage",
+        "code": "BathroomDrainage",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CADANRTZWRFB0XT8T728",
+        "displayName": "WaterLeaks",
+        "label": {
+          "ar": "تجمع مائي تسريب مياه",
+          "en": "WaterLeaks"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "تجمع مائي تسريب مياه"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "WaterLeaks"
+          }
+        ],
+        "name": "WaterLeaks",
+        "code": "WaterLeaks",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CADBBSA76ZP51E7CCNR8",
+        "displayName": "UndergroundWaterTank",
+        "label": {
+          "ar": "خزان مياه ارضي",
+          "en": "UndergroundWaterTank"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "خزان مياه ارضي"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "UndergroundWaterTank"
+          }
+        ],
+        "name": "UndergroundWaterTank",
+        "code": "UndergroundWaterTank",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CADCV4JBGSG6AQEB43V5",
+        "displayName": "HomeCementWaterBasins",
+        "label": {
+          "ar": "احواض اسمنتية منزلية للمياه",
+          "en": "HomeCementWaterBasins"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "HomeCementWaterBasins"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "احواض اسمنتية منزلية للمياه"
+          }
+        ],
+        "name": "HomeCementWaterBasins",
+        "code": "HomeCementWaterBasins",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CADCKJ1SXQBQYEYKBJC5",
+        "displayName": "OtherIndoorBreedingHabitat",
+        "label": {
+          "ar": "أخرى حدد",
+          "en": "OtherIndoorBreedingHabitat"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "OtherIndoorBreedingHabitat"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "أخرى حدد"
+          }
+        ],
+        "name": "OtherIndoorBreedingHabitat",
+        "code": "OtherIndoorBreedingHabitat",
+        "optionSet": "aZuza8ag7Mg",
+        "order": 13,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "fI4Lebq3aH5": [
+      {
+        "id": "01JZN8RW64X0MGS4EQGJCDPAFT",
+        "displayName": "Adult",
+        "label": {
+          "ar": "بالغ",
+          "en": "Adult"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بالغ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Adult"
+          }
+        ],
+        "name": "Adult",
+        "code": "Adult",
+        "optionSet": "fI4Lebq3aH5",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZN8SQJEG3BF0RHB9VW8QEFH",
+        "displayName": "Larval",
+        "label": {
+          "ar": "يرقي",
+          "en": "Larval"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Larval"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "يرقي"
+          }
+        ],
+        "name": "Larval",
+        "code": "Larval",
+        "optionSet": "fI4Lebq3aH5",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZN8TR3JDVZ26WR8JSFYYY89",
+        "displayName": "AdultAndLarval",
+        "label": {
+          "ar": "بالع ويرقي",
+          "en": "AdultAndLarval"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "AdultAndLarval"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "بالع ويرقي"
+          }
+        ],
+        "name": "AdultAndLarval",
+        "code": "AdultAndLarval",
+        "optionSet": "fI4Lebq3aH5",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "m9RlHply57i": [
+      {
+        "id": "01K0TM9KPQVXG30TKM2VAM9B3R",
+        "displayName": "Anopheles arabiensis",
+        "label": {
+          "ar": "Anopheles arabiensis",
+          "en": "Anopheles arabiensis"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Anopheles arabiensis"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Anopheles arabiensis"
+          }
+        ],
+        "name": "An.arabiensis",
+        "code": "An.arabiensis",
+        "optionSet": "m9RlHply57i",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQP4B31RK9SSAHZ0Q1",
+        "displayName": "Anopheles sergentii",
+        "label": {
+          "ar": "Anopheles sergentii",
+          "en": "Anopheles sergentii"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Anopheles sergentii"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Anopheles sergentii"
+          }
+        ],
+        "name": "An.sergentii",
+        "code": "An.sergentii",
+        "optionSet": "m9RlHply57i",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQ53WPBBGQ9VGA1VEX",
+        "displayName": "An. culicifacies",
+        "label": {
+          "ar": "An. culicifacies",
+          "en": "An. culicifacies"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. culicifacies"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. culicifacies"
+          }
+        ],
+        "name": "An.culicifacies",
+        "code": "An.culicifacies",
+        "optionSet": "m9RlHply57i",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQQG20BJQXZT0Q1BJH",
+        "displayName": "An. stephensi",
+        "label": {
+          "ar": "An. stephensi",
+          "en": "An. stephensi"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. stephensi"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. stephensi"
+          }
+        ],
+        "name": "An.stephensi",
+        "code": "An.stephensi",
+        "optionSet": "m9RlHply57i",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQ11BK4JRJEREVGHWV",
+        "displayName": "An. dthali",
+        "label": {
+          "ar": "An. dthali",
+          "en": "An. dthali"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. dthali"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. dthali"
+          }
+        ],
+        "name": "An.dthali",
+        "code": "An.dthali",
+        "optionSet": "m9RlHply57i",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQQ2FYCMJG4WEJ98HT",
+        "displayName": "An.rhodesiensis",
+        "label": {
+          "ar": "An. rhodesiensis",
+          "en": "An.rhodesiensis"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. rhodesiensis"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An.rhodesiensis"
+          }
+        ],
+        "name": "An. rhodesiensis",
+        "code": "An. rhodesiensis",
+        "optionSet": "m9RlHply57i",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQNZ5PACG66862KD8N",
+        "displayName": "An. pretoriensis",
+        "label": {
+          "ar": "An. pretoriensis",
+          "en": "An. pretoriensis"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. pretoriensis"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. pretoriensis"
+          }
+        ],
+        "name": "An.pretoriensis",
+        "code": "An.pretoriensis",
+        "optionSet": "m9RlHply57i",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQPB2XMCQZ0WPNEBZ8",
+        "displayName": "An.turkhudi",
+        "label": {
+          "ar": "An. turkhudi",
+          "en": "An.turkhudi"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. turkhudi"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An.turkhudi"
+          }
+        ],
+        "name": "An. turkhudi",
+        "code": "An. turkhudi",
+        "optionSet": "m9RlHply57i",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQ5QVTPSSQ24X5T6YS",
+        "displayName": "An. algeriensis",
+        "label": {
+          "ar": "An. algeriensis",
+          "en": "An. algeriensis"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. algeriensis"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. algeriensis"
+          }
+        ],
+        "name": "An.algeriensis",
+        "code": "An.algeriensis",
+        "optionSet": "m9RlHply57i",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQKH6W5J0WNFJPJ6WX",
+        "displayName": "An. multicolor",
+        "label": {
+          "ar": "An. multicolor",
+          "en": "An. multicolor"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. multicolor"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. multicolor"
+          }
+        ],
+        "name": "An.multicolor",
+        "code": "An.multicolor",
+        "optionSet": "m9RlHply57i",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQVNEQFFND322QB5QH",
+        "displayName": "Ae. aegypti",
+        "label": {
+          "ar": "Ae. aegypti",
+          "en": "Ae. aegypti"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. aegypti"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. aegypti"
+          }
+        ],
+        "name": "Ae.aegypti",
+        "code": "Ae.aegypti",
+        "optionSet": "m9RlHply57i",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQRBWZXSKZV4GPNR64",
+        "displayName": "Ae. vittatus",
+        "label": {
+          "ar": "Ae. vittatus",
+          "en": "Ae. vittatus"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. vittatus"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. vittatus"
+          }
+        ],
+        "name": "Ae.vittatus",
+        "code": "Ae.vittatus",
+        "optionSet": "m9RlHply57i",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQAXTAPGD9FQ8NQ7CY",
+        "displayName": "Ae. vexans",
+        "label": {
+          "ar": "Ae. vexans",
+          "en": "Ae. vexans"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. vexans"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. vexans"
+          }
+        ],
+        "name": "Ae.vexans",
+        "code": "Ae.vexans",
+        "optionSet": "m9RlHply57i",
+        "order": 13,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQDH672C7JWM508CPY",
+        "displayName": "Ae. caspius",
+        "label": {
+          "ar": "Ae. caspius",
+          "en": "Ae. caspius"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. caspius"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. caspius"
+          }
+        ],
+        "name": "Ae.caspius",
+        "code": "Ae.caspius",
+        "optionSet": "m9RlHply57i",
+        "order": 14,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQYXH6EE5ZM8MTSP28",
+        "displayName": "Ae. albupictus",
+        "label": {
+          "ar": "Ae. albupictus",
+          "en": "Ae. albupictus"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. albupictus"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. albupictus"
+          }
+        ],
+        "name": "Ae.albupictus",
+        "code": "Ae.albupictus",
+        "optionSet": "m9RlHply57i",
+        "order": 15,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01K0TM9KPQP4AC3PT5JACKY1W9",
+        "displayName": "Culex",
+        "label": {
+          "ar": "Culex",
+          "en": "Culex"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Culex"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Culex"
+          }
+        ],
+        "name": "CulexSpecies",
+        "code": "CulexSpecies",
+        "optionSet": "m9RlHply57i",
+        "order": 16,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "qFBG6dSJURm": [
+      {
+        "id": "01JZ45CAMVQJFX09A35YV40CND",
+        "displayName": "Routine",
+        "label": {
+          "ar": "روتيني (وحدات الملاريا)",
+          "en": "Routine"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "روتيني (وحدات الملاريا)"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Routine"
+          }
+        ],
+        "name": "Routine",
+        "code": "Routine",
+        "optionSet": "qFBG6dSJURm",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAMWQNAT5DCXMQGJDGC9",
+        "displayName": "Fixed stations",
+        "label": {
+          "ar": "محطات ثابتة",
+          "en": "Fixed stations"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "محطات ثابتة"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Fixed stations"
+          }
+        ],
+        "name": "FixedStations",
+        "code": "FixedStations",
+        "optionSet": "qFBG6dSJURm",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAMX39ZCQ4AZARCCS99A",
+        "displayName": "Emergency",
+        "label": {
+          "ar": "طوارئ",
+          "en": "Emergency"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "طوارئ"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Emergency"
+          }
+        ],
+        "name": "Emergency",
+        "code": "Emergency",
+        "optionSet": "qFBG6dSJURm",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAMXV9ENVE6MERTR46G6",
+        "displayName": "EntomologicalStudy",
+        "label": {
+          "ar": "دراسة حشرية",
+          "en": "EntomologicalStudy"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "EntomologicalStudy"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "دراسة حشرية"
+          }
+        ],
+        "name": "EntomologicalStudy",
+        "code": "EntomologicalStudy",
+        "optionSet": "qFBG6dSJURm",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "xCtgK5yavq3": [
+      {
+        "id": "01JZ45C9Z21W5XSXCA72HFD7W4",
+        "displayName": "White Sheets",
+        "label": {
+          "ar": " (White Sheets)ملايات",
+          "en": "White Sheets"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": " (White Sheets)ملايات"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "White Sheets"
+          }
+        ],
+        "name": "WhiteSheets",
+        "code": "WhiteSheets",
+        "optionSet": "xCtgK5yavq3",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9Z6X7Q6V4B6T3CK1KWW",
+        "displayName": "Aspirators",
+        "label": {
+          "ar": " (Aspirators)شفط",
+          "en": "Aspirators"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Aspirators"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": " (Aspirators)شفط"
+          }
+        ],
+        "name": "Aspirators",
+        "code": "Aspirators",
+        "optionSet": "xCtgK5yavq3",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9Z8FB6BGV74KMYCRH6B",
+        "displayName": "Light Trap",
+        "label": {
+          "ar": " (Light Trap)مصيدة ضوئية",
+          "en": "Light Trap"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": " (Light Trap)مصيدة ضوئية"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Light Trap"
+          }
+        ],
+        "name": "LightTraps",
+        "code": "LightTraps",
+        "optionSet": "xCtgK5yavq3",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9ZBPC7W9TN8XSZ2J9SC",
+        "displayName": "Ovitraps",
+        "label": {
+          "ar": " (Ovitrap)مصيدة",
+          "en": "Ovitraps"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ovitraps"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": " (Ovitrap)مصيدة"
+          }
+        ],
+        "name": "Ovitraps",
+        "code": "Ovitraps",
+        "optionSet": "xCtgK5yavq3",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9ZEM51P0THJBM0JEAWW",
+        "displayName": "BG-Sentinel trap",
+        "label": {
+          "ar": "(BG-Sentinel) مصيدة ",
+          "en": "BG-Sentinel trap"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "(BG-Sentinel) مصيدة "
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "BG-Sentinel trap"
+          }
+        ],
+        "name": "BGSentinelTraps",
+        "code": "BGSentinelTraps",
+        "optionSet": "xCtgK5yavq3",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9ZGH5FBYZPSC2N0KF3W",
+        "displayName": "StickyTraps",
+        "label": {
+          "ar": " (Sticky Traps) مصيدة لاصقة",
+          "en": "StickyTraps"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "StickyTraps"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": " (Sticky Traps) مصيدة لاصقة"
+          }
+        ],
+        "name": "StickyTraps",
+        "code": "StickyTraps",
+        "optionSet": "xCtgK5yavq3",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45C9ZJ3Q5Q0VBA24RDRZC6",
+        "displayName": "WindowExitTraps",
+        "label": {
+          "ar": " (Window Exit Traps) مصيدة لاصقة",
+          "en": "WindowExitTraps"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "WindowExitTraps"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": " (Window Exit Traps) مصيدة لاصقة"
+          }
+        ],
+        "name": "WindowExitTraps",
+        "code": "WindowExitTraps",
+        "optionSet": "xCtgK5yavq3",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "z9VYq4N0OUF": [
+      {
+        "id": "01JZ45CANHBE7NHMPWMV3J8V7B",
+        "displayName": "Anopheles arabiensis",
+        "label": {
+          "ar": "Anopheles arabiensis",
+          "en": "Anopheles arabiensis"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Anopheles arabiensis"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Anopheles arabiensis"
+          }
+        ],
+        "name": "An.arabiensis",
+        "code": "An.arabiensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANJCJY8783F630RQN48",
+        "displayName": "Anopheles sergentii",
+        "label": {
+          "ar": "Anopheles sergentii",
+          "en": "Anopheles sergentii"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Anopheles sergentii"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Anopheles sergentii"
+          }
+        ],
+        "name": "An.sergentii",
+        "code": "An.sergentii",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANK86DFPSN9J0BK5TXY",
+        "displayName": "An. culicifacies",
+        "label": {
+          "ar": "An. culicifacies",
+          "en": "An. culicifacies"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. culicifacies"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. culicifacies"
+          }
+        ],
+        "name": "An.culicifacies",
+        "code": "An.culicifacies",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 3,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANK0748S5D9QGT5HJXH",
+        "displayName": "An. stephensi",
+        "label": {
+          "ar": "An. stephensi",
+          "en": "An. stephensi"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. stephensi"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. stephensi"
+          }
+        ],
+        "name": "An.stephensi",
+        "code": "An.stephensi",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 4,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANMJF1EN19TH8SP0DTF",
+        "displayName": "An. dthali",
+        "label": {
+          "ar": "An. dthali",
+          "en": "An. dthali"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. dthali"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. dthali"
+          }
+        ],
+        "name": "An.dthali",
+        "code": "An.dthali",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 5,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANMSR55D386R0RZ9DKB",
+        "displayName": "An.rhodesiensis",
+        "label": {
+          "ar": "An. rhodesiensis",
+          "en": "An.rhodesiensis"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. rhodesiensis"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An.rhodesiensis"
+          }
+        ],
+        "name": "An. rhodesiensis",
+        "code": "An. rhodesiensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 6,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANN7G29ZNFJ1ST31S76",
+        "displayName": "An. pretoriensis",
+        "label": {
+          "ar": "An. pretoriensis",
+          "en": "An. pretoriensis"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. pretoriensis"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. pretoriensis"
+          }
+        ],
+        "name": "An.pretoriensis",
+        "code": "An.pretoriensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 7,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANNXRF4BZVDXRXPEWQ0",
+        "displayName": "An.turkhudi",
+        "label": {
+          "ar": "An. turkhudi",
+          "en": "An.turkhudi"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. turkhudi"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An.turkhudi"
+          }
+        ],
+        "name": "An. turkhudi",
+        "code": "An. turkhudi",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 8,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANPE70T81E9VMAQKS89",
+        "displayName": "An. algeriensis",
+        "label": {
+          "ar": "An. algeriensis",
+          "en": "An. algeriensis"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. algeriensis"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. algeriensis"
+          }
+        ],
+        "name": "An.algeriensis",
+        "code": "An.algeriensis",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 9,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANPSGNKKG54EDZ4ENXX",
+        "displayName": "An. multicolor",
+        "label": {
+          "ar": "An. multicolor",
+          "en": "An. multicolor"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "An. multicolor"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "An. multicolor"
+          }
+        ],
+        "name": "An.multicolor",
+        "code": "An.multicolor",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 10,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANP8M2PRDN38AA7EZ92",
+        "displayName": "Ae. aegypti",
+        "label": {
+          "ar": "Ae. aegypti",
+          "en": "Ae. aegypti"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. aegypti"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. aegypti"
+          }
+        ],
+        "name": "Ae.aegypti",
+        "code": "Ae.aegypti",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 11,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANQXXDVNRCANKEJS64X",
+        "displayName": "Ae. vittatus",
+        "label": {
+          "ar": "Ae. vittatus",
+          "en": "Ae. vittatus"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. vittatus"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. vittatus"
+          }
+        ],
+        "name": "Ae.vittatus",
+        "code": "Ae.vittatus",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 12,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANQNJ9NZPBCBW0QS1JN",
+        "displayName": "Ae. vexans",
+        "label": {
+          "ar": "Ae. vexans",
+          "en": "Ae. vexans"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. vexans"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. vexans"
+          }
+        ],
+        "name": "Ae.vexans",
+        "code": "Ae.vexans",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 13,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANRGPJ2AW2KCPD1YVRX",
+        "displayName": "Ae. caspius",
+        "label": {
+          "ar": "Ae. caspius",
+          "en": "Ae. caspius"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. caspius"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. caspius"
+          }
+        ],
+        "name": "Ae.caspius",
+        "code": "Ae.caspius",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 14,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANRP392B5T4FASW0K6C",
+        "displayName": "Ae. albupictus",
+        "label": {
+          "ar": "Ae. albupictus",
+          "en": "Ae. albupictus"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Ae. albupictus"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "Ae. albupictus"
+          }
+        ],
+        "name": "Ae.albupictus",
+        "code": "Ae.albupictus",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 15,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANS0243GZ2YRG0DRZGK",
+        "displayName": "CulexSpecies",
+        "label": {
+          "ar": "CulexSpecies",
+          "en": "CulexSpecies"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "CulexSpecies"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "CulexSpecies"
+          }
+        ],
+        "name": "CulexSpecies",
+        "code": "CulexSpecies",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 16,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CANSYSXEK7ZMX79S51ZJ",
+        "displayName": "Other",
+        "label": {
+          "ar": "صنف آخر",
+          "en": "Other"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "صنف آخر"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Other"
+          }
+        ],
+        "name": "OtherSpecies",
+        "code": "OtherSpecies",
+        "optionSet": "z9VYq4N0OUF",
+        "order": 17,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ],
+    "zK7EdFCwpx9": [
+      {
+        "id": "01JZ45CAEZDBAYF4J5VSB5FT7J",
+        "displayName": "Yes",
+        "label": {
+          "ar": "نعم",
+          "en": "Yes"
+        },
+        "translations": [
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "نعم"
+          },
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "Yes"
+          }
+        ],
+        "name": "yes",
+        "code": "yes",
+        "optionSet": "zK7EdFCwpx9",
+        "order": 1,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      },
+      {
+        "id": "01JZ45CAF0HQHVP4WP6YG48MFT",
+        "displayName": "No",
+        "label": {
+          "ar": "لا",
+          "en": "No"
+        },
+        "translations": [
+          {
+            "locale": "en",
+            "property": "name",
+            "value": "No"
+          },
+          {
+            "locale": "ar",
+            "property": "name",
+            "value": "لا"
+          }
+        ],
+        "name": "no",
+        "code": "no",
+        "optionSet": "zK7EdFCwpx9",
+        "order": 2,
+        "deletedAt": null,
+        "filterExpression": null,
+        "properties": {}
+      }
+    ]
+  }
+}

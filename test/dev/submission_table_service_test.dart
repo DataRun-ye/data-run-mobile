@@ -1,10 +1,14 @@
 import 'package:datarunmobile/core/form/element_template/template.dart';
+import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_upload_service.dart';
+import 'package:dio/dio.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -16,7 +20,13 @@ void main() {
       executor: NativeDatabase.memory(),
       userId: 'test-user',
     );
-    service = SubmissionTableService(db);
+    service = SubmissionTableService(
+      database: db,
+      uploadService: SubmissionUploadService(
+        database: db,
+        apiClient: _UnusedHttpClient(),
+      ),
+    );
     await _seedSubmissionTable(db);
   });
 
@@ -35,6 +45,32 @@ void main() {
     expect(result.totalCount, 2);
     expect(result.items.map((item) => item.id), ['submission-new']);
     expect(await service.countByFilter(filter).getSingle(), 2);
+  });
+
+  test('resolves syncable selections and deletes through the same owner',
+      () async {
+    await db.into(db.dataInstances).insert(
+          DataInstancesCompanion.insert(
+            id: 'submission-final',
+            formTemplate: 'form-1',
+            templateVersion: 'version-1',
+            assignment: const Value('assignment-1'),
+            syncState: InstanceSyncStatus.finalized,
+            isToUpdate: false,
+          ),
+        );
+
+    final ids = ISet([
+      'submission-old',
+      'submission-new',
+      'submission-final',
+    ]);
+
+    expect(await service.getSyncableIds(ids), ['submission-final']);
+    expect(await service.getInstances(ids), hasLength(3));
+
+    expect(await service.delete(['submission-old']), 1);
+    expect(await db.dataInstancesDao.getById('submission-old'), isNull);
   });
 }
 
@@ -99,4 +135,17 @@ Future<void> _seedSubmissionTable(AppDatabase db) async {
       ),
     ]);
   });
+}
+
+class _UnusedHttpClient extends HttpClient<dynamic> {
+  @override
+  Future<Response<dynamic>> request({
+    required String resourceName,
+    String? path,
+    required String method,
+    Object? data,
+    Map<String, dynamic>? headers,
+  }) {
+    throw UnimplementedError('Upload is covered by submission upload tests');
+  }
 }

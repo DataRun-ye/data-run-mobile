@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:datarunmobile/core/exception/session_expired_exception.dart';
+import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
 import 'package:datarunmobile/database/app_database.dart';
@@ -8,6 +9,7 @@ import 'package:datarunmobile/database/db_factory/database_factory.dart';
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/di/init_active_session_scope.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_upload_service.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_api.dart';
@@ -157,7 +159,16 @@ class AuthManager extends ChangeNotifier {
           await appLocator<DatabaseFactory>().closeForUser(db.userId);
         });
         getIt.registerFactory<SubmissionTableService>(
-          () => SubmissionTableService(getIt<AppDatabase>()),
+          () {
+            final database = getIt<AppDatabase>();
+            return SubmissionTableService(
+              database: database,
+              uploadService: SubmissionUploadService(
+                database: database,
+                apiClient: getIt<HttpClient<dynamic>>(),
+              ),
+            );
+          },
         );
       },
     );

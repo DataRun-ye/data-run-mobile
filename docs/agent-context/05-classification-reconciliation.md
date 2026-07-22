@@ -129,7 +129,7 @@ Submission table:
 
 - `lib/features/data_instance/application/table.providers.dart`
 - `lib/features/data_instance/application/table_controller.provider.dart`
-- `lib/features/data_instance/data/drift_table_repository.dart`
+- `lib/features/data_instance/application/submission_table_service.dart`
 - `lib/features/data_instance/presentation/table_screen.dart`
 - `lib/features/data_instance/presentation/table_widget.dart`
 - `lib/core/data_instance/form_data_util.dart`

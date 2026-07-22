@@ -41,10 +41,6 @@ import 'package:datarunmobile/features/assignment/application/assignment_service
     as _i935;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
-import 'package:datarunmobile/features/data_instance/data/drift_table_repository.dart'
-    as _i128;
-import 'package:datarunmobile/features/data_instance/data/table_repository.dart'
-    as _i325;
 import 'package:datarunmobile/features/form/application/form_template_service.dart'
     as _i258;
 import 'package:datarunmobile/features/form/application/form_template_service_impl.dart'
@@ -115,7 +111,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
         deviceInfoService: gh<_i1058.AndroidDeviceInfoService>(),
         formMetadata: formMetadata,
       ));
-  gh.factory<_i325.TableRepository>(() => _i128.DriftTableRepository());
   gh.factory<_i595.HintProvider>(() => const _i1066.HintProviderImpl());
   gh.factory<_i702.TokenStorage>(
       () => sdkModule.getTokenStorage(gh<_i550.StorageService>()));

@@ -203,7 +203,7 @@ Observations only:
   - Active list/detail service: `lib/data/form_template_list_service.dart`.
   - Active DI service: `lib/features/form/application/form_template_service_impl.dart`.
   - Old/commented service: `lib/data/form_template_service.dart`.
-- Submission table reads now have one active path: user-scoped `SubmissionTableService` fetches/counts paginated submissions through `DataInstancesDao.selectable/countSubmissions`. The uncalled alternate repository query API, generic filter framework, and duplicate `selectSubmissions/getFilterQuery` DAO path were removed. `DriftTableRepository` retains only selected-row delete/upload operations.
+- Submission table behavior now has one active owner: user-scoped `SubmissionTableService` fetches/counts paginated rows, resolves selected/syncable rows, deletes selected rows through `DataInstancesDao`, and delegates upload to `SubmissionUploadService`. The misleading `FormInstanceService` and duplicate `TableRepository`/`DriftTableRepository` abstractions were removed without changing DAO or upload behavior.
 - Submission list state overlaps:
   - `lib/features/form_submission/application/submission_list.provider.dart` manages form submissions and update/sync operations.
   - `lib/features/data_instance/application/table.providers.dart` and `table_controller.provider.dart` manage current table filters, selection, delete, and sync.
@@ -290,10 +290,9 @@ Treat these as high-risk files until the active paths above are fully understood
 - `lib/features/form_submission/application/submission_list.provider.dart`
 - `lib/features/data_instance/application/table.providers.dart`
 - `lib/features/data_instance/application/table_controller.provider.dart`
+- `lib/features/data_instance/application/submission_table_service.dart`
 - `lib/features/data_instance/presentation/table_screen.dart`
 - `lib/features/data_instance/presentation/table_widget.dart`
-- `lib/features/data_instance/data/drift_table_repository.dart`
-- `lib/features/data_instance/data/table_repository.dart`
 
 Also do not delete `lib/core/element_instance/display_value_lookup.dart` until its active display-only consumers are understood.
 

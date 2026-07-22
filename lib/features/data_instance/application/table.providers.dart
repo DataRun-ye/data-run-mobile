@@ -5,7 +5,6 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/data_instance/application/models.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
-import 'package:datarunmobile/features/data_instance/data/table_repository.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -95,7 +94,7 @@ Future<ISet<String>> selectedFinalizedItem(Ref ref) async {
   final selectedIds = ref.watch(selectedItemsProvider);
   if (selectedIds.isEmpty) return const ISet.empty();
   final syncableIds =
-      await appLocator<TableRepository>().getSyncableIds(selectedIds);
+      await appLocator<SubmissionTableService>().getSyncableIds(selectedIds);
   return ISet(syncableIds);
 }
 

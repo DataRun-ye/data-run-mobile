@@ -1,4 +1,4 @@
-import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/form_template_model.dart';
@@ -23,8 +23,9 @@ class OptionSetService {
         valueMapper: (o) => o);
 
     if (optionSets.isNotEmpty) {
-      final IList<FormOption> elementsOptions = (await DSdk
-              .db.managers.dataOptions
+      final IList<FormOption> elementsOptions = (await appLocator<AppDatabase>()
+              .managers
+              .dataOptions
               .filter((f) =>
                   f.optionSet.id.isIn(optionSets) &
                   f.deletedAt.isNull() &
@@ -56,7 +57,9 @@ class OptionSetService {
 
     final Map<String, DataOptionSet> formOptionSets = {};
     if (optionSets.isNotEmpty) {
-      final List<DataOptionSet> sets = await DSdk.db.managers.dataOptionSets
+      final List<DataOptionSet> sets = await appLocator<AppDatabase>()
+          .managers
+          .dataOptionSets
           .filter((f) => f.id.isIn(optionSets))
           .get();
       formOptionSets.addAll(
@@ -67,7 +70,9 @@ class OptionSetService {
   }
 
   Future<DataOptionSet?> getOptionSet(String id) async {
-    final DataOptionSet? optionSet = await DSdk.db.managers.dataOptionSets
+    final DataOptionSet? optionSet = await appLocator<AppDatabase>()
+        .managers
+        .dataOptionSets
         .filter((f) => f.id(id))
         .getSingleOrNull();
 

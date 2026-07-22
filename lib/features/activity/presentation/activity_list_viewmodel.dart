@@ -1,4 +1,4 @@
-import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/activity_model.dart';
 import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
@@ -10,7 +10,7 @@ class ActivityListViewModel extends BaseViewModel {
   List<ActivityModel> activities = [];
 
   Future<List<IdentifiableModel>> teams({String? activity}) async {
-    var query = DSdk.db.managers.teams;
+    var query = appLocator<AppDatabase>().managers.teams;
 
     if (activity.isNotNullOrEmpty) {
       query.filter((f) => f.activity.id(activity));
@@ -27,7 +27,7 @@ class ActivityListViewModel extends BaseViewModel {
 
   Future<List<IdentifiableModel>> managedTeams(
       {String? team, String? activity}) async {
-    var query = DSdk.db.managers.managedTeams;
+    var query = appLocator<AppDatabase>().managers.managedTeams;
 
     if (team.isNotNullOrEmpty) {
       query.filter((f) => f.managedBy.id(team));
@@ -49,10 +49,11 @@ class ActivityListViewModel extends BaseViewModel {
     final List<IdentifiableModel> assignedTeams = await teams();
     final List<IdentifiableModel> managed = await managedTeams();
 
-    final List<Activity> userEnabledActivities =
-        await DSdk.db.managers.activities
-            // .filter((f) => f.disabled.not(true))
-            .get();
+    final List<Activity> userEnabledActivities = await appLocator<AppDatabase>()
+        .managers
+        .activities
+        // .filter((f) => f.disabled.not(true))
+        .get();
 
     final List<ActivityModel> userActivities = [];
 
@@ -63,15 +64,19 @@ class ActivityListViewModel extends BaseViewModel {
       final List<IdentifiableModel> activityManagedTeams = managed
           .where((t) => t.properties['activity'] == activity.id)
           .toList();
-      final List<Assignment> assignedAssignment = await DSdk
-          .db.managers.assignments
-          .filter((f) => f.team.id(activityAssignedTeam?.id))
-          .get();
+      final List<Assignment> assignedAssignment =
+          await appLocator<AppDatabase>()
+              .managers
+              .assignments
+              .filter((f) => f.team.id(activityAssignedTeam?.id))
+              .get();
 
-      final List<Assignment> managedAssignments = await DSdk
-          .db.managers.assignments
-          .filter((f) => f.team.id.isIn(managed.map((t) => t.id)))
-          .get();
+      final List<Assignment> managedAssignments =
+          await appLocator<AppDatabase>()
+              .managers
+              .assignments
+              .filter((f) => f.team.id.isIn(managed.map((t) => t.id)))
+              .get();
 
       userActivities.add(
         ActivityModel(

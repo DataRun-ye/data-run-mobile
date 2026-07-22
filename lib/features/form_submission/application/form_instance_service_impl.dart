@@ -1,5 +1,4 @@
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/database/domain/filter.dart';
 import 'package:datarunmobile/database/shared/paginated_result.dart';
 import 'package:datarunmobile/database/shared/submission_summary.dart';
@@ -12,7 +11,7 @@ import 'package:rxdart/rxdart.dart';
 
 @Injectable(as: FormInstanceService)
 class FormInstanceServiceImpl extends FormInstanceService {
-  final AppDatabase _db = appLocator<DbManager>().db;
+  final AppDatabase _db = appLocator<AppDatabase>();
 
   @override
   Future<PaginatedResult<SubmissionSummary>> fetchByFilter(

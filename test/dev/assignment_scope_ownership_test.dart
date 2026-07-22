@@ -1,5 +1,4 @@
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/database/shared/assignment_model.dart';
 import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
@@ -25,7 +24,7 @@ void main() {
       executor: NativeDatabase.memory(),
       userId: 'test-user',
     );
-    rSdkLocator.registerSingleton<DbManager>(DbManager(db: db));
+    rSdkLocator.registerSingleton<AppDatabase>(db);
   });
 
   tearDown(() async {

@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/attribute_type.dart';
 import 'package:datarunmobile/core/util/date_helper.dart';
-import 'package:datarunmobile/d_sdk.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
@@ -23,7 +23,8 @@ class FormMetadataService {
   final String _uuid;
 
   Future<String?> getUserAttribute(AttributeType userAttributeType) async {
-    User? currentUser = await DSdk.db.managers.users.getSingleOrNull();
+    User? currentUser =
+        await appLocator<AppDatabase>().managers.users.getSingleOrNull();
 
     return switch (userAttributeType) {
       AttributeType.username => currentUser?.username,

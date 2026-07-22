@@ -1,5 +1,4 @@
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form/application/form_list_item_model.dart';
 import 'package:datarunmobile/features/form/application/form_template_service.dart';
@@ -8,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: FormTemplateService)
 class FormTemplateServiceImpl extends FormTemplateService {
-  final AppDatabase _db = appLocator<DbManager>().db;
+  final AppDatabase _db = appLocator<AppDatabase>();
 
   @override
   Future<List<FormListItemModel>> fetchByAssignment(String assignmentId) {

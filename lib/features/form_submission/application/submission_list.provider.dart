@@ -1,4 +1,5 @@
-import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:drift/drift.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -7,7 +8,7 @@ part 'submission_list.provider.g.dart';
 @riverpod
 Future<bool> submissionEditStatus(Ref ref,
     {required String submissionId}) async {
-  final db = DSdk.db;
+  final db = appLocator<AppDatabase>();
 
   final submission = await db.managers.dataInstances
       .filter((f) => f.id(submissionId))

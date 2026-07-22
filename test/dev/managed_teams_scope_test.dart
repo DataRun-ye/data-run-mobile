@@ -1,5 +1,4 @@
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:datarunmobile/data/teams.provider.dart';
@@ -17,7 +16,7 @@ void main() {
       executor: NativeDatabase.memory(),
       userId: 'test-user',
     );
-    rSdkLocator.registerSingleton<DbManager>(DbManager(db: db));
+    rSdkLocator.registerSingleton<AppDatabase>(db);
     container = ProviderContainer();
 
     await db.into(db.assignments).insert(

@@ -6,7 +6,6 @@ import 'package:datarunmobile/core/sync/sync_logger.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/converters/custom_serializer.dart';
 import 'package:datarunmobile/database/dao/sync_summaries_dao.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/database/shared/sync_error.dart';
 import 'package:datarunmobile/datasource/abstract_datasource.dart';
 import 'package:datarunmobile/di/injection.dart';
@@ -21,7 +20,7 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
   T get table;
 
   AppDatabase get db {
-    final instance = rSdkLocator<DbManager>().db;
+    final instance = rSdkLocator<AppDatabase>();
     return instance;
   }
 

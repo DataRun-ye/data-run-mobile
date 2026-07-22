@@ -1,8 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:datarunmobile/core/util/string_extension.dart';
-import 'package:datarunmobile/d_sdk.dart';
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/database/shared/collections.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/form_template_model.dart';
@@ -25,18 +23,23 @@ class FormTemplateListService {
       {String? assignment}) async {
     List<AssignmentForm> assignmentForms = [];
     if (assignment.isNotNullOrEmpty) {
-      assignmentForms.addAll(await DSdk.db.managers.assignmentForms
+      assignmentForms.addAll(await appLocator<AppDatabase>()
+          .managers
+          .assignmentForms
           .filter((f) => f.assignment.id(assignment))
           .get());
     } else {
-      assignmentForms.addAll(await DSdk.db.managers.assignmentForms.get());
+      assignmentForms.addAll(
+          await appLocator<AppDatabase>().managers.assignmentForms.get());
     }
 
     final userForm = assignmentForms.map((a) => a.form);
-    final List<FormTemplate> availableFormTemplates = await DSdk
-        .db.managers.formTemplates
-        .filter((f) => f.id.isIn(userForm))
-        .get();
+    final List<FormTemplate> availableFormTemplates =
+        await appLocator<AppDatabase>()
+            .managers
+            .formTemplates
+            .filter((f) => f.id.isIn(userForm))
+            .get();
 
     final List<String> availableForms =
         availableFormTemplates.map((f) => f.id).toList();
@@ -49,7 +52,7 @@ class FormTemplateListService {
   }
 
   Future<List<FormTemplate>> fetchByAssignment(assignmentId) async {
-    final db = appLocator<DbManager>().db;
+    final db = appLocator<AppDatabase>();
     final userForms =
         appLocator<AuthManager>().activeUserSession?.userFormsUIDs ?? [];
 
@@ -76,7 +79,9 @@ class FormTemplateListService {
         keyMapper: (o) => o.id, valueMapper: (o) => o);
 
     if (optionIdsMap.isNotEmpty) {
-      final mergedOptions = (await DSdk.db.managers.dataOptions
+      final mergedOptions = (await appLocator<AppDatabase>()
+              .managers
+              .dataOptions
               .filter((f) => f.id.isIn(optionIdsMap.keys))
               .get())
           .map((o) => optionIdsMap.get(o.id)?.fromDataOption(o))
@@ -90,7 +95,7 @@ class FormTemplateListService {
   }
 
   Future<List<FormTemplateModel>> fetchByFilter(FormListFilter filter) async {
-    final db = appLocator<DbManager>().db;
+    final db = appLocator<AppDatabase>();
     final query = db.formTemplateVersionsDao
         .selectFormTemplatesWithRefs(assignmentId: filter.assignment);
 
@@ -106,7 +111,9 @@ class FormTemplateListService {
     /// try to get form versions by the specific form version Ids
     /// It would retrieve the specific versions of formTemplate
     try {
-      var query = DSdk.db.managers.formTemplateVersions
+      var query = appLocator<AppDatabase>()
+          .managers
+          .formTemplateVersions
           .withReferences((prefetch) => prefetch(template: true));
 
       if (versionId != null) {

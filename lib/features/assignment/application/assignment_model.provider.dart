@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/assignment_model.dart';
 import 'package:datarunmobile/database/shared/collections.dart';
@@ -13,8 +13,9 @@ Future<List<AssignmentModel>> assignments(
   Ref ref,
   String activityId,
 ) async {
-  final List<AssignmentModel> assignments =
-      await DSdk.db.assignmentsDao.allAssignments(activityId: activityId);
+  final List<AssignmentModel> assignments = await appLocator<AppDatabase>()
+      .assignmentsDao
+      .allAssignments(activityId: activityId);
 
   final List<AssignmentFormAvailability> userForms =
       await ref.watch(userAvailableFormsProvider().future);

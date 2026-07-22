@@ -4,7 +4,6 @@ import 'package:datarunmobile/core/exception/session_expired_exception.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/database/db_factory/database_factory.dart';
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/di/init_active_session_scope.dart';
@@ -156,7 +155,6 @@ class AuthManager extends ChangeNotifier {
           logDebug('AppDatabase dispose');
           await appLocator<DatabaseFactory>().closeForUser(db.userId);
         });
-        getIt.registerLazySingleton(() => DbManager(db: getIt<AppDatabase>()));
       },
     );
 

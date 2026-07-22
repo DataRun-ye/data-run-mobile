@@ -1,6 +1,5 @@
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/exception/d_exception.dart';
-import 'package:datarunmobile/d_sdk.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
@@ -31,7 +30,7 @@ class FormFlowBootstrapperVm extends BaseViewModel {
   final String? versionId;
   final String? assignmentId;
 
-  AppDatabase get _db => DSdk.db;
+  AppDatabase get _db => appLocator<AppDatabase>();
 
   final NavigationService _navigationService = appLocator<NavigationService>();
 
@@ -168,7 +167,7 @@ class FormFlowBootstrapperVm extends BaseViewModel {
   }
 
   Future<bool> submissionEditStatus({required String submissionId}) async {
-    final db = DSdk.db;
+    final db = appLocator<AppDatabase>();
 
     final submission = await db.managers.dataInstances
         .filter((f) => f.id(submissionId))

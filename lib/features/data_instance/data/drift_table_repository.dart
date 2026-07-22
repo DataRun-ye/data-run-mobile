@@ -1,5 +1,5 @@
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/sync/sync_summary_model.dart';
-import 'package:datarunmobile/d_sdk.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/domain/filter.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
@@ -11,7 +11,8 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: TableRepository)
 class DriftTableRepository implements TableRepository {
-  final dao = DSdk.db.dataInstancesDao;
+  final AppDatabase _db = appLocator<AppDatabase>();
+  late final dao = _db.dataInstancesDao;
 
   @override
   Future<(Iterable<SubmissionSummary>, int)> getItems({
@@ -33,7 +34,10 @@ class DriftTableRepository implements TableRepository {
     final totalCount =
         await countQuery.map((row) => row.read(countAll()) ?? 0).getSingle();
 
-    return (items.map(SubmissionSummary.fromDrift).toList(), totalCount);
+    return (
+      items.map((row) => SubmissionSummary.fromDrift(row, _db)).toList(),
+      totalCount
+    );
   }
 
   @override

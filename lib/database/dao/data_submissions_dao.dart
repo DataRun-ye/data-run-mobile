@@ -418,7 +418,8 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
     query.limit(pageSize, offset: page * pageSize);
 
-    return query.map(SubmissionSummary.fromDrift);
+    return query
+        .map((row) => SubmissionSummary.fromDrift(row, attachedDatabase));
   }
 
   $DataInstancesTable get table => dataInstances;

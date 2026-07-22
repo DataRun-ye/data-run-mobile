@@ -1,5 +1,5 @@
+import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
-import 'package:datarunmobile/d_sdk.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 
 @injectable
 class DisplayValueLookup {
-  static AppDatabase get db => DSdk.db;
+  AppDatabase get db => appLocator<AppDatabase>();
 
   Future<String?> getOrgUnitById(String orgUnitUid) async {
     final List<OrgUnit> orgUnit = await db.managers.orgUnits

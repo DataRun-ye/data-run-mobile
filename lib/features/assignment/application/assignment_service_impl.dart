@@ -1,6 +1,4 @@
-import 'package:datarunmobile/d_sdk.dart';
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/dbManager.dart';
 import 'package:datarunmobile/database/shared/assignment_model.dart';
 import 'package:datarunmobile/database/shared/assignment_status.dart';
 import 'package:datarunmobile/database/shared/collections.dart';
@@ -35,7 +33,7 @@ import 'package:intl/intl.dart';
 /// a woman may enroll in "ANC Program" for each pregnancy.
 @Injectable(as: AssignmentService)
 class AssignmentServiceImpl implements AssignmentService {
-  final AppDatabase _db = appLocator<DbManager>().db;
+  final AppDatabase _db = appLocator<AppDatabase>();
 
   FormTemplateListService get formTemplateService =>
       appLocator<FormTemplateListService>();
@@ -169,7 +167,9 @@ class AssignmentServiceImpl implements AssignmentService {
   @override
   Future<void> updateAssignmentStatus(
       AssignmentStatus? progressStatus, String assignmentId) async {
-    await DSdk.db.managers.assignments
+    await appLocator<AppDatabase>()
+        .managers
+        .assignments
         .filter((f) => f.id(assignmentId))
         .update((o) => o.call(
               status: Value.absentIfNull(progressStatus),

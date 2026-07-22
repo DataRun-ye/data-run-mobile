@@ -1,6 +1,6 @@
 import 'package:datarunmobile/core/data_instance/field_value.dart';
 import 'package:datarunmobile/core/data_instance/form_data_util.dart';
-import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/assignment_status.dart';
 import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
@@ -104,12 +104,11 @@ class SubmissionSummary with EquatableMixin {
         deleted,
       ];
 
-  factory SubmissionSummary.fromDrift(TypedResult row) {
-    final dao = DSdk.db.dataInstancesDao;
-    final submission = row.readTable(dao.dataInstances);
-    final orgUnit = row.readTable(dao.orgUnits);
-    final form = row.readTable(dao.formTemplates);
-    final formVersion = row.readTable(dao.formTemplateVersions);
+  factory SubmissionSummary.fromDrift(TypedResult row, AppDatabase database) {
+    final submission = row.readTable(database.dataInstances);
+    final orgUnit = row.readTable(database.orgUnits);
+    final form = row.readTable(database.formTemplates);
+    final formVersion = row.readTable(database.formTemplateVersions);
 
     return SubmissionSummary(
         id: submission.id,

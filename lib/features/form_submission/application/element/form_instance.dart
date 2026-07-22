@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
-import 'package:datarunmobile/d_sdk.dart';
+import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
@@ -68,7 +68,7 @@ class FormInstance {
   final Section _formSection;
   final FieldContextRegistry fieldKeysRegistery;
 
-  final _db = DSdk.db;
+  final _db = appLocator<AppDatabase>();
 
   // final FormConfiguration formConfiguration;
 

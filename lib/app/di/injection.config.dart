@@ -51,8 +51,6 @@ import 'package:datarunmobile/features/form_submission/application/device_info_s
     as _i1058;
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart'
     as _i54;
-import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart'
-    as _i415;
 import 'package:datarunmobile/features/form_submission/application/form_metadata_service.dart'
     as _i747;
 import 'package:dio/dio.dart' as _i361;
@@ -88,8 +86,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.factory<_i735.DisplayValueLookup>(() => _i735.DisplayValueLookup());
   gh.factory<_i602.SyncManager>(() => _i602.SyncManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
-  gh.factory<_i415.RuleEffectStateFactory>(
-      () => _i415.RuleEffectStateFactory());
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());

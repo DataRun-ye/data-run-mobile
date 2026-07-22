@@ -15,7 +15,6 @@ class RuleAction
         EvaluationEngine<bool> {
   final String expression;
   final RuleActionType action;
-  final bool applyEffect;
   final IMap<String, String> message;
   final dynamic assignedValue;
 
@@ -23,7 +22,6 @@ class RuleAction
     required this.action,
     this.assignedValue,
     this.message = const IMapConst({}),
-    this.applyEffect = true,
     required this.expression,
   });
 
@@ -52,21 +50,6 @@ class RuleAction
       'assignedValue': assignedValue,
       // 'isInEffect': isInEffect,
     };
-  }
-
-  RuleAction copyWith({
-    String? expression,
-    RuleActionType? action,
-    IMap<String, String>? message,
-    dynamic assignedValue,
-    bool? applyEffect,
-  }) {
-    return RuleAction(
-        expression: expression ?? this.expression,
-        action: action ?? this.action,
-        message: message ?? this.message,
-        assignedValue: assignedValue ?? this.assignedValue,
-        applyEffect: applyEffect ?? this.applyEffect);
   }
 
   Expression getExpression() {

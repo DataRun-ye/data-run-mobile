@@ -1,30 +1,17 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:built_collection/built_collection.dart';
-import 'package:datarunmobile/core/form/element_template/template.dart';
-import 'package:datarunmobile/database/shared/form_option.dart';
-import 'package:datarunmobile/database/shared/form_template_model.dart';
-import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
 import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
+import 'support/form_template_fixture.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUpAll(() {
-    if (!appLocator.isRegistered<RuleEffectStateFactory>()) {
-      appLocator.registerFactory<RuleEffectStateFactory>(
-        RuleEffectStateFactory.new,
-      );
-    }
-  });
 
   test('profile ITNs repeat form at multiple row counts', () async {
     const formPath = 'example/ITNs Household Distribution Form.json';
@@ -33,13 +20,13 @@ void main() {
     const repeatPath = ['households_information', 'householdnames'];
     const rowCounts = [50, 150, 300];
 
-    final formJson = await _readJsonFile(formPath);
-    final submissionJson = await _readJsonFile(submissionPath);
+    final formJson = await readJsonMap(formPath);
+    final submissionJson = await readJsonMap(submissionPath);
     final baseFormData =
         Map<String, Object?>.from(submissionJson['formData'] as Map);
 
     for (final rowCount in rowCounts) {
-      final template = _templateModelFromJson(formJson);
+      final template = formTemplateFromJson(formJson);
       final repository = FormTemplateRepository.inMemory(
         formTemplateModel: template,
       );
@@ -121,81 +108,6 @@ RepeatProfileMetrics _profileFormBuildAndReduce({
         .fold<int>(0, (total, repeat) => total + repeat.elements.length),
     jsonBytes: jsonBytes,
   );
-}
-
-Future<Map<String, dynamic>> _readJsonFile(String path) async {
-  return jsonDecode(await File(path).readAsString()) as Map<String, dynamic>;
-}
-
-FormTemplateModel _templateModelFromJson(Map<String, dynamic> json) {
-  final normalized = _withTemplatePaths(json);
-  return FormTemplateModel(
-    id: normalized['uid'] as String? ?? normalized['id'] as String,
-    name: normalized['name'] as String,
-    code: normalized['code'] as String?,
-    label: normalized['label'] as Map<String, dynamic>?,
-    versionUid:
-        normalized['versionUid'] as String? ?? normalized['uid'] as String,
-    versionNumber: normalized['versionNumber'] as int? ?? 1,
-    fields: BuiltList<Template>(
-      (normalized['fields'] as List)
-          .cast<Map<String, dynamic>>()
-          .map(Template.fromJsonFactory),
-    ),
-    sections: BuiltList<Template>(
-      (normalized['sections'] as List)
-          .cast<Map<String, dynamic>>()
-          .map(Template.fromJsonFactory),
-    ),
-    options: BuiltList<FormOption>(),
-  );
-}
-
-Map<String, dynamic> _withTemplatePaths(Map<String, dynamic> json) {
-  final normalized = Map<String, dynamic>.from(json);
-  final sections = (json['sections'] as List)
-      .cast<Map<String, dynamic>>()
-      .map((section) => Map<String, dynamic>.from(section))
-      .toList();
-  final fields = (json['fields'] as List)
-      .cast<Map<String, dynamic>>()
-      .map((field) => Map<String, dynamic>.from(field))
-      .toList();
-
-  final sectionById = {
-    for (final section in sections) section['id'] as String: section,
-  };
-
-  String sectionPath(Map<String, dynamic> section) {
-    final existingPath = section['path'] as String?;
-    if (existingPath != null && existingPath.isNotEmpty) {
-      return existingPath;
-    }
-
-    final parentId = section['parent'] as String?;
-    final name = section['name'] as String;
-    if (parentId == null || !sectionById.containsKey(parentId)) {
-      return name;
-    }
-
-    return '${sectionPath(sectionById[parentId]!)}.$name';
-  }
-
-  for (final section in sections) {
-    section['path'] = sectionPath(section);
-  }
-
-  for (final field in fields) {
-    final parentId = field['parent'] as String?;
-    final name = field['name'] as String;
-    if (field['path'] == null && parentId != null) {
-      field['path'] = '${sectionPath(sectionById[parentId]!)}.$name';
-    }
-  }
-
-  normalized['sections'] = sections;
-  normalized['fields'] = fields;
-  return normalized;
 }
 
 Map<String, Object?> _withRepeatRows(

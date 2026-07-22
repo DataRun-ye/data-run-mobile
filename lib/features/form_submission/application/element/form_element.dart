@@ -13,12 +13,10 @@ import 'package:datarunmobile/core/form/rule/rule_parse_extension.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
-import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_state.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/rule.extension.dart';
-import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -59,14 +57,8 @@ sealed class FormElementInstance<T> {
   FormGroup form;
 
   bool _isEvaluating = false;
-  RuleEffectStateFactory ruleEffectStateFactory =
-      appLocator<RuleEffectStateFactory>();
 
   Iterable<RuleAction> get elementRuleActions => _template.ruleActions();
-
-  List<RuleAction> get inEffectRuleActions => elementRuleActions
-      .where((ruleAction) => ruleAction.evaluate(evalContext))
-      .toList();
 
   final Set<FormElementInstance<dynamic>> _dependents = Set();
   final Set<FormElementInstance<dynamic>> _resolvedDependencies = Set();
@@ -133,9 +125,6 @@ sealed class FormElementInstance<T> {
   }
 
   void updateValue(T? value, {bool updateParent = true, bool emitEvent = true});
-
-  @protected
-  bool allElementsHidden() => hidden;
 
   @protected
   void forEachChild(
@@ -264,16 +253,6 @@ sealed class FormElementInstance<T> {
     // }
   }
 
-  static final Set<String> _evaluationStack = {};
-
-  List<RuleAction> get effectiveRuleEffects {
-    final effectiveRules = elementRuleActions
-        .map((ruleAction) =>
-            ruleAction.copyWith(applyEffect: ruleAction.evaluate(evalContext)))
-        .toList();
-    return effectiveRules;
-  }
-
   void evaluate(
       {String? changedDependency,
       bool updateParent = true,
@@ -291,112 +270,76 @@ sealed class FormElementInstance<T> {
       return;
     }
 
-    _isEvaluating = true;
-
-    if (_evaluationStack.contains(name)) {
-      logError(
-          '_.${elementPath ?? 'root'}, evaluate, error: Circular dependency detected on.');
-      return;
-    }
-
-    _evaluationStack.add(name ?? 'root'); // Track current element
-
     try {
-      // final previousState = elementState;
-      for (var ruleAction in elementRuleActions) {
-        logDebug(
-            '3/4.$elementPath, evaluate, expression: ${ruleAction.expression}.');
-        logDebug(
-            '4/4.$elementPath, evaluate, result: ${ruleAction.evaluate(evalContext)}.');
-        ruleAction.evaluate(evalContext)
-            ? ruleAction.apply(
-                this,
-                emitEvent: emitEvent,
-                updateParent: updateParent,
-              )
-            : ruleAction.reset(
-                this,
-                emitEvent: emitEvent,
-                updateParent: updateParent,
-              );
-      }
+      _isEvaluating = true;
+      _evaluateRuleActions(
+        elementRuleActions,
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
     } catch (e) {
       logError('_.${elementPath ?? 'root'}, evaluate, error: $e.');
     } finally {
       _isEvaluating = false;
-      _evaluationStack.remove(name); // Remove from stack after evaluation
     }
-  }
-
-  FormElementState<T> _calculateStatus() {
-    logDebug('1/2.$elementPath, _calculateStatus: ${_getDebugState()}.');
-    // if (allElementsHidden()) {
-    //   logDebug('2/2.$elementPath, _calculateStatus, all hidden.');
-    //   return _elementState.copyWith(
-    //       hidden: true, errors: {}, mandatory: false, warning: '');
-    // }
-
-    final state = ruleEffectStateFactory.applyRuleEffects(
-        elementState: elementState, calcResult: effectiveRuleEffects);
-    return state;
   }
 
   String _getDebugState([FormElementState<T>? state]) =>
       'state(${(state ?? _elementState).hidden ? 'Hidden' : 'Visible'}), mandatory($mandatory)';
 
-  bool hasVisibilityRules() {
-    return effectiveRuleEffects.any((rule) => rule.action.isVisibility);
-  }
-
-  void decideState({
+  void restoreVisibilityAfterParentShown({
     bool updateParent = true,
     bool emitEvent = true,
   }) {
-    logDebug('1/3.$elementPath, updateValueAndValidity: ${_getDebugState()}.');
-    // _setInitialStatus();
-    if (hasVisibilityRules()) {
-      final state = _calculateStatus();
-      if (state.hidden) {
-        logDebug('3/3.$elementPath, updateValueAndValidity, Hide.');
-        markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
-        elementControl!
-            .reset(disabled: true, updateParent: false, emitEvent: false);
-      } else {
-        logDebug('3/3.$elementPath, updateValueAndValidity, Show.');
-        markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
-      }
-    } else {
+    final visibilityActions = elementRuleActions
+        .where((ruleAction) => ruleAction.action.isVisibility)
+        .toList();
+    if (visibilityActions.isEmpty) {
       markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+      return;
     }
-    // if (visible) {
-    //   logDebug(
-    //       '2/3.$elementPath, updateValueAndValidity, calculated: ${_getDebugState(state)}.');
-    //   markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
-    //   // if (state.hidden) {
-    //   //   logDebug('3/3.$elementPath, updateValueAndValidity, Hide.');
-    //   //   markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
-    //   // } else {
-    //   //   logDebug('3/3.$elementPath, updateValueAndValidity, Show.');
-    //   //   markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
-    //   // }
-    // }
-    //
-    // logDebug('2.$elementPath, updateValueAndValidity: ${_getDebugState()}.');
-    //
-    // if after `_calculateStatus()` it's became hidden
-    // (this fix the initial status of an element when loading the form
-    // if (hidden) {
-    //   _elementState = _elementState.copyWith(mandatory: false);
-    //   elementControl!.reset(disabled: true, emitEvent: emitEvent);
-    // } else {
-    //   // if after `_calculateStatus()` is still visible
-    //   _elementState = _elementState.copyWith(mandatory: _template.mandatory);
-    //   elementControl?.markAsEnabled(
-    //       emitEvent: emitEvent, updateParent: updateParent);
-    // }
 
-    // updateStatus(_elementState, emitEvent: emitEvent);
-    // _updateAncestors(state);
+    if (_isEvaluating) {
+      return;
+    }
+
+    try {
+      _isEvaluating = true;
+      _evaluateRuleActions(
+        visibilityActions,
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
+    } catch (e) {
+      logError(
+          '_.${elementPath ?? 'root'}, restoreVisibilityAfterParentShown, error: $e.');
+    } finally {
+      _isEvaluating = false;
+    }
+  }
+
+  void _evaluateRuleActions(
+    Iterable<RuleAction> ruleActions, {
+    required bool updateParent,
+    required bool emitEvent,
+  }) {
+    for (final ruleAction in ruleActions) {
+      logDebug(
+          '3/4.$elementPath, evaluate, expression: ${ruleAction.expression}.');
+      final applies = ruleAction.evaluate(evalContext);
+      logDebug('4/4.$elementPath, evaluate, result: $applies.');
+      applies
+          ? ruleAction.apply(
+              this,
+              emitEvent: emitEvent,
+              updateParent: updateParent,
+            )
+          : ruleAction.reset(
+              this,
+              emitEvent: emitEvent,
+              updateParent: updateParent,
+            );
+    }
   }
 
   List<String> get dependencies => template.dependencies;

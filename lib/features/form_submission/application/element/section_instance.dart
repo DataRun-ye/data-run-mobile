@@ -118,14 +118,6 @@ class Section extends SectionElement<Map<String, Object?>> {
   }
 
   @override
-  bool allElementsHidden() {
-    if (_elements.isEmpty) {
-      return false;
-    }
-    return _elements.values.every((element) => element.hidden);
-  }
-
-  @override
   Map<String, Object?>? reduceValue() {
     final map = <String, Object?>{};
     _elements.forEach((key, element) {
@@ -166,7 +158,8 @@ class Section extends SectionElement<Map<String, Object?>> {
     // should let children decide and only mark myself visible, may children decides their visibility
     super.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
     _elements.forEach((_, element) {
-      element.decideState(emitEvent: emitEvent, updateParent: updateParent);
+      element.restoreVisibilityAfterParentShown(
+          emitEvent: emitEvent, updateParent: updateParent);
     });
   }
 

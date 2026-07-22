@@ -11,7 +11,6 @@ import 'package:datarunmobile/database/shared/form_template_model.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
-import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,9 +25,7 @@ void main() {
       executor: NativeDatabase.memory(),
       userId: 'test-user',
     );
-    appLocator
-      ..registerSingleton<AppDatabase>(db)
-      ..registerFactory<RuleEffectStateFactory>(RuleEffectStateFactory.new);
+    appLocator.registerSingleton<AppDatabase>(db);
   });
 
   tearDown(() async {

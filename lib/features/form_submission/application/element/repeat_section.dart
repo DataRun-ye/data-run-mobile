@@ -208,14 +208,6 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
       _elements.forEach(callback);
 
   @override
-  bool allElementsHidden() {
-    if (_elements.isEmpty) {
-      return false;
-    }
-    return _elements.every((control) => control.hidden);
-  }
-
-  @override
   FormArray<Map<String, Object?>> get elementControl =>
       form.control(elementPath!) as FormArray<Map<String, Object?>>;
 

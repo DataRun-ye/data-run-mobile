@@ -8,7 +8,6 @@ import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/core/util/string_extension.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/dao/data_submissions_dao_expression_extension.dart';
-import 'package:datarunmobile/database/domain/filter.dart';
 import 'package:datarunmobile/database/extensions/data_submission.extension.dart';
 import 'package:datarunmobile/database/shared/d_identifiable_model.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
@@ -348,80 +347,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     });
   }
 
-  JoinedSelectStatement<HasResultSet, dynamic> getFilterQuery(
-      {Iterable<FilterCondition>? filters}) {
-    List<Expression<bool>> filterExpressions = [];
-    // Apply each filter
-    if (filters != null) {
-      for (final f in filters) {
-        filterExpressions.add(f.toExpression());
-      }
-    }
-
-    final JoinedSelectStatement<HasResultSet, dynamic> base =
-        select(dataInstances).join([
-      innerJoin(
-          assignments, assignments.id.equalsExp(dataInstances.assignment)),
-      innerJoin(orgUnits, assignments.orgUnit.equalsExp(orgUnits.id)),
-      innerJoin(formTemplateVersions,
-          formTemplateVersions.id.equalsExp(dataInstances.templateVersion)),
-      innerJoin(formTemplates,
-          formTemplates.id.equalsExp(formTemplateVersions.template)),
-    ]);
-
-    if (filterExpressions.isNotEmpty) {
-      base.where(Expression.and(filterExpressions));
-    }
-    return base;
-  }
-
-  Selectable<SubmissionSummary> selectSubmissions(
-    SubmissionsFilter filterModel, {
-    String? sortColumn,
-    bool sortAscending = true,
-    int page = 0,
-    int pageSize = 10,
-    Iterable<FilterCondition>? filters,
-  }) {
-    final effectiveFilters = [
-      FilterCondition.equals(dataInstances.formTemplate, filterModel.formId),
-      if (filterModel.assignmentId != null)
-        FilterCondition.equals(
-            dataInstances.assignment, filterModel.assignmentId!),
-      if (filterModel.syncStates.isNotEmpty)
-        FilterCondition.inList(dataInstances.syncState,
-            filterModel.syncStates.map((s) => s.name).toList()),
-      if (!filterModel.includeDeleted)
-        FilterCondition.equals(dataInstances.deleted, false),
-      if (filterModel.dateFilterBand != null)
-        FilterCondition.between(
-            dataInstances.createdDate,
-            getDateRangeFromBand(filterModel.dateFilterBand!).$1,
-            getDateRangeFromBand(filterModel.dateFilterBand!).$2),
-      ...?filters
-    ];
-
-    final query = getFilterQuery(filters: effectiveFilters);
-
-    // Apply sorting (if provided)
-    if (sortColumn != null) {
-      final col = table.$columns
-          .cast<GeneratedColumn>()
-          .firstWhere((c) => c.$name == sortColumn);
-      query.orderBy([
-        OrderingTerm(
-          expression: col,
-          mode: (sortAscending) ? OrderingMode.asc : OrderingMode.desc,
-        )
-      ]);
-    }
-
-    query.limit(pageSize, offset: page * pageSize);
-
-    return query
-        .map((row) => SubmissionSummary.fromDrift(row, attachedDatabase));
-  }
-
   $DataInstancesTable get table => dataInstances;
 
   // Helper method to calculate the date range based on the enum
@@ -473,11 +398,8 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
   Selectable<SubmissionSummary> selectable(
     SubmissionsFilter? filterModel, {
-    String? sortColumn,
-    bool sortAscending = true,
     int page = 0,
     int pageSize = 10,
-    Iterable<FilterCondition>? filters,
     bool paged = true,
   }) {
     final a = alias(assignments, 'a');
@@ -511,7 +433,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
     return query.map((TypedResult row) {
       final submission = row.readTable(dataInstances);
-      final orgUnit = row.readTable(ou);
       final form = row.readTable(f);
       final FormTemplateVersion formVersion = row.readTable(fv);
 
@@ -523,14 +444,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
             name: form.name,
             label: form.label,
           ),
-          versionNumber: form.versionNumber,
-          orgUnit: IdentifiableModel(
-            id: orgUnit.id,
-            code: orgUnit.code,
-            name: orgUnit.name,
-            label: orgUnit.label,
-          ),
-          submittedAt: submission.createdDate,
           syncStatus: submission.syncState,
           formVersionId: formVersion.id,
           createdDate: submission.createdDate,

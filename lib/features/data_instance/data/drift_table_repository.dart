@@ -1,9 +1,7 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/database/app_database.dart';
-import 'package:datarunmobile/database/domain/filter.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
-import 'package:datarunmobile/database/shared/submission_summary.dart';
 import 'package:datarunmobile/features/data_instance/data/table_repository.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/src/iset/iset.dart';
@@ -13,41 +11,6 @@ import 'package:injectable/injectable.dart';
 class DriftTableRepository implements TableRepository {
   final AppDatabase _db = appLocator<AppDatabase>();
   late final dao = _db.dataInstancesDao;
-
-  @override
-  Future<(Iterable<SubmissionSummary>, int)> getItems({
-    required int page,
-    required int pageSize,
-    Iterable<FilterCondition> filters = const [],
-    String? sortColumn,
-    bool sortAscending = true,
-  }) async {
-    // data
-    final items = await (dao.getFilterQuery(filters: filters)
-          ..limit(pageSize, offset: page * pageSize))
-        .get();
-
-    // Count
-    var countQuery = dao.getFilterQuery(filters: filters)
-      ..addColumns([countAll()]);
-
-    final totalCount =
-        await countQuery.map((row) => row.read(countAll()) ?? 0).getSingle();
-
-    return (
-      items.map((row) => SubmissionSummary.fromDrift(row, _db)).toList(),
-      totalCount
-    );
-  }
-
-  @override
-  Selectable<int> getTotalCount(
-      {Iterable<FilterCondition> filters = const []}) {
-    var countQuery = dao.getFilterQuery(filters: filters)
-      ..addColumns([countAll()]);
-
-    return countQuery.map((row) => row.read(countAll()) ?? 0);
-  }
 
   @override
   Future<int> delete(Iterable<String> ids) async {
@@ -66,12 +29,6 @@ class DriftTableRepository implements TableRepository {
         .get();
 
     return items;
-  }
-
-  @override
-  Future<void> bulkInsert(List<DataInstance> items) {
-    // TODO: implement bulkInsert
-    throw UnimplementedError();
   }
 
   @override

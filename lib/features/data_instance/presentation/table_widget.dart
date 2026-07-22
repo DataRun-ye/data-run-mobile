@@ -1,4 +1,3 @@
-import 'package:datarunmobile/database/domain/filter.dart';
 import 'package:datarunmobile/database/shared/form_template_model.dart';
 import 'package:datarunmobile/database/shared/submissions_filter.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -24,14 +23,12 @@ class PaginatedItemsTable extends ConsumerStatefulWidget {
     this.assignmentId,
     this.header,
     this.disabledCellColor,
-    this.filters = const IList.empty(),
   });
 
   final FormTemplateModel templateModel;
   final String? assignmentId;
   final Widget? header;
   final WidgetStateProperty<Color?>? disabledCellColor;
-  final IList<FilterCondition<Object>> filters;
 
   @override
   ConsumerState<PaginatedItemsTable> createState() =>

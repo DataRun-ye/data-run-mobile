@@ -4,8 +4,8 @@ import 'package:datarunmobile/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/data_instance/application/models.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
 import 'package:datarunmobile/features/data_instance/data/table_repository.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -58,7 +58,7 @@ Stream<int> totalItemsStream(Ref ref,
   final filter = ref.watch(dataInstanceFilterProvider(
       formId: templateFilter.formId,
       assignmentId: templateFilter.assignmentId));
-  return appLocator<FormInstanceService>()
+  return appLocator<SubmissionTableService>()
       .countByFilter(
         filter,
         // filters: filters,

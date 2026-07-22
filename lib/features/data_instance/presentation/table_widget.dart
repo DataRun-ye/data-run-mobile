@@ -4,10 +4,10 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/common/confirmation_service.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
 import 'package:datarunmobile/features/data_instance/presentation/paginated_table_source.dart';
 import 'package:datarunmobile/features/data_instance/presentation/table_columns_build_extension.dart';
-import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/gestures.dart';
@@ -133,7 +133,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
       formId: widget.templateModel.id,
       assignmentId: widget.assignmentId,
     ));
-    final result = await appLocator<FormInstanceService>().fetchByFilter(
+    final result = await appLocator<SubmissionTableService>().fetchByFilter(
       filter,
       page: pageIndex,
       pageSize: pageSize,
@@ -168,7 +168,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
       formId: widget.templateModel.id,
       assignmentId: widget.assignmentId,
     ));
-    final svc = appLocator<FormInstanceService>();
+    final svc = appLocator<SubmissionTableService>();
     final result = await svc.fetchByFilter(
       filter,
       page: pageIndex,

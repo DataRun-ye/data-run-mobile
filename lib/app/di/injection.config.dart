@@ -57,10 +57,6 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
     as _i54;
 import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart'
     as _i415;
-import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart'
-    as _i34;
-import 'package:datarunmobile/features/form_submission/application/form_instance_service_impl.dart'
-    as _i756;
 import 'package:datarunmobile/features/form_submission/application/form_metadata_service.dart'
     as _i747;
 import 'package:dio/dio.dart' as _i361;
@@ -107,7 +103,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i460.SharedPreferences>(),
       ));
-  gh.factory<_i34.FormInstanceService>(() => _i756.FormInstanceServiceImpl());
   gh.factory<_i760.FormTemplateListService>(() => _i760.FormTemplateListService(
       optionSetService: gh<_i158.OptionSetService>()));
   gh.factory<_i244.MapValueToDisplay>(

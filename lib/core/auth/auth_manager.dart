@@ -7,6 +7,7 @@ import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/db_factory/database_factory.dart';
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/di/init_active_session_scope.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_api.dart';
@@ -155,6 +156,9 @@ class AuthManager extends ChangeNotifier {
           logDebug('AppDatabase dispose');
           await appLocator<DatabaseFactory>().closeForUser(db.userId);
         });
+        getIt.registerFactory<SubmissionTableService>(
+          () => SubmissionTableService(getIt<AppDatabase>()),
+        );
       },
     );
 

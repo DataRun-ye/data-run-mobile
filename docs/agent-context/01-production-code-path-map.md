@@ -203,7 +203,7 @@ Observations only:
   - Active list/detail service: `lib/data/form_template_list_service.dart`.
   - Active DI service: `lib/features/form/application/form_template_service_impl.dart`.
   - Old/commented service: `lib/data/form_template_service.dart`.
-- Submission table reads now have one active path: `FormInstanceServiceImpl` fetches/counts paginated submissions through `DataInstancesDao.selectable/countSubmissions`. The uncalled alternate repository query API, generic filter framework, and duplicate `selectSubmissions/getFilterQuery` DAO path were removed. `DriftTableRepository` retains only selected-row delete/upload operations.
+- Submission table reads now have one active path: user-scoped `SubmissionTableService` fetches/counts paginated submissions through `DataInstancesDao.selectable/countSubmissions`. The uncalled alternate repository query API, generic filter framework, and duplicate `selectSubmissions/getFilterQuery` DAO path were removed. `DriftTableRepository` retains only selected-row delete/upload operations.
 - Submission list state overlaps:
   - `lib/features/form_submission/application/submission_list.provider.dart` manages form submissions and update/sync operations.
   - `lib/features/data_instance/application/table.providers.dart` and `table_controller.provider.dart` manage current table filters, selection, delete, and sync.

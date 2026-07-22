@@ -57,8 +57,6 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
     as _i54;
 import 'package:datarunmobile/features/form_submission/application/element/rule_effect_state_factory.dart'
     as _i415;
-import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart'
-    as _i342;
 import 'package:datarunmobile/features/form_submission/application/form_instance_service.dart'
     as _i34;
 import 'package:datarunmobile/features/form_submission/application/form_instance_service_impl.dart'
@@ -103,8 +101,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());
-  gh.lazySingleton<_i342.FieldContextRegistry>(
-      () => _i342.FieldContextRegistry());
   gh.factory<_i935.AssignmentService>(() => _i1027.AssignmentServiceImpl());
   gh.factory<_i258.FormTemplateService>(() => _i489.FormTemplateServiceImpl());
   gh.factory<_i550.StorageService>(() => sdkModule.getStorageService(

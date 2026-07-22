@@ -141,7 +141,6 @@ void main() {
     expect(repeatRow.parentSection, isNull);
     expect(nestedRow.parentSection, isNull);
     expect(instance.forElementMap, isEmpty);
-    expect(registry.getKey('details'), isNull);
   });
 }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_submission_screen.widget.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +14,14 @@ void main() {
 
   testWidgets('removing the form route closes its submission scope',
       (tester) async {
-    var disposed = false;
+    final registry = FieldContextRegistry();
+    registry.getOrCreateKey('field');
     await appLocator.pushNewScopeAsync(
       scopeName: 'submission-1',
       init: (getIt) async {
-        getIt.registerSingleton<_DisposableMarker>(
-          _DisposableMarker(),
-          dispose: (_) {
-            disposed = true;
-          },
+        getIt.registerSingleton<FieldContextRegistry>(
+          registry,
+          dispose: (registry) => registry.dispose(),
         );
       },
     );
@@ -47,8 +47,6 @@ void main() {
     await tester.pump();
 
     expect(appLocator.hasScope('submission-1'), isFalse);
-    expect(disposed, isTrue);
+    expect(registry.getKey('field'), isNull);
   });
 }
-
-class _DisposableMarker {}

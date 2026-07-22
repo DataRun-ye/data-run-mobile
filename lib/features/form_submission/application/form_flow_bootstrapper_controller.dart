@@ -61,6 +61,11 @@ class FormFlowBootstrapperController {
       await appLocator.pushNewScopeAsync(
         scopeName: dataInstance.id,
         init: (getIt) async {
+          final fieldContextRegistry =
+              getIt.registerSingleton<FieldContextRegistry>(
+            FieldContextRegistry(),
+            dispose: (registry) => registry.dispose(),
+          );
           final templateRepository =
               getIt.registerSingleton<FormTemplateRepository>(
             await FormTemplateRepository.create(
@@ -72,6 +77,7 @@ class FormFlowBootstrapperController {
             await _buildFormInstance(
               instance: dataInstance,
               templateRepository: templateRepository,
+              fieldContextRegistry: fieldContextRegistry,
             ),
             dispose: (instance) => instance.dispose(),
           );
@@ -97,6 +103,7 @@ class FormFlowBootstrapperController {
   Future<FormInstance> _buildFormInstance({
     required DataInstance instance,
     required FormTemplateRepository templateRepository,
+    required FieldContextRegistry fieldContextRegistry,
   }) async {
     final totalWatch = Stopwatch()..start();
     final Map<String, dynamic>? initialFormValue = instance.formData;
@@ -118,8 +125,6 @@ class FormFlowBootstrapperController {
       ),
     );
     controlWatch.stop();
-    final registry = appLocator<FieldContextRegistry>();
-
     final elementsWatch = Stopwatch()..start();
     final elements = FormElementBuilder.buildFormElements(
       form,
@@ -178,7 +183,7 @@ class FormFlowBootstrapperController {
       initialValue: {...?initialFormValue, ...attributeMap},
       elements: elements,
       formMetadata: formMetadata,
-      fieldKeysRegistery: registry,
+      fieldKeysRegistery: fieldContextRegistry,
       form: form,
       rootSection: formSection,
       formFlatTemplate: templateRepository,

@@ -8,7 +8,6 @@ import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/configure_form_completion_dialog.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
-import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_scope.dart';
 import 'package:datarunmobile/features/form_submission/application/submission_list.provider.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_entry_view_silver.widget.dart';
@@ -101,7 +100,6 @@ class _SubmissionTabScreenState extends ConsumerState<FormTabScreen> {
   @override
   void initState() {
     super.initState();
-    appLocator<FieldContextRegistry>().clear();
   }
 
   @override

@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:injectable/injectable.dart';
 
 /// Holds a map of elementPath → GlobalKey
-@lazySingleton
 class FieldContextRegistry {
   final Map<String, GlobalKey> _keys = {};
 
@@ -22,4 +20,6 @@ class FieldContextRegistry {
   void clear() {
     _keys.clear();
   }
+
+  void dispose() => clear();
 }

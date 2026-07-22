@@ -265,7 +265,6 @@ class FormInstance {
   }
 
   void onErrorTap(String elementPath) {
-    final registry = appLocator<FieldContextRegistry>();
     try {
       final SectionElement<dynamic>? elementParent =
           formSection.element(elementPath).parentSection;
@@ -274,7 +273,7 @@ class FormInstance {
       final elementPathToScrollTo = parentIsRepeat
           ? elementParent.parentSection!.elementPath!
           : elementPath;
-      final key = registry.getKey(elementPathToScrollTo);
+      final key = fieldKeysRegistery.getKey(elementPathToScrollTo);
       if (key?.currentContext != null) {
         Scrollable.ensureVisible(
           key!.currentContext!,
@@ -297,7 +296,6 @@ class FormInstance {
 
     _formSection.dispose();
     form.dispose();
-    fieldKeysRegistery.clear();
     _forElementMap.clear();
   }
 }

@@ -9,7 +9,7 @@ Scope: smallest practical executable baseline for behavior-preserving cleanup an
 | Area | Command | Status | Evidence / notes |
 | --- | --- | --- | --- |
 | Dependency resolution | `flutter pub get` | PASS | Root package resolves. Former `drun_sdk` dependencies are declared directly in the root package. |
-| Tests | `flutter test --no-pub` | PASS | All 31 current tests pass. They cover schema 3/4 to 5 migration, sync registration and status projection, repeat metadata/validation/metrics, submission completion/edit access/upload transitions, assignment ownership, managed-team/activity projection, and live sync-badge state. |
+| Tests | `flutter test --no-pub` | PASS | All 33 current tests pass. They cover schema 3/4 to 5 migration, sync registration and status projection, form-bootstrap guards/scope cleanup, repeat metadata/validation/metrics, submission completion/edit access/upload transitions, assignment ownership, managed-team/activity projection, and live sync-badge state. |
 | Static analysis | `flutter analyze --no-pub` | NO ERRORS; LINT DEBT | Reports 110 existing warning/info findings after the current ownership cleanup. Most were previously hidden under the nested SDK analyzer boundary and became visible after consolidation. Do not increase this count; clean it in bounded ownership slices rather than mixing it into mechanical moves. |
 | Debug Android build | `flutter build apk --debug --no-pub` | PASS | Produces `build/app/outputs/flutter-apk/app-debug.apk`. Java source/target 8 deprecation warnings remain. |
 | Code generation | `dart run build_runner build` | PASS, EXPENSIVE | Full generation passed after consolidation and took about eight minutes. It still warns that `FormMetadataService` depends on unregistered `AndroidDeviceInfoService`. Review generated diffs intentionally. |
@@ -27,7 +27,7 @@ Scope: smallest practical executable baseline for behavior-preserving cleanup an
 
 ## Known Limits
 
-- The 31 tests are targeted characterization checks, not broad product coverage.
+- The 33 tests are targeted characterization checks, not broad product coverage.
 - Large-repeat metrics are deterministic harness measurements, not proof of behavior on slower field devices.
 - Login/config sync, form entry, local save, and submission upload still require production-style smoke checks for changes crossing those boundaries.
 - The analyzer is not yet a green gate because inherited lint debt remains, but analyzer errors or new warnings are regressions.

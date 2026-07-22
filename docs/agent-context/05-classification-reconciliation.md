@@ -59,7 +59,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | `repeat_instances` table | Previously LEGACY-RISK | OBSOLETE-REMOVED | DAO/datasource/table are removed; migration 5 preserves repeats in nested submission JSON. |
 | `metadata_submissions` and `systemMetadataSubmissionsProvider` | Inactive/incomplete in `01`/`03`, incomplete in `04` | INCOMPLETE | The comment-only SDK table/datasource artifacts were removed. Reference widgets can still watch the provider, but it currently returns `[]` after commented DB logic. Production use depends on forms containing `ValueType.Reference`. |
 | `partyResolverProvider` and party/manifest tables | Mixed/uncertain in early scans | OBSOLETE-REMOVED | The placeholder provider, DI services, and schema declarations had no production consumer and were removed without dropping unknown tables from existing databases. |
-| Form route/load/save/repeat core in `02` | ACTIVE | ACTIVE | `FormFlowBootstrapperVm`, `FormTemplateRepository`, `FormElementControlBuilder`, `FormElementBuilder`, `FormInstance`, repeat models/widgets, and `DataInstancesDao.updateData` pass the strict test. |
+| Form route/load/save/repeat core in `02` | ACTIVE | ACTIVE | `FormFlowBootstrapperController`, `FormTemplateRepository`, `FormElementControlBuilder`, `FormElementBuilder`, `FormInstance`, repeat models/widgets, and `DataInstancesDao.updateData` pass the strict test. |
 | Form summary utilities | ACTIVE in `02` | ACTIVE | `FormDataUtil`/`FormDataAggregator` are active through submission table summaries, but not part of form load/save/repeat persistence. |
 | `CodeGenerator` | ACTIVE in `02` | ACTIVE | Active for submission IDs and referenced by old repeat UID UI code. Backend validation later proved mobile should write repeat metadata, not `repeatUid`; see `07-repeat-uid-contract.md`. |
 | Example/debug `main()` functions inside helper files | Mentioned as examples | INACTIVE | Files like date-time demos or aggregator examples are not production entrypoints unless imported by `lib/main.dart` or routed production paths. |
@@ -107,7 +107,7 @@ Assignment/form access and listing:
 
 Form/repeat/save:
 
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart`
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart`
 - `lib/data/form_template_repository.dart`
 - `lib/core/form/builder/form_element_control_builder.dart`
 - `lib/core/form/builder/form_element_builder.dart`

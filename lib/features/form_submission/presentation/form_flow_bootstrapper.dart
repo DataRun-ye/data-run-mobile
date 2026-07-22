@@ -1,11 +1,9 @@
+import 'package:datarunmobile/features/form_submission/application/form_flow_bootstrapper_controller.dart';
 import 'package:datarunmobile/features/common_ui_element/common/ui_helpers.dart';
-import 'package:datarunmobile/features/form_submission/presentation/form_flow_bootstrapper_vm.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:stacked/stacked.dart';
 
-class FormFlowBootstrapper extends StackedView<FormFlowBootstrapperVm> {
+class FormFlowBootstrapper extends StatefulWidget {
   const FormFlowBootstrapper({
     Key? key,
     this.submissionId,
@@ -19,13 +17,40 @@ class FormFlowBootstrapper extends StackedView<FormFlowBootstrapperVm> {
   final String? submissionId;
 
   @override
-  Widget builder(
-    BuildContext context,
-    FormFlowBootstrapperVm viewModel,
-    Widget? child,
-  ) {
+  State<FormFlowBootstrapper> createState() => _FormFlowBootstrapperState();
+}
+
+class _FormFlowBootstrapperState extends State<FormFlowBootstrapper> {
+  late final FormFlowBootstrapperController _controller =
+      FormFlowBootstrapperController(
+    formId: widget.formId,
+    versionId: widget.versionId,
+    assignmentId: widget.assignmentId,
+  );
+  Object? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _bootstrap();
+    });
+  }
+
+  Future<void> _bootstrap() async {
+    try {
+      await _controller.bootstrapFlow(widget.submissionId);
+    } catch (error) {
+      if (mounted) {
+        setState(() => _error = error);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final message = submissionId == null
+    final message = widget.submissionId == null
         ? S.of(context).draftDataInstance
         : S.of(context).initializingDataInstance;
     return Scaffold(
@@ -38,11 +63,8 @@ class FormFlowBootstrapper extends StackedView<FormFlowBootstrapperVm> {
                 '${message}...',
                 overflow: TextOverflow.ellipsis,
               ),
-              if (viewModel.hasError)
-                Text(
-                  '${viewModel.modelError.toString()}...'
-                ),
-              SizedBox(
+              if (_error != null) Text('${_error.toString()}...'),
+              const SizedBox(
                 width: 2,
               ),
               Row(
@@ -68,19 +90,4 @@ class FormFlowBootstrapper extends StackedView<FormFlowBootstrapperVm> {
       ),
     );
   }
-
-  @override
-  FormFlowBootstrapperVm viewModelBuilder(
-    BuildContext context,
-  ) =>
-      FormFlowBootstrapperVm(
-        formId: formId,
-        versionId: versionId,
-        assignmentId: assignmentId,
-      );
-
-  @override
-  void onViewModelReady(FormFlowBootstrapperVm viewModel) =>
-      SchedulerBinding.instance.addPostFrameCallback(
-          (timeStamp) => viewModel.bootstrapFlow(submissionId));
 }

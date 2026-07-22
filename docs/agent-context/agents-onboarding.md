@@ -37,7 +37,7 @@ Do not assign ownership based on a file's former package location. First prove t
 
 ## Known Messy Areas
 
-- Riverpod, Stacked viewmodels, GetIt scopes, `reactive_forms`, `ChangeNotifier`, generated injectable registrations, and generated providers coexist.
+- Riverpod, GetIt scopes, `reactive_forms`, `ChangeNotifier`, generated injectable registrations/providers, and Stacked routing/services coexist. Hand-written Stacked viewmodels have been removed, but Stacked is still the active generated navigation mechanism.
 - Form state is not owned by one clean system.
 - Generated files are significant and can be stale or noisy.
 - There are old form-state, form-value, sync, data-value, repeat-instance, and metadata-submission paths that are not proven active for current form capture.
@@ -62,7 +62,7 @@ Read these before touching related areas:
 Current active form entry/edit flow:
 
 1. Form open/create routes go through Stacked navigation into `FormFlowBootstrapper`.
-2. `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` creates or loads a `DataInstance`.
+2. `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` creates or loads a `DataInstance`.
 3. It creates a per-submission GetIt scope.
 4. It registers a `FormTemplateRepository`.
 5. It builds the full `reactive_forms` `FormGroup` through `FormElementControlBuilder`.
@@ -78,7 +78,7 @@ Current active form entry/edit flow:
 
 Core active files:
 
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart`
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart`
 - `lib/data/form_template_repository.dart`
 - `lib/core/form/builder/form_element_control_builder.dart`
 - `lib/core/form/builder/form_element_builder.dart`

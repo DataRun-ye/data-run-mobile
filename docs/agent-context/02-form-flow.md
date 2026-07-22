@@ -24,12 +24,12 @@ Status legend:
 | Create/edit navigation from table | ACTIVE | `lib/features/data_instance/presentation/table_screen.dart` | New submission action calls `navigateToFormFlowBootstrapper` at line 93. | High | This is the active create path into form loading. Large repeat defaults would be loaded from this path if a draft already has form data. |
 | Edit navigation from table rows | ACTIVE | `lib/features/data_instance/presentation/table_widget.dart` | Existing row edit calls `navigateToFormFlowBootstrapper` with `submissionId`, `formId`, `versionId`, and `assignmentId` at line 62. | High | This is a direct server/draft edit path into repeat rendering. It determines whether existing `formData` rows get rebuilt. |
 | Assignment detail create path | ACTIVE | `lib/features/assignment_detail/presentation/assignment_detail_page.dart` | Calls `navigateToFormFlowBootstrapper` at line 140. | High | Confirms active production flow can create submissions without going through only the data instance table screen. |
-| Bootstrapper view | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper.dart` | Stacked view creates `FormFlowBootstrapperVm` at lines 73-80 and calls `bootstrapFlow(submissionId)` at line 83. | High | The bootstrapper is the hard boundary where the form instance scope is created. |
-| Draft/load bootstrap logic | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` | `createDraft` is called for new submissions at line 47; existing submissions are loaded with `_db.dataInstances.findById(submissionId).getSingle()` at line 54. | High | Existing server-submitted records and local drafts converge here before the full form tree is built. |
-| Per-submission DI scope | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` | Pushes a GetIt scope named by `dataInstance.id` at line 60 and registers `FormTemplateRepository`/`FormInstance` at lines 63-68. | High | Repeat state is held in a scoped in-memory `FormInstance`; stale scopes or scope lifetime bugs can affect edit/save behavior. |
-| Template JSON load | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` | Calls `FormTemplateRepository.create(versionUid: dataInstance.templateVersion)` at line 65. | High | The active flow loads one template version as a whole before rendering; no lazy section/repeat load was found. |
-| Form controls build | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` | Creates full `FormGroup` from `FormElementControlBuilder.formDataControls(...)` at line 103. | High | For 200-300 repeat rows, all repeat row controls are allocated up front. |
-| Form element tree build | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart` | Calls `FormElementBuilder.buildFormElements(...)` at line 107, wraps it in a root `Section`, then calls `resolveDependencies()` and `evaluate(emitEvent: false)` before navigation. | High | Repeat trees, dependencies, and initial rule evaluation are all eager. |
+| Bootstrapper view | ACTIVE | `lib/features/form_submission/presentation/form_flow_bootstrapper.dart` | The routed stateful loading view invokes `FormFlowBootstrapperController.bootstrapFlow(submissionId)` after its first frame and displays bootstrap errors. | High | The bootstrapper is the hard boundary where the form instance scope is created. |
+| Draft/load bootstrap logic | ACTIVE | `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` | `createDraft` is called for new submissions; existing submissions are loaded through `dataInstancesDao.getById(submissionId)`. | High | Existing server-submitted records and local drafts converge here before the full form tree is built. |
+| Per-submission DI scope | ACTIVE | `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` | Pushes a GetIt scope named by `dataInstance.id` and registers `FormTemplateRepository`/`FormInstance`. | High | Repeat state is held in a scoped in-memory `FormInstance`; stale scopes or scope lifetime bugs can affect edit/save behavior. |
+| Template JSON load | ACTIVE | `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` | Calls `FormTemplateRepository.create(versionUid: dataInstance.templateVersion)`. | High | The active flow loads one template version as a whole before rendering; no lazy section/repeat load was found. |
+| Form controls build | ACTIVE | `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` | Creates the full `FormGroup` from `FormElementControlBuilder.formDataControls(...)`. | High | For 200-300 repeat rows, all repeat row controls are allocated up front. |
+| Form element tree build | ACTIVE | `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` | Calls `FormElementBuilder.buildFormElements(...)`, wraps it in a root `Section`, then calls `resolveDependencies()` and `evaluate(emitEvent: false)` before navigation. | High | Repeat trees, dependencies, and initial rule evaluation are all eager. |
 | Form template repository | ACTIVE | `lib/data/form_template_repository.dart` | `create` loads template, options, and option sets at lines 18-27; `rootSection` builds a tree from template fields and sections. | High | Template flattening/tree construction is central to repeat path names and dependency lookup. |
 | Template local query service | ACTIVE | `lib/data/form_template_list_service.dart` | `fetchByFilter` uses `formTemplateVersionsDao.selectFormTemplatesWithRefs(...)` at line 154; `getTemplateByVersionOrLatest` loads version data at lines 166-197. | High | This is the active local cache layer for form JSON before rendering. |
 | Template storage table | ACTIVE | `lib/database/tables/form_template_versions.table.dart` | Stores `fields`, `sections`, and `options` as text columns with converters. | High | Confirms active form definition is stored as JSON-like blobs, not normalized per field table reads at render time. |
@@ -110,7 +110,7 @@ Active path:
 1. A locally created submission is uploaded through `SubmissionUploadService.upload()`; the DAO retains all local persistence and sync-state transitions.
 2. A successful upload leaves the local row in `synced` state with `isToUpdate: true`.
 3. Edit routes load that existing local `DataInstance` by `submissionId`.
-4. `FormFlowBootstrapperVm` builds the form from existing `instance.formData`.
+4. `FormFlowBootstrapperController` builds the form from existing `instance.formData`.
 5. `FormSubmissionScreen` checks `submissionEditStatusProvider`.
 6. `FormInstance.saveFormData()` writes the edited whole JSON back through `dataInstancesDao.updateData`.
 7. `markSubmissionAsFinal()` makes it eligible for another upload.
@@ -156,7 +156,7 @@ Inactive or not active for capture:
 
 Treat these as the minimum "do not touch until understood" set for repeat performance or repeat UID work:
 
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart`
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart`
 - `lib/core/form/builder/form_element_control_builder.dart`
 - `lib/core/form/builder/form_element_builder.dart`
 - `lib/features/form_submission/application/element/form_instance.dart`

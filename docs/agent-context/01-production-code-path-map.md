@@ -25,10 +25,10 @@ Active:
 - `lib/main.dart:101` defines `App extends ConsumerWidget`.
 - `lib/main.dart:174` uses `StackedRouter().onGenerateRoute`.
 - `lib/main.dart:180` sets `Routes.splashView` as the initial route.
-- `lib/app/stacked/app.dart:19-29` registers current Stacked routes: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `AssignmentScreen`, `EditRowScreen`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`.
+- `lib/app/stacked/app.dart:19-29` registers current Stacked routes: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `EditRowScreen`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`.
 - `lib/features/startup/application/startup_coordinator.dart` routes authenticated users to sync or home, and unauthenticated users to login.
 - `lib/features/home/presentation/home_wrapper_page.dart:19` shows `ActivityListView` as the home body.
-- `lib/features/activity/presentation/activity_list_view.dart:38` opens `AssignmentScreen` from an activity card.
+- `lib/features/activity/presentation/activity_list_view.dart` opens `AssignmentScreen` from an activity card through a direct Flutter `MaterialPageRoute`; it is active but not in the generated Stacked route list.
 
 Obsolete-looking or inactive:
 
@@ -68,18 +68,18 @@ Active evidence:
 
 - `lib/features/data_instance/presentation/table_screen.dart:93` creates a new submission by navigating to `FormFlowBootstrapper`.
 - `lib/features/data_instance/presentation/table_widget.dart:62` edits an existing item by navigating to `FormFlowBootstrapper` with `submissionId`, `formId`, `versionId`, and `assignmentId`.
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:47` creates a draft via `_db.dataInstancesDao.createDraft(...)` when `submissionId == null`.
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:60-68` pushes a GetIt scope for the submission and registers `FormTemplateRepository` plus `FormInstance`.
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:65` loads template data through `FormTemplateRepository.create(versionUid: dataInstance.templateVersion)`.
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` creates a draft via `_db.dataInstancesDao.createDraft(...)` when `submissionId == null`.
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` pushes a GetIt scope for the submission and registers `FormTemplateRepository` plus `FormInstance`.
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` loads template data through `FormTemplateRepository.create(versionUid: dataInstance.templateVersion)`.
 - `lib/data/form_template_repository.dart:21-27` loads `FormTemplateModel`, options, and option sets.
 - `lib/data/form_template_list_service.dart:154` fetches form templates through `formTemplateVersionsDao.selectFormTemplatesWithRefs(...)`.
 - `lib/data/form_template_list_service.dart:166-197` loads a specific/latest `FormTemplateVersion` with `fields`, `sections`, and merged options.
 - `lib/database/tables/form_template_versions.table.dart:11-17` stores `fields`, `sections`, and `options` as converted text columns. This is the active "form JSON all at once" source.
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:103` builds the full `FormGroup`.
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` builds the full `FormGroup`.
 - `lib/core/form/builder/form_element_control_builder.dart:51` creates repeat sections as full `FormArray` instances from the entire initial repeat list.
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:107` builds all form element instances.
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` builds all form element instances.
 - `lib/core/form/builder/form_element_builder.dart:79` builds a `RepeatSection` with all initial repeat rows.
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:72` routes into `FormSubmissionScreen`.
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` routes into `FormSubmissionScreen`.
 
 Active sync source for template JSON:
 
@@ -152,18 +152,16 @@ Active:
 - Stacked:
   - `lib/app/stacked/app.dart:19-29` defines Stacked routes.
   - The generated Stacked router and navigation/dialog services remain active.
-  - `lib/features/form_submission/presentation/form_flow_bootstrapper.dart` is the remaining `StackedView`.
-  - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:21` uses `BaseViewModel`.
-  - Startup, login, settings, activity loading, sync badges, and configuration-sync presentation state no longer use Stacked viewmodels.
+  - No hand-written active screen now extends `StackedView` or a Stacked viewmodel; routed widgets remain registered through the generated router.
 - Configuration sync presentation:
   - `lib/features/sync/application/sync_resources.controller.dart` subscribes to `SyncManager.progressStream`, projects per-resource/global status through an auto-dispose Riverpod notifier, records completion metadata, and navigates home.
 - GetIt/Stacked locator:
   - `lib/app/di/injection.dart` sets `appLocator`.
   - `lib/core/auth/auth_manager.dart:144-163` manages per-user database scope.
-  - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:60-68` manages per-submission scope.
+  - `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` manages per-submission scope.
   - Active form widgets repeatedly read `appLocator<FormInstance>()`.
 - Reactive Forms:
-  - `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:103` creates the root `FormGroup`.
+  - `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` creates the root `FormGroup`.
   - `lib/core/form/builder/form_element_control_builder.dart:51` creates repeat `FormArray`s.
   - Field widgets and row edit screens use `ReactiveForm` and `ReactiveFormField`.
 - RxDart/streams:
@@ -199,7 +197,7 @@ Observations only:
   - `lib/database/shared/form_template_model.dart:22,33` builds a tree in `FormTemplateModel`.
   - `lib/data/form_template_repository.dart:53,101` builds another tree/cache for runtime rendering.
 - Form instance construction appears duplicated:
-  - Active: `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart:103-127`.
+  - Active: `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart`.
   - The commented old Riverpod construction path was removed.
 - Template services overlap:
   - Active list/detail service: `lib/data/form_template_list_service.dart`.
@@ -275,7 +273,7 @@ Treat these as high-risk files until the active paths above are fully understood
 - `lib/core/form/builder/form_element_control_builder.dart`
 - `lib/core/form/builder/form_element_builder.dart`
 - `lib/features/form_submission/presentation/form_flow_bootstrapper.dart`
-- `lib/features/form_submission/presentation/form_flow_bootstrapper_vm.dart`
+- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart`
 - `lib/features/form_submission/presentation/form_submission_screen.widget.dart`
 - `lib/features/form_submission/application/element/form_instance.dart`
 - `lib/features/form_submission/application/element/form_element.dart`
@@ -305,7 +303,7 @@ Run a focused runtime trace on one real example form with a large repeat section
 
 1. Seed or load a submission with 200-300 repeat rows from `example/`.
 2. Instrument only timings and sizes around:
-   - `FormFlowBootstrapperVm.bootstrapFlow`
+   - `FormFlowBootstrapperController.bootstrapFlow`
    - `FormElementControlBuilder.formDataControls`
    - `FormElementBuilder.buildFormElements`
    - `Section.resolveDependencies`

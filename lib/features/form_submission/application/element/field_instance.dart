@@ -24,20 +24,10 @@ class FieldInstance<T> extends FormElementInstance<T> {
 
   dynamic get defaultValue => template.defaultValue;
 
-  List<String> get filterDependencies => [...template.filterDependencies];
-
-  List<String> get filterExpressionDependencies => [
-        ...?choiceFilter?.options
-            .expand((o) => o.filterExpressionDependencies)
-            .toSet()
-      ];
-
-  List<String> get dependencies => [
+  List<String> get dependencies => {
         ...template.dependencies,
-        // if (filterExpressionDependencies.isNotEmpty)
-        //   ...filterExpressionDependencies,
-        // if (filterExpressionDependencies.isEmpty) ...filterDependencies
-      ];
+        ...?choiceFilter?.dependencies,
+      }.toList();
 
   Object? _lastNotifiedControlValue = _uninitializedControlValue;
   static final Object _uninitializedControlValue = Object();
@@ -99,9 +89,7 @@ class FieldInstance<T> extends FormElementInstance<T> {
         changedDependency: changedDependency,
         updateParent: updateParent,
         emitEvent: emitEvent);
-    if (filterExpressionDependencies.isNotEmpty) {
-      _applyChoiceFilter(updateParent: updateParent, emitEvent: emitEvent);
-    } else if (choiceFilter?.expression != null) {
+    if (choiceFilter?.hasFilters == true) {
       _applyChoiceFilter(updateParent: updateParent, emitEvent: emitEvent);
     }
   }

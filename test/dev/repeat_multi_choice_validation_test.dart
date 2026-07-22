@@ -71,6 +71,162 @@ void main() {
     expect(field.value, ['choice-a']);
   });
 
+  test('choice filters react when their source control changes', () {
+    final optionA = _option(code: 'choice-a', name: 'Choice A');
+    final optionB = _option(code: 'choice-b', name: 'Choice B');
+    final sourceControl = FormControl<String>(value: 'choice-a');
+    final choicesControl = FormControl<List<String>>(value: ['choice-a']);
+    final form = FormGroup({
+      'source': sourceControl,
+      'choices': choicesControl,
+    });
+    final source = FieldInstance<String>(
+      form: form,
+      template: FieldTemplate(
+        id: 'source-id',
+        name: 'source',
+        type: ValueType.SelectOne,
+      ),
+      elementProperties: FieldElementState<String>(),
+    );
+    final choices = FieldInstance<List<String>>(
+      form: form,
+      template: FieldTemplate(
+        id: 'choices-id',
+        name: 'choices',
+        type: ValueType.SelectMulti,
+      ),
+      choiceFilter: ChoiceFilter(
+        expression: '#{source} == code',
+        options: [optionA, optionB],
+      ),
+      elementProperties: FieldElementState<List<String>>(
+        visibleOptions: [optionA, optionB],
+      ),
+    );
+    final root = Section(
+      form: form,
+      template: SectionTemplate(id: 'root-id', path: ''),
+      elements: {
+        'source': source,
+        'choices': choices,
+      },
+    )
+      ..bindControlReferences()
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+
+    expect(choices.visibleOption, [optionA]);
+    expect(choices.value, ['choice-a']);
+
+    sourceControl.updateValue('choice-b', emitEvent: false);
+    source.handleControlValueChanged('choice-b');
+
+    expect(choices.visibleOption, [optionB]);
+    expect(choices.value, isEmpty);
+    root.dispose();
+  });
+
+  test('options without an option filter remain visible', () {
+    final filteredOption = _option(
+      code: 'filtered',
+      name: 'Filtered',
+      filterExpression: "#{source} == 'yes'",
+    );
+    final unfilteredOption = _option(code: 'unfiltered', name: 'Unfiltered');
+    final filter = ChoiceFilter(
+      expression: null,
+      options: [filteredOption, unfilteredOption],
+    );
+
+    expect(filter.dependencies, ['source']);
+    expect(filter.evaluate({'source': 'no'}), [unfilteredOption]);
+    expect(
+      filter.evaluate({'source': 'yes'}),
+      [filteredOption, unfilteredOption],
+    );
+  });
+
+  test('same-named repeat fields filter within their own row', () {
+    final optionA = _option(code: 'choice-a', name: 'Choice A');
+    final optionB = _option(code: 'choice-b', name: 'Choice B');
+    final repeatTemplate = SectionTemplate(
+      id: 'items-id',
+      path: 'items',
+      name: 'items',
+      repeatable: true,
+    );
+    final sourceTemplate = FieldTemplate(
+      id: 'source-id',
+      parent: repeatTemplate.id,
+      path: 'items.source',
+      name: 'source',
+      type: ValueType.SelectOne,
+    );
+    final choicesTemplate = FieldTemplate(
+      id: 'choices-id',
+      parent: repeatTemplate.id,
+      path: 'items.choices',
+      name: 'choices',
+      type: ValueType.SelectMulti,
+    );
+    final form = FormGroup({
+      'items': FormArray<Map<String, Object?>>([
+        FormGroup({
+          'source': FormControl<String>(value: 'choice-a'),
+          'choices': FormControl<List<String>>(value: ['choice-a']),
+        }),
+        FormGroup({
+          'source': FormControl<String>(value: 'choice-b'),
+          'choices': FormControl<List<String>>(value: ['choice-b']),
+        }),
+      ]),
+    });
+    final firstRow = _repeatChoiceRow(
+      form: form,
+      repeatTemplate: repeatTemplate,
+      sourceTemplate: sourceTemplate,
+      choicesTemplate: choicesTemplate,
+      options: [optionA, optionB],
+    );
+    final secondRow = _repeatChoiceRow(
+      form: form,
+      repeatTemplate: repeatTemplate,
+      sourceTemplate: sourceTemplate,
+      choicesTemplate: choicesTemplate,
+      options: [optionA, optionB],
+    );
+    final repeat = RepeatSection(
+      template: repeatTemplate,
+      form: form,
+      elements: [firstRow, secondRow],
+    );
+    final root = Section(
+      form: form,
+      template: SectionTemplate(id: 'root-id', path: ''),
+      elements: {'items': repeat},
+    )
+      ..bindControlReferences()
+      ..resolveDependencies()
+      ..evaluate(emitEvent: false);
+    final firstChoices =
+        firstRow.element('choices') as FieldInstance<List<String>>;
+    final secondChoices =
+        secondRow.element('choices') as FieldInstance<List<String>>;
+
+    expect(firstChoices.visibleOption, [optionA]);
+    expect(secondChoices.visibleOption, [optionB]);
+
+    final firstSource = firstRow.element('source') as FieldInstance<String>;
+    firstSource.elementControl.updateValue('choice-b', emitEvent: false);
+    firstSource.handleControlValueChanged('choice-b');
+
+    expect(firstChoices.visibleOption, [optionB]);
+    expect(secondChoices.visibleOption, [optionB]);
+    expect(secondChoices.value, ['choice-b']);
+    root.dispose();
+  });
+
   test('legacy names and translated labels reopen as canonical option codes',
       () {
     final optionA = _option(
@@ -94,10 +250,42 @@ void main() {
   });
 }
 
+RepeatItemInstance _repeatChoiceRow({
+  required FormGroup form,
+  required SectionTemplate repeatTemplate,
+  required FieldTemplate sourceTemplate,
+  required FieldTemplate choicesTemplate,
+  required List<FormOption> options,
+}) {
+  return RepeatItemInstance(
+    template: repeatTemplate,
+    form: form,
+    elements: {
+      'source': FieldInstance<String>(
+        form: form,
+        template: sourceTemplate,
+        elementProperties: FieldElementState<String>(),
+      ),
+      'choices': FieldInstance<List<String>>(
+        form: form,
+        template: choicesTemplate,
+        choiceFilter: ChoiceFilter(
+          expression: '#{source} == code',
+          options: options,
+        ),
+        elementProperties: FieldElementState<List<String>>(
+          visibleOptions: options,
+        ),
+      ),
+    },
+  );
+}
+
 FormOption _option({
   required String code,
   required String name,
   Map<String, dynamic> label = const {},
+  String? filterExpression,
 }) {
   return FormOption(
     id: '$code-id',
@@ -106,6 +294,7 @@ FormOption _option({
     name: name,
     label: label,
     order: 0,
+    filterExpression: filterExpression,
   );
 }
 

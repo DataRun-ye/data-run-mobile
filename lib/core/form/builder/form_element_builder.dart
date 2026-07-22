@@ -169,7 +169,7 @@ class FormElementBuilder {
           form: rootFormControl,
           choiceFilter: elementTemplate.choiceFilter != null
               ? ChoiceFilter(
-                  expression: elementTemplate.evalChoiceFilterExpression,
+                  expression: elementTemplate.choiceFilter,
                   options: formFlatTemplate
                           .optionMap[elementTemplate.optionSet!]
                           ?.toList() ??
@@ -189,7 +189,7 @@ class FormElementBuilder {
             form: rootFormControl,
             choiceFilter: elementTemplate.choiceFilter != null
                 ? ChoiceFilter(
-                    expression: elementTemplate.evalChoiceFilterExpression,
+                    expression: elementTemplate.choiceFilter,
                     options: formFlatTemplate
                             .optionMap[elementTemplate.optionSet!]
                             ?.toList() ??

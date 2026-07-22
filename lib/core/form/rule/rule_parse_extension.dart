@@ -31,27 +31,6 @@ extension FieldTemplateDependencies on Template {
     return visibilityRules.toSet().toList();
   }
 
-  /// from the choiceFilter expression
-  List<String> get filterDependencies {
-    List<String> dependencyList = [];
-    final fieldPattern = RegExp(r'#\{(.*?)\}');
-
-    if (type?.isSelectType == true) {
-      if ((this as FieldTemplate).choiceFilter != null &&
-          (this as FieldTemplate).choiceFilter!.isNotEmpty) {
-        final filterDependencies = fieldPattern
-            .allMatches((this as FieldTemplate).choiceFilter!)
-            .map((match) => match.group(1)!)
-            .toList();
-        dependencyList.addAll(filterDependencies);
-      } else {}
-
-      return dependencyList.toSet().toList();
-    }
-
-    return [];
-  }
-
   List<String> get calculationDependencies {
     List<String> dependencyList = [];
     final fieldPattern = RegExp(r'#\{(.*?)\}');
@@ -75,17 +54,7 @@ extension FieldTemplateDependencies on Template {
   String? get calculationExpression {
     return (this as FieldTemplate)
         .calculation
-        ?.replaceAll("#{", "")
-        .replaceAll("}", "");
-  }
-
-  String? get evalChoiceFilterExpression {
-    if (this.type?.isSelectType == true) {
-      return (this as FieldTemplate)
-          .choiceFilter
-          ?.replaceAll("#{", "")
-          .replaceAll("}", "");
-    }
-    return null;
+        ?.replaceAll('#{', '')
+        .replaceAll('}', '');
   }
 }

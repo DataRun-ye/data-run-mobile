@@ -212,6 +212,36 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
       form.control(elementPath!) as FormArray<Map<String, Object?>>;
 
   @override
+  void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
+    if (!hidden) {
+      super.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+    }
+    for (final element in _elements) {
+      element.markAsHidden(
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
+    }
+  }
+
+  @override
+  void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
+    if (visible) {
+      return;
+    }
+    super.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+    if (hidden) {
+      return;
+    }
+    for (final element in _elements) {
+      element.restoreVisibilityAfterParentShown(
+        updateParent: updateParent,
+        emitEvent: emitEvent,
+      );
+    }
+  }
+
+  @override
   void dispose() {
     forEachChild((element) {
       element.dispose();

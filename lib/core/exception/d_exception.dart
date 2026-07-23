@@ -29,7 +29,8 @@ class DException implements Exception {
 
     Object? source = this.cause;
     if (source is String) {
-      description += "(source: '${source.substring(0, 50)}')";
+      final preview = source.length > 50 ? source.substring(0, 50) : source;
+      description += "(source: '$preview')";
     }
 
     return description;

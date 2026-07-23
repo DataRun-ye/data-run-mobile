@@ -1,6 +1,7 @@
 import 'package:datarunmobile/core/exception/d_error.dart';
 import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/d_exception.dart';
+import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:dio/dio.dart';
 
@@ -9,17 +10,19 @@ class ErrorMessage {
 
   static String getMessage(Object? exception) {
     return switch (exception) {
+      final DioException error => _handleDError(
+          NetworkHttpError.fromDioException(error),
+        ),
       final DError error => _handleDError(error),
       final DException dException => _handleDException(dException),
-      _ => S.current.unexpected((exception.toString().length > 255
-          ? exception.toString().substring(0, 255)
-          : exception.toString())),
+      _ => S.current.generalErrorTitle,
     };
   }
 
-  static String _handleDError(DError d2Error) {
-    final message = '\n' + (d2Error.message ?? d2Error.cause.toString());
-    return switch (d2Error.errorCode) {
+  static String _handleDError(DError error) {
+    final serverMessage =
+        error is NetworkHttpError ? error.serverMessage : null;
+    return switch (error.errorCode) {
       DRunErrorCode.validationError => S.current.validationError,
       DRunErrorCode.networkTimeout => S.current.networkTimeout,
       DRunErrorCode.networkConnectionFailed =>
@@ -29,83 +32,35 @@ class ErrorMessage {
       DRunErrorCode.databaseConnectionFailed =>
         S.current.databaseConnectionFailed,
       DRunErrorCode.databaseQueryFailed => S.current.databaseQueryFailed,
-      DRunErrorCode.databaseInternalError =>
-        S.current.databaseInternalError(message),
-      DRunErrorCode.apiError => S.current.apiError(message),
-      DRunErrorCode.syncError => S.current.syncError(message),
-      DRunErrorCode.badResponse => S.current.badHttpRequest(message),
-      DRunErrorCode.badRequest => S.current.badRequestToEndPoint(message),
-      DRunErrorCode.notFound => S.current.endPointNotFound(message),
-      DRunErrorCode.serverError => S.current.serverError(message),
-      DRunErrorCode.unauthorized =>
-        S.current.unauthorizedAccessToEndPoint(message),
-      DRunErrorCode.forbidden => S.current.forbidden(message),
-      DRunErrorCode.invalidData => S.current.invalidData(message),
-      DRunErrorCode.badCertificate => S.current.badCertificate(message),
-      DRunErrorCode.sessionExpired => S.current.sessionExpired(message),
+      DRunErrorCode.databaseInternalError => S.current.generalErrorTitle,
+      DRunErrorCode.apiError => S.current.generalErrorTitle,
+      DRunErrorCode.syncError => S.current.syncFailed,
+      DRunErrorCode.badResponse => S.current.generalErrorTitle,
+      DRunErrorCode.badRequest ||
+      DRunErrorCode.invalidData =>
+        serverMessage ?? S.current.validationError,
+      DRunErrorCode.notFound => S.current.generalErrorTitle,
+      DRunErrorCode.serverError => S.current.generalErrorTitle,
+      DRunErrorCode.unauthorized => S.current.authSessionExpired,
+      DRunErrorCode.forbidden => S.current.generalErrorTitle,
+      DRunErrorCode.badCertificate => S.current.generalErrorTitle,
+      DRunErrorCode.sessionExpired => S.current.authSessionExpired,
       DRunErrorCode.noLoggedInUser => S.current.noAuthenticatedUser,
       DRunErrorCode.noUserDetailsFetchedFromServer =>
-        S.current.noUserDetailsFetchedFromServer(message),
-      // DRunErrorCode.noLoggedInUserOffline =>
-      //   S.current.noAuthenticatedUserOffline,
+        S.current.noAuthenticatedUser,
       DRunErrorCode.noActiveDatabaseInstance =>
-        S.current.noActiveDatabaseFound(message),
-      DRunErrorCode.systemFileError =>
-        S.current.systemFilesAccessError(message),
-      DRunErrorCode.unexpected => S.current.unexpected(message),
-      null => S.current.unexpected(d2Error.toString()),
+        S.current.databaseConnectionFailed,
+      DRunErrorCode.systemFileError => S.current.generalErrorTitle,
+      DRunErrorCode.unexpected => S.current.generalErrorTitle,
+      null => S.current.generalErrorTitle,
     };
   }
 
   static String _handleDException(DException dException) {
-    if (dException is DioException || dException.cause is DioException) {
-      final dioException = dException.cause as DioException;
-      return dioException.type.toPrettyDescription(dioException);
+    final cause = dException.cause;
+    if (cause != null && !identical(cause, dException)) {
+      return getMessage(cause);
     }
-
-    if (dException.cause is DError) {
-      final d2Error = dException.cause as DError;
-      return _handleDError(d2Error);
-    }
-
-    if (dException.cause is DException) {
-      final d2Exception = dException.cause as DException;
-      return _handleDException(d2Exception);
-    }
-
-    return dException.message ??
-        dException.cause?.toString() ??
-        dException.toString();
-  }
-}
-
-extension DioExceptionTypeExtension on DioExceptionType {
-  String toPrettyDescription(DioException e) {
-    final errorMessage = e.message ?? '';
-    final responseCode = e.response?.statusCode.toString() ?? '';
-    final type = e.type.toString();
-    final longMessage = '$type: $responseCode $errorMessage';
-    final message =
-        longMessage.length > 256 ? longMessage.substring(0, 255) : longMessage;
-    switch (this) {
-      case DioExceptionType.connectionTimeout:
-        return S.current
-            .connectionTimeout(DioExceptionType.connectionTimeout.name);
-      case DioExceptionType.sendTimeout:
-        return S.current.sendTimeout(DioExceptionType.sendTimeout.name);
-      case DioExceptionType.receiveTimeout:
-        return S.current.receiveTimeout(DioExceptionType.receiveTimeout.name);
-      case DioExceptionType.badCertificate:
-        return S.current.badCertificate(message);
-      case DioExceptionType.badResponse:
-        return S.current.badResponse(message);
-      case DioExceptionType.cancel:
-        return S.current.requestCancelled;
-      case DioExceptionType.connectionError:
-        return S.current.connectionError(message);
-      case DioExceptionType.unknown:
-        return S.current.unexpected(
-            (message.length > 255 ? message.substring(0, 255) : message));
-    }
+    return S.current.generalErrorTitle;
   }
 }

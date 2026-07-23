@@ -54,6 +54,16 @@ class _SyncResourcesViewState extends ConsumerState<SyncResourcesView> {
                     syncProgressInfo: global,
                   ),
                 ),
+                if (global.completed && !global.overallState.isSuccess)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                    child: Text(
+                      S.of(context).syncFailed,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: cs.onPrimary,
+                          ),
+                    ),
+                  ),
                 Wrap(
                   alignment: WrapAlignment.center,
                   spacing: 8,

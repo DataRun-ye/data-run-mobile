@@ -1,5 +1,6 @@
 import 'package:datarunmobile/core/auth/auth_response.dart';
 import 'package:datarunmobile/core/exception/authentication_exception.dart';
+import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/d_exception.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
@@ -36,8 +37,11 @@ class AuthApi {
       return AuthResponse.fromJson(response.data);
     } on DioException catch (e, s) {
       logError('Error during login', source: e, stackTrace: s);
-      throw NetworkHttpError.fromDioException(e,
-          stackTrace: StackTrace.current);
+      throw NetworkHttpError.fromDioException(
+        e,
+        stackTrace: StackTrace.current,
+        unauthorizedErrorCode: DRunErrorCode.invalidCredentials,
+      );
       // throw AuthException('Error during login',
       //     cause: e, errorCode: DRunErrorCode.noUserDetailsFetchedFromServer);
     }

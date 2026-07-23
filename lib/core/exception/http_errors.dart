@@ -10,6 +10,7 @@ class NetworkHttpError extends NetworkException {
   NetworkHttpError._(
     String message, {
     String? url,
+    this.serverMessage,
     bool shouldShowMessage = true,
     DErrorComponent? errorComponent = DErrorComponent.Server,
     super.httpErrorCode,
@@ -21,106 +22,99 @@ class NetworkHttpError extends NetworkException {
             url: url,
             errorComponent: errorComponent);
 
-  factory NetworkHttpError.error(Response? response, {StackTrace? stackTrace, Object? cause}) {
-    String message = '${response?.statusMessage ?? ''}' +
-        ' ${response?.data.toString() ?? ''}';
-    message = message.length > 600 ? message.substring(0, 600) : message;
-
-    return switch (response) {
-      Response(:final statusCode) when statusCode == 200 => NetworkHttpError._(
-          'Bad request: ${message}',
-          url: response.requestOptions.path,
-          httpErrorCode: response.statusCode,
-          errorCode: DRunErrorCode.badRequest,
-          stackTrace: stackTrace,
-          cause: cause),
-      Response(:final statusCode) when statusCode == 401 => NetworkHttpError._(
-          'unauthorized: ${message}',
-          url: response.requestOptions.path,
-          httpErrorCode: response.statusCode,
-          errorCode: DRunErrorCode.unauthorized,
-          stackTrace: stackTrace,
-          cause: cause),
-      Response(:final statusCode) when statusCode == 403 => NetworkHttpError._(
-          'forbidden: ${message}',
-          url: response.requestOptions.path,
-          httpErrorCode: response.statusCode,
-          errorCode: DRunErrorCode.forbidden,
-          stackTrace: stackTrace,
-          cause: cause),
-      Response(:final statusCode) when statusCode == 404 => NetworkHttpError._(
-          'not found: ${message}',
-          url: response.requestOptions.path,
-          httpErrorCode: response.statusCode,
-          errorCode: DRunErrorCode.notFound,
-          stackTrace: stackTrace,
-          cause: cause),
-      Response(:final statusCode) when statusCode == 406 => NetworkHttpError._(
-          'invalid, not acceptable request: ${message}',
-          url: response.requestOptions.path,
-          httpErrorCode: response.statusCode,
-          errorCode: DRunErrorCode.notFound,
-          stackTrace: stackTrace,
-          cause: cause),
-      _ => NetworkHttpError._('http server Error: ${message}',
-          url: response?.requestOptions.path,
-          httpErrorCode: response?.statusCode,
-          errorCode: DRunErrorCode.unexpected,
-          stackTrace: stackTrace,
-          cause: cause),
+  factory NetworkHttpError.error(
+    Response<dynamic>? response, {
+    StackTrace? stackTrace,
+    Object? cause,
+    DRunErrorCode unauthorizedErrorCode = DRunErrorCode.unauthorized,
+  }) {
+    final statusCode = response?.statusCode;
+    final serverMessage = _extractServerMessage(response?.data);
+    final message = [
+      if (statusCode != null) 'HTTP $statusCode',
+      if (serverMessage != null) serverMessage,
+      if (statusCode == null && serverMessage == null) 'HTTP request failed',
+    ].join(': ');
+    final errorCode = switch (statusCode) {
+      400 => DRunErrorCode.badRequest,
+      401 => unauthorizedErrorCode,
+      403 => DRunErrorCode.forbidden,
+      404 => DRunErrorCode.notFound,
+      406 || 409 => DRunErrorCode.invalidData,
+      422 => DRunErrorCode.validationError,
+      final int code when code >= 500 => DRunErrorCode.serverError,
+      _ => DRunErrorCode.badResponse,
     };
+
+    return NetworkHttpError._(
+      message,
+      url: response?.requestOptions.path,
+      serverMessage: serverMessage,
+      httpErrorCode: statusCode,
+      errorCode: errorCode,
+      stackTrace: stackTrace,
+      cause: cause,
+    );
   }
 
-  factory NetworkHttpError.fromDioException(DioException error,
-      {StackTrace? stackTrace}) {
-    String message = '${error.response?.statusMessage ?? ''}' +
-        // ' ${error.response?.data.toString() ?? ''}' +
-        ' ${error.message}';
-    message = message.length > 600 ? message.substring(0, 600) : message;
+  factory NetworkHttpError.fromDioException(
+    DioException error, {
+    StackTrace? stackTrace,
+    DRunErrorCode unauthorizedErrorCode = DRunErrorCode.unauthorized,
+  }) {
+    if (error.response != null) {
+      return NetworkHttpError.error(
+        error.response,
+        stackTrace: stackTrace,
+        cause: error,
+        unauthorizedErrorCode: unauthorizedErrorCode,
+      );
+    }
 
-    // error.
-    return NetworkHttpError.error(error.response, stackTrace: stackTrace, cause: error);
-    // return switch (error.type) {
-    //   DioExceptionType.connectionTimeout ||
-    //   DioExceptionType.receiveTimeout ||
-    //   DioExceptionType.sendTimeout =>
-    //     NetworkHttpError._('Connection timeout: ${message}',
-    //         url: error.requestOptions.path,
-    //         httpErrorCode: error.response?.statusCode,
-    //         errorCode: DRunErrorCode.networkTimeout,
-    //         stackTrace: stackTrace,
-    //         cause: error),
-    //   DioExceptionType.badResponse => NetworkHttpError._(
-    //       'Bad response: ${message}',
-    //       url: error.requestOptions.path,
-    //       httpErrorCode: error.response?.statusCode,
-    //       errorCode: DRunErrorCode.networkConnectionFailed,
-    //       stackTrace: stackTrace,
-    //       cause: error),
-    //   DioExceptionType.cancel => NetworkHttpError._(
-    //       'Request Canceled ${message}',
-    //       shouldShowMessage: false,
-    //       url: error.requestOptions.path,
-    //       httpErrorCode: error.response?.statusCode,
-    //       errorCode: DRunErrorCode.unexpected,
-    //       stackTrace: stackTrace,
-    //       cause: error),
-    //   DioExceptionType.connectionError => NetworkHttpError._(
-    //       'Connection To server error: ${message}',
-    //       url: error.requestOptions.path,
-    //       httpErrorCode: error.response?.statusCode,
-    //       errorCode: DRunErrorCode.badResponse,
-    //       stackTrace: stackTrace,
-    //       cause: error),
-    //   DioExceptionType.badCertificate => NetworkHttpError._(
-    //       'Bad Http Certificate: ${message}',
-    //       url: error.requestOptions.path,
-    //       httpErrorCode: error.response?.statusCode,
-    //       errorCode: DRunErrorCode.badCertificate,
-    //       stackTrace: stackTrace,
-    //       cause: error),
-    //   DioExceptionType.unknown =>
-    //     NetworkHttpError.error(error.response, stackTrace: stackTrace),
-    // };
+    final (errorCode, shouldShowMessage) = switch (error.type) {
+      DioExceptionType.connectionTimeout ||
+      DioExceptionType.sendTimeout ||
+      DioExceptionType.receiveTimeout =>
+        (DRunErrorCode.networkTimeout, true),
+      DioExceptionType.connectionError => (
+          DRunErrorCode.networkConnectionFailed,
+          true
+        ),
+      DioExceptionType.badCertificate => (DRunErrorCode.badCertificate, true),
+      DioExceptionType.cancel => (DRunErrorCode.unexpected, false),
+      DioExceptionType.badResponse => (DRunErrorCode.badResponse, true),
+      DioExceptionType.unknown => (DRunErrorCode.unexpected, true),
+    };
+
+    return NetworkHttpError._(
+      error.message ?? error.type.name,
+      url: error.requestOptions.path,
+      shouldShowMessage: shouldShowMessage,
+      errorCode: errorCode,
+      stackTrace: stackTrace,
+      cause: error,
+    );
+  }
+
+  final String? serverMessage;
+
+  static String? _extractServerMessage(dynamic data) {
+    String? candidate;
+    if (data is String) {
+      candidate = data;
+    } else if (data is Map) {
+      for (final key in const ['detail', 'message', 'title']) {
+        final value = data[key];
+        if (value is String && value.trim().isNotEmpty) {
+          candidate = value;
+          break;
+        }
+      }
+      candidate ??= _extractServerMessage(data['error']);
+    }
+
+    final trimmed = candidate?.trim();
+    if (trimmed == null || trimmed.isEmpty) return null;
+    return trimmed.length > 300 ? trimmed.substring(0, 300) : trimmed;
   }
 }

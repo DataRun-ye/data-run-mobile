@@ -1,280 +1,182 @@
 # Agent Onboarding
 
-Generated: 2026-07-10
+Validated: 2026-07-24
 
-Purpose: give future AI agents enough stable repository context to avoid repeating the same discovery work, misclassifying dead code as active, or making broad changes before the active production paths are understood.
+Purpose: give coding agents a durable starting point without making them rediscover the repository or treat historical code as current architecture.
 
-This file is an onboarding guide. The numbered files in `docs/agent-context/` are the evidence maps.
+## Repository And Production Status
 
-Start with `09-production-boundaries-and-work-strategy.md`. It records the current product contracts, corrections to earlier classifications, production compatibility boundary, and investigation/cleanup order. Earlier maps remain evidence snapshots.
+DataRun is a Flutter mobile application for assignment-driven, offline-capable field data collection. It downloads configuration and form templates, stores them in a per-user Drift database, captures submissions locally, and uploads completed submissions.
 
-## Repository Purpose
+`v6.0.0+50` is the current production baseline. It was released from commit `ff20d6fc` and rolled out through Google Play to 100% of users. A real Play `5.3.1+21` to Play `6.0.0+50` in-place upgrade preserved the cached session, configuration, drafts, repeat data, completed submissions, and upload behavior. Production adoption and telemetry still need observation; an empty Play crash graph before adoption is not proof of zero crashes.
 
-This repo contains the DataRun mobile/data-collection app. It is a Flutter application for offline-capable field data collection, assignment-driven form access, local form entry, local submission storage, and sync/upload.
+The former local `drun_sdk` package was consolidated into the root `datarunmobile` package. All active Dart production code is under `lib/`; the stale remote SDK repository is not authoritative. The move preserved the database filename/schema lineage, storage keys, network payloads, sync registration order, and form behavior.
 
-The surviving code from the former local `drun_sdk` package is consolidated into the root `datarunmobile` package. Current production behavior must be judged from this repo's active runtime paths; the stale remote SDK repository is not authoritative.
+## Context Map Ownership
 
-## Production Status
+Read `09-production-boundaries-and-work-strategy.md` first. It owns current product contracts, the production compatibility boundary, release baseline, and remaining roadmap.
 
-Treat this as a messy production repository for a running app. There is stale documentation, dead code, incomplete feature work, repeated logic, generated code churn, and multiple state-management approaches.
+Then read only the focused map for the boundary being changed:
 
-Do not assume an implementation is active because its name sounds right. Some tables and files look form-related but are not part of the active form capture path.
+- `01-production-code-path-map.md`: broad entrypoints and production call paths.
+- `02-form-flow.md`: form load/render/repeat/edit/save and form-state ownership.
+- `03-config-fetching.md`: configuration fetch, parsing, registration, and offline cache.
+- `04-state-di-runtime-map.md`: state owners, DI, scopes, and generated registration.
+- `05-classification-reconciliation.md`: strict active/inactive legend and unresolved misleading surfaces.
+- `06-large-repeat-hang-data-loss.md`: closed repeat improvements and current residual scaling risks.
+- `07-repeat-uid-contract.md`: repeat identity and metadata contract.
+- `08-validation-baseline.md`: current executable checks and limits.
 
-## Former SDK Boundary
+Focused maps own technical detail. Do not duplicate their tables into `09`; update the owner document when evidence changes.
 
-All production Dart code now lives under `lib/`. The old physical app/SDK package boundary no longer exists; former SDK origin does not establish current ownership.
+## Runtime Boundaries
 
-Important boundary points:
+### App And Composition
 
-- `lib/main.dart` starts the production app.
-- app DI is configured from `lib/app/di/injection.dart` and generated `lib/app/di/injection.config.dart`.
-- Stacked routing is generated from `lib/app/stacked/app.dart`.
-- the app opens a user-scoped Drift database and registers active configuration datasources after login/session restore.
-- active sync/data persistence goes through `lib/database`, `lib/datasource`, and the active datasource list in `lib/di/init_active_session_scope.dart`.
-- active form rendering uses app builders/models and form template JSON stored in Drift.
+- `lib/main.dart` is the Flutter entrypoint.
+- `lib/app/di/injection.dart` coordinates generated Stacked/app DI and explicit database registration.
+- `lib/di/injection.dart` owns the single `appLocator = GetIt.instance`.
+- `lib/app/stacked/app.dart` owns active generated routes and Stacked navigation/dialog registration.
+- `lib/core/auth/auth_manager.dart` owns authenticated session transitions and the per-user GetIt scope.
+- `lib/di/init_active_session_scope.dart` explicitly registers the nine configuration datasources used by `SyncManager`.
+- `lib/database/db_factory/` opens one Drift database per user.
 
-Do not assign ownership based on a file's former package location. First prove the active app path, consumers, lifecycle, and persistence/network effects.
+Do not infer ownership from directories such as `core`, `data`, or `features`, or from a file's former SDK location. Prove it from callers, lifecycle, persistence, network effects, and registration.
 
-## Known Messy Areas
+### Active Form Flow
 
-- Riverpod, GetIt scopes, `reactive_forms`, `ChangeNotifier`, generated injectable registrations/providers, and Stacked routing/services coexist. Hand-written Stacked viewmodels have been removed, but Stacked is still the active generated navigation mechanism.
-- Form state is not owned by one clean system.
-- Generated files are significant and can be stale or noisy.
-- There are old form-state, form-value, sync, data-value, repeat-instance, and metadata-submission paths that are not proven active for current form capture.
-- Current captured form fixtures live under `test/fixtures/live_forms/`; their manifest records the snapshot date and versions. Files under `test/fixtures/legacy_forms/` and `legacy_submissions/` are historical test inputs, not production truth.
+1. A table or assignment action opens `FormFlowBootstrapper`.
+2. `FormFlowBootstrapperController` creates or loads a `DataInstance` and opens a submission-named GetIt scope.
+3. `FormTemplateRepository` loads the exact cached form version plus options from Drift.
+4. `FormElementControlBuilder` builds the root control graph. Stored repeat rows receive one lightweight map control while dormant.
+5. `FormElementBuilder` builds the full element/rule graph, including repeat-row element instances.
+6. The bootstrapper resolves dependencies, evaluates initial rules, and registers `FormInstance`.
+7. `FormSubmissionScreen` and field/repeat widgets render from the scoped `FormInstance`.
+8. Opening a repeat row materializes that row's field controls; closing the editor commits or discards transactionally and disposes those controls.
+9. `FormInstance.saveFormData()` reduces the entire active form to one nested map and writes `data_instances.formData`.
+10. `SubmissionUploadService` uploads eligible completed rows as whole saved JSON objects.
 
-## Existing Context Maps
+Form authority is divided by responsibility, not duplicated:
 
-Read these before touching related areas:
+- `reactive_forms` controls own field values, enabled state, validators, errors, and validity.
+- `FormElementState`/`FieldElementState` hold presentation and rule projection only.
+- the element tree owns hierarchy, dependencies, rule application, repeat lifecycle, and reduction.
+- `FormInstance` owns one submission lifecycle and persistence orchestration.
+- Riverpod owns feature/presentation state such as lists, filters, selection, and preferences; it is not a second form-value store.
 
-- `01-production-code-path-map.md`: broad first-pass production path map.
-- `02-form-flow.md`: active/inactive form load, render, repeat, save, edit, repeat metadata, and local persistence map.
-- `03-config-fetching.md`: server config/form/assignment/org-unit/metadata fetch and offline cache map.
-- `04-state-di-runtime-map.md`: state management, DI, scopes, generated registration, and runtime ownership map.
-- `05-classification-reconciliation.md`: strict active/inactive classification overlay. Use this legend.
-- `06-large-repeat-hang-data-loss.md`: large repeat hang and save/data-loss risk investigation.
-- `07-repeat-uid-contract.md`: backend-validated repeat metadata evidence; its original implementation-status wording is historical.
-- `08-validation-baseline.md`: check/test baseline snapshot; rerun commands before relying on its status.
-- `09-production-boundaries-and-work-strategy.md`: current product-contract and production-boundary authority overlay.
+## Inactive Or Incomplete Form-Looking Surfaces
 
-## Active Form Flow Map
+The following are not alternative active form stores:
 
-Current active form entry/edit flow:
+- normalized `repeat_instances` and `data_values` persistence was removed in schema 5;
+- the write-only `data_elements` sync/table path was removed in schema 6;
+- obsolete form repositories, value stores, rule-effect state, Riverpod form-instance sketches, alternate repeat editors, and duplicate template builders were removed;
+- submission pulling is excluded and its datasource was removed;
+- `lib/data/metadata_submission_update.provider.dart` remains reachable from reference fields but currently returns no records;
+- calculated fields parse but do not calculate and are unsupported/incomplete;
+- `user_form_permissions` is fetched and stored, but active authorization reads are not proven; `assignment_forms` is the proven access source.
 
-1. Form open/create routes go through Stacked navigation into `FormFlowBootstrapper`.
-2. `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` creates or loads a `DataInstance`.
-3. It creates a per-submission GetIt scope.
-4. It registers a `FormTemplateRepository`.
-5. It builds the full `reactive_forms` `FormGroup` through `FormElementControlBuilder`.
-6. It builds the full app-side form element tree through `FormElementBuilder`.
-7. It wraps the tree in a root `Section`, resolves dependencies, evaluates rules, and registers `FormInstance`.
-8. `FormSubmissionScreen` renders the active form using scoped `FormInstance`; route disposal closes that scope and disposes the element/control graph.
-9. Sections render through `SectionWidget`.
-10. Fields render through `FieldWidget` and `FieldFactory`.
-11. Repeats render through `RepeatTableSliver`, `RepeatTable`, and `RepeatTableDataSource`.
-12. Submission save calls `FormInstance.saveFormData()`.
-13. `saveFormData()` reduces the whole form tree to one nested map and writes `data_instances.formData` through `DataInstancesDao.updateData`.
-14. Upload sends that whole saved `formData` through `DataSubmissionUploadExt.toUpload()`.
+Do not recreate a removed path because its former table or class name sounds appropriate.
 
-Core active files:
+## Evidence And Classification
 
-- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart`
-- `lib/data/form_template_repository.dart`
-- `lib/core/form/builder/form_element_control_builder.dart`
-- `lib/core/form/builder/form_element_builder.dart`
-- `lib/features/form_submission/application/element/form_instance.dart`
-- `lib/features/form_submission/application/element/form_element.dart`
-- `lib/features/form_submission/application/element/section_instance.dart`
-- `lib/features/form_submission/application/element/repeat_section.dart`
-- `lib/features/form_submission/application/element/repeat_item_instance.dart`
-- `lib/features/form_submission/application/element/field_instance.dart`
-- `lib/features/form_submission/presentation/form_submission_screen.widget.dart`
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart`
-- `lib/features/form_submission/presentation/section/repeat_table_rows_source.dart`
-- `lib/features/form_submission/presentation/section/edit_row_screen.dart`
-- `lib/database/dao/data_submissions_dao.dart`
-- `lib/database/tables/data_submissions.table.dart`
-- `lib/database/extensions/data_submission.extension.dart`
+Docs, comments, generated code, table names, tests, and historical branches are evidence, not authority. Prefer, in order:
 
-## Known Inactive Or Incomplete Form-Related Areas
+1. observed production behavior and data;
+2. active call paths and persistence/network effects;
+3. current product contracts in `09`;
+4. focused maps;
+5. names and historical intent.
 
-Treat these as inactive, incomplete, or legacy-risk unless runtime evidence proves otherwise:
+Apply the comment-out test at function or registration level:
 
-- the obsolete per-field `submission_capture_repository` path was removed; do not recreate it beside the active whole-JSON save path.
-- `lib/data/metadata_submission_update.provider.dart` and its reference-field UI remain reachable but incomplete; do not infer active persistence from their names.
+- `ACTIVE-CORE`: removing it without replacement breaks a core production workflow.
+- `ACTIVE-SUPPORT`: reached and useful, but not itself a core capability.
+- `REACHABLE-INCOMPLETE`: runtime can reach it, but its contract is unfinished.
+- `REGISTERED-UNUSED`: generated or registered without a proven consumer.
+- `SCHEMA-ONLY`: persisted table/column without a proven active feature.
+- `SOURCE-DEAD`: no active import, route, retrieval, effect, or reference.
+- `UNKNOWN`: current evidence cannot decide.
 
-The obsolete normalized repeat/data-value persistence path was removed in schema
-5. Active form capture stores fields and repeat rows only in
-`data_instances.formData`.
+A reachable file may contain source-dead methods. Generated registration alone does not make code active.
 
-The closed legacy repository/value-store/evaluation/UI-model architecture formerly
-under `lib/core/form` has been removed. The production-reached files remaining in
-that directory are the two builders, the form-element iterator, and the
-`HintProvider` interface/implementation.
+## Build And Validation
 
-These files may contain useful ideas or stale design intent, but they are not authority for current behavior.
-
-## Docs Are Evidence, Not Authority
-
-Docs are a map of what previous scans found. They can be wrong or incomplete after code changes.
-
-When docs conflict with code:
-
-1. prefer active runtime call paths;
-2. prefer entrypoints, routes, active DI registrations, imports, and direct references;
-3. prefer currently generated code only when the generated code is actually used by active runtime;
-4. explicitly record uncertainty;
-5. update the docs if a later pass proves an assumption wrong.
-
-## Build, Run, And Check Commands
-
-Known useful commands:
+Common commands:
 
 ```bash
 flutter pub get
-flutter run
-flutter build apk --debug
-flutter analyze
-flutter test
+flutter test --no-pub
+flutter analyze --no-pub
+flutter build apk --debug --no-pub
 dart run build_runner build
+flutter run
 ```
 
-Notes:
+Use the matrix in `08-validation-baseline.md` to select checks. Generated output is active for Stacked, injectable, Riverpod, Drift, Freezed, JSON serialization, and localization; run the relevant generator and review its diff intentionally.
 
-- `flutter build apk --debug` succeeded on `chore/tooling-compat` with Flutter `3.41.9` and Dart `3.11.5`; that branch was merged into `develop` as the build baseline.
-- Release builds may involve signing and `android/key.properties`; do not change signing casually.
-- Generated code is present. If a change affects Riverpod, Stacked, injectable, Drift, Freezed, JSON serialization, or localization, identify the correct generation command before editing generated files manually.
-- If a command fails because dependencies or SDK caches need network or writes outside the workspace, report that clearly.
+Release builds require the local upload key outside git. Google Play signs distributed APKs with the separate Play App Signing key, so a locally signed APK cannot update a Play installation in place. Production upgrade tests must use a Play-distributed track.
 
-## Active Vs Inactive Classification
+## Safe Working Rules
 
-Use the strict comment-out test from `05-classification-reconciliation.md`:
+Before editing:
 
-- ACTIVE: removing the path without replacement would break startup/auth/navigation, sync/offline cache, assignment/form access, form load/render/repeat/edit/save, or submission table behavior.
-- SUPPORTING-USED: reachable UI/helper behavior, but core data collection would still run if intentionally removed.
-- INACTIVE: not referenced by active runtime flow found in static scans.
-- INCOMPLETE: reachable or plausible code exists, but implementation is unfinished, placeholder-based, or returns empty/no-op data.
-- LEGACY-RISK: old, duplicate, registered-only, generated-only, or conceptually related code that could be mistaken for active.
-- UNKNOWN: static evidence cannot prove either way.
+1. Check the branch and dirty tree.
+2. Read `09` and the focused map.
+3. State the behavior/data contract.
+4. Trace the active owner and rule out inactive lookalikes.
+5. Identify persistence, network, identity, migration, offline, and generated-code effects.
+6. Choose the smallest slice that closes one behavior.
 
-Do not classify code as ACTIVE merely because:
+While editing:
 
-- it compiles;
-- it is generated;
-- it is registered in DI but not retrieved by active flow;
-- it has a form/table/repeat-looking name;
-- it appears in stale docs/comments;
-- it is reachable only through commented code.
+- preserve user changes already in the tree;
+- avoid changing persistence formats or schema unless the slice requires it;
+- do not manually edit generated files when a generator owns them;
+- do not add a second owner, compatibility wrapper, provider, or service to bypass an unclear boundary;
+- when relevant known debt is safely inside the slice, move consumers toward the established owner and remove the superseded path;
+- when debt is unrelated, record it in the `09` roadmap instead of broadening the change;
+- treat product/data invariants as protected behavior, not current implementation structure.
 
-## Safe Working Rules For Agents
+## Definition Of Done
 
-Before editing code:
+A code change is closed only when:
 
-1. Check branch and working tree.
-2. Read the focused context maps.
-3. Identify the active call path and likely inactive lookalikes.
-4. Keep the PR slice narrow.
-5. Avoid mixed-purpose commits.
-6. Do not refactor while mapping.
-7. Do not change persistence format, repeat metadata semantics, sync payloads, or generated code casually.
-8. Do not revert user changes you did not make.
-9. Prefer local patterns over new abstractions.
-10. Run the smallest meaningful validation.
+- the active path and inactive lookalikes are identified;
+- one explicit behavior/data contract is implemented;
+- state and lifecycle ownership remain singular and clear;
+- persistence, sync, offline, identity, migration, and compatibility risks are evaluated;
+- focused characterization tests pass;
+- analyzer/build/generation checks appropriate to the slice are run or reported;
+- a production-style device smoke is completed when user data, auth, sync, migration, or forms are touched;
+- the focused map is corrected when evidence changed;
+- out-of-scope uncertainty is left explicit.
 
-For docs-only work:
+For form/repeat/save changes, also prove save/reopen, completion validity, hidden/show behavior, repeat identity, nested dependencies where relevant, and existing submission compatibility.
 
-- stay on the docs branch when possible;
-- keep docs in `docs/agent-context/` unless the file is root-level onboarding like `AGENTS.md`;
-- update the numbered maps when assumptions change.
+## Lightweight Production Workflow
 
-For code work:
+`develop` is the integration baseline and `main` is production. A branch/PR is optional ceremony for solo work; a focused commit and reviewed diff are mandatory.
 
-- create a focused branch from the correct baseline;
-- keep generated changes intentional;
-- use `apply_patch` for manual edits;
-- run formatting only for files touched or when the project convention requires it.
+For each production change:
 
-## Definition Of Done For Code Changes
+1. Start from current `develop`.
+2. Keep one behavior per commit or tightly related commit series.
+3. Run focused tests, the full test suite, analyzer, and the appropriate build.
+4. Smoke the touched workflow on a real device when needed.
+5. Review `git diff` and migration/signing/release implications.
+6. Promote a tested commit to `main`, intentionally set version/build, tag it, and retain release artifacts.
+7. For data-affecting releases, run a Play-distributed in-place upgrade from the current production version.
+8. After rollout, monitor adoption, Play vitals, and GlitchTip before declaring production stability.
 
-A code PR is not done until:
+## Current High-Risk Areas
 
-- the active path was identified;
-- inactive/legacy-looking alternatives were not accidentally edited;
-- behavior change is described in plain language;
-- risk to persistence/sync/offline behavior is called out;
-- relevant tests, build, analyze, or smoke checks were run, or inability to run them is explicitly reported;
-- generated files are consistent when generators are involved;
-- docs are updated if a mapped assumption changed.
+- The repeat control-memory problem is reduced, but the full element/dependency graph remains eager.
+- Outside-to-repeat rule fan-out remains linear in dependent rows.
+- Saving still reduces, JSON-encodes, and writes the whole submission.
+- Synced edit/delete authorization and server round-trip behavior are incomplete.
+- Reference fields and calculated fields are incomplete.
+- Server error response shapes and whole-resource configuration sync need server-side contracts before deeper client changes.
+- Multiple state/DI libraries remain active by distinct responsibility; consolidate only after proving an actual duplicate owner.
 
-For form/repeat/save changes, also confirm:
-
-- new submissions still save;
-- existing submissions still edit;
-- finalized/upload flow is not broken;
-- repeat rows are not silently dropped;
-- large-repeat risk was considered.
-
-## Solo Production Workflow
-
-Use this lightweight workflow for solo developer plus AI-agent work:
-
-1. Treat `develop` as integration and `main` as production.
-2. Keep each production fix small and named by behavior.
-3. Before code, write the data contract or behavior contract in plain text.
-4. During code, avoid DB schema changes unless truly required.
-5. Before merging to `develop`, run `git diff develop...HEAD`, run the smallest relevant checks, and do one smoke test for the touched workflow.
-6. Before promoting `develop` to `main`, intentionally bump version/build number, confirm old local drafts/finals still load or upload, call out rollback risk, and tag the release commit.
-7. After release, verify one real device can open, save, and sync, and keep the previous APK/build available for rollback.
-
-Release signing notes:
-
-- Do not commit signing keys.
-- Release builds require a local signing configuration pointing at the Google Play key, currently expected outside the repo at `/home/hamza/datarun/datarun-key`.
-- Stop before `develop -> main` promotion when signing, production-style build, or update smoke behavior is uncertain.
-
-## PR Slicing Rules
-
-Keep PRs boring and reviewable.
-
-Good slices:
-
-- tooling compatibility baseline;
-- docs/context maps;
-- await-save correctness fix;
-- subscription cleanup;
-- repeat metadata contract implementation;
-- large-repeat measurement instrumentation;
-- one performance improvement chosen from measurement.
-
-Bad slices:
-
-- save race fix plus repeat metadata persistence plus render optimization;
-- build tooling plus production behavior changes;
-- generated churn plus unrelated refactor;
-- data model migration without runtime proof;
-- docs that claim behavior without code evidence.
-
-Prefer stacked branches only when a build baseline is required and not merged yet. Once the baseline is merged, start behavior PRs from `develop`.
-
-## Known Risks Around Forms, Elements, Large Repeats, And Expressions
-
-Current known risks:
-
-- form load builds all controls and element instances eagerly;
-- repeats with 200-300 rows can create large control/model trees;
-- rule/dependency evaluation walks sections and repeat rows;
-- expression evaluation parses expressions during evaluation;
-- `FieldWidget` value subscriptions cancel on disposal, but listener/rebuild volume still scales with mounted repeat fields;
-- `saveFormData()` writes one whole `formData` JSON object;
-- active save call sites now await persistence; failed-write and concurrent-tap behavior still need characterization;
-- repeat metadata persistence matches the backend V1 shape locally: `_id`, `_index`, `_parentId`, `_submissionUid`; server round-trip editing is not yet validated;
-- generated and old form-state paths can mislead agents into editing inactive code.
-
-Current recommended order for known work:
-
-1. Complete and validate the behavior-preserving former-SDK package consolidation.
-2. Map each surviving service/state object's responsibility, owner, lifetime, consumers, and persistence/network effects.
-3. Reorganize folders and same-layer services by that proven ownership, keeping mechanical moves separate from behavioral changes.
-4. Consolidate state/DI mechanisms one bounded feature at a time; remove a library only after no active path depends on it.
-5. Revisit form engine/expression ownership and large-repeat performance using the existing harness and real form structures.
-6. Close incomplete access, synced edit/delete, and offline policy only after their contracts are explicit.
+The ordered current backlog belongs in `09-production-boundaries-and-work-strategy.md`.

@@ -1,6 +1,7 @@
 # State, DI, And Runtime Registration Map
 
 Generated: 2026-07-10
+Reconciled: 2026-07-24 against production `v6.0.0+50`
 
 Scope: active and inactive-looking state management, dependency injection, generated registrations, runtime scopes, route registration, and service registration. This complements `01-production-code-path-map.md`, `02-form-flow.md`, and `03-config-fetching.md`; it does not remap form rendering or config sync internals except where those depend on runtime state/DI.
 
@@ -29,7 +30,7 @@ Active app runtime is a hybrid:
 8. Opening a form creates a per-submission GetIt scope containing `FormTemplateRepository` and `FormInstance`.
 9. Form widgets use Riverpod for widget-level async/selection/preference state, but active form state is held in `FormInstance`, `reactive_forms` controls, and scoped GetIt.
 
-Core risk: the app does not have one state system. Riverpod, ChangeNotifier, GetIt scopes, generated injectable registrations, `reactive_forms`, and Stacked routing/services all participate in the active runtime for startup/auth/sync/forms/submissions. Hand-written Stacked viewmodels have now been removed from the active surface.
+The app intentionally still uses several mechanisms, but current production responsibilities no longer have the previously identified duplicate owners: Riverpod owns app/feature presentation state, `reactive_forms` owns form values and validity, scoped GetIt owns service/form lifetimes, `AuthManager` owns session transitions, and Stacked owns generated routing/navigation/dialog presentation. Consolidate a library only after proving a real overlapping authority and migrating one bounded feature.
 
 ## Runtime Boot Path
 
@@ -86,7 +87,7 @@ Core risk: the app does not have one state system. Riverpod, ChangeNotifier, Get
 | Submission table service | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/features/data_instance/application/submission_table_service.dart` | Registered as a user-scoped factory with the scoped `AppDatabase`; submission table providers/controllers/widgets use it for filtered pagination, selected-row lookup/delete, and upload delegation. | High | Submission-table behavior has one explicit owner and no longer resolves its database through root factories or implicit field initializers. |
 | Active user session | ACTIVE | `lib/core/auth/auth_manager.dart` | Registers `UserSession` with instance name `'activeUser'`. | High | Services/widgets rely on active user context. |
 | Configuration datasource dependencies | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/di/init_active_session_scope.dart` | After pushing the scope, `AuthManager` calls `registerUserConfigurationDatasources(appLocator)`. | High | This is the active datasource registration path for sync. |
-| User scope disposal | ACTIVE | `lib/core/auth/auth_manager.dart` | Login/logout use `popScopesTill(username)` when a matching scope exists. | Medium | Scope pop behavior should be runtime-confirmed before changing login/logout or multi-user support. |
+| User scope disposal | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/core/auth/session_operation_tracker.dart` | Logout/revocation drains active sync/upload cleanup before closing the user scope/database; login activation rolls back partial scopes transactionally. | High | Auth/session lifecycle tests cover ownership and cleanup; preserve the operation-drain boundary. |
 
 ### Active Configuration Datasource Registrations
 
@@ -129,7 +130,7 @@ Why it matters: datasource registration order and type shape affect config fetch
 | Form availability/template providers | ACTIVE | `lib/features/form/application/form_provider.dart`, `lib/data/teams.provider.dart` | Form submission bootstrap watches `formTemplateProvider`; assignment UI watches `userAvailableFormsProvider`. The unconsumed `formListItemsProvider` and its model/filter, plus the generated-only `FormTemplateService`, were removed. | High | Form availability and template loading now have one visible provider each. `FormTemplateListService` remains the active GetIt-backed template/version lookup. |
 | Submission edit/status providers | ACTIVE | `lib/features/form_submission/application/submission_edit_access.dart`, `submission_list.provider.dart` | `FormSubmissionScreen` and table edit cells watch `submissionEditStatusProvider`; both provider and form bootstrap delegate to one tested edit-access query. | High | Edit permissions and synced record behavior depend on this rule, while the final synced-edit product policy remains open. |
 | Data instance table providers | ACTIVE | `lib/features/data_instance/application/table.providers.dart`, `table_controller.provider.dart` | Filter/count/appearance providers remain separate by responsibility. One form-and-assignment-keyed `TableController` owns row selection and bulk delete/sync commands; the table source keeps only a rendering projection of that selection. `submission_table_controller_test.dart` covers scope isolation and disposal during deletion. | High | Bulk selection/delete/sync no longer crosses a global selection provider or a command-only provider that can dispose during an awaited action. |
-| Reference-field metadata provider | INCOMPLETE | `lib/data/metadata_submission_update.provider.dart`, `q_reference_drop_down_search_field.widget.dart` | `ValueType.Reference` fields render `QReferenceDropDownSearchField`, which watches `systemMetadataSubmissionsProvider`; provider currently returns `[]` after commented metadata-submission logic. Production use depends on synced form JSON containing `ValueType.Reference`. | High for code state, low for runtime frequency | Do not classify as ACTIVE until a production form proves this field type is exercised. |
+| Reference-field metadata provider | INCOMPLETE | `lib/data/metadata_submission_update.provider.dart`, `q_reference_drop_down_search_field.widget.dart` | `ValueType.Reference` routes to `QReferenceDropDownSearchField`, which watches `systemMetadataSubmissionsProvider`; the provider returns `[]`. None of the 19 live form versions captured on 2026-07-22 uses `ValueType.Reference`. | High | This is a reachable generic type path, not a current captured production capability. |
 | User org unit provider | OBSOLETE-REMOVED | Its only found consumer was the removed comment-only org-unit widget; the provider and generated family were then removed. | High | Active org-unit metadata and display paths do not use this provider. |
 | Party resolver provider | OBSOLETE-REMOVED | Former placeholder resolver and generated provider had no runtime consumer and were removed with the abandoned party/manifest persistence attempt. | High | Party naming no longer presents a false active access boundary. |
 | Form integrity provider | OBSOLETE-REMOVED | Its source and generated provider had no runtime consumer and were removed. | High | Active form completion validity comes from `FormInstance`/element validation, not a second Riverpod integrity owner. |
@@ -163,7 +164,7 @@ Stacked remains active as generated route and navigation/dialog service infrastr
 | OBSOLETE-REMOVED | Standalone date/time demo entrypoint | It had its own `runApp` and no production importer. | High | Active date/time fields continue through `CustomReactiveDateTimePicker`. |
 | OBSOLETE-REMOVED | Old team-management feature and dashboard demo | The screen used hard-coded team summaries, had no route, and was referenced only by a comment-only dashboard. | High | Active assignment/team behavior continues through SDK team persistence and `lib/data/teams.provider.dart`. |
 | OBSOLETE-REMOVED | Duplicate coordinator/executor/progress sync stack | Generated DI was its only outside reference; the stack and its private progress models were removed. `SyncScheduler` and `SyncMetadataRepository` remain active. | High | Sync ownership is now clearer without changing the active fetch path. |
-| INCOMPLETE | `lib/data/metadata_submission_update.provider.dart` | Provider is used by Reference field widgets but currently returns empty list after commented metadata-submission lookup; production form JSON use of `ValueType.Reference` was not confirmed. | High | Reference fields are reachable by value type, but data backing is incomplete and not proven core-active. |
+| INCOMPLETE | `lib/data/metadata_submission_update.provider.dart` | Reference widgets can watch it, but it returns an empty list; the captured live form set has no Reference field. | High | Reference fields are a generic reachable path with no current captured production use or data owner. |
 
 ## Resolved Runtime Ownership
 
@@ -241,13 +242,13 @@ Sync runtime ownership:
 - `lib/core/sync_manager/sync_manager.dart`
 - `lib/features/sync/application/sync_resources.controller.dart`
 
-## Questions Requiring Runtime Confirmation
+## Residual Questions
 
-1. What is the exact scope stack after login, after opening a form, after saving, after back navigation, and after logout?
-2. Does `GetIt.getAll<AbstractDatasource<dynamic>>()` return the explicit datasource registrations in the expected order after every login/session restore?
-3. Do production forms contain `ValueType.Reference` fields, and if yes is the current empty metadata submission provider accepted behavior or a broken incomplete feature?
-4. Do generated Riverpod/injectable/Stacked outputs still match this map after each ownership move?
+1. Do production forms need `ValueType.Reference`, and if so what service owns its offline metadata instead of the current empty provider?
+2. Can `user_form_permissions` be activated as a tested authorization owner, or should its datasource/table be retired?
+3. Which remaining folder/service names materially obscure the established ownership enough to justify a behavior-preserving move?
+4. After each generated-owner change, do Riverpod/injectable/Stacked/Drift outputs still match the active registrations and remain free of generated-only services?
 
-## Next Investigation Step
+## Current Follow-Up
 
-State/DI ownership cleanup is bounded and complete for the mapped production paths. The next useful investigation is the active authentication/session lifecycle: startup restore, login, token expiry/refresh, concurrent 401 handling, offline behavior, logout, and preservation of the scoped local database. Do not redesign it until the current call path and failure behavior are characterized.
+Mapped state/DI ownership cleanup, auth lifecycle, config-sync projection, locale, form state, and submission-table state are closed for v6. Remaining work is feature-by-feature: remove only proven duplicate owners, clarify folder ownership without behavioral churn, and address the incomplete reference/access policies listed in `09-production-boundaries-and-work-strategy.md`.

@@ -1,177 +1,86 @@
-# Classification Reconciliation Pass
+# Active And Inactive Classification
 
-Generated: 2026-07-10
+Validated: 2026-07-24
 
-Scope: reconcile `01-production-code-path-map.md`, `02-form-flow.md`, `03-config-fetching.md`, and `04-state-di-runtime-map.md` under a stricter active-code definition. This document is an overlay on the earlier maps: it does not invalidate their evidence, but it supersedes older classifications where later scans proved a narrower label.
+Purpose: provide one strict classification legend and identify the remaining surfaces most likely to mislead future agents. Detailed runtime evidence belongs in the focused maps.
 
-Update 2026-07-21: this reconciliation preserves the earlier `repeatUid` finding as mobile-side evidence only. The backend-validated contract is repeat metadata with `_id`, `_index`, `_parentId`, and `_submissionUid`; see `07-repeat-uid-contract.md`.
+## Strict Comment-Out Test
 
-## Strict Legend
+Classify functions, registrations, and call paths rather than whole files whenever a reachable file contains unused behavior.
 
-- ACTIVE: commenting/removing the path without replacement would break app startup/auth/navigation, sync/offline cache, assignment/form access, form load/render/repeat/edit/save, or submission table behavior.
-- SUPPORTING-USED: referenced by reachable production UI or helper flows, but core app/forms/sync/data-collection would still run if the feature were removed intentionally.
-- INACTIVE: not referenced by the active runtime flow found in static scans.
-- INCOMPLETE: reachable or plausible code exists, but the implementation is unfinished, placeholder-based, or returns empty/no-op data.
-- LEGACY-RISK: old, duplicate, registered-only, or conceptually related code that could be mistaken for active, but is not proven to be required by the current core flow.
-- UNKNOWN: static evidence cannot prove whether the path is required.
+| Label | Meaning | Comment-out test |
+|---|---|---|
+| `ACTIVE-CORE` | Required by the current production product | Removing it without replacement breaks startup/auth, configuration/offline access, assignment/form access, form capture/save, or submission upload |
+| `ACTIVE-SUPPORT` | Reached and useful, but not itself a core product capability | Removing it degrades a reached helper or UI concern without disabling core data collection |
+| `REACHABLE-INCOMPLETE` | Runtime can invoke it, but the behavior or policy is unfinished | It is not dead merely because it fails or returns no useful data |
+| `REGISTERED-UNUSED` | Generated or registered, but no active consumer is proven | Registration alone is not evidence of production use |
+| `SCHEMA-ONLY` | Present in a shipped schema but not used by an active feature | Source removal may be safe; dropping storage still requires an explicit migration |
+| `SOURCE-DEAD` | No active import, route, DI retrieval, persistence effect, or runtime reference | Removal should preserve production behavior, subject to focused checks |
+| `UNKNOWN` | Current static/runtime evidence cannot decide | Requires tracing, production data inspection, or characterization |
 
-Strict comment-out test: ACTIVE is not assigned just because a file compiles, is generated, appears in DI, is imported by another non-core file, has a form-looking/table-looking name, or is reachable only through stale/commented code. A path is ACTIVE only when removing it would break the running app or a current core data-collection feature.
+Do not classify code as `ACTIVE-CORE` because it compiles, has a plausible name, appears in generated output, is registered but never retrieved, or is mentioned in old docs/comments.
 
-## Main Finding
+## Current Core Authorities
 
-Yes, the earlier passes contain some over-classifications. The largest source is `01-production-code-path-map.md`, whose legend used "reachable through entrypoints, DI, imports, routes, or direct call sites" as active evidence. That was useful for first mapping, but too broad for demotion/removal planning.
+| Boundary | Classification | Current authority |
+|---|---|---|
+| App entry and navigation | `ACTIVE-CORE` | `lib/main.dart`; generated Stacked router/navigation from `lib/app/stacked/app.dart` |
+| Session and user scope | `ACTIVE-CORE` | `lib/core/auth/auth_manager.dart`; `AuthApi`; `TokenRefresher`; `SessionOperationTracker` |
+| Configuration sync | `ACTIVE-CORE` | explicit datasource list in `lib/di/init_active_session_scope.dart`; `SyncManager`; `SyncResourcesController` |
+| Offline configuration | `ACTIVE-CORE` | per-user `AppDatabase`, active datasources, DAOs, and cached form/version JSON |
+| Form lifecycle | `ACTIVE-CORE` | submission-scoped `FormInstance` and `FormTemplateRepository` |
+| Field value/validity | `ACTIVE-CORE` | `reactive_forms` controls |
+| Form presentation/rules | `ACTIVE-CORE` | `FormElementInstance` tree and presentation-only element state |
+| Repeat editing | `ACTIVE-CORE` | `RepeatRowEditSession`, `RepeatTable`, `EditRowScreen`, and `FormInstance` orchestration |
+| Submission persistence | `ACTIVE-CORE` | whole `data_instances.formData` JSON through `DataInstancesDao` |
+| Submission upload | `ACTIVE-CORE` | `SubmissionUploadService` and DAO-owned state transitions; no pull datasource |
+| Submission table state | `ACTIVE-CORE` | form/assignment-scoped `TableController` plus user-scoped `SubmissionTableService` |
+| Locale | `ACTIVE-CORE` | app-level preference plus device/build fallback in `app_locale_policy.dart` |
+| Error presentation | `ACTIVE-SUPPORT` | typed `ServerFailure`/network categories and localized presentation; Stacked `DialogService` is the reached generic dialog owner |
 
-The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "registered in the bulk sync datasource list" and sometimes means "required by offline consumers." Those are different. Under the strict test, a datasource can be active as part of the sync loop while the table it fills may still be supporting, conditional, or unproven for a specific form feature.
+## Remaining Misleading Or Incomplete Surfaces
 
-`02-form-flow.md` is mostly aligned for the form/repeat/save path, but a few rows should be read more narrowly: active widget use is not the same as active generated route registration, and display/summary helpers are not the same as form load/save core.
+| Surface | Classification | Evidence | Required decision |
+|---|---|---|---|
+| `OuLevelDatasource` and `ou_levels` | `REGISTERED-UNUSED` / `SCHEMA-ONLY` | active sync registration writes the table, but no production reader exists outside datasource/schema/generated code | Stop syncing in a bounded registration slice; drop the table only through a production migration |
+| Debug/example `main()` in `form_data_aggregator.dart` | `SOURCE-DEAD` fragment inside an active file | aggregation methods are consumed by submission summaries; the standalone `main()`/`print` block has no caller | Remove the debug fragment in a bounded no-behavior cleanup |
+| `lib/data/metadata_submission_update.provider.dart` and Reference field UI | `REACHABLE-INCOMPLETE` | `ValueType.Reference` routes to the widget, but the provider returns an empty list; none of 19 captured live form versions uses the type | Define backing metadata and future product use, or reject/remove the unsupported field path |
+| Calculated field parsing/render path | `REACHABLE-INCOMPLETE` | `ValueType.Calculated` is parsed, but calculation writeback is commented and captured live forms do not use it | Define expression/value ownership before implementing, or reject the type explicitly |
+| `user_form_permissions` fetch/table | `REACHABLE-INCOMPLETE` | datasource is in the active sync list and persists rows, but active access decisions are proven through `assignment_forms` | Define it as an authorization source with tests, or stop syncing and later migrate the table |
+| Synced submission edit | `REACHABLE-INCOMPLETE` | local edit/save/upload code exists and delegates to one access query, but deployed permissions and server round-trip repeat identity are not validated as product policy | Define authorization, lifecycle, conflict, and identity behavior before enabling broadly |
+| Synced/offline deletion | `REACHABLE-INCOMPLETE` | local delete and soft-delete payload traces exist, but retry/state/server-time behavior is not characterized end to end | Define one lifecycle and payload owner |
+| Server failure response shapes | `ACTIVE-SUPPORT` residual | mobile compatibility decoder handles current variants, but server responses still mix nested errors, RFC-style fields, strings, and partial bulk maps | Add structured `code`, `args`, `traceId`, and bulk details server-side without breaking old clients |
+| Whole-resource configuration transfer | `ACTIVE-CORE` residual | active sync still downloads sequential `paged=false` resource bodies | Measure deployed payloads before defining a delta/version server contract |
 
-`04-state-di-runtime-map.md` already introduced the stricter test. This pass adds one correction to it: `DialogService` is ACTIVE, while `SnackbarService` and Stacked `BottomSheetService` remain unproven.
+## Closed Misleading Surfaces
 
-## Reconciled Corrections
+These were proven non-authoritative and removed. Do not recreate them:
 
-| Earlier map area | Earlier label | Reconciled label | Evidence and correction |
-| --- | --- | --- | --- |
-| `01` status legend | Active if reachable/imported/registered/routed | Use this document's strict labels | The old label is too broad for cleanup. Treat `01` "Active" as "reachable evidence" unless confirmed by `02`, `03`, `04`, or this document. |
-| Generated Stacked router and locator | Active generated code | ACTIVE | `lib/main.dart` uses `StackedRouter().onGenerateRoute`; active navigation uses `NavigationService`. Generated route/locator output is required, but should not be edited manually. |
-| Stacked `SettingsView` and about/version UI | Active route/UI | SUPPORTING-USED | Settings is routed, but removing settings/about display would not break startup, sync, form capture, repeat edit, save, or submission table behavior. |
-| Stacked `DialogService` | UNKNOWN in `04` | ACTIVE | `DExceptionReporter` uses `appLocator<DialogService>().showDialog(...)`; login/startup/form-template error paths call the reporter. |
-| Stacked `SnackbarService` | Registered/generated | UNKNOWN | Static scan found registration but no required core call site. Do not classify active from generated registration alone. |
-| Stacked `BottomSheetService` | Registered/generated | UNKNOWN | Active form completion uses Flutter `showModalBottomSheet`, not Stacked `BottomSheetService`. Generated registration alone is not enough. |
-| `EditRowScreen` widget | ACTIVE in `02` | ACTIVE | Repeat edit constructs `EditRowScreen` on a context-owned `MaterialPageRoute`; commenting the widget would break active repeat editing. |
-| `EditRowScreen` generated Stacked route | ACTIVE in `02` | OBSOLETE-REMOVED | No caller used the generated route; active repeat editing constructs the widget through a local Material route. The registration and generated helper were removed on 2026-07-23. |
-| `EditRowPanel` and dialog repeat edit path | LEGACY-RISK in `02` | OBSOLETE-REMOVED | The active path always navigated to `EditRowScreen`; the unreachable `if (true)` alternative, `showEditDialog(...)`, and panel widget were removed. |
-| Riverpod as a library | ACTIVE | ACTIVE | Root `ProviderScope` and many providers are active, but every provider still needs per-provider evidence. Generated `*.provider.g.dart` files are not active unless their provider is watched by a core path. |
-| Old team `StateNotifierProvider` files | Active-looking Riverpod state | OBSOLETE-REMOVED | The only screen used hard-coded demo data, had no active route, and was referenced only by a comment-only dashboard. Active assignment filtering remains in `lib/data/teams.provider.dart`. |
-| `SyncCoordinator`, `SyncExecutor`, `SyncProgressNotifier` | Registered injectables | OBSOLETE-REMOVED | Generated DI was their only outside reference. The duplicate stack and private progress models were removed; active sync remains `SyncResourcesController` plus `SyncManager`. |
-| `syncServiceProvider` and NMC worker providers | Provider exists | OBSOLETE-REMOVED | No active watcher/worker registration existed; `performSync` did not perform the real download. The unused facade, worker models, and dependent legacy session service were removed. |
-| Former generated datasource registration | Generated active session scope | OBSOLETE-REMOVED | The generated typed alternative had no active caller and was removed. Active auth calls the explicit `registerUserConfigurationDatasources(appLocator)` list, whose membership is covered by a focused test. |
-| `UserDatasource` | Mixed/uncertain in `03` | OBSOLETE-REMOVED | It was registered only as concrete `UserDatasource`, had no resolver/caller, and was never collected by `SyncManager.getAll<AbstractDatasource>()`. Active profile fetch remains `AuthApi.getUserProfile`. |
-| Abandoned manifest service / party persistence attempt | INCOMPLETE in `03` | OBSOLETE-REMOVED | No runtime consumer, incomplete persistence, placeholder resolver, and no tables in the Play schema-3 database. Removed from active DI/schema declarations; no table-drop migration is performed. |
-| Bulk `AbstractDatasource` list | ACTIVE | ACTIVE | The nine raw `AbstractDatasource` registrations in `init_active_session_scope.dart` are core to current config sync because `SyncManager` collects them. Submission pull is intentionally excluded. |
-| `DataElementDatasource` | ACTIVE in `01`/`03` | OBSOLETE-REMOVED | The datasource was write-only: no runtime read of `data_elements` existed outside generated Drift code. Form metadata comes from cached template JSON. |
-| `data_elements` table as form-render source | ACTIVE in `01`/`03` | OBSOLETE-REMOVED | No active consumer was found. Migration 6 drops the populated table after migrations 3/4/5 preserve active cached form/submission data. |
-| `UserFormAccessesDatasource` | ACTIVE in `03` | ACTIVE | The datasource is in the `AbstractDatasource` sync loop. |
-| `user_form_permissions` as access gate | ACTIVE in `03` | UNKNOWN | Active form access checks found in later passes rely mostly on `assignment_forms`; direct production use of `user_form_permissions` was not proven. |
-| `assignment_forms` | ACTIVE | ACTIVE | Used by available forms, assignment detail access, edit permissions, and form list filtering. This is the active form-access table. |
-| `sync_summaries` | ACTIVE in `03` | SUPPORTING-USED | `BaseDataSource` writes summaries. The unreachable `SyncSummaryCard` UI was removed; core sync completion uses progress/global state and SharedPreferences flags. |
-| `DisplayValueLookup` display helper | Partially active in `01`, LEGACY-RISK in `02` | SUPPORTING-USED | `DisplayValueLookup` is used by `MapValueToDisplay`; its naming and API now expose that it is display support, not capture persistence. |
-| `data_values` table as capture storage | Previously partially active/LEGACY-RISK | OBSOLETE-REMOVED | DAO/datasource/CRUD callers and table are removed; migration 5 preserves active whole submission JSON. |
-| `repeat_instances` table | Previously LEGACY-RISK | OBSOLETE-REMOVED | DAO/datasource/table are removed; migration 5 preserves repeats in nested submission JSON. |
-| `metadata_submissions` and `systemMetadataSubmissionsProvider` | Inactive/incomplete in `01`/`03`, incomplete in `04` | INCOMPLETE | The comment-only SDK table/datasource artifacts were removed. Reference widgets can still watch the provider, but it currently returns `[]` after commented DB logic. Production use depends on forms containing `ValueType.Reference`. |
-| `partyResolverProvider` and party/manifest tables | Mixed/uncertain in early scans | OBSOLETE-REMOVED | The placeholder provider, DI services, and schema declarations had no production consumer and were removed without dropping unknown tables from existing databases. |
-| Form route/load/save/repeat core in `02` | ACTIVE | ACTIVE | `FormFlowBootstrapperController`, `FormTemplateRepository`, `FormElementControlBuilder`, `FormElementBuilder`, `FormInstance`, repeat models/widgets, and `DataInstancesDao.updateData` pass the strict test. |
-| Form summary utilities | ACTIVE in `02` | ACTIVE | `FormDataUtil`/`FormDataAggregator` are active through submission table summaries, but not part of form load/save/repeat persistence. |
-| `CodeGenerator` | ACTIVE in `02` | ACTIVE | Active for submission IDs and referenced by old repeat UID UI code. Backend validation later proved mobile should write repeat metadata, not `repeatUid`; see `07-repeat-uid-contract.md`. |
-| Example/debug `main()` functions inside helper files | Mentioned as examples | INACTIVE | Files like date-time demos or aggregator examples are not production entrypoints unless imported by `lib/main.dart` or routed production paths. |
+- the physical `drun_sdk` package boundary and duplicate generated SDK registration;
+- submission pull and its `DataInstanceDatasource`;
+- normalized repeat/data-value tables, DAOs, datasources, and value-store paths;
+- write-only `data_elements` datasource/table;
+- metadata-submission table/datasource artifacts;
+- obsolete form repositories, rule-effect/value state, provider sketches, builders, editors, and UI demos;
+- duplicate sync coordinators/executors/providers;
+- duplicate template tree construction and generated-only form-list services;
+- duplicate submission table selection/command owners;
+- unused Stacked snackbar, bottom-sheet, custom dialog/sheet registrations and hand-written viewmodels;
+- abandoned party/manifest persistence and UI;
+- unused assignment service and team-management demos;
+- old `go_router` experiment and duplicate login screen.
 
-## Strict Active Core To Carry Forward
+Removal of source does not imply that an unknown table left behind by an unshipped experiment should be dropped from a user database. Database removal remains migration-governed.
 
-These are the paths that should remain treated as core-active until runtime proves otherwise.
+## Classification Procedure
 
-App/session/bootstrap:
+Before demoting or deleting a surface:
 
-- `lib/main.dart`
-- `lib/app/di/injection.dart`
-- `lib/app/di/injection.config.dart`
-- `lib/app/di/third_party_services.module.dart`
-- `lib/app/di/sdk_module.dart`
-- `lib/app/stacked/app.dart`
-- `lib/app/stacked/app.router.dart`
-- `lib/app/stacked/app.locator.dart`
-- `lib/core/auth/auth_manager.dart`
-- `lib/core/user_session/preference.provider.dart`
-- `lib/core/user_session/app_locale_policy.dart`
+1. Search imports, exports, route calls, DI/provider registration and retrieval, generated references, persistence reads/writes, and tests.
+2. Trace from a production entrypoint or active owner, not from the candidate name.
+3. Check whether only part of a reachable file is unused.
+4. Check shipped Drift schemas and migration fixtures separately from Dart reachability.
+5. Add the smallest adjacent characterization or registration check.
+6. Remove one bounded capability/lookalike and update its focused map.
 
-Sync/offline cache:
-
-- `lib/features/sync/presentation/sync_resources_view.dart`
-- `lib/features/sync/application/sync_resources.controller.dart`
-- `lib/core/sync_manager/sync_manager.dart`
-- `lib/datasource/base_datasource.dart`
-- `lib/di/init_active_session_scope.dart`
-- Active `AbstractDatasource` implementations registered by `registerUserConfigurationDatasources(...)`
-- `lib/database/db_factory/database_factory.dart`
-- `lib/database/db_factory/platform_app.dart`
-- `lib/database/app_database.dart`
-
-Assignment/form access and listing:
-
-- `lib/features/assignment/application/assignment_model.provider.dart`
-- `lib/features/assignment/application/assignment_filter.provider.dart`
-- `lib/data/teams.provider.dart`
-- `lib/data/form_template_list_service.dart`
-- `lib/features/form/application/form_provider.dart`
-- `lib/features/form_submission/application/submission_edit_access.dart`
-- `lib/database/dao/assignments_dao.dart`
-- `assignment_forms` table and access queries
-
-Form/repeat/save:
-
-- `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart`
-- `lib/data/form_template_repository.dart`
-- `lib/core/form/builder/form_element_control_builder.dart`
-- `lib/core/form/builder/form_element_builder.dart`
-- `lib/features/form_submission/application/element/form_instance.dart`
-- `lib/features/form_submission/application/element/form_element.dart`
-- `lib/features/form_submission/application/element/section_instance.dart`
-- `lib/features/form_submission/application/element/repeat_section.dart`
-- `lib/features/form_submission/application/element/repeat_item_instance.dart`
-- `lib/features/form_submission/application/element/field_instance.dart`
-- `lib/features/form_submission/presentation/form_submission_screen.widget.dart`
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart`
-- `lib/features/form_submission/presentation/section/repeat_table_rows_source.dart`
-- `lib/features/form_submission/presentation/section/edit_row_screen.dart`
-- `lib/database/dao/data_submissions_dao.dart`
-- `lib/database/tables/data_submissions.table.dart`
-- `lib/database/extensions/data_submission.extension.dart`
-
-Submission table:
-
-- `lib/features/data_instance/application/table.providers.dart`
-- `lib/features/data_instance/application/table_controller.provider.dart`
-- `lib/features/data_instance/application/submission_table_service.dart`
-- `lib/features/data_instance/presentation/table_screen.dart`
-- `lib/features/data_instance/presentation/table_widget.dart`
-- `lib/core/data_instance/form_data_util.dart`
-
-## Supporting Or Conditional Paths
-
-These are used or plausible, but should not be treated as core-active without more proof.
-
-| Path | Reconciled label | Reason |
-| --- | --- | --- |
-| `lib/data/app_about_info.provider.dart` | SUPPORTING-USED | Version/about display only. |
-| Settings screens and appearance/preferences UI | SUPPORTING-USED | Reachable UI, but not core data-collection behavior. Preference provider itself remains ACTIVE because root app and table appearance use it. |
-| `SyncSummaryCard` UI | OBSOLETE-REMOVED | It had no executable consumer; `sync_summaries` persistence remains supporting-used independently. |
-| `DisplayValueLookup` | SUPPORTING-USED | Resolves org-unit/team/option labels only; inactive normalized value persistence was removed. |
-| `data_elements` table | OBSOLETE-REMOVED | No runtime read existed outside generated Drift code; migration 6 drops the table after the write-only sync source was removed. |
-| `ValueType.Reference` widgets and metadata provider | INCOMPLETE | Field factory can route to reference widgets, but provider returns empty data and production form use is unconfirmed. |
-| `UserFormAccessesDatasource` table output | UNKNOWN | Synced actively, but active access checks rely on `assignment_forms`. |
-| `DialogService` custom info dialog | ACTIVE | Error reporting and a test upload dialog use it. |
-| Stacked `SnackbarService` / `BottomSheetService` | UNKNOWN | Registered, but no core active call site found. |
-
-## Demotion Candidates
-
-Do not delete these yet, but they are strong candidates for demotion/removal after runtime confirmation.
-
-- `lib/core/sync_manager/sync_service.provider.dart`
-- `systemMetadataSubmissionsProvider` and its reference-field UI path, if production forms use `ValueType.Reference`
-
-## Open Reconciliation Questions
-
-1. Do real production forms contain `ValueType.Reference` fields? If yes, the reference widget path is reachable, but its provider still appears incomplete.
-2. Are `user_form_permissions` ever used for active access decisions, or is `assignment_forms` the only active permission gate?
-3. Which synced resources are semantically required for current production forms, beyond being registered in the sync loop?
-4. Are Stacked `SnackbarService` or `BottomSheetService` used by any runtime feature outside static Dart references?
-5. Should `sync_summaries` remain a core table, or is it supporting/debug sync telemetry?
-
-## Next Step
-
-Before the next feature/refactor pass, update future maps to use this strict legend from the start. For existing maps, read this document as the label overlay:
-
-- Use `01` mainly for broad entrypoint evidence and candidate surfaces.
-- Use `02` as the strongest static source for active form/repeat/save behavior.
-- Use `03` as the strongest static source for active sync fetch registration, but separate "synced resource" from "core offline consumer."
-- Use `04` for state/DI ownership, with the DialogService correction recorded above.
-
-The next runtime confirmation pass should focus on GetIt scope behavior, datasource registration order, real form JSON value types, future repeat-metadata server round trips, and whether supporting tables/providers are actually touched during normal production workflows.
+The current unresolved work order belongs only in `09-production-boundaries-and-work-strategy.md`.

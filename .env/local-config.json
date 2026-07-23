@@ -1,6 +1,7 @@
 {
   "env_label": "local",
   "api_base_url": "http://localhost:8080",
+  "sentry_dsn": "",
   "default_locale": "ar",
   "secure_cache": false
 }

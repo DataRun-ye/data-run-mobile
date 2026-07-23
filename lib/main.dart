@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/main_constants.dart';
+import 'package:datarunmobile/core/telemetry/app_telemetry.dart';
 import 'package:datarunmobile/core/user_session/app_locale_policy.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
@@ -14,7 +14,6 @@ import 'package:flutter/services.dart'
     show SystemUiOverlayStyle, SystemChrome, SystemUiMode;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -23,47 +22,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final packageInfo = await PackageInfo.fromPlatform();
-
   await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://1bb94e6e215c4c72a8ef5c260ed71745@glitchtip.nmcpye.org/1';
-      // CRITICAL: Link Sentry to your Stacked navigator
-      options.navigatorKey = StackedService.navigatorKey;
-
-      options.environment = AppEnvironment.envLabel;
-
-      // Track the Version (Automatic: name@version+build)
-      options.release =
-          '${packageInfo.appName}@${packageInfo.version}+${packageInfo.buildNumber}';
-
-      // Distinguish the platform (e.g., 'windows', 'android')
-      options.dist = Platform.operatingSystem;
-
-      options.maxCacheItems = 50;
-
-      options.enableAutoSessionTracking = false;
-
-      // Visual Debugging (The "Secret Sauce")
-      options.attachScreenshot = true;
-      // options.attachViewHierarchy = true;
-      options.maxAttachmentSize = 1 * 1024 * 1024;
-      // Performance (Keep it low to save your VM RAM/Disk)
-      options.tracesSampleRate = 0.01;
-
-      // Privacy & Cleanliness
-      // 2. Performance: Don't let reporting lag the app
-      options.sendDefaultPii = false; // Good for privacy
-      options.reportPackages = true;
-
-      // 3. Troubleshooting: See why reports fail in your IDE console
-      // Turn this OFF for production releases
-      // options.debug = true;
-      // Optional: Customize the feedback dialog's requirements
-      options.feedback.isNameRequired = true;
-      // options.feedback.isEmailRequired = true;
-    },
+    AppTelemetry.configure,
     appRunner: () async {
       WidgetsFlutterBinding.ensureInitialized();
       await configureDependencies();
@@ -107,9 +67,6 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (AppEnvironment.isDev) {
-      Sentry.captureMessage('DATARUN-APP, Glitch is working!');
-    }
     final language =
         ref.watch(preferenceProvider(Preference.language)) as String;
 

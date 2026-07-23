@@ -2,6 +2,7 @@ import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/sync/sync_scheduler.dart';
+import 'package:datarunmobile/core/telemetry/app_telemetry.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class StartupCoordinator {
@@ -20,6 +21,7 @@ class StartupCoordinator {
   Future<void> run() async {
     try {
       await _authManager.initialize();
+      await AppTelemetry.captureDevelopmentStartupCheck();
       if (!_authManager.isAuthenticated()) {
         _navigationService.replaceWithLoginView();
       } else if (await _syncScheduler.shouldSync()) {

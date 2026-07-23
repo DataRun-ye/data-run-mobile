@@ -1,6 +1,7 @@
 {
   "env_label": "development",
   "api_base_url": "https://api.nmcpye.org",
+  "sentry_dsn": "https://1bb94e6e215c4c72a8ef5c260ed71745@glitch.nmcpye.org/1",
   "default_locale": "en",
   "secure_cache": true
 }

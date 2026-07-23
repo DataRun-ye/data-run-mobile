@@ -1,7 +1,8 @@
-
 abstract class AppEnvironment {
   static const envLabel =
       String.fromEnvironment('env_label', defaultValue: "prod");
+  static const sentryDsn =
+      String.fromEnvironment('sentry_dsn', defaultValue: '');
   static const apiBaseUrl = String.fromEnvironment(
     'api_base_url',
     defaultValue: 'https://api.nmcpye.org',

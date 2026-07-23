@@ -19,10 +19,10 @@ import 'package:datarunmobile/core/auth/auth_storage.dart';
 import 'package:datarunmobile/core/auth/token_refresher.dart';
 import 'package:datarunmobile/core/auth/token_string_extension.dart';
 import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
+import 'package:datarunmobile/core/telemetry/app_telemetry.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 enum AuthStatus {
@@ -68,21 +68,6 @@ class AuthManager extends ChangeNotifier {
 
   UserSession? get activeUserSession => _activeUserSession;
 
-// Call this after your login is successful
-  FutureOr<void> setSentryUser(UserSession? activeUserSession) =>
-      Sentry.configureScope((scope) {
-        scope.setUser(SentryUser(
-          id: activeUserSession?.id,
-          username: activeUserSession?.username,
-          data: {
-            'firstname': activeUserSession?.firstName,
-            'langKey': activeUserSession?.langKey,
-            'activityUIDs': activeUserSession?.activityUIDs,
-            'userTeamsUIDs': activeUserSession?.userTeamsUIDs
-          },
-        ));
-      });
-
   /// Checks for any active session or previously logged in users.
   Future<void> initialize() async {
     _status = AuthStatus.unknown;
@@ -92,7 +77,7 @@ class AuthManager extends ChangeNotifier {
       final userSession = await _loadStartupSession();
       await _restoreSession(userSession);
       try {
-        await setSentryUser(activeUserSession);
+        await AppTelemetry.setUser(activeUserSession);
       } catch (error, stackTrace) {
         logError(
           'Failed to restore authenticated telemetry identity',
@@ -106,7 +91,7 @@ class AuthManager extends ChangeNotifier {
       } else {
         _status = AuthStatus.unauthenticated;
         _activeUserSession = null;
-        Sentry.configureScope((scope) => scope.setUser(null));
+        await AppTelemetry.setUser(null);
       }
     } finally {
       notifyListeners();
@@ -177,7 +162,7 @@ class AuthManager extends ChangeNotifier {
       await _activateUserSession(userSession);
 
       try {
-        await setSentryUser(userSession);
+        await AppTelemetry.setUser(userSession);
       } catch (error, stackTrace) {
         logError(
           'Failed to set authenticated telemetry identity',
@@ -346,7 +331,7 @@ class AuthManager extends ChangeNotifier {
     }
 
     try {
-      await setSentryUser(null);
+      await AppTelemetry.setUser(null);
     } catch (error, stackTrace) {
       logError(
         'Failed to clear ended session telemetry identity',

@@ -125,6 +125,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.lazySingleton<_i261.AuthManager>(() => _i261.AuthManager(
         authStorage: gh<_i324.AuthStorage>(),
         authApi: gh<_i64.AuthApi>(),
+        tokenRefresher: gh<_i48.TokenRefresher>(),
+        connectivityService: gh<_i658.ConnectivityService>(),
         sessionOperationTracker: gh<_i160.SessionOperationTracker>(),
       ));
   gh.factory<_i656.AuthInterceptor>(() => _i656.AuthInterceptor(

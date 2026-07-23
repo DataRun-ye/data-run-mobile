@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:datarunmobile/core/auth/auth_failure_policy.dart';
 import 'package:datarunmobile/core/auth/auth_storage.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/auth/token_refresher.dart';
@@ -67,10 +68,17 @@ class AuthInterceptor extends QueuedInterceptor {
 
       options.headers.addAll(_buildHeaders(tokenPair));
       return handler.next(options);
-    } catch (_) {
-      // Trigger auth failure
+    } on RevokeTokenException catch (error) {
+      return handler.reject(error, true);
+    } on DioException catch (error) {
+      return handler.reject(error, true);
+    } catch (error, stackTrace) {
       return handler.reject(
-        RevokeTokenException(requestOptions: options),
+        DioException(
+          requestOptions: options,
+          error: error,
+          stackTrace: stackTrace,
+        ),
         true,
       );
     }
@@ -150,10 +158,21 @@ class AuthInterceptor extends QueuedInterceptor {
         _authStorage.getActiveUserId(),
       );
     } catch (e, s) {
-      logError('could not refresh accessToken, clearing and revoke out...',
-          source: e, stackTrace: s);
-      await _authManager.expireSession();
-      throw RevokeTokenException(requestOptions: options);
+      if (isCredentialRejection(e)) {
+        logError(
+          'refresh token rejected, ending session',
+          source: e,
+          stackTrace: s,
+        );
+        await _authManager.expireSession();
+        throw RevokeTokenException(requestOptions: options);
+      }
+
+      throw DioException(
+        requestOptions: options,
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 

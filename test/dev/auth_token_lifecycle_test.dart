@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_api.dart';
+import 'package:datarunmobile/core/auth/auth_failure_policy.dart';
 import 'package:datarunmobile/core/auth/auth_interceptor.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/auth/auth_response.dart';
@@ -14,6 +15,7 @@ import 'package:datarunmobile/core/auth/token_refresher.dart';
 import 'package:datarunmobile/core/auth/token_storage.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/http/default_http_adapter.dart';
+import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
 import 'package:datarunmobile/core/secure_storage/storage_service.dart';
 import 'package:datarunmobile/core/user/cache_keys.dart';
 import 'package:datarunmobile/core/user_session/session_storage.dart';
@@ -54,9 +56,20 @@ void main() {
 
   tearDown(appLocator.reset);
 
-  AuthManager createAuthManager() => AuthManager(
+  AuthManager createAuthManager({
+    AuthApi? authApi,
+    TokenRefresher? startupTokenRefresher,
+    bool isOnline = true,
+  }) =>
+      AuthManager(
         authStorage: authStorage,
-        authApi: _FakeAuthApi((_) async => _newTokens),
+        authApi: authApi ?? _FakeAuthApi((_) async => _newTokens),
+        tokenRefresher: startupTokenRefresher ??
+            TokenRefresher(
+              tokenStorage,
+              _FakeAuthApi((_) async => _newTokens),
+            ),
+        connectivityService: _FakeConnectivityService(isOnline),
         sessionOperationTracker: operationTracker,
       );
 
@@ -71,6 +84,13 @@ void main() {
     expect(sessionStorage.readSession('test-user')?.id, _userSession.id);
   });
 
+  test('only explicit authentication rejection ends a cached session', () {
+    expect(isCredentialRejection(_refreshHttpError(statusCode: 401)), isTrue);
+    expect(isCredentialRejection(_refreshHttpError(statusCode: 403)), isTrue);
+    expect(isCredentialRejection(_refreshHttpError(statusCode: 500)), isFalse);
+    expect(isCredentialRejection(_refreshHttpError()), isFalse);
+  });
+
   test('login storage failure never opens a user database scope', () async {
     final databaseFactory = _TestDatabaseFactory();
     appLocator.registerSingleton<DatabaseFactory>(
@@ -78,11 +98,7 @@ void main() {
       dispose: (factory) => factory.close(),
     );
     storage.failWriteKey = CacheKeys.getRefreshTokenKey('test-user');
-    final authManager = AuthManager(
-      authStorage: authStorage,
-      authApi: _LoginAuthApi(),
-      sessionOperationTracker: operationTracker,
-    );
+    final authManager = createAuthManager(authApi: _LoginAuthApi());
 
     await expectLater(
       authManager.login(username: 'test-user', password: 'password'),
@@ -103,11 +119,7 @@ void main() {
       databaseFactory,
       dispose: (factory) => factory.close(),
     );
-    final authManager = AuthManager(
-      authStorage: authStorage,
-      authApi: _LoginAuthApi(),
-      sessionOperationTracker: operationTracker,
-    );
+    final authManager = createAuthManager(authApi: _LoginAuthApi());
 
     await expectLater(
       authManager.login(username: 'test-user', password: 'password'),
@@ -128,11 +140,7 @@ void main() {
       databaseFactory,
       dispose: (factory) => factory.close(),
     );
-    final authManager = AuthManager(
-      authStorage: authStorage,
-      authApi: _LoginAuthApi(),
-      sessionOperationTracker: operationTracker,
-    );
+    final authManager = createAuthManager(authApi: _LoginAuthApi());
 
     final session =
         await authManager.login(username: 'test-user', password: 'password');
@@ -173,6 +181,118 @@ void main() {
     expect(await Future.wait([first, second]), [_newTokens, _newTokens]);
     expect(refreshCalls, 1);
     expect(await tokenStorage.getTokens('test-user'), _newTokens);
+  });
+
+  test('offline startup restores the cached session without refreshing',
+      () async {
+    final databaseFactory = _TestDatabaseFactory();
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    final expiredTokens = (
+      accessToken: _jwtExpiringAt(
+        DateTime.now().subtract(const Duration(minutes: 5)),
+      ),
+      refreshToken: _oldTokens.refreshToken,
+    );
+    await authStorage.persistAuthenticatedSession(_userSession, expiredTokens);
+    var refreshCalls = 0;
+    final authManager = createAuthManager(
+      isOnline: false,
+      startupTokenRefresher: TokenRefresher(
+        tokenStorage,
+        _FakeAuthApi((_) async {
+          refreshCalls++;
+          return _newTokens;
+        }),
+      ),
+    );
+
+    await authManager.initialize();
+
+    expect(authManager.status, AuthStatus.authenticated);
+    expect(appLocator.hasScope('test-user'), isTrue);
+    expect(databaseFactory.openCalls, 1);
+    expect(refreshCalls, 0);
+    expect(preferences.getString(CacheKeys.activeUserKey), 'test-user');
+    expect(await tokenStorage.getTokens('test-user'), expiredTokens);
+
+    await authManager.logout();
+  });
+
+  test('transient startup refresh failure restores the cached session',
+      () async {
+    final databaseFactory = _TestDatabaseFactory();
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    final expiredTokens = (
+      accessToken: _jwtExpiringAt(
+        DateTime.now().subtract(const Duration(minutes: 5)),
+      ),
+      refreshToken: _oldTokens.refreshToken,
+    );
+    await authStorage.persistAuthenticatedSession(_userSession, expiredTokens);
+    var refreshCalls = 0;
+    final authManager = createAuthManager(
+      startupTokenRefresher: TokenRefresher(
+        tokenStorage,
+        _FakeAuthApi((_) {
+          refreshCalls++;
+          throw _refreshHttpError();
+        }),
+      ),
+    );
+
+    await authManager.initialize();
+
+    expect(authManager.status, AuthStatus.authenticated);
+    expect(appLocator.hasScope('test-user'), isTrue);
+    expect(databaseFactory.openCalls, 1);
+    expect(refreshCalls, 1);
+    expect(preferences.getString(CacheKeys.activeUserKey), 'test-user');
+    expect(await tokenStorage.getTokens('test-user'), expiredTokens);
+
+    await authManager.logout();
+  });
+
+  test('rejected startup refresh clears credentials without navigating',
+      () async {
+    final databaseFactory = _TestDatabaseFactory();
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    final expiredTokens = (
+      accessToken: _jwtExpiringAt(
+        DateTime.now().subtract(const Duration(minutes: 5)),
+      ),
+      refreshToken: _oldTokens.refreshToken,
+    );
+    await authStorage.persistAuthenticatedSession(_userSession, expiredTokens);
+    var refreshCalls = 0;
+    final authManager = createAuthManager(
+      startupTokenRefresher: TokenRefresher(
+        tokenStorage,
+        _FakeAuthApi((_) {
+          refreshCalls++;
+          throw _refreshHttpError(statusCode: 401);
+        }),
+      ),
+    );
+
+    await authManager.initialize();
+
+    expect(authManager.status, AuthStatus.unauthenticated);
+    expect(appLocator.hasScope('test-user'), isFalse);
+    expect(databaseFactory.openCalls, 0);
+    expect(refreshCalls, 1);
+    expect(navigationService.routes, isEmpty);
+    expect(preferences.getString(CacheKeys.activeUserKey), isNull);
+    expect(await tokenStorage.getTokens('test-user'), isNull);
+    expect(sessionStorage.readSession('test-user')?.id, _userSession.id);
   });
 
   test('expired authenticated request uses the persisted rotated access token',
@@ -240,7 +360,7 @@ void main() {
 
     final refresher = TokenRefresher(
       tokenStorage,
-      _FakeAuthApi((_) => throw StateError('refresh rejected')),
+      _FakeAuthApi((_) => throw _refreshHttpError(statusCode: 401)),
     );
     final authManager = createAuthManager();
     final dio = Dio(BaseOptions(baseUrl: 'https://example.test'))
@@ -277,6 +397,52 @@ void main() {
     expect(preferences.getString(CacheKeys.activeUserKey), isNull);
     expect(await tokenStorage.getTokens('test-user'), isNull);
     expect(sessionStorage.readSession('test-user')?.id, _userSession.id);
+  });
+
+  test('transient request refresh failure preserves the active session',
+      () async {
+    final expiredTokens = (
+      accessToken: _jwtExpiringAt(
+        DateTime.now().subtract(const Duration(minutes: 5)),
+      ),
+      refreshToken: _oldTokens.refreshToken,
+    );
+    await authStorage.persistAuthenticatedSession(
+      _userSession,
+      expiredTokens,
+    );
+    appLocator.pushNewScope(scopeName: 'test-user');
+
+    final refresher = TokenRefresher(
+      tokenStorage,
+      _FakeAuthApi((_) => throw _refreshHttpError()),
+    );
+    final authManager = createAuthManager();
+    final dio = Dio(BaseOptions(baseUrl: 'https://example.test'))
+      ..interceptors.add(
+        AuthInterceptor(
+          authStorage: authStorage,
+          authManager: authManager,
+          tokenRefresher: refresher,
+        ),
+      )
+      ..httpClientAdapter = _RecordingAdapter();
+
+    await expectLater(
+      operationTracker.track(
+        () => DefaultHttpAdapter(dio).request(
+          resourceName: 'protected',
+          path: '/protected',
+          method: 'get',
+        ),
+      ),
+      throwsA(isA<NetworkHttpError>()),
+    );
+
+    expect(appLocator.hasScope('test-user'), isTrue);
+    expect(navigationService.routes, isEmpty);
+    expect(preferences.getString(CacheKeys.activeUserKey), 'test-user');
+    expect(await tokenStorage.getTokens('test-user'), expiredTokens);
   });
 
   test('a repeated 401 with a valid token expires the session', () async {
@@ -382,6 +548,27 @@ String _jwtExpiringAt(DateTime expiration) {
   return '$header.$payload.signature';
 }
 
+NetworkHttpError _refreshHttpError({int? statusCode}) {
+  final request = RequestOptions(path: '/api/v1/refresh');
+  final response = statusCode == null
+      ? null
+      : Response<void>(
+          requestOptions: request,
+          statusCode: statusCode,
+          statusMessage: statusCode == 401 ? 'Unauthorized' : 'Error',
+        );
+  return NetworkHttpError.fromDioException(
+    DioException(
+      requestOptions: request,
+      response: response,
+      type: response == null
+          ? DioExceptionType.connectionError
+          : DioExceptionType.badResponse,
+      error: response == null ? StateError('offline') : null,
+    ),
+  );
+}
+
 class _FakeAuthApi extends AuthApi {
   _FakeAuthApi(this._refresh);
 
@@ -400,6 +587,18 @@ class _LoginAuthApi extends AuthApi {
 
   @override
   Future<UserSession> getUserProfile(String accessToken) async => _userSession;
+}
+
+class _FakeConnectivityService implements ConnectivityService {
+  _FakeConnectivityService(this.online);
+
+  final bool online;
+
+  @override
+  Future<bool> get isOnline async => online;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _MemoryStorageService implements StorageService {

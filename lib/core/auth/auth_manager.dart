@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:datarunmobile/core/auth/auth_failure_policy.dart';
 import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
-import 'package:datarunmobile/core/exception/session_expired_exception.dart';
+import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
@@ -20,7 +21,6 @@ import 'package:datarunmobile/core/auth/token_string_extension.dart';
 import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -37,12 +37,18 @@ class AuthManager extends ChangeNotifier {
   AuthManager({
     required AuthStorage authStorage,
     required AuthApi authApi,
+    required TokenRefresher tokenRefresher,
+    required ConnectivityService connectivityService,
     required SessionOperationTracker sessionOperationTracker,
   })  : _authStorage = authStorage,
         _authApi = authApi,
+        _tokenRefresher = tokenRefresher,
+        _connectivityService = connectivityService,
         _sessionOperationTracker = sessionOperationTracker;
 
   final AuthStorage _authStorage;
+  final TokenRefresher _tokenRefresher;
+  final ConnectivityService _connectivityService;
   final SessionOperationTracker _sessionOperationTracker;
   AuthStatus _status = AuthStatus.unknown;
   Future<void>? _sessionEnd;
@@ -83,16 +89,55 @@ class AuthManager extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final userSession = await initializeApp();
+      final userSession = await _loadStartupSession();
       await _restoreSession(userSession);
-      setSentryUser(activeUserSession);
-    } catch (e) {
-      _status = AuthStatus.unauthenticated;
-      _activeUserSession = null;
-      Sentry.configureScope((scope) => scope.setUser(null));
+      try {
+        await setSentryUser(activeUserSession);
+      } catch (error, stackTrace) {
+        logError(
+          'Failed to restore authenticated telemetry identity',
+          source: error,
+          stackTrace: stackTrace,
+        );
+      }
+    } catch (error) {
+      if (isCredentialRejection(error)) {
+        await _beginSessionEnd(navigateToLogin: false);
+      } else {
+        _status = AuthStatus.unauthenticated;
+        _activeUserSession = null;
+        Sentry.configureScope((scope) => scope.setUser(null));
+      }
     } finally {
       notifyListeners();
     }
+  }
+
+  Future<UserSession> _loadStartupSession() async {
+    final userId = _authStorage.getActiveUserId();
+    final tokenPair = await _authStorage.getActiveUserToken();
+    final userSession = _authStorage.getActiveSession();
+    if (tokenPair.accessToken.isAccessTokenValid) {
+      return userSession;
+    }
+
+    bool isOnline;
+    try {
+      isOnline = await _connectivityService.isOnline;
+    } catch (_) {
+      return userSession;
+    }
+    if (!isOnline) return userSession;
+
+    try {
+      await _tokenRefresher.refreshToken(userId);
+    } catch (error) {
+      if (isCredentialRejection(error)) rethrow;
+      if (error is NetworkHttpError) return userSession;
+      rethrow;
+    }
+
+    return userSession;
   }
 
   bool isAuthenticated() {
@@ -221,6 +266,7 @@ class AuthManager extends ChangeNotifier {
             database,
             dispose: (db) async {
               logDebug('AppDatabase dispose');
+              await db.close();
               await databaseFactory.closeForUser(db.userId);
             },
           );
@@ -264,13 +310,13 @@ class AuthManager extends ChangeNotifier {
   /// it. The user scope closes after active sync/upload cleanup has completed.
   Future<void> expireSession() => _beginSessionEnd();
 
-  Future<void> _beginSessionEnd() {
+  Future<void> _beginSessionEnd({bool navigateToLogin = true}) {
     final currentEnd = _sessionEnd;
     if (currentEnd != null) return currentEnd;
 
     final completion = Completer<void>();
     _sessionEnd = completion.future;
-    unawaited(_performSessionEnd().then(
+    unawaited(_performSessionEnd(navigateToLogin: navigateToLogin).then(
       (_) => completion.complete(),
       onError: (Object error, StackTrace stackTrace) {
         completion.completeError(error, stackTrace);
@@ -279,7 +325,7 @@ class AuthManager extends ChangeNotifier {
     return completion.future;
   }
 
-  Future<void> _performSessionEnd() async {
+  Future<void> _performSessionEnd({required bool navigateToLogin}) async {
     final userId = _sessionScopeUserId ?? _activeUserIdFromStorage();
     final idle = _sessionOperationTracker.stopAndWaitForIdle();
 
@@ -309,14 +355,16 @@ class AuthManager extends ChangeNotifier {
       );
     }
 
-    try {
-      appLocator<NavigationService>().clearStackAndShow(Routes.loginView);
-    } catch (error, stackTrace) {
-      logError(
-        'Failed to show login after session ended',
-        source: error,
-        stackTrace: stackTrace,
-      );
+    if (navigateToLogin) {
+      try {
+        appLocator<NavigationService>().clearStackAndShow(Routes.loginView);
+      } catch (error, stackTrace) {
+        logError(
+          'Failed to show login after session ended',
+          source: error,
+          stackTrace: stackTrace,
+        );
+      }
     }
     notifyListeners();
 
@@ -354,21 +402,4 @@ class AuthManager extends ChangeNotifier {
       _sessionScopeUserId = null;
     }
   }
-}
-
-Future<UserSession> initializeApp() async {
-  // Get last active user ID
-  String userActiveUserId = appLocator<AuthStorage>().getActiveUserId();
-  // Load tokens securely
-  TokenPair tokenPair = await appLocator<AuthStorage>().getActiveUserToken();
-  if (!tokenPair.accessToken.isAccessTokenValid) {
-    final isOnline = await appLocator<ConnectivityService>().isOnline;
-    throwIfNot(isOnline,
-        SessionExpiredException('No connection to refresh User Expired Token'));
-    tokenPair =
-        await appLocator<TokenRefresher>().refreshToken(userActiveUserId);
-  }
-
-  UserSession userSession = await appLocator<AuthStorage>().getActiveSession();
-  return userSession;
 }

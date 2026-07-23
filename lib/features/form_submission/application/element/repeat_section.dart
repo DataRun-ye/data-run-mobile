@@ -32,12 +32,12 @@ class RepeatSection extends SectionElement<List<Map<String, Object?>?>> {
   }
 
   @override
-  Map<String, dynamic> get errors {
-    final allErrors = Map.of(super.errors);
+  Map<String, dynamic> _collectErrors(_FormValidationPass validationPass) {
+    final allErrors = Map.of(super._collectErrors(validationPass));
     _elements.asMap().entries.forEach((entry) {
       final element = entry.value;
       final name = entry.key.toString();
-      final elementErrors = element.errors;
+      final elementErrors = element._collectErrors(validationPass);
       if (element.visible && elementErrors.isNotEmpty) {
         allErrors.update(
           name,

@@ -16,6 +16,72 @@ import 'package:reactive_forms/reactive_forms.dart';
 import 'support/form_template_fixture.dart';
 
 void main() {
+  test('dormant validation isolates each field while reusing one pass', () {
+    final form = FormGroup({});
+    final required = FieldInstance<String>(
+      form: form,
+      template: FieldTemplate(
+        id: 'required-id',
+        name: 'required',
+        type: ValueType.Text,
+        mandatory: true,
+      ),
+      elementProperties: FieldElementState<String>(mandatory: true),
+    );
+    final optional = FieldInstance<String>(
+      form: form,
+      template: FieldTemplate(
+        id: 'optional-id',
+        name: 'optional',
+        type: ValueType.Text,
+      ),
+      elementProperties: FieldElementState<String>(),
+    );
+    final email = FieldInstance<String>(
+      form: form,
+      template: FieldTemplate(
+        id: 'email-id',
+        name: 'email',
+        type: ValueType.Email,
+      ),
+      initialValue: 'not-an-email',
+      elementProperties: FieldElementState<String>(),
+    );
+    final positive = FieldInstance<int>(
+      form: form,
+      template: FieldTemplate(
+        id: 'positive-id',
+        name: 'positive',
+        type: ValueType.IntegerPositive,
+      ),
+      initialValue: 0,
+      elementProperties: FieldElementState<int>(),
+    );
+    final root = Section(
+      form: form,
+      template: SectionTemplate(id: 'root-id', path: ''),
+      elements: {
+        'required': required,
+        'optional': optional,
+        'email': email,
+        'positive': positive,
+      },
+    );
+
+    final errors = root.errors;
+    expect(errors['required'], contains(ValidationMessage.required));
+    expect(errors, isNot(contains('optional')));
+    expect(errors['email'], contains(ValidationMessage.email));
+    expect(errors['positive'], contains(ValidationMessage.min));
+
+    required.updateValue('filled', emitEvent: false);
+    email.updateValue('valid@example.com', emitEvent: false);
+    positive.updateValue(1, emitEvent: false);
+
+    expect(root.hasErrors, isFalse);
+    root.dispose();
+  });
+
   test('template-required field is ignored while hidden and required again',
       () {
     final (:field, :control) = _buildField(templateMandatory: true);

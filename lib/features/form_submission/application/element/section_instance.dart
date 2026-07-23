@@ -47,10 +47,11 @@ class Section extends SectionElement<Map<String, Object?>> {
   }
 
   @override
-  Map<String, dynamic> get errors {
-    final allErrors = Map<String, dynamic>.of(super.errors);
+  Map<String, dynamic> _collectErrors(_FormValidationPass validationPass) {
+    final allErrors =
+        Map<String, dynamic>.of(super._collectErrors(validationPass));
     elements.forEach((name, element) {
-      final elementErrors = element.errors;
+      final elementErrors = element._collectErrors(validationPass);
       if (element.visible && elementErrors.isNotEmpty) {
         allErrors.update(
           name,

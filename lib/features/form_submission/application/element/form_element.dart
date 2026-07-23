@@ -98,9 +98,20 @@ sealed class FormElementInstance<T> {
 
   Map<String, dynamic> get ruleErrors => _elementState.errors;
 
-  Map<String, dynamic> get errors => ruleErrors;
+  Map<String, dynamic> get errors {
+    final validationPass = _FormValidationPass();
+    try {
+      return _collectErrors(validationPass);
+    } finally {
+      validationPass.dispose();
+    }
+  }
 
   bool get hasErrors => errors.isNotEmpty;
+
+  @protected
+  Map<String, dynamic> _collectErrors(_FormValidationPass validationPass) =>
+      ruleErrors;
 
   bool get hidden => _elementState.hidden;
 
@@ -514,4 +525,38 @@ sealed class FormElementInstance<T> {
       unawaited(subject.close());
     }
   }
+}
+
+final class _FormValidationPass {
+  final FormControl<dynamic> _control = FormControl<dynamic>();
+
+  Map<String, dynamic> validateDormantField(
+    FieldTemplate template,
+    Object? value, {
+    required bool mandatory,
+  }) {
+    final validators = FieldValidators.getValidators(template)
+        .where((validator) => validator is! RequiredValidator)
+        .toList();
+    if (mandatory) {
+      validators.add(const RequiredFieldValidator());
+    }
+
+    _control.setValidators(validators);
+    if (_control.value == value) {
+      _control.updateValueAndValidity(
+        updateParent: false,
+        emitEvent: false,
+      );
+    } else {
+      _control.updateValue(
+        value,
+        updateParent: false,
+        emitEvent: false,
+      );
+    }
+    return Map<String, dynamic>.of(_control.errors);
+  }
+
+  void dispose() => _control.dispose();
 }

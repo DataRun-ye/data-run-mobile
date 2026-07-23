@@ -57,12 +57,13 @@ class FieldInstance<T> extends FormElementInstance<T> {
   T? get retainedValue => mountedControl?.value ?? _retainedValue;
 
   @override
-  Map<String, dynamic> get errors {
+  Map<String, dynamic> _collectErrors(_FormValidationPass validationPass) {
     if (hidden) {
       return const {};
     }
 
-    final controlErrors = mountedControl?.errors ?? _validateDormantValue();
+    final controlErrors =
+        mountedControl?.errors ?? _validateDormantValue(validationPass);
     return <String, dynamic>{...controlErrors, ...ruleErrors};
   }
 
@@ -132,25 +133,19 @@ class FieldInstance<T> extends FormElementInstance<T> {
     return value;
   }
 
-  Map<String, dynamic> _validateDormantValue() {
+  Map<String, dynamic> _validateDormantValue(
+    _FormValidationPass validationPass,
+  ) {
     final cached = _dormantValidationErrors;
     if (cached != null) {
       return cached;
     }
 
-    final validators = FieldValidators.getValidators(template)
-        .where((validator) => validator is! RequiredValidator)
-        .toList();
-    if (mandatory) {
-      validators.add(const RequiredFieldValidator());
-    }
-    final validationControl = FormControl<dynamic>(
-      value: _retainedValue,
-      validators: validators,
+    return _dormantValidationErrors = validationPass.validateDormantField(
+      template,
+      _retainedValue,
+      mandatory: mandatory,
     );
-    final errors = Map<String, dynamic>.of(validationControl.errors);
-    validationControl.dispose();
-    return _dormantValidationErrors = errors;
   }
 
   @override

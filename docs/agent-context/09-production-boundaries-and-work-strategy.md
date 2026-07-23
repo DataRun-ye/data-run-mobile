@@ -172,6 +172,8 @@ Before ownership reorganization, state-management consolidation, persistence ref
 
 Google Play `5.3.1+21` was inspected through a read-only Android backup: its active per-user `datarun_<user>.db` is healthy at schema version 3. Current `AppDatabase.schemaVersion` is 6. `test/fixtures/database/schema_v3.sql` captures the production schema, and `test/dev/app_database_migration_test.dart` proves schema 3, 4, and 5 upgrades preserve cached form/submission JSON while dropping only the obsolete normalized repeat/data-value tables and the unused `data_elements` table. Schema 3 remains the required production migration source until field evidence proves another shipped version.
 
+Signed local release build 48 upgraded build 47 in place on the Redmi smoke device, reopened its cached authenticated assignments through schema 6, synchronized the nine active configuration resources, and returned to Home without Flutter, Drift, SQLite, or crash errors.
+
 The Play-installed APK is signed by the Google Play App Signing certificate, while local release builds use the Hamza/nmcpye upload key. A locally built APK cannot update the Play installation in place. Production upgrade smoke must use a Play internal-testing build (or another Play-distributed track) so Google re-signs it with the installed-app certificate.
 
 ## Work Sequence

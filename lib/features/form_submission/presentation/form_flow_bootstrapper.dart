@@ -1,3 +1,4 @@
+import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
 import 'package:datarunmobile/features/form_submission/application/form_flow_bootstrapper_controller.dart';
 import 'package:datarunmobile/features/common_ui_element/common/ui_helpers.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -63,7 +64,7 @@ class _FormFlowBootstrapperState extends State<FormFlowBootstrapper> {
                 '${message}...',
                 overflow: TextOverflow.ellipsis,
               ),
-              if (_error != null) Text('${_error.toString()}...'),
+              if (_error != null) Text(ErrorMessage.getMessage(_error)),
               const SizedBox(
                 width: 2,
               ),

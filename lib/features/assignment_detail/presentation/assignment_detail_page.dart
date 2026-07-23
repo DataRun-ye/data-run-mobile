@@ -3,6 +3,7 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_by_value_label.dart';
 import 'package:datarunmobile/commons/custom_widgets/highlighted_label_with_icon.dart';
+import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/form_display.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/form_prefix_version_badge.dart';
 import 'package:datarunmobile/features/assignment/presentation/assignments_table/team_display.dart';
@@ -153,7 +154,8 @@ Future<void> showFormSelectionBottomSheet(
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-            '${S.of(context).errorOpeningForm}: ${e.toString().substring(0, 50)}'),
+          '${S.of(context).errorOpeningForm}: ${ErrorMessage.getMessage(e)}',
+        ),
         duration: const Duration(seconds: 2),
       ),
     );

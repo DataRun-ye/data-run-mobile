@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
 import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/d_exception.dart';
@@ -7,9 +5,14 @@ import 'package:datarunmobile/core/exception/failure_snapshot.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/exception/server_failure.dart';
 import 'package:datarunmobile/features/data_instance/presentation/submission_sync_failure_message.dart';
+import 'package:datarunmobile/features/form_submission/presentation/field/code_scanner/scanner_error_widget.dart';
+import 'package:datarunmobile/features/form_submission/presentation/form_flow_bootstrapper.dart';
+import 'package:datarunmobile/features/form_ui_elements/presentation/get_error_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -279,6 +282,50 @@ void main() {
         submissionSyncFailureMessage(legacy), isNot(contains('DioException')));
   });
 
+  testWidgets('shared async error widget does not render raw exceptions',
+      (tester) async {
+    final error = DioException(
+      requestOptions: RequestOptions(path: '/api/v1/forms'),
+      type: DioExceptionType.connectionError,
+      message: 'SocketException: internal.example.test',
+    );
+
+    await tester.pumpWidget(
+      _localizedTestApp(Scaffold(body: getErrorWidget(error, null))),
+    );
+
+    expect(find.textContaining(S.current.networkConnectionFailed), findsOne);
+    expect(find.textContaining('SocketException'), findsNothing);
+    expect(find.textContaining('internal.example.test'), findsNothing);
+  });
+
+  testWidgets('form bootstrap does not render its internal failure',
+      (tester) async {
+    await tester.pumpWidget(
+      _localizedTestApp(const FormFlowBootstrapper()),
+    );
+    await tester.pump();
+
+    expect(find.text(S.current.generalErrorTitle), findsOne);
+    expect(find.textContaining('pass form id'), findsNothing);
+  });
+
+  testWidgets('scanner shows its localized category without plugin details',
+      (tester) async {
+    const internalDetails = 'CameraAccessException: device-internal details';
+    const error = MobileScannerException(
+      errorCode: MobileScannerErrorCode.permissionDenied,
+      errorDetails: MobileScannerErrorDetails(message: internalDetails),
+    );
+
+    await tester.pumpWidget(
+      _localizedTestApp(const ScannerErrorWidget(error: error)),
+    );
+
+    expect(find.text(S.current.permissionDenied), findsOne);
+    expect(find.textContaining(internalDetails), findsNothing);
+  });
+
   test('canceled requests are explicitly non-reportable', () {
     final error = NetworkHttpError.fromDioException(
       DioException(
@@ -309,3 +356,10 @@ void main() {
     );
   });
 }
+
+Widget _localizedTestApp(Widget home) => MaterialApp(
+      locale: const Locale('en'),
+      localizationsDelegates: const [S.delegate],
+      supportedLocales: S.delegate.supportedLocales,
+      home: home,
+    );

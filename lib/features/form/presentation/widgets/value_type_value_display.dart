@@ -1,5 +1,6 @@
-import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
+import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/features/form/application/value_display.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,9 +24,13 @@ class ValueTypeValueDisplay extends ConsumerWidget {
           child: Text(value ?? '', overflow: TextOverflow.ellipsis),
         );
       },
-      errorBuilder: (Object? error, StackTrace? st) => Text(
-        'E',
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: cs.error),
+      errorBuilder: (Object? error, StackTrace? st) => Tooltip(
+        message: ErrorMessage.getMessage(error),
+        child: Icon(
+          Icons.error_outline,
+          size: 16,
+          color: cs.error,
+        ),
       ),
     );
   }

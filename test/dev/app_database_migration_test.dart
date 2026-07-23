@@ -6,8 +6,8 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  for (final sourceVersion in [3, 4]) {
-    test('schema $sourceVersion migrates to 5 without losing cached work',
+  for (final sourceVersion in [3, 4, 5]) {
+    test('schema $sourceVersion migrates to 6 without losing cached work',
         () async {
       final database = _openProductionDatabase(sourceVersion: sourceVersion);
       addTearDown(database.close);
@@ -17,7 +17,7 @@ void main() {
           .map((row) => row.read<int>('user_version'))
           .getSingle();
 
-      expect(version, 5);
+      expect(version, 6);
 
       final actualTables = await _tableNames(database);
       for (final table in database.allTables) {
@@ -49,6 +49,7 @@ void main() {
 
       expect(actualTables, isNot(contains('data_values')));
       expect(actualTables, isNot(contains('repeat_instances')));
+      expect(actualTables, isNot(contains('data_elements')));
       expect(actualTables, contains('metadata_submissions'));
       expect(
         await database
@@ -86,7 +87,7 @@ void main() {
       variables: [const Variable('legacy-party-set')],
     ).getSingle();
 
-    expect(version, 5);
+    expect(version, 6);
     expect(partySet.read<String>('name'), 'Preserved');
   });
 }
@@ -95,7 +96,7 @@ AppDatabase _openProductionDatabase({
   required int sourceVersion,
   String? additionalSetup,
 }) {
-  assert(sourceVersion == 3 || sourceVersion == 4);
+  assert(sourceVersion >= 3 && sourceVersion <= 5);
   final schema =
       File('test/fixtures/database/schema_v3.sql').readAsStringSync();
   return AppDatabase(
@@ -111,8 +112,12 @@ AppDatabase _openProductionDatabase({
         if (additionalSetup != null) {
           rawDatabase.execute(additionalSetup);
         }
-        rawDatabase.execute('PRAGMA user_version = $sourceVersion;');
         rawDatabase.execute(_syntheticProductionRows);
+        if (sourceVersion >= 5) {
+          rawDatabase.execute('DROP TABLE data_values;');
+          rawDatabase.execute('DROP TABLE repeat_instances;');
+        }
+        rawDatabase.execute('PRAGMA user_version = $sourceVersion;');
       },
     ),
     userId: 'migration-test-user',

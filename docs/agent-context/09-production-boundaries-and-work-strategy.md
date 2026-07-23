@@ -139,7 +139,6 @@ Common Dio failures now cross one typed presentation boundary. Connectivity and 
 |---|---|---|---|
 | Server domain validation messages do not have stable client localization keys | `ACTIVE-SUPPORT` residual UX risk | Common network/auth/HTTP categories are localized, but active server responses mix RFC7807 fields, nested error objects, and plain text | Define a shared server/client domain error-code catalog before translating domain-specific failures |
 | Configuration refresh still performs sequential whole-resource downloads | `ACTIVE-SUPPORT` residual poor-connectivity risk | Client-side failure state, queue stop, selective retry, and safe cached-data continuation are established, but each resource remains a whole `paged=false` response and the active request is not immediately cancellable | Measure deployed payload sizes and endpoint timings; delta/versioned or aggregate transfer requires an explicit server contract rather than client invention |
-| `data_elements` has no active runtime consumer | `SCHEMA-ONLY` migration risk | Its former datasource was write-only; form rendering parses field metadata from cached template JSON | Drop the table only through populated schema-3/4/5 migration fixtures |
 | Code generation is unusually slow and creates a large maintenance/version-conflict surface | `TOOLING-MAINTAINABILITY` risk | A one-file filtered generation traversed the broad generated graph without completing; the full generation took about 497 seconds | Capture builder timings and output ownership, then remove or replace Freezed, Stacked, and other generators only where plain maintained code has lower complexity and equivalent checks |
 | Synced edit is permission-dependent despite the temporary read-only product policy | `ACTIVE-CORE` policy gap | `submission_edit_access.dart` is the single tested owner of `canEditSubmissions || !isSynced`; bootstrap and screen provider both delegate to it | Confirm deployed assignment values and define the final edit policy |
 | Soft deletion has competing paths and an incomplete upload-state transition | `REACHABLE-INCOMPLETE` | `data_submissions_dao.dart`, `submission_list.provider.dart`, and `data_submission.extension.dart` | End-to-end delete state/payload characterization |
@@ -170,7 +169,7 @@ Before ownership reorganization, state-management consolidation, persistence ref
 - offline drafts/finals, sync state, and retry idempotency;
 - active DI registration order where synchronization depends on it.
 
-Google Play `5.3.1+21` was inspected through a read-only Android backup: its active per-user `datarun_<user>.db` is healthy at schema version 3. Current `AppDatabase.schemaVersion` is 5. `test/fixtures/database/schema_v3.sql` captures the production schema, and `test/dev/app_database_migration_test.dart` proves schema 3 and 4 upgrades preserve cached form/submission JSON while dropping only the obsolete normalized repeat/data-value tables. Schema 3 remains the required production migration source until field evidence proves another shipped version.
+Google Play `5.3.1+21` was inspected through a read-only Android backup: its active per-user `datarun_<user>.db` is healthy at schema version 3. Current `AppDatabase.schemaVersion` is 6. `test/fixtures/database/schema_v3.sql` captures the production schema, and `test/dev/app_database_migration_test.dart` proves schema 3, 4, and 5 upgrades preserve cached form/submission JSON while dropping only the obsolete normalized repeat/data-value tables and the unused `data_elements` table. Schema 3 remains the required production migration source until field evidence proves another shipped version.
 
 The Play-installed APK is signed by the Google Play App Signing certificate, while local release builds use the Hamza/nmcpye upload key. A locally built APK cannot update the Play installation in place. Production upgrade smoke must use a Play internal-testing build (or another Play-distributed track) so Google re-signs it with the installed-app certificate.
 
@@ -192,7 +191,7 @@ Remove unused registrations and generated alternatives after a registration-leve
 
 ### 4. Migrate Schema-Backed Dead Features
 
-The inactive repeat/data-value DAOs, callers, and schema tables are removed. Migration 5 covers populated schema 3 and 4 databases.
+The inactive repeat/data-value DAOs, callers, and schema tables are removed by migration 5. The write-only data-element sync source and its unconsumed table are removed by migration 6. Populated schema 3, 4, and 5 upgrades preserve active cached form/submission data.
 
 ### 5. Consolidate Boundaries Mechanically
 

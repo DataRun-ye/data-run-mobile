@@ -173,7 +173,7 @@ Active:
 
 - `data_instances`: active submission table. Evidence: `DataInstancesDao.createDraft`, `updateData`, `markFinal`, list queries, and sync upload.
 - `form_templates` and `form_template_versions`: active form metadata/template source. Evidence: `DataFormTemplateDatasource`, `FormTemplateListService`, `FormTemplateRepository`.
-- `data_elements`: schema-only after the write-only datasource was removed. Form rendering parses field metadata from cached template JSON; no runtime table read was found outside generated Drift code.
+- `data_elements`: obsolete and removed in schema 6 after its write-only datasource was removed. Form rendering parses field metadata from cached template JSON; no runtime table read was found outside generated Drift code.
 - `data_options` and `data_option_sets`: active option display and form option merging.
 
 Inactive or incomplete-looking:

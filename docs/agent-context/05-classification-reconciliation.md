@@ -49,7 +49,7 @@ The second source is `03-config-fetching.md`, where "ACTIVE" sometimes means "re
 | Abandoned manifest service / party persistence attempt | INCOMPLETE in `03` | OBSOLETE-REMOVED | No runtime consumer, incomplete persistence, placeholder resolver, and no tables in the Play schema-3 database. Removed from active DI/schema declarations; no table-drop migration is performed. |
 | Bulk `AbstractDatasource` list | ACTIVE | ACTIVE | The nine raw `AbstractDatasource` registrations in `init_active_session_scope.dart` are core to current config sync because `SyncManager` collects them. Submission pull is intentionally excluded. |
 | `DataElementDatasource` | ACTIVE in `01`/`03` | OBSOLETE-REMOVED | The datasource was write-only: no runtime read of `data_elements` existed outside generated Drift code. Form metadata comes from cached template JSON. |
-| `data_elements` table as form-render source | ACTIVE in `01`/`03` | SCHEMA-ONLY | No active consumer was found. Table removal remains a separate migration-backed step. |
+| `data_elements` table as form-render source | ACTIVE in `01`/`03` | OBSOLETE-REMOVED | No active consumer was found. Migration 6 drops the populated table after migrations 3/4/5 preserve active cached form/submission data. |
 | `UserFormAccessesDatasource` | ACTIVE in `03` | ACTIVE | The datasource is in the `AbstractDatasource` sync loop. |
 | `user_form_permissions` as access gate | ACTIVE in `03` | UNKNOWN | Active form access checks found in later passes rely mostly on `assignment_forms`; direct production use of `user_form_permissions` was not proven. |
 | `assignment_forms` | ACTIVE | ACTIVE | Used by available forms, assignment detail access, edit permissions, and form list filtering. This is the active form-access table. |
@@ -144,7 +144,7 @@ These are used or plausible, but should not be treated as core-active without mo
 | Settings screens and appearance/preferences UI | SUPPORTING-USED | Reachable UI, but not core data-collection behavior. Preference provider itself remains ACTIVE because root app and table appearance use it. |
 | `SyncSummaryCard` UI | OBSOLETE-REMOVED | It had no executable consumer; `sync_summaries` persistence remains supporting-used independently. |
 | `DisplayValueLookup` | SUPPORTING-USED | Resolves org-unit/team/option labels only; inactive normalized value persistence was removed. |
-| `data_elements` table | SUPPORTING-USED | Synced actively, used by display/older metadata helpers, but not the primary form JSON source. |
+| `data_elements` table | OBSOLETE-REMOVED | No runtime read existed outside generated Drift code; migration 6 drops the table after the write-only sync source was removed. |
 | `ValueType.Reference` widgets and metadata provider | INCOMPLETE | Field factory can route to reference widgets, but provider returns empty data and production form use is unconfirmed. |
 | `UserFormAccessesDatasource` table output | UNKNOWN | Synced actively, but active access checks rely on `assignment_forms`. |
 | `DialogService` custom info dialog | ACTIVE | Error reporting and a test upload dialog use it. |

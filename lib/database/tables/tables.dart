@@ -3,7 +3,6 @@ export 'activities.table.dart';
 export 'assignment_forms.table.dart';
 export 'assignments.table.dart';
 export 'base.entity.mixin.dart';
-export 'data_elements.table.dart';
 export 'data_submissions.table.dart';
 export 'form_template_versions.table.dart';
 export 'form_templates.table.dart';

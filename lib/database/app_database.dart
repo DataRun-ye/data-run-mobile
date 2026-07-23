@@ -4,12 +4,9 @@ import 'package:datarunmobile/database/dao/dao.dart';
 import 'package:datarunmobile/database/shared/assignment_status.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/form_permission.dart';
-import 'package:datarunmobile/database/shared/metadata_resource_type.dart';
-import 'package:datarunmobile/database/shared/scanned_code_properties.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/database/shared/sync_error.dart';
 import 'package:datarunmobile/database/shared/translations.dart';
-import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/database/tables/tables.dart';
 import 'package:drift/drift.dart';
 
@@ -27,7 +24,6 @@ part 'app_database.g.dart';
   AssignmentForms,
   FormTemplates,
   FormTemplateVersions,
-  DataElements,
   DataOptionSets,
   DataOptions,
   DataInstances,
@@ -41,13 +37,13 @@ part 'app_database.g.dart';
   SyncSummariesDao,
 ])
 class AppDatabase extends _$AppDatabase {
-  String userId;
-
   AppDatabase({required QueryExecutor executor, required this.userId})
       : super(executor);
 
+  final String userId;
+
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -69,6 +65,9 @@ class AppDatabase extends _$AppDatabase {
           if (from < 5) {
             await m.deleteTable('data_values');
             await m.deleteTable('repeat_instances');
+          }
+          if (from < 6) {
+            await m.deleteTable('data_elements');
           }
         },
       );

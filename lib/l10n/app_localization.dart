@@ -182,6 +182,48 @@ abstract class AppLocalizations {
   /// **'Please correct the errors in the form.'**
   String get validationError;
 
+  /// No description provided for @submissionRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'The server rejected this submission. Review its data and try again.'**
+  String get submissionRejected;
+
+  /// No description provided for @submissionFormMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'This submission is missing its form or form version. Reopen the form and save it again.'**
+  String get submissionFormMissing;
+
+  /// No description provided for @submissionTeamMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'This submission is missing its team. Reopen the form and save it again.'**
+  String get submissionTeamMissing;
+
+  /// No description provided for @submissionTeamUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The team for this submission is no longer available. Synchronize configuration or contact your administrator.'**
+  String get submissionTeamUnavailable;
+
+  /// No description provided for @submissionTeamAccessDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You no longer have access to the team for this submission. Synchronize configuration or contact your administrator.'**
+  String get submissionTeamAccessDenied;
+
+  /// No description provided for @submissionFormVersionConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'This submission was created with a different form version and cannot be updated.'**
+  String get submissionFormVersionConflict;
+
+  /// No description provided for @submissionNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This submission no longer exists on the server.'**
+  String get submissionNotFound;
+
   /// No description provided for @apiError.
   ///
   /// In en, this message translates to:

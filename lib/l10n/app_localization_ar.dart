@@ -66,6 +66,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get validationError => 'يرجى تصحيح الأخطاء في النموذج قبل المتابعة.';
 
   @override
+  String get submissionRejected =>
+      'رفض الخادم هذه الاستمارة. راجع بياناتها ثم حاول مرة أخرى.';
+
+  @override
+  String get submissionFormMissing =>
+      'لا تحتوي هذه الاستمارة على النموذج أو إصدار النموذج. أعد فتح الاستمارة واحفظها مرة أخرى.';
+
+  @override
+  String get submissionTeamMissing =>
+      'لا تحتوي هذه الاستمارة على الفريق. أعد فتح الاستمارة واحفظها مرة أخرى.';
+
+  @override
+  String get submissionTeamUnavailable =>
+      'لم يعد فريق هذه الاستمارة متاحًا. زامن الإعدادات أو تواصل مع مسؤول النظام.';
+
+  @override
+  String get submissionTeamAccessDenied =>
+      'لم يعد لديك صلاحية الوصول إلى فريق هذه الاستمارة. زامن الإعدادات أو تواصل مع مسؤول النظام.';
+
+  @override
+  String get submissionFormVersionConflict =>
+      'أُنشئت هذه الاستمارة باستخدام إصدار مختلف من النموذج ولا يمكن تحديثها.';
+
+  @override
+  String get submissionNotFound => 'لم تعد هذه الاستمارة موجودة على الخادم.';
+
+  @override
   String apiError(Object error) {
     return 'حدث خطأ أثناء التواصل API النظام: $error.';
   }

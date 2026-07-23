@@ -63,6 +63,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get validationError => 'Please correct the errors in the form.';
 
   @override
+  String get submissionRejected =>
+      'The server rejected this submission. Review its data and try again.';
+
+  @override
+  String get submissionFormMissing =>
+      'This submission is missing its form or form version. Reopen the form and save it again.';
+
+  @override
+  String get submissionTeamMissing =>
+      'This submission is missing its team. Reopen the form and save it again.';
+
+  @override
+  String get submissionTeamUnavailable =>
+      'The team for this submission is no longer available. Synchronize configuration or contact your administrator.';
+
+  @override
+  String get submissionTeamAccessDenied =>
+      'You no longer have access to the team for this submission. Synchronize configuration or contact your administrator.';
+
+  @override
+  String get submissionFormVersionConflict =>
+      'This submission was created with a different form version and cannot be updated.';
+
+  @override
+  String get submissionNotFound =>
+      'This submission no longer exists on the server.';
+
+  @override
   String apiError(Object error) {
     return 'An error occurred while interacting with the API $error.';
   }

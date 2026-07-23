@@ -1,5 +1,6 @@
 import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/network_exceptions.dart';
+import 'package:datarunmobile/core/exception/server_failure.dart';
 import 'package:dio/dio.dart';
 
 class RevokeTokenException extends DioException {
@@ -10,7 +11,7 @@ class NetworkHttpError extends NetworkException {
   NetworkHttpError._(
     String message, {
     String? url,
-    this.serverMessage,
+    this.serverFailure,
     bool shouldShowMessage = true,
     DErrorComponent? errorComponent = DErrorComponent.Server,
     super.httpErrorCode,
@@ -29,11 +30,15 @@ class NetworkHttpError extends NetworkException {
     DRunErrorCode unauthorizedErrorCode = DRunErrorCode.unauthorized,
   }) {
     final statusCode = response?.statusCode;
-    final serverMessage = _extractServerMessage(response?.data);
+    final serverFailure = ServerFailure.fromResponseData(response?.data);
     final message = [
       if (statusCode != null) 'HTTP $statusCode',
-      if (serverMessage != null) serverMessage,
-      if (statusCode == null && serverMessage == null) 'HTTP request failed',
+      if (serverFailure.code != null) serverFailure.code,
+      if (serverFailure.detail != null) serverFailure.detail,
+      if (statusCode == null &&
+          serverFailure.code == null &&
+          serverFailure.detail == null)
+        'HTTP request failed',
     ].join(': ');
     final errorCode = switch (statusCode) {
       400 => DRunErrorCode.badRequest,
@@ -49,7 +54,7 @@ class NetworkHttpError extends NetworkException {
     return NetworkHttpError._(
       message,
       url: response?.requestOptions.path,
-      serverMessage: serverMessage,
+      serverFailure: serverFailure,
       httpErrorCode: statusCode,
       errorCode: errorCode,
       stackTrace: stackTrace,
@@ -96,25 +101,7 @@ class NetworkHttpError extends NetworkException {
     );
   }
 
-  final String? serverMessage;
+  final ServerFailure? serverFailure;
 
-  static String? _extractServerMessage(dynamic data) {
-    String? candidate;
-    if (data is String) {
-      candidate = data;
-    } else if (data is Map) {
-      for (final key in const ['detail', 'message', 'title']) {
-        final value = data[key];
-        if (value is String && value.trim().isNotEmpty) {
-          candidate = value;
-          break;
-        }
-      }
-      candidate ??= _extractServerMessage(data['error']);
-    }
-
-    final trimmed = candidate?.trim();
-    if (trimmed == null || trimmed.isEmpty) return null;
-    return trimmed.length > 300 ? trimmed.substring(0, 300) : trimmed;
-  }
+  String? get serverMessage => serverFailure?.detail;
 }

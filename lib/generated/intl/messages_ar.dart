@@ -564,7 +564,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "status": MessageLookupByLibrary.simpleMessage("الحالة"),
     "submissionDataEntry": MessageLookupByLibrary.simpleMessage("بيانات"),
     "submissionError": m24,
+    "submissionFormMissing": MessageLookupByLibrary.simpleMessage(
+      "لا تحتوي هذه الاستمارة على النموذج أو إصدار النموذج. أعد فتح الاستمارة واحفظها مرة أخرى.",
+    ),
+    "submissionFormVersionConflict": MessageLookupByLibrary.simpleMessage(
+      "أُنشئت هذه الاستمارة باستخدام إصدار مختلف من النموذج ولا يمكن تحديثها.",
+    ),
     "submissionInitialData": MessageLookupByLibrary.simpleMessage("الرئيسة"),
+    "submissionNotFound": MessageLookupByLibrary.simpleMessage(
+      "لم تعد هذه الاستمارة موجودة على الخادم.",
+    ),
+    "submissionRejected": MessageLookupByLibrary.simpleMessage(
+      "رفض الخادم هذه الاستمارة. راجع بياناتها ثم حاول مرة أخرى.",
+    ),
+    "submissionTeamAccessDenied": MessageLookupByLibrary.simpleMessage(
+      "لم يعد لديك صلاحية الوصول إلى فريق هذه الاستمارة. زامن الإعدادات أو تواصل مع مسؤول النظام.",
+    ),
+    "submissionTeamMissing": MessageLookupByLibrary.simpleMessage(
+      "لا تحتوي هذه الاستمارة على الفريق. أعد فتح الاستمارة واحفظها مرة أخرى.",
+    ),
+    "submissionTeamUnavailable": MessageLookupByLibrary.simpleMessage(
+      "لم يعد فريق هذه الاستمارة متاحًا. زامن الإعدادات أو تواصل مع مسؤول النظام.",
+    ),
     "successCount": MessageLookupByLibrary.simpleMessage("عدد النجاحات"),
     "syncError": m25,
     "syncErrors": MessageLookupByLibrary.simpleMessage("أخطاء المزامنة"),

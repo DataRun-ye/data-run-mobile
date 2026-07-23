@@ -579,7 +579,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "status": MessageLookupByLibrary.simpleMessage("Status"),
     "submissionDataEntry": MessageLookupByLibrary.simpleMessage("Data"),
     "submissionError": m24,
+    "submissionFormMissing": MessageLookupByLibrary.simpleMessage(
+      "This submission is missing its form or form version. Reopen the form and save it again.",
+    ),
+    "submissionFormVersionConflict": MessageLookupByLibrary.simpleMessage(
+      "This submission was created with a different form version and cannot be updated.",
+    ),
     "submissionInitialData": MessageLookupByLibrary.simpleMessage("Main"),
+    "submissionNotFound": MessageLookupByLibrary.simpleMessage(
+      "This submission no longer exists on the server.",
+    ),
+    "submissionRejected": MessageLookupByLibrary.simpleMessage(
+      "The server rejected this submission. Review its data and try again.",
+    ),
+    "submissionTeamAccessDenied": MessageLookupByLibrary.simpleMessage(
+      "You no longer have access to the team for this submission. Synchronize configuration or contact your administrator.",
+    ),
+    "submissionTeamMissing": MessageLookupByLibrary.simpleMessage(
+      "This submission is missing its team. Reopen the form and save it again.",
+    ),
+    "submissionTeamUnavailable": MessageLookupByLibrary.simpleMessage(
+      "The team for this submission is no longer available. Synchronize configuration or contact your administrator.",
+    ),
     "successCount": MessageLookupByLibrary.simpleMessage("Success Count"),
     "syncError": m25,
     "syncErrors": MessageLookupByLibrary.simpleMessage("Sync Errors"),

@@ -194,6 +194,76 @@ class S {
     );
   }
 
+  /// `The server rejected this submission. Review its data and try again.`
+  String get submissionRejected {
+    return Intl.message(
+      'The server rejected this submission. Review its data and try again.',
+      name: 'submissionRejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This submission is missing its form or form version. Reopen the form and save it again.`
+  String get submissionFormMissing {
+    return Intl.message(
+      'This submission is missing its form or form version. Reopen the form and save it again.',
+      name: 'submissionFormMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This submission is missing its team. Reopen the form and save it again.`
+  String get submissionTeamMissing {
+    return Intl.message(
+      'This submission is missing its team. Reopen the form and save it again.',
+      name: 'submissionTeamMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The team for this submission is no longer available. Synchronize configuration or contact your administrator.`
+  String get submissionTeamUnavailable {
+    return Intl.message(
+      'The team for this submission is no longer available. Synchronize configuration or contact your administrator.',
+      name: 'submissionTeamUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You no longer have access to the team for this submission. Synchronize configuration or contact your administrator.`
+  String get submissionTeamAccessDenied {
+    return Intl.message(
+      'You no longer have access to the team for this submission. Synchronize configuration or contact your administrator.',
+      name: 'submissionTeamAccessDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This submission was created with a different form version and cannot be updated.`
+  String get submissionFormVersionConflict {
+    return Intl.message(
+      'This submission was created with a different form version and cannot be updated.',
+      name: 'submissionFormVersionConflict',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This submission no longer exists on the server.`
+  String get submissionNotFound {
+    return Intl.message(
+      'This submission no longer exists on the server.',
+      name: 'submissionNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `An error occurred while interacting with the API {error}.`
   String apiError(Object error) {
     return Intl.message(

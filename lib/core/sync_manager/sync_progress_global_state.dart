@@ -1,4 +1,3 @@
-import 'package:datarunmobile/core/common/standard_extensions.dart';
 import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 
 class SyncProgressGlobalState {
@@ -8,6 +7,7 @@ class SyncProgressGlobalState {
         overallState: SyncProgressState.ENQUEUED,
         currentMessage: '',
         completedResources: 0,
+        failedResources: 0,
         syncedItems: 0,
         totalResources: totalResources,
       );
@@ -17,6 +17,7 @@ class SyncProgressGlobalState {
     required this.overallState,
     required this.totalResources,
     this.completedResources,
+    this.failedResources = 0,
     this.currentMessage,
     this.syncedItems,
     this.completed = false,
@@ -27,6 +28,7 @@ class SyncProgressGlobalState {
   final String? currentMessage;
   final int? syncedItems;
   final int? completedResources;
+  final int failedResources;
   final int totalResources;
   final bool completed;
 
@@ -35,24 +37,33 @@ class SyncProgressGlobalState {
       String? currentMessage,
       double? overallPercentage,
       int? completedResources,
+      int? failedResources,
       int? syncedItems,
       bool completed = false}) {
-    final SyncProgressState newStatus = when<bool, SyncProgressState>(true, {
-      this.overallState == SyncProgressState.ENQUEUED: () => syncStatus,
-      this.overallState == SyncProgressState.SUCCEEDED &&
-              syncStatus == SyncProgressState.SUCCEEDED:
-          () => SyncProgressState.SUCCEEDED,
-      this.overallState == SyncProgressState.FAILED: () =>
-          SyncProgressState.FAILED,
-    }).orElse(() => SyncProgressState.PARTIAL_ERROR);
+    final nextCompleted = completedResources ?? this.completedResources ?? 0;
+    final nextFailed = failedResources ?? this.failedResources;
+    final isComplete = nextCompleted >= totalResources;
+    final SyncProgressState newStatus;
+    if (isComplete) {
+      newStatus = nextFailed == 0
+          ? SyncProgressState.SUCCEEDED
+          : nextFailed >= totalResources
+              ? SyncProgressState.FAILED
+              : SyncProgressState.PARTIAL_ERROR;
+    } else if (nextFailed > 0) {
+      newStatus = SyncProgressState.PARTIAL_ERROR;
+    } else {
+      newStatus = syncStatus;
+    }
 
     return copyWith(
       overallState: newStatus,
       overallPercentage: overallPercentage ?? this.overallPercentage,
-      completedResources: completedResources,
+      completedResources: nextCompleted,
+      failedResources: nextFailed,
       syncedItems: (this.syncedItems ?? 0) + (syncedItems ?? 0),
       currentMessage: currentMessage,
-      completed: (completedResources ?? 0) >= totalResources,
+      completed: isComplete,
     );
   }
 
@@ -61,6 +72,7 @@ class SyncProgressGlobalState {
       SyncProgressState? overallState,
       String? currentMessage,
       int? completedResources,
+      int? failedResources,
       int? totalResources,
       int? syncedItems,
       bool? completed}) {
@@ -69,6 +81,7 @@ class SyncProgressGlobalState {
         overallState: overallState ?? this.overallState,
         currentMessage: currentMessage ?? this.currentMessage,
         completedResources: completedResources ?? this.completedResources,
+        failedResources: failedResources ?? this.failedResources,
         totalResources: totalResources ?? this.totalResources,
         syncedItems: syncedItems ?? this.syncedItems,
         completed: completed ?? this.completed);

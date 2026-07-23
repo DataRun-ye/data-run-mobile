@@ -86,13 +86,22 @@ class SyncResourcesController extends Notifier<SyncResourcesState> {
     final globalState = _manager.globalState;
     state = state.apply(event, globalState);
 
-    if (!globalState.completed || _completionHandled) return;
+    if (!globalState.completed ||
+        !globalState.overallState.isSuccess ||
+        _completionHandled) {
+      return;
+    }
     _completionHandled = true;
 
-    unawaited(Future.wait([
+    unawaited(_completeSuccessfulSync());
+  }
+
+  Future<void> _completeSuccessfulSync() async {
+    await Future.wait([
       _metadataRepository.updateInitialSyncDone(true),
       _metadataRepository.updateLastSync(),
-    ]));
+    ]);
+    if (!ref.mounted) return;
     _completionNavigation = Timer(const Duration(seconds: 2), () {
       if (ref.mounted) leaveSync();
     });

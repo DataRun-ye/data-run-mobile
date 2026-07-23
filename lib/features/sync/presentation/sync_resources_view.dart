@@ -108,7 +108,8 @@ class _AnimatedGridSyncCardState extends State<_AnimatedGridSyncCard> {
   @override
   Widget build(BuildContext context) {
     final isSuccess = widget.status.state == SyncProgressState.SUCCEEDED;
-    final isError = widget.status.state == SyncProgressState.FAILED;
+    final isError = widget.status.state == SyncProgressState.FAILED ||
+        widget.status.state == SyncProgressState.PARTIAL_ERROR;
     final cs = Theme.of(context).colorScheme;
     final accentColor = isSuccess
         ? cs.onSurfaceVariant

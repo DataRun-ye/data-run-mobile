@@ -25,7 +25,8 @@ class SyncManager extends Disposable {
   final SessionOperationTracker _operationTracker;
 
   int get totalResources => _remoteDataSourcesMap.length;
-  int _currentResource = 0;
+  int _completedResources = 0;
+  int _failedResources = 0;
 
   /// A stream controller for progress events.
   final StreamController<SyncProgressEvent> _progressController =
@@ -37,24 +38,60 @@ class SyncManager extends Disposable {
   late SyncProgressGlobalState globalState;
 
   /// Sync a specific entity type T with granular progress.
-  Future<void> syncEntity(String resourceName) async {
+  Future<void> syncEntity(
+    String resourceName, {
+    required int resourceIndex,
+  }) async {
     final remoteSource = _remoteDataSourcesMap.get(resourceName);
     globalState = globalState.addSyncStatus(currentMessage: resourceName);
-    _currentResource++;
-    final basePercent = ((_currentResource - 1) / totalResources) * 100;
-    await remoteSource?.syncWithRemote(progressCallback: (event) {
-      _progressController.add(event);
+    final basePercent = (resourceIndex / totalResources) * 100;
+    var finalized = false;
+
+    void recordProgress(SyncProgressEvent event) {
+      if (event.completed && !finalized) {
+        finalized = true;
+        _completedResources++;
+        if (!event.syncProgressState.isSuccess) {
+          _failedResources++;
+        }
+      }
       final overallProgress =
           basePercent + (event.percentage / 100) * (100 / totalResources);
 
       globalState = globalState.addSyncStatus(
         syncStatus: event.syncProgressState,
         overallPercentage: overallProgress,
-        currentMessage: '${event.resourceName}',
-        completedResources: _currentResource,
+        currentMessage: event.resourceName,
+        completedResources: _completedResources,
+        failedResources: _failedResources,
         syncedItems: event.resources,
       );
-    });
+      _progressController.add(event);
+    }
+
+    try {
+      await remoteSource?.syncWithRemote(progressCallback: recordProgress);
+      if (!finalized) {
+        recordProgress(SyncProgressEvent(
+          resourceName: resourceName,
+          syncProgressState: SyncProgressState.SUCCEEDED,
+          message: 'Completed',
+          percentage: 100,
+          completed: true,
+        ));
+      }
+    } catch (error) {
+      if (!finalized) {
+        recordProgress(SyncProgressEvent(
+          resourceName: resourceName,
+          syncProgressState: SyncProgressState.FAILED,
+          message: 'Sync error: $error',
+          percentage: 100,
+          completed: true,
+        ));
+      }
+      rethrow;
+    }
   }
 
   Future<void> syncAll() => _operationTracker.track(_syncAll);
@@ -63,46 +100,26 @@ class SyncManager extends Disposable {
     // _progressController
     globalState =
         SyncProgressGlobalState.initial(totalResources: totalResources);
+    _completedResources = 0;
+    _failedResources = 0;
 
     int resourceIndex = 0;
 
     for (var remoteDataSource in _remoteDataSourcesMap.keys) {
-      resourceIndex++;
-
       try {
-        await syncEntity(remoteDataSource);
+        await syncEntity(
+          remoteDataSource,
+          resourceIndex: resourceIndex,
+        );
       } on RevokeTokenException catch (e) {
-        final overallProgress = (resourceIndex / totalResources) * 100;
-        _progressController.add(SyncProgressEvent(
-          resourceName: remoteDataSource,
-          syncProgressState: SyncProgressState.FAILED,
-          message: 'Session expired: $e',
-          percentage: overallProgress,
-          completed: true,
-        ));
         logError('Session expired while syncing $remoteDataSource', source: e);
         return;
       } on DioException catch (e) {
-        final overallProgress = (resourceIndex / totalResources) * 100;
-        _progressController.add(SyncProgressEvent(
-          resourceName: remoteDataSource,
-          syncProgressState: SyncProgressState.FAILED,
-          message: '❌ Sync error: $e',
-          percentage: overallProgress,
-          completed: true,
-        ));
-        logError('Error syncing ${remoteDataSource}: $e');
+        logError('Error syncing $remoteDataSource', source: e);
       } catch (e) {
-        final overallProgress = (resourceIndex / totalResources) * 100;
-        _progressController.add(SyncProgressEvent(
-          resourceName: remoteDataSource,
-          syncProgressState: SyncProgressState.FAILED,
-          message: '❌ Sync error: $e',
-          percentage: overallProgress,
-          completed: true,
-        ));
-        logError('Error syncing ${remoteDataSource}: $e');
+        logError('Error syncing $remoteDataSource', source: e);
       }
+      resourceIndex++;
     }
   }
 

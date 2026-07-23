@@ -37,6 +37,8 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
         progressCallback: progressCallback, resourceName: resourceName);
     final syncErrors = <SyncError>[];
     RevokeTokenException? sessionExpired;
+    var fetchFailed = false;
+    var databaseWriteFailed = false;
     List<Map<String, dynamic>> rawJson = [];
     // 1) Fetch
     try {
@@ -45,30 +47,37 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
       logger(percentage: 20, message: 'fetched ${rawJson.length} items');
     } on RevokeTokenException catch (e) {
       sessionExpired = e;
+      fetchFailed = true;
       syncErrors.add(SyncError(
         type: SyncStage.fetch,
         message: 'Session expired while fetching configuration',
       ));
       logger(
-        syncProgressState: SyncProgressState.FAILED,
+        syncProgressState: SyncProgressState.RUNNING,
         message: 'Session expired while fetching configuration',
+        completed: false,
       );
       rawJson = [];
     } on DioException catch (e) {
+      fetchFailed = true;
       syncErrors.add(SyncError(
           type: SyncStage.fetch, message: 'Fetch error: ${e.message}'));
       logger(
-          syncProgressState: SyncProgressState.FAILED,
-          message: 'Fetch error: ${e.message}');
+        syncProgressState: SyncProgressState.RUNNING,
+        message: 'Fetch error: ${e.message}',
+        completed: false,
+      );
       rawJson = []; // proceed with empty payload (or rethrow if you prefer)
     } catch (e) {
+      fetchFailed = true;
       logError('Unexpected fetch error: `$resourcePath`', source: e);
       syncErrors.add(SyncError(
-          type: SyncStage.unexpected,
-          message: 'Unexpected during fetch error: $e'));
+          type: SyncStage.fetch, message: 'Unexpected during fetch error: $e'));
       logger(
-          syncProgressState: SyncProgressState.FAILED,
-          message: 'Unexpected error during fetch: $e');
+        syncProgressState: SyncProgressState.RUNNING,
+        message: 'Unexpected error during fetch: $e',
+        completed: false,
+      );
       rawJson = [];
     }
 
@@ -89,8 +98,10 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
             type: SyncStage.fetchExtra,
             message: 'Extract extra entities error: $e'));
         logger(
-            syncProgressState: SyncProgressState.FAILED,
-            message: 'Extract extra entities error: $e');
+          syncProgressState: SyncProgressState.PARTIAL_ERROR,
+          message: 'Extract extra entities error: $e',
+          completed: false,
+        );
         extra = [];
       }
     }
@@ -111,12 +122,14 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
         logError('Mapping error: `$resourcePath`, for uid=`${item['uid']}`',
             source: e);
         syncErrors.add(SyncError(
-            type: SyncStage.fetchExtra,
+            type: SyncStage.mapping,
             message: 'Mapping error for uid=${item['uid']}: $e',
             extra: {'uid': item['uid']}));
         logger(
-            syncProgressState: SyncProgressState.FAILED,
-            message: 'Mapping error for uid=${item['uid']}: $e');
+          syncProgressState: SyncProgressState.PARTIAL_ERROR,
+          message: 'Mapping error for uid=${item['uid']}: $e',
+          completed: false,
+        );
       }
     }
 
@@ -150,27 +163,25 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
           await disableStale(liveIds);
         }
       });
-
-      logger(
-          percentage: 100,
-          message: 'Saved ${rawJson.length}',
-          resources: rawJson.length,
-          syncProgressState: SyncProgressState.SUCCEEDED);
     } catch (e) {
+      databaseWriteFailed = true;
       logError('Database write error: `$resourcePath`', source: e);
       syncErrors.add(SyncError(
         type: SyncStage.databaseWrite,
         message: 'Database write error: $e',
       ));
       logger(
-          syncProgressState: SyncProgressState.FAILED,
-          message: 'Database write error: $e');
+        syncProgressState: SyncProgressState.RUNNING,
+        message: 'Database write error: $e',
+        completed: false,
+      );
     }
 
-    // logger(
-    //     message:
-    //         'mapped ${mapped.length}, errors: ${syncErrors.length}');
-
+    final finalState = fetchFailed || databaseWriteFailed
+        ? SyncProgressState.FAILED
+        : syncErrors.isEmpty
+            ? SyncProgressState.SUCCEEDED
+            : SyncProgressState.PARTIAL_ERROR;
     await _summariesDao.upsertSummary(SyncSummary(
       entity: resourceName,
       lastSync: DateTime.now(),
@@ -178,6 +189,16 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
       failureCount: syncErrors.length,
       errors: syncErrors,
     ));
+
+    logger(
+      percentage: 100,
+      message: finalState.isSuccess
+          ? 'Saved ${rawJson.length}'
+          : 'Completed with ${syncErrors.length} error(s)',
+      resources: mapped.length,
+      syncProgressState: finalState,
+      completed: true,
+    );
 
     if (sessionExpired != null) {
       throw sessionExpired;

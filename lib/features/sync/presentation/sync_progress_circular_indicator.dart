@@ -25,9 +25,13 @@ class SyncProgressCircularIndicator extends StatelessWidget {
       progressColor: cs.inversePrimary,
       percent: ((syncProgressInfo?.overallPercentage ?? 0) / 100),
       center: (syncProgressInfo?.completed ?? false)
-          ? const Icon(
-              Icons.check,
-              color: DColors.Orange600,
+          ? Icon(
+              syncProgressInfo?.overallState.isSuccess == true
+                  ? Icons.check
+                  : Icons.error_outline,
+              color: syncProgressInfo?.overallState.isSuccess == true
+                  ? DColors.Orange600
+                  : cs.error,
               size: 40,
             )
           : Text(

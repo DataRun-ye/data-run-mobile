@@ -13,25 +13,29 @@ enum SyncProgressState {
   bool get isFailed => this == FAILED;
 
   bool isFinished() {
-    return this == SUCCEEDED || this == FAILED || this == CANCELLED;
+    return this == SUCCEEDED ||
+        this == FAILED ||
+        this == PARTIAL_ERROR ||
+        this == CANCELLED;
   }
 }
 
 class SyncProgressEvent {
+  const SyncProgressEvent({
+    required this.resourceName,
+    required this.syncProgressState,
+    required this.message,
+    required this.percentage,
+    this.completed = false,
+    this.resources,
+  });
+
   final String resourceName;
   final SyncProgressState syncProgressState;
   final String message;
   final double percentage;
   final bool completed;
   final int? resources;
-
-  const SyncProgressEvent(
-      {required this.resourceName,
-      required this.syncProgressState,
-      required this.message,
-      required this.percentage,
-      this.completed = false,
-      this.resources});
 
   Map<String, dynamic> toMap() {
     return {

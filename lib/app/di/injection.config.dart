@@ -41,10 +41,6 @@ import 'package:datarunmobile/features/assignment/application/assignment_service
     as _i935;
 import 'package:datarunmobile/features/assignment/application/assignment_service_impl.dart'
     as _i1027;
-import 'package:datarunmobile/features/form/application/form_template_service.dart'
-    as _i258;
-import 'package:datarunmobile/features/form/application/form_template_service_impl.dart'
-    as _i489;
 import 'package:datarunmobile/features/form/application/map_value_to_display.dart'
     as _i244;
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart'
@@ -90,7 +86,6 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());
   gh.factory<_i935.AssignmentService>(() => _i1027.AssignmentServiceImpl());
-  gh.factory<_i258.FormTemplateService>(() => _i489.FormTemplateServiceImpl());
   gh.factory<_i550.StorageService>(() => sdkModule.getStorageService(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i460.SharedPreferences>(),

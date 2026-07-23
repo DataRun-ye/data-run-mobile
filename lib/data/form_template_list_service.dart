@@ -8,7 +8,6 @@ import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/data/option_set_service.dart';
-import 'package:datarunmobile/features/form/application/form_list_filter.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:injectable/injectable.dart';
@@ -92,16 +91,6 @@ class FormTemplateListService {
     }
 
     return [];
-  }
-
-  Future<List<FormTemplateModel>> fetchByFilter(FormListFilter filter) async {
-    final db = appLocator<AppDatabase>();
-    final query = db.formTemplateVersionsDao
-        .selectFormTemplatesWithRefs(assignmentId: filter.assignment);
-
-    final formTemplates = await query.get();
-
-    return formTemplates;
   }
 
   Future<FormTemplateModel> getTemplateByVersionOrLatest(

@@ -127,7 +127,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 | Consumer | Evidence | Local rows required |
 | --- | --- | --- |
 | Assignment list | `lib/database/dao/assignments_dao.dart:97-132` reads non-disabled assignments with prefetched forms, team, activity, and org unit. | `assignments`, `assignment_forms`, `teams`, `activities`, `org_units`. |
-| Assignment detail/access checks | `lib/features/assignment/application/assignment_service_impl.dart:43-83` fetches assignment with org/team/activity/forms; lines 98-142 check assignment form permissions and synced/local submission state. | `assignments`, `assignment_forms`, `form_templates`, `data_instances`. |
+| Assignment list and form access | `lib/features/assignment/application/assignment_model.provider.dart` loads assignment rows and joins active `userAvailableFormsProvider`; `lib/data/form_template_list_service.dart` enforces `canAddSubmissions`; `lib/features/form_submission/application/submission_edit_access.dart` checks edit access for an existing submission. | `assignments`, `assignment_forms`, `form_templates`, `data_instances`. |
 | Available forms | `lib/data/form_template_list_service.dart:23-47` reads `assignmentForms`, then `formTemplates`; lines 111-131 further filter by active user forms and `canAddSubmissions`. | `assignment_forms`, `form_templates`, user session form ids. |
 | Form list/latest version | `lib/data/form_template_list_service.dart:154-180` and `form_template_versions_dao.dart:30-100` join form templates, form versions, and assignment forms to produce `FormTemplateModel`. | `form_templates`, `form_template_versions`, `assignment_forms`. |
 | Form opening | `lib/data/form_template_repository.dart:18-27` loads the selected version and option sets/options before the form tree is built. | `form_template_versions`, `data_option_sets`, `data_options`. |
@@ -140,6 +140,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 | OBSOLETE-REMOVED | Abandoned manifest services, party resolver, and `assignment_manifests`/party table declarations | No runtime consumer existed; persistence was TODO/comment-only; the resolver returned placeholders; the Play schema-3 database has none of these tables. Removed from active DI/schema declarations without a `DROP TABLE` migration. | Existing databases that happen to contain these unowned tables retain them, but active code no longer presents them as a production capability. |
 | OBSOLETE-REMOVED | Duplicate DAO `syncWithRemote` mixin and metadata DAO wrappers | The active `SyncManager` calls registered `AbstractDatasource.syncWithRemote`; the duplicate DAO implementation and unused DAO wrappers were removed without changing tables. | Configuration sync now has one implementation path. |
 | OBSOLETE-REMOVED | Former datasource order annotations/map | Ordering metadata did not determine active registration membership. The explicit order in `init_active_session_scope.dart` is now the only active source and is covered by a registration test. | Prevents generated annotations from being mistaken for sync membership. |
+| OBSOLETE-REMOVED | `AssignmentService` and `AssignmentServiceImpl` | No runtime lookup or direct consumer existed; injectable registration was their only external reference. Active listing, creation availability, and edit access use the provider/service/query paths above. | Dormant assignment status/delete policy methods no longer look like active production authorization. |
 | OBSOLETE-REMOVED | Unregistered data-value, repeat-instance, metadata-submission, form-version, and option datasources | No active `AbstractDatasource` registration or runtime caller existed. | Their names no longer imply active fetch paths. |
 | OBSOLETE-REMOVED | Old Riverpod sync service and NMC worker providers | No active watcher or worker registration existed; the facade did not perform the real download. | Active config fetching remains `SyncResourcesController` plus `SyncManager`; the controller is a presentation projection over the real manager, not a second sync implementation. |
 | OBSOLETE-REMOVED | `UserDatasource` | Its concrete registration had no resolver/caller and it was never part of `SyncManager.syncAll()`; active profile fetch remains `AuthApi.getUserProfile`. | Removes a false second user-profile fetch/persistence path from architectural reasoning. |
@@ -173,6 +174,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 - `lib/data/form_template_list_service.dart`
 - `lib/data/form_template_repository.dart`
 - `lib/data/option_set_service.dart`
-- `lib/features/assignment/application/assignment_service_impl.dart`
+- `lib/features/assignment/application/assignment_model.provider.dart`
+- `lib/features/form_submission/application/submission_edit_access.dart`
 - `lib/database/dao/form_template_versions_dao.dart`
 - `lib/database/dao/assignments_dao.dart`

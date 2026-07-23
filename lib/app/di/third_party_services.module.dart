@@ -12,18 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart'
 
 @module
 abstract class ThirdPartyServicesModule {
-  // @lazySingleton
-  // NavigationService get navigationService;
-  //
-  // @lazySingleton
-  // DialogService get dialogService;
-  //
-  // @lazySingleton
-  // SnackbarService get snackbarService;
-  //
-  // @lazySingleton
-  // BottomSheetService get bottomSheetService;
-
   @injectable
   Dio dio(AuthInterceptor authInterceptor) {
     final Map<String, String> _headers = {};

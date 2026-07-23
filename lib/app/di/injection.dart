@@ -1,6 +1,4 @@
 import 'package:datarunmobile/di/injection.dart';
-import 'package:datarunmobile/app/stacked/app.bottomsheets.dart';
-import 'package:datarunmobile/app/stacked/app.dialogs.dart';
 import 'package:datarunmobile/app/stacked/app.locator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -16,8 +14,6 @@ export 'package:datarunmobile/di/injection.dart' show appLocator;
 Future<GetIt> configureDependencies() async {
   // stacked
   await setupLocator();
-  setupDialogUi();
-  setupBottomSheetUi();
 
   // app
   // Sets up global dependencies that persist throughout the app's lifecycle.

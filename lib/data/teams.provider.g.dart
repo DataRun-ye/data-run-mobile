@@ -67,7 +67,7 @@ final class UserAvailableFormsProvider extends $FunctionalProvider<
 }
 
 String _$userAvailableFormsHash() =>
-    r'8998646893c5b6498e98ca1cdc5d2ff1fc11f7b5';
+    r'a60cba80c669bccc59872fe4f6ce25c58ea94687';
 
 final class UserAvailableFormsFamily extends $Family
     with
@@ -147,7 +147,7 @@ final class TeamsProvider extends $FunctionalProvider<
   }
 }
 
-String _$teamsHash() => r'd1d6bda1fc54540adb4442b3ddc9cf9d4c24d051';
+String _$teamsHash() => r'4f766aa3309d639e6549298296445b59a6a2c6c8';
 
 final class TeamsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<IdentifiableModel>>, String?> {
@@ -225,7 +225,7 @@ final class ManagedTeamsProvider extends $FunctionalProvider<
   }
 }
 
-String _$managedTeamsHash() => r'260a82886e29c06f02bb61ffc370871f3220d347';
+String _$managedTeamsHash() => r'fc9bdec4792a463974da21bc21f9314699381679';
 
 final class ManagedTeamsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<IdentifiableModel>>, String?> {

@@ -62,7 +62,7 @@ final class SubmissionEditStatusProvider
 }
 
 String _$submissionEditStatusHash() =>
-    r'02d9349aaea6e5b425324fcafea9817097b43533';
+    r'a5130b89151ffc0fca8f28bf455305a2c8169f27';
 
 final class SubmissionEditStatusFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<bool>, String> {

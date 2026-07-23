@@ -48,12 +48,24 @@ targets:
           - lib/core/**/*.dart
           - lib/data/*.dart
           - lib/data/**/*.dart
-#      stacked_generator:
-#        enabled: true
-#        generate_for:
-#          - lib/app/stacked/app.**.dart
-#      stacked_generator:stackedLoggerGenerator:
-#        enabled: false
+      # Stacked builders emit Dart inputs consumed by other builders. Keep the
+      # two active generators scoped so unused builders cannot form output chains.
+      stacked_generator|stackedRouterGenerator:
+        enabled: true
+        generate_for:
+          - lib/app/stacked/app.dart
+      stacked_generator|stackedLocatorGenerator:
+        enabled: true
+        generate_for:
+          - lib/app/stacked/app.dart
+      stacked_generator|stackedFormGenerator:
+        enabled: false
+      stacked_generator|stackedLoggerGenerator:
+        enabled: false
+      stacked_generator|stackedDialogGenerator:
+        enabled: false
+      stacked_generator|stackedBottomsheetGenerator:
+        enabled: false
       # Configuring this builder isn't required for most apps. In our case, we
       # want to compile the web worker in `web/worker.dart` to JS and we use the
       # build system for that.

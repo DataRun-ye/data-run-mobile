@@ -61,14 +61,37 @@ class AuthStorage {
     return tokenPair;
   }
 
-  Future<void> setActiveSession(UserSession userSession) async {
-    await _prefs.setString(CacheKeys.activeUserKey, userSession.username);
-    return _sessionStorage.writeSession(userSession.username,
-        session: userSession);
-  }
-
   Future<void> updateActiveUserToken(TokenPair tokenPair) {
     return _tokenStorage.saveTokens(getActiveUserId(), tokenPair);
+  }
+
+  Future<void> persistAuthenticatedSession(
+    UserSession userSession,
+    TokenPair tokenPair,
+  ) async {
+    final userId = userSession.username;
+    await _prefs.remove(CacheKeys.activeUserKey);
+
+    try {
+      await _sessionStorage.writeSession(userId, session: userSession);
+      await _tokenStorage.saveTokens(userId, tokenPair);
+      final activated = await _prefs.setString(CacheKeys.activeUserKey, userId);
+      if (!activated) {
+        throw StateError('Could not activate cached session for user: $userId');
+      }
+    } catch (error, stackTrace) {
+      await _prefs.remove(CacheKeys.activeUserKey);
+      try {
+        await _tokenStorage.deleteTokens(userId);
+      } catch (cleanupError, cleanupStackTrace) {
+        logError(
+          'Could not clean partially stored credentials',
+          source: cleanupError,
+          stackTrace: cleanupStackTrace,
+        );
+      }
+      Error.throwWithStackTrace(error, stackTrace);
+    }
   }
 
   Future<void> clearActiveUser() async {
@@ -78,10 +101,5 @@ class AuthStorage {
     logDebug('clearing active user credentials', source: this);
     await _prefs.remove(CacheKeys.activeUserKey);
     await _tokenStorage.deleteTokens(activeUserId!);
-  }
-
-  Future<void> setActiveCredentials(String userId, TokenPair tokenPair) async {
-    await _prefs.setString(CacheKeys.activeUserKey, userId);
-    await _tokenStorage.saveTokens(userId, tokenPair);
   }
 }

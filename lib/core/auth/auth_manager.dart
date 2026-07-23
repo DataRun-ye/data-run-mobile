@@ -103,39 +103,87 @@ class AuthManager extends ChangeNotifier {
   /// On successful login, it creates a new GetIt scope for the user session.
   Future<UserSession> login(
       {required String username, required String password}) async {
-    // Set to unknown during login process
     _status = AuthStatus.unknown;
     notifyListeners();
-    try {
-      // user token
-      final authResponse = await _authApi.login(username, password);
+    var credentialsPersisted = false;
+    var operationTrackingResumed = false;
+    String? sessionUserId;
 
-      // Fetch user profile (must succeed)
+    try {
+      final authResponse = await _authApi.login(username, password);
       final userSession =
           await _authApi.getUserProfile(authResponse.accessToken);
+      sessionUserId = userSession.username;
 
       final scopeClosure = _scopeClosure;
       if (scopeClosure != null) {
         await scopeClosure;
       }
-      _sessionEnd = null;
-      _sessionOperationTracker.resume();
-      await _activateUserSession(userSession);
 
-      await _authStorage.setActiveSession(userSession);
-      await _authStorage.setActiveCredentials(userSession.username, (
+      await _authStorage.persistAuthenticatedSession(userSession, (
         accessToken: authResponse.accessToken,
         refreshToken: authResponse.refreshToken
       ));
+      credentialsPersisted = true;
+
+      _sessionEnd = null;
+      _sessionOperationTracker.resume();
+      operationTrackingResumed = true;
+      await _activateUserSession(userSession);
+
+      try {
+        await setSentryUser(userSession);
+      } catch (error, stackTrace) {
+        logError(
+          'Failed to set authenticated telemetry identity',
+          source: error,
+          stackTrace: stackTrace,
+        );
+      }
 
       return userSession;
     } catch (error, s) {
       logError('Login failed', source: error, stackTrace: s);
+      if (operationTrackingResumed) {
+        await _sessionOperationTracker.stopAndWaitForIdle();
+      }
+      if (credentialsPersisted) {
+        try {
+          await _authStorage.clearActiveUser();
+        } catch (cleanupError, cleanupStackTrace) {
+          logError(
+            'Failed to roll back login credentials',
+            source: cleanupError,
+            stackTrace: cleanupStackTrace,
+          );
+        }
+      }
+      if (sessionUserId != null) {
+        try {
+          await _closeFailedLoginScope(sessionUserId);
+        } catch (cleanupError, cleanupStackTrace) {
+          logError(
+            'Failed to roll back login scope',
+            source: cleanupError,
+            stackTrace: cleanupStackTrace,
+          );
+        }
+      }
       _status = AuthStatus.unauthenticated;
       _activeUserSession = null;
-      rethrow; // Re-throw to be caught by UI for error display
+      rethrow;
     } finally {
       notifyListeners();
+    }
+  }
+
+  Future<void> _closeFailedLoginScope(String userId) async {
+    if (appLocator.hasScope(userId)) {
+      await appLocator.popScopesTill(userId);
+      driftRuntimeOptions.dontWarnAboutMultipleDatabases = false;
+    }
+    if (_sessionScopeUserId == userId) {
+      _sessionScopeUserId = null;
     }
   }
 
@@ -164,30 +212,36 @@ class AuthManager extends ChangeNotifier {
       scopeName: sessionUserId,
       init: (getIt) async {
         getIt.enableRegisteringMultipleInstancesOfOneType();
-        final executor =
-            await appLocator<DatabaseFactory>().openForUser(sessionUserId);
-        appLocator.registerSingleton<UserSession>(userSession,
-            instanceName: 'activeUser');
-
-        getIt.registerLazySingleton<AppDatabase>(
-            () => AppDatabase(executor: executor, userId: sessionUserId),
+        final databaseFactory = appLocator<DatabaseFactory>();
+        final executor = await databaseFactory.openForUser(sessionUserId);
+        try {
+          final database =
+              AppDatabase(executor: executor, userId: sessionUserId);
+          getIt.registerSingleton<AppDatabase>(
+            database,
             dispose: (db) async {
-          logDebug('AppDatabase dispose');
-          await appLocator<DatabaseFactory>().closeForUser(db.userId);
-        });
-        getIt.registerFactory<SubmissionTableService>(
-          () {
-            final database = getIt<AppDatabase>();
-            return SubmissionTableService(
+              logDebug('AppDatabase dispose');
+              await databaseFactory.closeForUser(db.userId);
+            },
+          );
+          getIt.registerSingleton<UserSession>(
+            userSession,
+            instanceName: 'activeUser',
+          );
+          getIt.registerFactory<SubmissionTableService>(
+            () => SubmissionTableService(
               database: database,
               uploadService: SubmissionUploadService(
                 database: database,
                 apiClient: getIt<HttpClient<dynamic>>(),
                 operationTracker: _sessionOperationTracker,
               ),
-            );
-          },
-        );
+            ),
+          );
+        } catch (_) {
+          await databaseFactory.closeForUser(sessionUserId);
+          rethrow;
+        }
       },
     );
 

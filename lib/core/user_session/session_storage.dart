@@ -12,10 +12,13 @@ class SessionStorage {
   /// Write session
   Future<void> writeSession(String userId,
       {required UserSession session}) async {
-    await _storage.setString(
+    final saved = await _storage.setString(
       userId,
       session.toJsonString(),
     );
+    if (!saved) {
+      throw StateError('Could not cache session for user: $userId');
+    }
   }
 
   /// Read session

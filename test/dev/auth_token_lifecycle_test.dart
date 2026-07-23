@@ -7,6 +7,7 @@ import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/core/auth/auth_api.dart';
 import 'package:datarunmobile/core/auth/auth_interceptor.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
+import 'package:datarunmobile/core/auth/auth_response.dart';
 import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
 import 'package:datarunmobile/core/auth/auth_storage.dart';
 import 'package:datarunmobile/core/auth/token_refresher.dart';
@@ -17,7 +18,10 @@ import 'package:datarunmobile/core/secure_storage/storage_service.dart';
 import 'package:datarunmobile/core/user/cache_keys.dart';
 import 'package:datarunmobile/core/user_session/session_storage.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
+import 'package:datarunmobile/database/db_factory/database_factory.dart';
 import 'package:dio/dio.dart';
+import 'package:drift/drift.dart' show QueryExecutor;
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -58,11 +62,93 @@ void main() {
 
   test('logout clears active credentials but preserves the cached profile',
       () async {
-    await authStorage.setActiveSession(_userSession);
-    await authStorage.setActiveCredentials('test-user', _oldTokens);
+    await authStorage.persistAuthenticatedSession(_userSession, _oldTokens);
 
     await authStorage.clearActiveUser();
 
+    expect(preferences.getString(CacheKeys.activeUserKey), isNull);
+    expect(await tokenStorage.getTokens('test-user'), isNull);
+    expect(sessionStorage.readSession('test-user')?.id, _userSession.id);
+  });
+
+  test('login storage failure never opens a user database scope', () async {
+    final databaseFactory = _TestDatabaseFactory();
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    storage.failWriteKey = CacheKeys.getRefreshTokenKey('test-user');
+    final authManager = AuthManager(
+      authStorage: authStorage,
+      authApi: _LoginAuthApi(),
+      sessionOperationTracker: operationTracker,
+    );
+
+    await expectLater(
+      authManager.login(username: 'test-user', password: 'password'),
+      throwsA(isA<StateError>()),
+    );
+
+    expect(databaseFactory.openCalls, 0);
+    expect(appLocator.hasScope('test-user'), isFalse);
+    expect(authManager.status, AuthStatus.unauthenticated);
+    expect(preferences.getString(CacheKeys.activeUserKey), isNull);
+    expect(await tokenStorage.getTokens('test-user'), isNull);
+    expect(sessionStorage.readSession('test-user')?.id, _userSession.id);
+  });
+
+  test('login activation failure rolls back committed credentials', () async {
+    final databaseFactory = _TestDatabaseFactory(failOpen: true);
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    final authManager = AuthManager(
+      authStorage: authStorage,
+      authApi: _LoginAuthApi(),
+      sessionOperationTracker: operationTracker,
+    );
+
+    await expectLater(
+      authManager.login(username: 'test-user', password: 'password'),
+      throwsA(isA<StateError>()),
+    );
+
+    expect(databaseFactory.openCalls, 1);
+    expect(appLocator.hasScope('test-user'), isFalse);
+    expect(authManager.status, AuthStatus.unauthenticated);
+    expect(preferences.getString(CacheKeys.activeUserKey), isNull);
+    expect(await tokenStorage.getTokens('test-user'), isNull);
+    expect(sessionStorage.readSession('test-user')?.id, _userSession.id);
+  });
+
+  test('successful login owns and closes one user database scope', () async {
+    final databaseFactory = _TestDatabaseFactory();
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    final authManager = AuthManager(
+      authStorage: authStorage,
+      authApi: _LoginAuthApi(),
+      sessionOperationTracker: operationTracker,
+    );
+
+    final session =
+        await authManager.login(username: 'test-user', password: 'password');
+
+    expect(session, same(_userSession));
+    expect(authManager.status, AuthStatus.authenticated);
+    expect(appLocator.hasScope('test-user'), isTrue);
+    expect(databaseFactory.openCalls, 1);
+    expect(preferences.getString(CacheKeys.activeUserKey), 'test-user');
+    expect(await tokenStorage.getTokens('test-user'), _loginTokens);
+
+    await authManager.logout();
+
+    expect(authManager.status, AuthStatus.unauthenticated);
+    expect(appLocator.hasScope('test-user'), isFalse);
+    expect(databaseFactory.closeForUserCalls, 1);
     expect(preferences.getString(CacheKeys.activeUserKey), isNull);
     expect(await tokenStorage.getTokens('test-user'), isNull);
     expect(sessionStorage.readSession('test-user')?.id, _userSession.id);
@@ -103,8 +189,10 @@ void main() {
       ),
       refreshToken: _newTokens.refreshToken,
     );
-    await authStorage.setActiveSession(_userSession);
-    await authStorage.setActiveCredentials('test-user', expiredTokens);
+    await authStorage.persistAuthenticatedSession(
+      _userSession,
+      expiredTokens,
+    );
 
     var refreshCalls = 0;
     final refresher = TokenRefresher(
@@ -144,8 +232,10 @@ void main() {
       ),
       refreshToken: _oldTokens.refreshToken,
     );
-    await authStorage.setActiveSession(_userSession);
-    await authStorage.setActiveCredentials('test-user', expiredTokens);
+    await authStorage.persistAuthenticatedSession(
+      _userSession,
+      expiredTokens,
+    );
     appLocator.pushNewScope(scopeName: 'test-user');
 
     final refresher = TokenRefresher(
@@ -196,8 +286,7 @@ void main() {
       ),
       refreshToken: _oldTokens.refreshToken,
     );
-    await authStorage.setActiveSession(_userSession);
-    await authStorage.setActiveCredentials('test-user', validTokens);
+    await authStorage.persistAuthenticatedSession(_userSession, validTokens);
     appLocator.pushNewScope(scopeName: 'test-user');
     final authManager = createAuthManager();
     final adapter = _UnauthorizedAdapter();
@@ -234,8 +323,7 @@ void main() {
 
   test('concurrent session expiration drains operations and navigates once',
       () async {
-    await authStorage.setActiveSession(_userSession);
-    await authStorage.setActiveCredentials('test-user', _oldTokens);
+    await authStorage.persistAuthenticatedSession(_userSession, _oldTokens);
     appLocator.pushNewScope(scopeName: 'test-user');
     final authManager = createAuthManager();
     final releaseOperation = Completer<void>();
@@ -265,6 +353,10 @@ const _oldTokens = (
 const _newTokens = (
   accessToken: 'new-access-token',
   refreshToken: 'new-refresh-token',
+);
+const _loginTokens = (
+  accessToken: 'login-access-token',
+  refreshToken: 'login-refresh-token',
 );
 
 const _userSession = UserSession(
@@ -299,8 +391,20 @@ class _FakeAuthApi extends AuthApi {
   Future<TokenPair> refreshToken(String refreshToken) => _refresh(refreshToken);
 }
 
+class _LoginAuthApi extends AuthApi {
+  @override
+  Future<AuthResponse> login(username, password) async => AuthResponse(
+        accessToken: _loginTokens.accessToken,
+        refreshToken: _loginTokens.refreshToken,
+      );
+
+  @override
+  Future<UserSession> getUserProfile(String accessToken) async => _userSession;
+}
+
 class _MemoryStorageService implements StorageService {
   final Map<String, String> values = {};
+  String? failWriteKey;
 
   @override
   Future<void> delete(String key) async {
@@ -320,7 +424,44 @@ class _MemoryStorageService implements StorageService {
 
   @override
   Future<void> write(String key, String value) async {
+    if (key == failWriteKey) {
+      throw StateError('Secure storage write failed: $key');
+    }
     values[key] = value;
+  }
+}
+
+class _TestDatabaseFactory extends DatabaseFactory {
+  _TestDatabaseFactory({this.failOpen = false});
+
+  final bool failOpen;
+  final _executors = <QueryExecutor>[];
+  var openCalls = 0;
+  var closeForUserCalls = 0;
+
+  @override
+  Future<QueryExecutor> openForUser(String userId) async {
+    openCalls++;
+    if (failOpen) {
+      throw StateError('Database open failed: $userId');
+    }
+    final executor = NativeDatabase.memory();
+    _executors.add(executor);
+    return executor;
+  }
+
+  @override
+  Future<void> closeForUser(String userId) async {
+    closeForUserCalls++;
+    await close();
+  }
+
+  @override
+  Future<void> close() async {
+    for (final executor in _executors) {
+      await executor.close();
+    }
+    _executors.clear();
   }
 }
 

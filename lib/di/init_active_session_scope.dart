@@ -1,7 +1,6 @@
 import 'package:datarunmobile/datasource/abstract_datasource.dart';
 import 'package:datarunmobile/datasource/remote_data_sources/activity_datasource.dart';
 import 'package:datarunmobile/datasource/remote_data_sources/assignment_datasource.dart';
-import 'package:datarunmobile/datasource/remote_data_sources/data_element_datasource.dart';
 import 'package:datarunmobile/datasource/remote_data_sources/form_template_datasource.dart';
 import 'package:datarunmobile/datasource/remote_data_sources/option_set_datasource.dart';
 import 'package:datarunmobile/datasource/remote_data_sources/org_unit_datasource.dart';
@@ -17,7 +16,6 @@ GetIt registerUserConfigurationDatasources(GetIt getIt) {
   getIt.registerFactory<AbstractDatasource<dynamic>>(OuLevelDatasource.new);
   getIt.registerFactory<AbstractDatasource<dynamic>>(OrgUnitDatasource.new);
   getIt.registerFactory<AbstractDatasource<dynamic>>(OptionSetDatasource.new);
-  getIt.registerFactory<AbstractDatasource<dynamic>>(DataElementDatasource.new);
   getIt.registerFactory<AbstractDatasource<dynamic>>(
     DataFormTemplateDatasource.new,
   );

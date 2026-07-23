@@ -37,7 +37,6 @@ void main() {
         'ouLevels',
         'orgUnits',
         'optionSets',
-        'dataElements',
         'formTemplates',
         'teams',
         'formPermissions',

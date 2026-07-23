@@ -57,11 +57,10 @@ Registered as `AbstractDatasource` and therefore collected by `SyncManager`:
 3. `OuLevelDatasource`
 4. `OrgUnitDatasource`
 5. `OptionSetDatasource`
-6. `DataElementDatasource`
-7. `DataFormTemplateDatasource`
-8. `TeamDatasource`
-9. `UserFormAccessesDatasource`
-10. `AssignmentDatasource`
+6. `DataFormTemplateDatasource`
+7. `TeamDatasource`
+8. `UserFormAccessesDatasource`
+9. `AssignmentDatasource`
 
 The former concrete `UserDatasource` registration had no resolver/caller and was removed. Login still fetches the user profile through `AuthApi.getUserProfile()` before this list is registered.
 
@@ -93,7 +92,7 @@ Fetch, extraction, mapping, and database errors now retain their terminal `FAILE
 | OU levels | ACTIVE | `ouLevels?paged=false` | `OuLevelDatasource.fromApiJson` uses default mapping. | `ou_levels` table: name/code/level/offlineLevels. | No datasource `disableStale` override found. | Org hierarchy support; direct active UI use not deeply traced in this pass. | Medium |
 | Org units | ACTIVE | `orgUnits?paged=false` | `OrgUnitDatasource.fromApiJson` collapses nested `parent.uid`/`parent.id` to `parent`. | `org_units` table: name/code/path/level/parent. | No datasource `disableStale` override found. | Assignment list/detail prefetch org unit refs. | High |
 | Option sets | ACTIVE | `optionSets?paged=false` | `OptionSetDatasource` maps option sets and extracts nested `options` into `DataOption` rows with `optionSet`, `order`, label/translations, and delete flags. | `data_option_sets`; child `data_options`. | No option-set stale override found. Child `data_options` is fully deleted/reinserted when extras exist. | `OptionSetService.getOptions` reads local `dataOptions` and `dataOptionSets` for select fields. | High |
-| Data elements | ACTIVE | `dataElements?paged=false` | `DataElementDatasource.fromApiJson` collapses nested `optionSet.uid` to `optionSet`. | `data_elements` table: value type, optionSet, mandatory/default/scanned-code/resource metadata columns. | No datasource `disableStale` override found. | Form element templates may refer to data element metadata; direct active form rendering mainly uses `form_template_versions` JSON. | Medium |
+| Data elements | SOURCE-DEAD / SCHEMA-ONLY | No active fetch after removal of `DataElementDatasource`. | Form field metadata is parsed directly from cached `form_template_versions` JSON. | The `data_elements` table remains only until its production-safe migration is applied. | N/A | No production read consumer was found outside generated Drift code; registration previously caused write-only synchronization. | High |
 | Form templates | ACTIVE | `formTemplates?paged=false` | `DataFormTemplateDatasource.mapRemoteItem` marks disabled; `fromApiJson` treats `disabled` or `deleted` as disabled. | `form_templates`: id/version/name/label/disabled. | Overrides `disableStale` to set `disabled = true`. | Form lists and assignment access query `formTemplates`. | High |
 | Form template versions/elements | ACTIVE | Extra fetch: `formTemplateVersions?paged=false` from `DataFormTemplateDatasource._getFormVersions`. | Each item becomes `FormTemplateVersion` with `id = uid` and `template = templateUid`. Drift converters parse/store `fields`, `sections`, and `options` JSON. | `form_template_versions`: template FK, versionNumber, `fields`, `sections`, `options`. | Child table is fully deleted/reinserted when form template extras exist. Separate `FormTemplateVersionDatasource` is not active. | `FormTemplateListService.getTemplateByVersionOrLatest` and `FormTemplateVersionsDao.selectFormTemplatesWithRefs` read this table to open forms. | High |
 | Teams | ACTIVE | `teams?paged=false` | `TeamDatasource.fromApiJson` collapses nested activity UID and marks disabled if team or activity is disabled. | `teams`; child `managed_teams`. | Overrides `disableStale` to set `disabled = true`. Child `managed_teams` is fully deleted/reinserted when extras exist. | Assignment list/detail prefetch team refs; team fields can read managed teams. | High |

@@ -97,11 +97,10 @@ Core risk: the app does not have one state system. Riverpod, ChangeNotifier, Get
 3. `OuLevelDatasource`
 4. `OrgUnitDatasource`
 5. `OptionSetDatasource`
-6. `DataElementDatasource`
-7. `DataFormTemplateDatasource`
-8. `TeamDatasource`
-9. `UserFormAccessesDatasource`
-10. `AssignmentDatasource`
+6. `DataFormTemplateDatasource`
+7. `TeamDatasource`
+8. `UserFormAccessesDatasource`
+9. `AssignmentDatasource`
 
 Evidence: `SyncManager` builds its resource map from `appLocator.getAll<AbstractDatasource<dynamic>>()`; `SyncResourcesController` calls `SyncManager.syncAll()`.
 

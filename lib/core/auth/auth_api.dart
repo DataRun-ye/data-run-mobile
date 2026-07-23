@@ -43,6 +43,31 @@ class AuthApi {
     }
   }
 
+  Future<TokenPair> refreshToken(String refreshToken) async {
+    try {
+      final response = await _dioClient.post(
+        '$apiPath/refresh',
+        data: {'refreshToken': refreshToken},
+        options: Options(
+          extra: {'skipAuth': true},
+          receiveTimeout: const Duration(seconds: 70),
+          sendTimeout: const Duration(seconds: 40),
+        ),
+      );
+
+      return (
+        accessToken: response.data['accessToken'] as String,
+        refreshToken: response.data['refreshToken'] as String,
+      );
+    } on DioException catch (e, s) {
+      logError('Error while refreshing tokens', source: e, stackTrace: s);
+      throw NetworkHttpError.fromDioException(
+        e,
+        stackTrace: StackTrace.current,
+      );
+    }
+  }
+
   Future<UserSession> getUserProfile(String accessToken) async {
     try {
       final response = await _dioClient.get('$apiPath/myDetails',

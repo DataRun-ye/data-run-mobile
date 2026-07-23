@@ -1,61 +1,43 @@
-import 'dart:async';
-
+import 'package:datarunmobile/core/auth/auth_api.dart';
 import 'package:datarunmobile/core/auth/token_storage.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
-import 'package:datarunmobile/di/app_environment.dart';
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@lazySingleton
 class TokenRefresher {
-  TokenRefresher(this._storage)
-      : _refreshClient = Dio()
-          ..options.baseUrl = AppEnvironment.apiBaseUrl
-          ..options.headers = {
-            'content-type': 'application/json; charset=utf-8'
-          }
-          ..options.connectTimeout = const Duration(seconds: 10)
-          ..options.receiveTimeout = const Duration(seconds: 10);
+  TokenRefresher(this._storage, this._authApi);
 
   final TokenStorage _storage;
-  final Dio _refreshClient;
+  final AuthApi _authApi;
 
   final _refreshLocks = <String, Future<TokenPair>>{};
 
-  String get apiPath => AppEnvironment.apiV1Path;
-
-  Future<TokenPair> refreshToken(String userId) async {
-    // Prevent dulicate refresh calls
-    if (_refreshLocks.containsKey(userId)) {
-      return _refreshLocks[userId]!;
+  Future<TokenPair> refreshToken(String userId) {
+    // Refresh-token rotation makes concurrent refresh requests unsafe.
+    final existingRefresh = _refreshLocks[userId];
+    if (existingRefresh != null) {
+      return existingRefresh;
     }
 
-    final completer = Completer<TokenPair>();
-    _refreshLocks[userId] = completer.future;
+    late final Future<TokenPair> refresh;
+    refresh = _refreshAndPersist(userId).whenComplete(() {
+      if (identical(_refreshLocks[userId], refresh)) {
+        _refreshLocks.remove(userId);
+      }
+    });
+    _refreshLocks[userId] = refresh;
+    return refresh;
+  }
 
-    try {
-      final tokens = await _storage.getTokens(userId);
-      final response = await _refreshClient.post('$apiPath/refresh',
-          data: {'refreshToken': tokens!.refreshToken},
-          options: Options(
-            extra: {'skipAuth': true},
-            receiveTimeout: const Duration(seconds: 70),
-            sendTimeout: const Duration(seconds: 40),
-          ));
-
-      final TokenPair newTokenPair = (
-        accessToken: response.data['accessToken'],
-        refreshToken: response.data['refreshToken'],
-      );
-      await _storage.saveTokens(userId, newTokenPair);
-
-      completer.complete(newTokenPair);
-      return newTokenPair;
-    } catch (e) {
-      completer.completeError(e);
-      throw e;
-    } finally {
-      _refreshLocks.remove(userId);
+  Future<TokenPair> _refreshAndPersist(String userId) async {
+    final tokens = await _storage.getTokens(userId);
+    if (tokens == null) {
+      throw StateError('No cached tokens for user: $userId');
     }
+
+    final newTokenPair = await _authApi.refreshToken(tokens.refreshToken);
+    await _storage.saveTokens(userId, newTokenPair);
+
+    return newTokenPair;
   }
 }

@@ -104,6 +104,10 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
   gh.factory<_i139.SessionStorage>(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
+  gh.lazySingleton<_i48.TokenRefresher>(() => _i48.TokenRefresher(
+        gh<_i702.TokenStorage>(),
+        gh<_i64.AuthApi>(),
+      ));
   gh.factory<_i324.AuthStorage>(() => _i324.AuthStorage(
         tokenStorage: gh<_i702.TokenStorage>(),
         sessionStorage: gh<_i139.SessionStorage>(),
@@ -113,13 +117,13 @@ Future<_i174.GetIt> setupGlobalDependencies(
         metadataRepo: gh<_i492.SyncMetadataRepository>(),
         connectivity: gh<_i658.ConnectivityService>(),
       ));
-  gh.factory<_i48.TokenRefresher>(
-      () => _i48.TokenRefresher(gh<_i702.TokenStorage>()));
-  gh.factory<_i656.AuthInterceptor>(
-      () => _i656.AuthInterceptor(authStorage: gh<_i324.AuthStorage>()));
   gh.lazySingleton<_i261.AuthManager>(() => _i261.AuthManager(
         authStorage: gh<_i324.AuthStorage>(),
         authApi: gh<_i64.AuthApi>(),
+      ));
+  gh.factory<_i656.AuthInterceptor>(() => _i656.AuthInterceptor(
+        authStorage: gh<_i324.AuthStorage>(),
+        tokenRefresher: gh<_i48.TokenRefresher>(),
       ));
   gh.factory<_i361.Dio>(
       () => thirdPartyServicesModule.dio(gh<_i656.AuthInterceptor>()));

@@ -72,11 +72,12 @@ class AuthStorage {
   }
 
   Future<void> clearActiveUser() async {
-    try {
-      logDebug('clearing active user credentials', source: this);
-      await _prefs.remove(CacheKeys.activeUserKey);
-      await _tokenStorage.deleteTokens(getActiveUserId());
-    } catch (_) {}
+    final activeUserId = _prefs.getString(CacheKeys.activeUserKey);
+    if (activeUserId.isNullOrEmpty) return;
+
+    logDebug('clearing active user credentials', source: this);
+    await _prefs.remove(CacheKeys.activeUserKey);
+    await _tokenStorage.deleteTokens(activeUserId!);
   }
 
   Future<void> setActiveCredentials(String userId, TokenPair tokenPair) async {

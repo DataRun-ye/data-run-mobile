@@ -15,6 +15,8 @@ import 'package:datarunmobile/core/auth/auth_api.dart' as _i64;
 import 'package:datarunmobile/core/auth/auth_interceptor.dart' as _i656;
 import 'package:datarunmobile/core/auth/auth_manager.dart' as _i261;
 import 'package:datarunmobile/core/auth/auth_storage.dart' as _i324;
+import 'package:datarunmobile/core/auth/session_operation_tracker.dart'
+    as _i160;
 import 'package:datarunmobile/core/auth/token_refresher.dart' as _i48;
 import 'package:datarunmobile/core/auth/token_storage.dart' as _i702;
 import 'package:datarunmobile/core/common/confirmation_service.dart' as _i18;
@@ -76,8 +78,9 @@ Future<_i174.GetIt> setupGlobalDependencies(
   );
   gh.factory<_i64.AuthApi>(() => _i64.AuthApi());
   gh.factory<_i735.DisplayValueLookup>(() => _i735.DisplayValueLookup());
-  gh.factory<_i602.SyncManager>(() => _i602.SyncManager());
   gh.factory<_i158.OptionSetService>(() => _i158.OptionSetService());
+  gh.lazySingleton<_i160.SessionOperationTracker>(
+      () => _i160.SessionOperationTracker());
   gh.lazySingleton<_i18.ConfirmationService>(() => _i18.ConfirmationService());
   gh.lazySingleton<_i658.ConnectivityService>(
       () => _i658.ConnectivityService());
@@ -102,6 +105,8 @@ Future<_i174.GetIt> setupGlobalDependencies(
       () => sdkModule.getTokenStorage(gh<_i550.StorageService>()));
   gh.factory<_i492.SyncMetadataRepository>(
       () => _i492.SyncMetadataRepository(gh<_i460.SharedPreferences>()));
+  gh.factory<_i602.SyncManager>(
+      () => _i602.SyncManager(gh<_i160.SessionOperationTracker>()));
   gh.factory<_i139.SessionStorage>(
       () => _i139.SessionStorage(storage: gh<_i460.SharedPreferences>()));
   gh.lazySingleton<_i48.TokenRefresher>(() => _i48.TokenRefresher(
@@ -120,9 +125,11 @@ Future<_i174.GetIt> setupGlobalDependencies(
   gh.lazySingleton<_i261.AuthManager>(() => _i261.AuthManager(
         authStorage: gh<_i324.AuthStorage>(),
         authApi: gh<_i64.AuthApi>(),
+        sessionOperationTracker: gh<_i160.SessionOperationTracker>(),
       ));
   gh.factory<_i656.AuthInterceptor>(() => _i656.AuthInterceptor(
         authStorage: gh<_i324.AuthStorage>(),
+        authManager: gh<_i261.AuthManager>(),
         tokenRefresher: gh<_i48.TokenRefresher>(),
       ));
   gh.factory<_i361.Dio>(

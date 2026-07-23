@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:datarunmobile/core/auth/auth_storage.dart';
+import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/auth/token_refresher.dart';
 import 'package:datarunmobile/core/auth/token_string_extension.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
@@ -15,23 +16,22 @@ import 'package:injectable/injectable.dart';
 class AuthInterceptor extends QueuedInterceptor {
   AuthInterceptor({
     required AuthStorage authStorage,
+    required AuthManager authManager,
     required TokenRefresher tokenRefresher,
   })  : _authStorage = authStorage,
+        _authManager = authManager,
         _tokenRefresher = tokenRefresher,
         retryClient = Dio()
           ..options = BaseOptions(baseUrl: AppEnvironment.apiBaseUrl);
 
   final AuthStorage _authStorage;
+  final AuthManager _authManager;
   final TokenRefresher _tokenRefresher;
 
   late final Dio retryClient;
 
   Future<TokenPair?> _getTokenPair() {
     return _authStorage.getActiveUserToken();
-  }
-
-  Future<void> _clearTokenPair() async {
-    await _authStorage.clearActiveUser();
   }
 
   /// The following method will check if the token is valid or not:
@@ -127,12 +127,18 @@ class AuthInterceptor extends QueuedInterceptor {
         );
         return handler.resolve(previousRequest);
       }
-    } on RevokeTokenException {
+    } on RevokeTokenException catch (revokeError) {
       /// call the session expire logic for state management
       logError('could not refresh accessToken...', source: this);
-      return handler.reject(err);
-    } on DioException catch (err) {
-      return handler.next(err);
+      return handler.reject(revokeError);
+    } on DioException catch (retryError) {
+      if (shouldRefresh(retryError.response)) {
+        await _authManager.expireSession();
+        return handler.reject(
+          RevokeTokenException(requestOptions: retryError.requestOptions),
+        );
+      }
+      return handler.next(retryError);
     }
   }
 
@@ -146,15 +152,7 @@ class AuthInterceptor extends QueuedInterceptor {
     } catch (e, s) {
       logError('could not refresh accessToken, clearing and revoke out...',
           source: e, stackTrace: s);
-      try {
-        await _clearTokenPair();
-      } catch (clearError, clearStackTrace) {
-        logError(
-          'could not clear rejected credentials',
-          source: clearError,
-          stackTrace: clearStackTrace,
-        );
-      }
+      await _authManager.expireSession();
       throw RevokeTokenException(requestOptions: options);
     }
   }

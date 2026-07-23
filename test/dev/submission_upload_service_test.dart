@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
 import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
+import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
@@ -11,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late AppDatabase db;
   late _FakeHttpClient apiClient;
+  late SessionOperationTracker operationTracker;
   late SubmissionUploadService service;
 
   setUp(() {
@@ -19,9 +24,11 @@ void main() {
       userId: 'test-user',
     );
     apiClient = _FakeHttpClient();
+    operationTracker = SessionOperationTracker();
     service = SubmissionUploadService(
       database: db,
       apiClient: apiClient,
+      operationTracker: operationTracker,
     );
   });
 
@@ -104,6 +111,39 @@ void main() {
     expect(saved.lastSyncMessage, contains('offline'));
     expect(saved.lastSyncDate, isNotNull);
   });
+
+  test('session drain waits until a rejected upload is marked failed',
+      () async {
+    await _insertSubmission(
+      db,
+      id: 'submission-expired',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.requestStarted = Completer<void>();
+    apiClient.releaseRequest = Completer<void>();
+    apiClient.error = RevokeTokenException(
+      requestOptions: RequestOptions(path: '/dataSubmission/bulk'),
+    );
+
+    final upload = service.upload(['submission-expired']);
+    await apiClient.requestStarted!.future;
+    var drainCompleted = false;
+    final drain = operationTracker.stopAndWaitForIdle().then((_) {
+      drainCompleted = true;
+    });
+
+    await Future<void>.delayed(Duration.zero);
+    expect(drainCompleted, isFalse);
+
+    apiClient.releaseRequest!.complete();
+    await upload;
+    await drain;
+
+    final saved = await db.dataInstancesDao.getById('submission-expired');
+    expect(saved!.syncState, InstanceSyncStatus.syncFailed);
+    expect(drainCompleted, isTrue);
+  });
 }
 
 Future<void> _insertSubmission(
@@ -127,6 +167,8 @@ Future<void> _insertSubmission(
 class _FakeHttpClient extends HttpClient<dynamic> {
   Map<String, dynamic> responseData = const {};
   Object? error;
+  Completer<void>? requestStarted;
+  Completer<void>? releaseRequest;
   String? resourceName;
   String? method;
   Object? data;
@@ -142,6 +184,8 @@ class _FakeHttpClient extends HttpClient<dynamic> {
     this.resourceName = resourceName;
     this.method = method;
     this.data = data;
+    requestStarted?.complete();
+    await releaseRequest?.future;
     final requestError = error;
     if (requestError != null) throw requestError;
     return Response<dynamic>(

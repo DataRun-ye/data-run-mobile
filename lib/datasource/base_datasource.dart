@@ -1,3 +1,4 @@
+import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/sync/model/sync_config.dart';
@@ -15,7 +16,7 @@ import 'package:flutter/foundation.dart';
 
 abstract class BaseDataSource<T extends TableInfo<T, D>,
     D extends Insertable<D>> extends AbstractDatasource<D> {
-  HttpClient get apiClient => appLocator<HttpClient<dynamic>>();
+  HttpClient<dynamic> get apiClient => appLocator<HttpClient<dynamic>>();
 
   T get table;
 
@@ -35,12 +36,24 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
     final SyncLogger logger = SyncLogger(
         progressCallback: progressCallback, resourceName: resourceName);
     final syncErrors = <SyncError>[];
+    RevokeTokenException? sessionExpired;
     List<Map<String, dynamic>> rawJson = [];
     // 1) Fetch
     try {
       // Fetch raw JSON
       rawJson = await getOnlineRaw(options: options);
       logger(percentage: 20, message: 'fetched ${rawJson.length} items');
+    } on RevokeTokenException catch (e) {
+      sessionExpired = e;
+      syncErrors.add(SyncError(
+        type: SyncStage.fetch,
+        message: 'Session expired while fetching configuration',
+      ));
+      logger(
+        syncProgressState: SyncProgressState.FAILED,
+        message: 'Session expired while fetching configuration',
+      );
+      rawJson = [];
     } on DioException catch (e) {
       syncErrors.add(SyncError(
           type: SyncStage.fetch, message: 'Fetch error: ${e.message}'));
@@ -68,6 +81,8 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
         // A hook, let subclass extract any “auxiliary” entities
         extra = await extractExtraEntities(rawJson);
         logger(percentage: 40, message: extra.length.toString());
+      } on RevokeTokenException {
+        rethrow;
       } catch (e) {
         logError('Extract extra entities error: `$resourcePath`', source: e);
         syncErrors.add(SyncError(
@@ -164,6 +179,10 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
       errors: syncErrors,
     ));
 
+    if (sessionExpired != null) {
+      throw sessionExpired;
+    }
+
     return mapped;
   }
 
@@ -223,8 +242,8 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
 /// Helper for “extra” batch inserts
 @protected
 class CompanionInsert<T extends Table, D extends DataClass> {
+  CompanionInsert(this.table, this.entity);
+
   final TableInfo<T, D> table;
   final Insertable<D> entity;
-
-  CompanionInsert(this.table, this.entity);
 }

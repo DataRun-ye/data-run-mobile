@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
 import 'package:datarunmobile/core/form/element_template/template.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/database/app_database.dart';
@@ -29,6 +30,7 @@ void main() {
       uploadService: SubmissionUploadService(
         database: db,
         apiClient: _UnusedHttpClient(),
+        operationTracker: SessionOperationTracker(),
       ),
     );
     appLocator.registerSingleton<SubmissionTableService>(service);

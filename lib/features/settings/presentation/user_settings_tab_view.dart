@@ -7,7 +7,6 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 class UserSettingsTabView extends ConsumerWidget {
   const UserSettingsTabView({super.key});
@@ -108,7 +107,6 @@ class UserSettingsTabView extends ConsumerWidget {
 
   Future<void> _logout() async {
     await appLocator<AuthManager>().logout();
-    await Sentry.configureScope((scope) => scope.setUser(null));
   }
 }
 

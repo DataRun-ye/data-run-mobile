@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
 import 'package:datarunmobile/core/exception/session_expired_exception.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
@@ -33,12 +34,20 @@ enum AuthStatus {
 /// A service to manage user authentication and session-specific dependencies.
 @lazySingleton
 class AuthManager extends ChangeNotifier {
-  AuthManager({required AuthStorage authStorage, required AuthApi authApi})
-      : _authStorage = authStorage,
-        _authApi = authApi;
+  AuthManager({
+    required AuthStorage authStorage,
+    required AuthApi authApi,
+    required SessionOperationTracker sessionOperationTracker,
+  })  : _authStorage = authStorage,
+        _authApi = authApi,
+        _sessionOperationTracker = sessionOperationTracker;
 
   final AuthStorage _authStorage;
+  final SessionOperationTracker _sessionOperationTracker;
   AuthStatus _status = AuthStatus.unknown;
+  Future<void>? _sessionEnd;
+  Future<void>? _scopeClosure;
+  String? _sessionScopeUserId;
 
   /// The full User object for the active user
   UserSession? _activeUserSession;
@@ -105,6 +114,12 @@ class AuthManager extends ChangeNotifier {
       final userSession =
           await _authApi.getUserProfile(authResponse.accessToken);
 
+      final scopeClosure = _scopeClosure;
+      if (scopeClosure != null) {
+        await scopeClosure;
+      }
+      _sessionEnd = null;
+      _sessionOperationTracker.resume();
       await _activateUserSession(userSession);
 
       await _authStorage.setActiveSession(userSession);
@@ -135,13 +150,16 @@ class AuthManager extends ChangeNotifier {
   Future<void> _activateUserSession(UserSession userSession) async {
     WidgetsFlutterBinding.ensureInitialized();
     final sessionUserId = userSession.username;
-    // Deactivate current session if any
-    if (appLocator.hasScope(sessionUserId)) {
-      // await appLocator<DatabaseFactory>().closeForUser(sessionUserId!);
-      // await appLocator.resetScope();
+    final previousScopeUserId = _sessionScopeUserId;
+    if (previousScopeUserId != null &&
+        appLocator.hasScope(previousScopeUserId)) {
+      await appLocator.popScopesTill(previousScopeUserId);
+      logDebug('Previous user session scope popped: $previousScopeUserId');
+    } else if (appLocator.hasScope(sessionUserId)) {
       await appLocator.popScopesTill(sessionUserId);
       logDebug('Previous user session scope popped: $sessionUserId');
     }
+
     await appLocator.pushNewScopeAsync(
       scopeName: sessionUserId,
       init: (getIt) async {
@@ -165,6 +183,7 @@ class AuthManager extends ChangeNotifier {
               uploadService: SubmissionUploadService(
                 database: database,
                 apiClient: getIt<HttpClient<dynamic>>(),
+                operationTracker: _sessionOperationTracker,
               ),
             );
           },
@@ -176,40 +195,109 @@ class AuthManager extends ChangeNotifier {
 
     logDebug('New user session scope pushed: ${sessionUserId}');
 
+    _sessionScopeUserId = sessionUserId;
     _activeUserSession = userSession;
     _status = AuthStatus.authenticated;
   }
 
   /// Logs out the currently active user.
   Future<void> logout() async {
-    if (_activeUserSession == null) return;
+    await _beginSessionEnd();
+    await _scopeClosure;
+  }
 
-    final userIdToLogout = _activeUserSession!.username;
-    _status = AuthStatus.unknown; // Indicate a transition state
+  /// Invalidates a rejected session without blocking the request that detected
+  /// it. The user scope closes after active sync/upload cleanup has completed.
+  Future<void> expireSession() => _beginSessionEnd();
+
+  Future<void> _beginSessionEnd() {
+    final currentEnd = _sessionEnd;
+    if (currentEnd != null) return currentEnd;
+
+    final completion = Completer<void>();
+    _sessionEnd = completion.future;
+    unawaited(_performSessionEnd().then(
+      (_) => completion.complete(),
+      onError: (Object error, StackTrace stackTrace) {
+        completion.completeError(error, stackTrace);
+      },
+    ));
+    return completion.future;
+  }
+
+  Future<void> _performSessionEnd() async {
+    final userId = _sessionScopeUserId ?? _activeUserIdFromStorage();
+    final idle = _sessionOperationTracker.stopAndWaitForIdle();
+
+    _status = AuthStatus.unknown;
     notifyListeners();
 
-    try {
-      _activeUserSession = null;
-      _status = AuthStatus.unauthenticated;
-      await _authStorage.clearActiveUser();
-      // Pop the current user's scope. This disposes all user-specific services.
-      if (appLocator.hasScope(userIdToLogout)) {
-        await appLocator.popScopesTill(userIdToLogout);
-        driftRuntimeOptions.dontWarnAboutMultipleDatabases = false;
-        logDebug('User session scope popped: $userIdToLogout');
-      }
+    _activeUserSession = null;
+    _status = AuthStatus.unauthenticated;
 
-      appLocator<NavigationService>().clearStackAndShow(
-        Routes.loginView,
-      );
-      logDebug('User session deleted: $userIdToLogout');
-    } catch (e) {
-      debugPrint('Logout failed: $e');
-    } finally {
-      _activeUserSession = null;
-      _status = AuthStatus.unauthenticated;
+    try {
       await _authStorage.clearActiveUser();
-      notifyListeners();
+    } catch (error, stackTrace) {
+      logError(
+        'Failed to clear ended session credentials',
+        source: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    try {
+      await setSentryUser(null);
+    } catch (error, stackTrace) {
+      logError(
+        'Failed to clear ended session telemetry identity',
+        source: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    try {
+      appLocator<NavigationService>().clearStackAndShow(Routes.loginView);
+    } catch (error, stackTrace) {
+      logError(
+        'Failed to show login after session ended',
+        source: error,
+        stackTrace: stackTrace,
+      );
+    }
+    notifyListeners();
+
+    _scopeClosure = _closeScopeWhenIdle(userId, idle);
+    unawaited(_scopeClosure!.catchError((Object error, StackTrace stackTrace) {
+      logError(
+        'Failed to close ended user scope',
+        source: error,
+        stackTrace: stackTrace,
+      );
+    }));
+  }
+
+  String? _activeUserIdFromStorage() {
+    try {
+      return _authStorage.getActiveUserId();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> _closeScopeWhenIdle(
+    String? userId,
+    Future<void> idle,
+  ) async {
+    await idle;
+    if (userId == null) return;
+
+    if (appLocator.hasScope(userId)) {
+      await appLocator.popScopesTill(userId);
+      driftRuntimeOptions.dontWarnAboutMultipleDatabases = false;
+      logDebug('Ended user session scope popped: $userId');
+    }
+    if (_sessionScopeUserId == userId) {
+      _sessionScopeUserId = null;
     }
   }
 }

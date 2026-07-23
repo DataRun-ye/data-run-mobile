@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
+import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 import 'package:datarunmobile/datasource/abstract_datasource.dart';
 import 'package:datarunmobile/app/di/injection.dart';
@@ -12,7 +14,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class SyncManager extends Disposable {
-  SyncManager()
+  SyncManager(this._operationTracker)
       : _remoteDataSourcesMap = IMap.fromIterable(
           appLocator.getAll<AbstractDatasource<dynamic>>(),
           keyMapper: (resource) => resource.resourceName,
@@ -20,6 +22,7 @@ class SyncManager extends Disposable {
         );
 
   final IMap<String, AbstractDatasource<dynamic>> _remoteDataSourcesMap;
+  final SessionOperationTracker _operationTracker;
 
   int get totalResources => _remoteDataSourcesMap.length;
   int _currentResource = 0;
@@ -54,7 +57,9 @@ class SyncManager extends Disposable {
     });
   }
 
-  Future<void> syncAll() async {
+  Future<void> syncAll() => _operationTracker.track(_syncAll);
+
+  Future<void> _syncAll() async {
     // _progressController
     globalState =
         SyncProgressGlobalState.initial(totalResources: totalResources);
@@ -66,6 +71,17 @@ class SyncManager extends Disposable {
 
       try {
         await syncEntity(remoteDataSource);
+      } on RevokeTokenException catch (e) {
+        final overallProgress = (resourceIndex / totalResources) * 100;
+        _progressController.add(SyncProgressEvent(
+          resourceName: remoteDataSource,
+          syncProgressState: SyncProgressState.FAILED,
+          message: 'Session expired: $e',
+          percentage: overallProgress,
+          completed: true,
+        ));
+        logError('Session expired while syncing $remoteDataSource', source: e);
+        return;
       } on DioException catch (e) {
         final overallProgress = (resourceIndex / totalResources) * 100;
         _progressController.add(SyncProgressEvent(

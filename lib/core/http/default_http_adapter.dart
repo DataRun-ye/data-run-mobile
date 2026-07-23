@@ -56,6 +56,8 @@ class DefaultHttpAdapter extends HttpClient<dynamic> {
       if (futureResponse != null) {
         response = await futureResponse.timeout(const Duration(seconds: 1000));
       }
+    } on RevokeTokenException {
+      rethrow;
     } on DioException catch (error) {
       throw NetworkHttpError.fromDioException(error,
           stackTrace: StackTrace.current);

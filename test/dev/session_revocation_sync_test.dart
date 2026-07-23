@@ -137,6 +137,109 @@ void main() {
     expect(manager.globalState.failedResources, 1);
     expect(manager.globalState.overallPercentage, 100);
   });
+
+  test('retry runs only failed resources and preserves successful work',
+      () async {
+    final operationTracker = SessionOperationTracker();
+    var failingAttempts = 0;
+    final failsOnce = _FakeDatasource(
+      resourceName: 'failsOnce',
+      onSync: (progress) {
+        failingAttempts++;
+        progress?.call(
+          failingAttempts == 1
+              ? const SyncProgressEvent(
+                  resourceName: 'failsOnce',
+                  syncProgressState: SyncProgressState.FAILED,
+                  message: 'temporary failure',
+                  percentage: 100,
+                  completed: true,
+                )
+              : _succeeded('failsOnce'),
+        );
+      },
+    );
+    final alwaysSucceeds = _FakeDatasource(
+      resourceName: 'alwaysSucceeds',
+      onSync: (progress) {
+        progress?.call(_succeeded('alwaysSucceeds'));
+      },
+    );
+    appLocator
+      ..registerFactory<AbstractDatasource<dynamic>>(() => failsOnce)
+      ..registerFactory<AbstractDatasource<dynamic>>(() => alwaysSucceeds);
+    final manager = SyncManager(operationTracker);
+    addTearDown(manager.onDispose);
+
+    await manager.syncAll();
+
+    expect(manager.retryableResourceCount, 1);
+    expect(failsOnce.syncCalls, 1);
+    expect(alwaysSucceeds.syncCalls, 1);
+
+    await manager.retryFailed();
+
+    expect(manager.retryableResourceCount, 0);
+    expect(failsOnce.syncCalls, 2);
+    expect(alwaysSucceeds.syncCalls, 1);
+    expect(manager.globalState.totalResources, 1);
+    expect(manager.globalState.overallState, SyncProgressState.SUCCEEDED);
+  });
+
+  test('cancel stops the queue after the in-flight resource', () async {
+    final operationTracker = SessionOperationTracker();
+    final firstStarted = Completer<void>();
+    final releaseFirst = Completer<void>();
+    final first = _FakeDatasource(
+      resourceName: 'first',
+      onSync: (progress) async {
+        firstStarted.complete();
+        await releaseFirst.future;
+        progress?.call(_succeeded('first'));
+      },
+    );
+    final later = _FakeDatasource(resourceName: 'later');
+    appLocator
+      ..registerFactory<AbstractDatasource<dynamic>>(() => first)
+      ..registerFactory<AbstractDatasource<dynamic>>(() => later);
+    final manager = SyncManager(operationTracker);
+    addTearDown(manager.onDispose);
+
+    final sync = manager.syncAll();
+    await firstStarted.future;
+    manager.cancel();
+    releaseFirst.complete();
+    await sync;
+
+    expect(first.syncCalls, 1);
+    expect(later.syncCalls, 0);
+    expect(manager.retryableResourceCount, 1);
+    expect(manager.globalState.completed, isTrue);
+    expect(manager.globalState.overallState, SyncProgressState.PARTIAL_ERROR);
+  });
+
+  test('connection failure skips remaining requests until retry', () async {
+    final operationTracker = SessionOperationTracker();
+    final unavailable = _FakeDatasource(
+      resourceName: 'unavailable',
+      onSync: (_) => throw _connectionFailure(),
+    );
+    final later = _FakeDatasource(resourceName: 'later');
+    appLocator
+      ..registerFactory<AbstractDatasource<dynamic>>(() => unavailable)
+      ..registerFactory<AbstractDatasource<dynamic>>(() => later);
+    final manager = SyncManager(operationTracker);
+    addTearDown(manager.onDispose);
+
+    await manager.syncAll();
+
+    expect(unavailable.syncCalls, 1);
+    expect(later.syncCalls, 0);
+    expect(manager.retryableResourceCount, 2);
+    expect(manager.globalState.completed, isTrue);
+    expect(manager.globalState.failedResources, 2);
+    expect(manager.globalState.overallState, SyncProgressState.FAILED);
+  });
 }
 
 SyncProgressEvent _succeeded(String resourceName) => SyncProgressEvent(
@@ -146,6 +249,17 @@ SyncProgressEvent _succeeded(String resourceName) => SyncProgressEvent(
       percentage: 100,
       completed: true,
     );
+
+NetworkHttpError _connectionFailure() {
+  final request = RequestOptions(path: '/configuration');
+  return NetworkHttpError.fromDioException(
+    DioException(
+      requestOptions: request,
+      type: DioExceptionType.connectionError,
+      error: StateError('offline'),
+    ),
+  );
+}
 
 class _FakeDatasource implements AbstractDatasource<dynamic> {
   _FakeDatasource({

@@ -1,9 +1,11 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/sync/model/sync_config.dart';
 import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
+import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/sync_error.dart';
 import 'package:datarunmobile/datasource/base_datasource.dart';
+import 'package:dio/dio.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -73,6 +75,35 @@ void main() {
     expect(summary.successCount, 0);
     expect(summary.failureCount, 1);
     expect(summary.errors?.single.type, SyncStage.mapping);
+  });
+
+  test('connection failures persist their outcome before stopping the queue',
+      () async {
+    final events = <SyncProgressEvent>[];
+    final request = RequestOptions(path: '/api/v1/outcomes');
+    final connectionFailure = NetworkHttpError.fromDioException(
+      DioException(
+        requestOptions: request,
+        type: DioExceptionType.connectionError,
+        error: StateError('offline'),
+      ),
+    );
+    final datasource = _OutcomeDatasource(
+      fetch: () => throw connectionFailure,
+    );
+
+    await expectLater(
+      datasource.syncWithRemote(progressCallback: events.add),
+      throwsA(same(connectionFailure)),
+    );
+
+    expect(events.last.syncProgressState, SyncProgressState.FAILED);
+    expect(events.last.completed, isTrue);
+    final summary = await (database.select(database.syncSummaries)
+          ..where((row) => row.entity.equals('outcomes')))
+        .getSingle();
+    expect(summary.failureCount, 1);
+    expect(summary.errors?.single.type, SyncStage.fetch);
   });
 }
 

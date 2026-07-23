@@ -41,7 +41,7 @@ Primary active config store:
 | Manual refresh | ACTIVE | `lib/features/home/presentation/drawer/app_drawer_sync_item.dart` | Drawer item calls `replaceWithSyncResourcesView()` at line 53 when online. | High | Users can explicitly refresh offline config. |
 | Sync due decision | ACTIVE | `lib/core/sync/sync_scheduler.dart` | `shouldSync()` returns false when offline, true when initial sync is missing, or true when interval elapsed at lines 16-22. | High | Offline startup does not force config fetch; existing local DB remains the source. |
 | Sync screen autostart | ACTIVE | `lib/features/sync/presentation/sync_resources_view.dart` | The routed `ConsumerStatefulWidget` triggers `SyncResourcesController.triggerSync()` after its first frame. | High | The sync route automatically starts the server fetch. |
-| Sync completion flags | ACTIVE | `lib/features/sync/application/sync_resources.controller.dart` | The controller subscribes to `SyncManager.progressStream`; once global state completes, it updates `SYNC_DONE` and `LAST_SYNC_TIME`, then routes home after the existing delay. The subscription and pending navigation are cancelled when the screen state is disposed. | High | These SharedPreferences flags control future startup sync decisions. |
+| Sync completion flags | ACTIVE | `lib/features/sync/application/sync_resources.controller.dart` | The controller subscribes to `SyncManager.progressStream`; only a fully successful global result updates `SYNC_DONE` and `LAST_SYNC_TIME` and schedules navigation home. Failed or partial runs remain visible and can retry only failed/unattempted resources. Leaving the screen cancels the remaining queue after the active request. | High | Failed refreshes no longer advance metadata or force successful navigation, while already persisted resources are retained. |
 | User profile fetch | ACTIVE-SEPARATE | `lib/core/auth/auth_api.dart` | Login posts to `/api/v1/authenticate`; profile fetch reads `/api/v1/myDetails` and converts authorities before `UserSession.fromJson`. | High | User/session config is fetched before bulk sync and saved outside the bulk datasource list. |
 | User session activation | ACTIVE | `lib/core/auth/auth_manager.dart` | Login gets the user profile, activates the session, stores session/tokens, opens and registers the user-scoped `AppDatabase`, then calls `registerUserConfigurationDatasources`. | High | Bulk sync only works after the per-user DB and configuration datasources are registered. `AppDatabase` is the single database owner; the former `DSdk`/`DbManager` wrappers were removed. |
 | Per-user database file | ACTIVE | `lib/database/db_factory/platform_app.dart` | Opens `UserFileManager(userId).getUserFile('datarun_$userId.db')` and uses a background Drift connection. | High | Offline metadata is scoped by username. |
@@ -73,15 +73,15 @@ Active implementation: `lib/datasource/base_datasource.dart`.
 
 | Step | Evidence | Behavior |
 | --- | --- | --- |
-| Fetch | Lines 41-45 and 172-183 | `getOnlineRaw()` GETs `resourcePath`, defaulting to `<resourceName>?paged=false`, and expects `response.data[resourceName]` to be a list. |
+| Fetch | Lines 41-45 and 203-214 | `getOnlineRaw()` GETs `resourcePath`, defaulting to `<resourceName>?paged=false`, and expects `response.data[resourceName]` to be a list. A connection failure is persisted as a failed resource result and stops the remaining request queue until retry. |
 | Extract child rows | Lines 64-82 and 186-193 | Datasources can return `CompanionInsert` rows for auxiliary tables such as options, form versions, managed teams, and assignment forms. |
 | Map JSON | Lines 87-108 and 196-208 | Each JSON item becomes a Drift row. The default mapper injects `id`, `dirty: false`, `isToUpdate: true`, default `label`, and default `translations`, then calls `fromApiJson(..., CustomSerializer())`. |
 | Upsert main rows | Lines 110-116 | Mapped rows are written with `insertAllOnConflictUpdate(table, mapped)`. |
 | Refresh child table | Lines 118-126 | If extras exist, the code deletes all rows from `extra.first.table`, then upserts every extra row. This is a full child-table refresh per datasource, not a per-parent merge. |
 | Disable stale rows | Lines 131-138 | If live IDs exist and fetch did not fail, datasource-specific `disableStale(liveIds)` may run. Base implementation is no-op. |
-| Sync summary | Lines 161-167 | Writes `sync_summaries` with success count, failure count, and serialized errors. |
+| Sync summary | Lines 183-203 | Writes `sync_summaries` with success count, failure count, and serialized errors before emitting the resource's terminal progress event. |
 
-Important behavior to verify: fetch errors are caught and converted to `syncErrors`, but the method continues with empty data and can still emit a final saved/succeeded progress event unless the database write fails.
+Fetch, extraction, mapping, and database errors now retain their terminal `FAILED` or `PARTIAL_ERROR` outcome. Global completion counts only terminal resource events; it cannot complete while the final resource is still fetching or persisting. `test/dev/config_sync_outcome_test.dart` and `test/dev/session_revocation_sync_test.dart` cover false-success prevention, completion timing, connection-stop behavior, cancellation, retry isolation, and per-run counter reset.
 
 ## Entity Fetch And Storage Map
 
@@ -150,7 +150,7 @@ Important behavior to verify: fetch errors are caught and converted to `syncErro
 1. Does `GetIt.getAll<AbstractDatasource>()` preserve the generated registration order on all targets? The current order matters for FK-linked tables.
 2. Should resources without `disableStale` keep stale rows forever, especially projects, org units, option sets, data elements, and form permissions?
 3. Child-table refresh deletes all rows from the child table before reinserting extras. Confirm this is acceptable for `form_template_versions`, `assignment_forms`, `managed_teams`, and `data_options`.
-4. Confirm runtime behavior when one resource fetch fails: the base datasource records errors, but may still emit a final succeeded event and the sync screen may mark global sync done.
+4. Cancellation stops the queue after the current resource; it does not yet interrupt the active Dio request, which remains bounded by the configured connection/receive timeout.
 5. Confirm whether `user_form_permissions` is still needed, since active form access appears to rely mostly on `assignment_forms`.
 
 ## Do Not Touch Until Understood

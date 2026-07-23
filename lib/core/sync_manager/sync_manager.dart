@@ -25,8 +25,13 @@ class SyncManager extends Disposable {
   final SessionOperationTracker _operationTracker;
 
   int get totalResources => _remoteDataSourcesMap.length;
+  int get retryableResourceCount => _retryableResources.length;
   int _completedResources = 0;
   int _failedResources = 0;
+  final Set<String> _retryableResources = {};
+  Future<void>? _activeRun;
+  bool _cancelRequested = false;
+  bool _disposed = false;
 
   /// A stream controller for progress events.
   final StreamController<SyncProgressEvent> _progressController =
@@ -38,13 +43,14 @@ class SyncManager extends Disposable {
   late SyncProgressGlobalState globalState;
 
   /// Sync a specific entity type T with granular progress.
-  Future<void> syncEntity(
+  Future<void> _syncEntity(
     String resourceName, {
     required int resourceIndex,
+    required int runTotalResources,
   }) async {
     final remoteSource = _remoteDataSourcesMap.get(resourceName);
     globalState = globalState.addSyncStatus(currentMessage: resourceName);
-    final basePercent = (resourceIndex / totalResources) * 100;
+    final basePercent = (resourceIndex / runTotalResources) * 100;
     var finalized = false;
 
     void recordProgress(SyncProgressEvent event) {
@@ -53,10 +59,13 @@ class SyncManager extends Disposable {
         _completedResources++;
         if (!event.syncProgressState.isSuccess) {
           _failedResources++;
+          _retryableResources.add(resourceName);
+        } else {
+          _retryableResources.remove(resourceName);
         }
       }
       final overallProgress =
-          basePercent + (event.percentage / 100) * (100 / totalResources);
+          basePercent + (event.percentage / 100) * (100 / runTotalResources);
 
       globalState = globalState.addSyncStatus(
         syncStatus: event.syncProgressState,
@@ -94,38 +103,122 @@ class SyncManager extends Disposable {
     }
   }
 
-  Future<void> syncAll() => _operationTracker.track(_syncAll);
+  Future<void> syncAll() {
+    _retryableResources.clear();
+    return _startRun(_remoteDataSourcesMap.keys.toList());
+  }
 
-  Future<void> _syncAll() async {
-    // _progressController
+  Future<void> retryFailed() {
+    final resources =
+        _remoteDataSourcesMap.keys.where(_retryableResources.contains).toList();
+    return _startRun(resources);
+  }
+
+  Future<void> _startRun(List<String> resources) {
+    final activeRun = _activeRun;
+    if (activeRun != null) return activeRun;
+    if (resources.isEmpty) return Future.value();
+
+    late final Future<void> run;
+    run = _operationTracker.track(() => _syncResources(resources)).whenComplete(
+      () {
+        if (identical(_activeRun, run)) {
+          _activeRun = null;
+        }
+      },
+    );
+    _activeRun = run;
+    return run;
+  }
+
+  Future<void> _syncResources(List<String> resources) async {
+    _cancelRequested = false;
+    _retryableResources.removeAll(resources);
     globalState =
-        SyncProgressGlobalState.initial(totalResources: totalResources);
+        SyncProgressGlobalState.initial(totalResources: resources.length);
     _completedResources = 0;
     _failedResources = 0;
 
-    int resourceIndex = 0;
-
-    for (var remoteDataSource in _remoteDataSourcesMap.keys) {
+    for (var resourceIndex = 0;
+        resourceIndex < resources.length;
+        resourceIndex++) {
+      final remoteDataSource = resources[resourceIndex];
       try {
-        await syncEntity(
+        await _syncEntity(
           remoteDataSource,
           resourceIndex: resourceIndex,
+          runTotalResources: resources.length,
         );
       } on RevokeTokenException catch (e) {
         logError('Session expired while syncing $remoteDataSource', source: e);
         return;
-      } on DioException catch (e) {
-        logError('Error syncing $remoteDataSource', source: e);
       } catch (e) {
         logError('Error syncing $remoteDataSource', source: e);
+        if (_isConnectivityFailure(e)) {
+          _cancelRemaining(
+            resources.skip(resourceIndex + 1),
+            reason: 'Connection unavailable',
+          );
+          return;
+        }
       }
-      resourceIndex++;
+
+      if (_cancelRequested) {
+        _cancelRemaining(
+          resources.skip(resourceIndex + 1),
+          reason: 'Sync cancelled',
+        );
+        return;
+      }
     }
   }
 
+  bool _isConnectivityFailure(Object error) {
+    if (error is NetworkHttpError) return error.httpErrorCode == null;
+    return error is DioException &&
+        (error.type == DioExceptionType.connectionError ||
+            error.type == DioExceptionType.connectionTimeout ||
+            error.type == DioExceptionType.receiveTimeout ||
+            error.type == DioExceptionType.sendTimeout);
+  }
+
+  void _cancelRemaining(
+    Iterable<String> remaining, {
+    required String reason,
+  }) {
+    for (final resourceName in remaining) {
+      _completedResources++;
+      _failedResources++;
+      _retryableResources.add(resourceName);
+      globalState = globalState.addSyncStatus(
+        syncStatus: SyncProgressState.CANCELLED,
+        overallPercentage:
+            (_completedResources / globalState.totalResources) * 100,
+        currentMessage: resourceName,
+        completedResources: _completedResources,
+        failedResources: _failedResources,
+      );
+      _progressController.add(SyncProgressEvent(
+        resourceName: resourceName,
+        syncProgressState: SyncProgressState.CANCELLED,
+        message: reason,
+        percentage: 100,
+        completed: true,
+      ));
+    }
+  }
+
+  void cancel() {
+    _cancelRequested = true;
+  }
+
   @override
-  FutureOr<dynamic> onDispose() {
+  Future<void> onDispose() async {
+    if (_disposed) return;
+    _disposed = true;
+    cancel();
+    await _activeRun;
     logDebug('dispose sync Manager');
-    return _progressController.close();
+    await _progressController.close();
   }
 }

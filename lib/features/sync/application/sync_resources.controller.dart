@@ -64,12 +64,15 @@ class SyncResourcesController extends Notifier<SyncResourcesState> {
     ref.onDispose(() {
       _completionNavigation?.cancel();
       unawaited(_progressSubscription?.cancel());
+      _manager.cancel();
+      unawaited(_manager.onDispose());
     });
 
     return const SyncResourcesState();
   }
 
   Future<void> triggerSync() async {
+    _completionHandled = false;
     state = state.start(totalResources: _manager.totalResources);
     try {
       await _manager.syncAll();
@@ -78,7 +81,20 @@ class SyncResourcesController extends Notifier<SyncResourcesState> {
     }
   }
 
+  Future<void> retryFailed() async {
+    final totalResources = _manager.retryableResourceCount;
+    if (totalResources == 0) return;
+    _completionHandled = false;
+    state = state.start(totalResources: totalResources);
+    try {
+      await _manager.retryFailed();
+    } catch (_) {
+      // Resource failures are projected through the progress stream.
+    }
+  }
+
   void leaveSync() {
+    _manager.cancel();
     _navigationService.clearStackAndShow(Routes.homeWrapperPage);
   }
 

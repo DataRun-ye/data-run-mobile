@@ -37,6 +37,7 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
         progressCallback: progressCallback, resourceName: resourceName);
     final syncErrors = <SyncError>[];
     RevokeTokenException? sessionExpired;
+    NetworkHttpError? connectivityFailure;
     var fetchFailed = false;
     var databaseWriteFailed = false;
     List<Map<String, dynamic>> rawJson = [];
@@ -58,6 +59,19 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
         completed: false,
       );
       rawJson = [];
+    } on NetworkHttpError catch (e) {
+      fetchFailed = true;
+      if (e.httpErrorCode == null) {
+        connectivityFailure = e;
+      }
+      syncErrors.add(SyncError(
+          type: SyncStage.fetch, message: 'Fetch error: ${e.message}'));
+      logger(
+        syncProgressState: SyncProgressState.RUNNING,
+        message: 'Fetch error: ${e.message}',
+        completed: false,
+      );
+      rawJson = []; // proceed with empty payload (or rethrow if you prefer)
     } on DioException catch (e) {
       fetchFailed = true;
       syncErrors.add(SyncError(
@@ -67,7 +81,7 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
         message: 'Fetch error: ${e.message}',
         completed: false,
       );
-      rawJson = []; // proceed with empty payload (or rethrow if you prefer)
+      rawJson = [];
     } catch (e) {
       fetchFailed = true;
       logError('Unexpected fetch error: `$resourcePath`', source: e);
@@ -202,6 +216,9 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
 
     if (sessionExpired != null) {
       throw sessionExpired;
+    }
+    if (connectivityFailure != null) {
+      throw connectivityFailure;
     }
 
     return mapped;

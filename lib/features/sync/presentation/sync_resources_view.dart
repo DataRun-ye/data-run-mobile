@@ -54,12 +54,33 @@ class _SyncResourcesViewState extends ConsumerState<SyncResourcesView> {
                     syncProgressInfo: global,
                   ),
                 ),
-                ElevatedButton(
-                  style: overrideFocusColor,
-                  onPressed: ref
-                      .read(syncResourcesControllerProvider.notifier)
-                      .leaveSync,
-                  child: Text(S.of(context).cancelSyncing),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    if (global.completed && !global.overallState.isSuccess)
+                      ElevatedButton.icon(
+                        style: overrideFocusColor,
+                        onPressed: ref
+                            .read(syncResourcesControllerProvider.notifier)
+                            .retryFailed,
+                        icon: const Icon(Icons.refresh),
+                        label: Text(S.of(context).syncNow),
+                      ),
+                    ElevatedButton.icon(
+                      style: overrideFocusColor,
+                      onPressed: ref
+                          .read(syncResourcesControllerProvider.notifier)
+                          .leaveSync,
+                      icon: Icon(global.completed ? Icons.home : Icons.close),
+                      label: Text(
+                        global.completed
+                            ? S.of(context).home
+                            : S.of(context).cancelSyncing,
+                      ),
+                    ),
+                  ],
                 ),
               ],
               // Expanded list of individual resources

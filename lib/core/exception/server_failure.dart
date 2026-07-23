@@ -21,6 +21,16 @@ final class ServerFailure {
   final String? detail;
   final String? traceId;
 
+  bool get isEmpty =>
+      code == null && arguments.isEmpty && detail == null && traceId == null;
+
+  Map<String, Object?> toJson() => {
+        if (code != null) 'code': code,
+        if (arguments.isNotEmpty) 'args': arguments,
+        if (detail != null) 'detail': detail,
+        if (traceId != null) 'traceId': traceId,
+      };
+
   static _ParsedServerFailure _parse(Object? data) {
     if (data is String) {
       return _ParsedServerFailure(detail: _clean(data, maxLength: 300));

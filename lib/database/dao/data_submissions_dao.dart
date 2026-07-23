@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:datarunmobile/core/code_generator.dart';
 import 'package:datarunmobile/core/data_instance/form_data_util.dart';
 import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
+import 'package:datarunmobile/core/exception/failure_snapshot.dart';
 import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/core/util/string_extension.dart';
 import 'package:datarunmobile/database/app_database.dart';
@@ -51,7 +52,7 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
     for (final submission in submissions) {
       final id = submission.id;
-      final failedMessage = summary.failed[id];
+      final failedValue = summary.failed[id];
       final succeeded =
           summary.created.contains(id) || summary.updated.contains(id);
 
@@ -63,11 +64,14 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
           lastSyncDate: now,
           isToUpdate: true,
         ));
-      } else if (failedMessage != null) {
+      } else {
+        final failure = summary.failed.containsKey(id)
+            ? FailureSnapshot.fromServerResponse(failedValue)
+            : FailureSnapshot.badResponse();
         updates.add(_PerRowUpdate(
           id: id,
           syncState: InstanceSyncStatus.syncFailed,
-          lastSyncMessage: failedMessage,
+          lastSyncMessage: failure.encode(),
           lastSyncDate: now,
           isToUpdate: false,
         ));
@@ -79,13 +83,13 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> markUploadFailed(
     List<DataInstance> submissions,
-    Object error,
+    FailureSnapshot failure,
   ) async {
     final now = DateTime.now().toUtc();
     await _applyRowUpdates(submissions.map((submission) => _PerRowUpdate(
           id: submission.id,
           syncState: InstanceSyncStatus.syncFailed,
-          lastSyncMessage: error.toString(),
+          lastSyncMessage: failure.encode(),
           lastSyncDate: now,
           isToUpdate: false,
         )));

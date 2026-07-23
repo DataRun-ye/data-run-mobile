@@ -8,6 +8,7 @@ import 'package:datarunmobile/features/data_instance/application/submission_tabl
 import 'package:datarunmobile/features/data_instance/application/table.providers.dart';
 import 'package:datarunmobile/features/data_instance/application/table_controller.provider.dart';
 import 'package:datarunmobile/features/data_instance/presentation/paginated_table_source.dart';
+import 'package:datarunmobile/features/data_instance/presentation/submission_sync_failure_message.dart';
 import 'package:datarunmobile/features/data_instance/presentation/table_columns_build_extension.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -67,7 +68,7 @@ class _PaginatedItemsTableState extends ConsumerState<PaginatedItemsTable>
             context: context,
             title: S.current.syncFailed,
             body:
-                '${S.current.syncErrors}: ${item.lastSyncMessage?.toLowerCase().contains('Timeout') == true ? S.current.networkTimeout : item.lastSyncMessage}',
+                '${S.current.syncErrors}: ${submissionSyncFailureMessage(item.lastSyncMessage)}',
             confirmLabel: S.current.ok,
             action: () {});
       },

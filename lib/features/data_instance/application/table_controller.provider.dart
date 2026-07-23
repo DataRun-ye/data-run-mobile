@@ -1,6 +1,6 @@
-import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_upload_result.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,7 +32,7 @@ class TableController extends _$TableController {
     if (ref.mounted) clearSelection();
   }
 
-  Future<ImportSummaryModel?> syncSelectedFinalizedItems() async {
+  Future<SubmissionUploadResult?> syncSelectedFinalizedItems() async {
     final selectedIds = state;
     if (selectedIds.isEmpty) return null;
     clearSelection();

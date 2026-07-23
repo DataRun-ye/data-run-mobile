@@ -1,36 +1,64 @@
 import 'dart:convert';
 
 class ImportSummaryModel {
-  final List<String> created;
-  final List<String> updated;
-  final Map<String, dynamic> failed;
-
-  ImportSummaryModel(
-      {required this.created, required this.updated, required this.failed});
+  ImportSummaryModel({
+    required Iterable<String> created,
+    required Iterable<String> updated,
+    required Map<String, Object?> failed,
+  })  : created = List.unmodifiable(created),
+        updated = List.unmodifiable(updated),
+        failed = Map.unmodifiable(failed);
 
   factory ImportSummaryModel.empty() {
-    return ImportSummaryModel(created: [], updated: [], failed: {});
+    return ImportSummaryModel(
+      created: const [],
+      updated: const [],
+      failed: const {},
+    );
   }
 
   factory ImportSummaryModel.fromJson(Map<String, dynamic> json) {
-    final created = json['created'] != null
-        ? json['created'].runtimeType == String
-            ? jsonDecode(json['created']).cast<String>()
-            : json['created'].cast<String>()
-        : null;
-
-    final updated = json['updated'] != null
-        ? json['updated'].runtimeType == String
-            ? jsonDecode(json['updated']).cast<String>()
-            : json['updated'].cast<String>()
-        : null;
-
-    final failed = json['failed'] != null
-        ? json['failed'].runtimeType == String
-            ? jsonDecode(json['failed'])
-            : json['failed']
-        : null;
     return ImportSummaryModel(
-        created: created, updated: updated, failed: failed);
+      created: _parseIds(json['created'], fieldName: 'created'),
+      updated: _parseIds(json['updated'], fieldName: 'updated'),
+      failed: _parseFailures(json['failed']),
+    );
+  }
+
+  final List<String> created;
+  final List<String> updated;
+  final Map<String, Object?> failed;
+
+  static List<String> _parseIds(
+    Object? value, {
+    required String fieldName,
+  }) {
+    if (value == null) return const [];
+    if (value is String) {
+      try {
+        return _parseIds(jsonDecode(value), fieldName: fieldName);
+      } on FormatException {
+        throw FormatException('Invalid $fieldName response');
+      }
+    }
+    if (value is! List || value.any((item) => item is! String)) {
+      throw FormatException('Invalid $fieldName response');
+    }
+    return value.cast<String>();
+  }
+
+  static Map<String, Object?> _parseFailures(Object? value) {
+    if (value == null) return const {};
+    if (value is String) {
+      try {
+        return _parseFailures(jsonDecode(value));
+      } on FormatException {
+        throw const FormatException('Invalid failed response');
+      }
+    }
+    if (value is! Map || value.keys.any((key) => key is! String)) {
+      throw const FormatException('Invalid failed response');
+    }
+    return value.cast<String, Object?>();
   }
 }

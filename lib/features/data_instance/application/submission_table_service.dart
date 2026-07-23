@@ -1,10 +1,10 @@
-import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/paginated_result.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/database/shared/submission_summary.dart';
 import 'package:datarunmobile/database/shared/submissions_filter.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_upload_service.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_upload_result.dart';
 import 'package:drift/drift.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
@@ -48,6 +48,6 @@ class SubmissionTableService {
   Future<int> delete(Iterable<String> ids) =>
       _db.dataInstancesDao.hardDeleteIds(ids);
 
-  Future<ImportSummaryModel> sync(Iterable<String> ids) =>
+  Future<SubmissionUploadResult> sync(Iterable<String> ids) =>
       _uploadService.upload(ids);
 }

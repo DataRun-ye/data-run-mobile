@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:datarunmobile/commons/errors_management/d_error_localization.dart';
 import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/d_exception.dart';
+import 'package:datarunmobile/core/exception/failure_snapshot.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/exception/server_failure.dart';
+import 'package:datarunmobile/features/data_instance/presentation/submission_sync_failure_message.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -232,6 +234,49 @@ void main() {
     expect(problem.code, isNull);
     expect(problem.detail, 'The request has an actionable problem');
     expect(problem.traceId, 'request-123');
+  });
+
+  test('stored failures localize at display time in the active locale',
+      () async {
+    const failure = FailureSnapshot(
+      errorCode: DRunErrorCode.networkConnectionFailed,
+    );
+    final stored = failure.encode();
+
+    expect(
+      submissionSyncFailureMessage(stored),
+      S.current.networkConnectionFailed,
+    );
+
+    await S.load(const Locale('ar'));
+    expect(
+      submissionSyncFailureMessage(stored),
+      S.current.networkConnectionFailed,
+    );
+  });
+
+  test('stored server codes retain domain localization', () {
+    final failure = FailureSnapshot.fromServerResponse(
+      const {
+        'error_code': 'E4112',
+        'message': 'Submission abc is missing its form version',
+      },
+      errorCode: DRunErrorCode.badRequest,
+    );
+
+    expect(
+      submissionSyncFailureMessage(failure.encode()),
+      S.current.submissionFormMissing,
+    );
+  });
+
+  test('legacy raw sync errors use a safe generic message', () {
+    const legacy =
+        'DioException [receive timeout]: receiveTimeout after 100 seconds';
+
+    expect(submissionSyncFailureMessage(legacy), S.current.syncFailed);
+    expect(
+        submissionSyncFailureMessage(legacy), isNot(contains('DioException')));
   });
 
   test('canceled requests are explicitly non-reportable', () {

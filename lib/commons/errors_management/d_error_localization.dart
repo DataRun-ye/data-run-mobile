@@ -1,6 +1,7 @@
 import 'package:datarunmobile/core/exception/d_error.dart';
 import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/d_exception.dart';
+import 'package:datarunmobile/core/exception/failure_snapshot.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/exception/server_failure.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -14,6 +15,10 @@ class ErrorMessage {
       final DioException error => _handleDError(
           NetworkHttpError.fromDioException(error),
         ),
+      final FailureSnapshot failure => _handleFailure(
+          failure.errorCode,
+          failure.serverFailure,
+        ),
       final DError error => _handleDError(error),
       final DException dException => _handleDException(dException),
       _ => S.current.generalErrorTitle,
@@ -23,9 +28,16 @@ class ErrorMessage {
   static String _handleDError(DError error) {
     final serverFailure =
         error is NetworkHttpError ? error.serverFailure : null;
+    return _handleFailure(error.errorCode, serverFailure);
+  }
+
+  static String _handleFailure(
+    DRunErrorCode? errorCode,
+    ServerFailure? serverFailure,
+  ) {
     final domainMessage = _serverFailureMessage(serverFailure);
     final serverMessage = serverFailure?.detail;
-    return switch (error.errorCode) {
+    return switch (errorCode) {
       DRunErrorCode.validationError =>
         domainMessage ?? S.current.validationError,
       DRunErrorCode.networkTimeout => S.current.networkTimeout,

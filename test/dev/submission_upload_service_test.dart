@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
 import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
+import 'package:datarunmobile/core/exception/d_error_code.dart';
+import 'package:datarunmobile/core/exception/failure_snapshot.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_upload_service.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_upload_result.dart';
 import 'package:dio/dio.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
@@ -59,7 +62,8 @@ void main() {
 
     final result = await service.upload(['submission-1', 'draft-1']);
 
-    expect(result.created, ['submission-1']);
+    expect(result.outcome, SubmissionUploadOutcome.complete);
+    expect(result.summary.created, ['submission-1']);
     expect(apiClient.resourceName, 'dataSubmission/bulk');
     expect(apiClient.method, 'post');
 
@@ -98,18 +102,205 @@ void main() {
       syncState: InstanceSyncStatus.finalized,
       formData: const {},
     );
-    apiClient.error = StateError('offline');
+    apiClient.error = NetworkHttpError.fromDioException(
+      DioException(
+        requestOptions: RequestOptions(path: '/dataSubmission/bulk'),
+        type: DioExceptionType.connectionError,
+        message: 'SocketException: offline',
+      ),
+    );
 
     final result = await service.upload(['submission-2']);
 
-    expect(result.created, isEmpty);
-    expect(result.updated, isEmpty);
-    expect(result.failed, isEmpty);
+    expect(result.outcome, SubmissionUploadOutcome.requestFailure);
+    expect(
+      result.failure?.errorCode,
+      DRunErrorCode.networkConnectionFailed,
+    );
     final saved = await db.dataInstancesDao.getById('submission-2');
     expect(saved!.syncState, InstanceSyncStatus.syncFailed);
     expect(saved.isToUpdate, isFalse);
-    expect(saved.lastSyncMessage, contains('offline'));
+    final storedFailure = FailureSnapshot.tryDecode(saved.lastSyncMessage);
+    expect(
+      storedFailure?.errorCode,
+      DRunErrorCode.networkConnectionFailed,
+    );
+    expect(saved.lastSyncMessage, isNot(contains('SocketException')));
     expect(saved.lastSyncDate, isNotNull);
+  });
+
+  test('partial response syncs successes and records typed row rejection',
+      () async {
+    await _insertSubmission(
+      db,
+      id: 'submission-created',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    await _insertSubmission(
+      db,
+      id: 'submission-rejected',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.responseData = {
+      'created': ['submission-created'],
+      'updated': <String>[],
+      'failed': {
+        'submission-rejected': 'The submission contains invalid values',
+      },
+    };
+
+    final result = await service.upload([
+      'submission-created',
+      'submission-rejected',
+    ]);
+
+    expect(result.outcome, SubmissionUploadOutcome.partial);
+    expect(result.unresolvedIds, isEmpty);
+    final created = await db.dataInstancesDao.getById('submission-created');
+    final rejected = await db.dataInstancesDao.getById('submission-rejected');
+    expect(created!.syncState, InstanceSyncStatus.synced);
+    expect(rejected!.syncState, InstanceSyncStatus.syncFailed);
+    final failure = FailureSnapshot.tryDecode(rejected.lastSyncMessage);
+    expect(failure?.errorCode, DRunErrorCode.invalidData);
+    expect(
+      failure?.serverFailure?.detail,
+      'The submission contains invalid values',
+    );
+  });
+
+  test('a fully rejected response is distinct from request failure', () async {
+    await _insertSubmission(
+      db,
+      id: 'submission-rejected',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.responseData = {
+      'created': <String>[],
+      'updated': <String>[],
+      'failed': {
+        'submission-rejected': {
+          'error_code': 'E4114',
+          'message': 'User is not part of the submission team',
+        },
+      },
+    };
+
+    final result = await service.upload(['submission-rejected']);
+
+    expect(result.outcome, SubmissionUploadOutcome.rejected);
+    expect(result.failure, isNull);
+    final rejected = await db.dataInstancesDao.getById('submission-rejected');
+    final failure = FailureSnapshot.tryDecode(rejected!.lastSyncMessage);
+    expect(failure?.serverFailure?.code, 'E4114');
+  });
+
+  test('omitted response rows leave uploading as typed bad responses',
+      () async {
+    await _insertSubmission(
+      db,
+      id: 'submission-omitted',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.responseData = {
+      'created': <String>[],
+      'updated': <String>[],
+      'failed': <String, Object?>{},
+    };
+
+    final result = await service.upload(['submission-omitted']);
+
+    expect(result.outcome, SubmissionUploadOutcome.rejected);
+    expect(result.unresolvedIds, {'submission-omitted'});
+    final omitted = await db.dataInstancesDao.getById('submission-omitted');
+    expect(omitted!.syncState, InstanceSyncStatus.syncFailed);
+    expect(
+      FailureSnapshot.tryDecode(omitted.lastSyncMessage)?.errorCode,
+      DRunErrorCode.badResponse,
+    );
+  });
+
+  test('malformed summaries become typed request failures', () async {
+    await _insertSubmission(
+      db,
+      id: 'submission-malformed',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.responseData = {
+      'created': {'not': 'a list'},
+    };
+
+    final result = await service.upload(['submission-malformed']);
+
+    expect(result.outcome, SubmissionUploadOutcome.requestFailure);
+    expect(result.failure?.errorCode, DRunErrorCode.badResponse);
+    final malformed = await db.dataInstancesDao.getById('submission-malformed');
+    expect(malformed!.syncState, InstanceSyncStatus.syncFailed);
+    expect(
+      FailureSnapshot.tryDecode(malformed.lastSyncMessage)?.errorCode,
+      DRunErrorCode.badResponse,
+    );
+  });
+
+  test('non-object summaries become typed request failures', () async {
+    await _insertSubmission(
+      db,
+      id: 'submission-malformed-body',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.responseData = const ['unexpected'];
+
+    final result = await service.upload(['submission-malformed-body']);
+
+    expect(result.outcome, SubmissionUploadOutcome.requestFailure);
+    expect(result.failure?.errorCode, DRunErrorCode.badResponse);
+    final malformed =
+        await db.dataInstancesDao.getById('submission-malformed-body');
+    expect(malformed!.syncState, InstanceSyncStatus.syncFailed);
+    expect(
+      FailureSnapshot.tryDecode(malformed.lastSyncMessage)?.errorCode,
+      DRunErrorCode.badResponse,
+    );
+  });
+
+  test('no eligible rows is distinct from an upload failure', () async {
+    await _insertSubmission(
+      db,
+      id: 'draft-only',
+      syncState: InstanceSyncStatus.draft,
+      formData: const {},
+    );
+
+    final result = await service.upload(['draft-only']);
+
+    expect(result.outcome, SubmissionUploadOutcome.nothingToUpload);
+    expect(apiClient.resourceName, isNull);
+  });
+
+  test('legacy string-encoded summary fields remain compatible', () async {
+    await _insertSubmission(
+      db,
+      id: 'submission-legacy-summary',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.responseData = {
+      'created': '["submission-legacy-summary"]',
+      'updated': '[]',
+      'failed': '{}',
+    };
+
+    final result = await service.upload(['submission-legacy-summary']);
+
+    expect(result.outcome, SubmissionUploadOutcome.complete);
+    final saved =
+        await db.dataInstancesDao.getById('submission-legacy-summary');
+    expect(saved!.syncState, InstanceSyncStatus.synced);
   });
 
   test('session drain waits until a rejected upload is marked failed',
@@ -137,11 +328,17 @@ void main() {
     expect(drainCompleted, isFalse);
 
     apiClient.releaseRequest!.complete();
-    await upload;
+    final result = await upload;
     await drain;
 
+    expect(result.outcome, SubmissionUploadOutcome.requestFailure);
+    expect(result.failure?.errorCode, DRunErrorCode.sessionExpired);
     final saved = await db.dataInstancesDao.getById('submission-expired');
     expect(saved!.syncState, InstanceSyncStatus.syncFailed);
+    expect(
+      FailureSnapshot.tryDecode(saved.lastSyncMessage)?.errorCode,
+      DRunErrorCode.sessionExpired,
+    );
     expect(drainCompleted, isTrue);
   });
 }
@@ -165,7 +362,7 @@ Future<void> _insertSubmission(
 }
 
 class _FakeHttpClient extends HttpClient<dynamic> {
-  Map<String, dynamic> responseData = const {};
+  Object? responseData = const <String, dynamic>{};
   Object? error;
   Completer<void>? requestStarted;
   Completer<void>? releaseRequest;

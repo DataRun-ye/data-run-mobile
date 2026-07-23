@@ -79,8 +79,8 @@ App/session/bootstrap:
 - `lib/app/stacked/app.router.dart`
 - `lib/app/stacked/app.locator.dart`
 - `lib/core/auth/auth_manager.dart`
-- `lib/core/auth/ref_extension.provider.dart`
 - `lib/core/user_session/preference.provider.dart`
+- `lib/core/user_session/app_locale_policy.dart`
 
 Sync/offline cache:
 

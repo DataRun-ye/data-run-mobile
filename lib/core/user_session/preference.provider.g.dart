@@ -80,7 +80,7 @@ final class PreferenceNotifierProvider
 }
 
 String _$preferenceNotifierHash() =>
-    r'2781871ad0ffed37357f7074b32c68d061050d02';
+    r'c9461111d4c010929811f05fa73d52900233aa1b';
 
 /// read
 ///

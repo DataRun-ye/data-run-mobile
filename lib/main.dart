@@ -4,10 +4,8 @@ import 'dart:io';
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
-import 'package:datarunmobile/core/auth/auth_manager.dart';
-import 'package:datarunmobile/core/auth/ref_extension.provider.dart';
 import 'package:datarunmobile/core/main_constants.dart';
-import 'package:datarunmobile/core/user_session/locale_service.dart';
+import 'package:datarunmobile/core/user_session/app_locale_policy.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
 import 'package:datarunmobile/generated/l10n.dart';
@@ -90,6 +88,9 @@ Future<void> main() async {
         return stack;
       };
 
+      timeago.setLocaleMessages('ar', timeago.ArMessages());
+      timeago.setLocaleMessages('en', timeago.EnMessages());
+
       runApp(SentryWidget(
         child: const ProviderScope(
           child: App(key: ValueKey('DATARUN_MAIN_APP')),
@@ -106,8 +107,9 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (AppEnvironment.isDev) Sentry.captureMessage('DATARUN-APP, Glitch is working!');
-    final authManager = ref.watch(authProvider);
+    if (AppEnvironment.isDev) {
+      Sentry.captureMessage('DATARUN-APP, Glitch is working!');
+    }
     final language =
         ref.watch(preferenceProvider(Preference.language)) as String;
 
@@ -131,41 +133,15 @@ class App extends ConsumerWidget {
           base: ThemeData.dark(useMaterial3: true),
           platform: Theme.of(context).platform,
           brightness: Brightness.dark),
-      locale: resolveLocale(status: authManager.status, languageCode: language),
+      locale: AppLocalePolicy.explicitLocale(language, supportedLocales),
       localizationsDelegates: localizationsDelegates,
       supportedLocales: supportedLocales,
-      localeResolutionCallback:
-          (Locale? locale, Iterable<Locale> supportedLocales) {
-        Locale? userLocale;
-
-        if (authManager.status == AuthStatus.authenticated) {
-          // preference take precedence over api user's local
-          userLocale = language != 'NA'
-              ? Locale(language, language == 'en' ? '' : '')
-              : appLocator<LocaleService>().currentLocale;
-        }
-
-        if (userLocale == null) {
-          // Otherwise, use the device locale or default to English
-          for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale?.languageCode) {
-              userLocale = supportedLocale;
-            }
-          }
-
-          // Fallback to the first supported locale (e.g., en)
-          userLocale = Locale(AppEnvironment.defaultLocale);
-        }
-
-        timeago.setLocaleMessages(
-            userLocale.languageCode,
-            switch (language) {
-              'ar' => timeago.ArMessages(),
-              'en' => timeago.EnMessages(),
-              _ => timeago.EnMessages(),
-            });
-        return userLocale;
-      },
+      localeListResolutionCallback: (deviceLocales, supportedLocales) =>
+          AppLocalePolicy.resolveDeviceOrFallback(
+        deviceLocales: deviceLocales,
+        supportedLocales: supportedLocales,
+        buildFallbackLanguage: AppEnvironment.defaultLocale,
+      ),
       // stacked
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorObservers: [
@@ -188,27 +164,6 @@ class App extends ConsumerWidget {
     GlobalCupertinoLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
   ];
-
-  Locale? resolveLocale(
-      {required AuthStatus status, required String languageCode}) {
-    Locale? userLocale;
-    if (status == AuthStatus.authenticated &&
-        appLocator.isRegistered<LocaleService>()) {
-      // preference take precedence over api user's local
-      userLocale = languageCode != 'NA'
-          ? Locale(languageCode, languageCode == 'en' ? 'en_US' : '')
-          : appLocator<LocaleService>().currentLocale ?? userLocale;
-      timeago.setLocaleMessages(
-          userLocale!.languageCode,
-          switch (userLocale.languageCode) {
-            'ar' => timeago.ArMessages(),
-            'en' => timeago.EnMessages(),
-            _ => timeago.EnMessages(),
-          });
-    }
-
-    return userLocale;
-  }
 
   ThemeData buildTheme(
       {required ColorSeed colorSeed,

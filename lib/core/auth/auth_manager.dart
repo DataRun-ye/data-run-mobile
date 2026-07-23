@@ -17,7 +17,6 @@ import 'package:datarunmobile/core/auth/auth_storage.dart';
 import 'package:datarunmobile/core/auth/token_refresher.dart';
 import 'package:datarunmobile/core/auth/token_string_extension.dart';
 import 'package:datarunmobile/core/network/reactive_connectivity_service.dart';
-import 'package:datarunmobile/core/user_session/locale_service.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -62,7 +61,7 @@ class AuthManager extends ChangeNotifier {
           username: activeUserSession?.username,
           data: {
             'firstname': activeUserSession?.firstName,
-            'langKey': activeUserSession?.userTeamsUIDs,
+            'langKey': activeUserSession?.langKey,
             'activityUIDs': activeUserSession?.activityUIDs,
             'userTeamsUIDs': activeUserSession?.userTeamsUIDs
           },
@@ -179,13 +178,6 @@ class AuthManager extends ChangeNotifier {
 
     _activeUserSession = userSession;
     _status = AuthStatus.authenticated;
-
-    // Register user-specific dependencies in the new scope
-    appLocator.registerSingleton<LocaleService>(
-      LocaleService()
-        ..setLocale(Locale(
-            userSession.langKey ?? AppEnvironment.defaultLocale, 'en_US')),
-    );
   }
 
   /// Logs out the currently active user.

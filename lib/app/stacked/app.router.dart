@@ -99,8 +99,7 @@ class StackedRouter extends _i1.RouterBase {
         orElse: () => const HomeWrapperPageArguments(),
       );
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) =>
-            _i2.HomeWrapperPage(key: args.key, langKey: args.langKey),
+        builder: (context) => _i2.HomeWrapperPage(key: args.key),
         settings: data,
       );
     },
@@ -185,29 +184,24 @@ class StackedRouter extends _i1.RouterBase {
 }
 
 class HomeWrapperPageArguments {
-  const HomeWrapperPageArguments({
-    this.key,
-    this.langKey = 'ar',
-  });
+  const HomeWrapperPageArguments({this.key});
 
   final _i10.Key? key;
 
-  final String langKey;
-
   @override
   String toString() {
-    return '{"key": "$key", "langKey": "$langKey"}';
+    return '{"key": "$key"}';
   }
 
   @override
   bool operator ==(covariant HomeWrapperPageArguments other) {
     if (identical(this, other)) return true;
-    return other.key == key && other.langKey == langKey;
+    return other.key == key;
   }
 
   @override
   int get hashCode {
-    return key.hashCode ^ langKey.hashCode;
+    return key.hashCode;
   }
 }
 
@@ -413,7 +407,6 @@ class TableScreenArguments {
 extension NavigatorStateExtension on _i12.NavigationService {
   Future<dynamic> navigateToHomeWrapperPage({
     _i10.Key? key,
-    String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -421,7 +414,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.homeWrapperPage,
-        arguments: HomeWrapperPageArguments(key: key, langKey: langKey),
+        arguments: HomeWrapperPageArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -567,7 +560,6 @@ extension NavigatorStateExtension on _i12.NavigationService {
 
   Future<dynamic> replaceWithHomeWrapperPage({
     _i10.Key? key,
-    String langKey = 'ar',
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -575,7 +567,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.homeWrapperPage,
-        arguments: HomeWrapperPageArguments(key: key, langKey: langKey),
+        arguments: HomeWrapperPageArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

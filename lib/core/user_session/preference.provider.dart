@@ -1,4 +1,5 @@
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/user_session/app_locale_policy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,7 +7,7 @@ part 'preference.provider.g.dart';
 
 enum Preference {
   shouldShowWalkthrough('should_show_walkthrough', true),
-  language('language', 'NA'),
+  language('language', AppLocalePolicy.noExplicitPreference),
   // appearance
   // useMaterial3('useMaterial3', true),
   themeMode('themeMode', 1),
@@ -37,7 +38,7 @@ class PreferenceNotifier extends _$PreferenceNotifier {
   }
 
   Future<void> update(dynamic value) async {
-    appLocator<SharedPreferences>().setValue(pref, value);
+    await appLocator<SharedPreferences>().setValue(pref, value);
     ref.invalidateSelf();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/user_session/app_locale_policy.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
@@ -118,7 +119,11 @@ class _SettingsLanguageItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     String prefLang =
         ref.watch(preferenceProvider(Preference.language)) as String;
-    String language = prefLang == 'NA' ? 'en' : prefLang;
+    final language = AppLocalePolicy.explicitLocale(
+          prefLang,
+          S.delegate.supportedLocales,
+        )?.languageCode ??
+        Localizations.localeOf(context).languageCode;
 
     return Card(
       child: ListTile(
@@ -128,13 +133,11 @@ class _SettingsLanguageItem extends ConsumerWidget {
         title: Text(S.of(context).language),
         subtitle: DropdownButton<String>(
           value: language,
-          onChanged: (String? newValue) {
+          onChanged: (String? newValue) async {
             if (newValue != null) {
-              {
-                ref
-                    .read(preferenceProvider(Preference.language).notifier)
-                    .update(newValue);
-              }
+              await ref
+                  .read(preferenceProvider(Preference.language).notifier)
+                  .update(newValue);
             }
           },
           items: <String>['ar', 'en']

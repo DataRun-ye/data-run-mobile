@@ -23,7 +23,7 @@ Active app runtime is a hybrid:
 2. `main()` calls `configureDependencies()` before `runApp(...)`.
 3. `configureDependencies()` registers Stacked services, app-level injectable services, and the explicit root database dependency.
 4. `runApp(...)` wraps the app with a root Riverpod `ProviderScope`.
-5. `MaterialApp` uses generated Stacked routing from `lib/app/stacked/app.router.dart`.
+5. `MaterialApp` uses the persisted language preference plus device/build fallback policy and generated Stacked routing from `lib/app/stacked/app.router.dart`.
 6. `AuthManager` creates a per-user GetIt scope after login/session restore.
 7. Configuration datasource registrations are added to the active user scope by `registerUserConfigurationDatasources(...)`.
 8. Opening a form creates a per-submission GetIt scope containing `FormTemplateRepository` and `FormInstance`.
@@ -36,7 +36,7 @@ Core risk: the app does not have one state system. Riverpod, ChangeNotifier, Get
 | Step | Classification | File path | Evidence | Confidence | Why it matters |
 | --- | --- | --- | --- | --- | --- |
 | Production entrypoint | ACTIVE | `lib/main.dart` | `main()` initializes Sentry, calls `configureDependencies()`, then `runApp(SentryWidget(child: ProviderScope(child: App(...))))`. | High | Any DI or provider change must preserve this order. |
-| App root state bridge | ACTIVE | `lib/main.dart` | `App extends ConsumerWidget` and watches `authNotifierProvider` plus preference providers for language/theme. | High | Riverpod is active at the root; it is not only feature-local. |
+| App root state bridge | ACTIVE | `lib/main.dart` | `App extends ConsumerWidget` and watches preference providers for language and theme. | High | Riverpod is active at the root; it is not only feature-local. |
 | Generated Stacked routing | ACTIVE | `lib/main.dart`, `lib/app/stacked/app.router.dart` | `MaterialApp.onGenerateRoute` is `StackedRouter().onGenerateRoute`; initial route is `Routes.splashView`. | High | Route registration determines reachability more strongly than file names. |
 | Stacked app registration | ACTIVE | `lib/app/stacked/app.dart` | `@StackedApp` lists routed pages: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`. `EditRowScreen` is active through the repeat table's local `MaterialPageRoute`, not generated registration. | High | Screens not in this route list need separate proof of reachability; route registration alone is not the authority. |
 | Dependency bootstrap | ACTIVE | `lib/app/di/injection.dart` | `configureDependencies()` calls `setupLocator()`, `setupDialogUi()`, `setupBottomSheetUi()`, `setupGlobalDependencies(appLocator)`, then `registerDatabaseDependencies(appLocator)`. | High | This is the production DI order. |
@@ -51,7 +51,7 @@ Core risk: the app does not have one state system. Riverpod, ChangeNotifier, Get
 | `stacked`, `stacked_services`, `stacked_generator` | ACTIVE | Declared in `pubspec.yaml`; `@StackedApp`, generated routing, and generated navigation/dialog services remain active. No hand-written active viewmodel pair remains. | High | Do not remove Stacked while the generated router and services still own navigation. |
 | `get_it`, `injectable`, `injectable_generator` | ACTIVE | Declared in the root `pubspec.yaml`; `appLocator`, generated app `injection.config.dart`, explicit database registration, user scopes, and form scopes are active. | High | Core services, DB, datasources, and form instances are runtime-located through GetIt. |
 | `reactive_forms` | ACTIVE | Declared in `pubspec.yaml`; login form and form submission form use `FormGroup`, `FormArray`, `FormControl`, `ReactiveForm`, and reactive field widgets. | High | Active form value state and repeat rows live in reactive controls. |
-| `ChangeNotifier` | ACTIVE | `AuthManager extends ChangeNotifier`; `LocaleService extends ChangeNotifier`; `ref_extension.provider.dart` wraps them for Riverpod. | High | Changing notifier ownership can break root auth/locale updates. |
+| `ChangeNotifier` | ACTIVE | `AuthManager extends ChangeNotifier` and is passed directly into active startup/login controllers. | High | Authentication lifecycle remains notifier-driven even though the unused Riverpod auth/locale bridge was removed. |
 | `StateNotifierProvider` / `StateProvider` old Riverpod style | OBSOLETE-REMOVED for team management | The isolated team-management state and hard-coded demo screen were removed after confirming they had no active route or consumer. | High | This does not classify other legacy Riverpod providers; each still requires consumer evidence. |
 | Old `go_router` path | OBSOLETE-REMOVED | The unimported `lib/app/app_routes/` experiment was removed; production `lib/main.dart` uses the generated Stacked router. | High | Navigation evidence must come from the active Stacked route registration and callers. |
 | `rxdart` `BehaviorSubject` sync progress stack | OBSOLETE-REMOVED | `SyncProgressNotifier`, `SyncExecutor`, and `SyncCoordinator` were wired only to each other by generated DI and had no runtime retrieval. | High | Active synchronization continues through `SyncManager` and SDK progress events. |
@@ -86,7 +86,6 @@ Core risk: the app does not have one state system. Riverpod, ChangeNotifier, Get
 | Submission table service | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/features/data_instance/application/submission_table_service.dart` | Registered as a user-scoped factory with the scoped `AppDatabase`; submission table providers/controllers/widgets use it for filtered pagination, selected-row lookup/delete, and upload delegation. | High | Submission-table behavior has one explicit owner and no longer resolves its database through root factories or implicit field initializers. |
 | Active user session | ACTIVE | `lib/core/auth/auth_manager.dart` | Registers `UserSession` with instance name `'activeUser'`. | High | Services/widgets rely on active user context. |
 | Configuration datasource dependencies | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/di/init_active_session_scope.dart` | After pushing the scope, `AuthManager` calls `registerUserConfigurationDatasources(appLocator)`. | High | This is the active datasource registration path for sync. |
-| Locale service | ACTIVE | `lib/core/auth/auth_manager.dart`, `lib/core/auth/ref_extension.provider.dart` | `LocaleService` is registered after user activation and exposed via Riverpod `localeNotifier`. | High | Root locale resolution depends on this user-scoped service after login. |
 | User scope disposal | ACTIVE | `lib/core/auth/auth_manager.dart` | Login/logout use `popScopesTill(username)` when a matching scope exists. | Medium | Scope pop behavior should be runtime-confirmed before changing login/logout or multi-user support. |
 
 ### Active Configuration Datasource Registrations
@@ -122,9 +121,7 @@ Why it matters: datasource registration order and type shape affect config fetch
 
 | Provider area | Classification | File path | Evidence | Confidence | Why it matters |
 | --- | --- | --- | --- | --- | --- |
-| Auth provider bridge | ACTIVE | `lib/core/auth/ref_extension.provider.dart` | `authNotifierProvider` returns `appLocator<AuthManager>()` and notifies Riverpod from `ChangeNotifier`; watched in root `App`. | High | Auth is GetIt-owned but Riverpod-observed. |
-| Locale provider bridge | ACTIVE | `lib/core/auth/ref_extension.provider.dart` | `localeNotifierProvider` wraps `appLocator<LocaleService>()`. | High | Locale is user-scope dependent. |
-| Preferences | ACTIVE | `lib/core/user_session/preference.provider.dart` | Reads/writes `SharedPreferences` through `appLocator`; root app watches language/theme; table appearance and settings use it. | High | Shared preferences are Riverpod state and persistent storage at once. |
+| Preferences | ACTIVE | `lib/core/user_session/preference.provider.dart`, `app_locale_policy.dart` | Reads/writes `SharedPreferences` through `appLocator`; root app watches language/theme; locale resolution uses explicit preference, then supported device locale, then build fallback. | High | This is the single locale ownership path; authentication and server `langKey` no longer write UI locale state. |
 | Login password visibility | ACTIVE | `lib/data/password_visibility.provider.dart` | `LoginView` watches and toggles `passwordVisibilityProvider`; `LoginView` is in Stacked routes. | High | Small active UI state. |
 | App about/version | SUPPORTING-USED | `lib/data/app_about_info.provider.dart` | Settings and drawer version item watch `appAboutInfoProvider`. | High | Referenced by reachable UI, but not required for startup/auth/sync/forms/submissions. |
 | Activity selection context | ACTIVE | `lib/features/activity/application/activity_list.provider.dart`, `lib/features/activity/presentation/activity_list_view.dart`, assignment providers | Activity list items pass `activityId` directly into `AssignmentScreen`, and assignment providers are keyed by that ID. The former nested activity `ProviderScope`/override was removed. | High | Activity ownership is explicit and no longer depends on a route-local provider container. |
@@ -214,8 +211,8 @@ Runtime bootstrap and registration:
 Session and DB scope:
 
 - `lib/core/auth/auth_manager.dart`
-- `lib/core/auth/ref_extension.provider.dart`
 - `lib/core/user_session/preference.provider.dart`
+- `lib/core/user_session/app_locale_policy.dart`
 - `lib/database/db_factory/database_factory.dart`
 - `lib/database/db_factory/platform_app.dart`
 

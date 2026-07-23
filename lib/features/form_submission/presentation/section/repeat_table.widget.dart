@@ -1,18 +1,20 @@
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
-import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart';
+import 'package:datarunmobile/features/form_submission/application/repeat_row_edit_session.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_rows_source.dart';
+import 'package:datarunmobile/features/form_submission/presentation/section/repeat_row_edit_result.dart';
+import 'package:datarunmobile/features/form_submission/presentation/section/repeat_row_edit_session_scope.dart';
 import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class RepeatTable extends StatefulHookConsumerWidget {
   const RepeatTable({
@@ -43,14 +45,19 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     final formInstance = appLocator<FormInstance>();
 
     final itemInstance = _dataSource.elements[index];
-    await _showEditPanel(context, formInstance, itemInstance);
+    await _showEditPanel(
+      context,
+      formInstance,
+      itemInstance,
+      isNew: false,
+    );
   }
 
   void onDelete(int index) {
     final formInstance = appLocator<FormInstance>();
 
-    final removed = formInstance.onRemoveRepeatedItem(index, _repeatInstance);
-    _dataSource.removeItem(removed);
+    formInstance.onRemoveRepeatedItem(index, _repeatInstance);
+    _dataSource.replaceItems(_repeatInstance.elements);
     _repeatInstance.elementControl.markAsTouched();
   }
 
@@ -71,9 +78,6 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     super.didChangeDependencies();
     if (widget.repeatInstance.hidden) {
       widget.repeatInstance.elementControl.markAsDisabled(emitEvent: false);
-    }
-    if (widget.repeatInstance.elements != _repeatInstance.elements) {
-      _dataSource.updateItems(_repeatInstance.elements);
     }
   }
 
@@ -100,11 +104,20 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
             ElevatedButton(
               onPressed: _dataSource.editable
                   ? () async {
+                      final formWasDirty = formInstance.form.dirty;
+                      final formWasTouched = formInstance.form.touched;
                       final repeatItem =
                           formInstance.onAddRepeatedItem(_repeatInstance);
-                      _dataSource.addItem(repeatItem);
+                      _dataSource.replaceItems(_repeatInstance.elements);
 
-                      await _showEditPanel(context, formInstance, repeatItem);
+                      await _showEditPanel(
+                        context,
+                        formInstance,
+                        repeatItem,
+                        isNew: true,
+                        formWasDirtyBeforeEdit: formWasDirty,
+                        formWasTouchedBeforeEdit: formWasTouched,
+                      );
                     }
                   : null,
               child: const Icon(Icons.add),
@@ -162,56 +175,103 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     ];
   }
 
-  Future<void> _showEditPanel(BuildContext context, FormInstance formInstance,
-      RepeatItemInstance repeatItem) async {
-    formInstance.materializeRepeatItem(repeatItem);
-    try {
-      await appLocator<NavigationService>().navigateToView(
-          preventDuplicates: false,
-          FormMetadataWidget(
-              formMetadata: formInstance.formMetadata,
-              child: ReactiveForm(
-                formGroup: repeatItem.elementControl,
-                child: Builder(builder: (context) {
-                  final title =
-                      '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
+  Future<void> _showEditPanel(
+    BuildContext context,
+    FormInstance formInstance,
+    RepeatItemInstance repeatItem, {
+    required bool isNew,
+    bool? formWasDirtyBeforeEdit,
+    bool? formWasTouchedBeforeEdit,
+  }) async {
+    var currentItem = repeatItem;
+    var currentIsNew = isNew;
+    var wasDirtyBeforeEdit = formWasDirtyBeforeEdit;
+    var wasTouchedBeforeEdit = formWasTouchedBeforeEdit;
 
-                  return EditRowScreen(
-                    title: title,
-                    repeatInstance: _repeatInstance,
-                    item: repeatItem,
-                    onRemoveItem: _dataSource.removeItem,
-                    onSave: (formGroup, action) async {
-                      _repeatInstance.elementControl.markAsTouched();
-                      await formInstance.saveFormData();
-                      if (!context.mounted) {
-                        return;
-                      }
-                      _dataSource.updateItems(_repeatInstance.elements);
-                      if (formGroup.valid) {
-                        await _handleSave(
-                            context, formInstance, repeatItem, action);
-                      }
-                    },
-                  );
-                }),
-              )));
-    } finally {
-      formInstance.dematerializeRepeatItem(repeatItem);
-      _dataSource.updateItems(_repeatInstance.elements);
+    while (context.mounted) {
+      final action = await _editRow(
+        context,
+        formInstance,
+        currentItem,
+        isNew: currentIsNew,
+        formWasDirtyBeforeEdit: wasDirtyBeforeEdit,
+        formWasTouchedBeforeEdit: wasTouchedBeforeEdit,
+      );
+      if (action != RepeatRowEditResult.savedAndAddAnother ||
+          !context.mounted) {
+        return;
+      }
+
+      wasDirtyBeforeEdit = formInstance.form.dirty;
+      wasTouchedBeforeEdit = formInstance.form.touched;
+      currentItem = formInstance.onAddRepeatedItem(_repeatInstance);
+      currentIsNew = true;
+      _dataSource.replaceItems(_repeatInstance.elements);
     }
   }
 
-  Future<void> _handleSave(BuildContext context, FormInstance formInstance,
-      RepeatItemInstance repeatItem, EditActionType action) async {
-    if (repeatItem.elementControl.valid) {
-      Navigator.of(context).pop();
+  Future<RepeatRowEditResult?> _editRow(
+    BuildContext context,
+    FormInstance formInstance,
+    RepeatItemInstance repeatItem, {
+    required bool isNew,
+    bool? formWasDirtyBeforeEdit,
+    bool? formWasTouchedBeforeEdit,
+  }) async {
+    final enclosingSession = RepeatRowEditSessionScope.maybeOf(context);
+    formInstance.materializeRepeatItem(repeatItem);
+    final session = RepeatRowEditSession(
+      formInstance: formInstance,
+      parent: _repeatInstance,
+      item: repeatItem,
+      isNew: isNew,
+      formWasDirtyBeforeEdit: formWasDirtyBeforeEdit,
+      formWasTouchedBeforeEdit: formWasTouchedBeforeEdit,
+    );
+    RepeatRowEditResult? action;
+    final navigator = Navigator.of(context);
+    final route = MaterialPageRoute<RepeatRowEditResult>(
+      builder: (_) => FormMetadataWidget(
+        formMetadata: formInstance.formMetadata,
+        child: ReactiveForm(
+          formGroup: repeatItem.elementControl,
+          child: Builder(builder: (context) {
+            final title =
+                '${S.of(context).editItem}: ${_repeatInstance.template.itemTitle ?? _repeatInstance.label}';
 
-      if (action == EditActionType.SAVE_AND_ADD_ANOTHER) {
-        final repeatItem = formInstance.onAddRepeatedItem(_repeatInstance);
-        _dataSource.addItem(repeatItem);
-        await _showEditPanel(context, formInstance, repeatItem);
+            return EditRowScreen(
+              title: title,
+              item: repeatItem,
+              session: session,
+              onSave: () async {
+                await session.save(
+                  enclosingSession: enclosingSession,
+                );
+                _dataSource.replaceItems(_repeatInstance.elements);
+              },
+              onSaveError: (error, stackTrace) {
+                DExceptionReporter.instance.report(
+                  error,
+                  stackTrace: stackTrace,
+                  showToUser: true,
+                );
+              },
+            );
+          }),
+        ),
+      ),
+    );
+    try {
+      action = await navigator.push(route);
+      await route.completed;
+    } finally {
+      if (action == RepeatRowEditResult.discarded) {
+        session.discard();
+      } else {
+        formInstance.dematerializeRepeatItem(repeatItem);
       }
+      _dataSource.replaceItems(_repeatInstance.elements);
     }
+    return action;
   }
 }

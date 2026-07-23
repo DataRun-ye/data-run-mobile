@@ -3,7 +3,6 @@ import 'package:datarunmobile/features/common_ui_element/info_alert/info_alert_d
 import 'package:datarunmobile/features/common_ui_element/notice/notice_sheet.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_flow_bootstrapper.dart';
 import 'package:datarunmobile/features/form_submission/presentation/form_submission_screen.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_screen.dart';
 import 'package:datarunmobile/features/home/presentation/home_wrapper_page.dart';
 import 'package:datarunmobile/features/home/presentation/settings_view.dart';
 import 'package:datarunmobile/features/login/presentation/login_view.dart';
@@ -20,7 +19,6 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SplashView),
     MaterialRoute(page: SettingsView),
     MaterialRoute(page: SyncResourcesView),
-    MaterialRoute(page: EditRowScreen),
     MaterialRoute(page: FormSubmissionScreen),
     MaterialRoute(page: FormFlowBootstrapper),
     // MaterialRoute(page: DataInstanceTableScreen),

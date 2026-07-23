@@ -92,7 +92,10 @@ void main() {
     expect(severity.value, 'uncomplicated');
 
     performed.updateValue('no', emitEvent: false);
+    graph.instance.form.markAsDirty();
+    expect(graph.instance.form.dirty, isTrue);
     await graph.instance.saveFormData();
+    expect(graph.instance.form.dirty, isTrue);
     await graph.instance.markSubmissionAsFinal();
 
     final saved = await db.dataInstancesDao.getById('malaria-submission');

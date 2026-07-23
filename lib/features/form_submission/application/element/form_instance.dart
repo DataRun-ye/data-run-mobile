@@ -155,8 +155,7 @@ class FormInstance {
     itemInstance.bindControlReferences();
     itemInstance.resolveDependencies();
     itemInstance.evaluate(emitEvent: false);
-    // parent.elementControl.markAsDirty(updateParent: false);
-    // parent.updateValueAndValidity(emitEvent: false);
+    parent.elementControl.markAsDirty();
     return itemInstance;
   }
 
@@ -246,22 +245,78 @@ class FormInstance {
     removedItem.dispose();
     parent.elementControl.removeAt(index).dispose();
     parent.removeAt(index);
+    parent.elementControl.markAsDirty();
     parent.evaluate(emitEvent: true);
     return removedItem;
   }
 
-  RepeatItemInstance? onRemoveLastItem(RepeatSection parent) {
-    try {
-      final removed = onRemoveRepeatedItem(
-        parent.elements.length - 1,
-        parent,
-      );
-      logDebug('last Item deleted');
-      return removed;
-    } catch (e) {
-      logError('last Item not exist');
-      return null;
+  RepeatItemInstance removeRepeatedItem(
+    RepeatItemInstance item,
+    RepeatSection parent,
+  ) {
+    final index =
+        parent.sectionIndexWhere((element) => identical(element, item));
+    if (index < 0) {
+      throw StateError('Cannot remove a repeat row outside its parent');
     }
+    return onRemoveRepeatedItem(index, parent);
+  }
+
+  RepeatItemInstance restoreRepeatedItem(
+    RepeatItemInstance item,
+    RepeatSection parent,
+    Map<String, Object?> value, {
+    required bool dirty,
+    required bool touched,
+  }) {
+    final index =
+        parent.sectionIndexWhere((element) => identical(element, item));
+    if (index < 0) {
+      throw StateError('Cannot restore a repeat row outside its parent');
+    }
+
+    item.dispose();
+    final removedControl = parent.elementControl.removeAt(
+      index,
+      emitEvent: false,
+      updateParent: false,
+    );
+    removedControl.dispose();
+    parent.removeAt(index, emitEvent: false, updateParent: false);
+
+    final restoredItem = FormElementBuilder.buildRepeatItem(
+      form,
+      formFlatTemplate,
+      parent.template,
+      initialFormValue: value,
+    );
+    parent.insert(
+      index,
+      restoredItem,
+      emitEvent: false,
+      updateParent: false,
+    );
+    final restoredControl = FormControl<Map<String, Object?>>(
+      value: value,
+    );
+    if (dirty) {
+      restoredControl.markAsDirty(updateParent: false, emitEvent: false);
+    }
+    if (touched) {
+      restoredControl.markAsTouched(updateParent: false, emitEvent: false);
+    }
+    parent.elementControl.insert(
+      index,
+      restoredControl,
+      emitEvent: false,
+      updateParent: true,
+    );
+
+    restoredItem.bindControlReferences();
+    _formSection.resolveDependencies();
+    _formSection.evaluate(emitEvent: true);
+    parent.elementControl.updateValueAndValidity();
+    return restoredItem;
   }
 
   Future<void> markSubmissionAsFinal() {

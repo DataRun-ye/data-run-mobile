@@ -7,7 +7,6 @@ import 'package:datarunmobile/features/assignment/presentation/build_status.dart
 import 'package:datarunmobile/features/form/presentation/widgets/value_type_value_display.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -18,27 +17,20 @@ class RepeatTableDataSource extends DataTableSource {
       this.editable = true,
       // required this.activityModel,
       List<RepeatItemInstance> elements = const []}) {
-    this.elements.addAll(elements);
+    _elements.addAll(elements);
   }
 
-  void removeItem(RepeatItemInstance item) {
-    elements.remove(item);
-    notifyListeners();
-  }
-
-  void updateItems(List<RepeatItemInstance> items) {
-    elements.updateById(items, (item) => item.elementPath == item.elementPath);
-    notifyListeners();
-  }
-
-  void addItem(RepeatItemInstance item) {
-    elements.add(item);
+  void replaceItems(List<RepeatItemInstance> items) {
+    _elements
+      ..clear()
+      ..addAll(items);
     notifyListeners();
   }
 
   final Function(int)? onDelete;
   final Function(int)? onEdit;
-  final List<RepeatItemInstance> elements = [];
+  final List<RepeatItemInstance> _elements = [];
+  List<RepeatItemInstance> get elements => List.unmodifiable(_elements);
   bool editable;
 
   int _selectedCount = 0;
@@ -47,11 +39,11 @@ class RepeatTableDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     assert(index >= 0);
 
-    if (index >= elements.length) return null;
+    if (index >= _elements.length) return null;
 
-    final repeatItem = elements[index];
+    final repeatItem = _elements[index];
     final Iterable<FieldInstance<dynamic>> rowFields =
-        getFormElementIterator<FieldInstance<dynamic>>(elements[index])
+        getFormElementIterator<FieldInstance<dynamic>>(_elements[index])
             .where((field) => field.parentSection == repeatItem);
 
     final rowFieldsStates = rowFields.map((field) => field).toList();
@@ -188,7 +180,7 @@ class RepeatTableDataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => elements.length;
+  int get rowCount => _elements.length;
 
   @override
   bool get isRowCountApproximate => false;

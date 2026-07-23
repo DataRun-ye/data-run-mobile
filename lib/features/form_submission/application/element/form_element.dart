@@ -502,6 +502,9 @@ sealed class FormElementInstance<T> {
           '${elementPath ?? 'root'}: unsubscribing from ${dependency.name ?? 'root'}.');
       dependency._dependents.remove(this);
     }
+    for (final dependent in _dependents) {
+      dependent._resolvedDependencies.remove(this);
+    }
     _resolvedDependencies.clear();
     _dependents.clear();
 

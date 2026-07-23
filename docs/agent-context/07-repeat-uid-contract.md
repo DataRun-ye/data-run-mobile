@@ -70,7 +70,7 @@ Current backend behavior remains compatible with older mobile payloads because i
 | Area | Current code path | Behavior |
 | --- | --- | --- |
 | Load repeat row model | `lib/core/form/builder/form_element_builder.dart` | Reads `_id`, with `_uid` and `repeatUid` as compatibility fallbacks, into `RepeatItemInstance.uid`. |
-| New repeat row close-save paths | `lib/features/form_submission/presentation/section/edit_row_screen.dart` | Assigns a 26-character ULID only when the row has no existing ID. |
+| New repeat row save path | `lib/features/form_submission/application/element/repeat_item_instance.dart`; `lib/features/form_submission/application/element/form_instance.dart` | `RepeatItemInstance.reduceValue()` assigns a 26-character ULID only when the row has no existing ID; whole-form normalization completes the metadata before persistence. Navigation does not create or overwrite row identity. |
 | Save serialization | `lib/features/form_submission/application/element/repeat_item_instance.dart`, `form_instance.dart` | Row reduction writes `_id`; whole-form normalization supplies/preserves `_index`, `_parentId`, and `_submissionUid` before local persistence. |
 | Upload | `lib/database/dao/data_submissions_dao.dart`, `database/extensions/data_submission.extension.dart` | Upload normalizes legacy local JSON, persists compatibility additions, then sends the saved whole `formData`. |
 

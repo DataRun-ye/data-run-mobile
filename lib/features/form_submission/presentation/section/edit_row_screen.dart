@@ -1,63 +1,48 @@
-import 'package:datarunmobile/core/code_generator.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
-import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
+import 'package:datarunmobile/features/form_submission/application/repeat_row_edit_session.dart';
 import 'package:datarunmobile/features/form_submission/presentation/field/field.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/section/edit_row_panel.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_sliver.dart';
+import 'package:datarunmobile/features/form_submission/presentation/section/repeat_row_edit_result.dart';
+import 'package:datarunmobile/features/form_submission/presentation/section/repeat_row_edit_session_scope.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/section.widget.dart';
-import 'package:datarunmobile/features/form_submission/presentation/widgets/form_metadata_inherit_widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class EditRowScreen extends ConsumerStatefulWidget {
-  EditRowScreen(
-      {required this.repeatInstance,
-      required this.item,
-      this.title,
-      this.onRemoveItem,
-      required this.onSave});
+class EditRowScreen extends StatefulWidget {
+  const EditRowScreen({
+    super.key,
+    required this.item,
+    required this.session,
+    this.title,
+    required this.onSave,
+    required this.onSaveError,
+  });
 
   final String? title;
 
-  final void Function(FormGroup form, EditActionType action) onSave;
+  final Future<void> Function() onSave;
+  final void Function(Object error, StackTrace stackTrace) onSaveError;
 
   final RepeatItemInstance item;
 
-  final RepeatSection repeatInstance;
-
-  final void Function(RepeatItemInstance item)? onRemoveItem;
+  final RepeatRowEditSession session;
 
   @override
-  EditRowScreenState createState() => EditRowScreenState();
+  State<EditRowScreen> createState() => _EditRowScreenState();
 }
 
-class EditRowScreenState extends ConsumerState<EditRowScreen> {
-  late final ScrollController scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    scrollController.dispose();
-  }
+class _EditRowScreenState extends State<EditRowScreen> {
+  bool _allowPop = false;
+  bool _isClosing = false;
+  bool _isSaving = false;
 
   @override
   Widget build(BuildContext context) {
     final formGroup = ReactiveForm.of(context);
-    // final FormInstance formInstance = ref
-    //     .watch(formInstanceProvider(submissionId: widget.submissionId))
-    //     .requireValue;
-    final formInstance = appLocator<FormInstance>();
 
     if (formGroup is! FormGroup) {
       throw FormControlParentNotFoundException(widget);
@@ -66,13 +51,9 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
     List<Widget> buildSlivers() {
       return widget.item.elements.values.map((element) {
         if (element is Section) {
-          return SectionWidget(
-            // key: key,
-            element: element,
-          );
+          return SectionWidget(element: element);
         } else if (element is RepeatSection) {
           return RepeatTableSliver(
-            // key: key,
             repeatInstance: element,
           );
         } else if (element is FieldInstance) {
@@ -92,36 +73,23 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
       ),
       body: SafeArea(
         child: PopScope(
-          canPop: false,
+          canPop: _allowPop,
           onPopInvokedWithResult: (bool didPop, result) async {
-            if (didPop) {
+            if (didPop || _isClosing || _isSaving) {
               return;
             }
-
-            final bool shouldPop = await _onTryToClose(
-              context,
-              formInstance,
-              widget.repeatInstance,
-              widget.item,
-            );
-            if (context.mounted && shouldPop) {
-              Navigator.pop(context);
-            }
+            await _onTryToClose(context);
           },
-          child: FormMetadataWidget(
-            formMetadata: formInstance.formMetadata,
-            child: ReactiveForm(
-              formGroup: widget.item.elementControl,
-              child: CustomScrollView(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                slivers: buildSlivers(),
-              ),
+          child: RepeatRowEditSessionScope(
+            session: widget.session,
+            child: CustomScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              slivers: buildSlivers(),
             ),
           ),
         ),
       ),
-      floatingActionButton: formGroup.valid
+      floatingActionButton: widget.session.canSave
           ? Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Row(
@@ -132,20 +100,26 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
                 children: [
                   FloatingActionButton(
                     backgroundColor: cs.primary,
-                    heroTag: '${widget.item.uid}_save',
-                    onPressed: () {
-                      widget.onSave(formGroup, EditActionType.SAVE_AND_CLOSE);
-                    },
-                    child: Icon(MdiIcons.contentSaveCheck),
+                    heroTag: '${identityHashCode(widget.item)}_save',
+                    onPressed: _isSaving
+                        ? null
+                        : () => _saveAndClose(RepeatRowEditResult.saved),
+                    child: _isSaving
+                        ? const SizedBox.square(
+                            dimension: 24,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Icon(MdiIcons.contentSaveCheck),
                     tooltip: S.of(context).saveAndClose,
                   ),
                   FloatingActionButton(
                     backgroundColor: cs.secondary,
-                    onPressed: () {
-                      widget.onSave(
-                          formGroup, EditActionType.SAVE_AND_ADD_ANOTHER);
-                    },
-                    heroTag: '${widget.item.uid}_addNew',
+                    onPressed: _isSaving
+                        ? null
+                        : () => _saveAndClose(
+                              RepeatRowEditResult.savedAndAddAnother,
+                            ),
+                    heroTag: '${identityHashCode(widget.item)}_addNew',
                     child: Icon(MdiIcons.plus),
                     tooltip: S.of(context).addNew,
                   ),
@@ -153,68 +127,102 @@ class EditRowScreenState extends ConsumerState<EditRowScreen> {
               ),
             )
           : null,
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
-  Future<bool> _onTryToClose(BuildContext context, FormInstance formInstance,
-      RepeatSection repeatInstance, RepeatItemInstance repeatItem) async {
-    final isNew = repeatItem.uid == null;
-
-    if (/*control.itemFormGroup.dirty && */ isNew) {
-      final bool? confirmClose = await showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          final cs = Theme.of(context).colorScheme;
-          return AlertDialog(
-            title: Text(S.of(context).unsavedChangesWarning),
-            content: Text(S.of(context).closeWithoutSaving),
-            actions: <Widget>[
-              if (repeatItem.elementControl.valid)
-                ElevatedButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: cs.primary,
-                    foregroundColor: cs.onPrimary,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
-                  ),
-                  child: Text(S.of(context).saveAndClose),
-                  onPressed: () {
-                    repeatItem.setUid(CodeGenerator.generateUlid());
-                    Navigator.of(context).pop(true);
-                  },
-                ),
-              // TextButton(
-              //   child: Text(S.of(context).cancel),
-              //   onPressed: () => Navigator.of(context).pop(false),
-              // ),
-              ElevatedButton.icon(
-                style: TextButton.styleFrom(
-                  backgroundColor: cs.error,
-                  foregroundColor: cs.onError,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                ),
-                // icon: Icon(Icons.warning),
-                label: Text(S.of(context).delete),
-                onPressed: () {
-                  final RepeatItemInstance? item =
-                      formInstance.onRemoveLastItem(repeatInstance);
-                  if (item != null) {
-                    widget.onRemoveItem?.call(item);
-                  }
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
-          );
-        },
-      );
-
-      return (confirmClose ?? false);
-    } else if (repeatItem.elementControl.valid) {
-      return true;
+  Future<void> _onTryToClose(BuildContext context) async {
+    switch (widget.session.backAction) {
+      case RepeatRowBackAction.close:
+        _requestPop();
+        return;
+      case RepeatRowBackAction.discard:
+        _requestPop(RepeatRowEditResult.discarded);
+        return;
+      case RepeatRowBackAction.confirm:
+        final action = await _showCloseDecisionDialog(context);
+        if (!mounted || action == null) {
+          return;
+        }
+        if (action == RepeatRowEditResult.saved) {
+          await _saveAndClose(action);
+        } else if (action == RepeatRowEditResult.discarded) {
+          _requestPop(action);
+        }
     }
-    return false;
+  }
+
+  Future<RepeatRowEditResult?> _showCloseDecisionDialog(
+    BuildContext context,
+  ) async {
+    final navigator = Navigator.of(context, rootNavigator: true);
+    final route = DialogRoute<RepeatRowEditResult>(
+      context: context,
+      themes: InheritedTheme.capture(
+        from: context,
+        to: navigator.context,
+      ),
+      builder: (dialogContext) => AlertDialog(
+        title: Text(S.of(dialogContext).unsavedChangesWarning),
+        content: Text(S.of(dialogContext).closeWithoutSaving),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(S.of(dialogContext).cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(
+              dialogContext,
+              RepeatRowEditResult.discarded,
+            ),
+            child: Text(S.of(dialogContext).discard),
+          ),
+          if (widget.session.canSave)
+            FilledButton(
+              onPressed: () => Navigator.pop(
+                dialogContext,
+                RepeatRowEditResult.saved,
+              ),
+              child: Text(S.of(dialogContext).saveAndClose),
+            ),
+        ],
+      ),
+    );
+    final action = await navigator.push(route);
+    await route.completed;
+    return action;
+  }
+
+  Future<void> _saveAndClose(RepeatRowEditResult action) async {
+    if (_isSaving || _isClosing || !widget.session.canSave) {
+      return;
+    }
+    setState(() => _isSaving = true);
+    try {
+      await widget.onSave();
+      if (mounted) {
+        _requestPop(action);
+      }
+    } catch (error, stackTrace) {
+      widget.onSaveError(error, stackTrace);
+    } finally {
+      if (mounted && !_isClosing) {
+        setState(() => _isSaving = false);
+      }
+    }
+  }
+
+  void _requestPop([RepeatRowEditResult? result]) {
+    if (_isClosing) {
+      return;
+    }
+    setState(() {
+      _isClosing = true;
+      _allowPop = true;
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        Navigator.of(context).pop(result);
+      }
+    });
   }
 }

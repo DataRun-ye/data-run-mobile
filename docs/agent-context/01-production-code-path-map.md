@@ -25,7 +25,7 @@ Active:
 - `lib/main.dart:101` defines `App extends ConsumerWidget`.
 - `lib/main.dart:174` uses `StackedRouter().onGenerateRoute`.
 - `lib/main.dart:180` sets `Routes.splashView` as the initial route.
-- `lib/app/stacked/app.dart:19-29` registers current Stacked routes: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `EditRowScreen`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`.
+- `lib/app/stacked/app.dart` registers current Stacked routes: `HomeWrapperPage`, `LoginView`, `SplashView`, `SettingsView`, `SyncResourcesView`, `FormSubmissionScreen`, `FormFlowBootstrapper`, and `TableScreen`. Repeat row editing is opened directly from the active table and is not a generated route.
 - `lib/features/startup/application/startup_coordinator.dart` routes authenticated users to sync or home, and unauthenticated users to login.
 - `lib/features/home/presentation/home_wrapper_page.dart:19` shows `ActivityListView` as the home body.
 - `lib/features/activity/presentation/activity_list_view.dart` opens `AssignmentScreen` from an activity card through a direct Flutter `MaterialPageRoute`; it is active but not in the generated Stacked route list.
@@ -122,19 +122,12 @@ Active render path:
 
 Active add/edit/delete path:
 
-- `lib/features/form_submission/application/element/form_instance.dart:134-149` adds a repeated row by creating a child `FormGroup`, adding it to the parent `FormArray`, building a `RepeatItemInstance`, resolving dependencies, and evaluating the row.
-- `lib/features/form_submission/application/element/form_instance.dart:153-157` removes a repeated row from both the element list and the `FormArray`.
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart:116` calls `formInstance.onAddRepeatedItem(...)`.
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart:60` calls `formInstance.onRemoveRepeatedItem(...)`.
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart:181-191` opens `EditRowScreen` via `NavigationService.navigateToView(...)`.
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart:200` saves the whole submission after a repeat row save.
-- `lib/features/form_submission/presentation/section/repeat_table.widget.dart:264` does the same from the dialog/panel path.
-- `lib/features/form_submission/presentation/section/edit_row_screen.dart:17` defines the row editing screen.
-- `lib/features/form_submission/presentation/section/edit_row_screen.dart:114` wraps the row controls in `ReactiveForm`.
+- `lib/features/form_submission/application/element/form_instance.dart` adds a lightweight repeat row, materializes its field controls while edited, and removes/restores exact rows in both the element list and `FormArray`.
+- `lib/features/form_submission/presentation/section/repeat_table.widget.dart` opens `EditRowScreen` on a context-owned `MaterialPageRoute`, waits for that route to finish leaving the overlay, owns persistence callbacks, and applies the typed save/discard result.
+- `lib/features/form_submission/application/repeat_row_edit_session.dart` owns the opening snapshot and pristine/changed/new/valid decision state.
+- `lib/features/form_submission/presentation/section/edit_row_screen.dart` renders the row `ReactiveForm` and returns a `RepeatRowEditResult`; it does not own persistence or row restoration.
 
-Uncertain:
-
-- `lib/app/stacked/app.dart:25` registers `EditRowScreen` as a Stacked route, and generated route code exists. The active repeat table call site uses `navigateToView(...)`, not the generated `navigateToEditRowScreen(...)` helper.
+The active repeat table constructs `EditRowScreen` on a local `MaterialPageRoute`. The uncalled generated `navigateToEditRowScreen(...)` route registration was removed on 2026-07-23, leaving one row-editor entry path independent of Stacked/Get navigation.
 
 Important active repeat data detail:
 

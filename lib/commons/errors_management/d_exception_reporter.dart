@@ -12,10 +12,17 @@ class DExceptionReporter {
   static DExceptionReporter instance = DExceptionReporter._internal();
   final _dialogService = appLocator<DialogService>();
 
-  void report(Object error, {bool showToUser = false}) {
+  void report(
+    Object error, {
+    StackTrace? stackTrace,
+    bool showToUser = false,
+  }) {
     final message = ErrorMessage.getMessage(error);
 
-    logException(DException(error.toString(), error));
+    logException(
+      DException(error.toString(), error),
+      stackTrace: stackTrace,
+    );
 
     if (showToUser) {
       _dialogService.showDialog(

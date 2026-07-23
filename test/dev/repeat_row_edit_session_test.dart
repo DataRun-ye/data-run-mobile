@@ -1,6 +1,7 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/form/builder/form_element_builder.dart';
 import 'package:datarunmobile/core/form/builder/form_element_control_builder.dart';
+import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/data/form_template_repository.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
@@ -9,7 +10,9 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/repeat_row_edit_session.dart';
 import 'package:datarunmobile/features/form_submission/presentation/section/repeat_table_rows_source.dart';
+import 'package:datarunmobile/generated/l10n.dart';
 import 'package:drift/native.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -292,7 +295,174 @@ void main() {
 
     graph.instance.dispose();
   });
+
+  test('repeat table selection is identity-based and presentation-only',
+      () async {
+    await S.load(const Locale('en'));
+    final graph = _buildFormInstance(
+      repository,
+      initialValue: _initialPatients(),
+    );
+    final patients = graph.root.element('patients') as RepeatSection;
+    final investigations =
+        patients.elements.single.element('investigations') as RepeatSection;
+    var selectionChanges = 0;
+    final tableSource = RepeatTableDataSource(
+      elements: investigations.elements,
+      onSelectionChanged: () => selectionChanges++,
+    );
+    final first = investigations.elements.first;
+    final second = investigations.elements.last;
+
+    tableSource.setSelectedRange(0, 2, true);
+
+    expect(tableSource.selectedRowCount, 2);
+    expect(tableSource.selectedItems, [first, second]);
+    expect(selectionChanges, 1);
+    expect(first.retainedValue, isNot(contains('selected')));
+
+    tableSource.replaceItems([second]);
+
+    expect(tableSource.selectedRowCount, 1);
+    expect(tableSource.selectedItems, [second]);
+    expect(selectionChanges, 2);
+
+    tableSource.getRow(0)!.onSelectChanged!(false);
+
+    expect(tableSource.selectedRowCount, 0);
+    expect(selectionChanges, 3);
+
+    final readOnlySource = RepeatTableDataSource(
+      elements: [second],
+      editable: false,
+    );
+    expect(readOnlySource.getRow(0)!.onSelectChanged, isNull);
+
+    tableSource.dispose();
+    readOnlySource.dispose();
+    graph.instance.dispose();
+  });
+
+  test('bulk removal deletes exact root rows and preserves surviving ids',
+      () async {
+    final initialValue = <String, Object?>{
+      'patients': [
+        _patient('01K0PATIENT00000000000000', 'Patient 0'),
+        _patient('01K0PATIENT00000000000001', 'Patient 1'),
+        _patient('01K0PATIENT00000000000002', 'Patient 2'),
+        _patient('01K0PATIENT00000000000003', 'Patient 3'),
+      ],
+    };
+    final graph = _buildFormInstance(repository, initialValue: initialValue);
+    final patients = graph.root.element('patients') as RepeatSection;
+    final originalRows = patients.elements.toList();
+    var collectionEvents = 0;
+    final collectionSubscription =
+        patients.collectionChanges.skip(1).listen((_) => collectionEvents++);
+
+    final removed = graph.instance.removeRepeatedItems(
+      [originalRows[1], originalRows[3]],
+      patients,
+    );
+
+    expect(removed, containsAll([originalRows[1], originalRows[3]]));
+    expect(
+      patients.elements.map((row) => row.uid),
+      ['01K0PATIENT00000000000000', '01K0PATIENT00000000000002'],
+    );
+    expect(patients.elementControl.controls, hasLength(2));
+    expect(originalRows[1].parentSection, isNull);
+    expect(originalRows[3].parentSection, isNull);
+    expect(graph.instance.form.dirty, isTrue);
+    await Future<void>.delayed(Duration.zero);
+    expect(collectionEvents, 1);
+
+    final newRow = graph.instance.onAddRepeatedItem(patients);
+    final normalized = RepeatMetadataNormalizer.normalizeFormData(
+      Map<String, dynamic>.from(graph.root.value),
+      submissionUid: 'submission-1',
+    );
+    final normalizedRows =
+        (normalized['patients'] as List).cast<Map<String, dynamic>>();
+
+    expect(
+      normalizedRows.map((row) => row[RepeatMetadataNormalizer.idKey]),
+      [
+        '01K0PATIENT00000000000000',
+        '01K0PATIENT00000000000002',
+        newRow.uid,
+      ],
+    );
+    expect(
+      normalizedRows.map((row) => row[RepeatMetadataNormalizer.indexKey]),
+      [1, 2, 3],
+    );
+    expect(
+      normalizedRows
+          .map((row) => row[RepeatMetadataNormalizer.parentIdKey])
+          .toSet(),
+      {'submission-1'},
+    );
+    expect(
+      normalizedRows
+          .map((row) => row[RepeatMetadataNormalizer.submissionUidKey])
+          .toSet(),
+      {'submission-1'},
+    );
+    expect(
+      normalizedRows.map((row) => row[RepeatMetadataNormalizer.idKey]).toSet(),
+      hasLength(3),
+    );
+
+    await collectionSubscription.cancel();
+    graph.instance.dispose();
+  });
+
+  test('outer discard restores nested rows removed as one batch', () {
+    final graph = _buildFormInstance(
+      repository,
+      initialValue: _initialPatients(),
+    );
+    final patients = graph.root.element('patients') as RepeatSection;
+    final patient = patients.elements.single;
+    graph.instance.materializeRepeatItem(patient);
+    final outerSession = RepeatRowEditSession(
+      formInstance: graph.instance,
+      parent: patients,
+      item: patient,
+      isNew: false,
+    );
+    final investigations = patient.element('investigations') as RepeatSection;
+
+    graph.instance.removeRepeatedItems(
+      investigations.elements.toList(),
+      investigations,
+    );
+
+    expect(investigations.elements, isEmpty);
+    expect(outerSession.hasChanges, isTrue);
+
+    final restoredPatient = outerSession.discard()!;
+    final restoredInvestigations =
+        restoredPatient.element('investigations') as RepeatSection;
+
+    expect(
+      restoredInvestigations.elements.map((row) => row.uid),
+      [
+        '01K0INVESTIGATION000000000',
+        '01K0INVESTIGATION000000001',
+      ],
+    );
+    graph.instance.dispose();
+  });
 }
+
+Map<String, Object?> _patient(String id, String name) => <String, Object?>{
+      '_id': id,
+      'PatientName': name,
+      'is_test_preformed': 'no',
+      'investigations': <Object?>[],
+    };
 
 Map<String, Object?> _initialPatients() => <String, Object?>{
       'patients': [

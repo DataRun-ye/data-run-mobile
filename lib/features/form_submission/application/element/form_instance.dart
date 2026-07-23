@@ -241,25 +241,60 @@ class FormInstance {
   }
 
   RepeatItemInstance onRemoveRepeatedItem(int index, RepeatSection parent) {
-    final removedItem = parent.elements[index];
-    removedItem.dispose();
-    parent.elementControl.removeAt(index).dispose();
-    parent.removeAt(index);
-    parent.elementControl.markAsDirty();
-    parent.evaluate(emitEvent: true);
-    return removedItem;
+    return removeRepeatedItems([parent.elements[index]], parent).single;
   }
 
   RepeatItemInstance removeRepeatedItem(
     RepeatItemInstance item,
     RepeatSection parent,
   ) {
-    final index =
-        parent.sectionIndexWhere((element) => identical(element, item));
-    if (index < 0) {
-      throw StateError('Cannot remove a repeat row outside its parent');
+    return removeRepeatedItems([item], parent).single;
+  }
+
+  List<RepeatItemInstance> removeRepeatedItems(
+    Iterable<RepeatItemInstance> items,
+    RepeatSection parent,
+  ) {
+    final uniqueItems = Set<RepeatItemInstance>.identity()..addAll(items);
+    if (uniqueItems.isEmpty) {
+      return const [];
     }
-    return onRemoveRepeatedItem(index, parent);
+
+    final indexedItems = uniqueItems.map((item) {
+      final index =
+          parent.sectionIndexWhere((element) => identical(element, item));
+      if (index < 0) {
+        throw StateError('Cannot remove a repeat row outside its parent');
+      }
+      return (index: index, item: item);
+    }).toList();
+
+    if (parent.elementControl.controls.length != parent.elements.length) {
+      throw StateError('Repeat rows and controls are out of sync');
+    }
+
+    indexedItems.sort((left, right) => right.index.compareTo(left.index));
+    for (var position = 0; position < indexedItems.length; position++) {
+      final indexedItem = indexedItems[position];
+      indexedItem.item.dispose();
+      final removedControl = parent.elementControl.removeAt(
+        indexedItem.index,
+        emitEvent: false,
+        updateParent: false,
+      );
+      final removedItem = parent.removeAt(
+        indexedItem.index,
+        emitEvent: position == indexedItems.length - 1,
+        updateParent: false,
+      );
+      assert(identical(removedItem, indexedItem.item));
+      removedControl.dispose();
+    }
+
+    parent.elementControl.updateValueAndValidity();
+    parent.elementControl.markAsDirty();
+    parent.evaluate(emitEvent: true);
+    return indexedItems.map((entry) => entry.item).toList(growable: false);
   }
 
   RepeatItemInstance restoreRepeatedItem(

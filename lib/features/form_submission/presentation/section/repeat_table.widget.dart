@@ -1,5 +1,6 @@
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/core/form/element_template/get_item_local_string.dart';
+import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
@@ -36,15 +37,17 @@ class RepeatTable extends StatefulHookConsumerWidget {
 }
 
 class RepeatTableState extends ConsumerState<RepeatTable> {
+  final _tableKey = GlobalKey<PaginatedDataTableState>();
   late final RepeatTableDataSource _dataSource;
   late final RepeatSection _repeatInstance;
 
   int defaultRowsPerPage = 5;
+  int _firstRowIndex = 0;
+  int _rowsPerPage = 5;
 
-  Future<void> onEdit(int index) async {
+  Future<void> onEdit(RepeatItemInstance itemInstance) async {
     final formInstance = appLocator<FormInstance>();
 
-    final itemInstance = _dataSource.elements[index];
     await _showEditPanel(
       context,
       formInstance,
@@ -53,12 +56,40 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     );
   }
 
-  void onDelete(int index) {
-    final formInstance = appLocator<FormInstance>();
+  Future<void> onDelete(RepeatItemInstance item) {
+    return _confirmAndDelete([item]);
+  }
 
-    formInstance.onRemoveRepeatedItem(index, _repeatInstance);
-    _dataSource.replaceItems(_repeatInstance.elements);
-    _repeatInstance.elementControl.markAsTouched();
+  Future<void> _confirmAndDelete(List<RepeatItemInstance> items) async {
+    if (items.isEmpty || !mounted) {
+      return;
+    }
+
+    final confirmedItems = List<RepeatItemInstance>.of(items);
+    await withConfirmation(
+      context: context,
+      title: S.of(context).confirm,
+      body: S.of(context).confirmDeleteItemsSelected(confirmedItems.length),
+      confirmLabel: S.of(context).delete,
+      onConfirmed: () {
+        final formInstance = appLocator<FormInstance>();
+        formInstance.removeRepeatedItems(confirmedItems, _repeatInstance);
+        _dataSource.replaceItems(_repeatInstance.elements);
+        _moveToLastAvailablePage();
+        _repeatInstance.elementControl.markAsTouched();
+      },
+    );
+  }
+
+  void _moveToLastAvailablePage() {
+    final rowCount = _dataSource.rowCount;
+    final lastPageStart =
+        rowCount == 0 ? 0 : ((rowCount - 1) ~/ _rowsPerPage) * _rowsPerPage;
+    if (_firstRowIndex <= lastPageStart) {
+      return;
+    }
+    _firstRowIndex = lastPageStart;
+    _tableKey.currentState?.pageTo(lastPageStart);
   }
 
   @override
@@ -67,10 +98,21 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     _repeatInstance = widget.repeatInstance;
     _dataSource = RepeatTableDataSource(
       elements: widget.repeatInstance.elements,
-      onEdit: (value) => onEdit(value),
+      onEdit: onEdit,
       onDelete: onDelete,
+      onSelectionChanged: () {
+        if (mounted) {
+          setState(() {});
+        }
+      },
       editable: widget.repeatInstance.elementControl.enabled,
     );
+  }
+
+  @override
+  void dispose() {
+    _dataSource.dispose();
+    super.dispose();
   }
 
   @override
@@ -98,9 +140,27 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: PaginatedDataTable(
+          key: _tableKey,
           primary: true,
           showFirstLastButtons: true,
+          onPageChanged: (firstRowIndex) {
+            _firstRowIndex = firstRowIndex;
+          },
+          onSelectAll: _dataSource.editable
+              ? (selected) => _dataSource.setSelectedRange(
+                    _firstRowIndex,
+                    rowsPerPage.value,
+                    selected ?? false,
+                  )
+              : null,
           actions: [
+            if (_dataSource.editable && _dataSource.selectedRowCount > 0)
+              IconButton(
+                tooltip:
+                    S.of(context).deleteSelected(_dataSource.selectedRowCount),
+                onPressed: () => _confirmAndDelete(_dataSource.selectedItems),
+                icon: const Icon(Icons.delete_sweep, color: Colors.red),
+              ),
             ElevatedButton(
               onPressed: _dataSource.editable
                   ? () async {
@@ -136,6 +196,7 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
           ],
           onRowsPerPageChanged: (rows) {
             if (rows != null) {
+              _rowsPerPage = rows;
               rowsPerPage.value = rows;
             }
           },

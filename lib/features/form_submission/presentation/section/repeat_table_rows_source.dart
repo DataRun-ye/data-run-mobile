@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:datarunmobile/core/util/date_helper.dart';
 import 'package:datarunmobile/database/shared/assignment_status.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
@@ -14,6 +16,7 @@ class RepeatTableDataSource extends DataTableSource {
   RepeatTableDataSource(
       {this.onDelete,
       this.onEdit,
+      this.onSelectionChanged,
       this.editable = true,
       // required this.activityModel,
       List<RepeatItemInstance> elements = const []}) {
@@ -21,19 +24,59 @@ class RepeatTableDataSource extends DataTableSource {
   }
 
   void replaceItems(List<RepeatItemInstance> items) {
+    final previousSelectedCount = _selectedItems.length;
     _elements
       ..clear()
       ..addAll(items);
+    _selectedItems.removeWhere(
+      (selected) => !_elements.any((item) => identical(item, selected)),
+    );
     notifyListeners();
+    if (_selectedItems.length != previousSelectedCount) {
+      onSelectionChanged?.call();
+    }
   }
 
-  final Function(int)? onDelete;
-  final Function(int)? onEdit;
+  final ValueChanged<RepeatItemInstance>? onDelete;
+  final ValueChanged<RepeatItemInstance>? onEdit;
+  final VoidCallback? onSelectionChanged;
   final List<RepeatItemInstance> _elements = [];
+  final Set<RepeatItemInstance> _selectedItems = HashSet.identity();
   List<RepeatItemInstance> get elements => List.unmodifiable(_elements);
+  List<RepeatItemInstance> get selectedItems => List.unmodifiable(
+        _elements.where(_selectedItems.contains),
+      );
   bool editable;
 
-  int _selectedCount = 0;
+  void _setSelected(RepeatItemInstance item, bool selected) {
+    final changed =
+        selected ? _selectedItems.add(item) : _selectedItems.remove(item);
+    if (!changed) {
+      return;
+    }
+    _notifySelectionChanged();
+  }
+
+  void setSelectedRange(int start, int count, bool selected) {
+    var changed = false;
+    for (var index = start;
+        index >= 0 && index < start + count && index < _elements.length;
+        index++) {
+      changed = (selected
+              ? _selectedItems.add(_elements[index])
+              : _selectedItems.remove(_elements[index])) ||
+          changed;
+    }
+    if (!changed) {
+      return;
+    }
+    _notifySelectionChanged();
+  }
+
+  void _notifySelectionChanged() {
+    notifyListeners();
+    onSelectionChanged?.call();
+  }
 
   @override
   DataRow? getRow(int index) {
@@ -48,29 +91,35 @@ class RepeatTableDataSource extends DataTableSource {
 
     final rowFieldsStates = rowFields.map((field) => field).toList();
 
-    return DataRow.byIndex(index: index, selected: repeatItem.selected, cells: [
-      DataCell(Text('${index + 1}')),
-      ...rowFieldsStates
-          .map((field) => DataCell(userFriendlyValue(field)))
-          .toList(),
-      if (editable)
-        DataCell(IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              onEdit?.call(index);
-            })),
-      if (editable)
-        DataCell(IconButton(
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.red,
-            ),
-            onPressed: editable
-                ? () {
-                    onDelete?.call(index);
-                  }
-                : null)),
-    ]);
+    return DataRow.byIndex(
+        index: index,
+        selected: _selectedItems.contains(repeatItem),
+        onSelectChanged: editable
+            ? (selected) => _setSelected(repeatItem, selected ?? false)
+            : null,
+        cells: [
+          DataCell(Text('${index + 1}')),
+          ...rowFieldsStates
+              .map((field) => DataCell(userFriendlyValue(field)))
+              .toList(),
+          if (editable)
+            DataCell(IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  onEdit?.call(repeatItem);
+                })),
+          if (editable)
+            DataCell(IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+                onPressed: editable
+                    ? () {
+                        onDelete?.call(repeatItem);
+                      }
+                    : null)),
+        ]);
   }
 
   Widget userFriendlyValue(FieldInstance<dynamic> field) {
@@ -186,5 +235,5 @@ class RepeatTableDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => _selectedCount;
+  int get selectedRowCount => _selectedItems.length;
 }

@@ -7,11 +7,8 @@ class RepeatItemInstance extends Section {
       required super.form,
       super.elements,
       // required this.parentUid,
-      String? uid,
-      this.selected = false})
+      String? uid})
       : _uid = uid;
-
-  bool selected;
 
   // final String parentUid;
   String? _uid;

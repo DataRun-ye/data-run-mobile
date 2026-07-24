@@ -62,7 +62,7 @@ final class TableControllerProvider
   }
 }
 
-String _$tableControllerHash() => r'cc2f495be40e1ceb32cc328ee7feff634d73b6b9';
+String _$tableControllerHash() => r'ed28bb5aba03dbedaf2ec86dac631d272291d26b';
 
 final class TableControllerFamily extends $Family
     with

@@ -2,6 +2,7 @@
 
 Generated: 2026-07-10
 Updated: 2026-07-22
+Reconciled: 2026-07-24 against production `v6.0.0+50`
 
 Scope: define and record the implemented repeat row identity contract. This document supersedes the earlier `repeatUid`-only assumption after validating the backend submission path.
 
@@ -101,7 +102,7 @@ Slice name:
 fix: write backend-compatible repeat metadata
 ```
 
-Goal achieved on `develop`: generate and preserve backend-compatible repeat metadata in mobile `formData` without a DB schema change or repeat-rendering refactor.
+Goal released in `v6.0.0+50`: generate and preserve backend-compatible repeat metadata in mobile `formData` without a DB schema change or normalized repeat persistence.
 
 Scope:
 
@@ -139,4 +140,6 @@ Smoke checks:
 
 ## Remaining Validation
 
-Local create/save/reopen behavior and normalization are covered by focused tests. Before enabling synced submission edits in production, run a server round-trip smoke that preserves an existing top-level and nested `_id`, adds a new row with a new ULID, and confirms the server returns or stores the same metadata.
+Local create/save/reopen/upload behavior and normalization are covered by focused tests and the Play v21-to-v50 upgrade smoke preserved existing local repeat submissions. This does not prove synced editing.
+
+Before enabling synced submission edits as a production capability, run a server round-trip smoke that preserves an existing top-level and nested `_id`, adds a new row with a new ULID, and confirms the server stores/returns the same metadata.

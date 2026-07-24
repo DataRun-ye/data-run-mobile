@@ -10,7 +10,6 @@ import 'package:datarunmobile/features/form/presentation/widgets/value_type_valu
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RepeatTableDataSource extends DataTableSource {
   RepeatTableDataSource(
@@ -150,7 +149,7 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.ScannedCode:
         cellContent = Row(
           children: [
-            Icon(MdiIcons.barcode),
+            const Icon(Icons.qr_code_scanner),
             const SizedBox(width: 4),
             Text(field.value?.toString().substring(0, 10) ?? '-'),
           ],
@@ -169,7 +168,7 @@ class RepeatTableDataSource extends DataTableSource {
       case ValueType.Team:
         cellContent = Row(
           children: [
-            Icon(MdiIcons.accountGroup),
+            const Icon(Icons.groups),
             const SizedBox(width: 4),
             ValueTypeValueDisplay(
               valueType: field.template.type,

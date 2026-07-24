@@ -7,7 +7,6 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -46,7 +45,7 @@ class DrawerSyncItem extends ConsumerWidget {
                 color: syncMetadataRepo.isInitialSyncDone
                     ? Colors.green
                     : Colors.red)
-            : Icon(MdiIcons.webOff, color: Colors.grey),
+            : const Icon(Icons.cloud_off, color: Colors.grey),
         onTap: isOnline
             ? () {
                 appLocator<NavigationService>().back();
@@ -64,7 +63,7 @@ class DrawerSyncItem extends ConsumerWidget {
           '$lastSynced',
           softWrap: true,
         ),
-        trailing: Icon(MdiIcons.webOff, color: Colors.grey),
+        trailing: const Icon(Icons.cloud_off, color: Colors.grey),
         onTap: null,
       ),
     );

@@ -6,7 +6,6 @@ import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class UserSettingsTabView extends ConsumerWidget {
   const UserSettingsTabView({super.key});
@@ -24,14 +23,14 @@ class UserSettingsTabView extends ConsumerWidget {
         const SizedBox(height: 10),
         Card(
           child: ListTile(
-            leading: Icon(MdiIcons.accountArrowLeft),
+            leading: const Icon(Icons.account_circle),
             title: Text(S.of(context).loginUsername),
             subtitle: Text(currentAuthUser?.username ?? '-'),
           ),
         ),
         Card(
           child: ListTile(
-            leading: Icon(MdiIcons.faceMan),
+            leading: const Icon(Icons.person),
             title: Text(S.of(context).personInformation),
             subtitle: Text(currentAuthUser?.firstName ?? '-'),
             trailing: IconButton(
@@ -42,7 +41,7 @@ class UserSettingsTabView extends ConsumerWidget {
         ),
         Card(
           child: ListTile(
-            leading: Icon(MdiIcons.phoneSettings),
+            leading: const Icon(Icons.phone_android),
             title: Text(S.of(context).mobile),
             subtitle: Text(currentAuthUser?.mobile ?? '-'),
             trailing: IconButton(
@@ -78,7 +77,7 @@ class UserSettingsTabView extends ConsumerWidget {
         Card(
           color: Theme.of(context).colorScheme.errorContainer,
           child: ListTile(
-            leading: Icon(MdiIcons.logout,
+            leading: Icon(Icons.logout,
                 color: Theme.of(context).colorScheme.onErrorContainer),
             title: Text(
               S.of(context).logout,

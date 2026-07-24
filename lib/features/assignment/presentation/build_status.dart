@@ -1,7 +1,6 @@
 import 'package:datarunmobile/database/shared/assignment_status.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 Widget buildStatusBadge(AssignmentStatus status,
     [double? size, ValueKey<dynamic>? key]) {
@@ -10,35 +9,35 @@ Widget buildStatusBadge(AssignmentStatus status,
 
   switch (status) {
     case AssignmentStatus.NOT_STARTED:
-      statusIcon = MdiIcons.progressClock; // More expressive icon
+      statusIcon = Icons.schedule;
       badgeColor = Colors.grey;
       break;
     case AssignmentStatus.IN_PROGRESS:
-      statusIcon = MdiIcons.circleSlice6; // More expressive icon
+      statusIcon = Icons.timelapse;
       badgeColor = Colors.blue;
       break;
     case AssignmentStatus.DONE:
-      statusIcon = MdiIcons.checkCircle; // More expressive icon
+      statusIcon = Icons.check_circle;
       badgeColor = Colors.green;
       break;
     case AssignmentStatus.RESCHEDULED:
-      statusIcon = MdiIcons.calendarArrowRight; // More expressive icon
+      statusIcon = Icons.event_repeat;
       badgeColor = Colors.orange;
       break;
     case AssignmentStatus.CANCELLED:
-      statusIcon = MdiIcons.bookCancel; // More expressive icon
+      statusIcon = Icons.cancel;
       badgeColor = Colors.red;
       break;
     case AssignmentStatus.MERGED:
-      statusIcon = MdiIcons.merge; // More expressive icon
+      statusIcon = Icons.merge_type;
       badgeColor = Colors.blueGrey;
       break;
     case AssignmentStatus.REASSIGNED:
-      statusIcon = MdiIcons.clipboardAccount; // More expressive icon
+      statusIcon = Icons.assignment_ind;
       badgeColor = Colors.deepPurpleAccent;
       break;
     default:
-      statusIcon = MdiIcons.helpCircleOutline; // More expressive icon
+      statusIcon = Icons.help_outline;
       badgeColor = Colors.black;
   }
 

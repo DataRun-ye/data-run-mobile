@@ -1,50 +1,51 @@
 # Draft: Bounded Reference Field
 
-> **Status: DRAFT FOR REVIEW.**
+> **Status: FINAL DRAFT FOR ACCEPTANCE.**
 >
-> This document records a proposed bounded capability. It is not an implemented
-> contract or an active production path. Do not implement it until the remaining
-> review points are resolved and repository evidence is rechecked.
+> This is an implementation blueprint, not an active production contract.
+> Repository evidence was rechecked against the current mobile `develop`
+> baseline following the v6 production release and the current local server
+> source on 2026-07-25. Do not expose a production form using `Reference`
+> until every delivery and activation gate below passes.
 
 ## Purpose
 
-Stabilize the existing `Reference` form field as a deliberately narrow,
-domain-neutral field that works within the current form and repeat flow.
+Stabilize the existing `Reference` form field as one deliberately narrow,
+domain-neutral capability inside the current form and repeat flow.
 
-The initial use needs rapid entry:
+The initial workflow is rapid entry:
 
-1. shared answers remain outside a repeat and are entered once;
+1. shared answers stay outside a repeat and are entered once;
 2. one referenced item is selected or created inside each repeat row;
-3. the user saves the row and immediately adds the next one;
-4. each saved repeat stores only the referenced item's UID.
+3. the row is saved using the existing `Save and add another` flow;
+4. the field stores only the referenced item's UID.
 
-The field and catalog must not be named after a current campaign concept such
-as a household or person. Those meanings come from localized form labels and
-may change without changing the implementation.
+The implementation must not use a campaign concept such as household or
+person as a code, table, route, or service name. A form's localized label gives
+the field its current business meaning.
 
-## Locked Direction
+## Locked Product Contract
 
-The reference field:
+The bounded field:
 
-- reads an offline catalog synchronized for org units available through the
-  user's current assignments;
-- displays a server-authoritative name;
-- stores only an 11-character UID in `formData`;
-- supports deliberate offline creation using only a name;
-- works in ordinary fields, repeats, and nested repeats;
-- preserves the generated UID through repeat edits and upload retries;
+- reads an offline catalog scoped by organization unit;
+- reaches that catalog only through assignments available to the current user;
+- displays one server-authoritative name;
+- stores one 11-character UID in `formData`;
+- supports deliberate offline creation using only a validated name;
+- works as an ordinary field and inside top-level or nested repeats;
+- preserves the selected or generated UID through edit, restart, and retry;
+- prevents the same `Reference` element from selecting one UID more than once
+  in one submission;
 - carries no targeting, completion, coverage, workflow, or analytical state.
 
-The minimal reference identity is:
+The mobile catalog row is exactly:
 
 ```text
 uid
-displayName
 orgUnitUid
+displayName
 ```
-
-`orgUnitUid` owns catalog scope. An assignment supplies authorized access and
-the current activity context; it is not catalog identity.
 
 The mobile must not add:
 
@@ -53,71 +54,84 @@ The mobile must not add:
 - `available`;
 - `lastSeenSyncRun`;
 - a synchronization-state enum;
-- a domain type such as household or person;
+- a domain type;
 - a submission-level subject column;
-- a generic resource/provider registry.
+- a generic reference-source registry.
 
-## Repository Evidence
+`orgUnitUid` is catalog ownership. Assignment and activity provide access and
+first-registration context; they do not become catalog identity.
 
-### Existing form shape
+## Evidence: Current Production Shape
 
-`ValueType.Reference` exists in the mobile and server form models:
+### Supported foundations
 
-- `lib/database/shared/value_type.dart`;
-- `lib/core/form/builder/form_element_control_builder.dart`;
-- `lib/core/form/builder/form_element_builder.dart`;
-- server `datatemplateelement/enumeration/ValueType.java`.
+| Current capability | Evidence | Consequence |
+| --- | --- | --- |
+| `ValueType.Reference` exists on mobile and server | `lib/database/shared/value_type.dart`; `lib/core/form/builder/form_element_control_builder.dart`; server `datatemplateelement/enumeration/ValueType.java` | No new form field type or template-schema property is needed. |
+| Active builders use `FieldInstance<String>` and `FormControl<String>` | `lib/core/form/builder/form_element_builder.dart`; `lib/core/form/builder/form_element_control_builder.dart` | A Reference value can remain a UID string in whole-form JSON. |
+| Form entry carries assignment, template, version, and submission IDs | `lib/features/form_submission/application/element/form_metadata.dart`; `lib/features/form_submission/application/form_flow_bootstrapper_controller.dart` | The field can resolve assignment scope without a new submission column. |
+| Assignments already contain activity, team, and org-unit UIDs | `lib/database/tables/assignments.table.dart`; `lib/database/dao/assignments_dao.dart` | The local assignment can resolve the catalog org unit. |
+| Available forms come from `assignment_forms` | `lib/data/form_template_list_service.dart`; `lib/database/dao/form_template_versions_dao.dart` | Filtering the assignment-form response is an effective old-client gate. |
+| Drafts pin a concrete form-version UID | `lib/database/tables/data_submissions.table.dart`; `lib/database/tables/form_template_versions.table.dart` | Upload extraction can use the exact template that created the draft. |
+| Submission values are one JSON object | `lib/database/tables/data_submissions.table.dart` | Reference stays in `formData`; no normalized reference-value table is needed. |
+| Repeat rapid entry already exists | `lib/features/form_submission/presentation/section/repeat_table.widget.dart` | No queue, entry-session, or subject workflow should be introduced. |
+| Submission upload is centralized | `lib/features/data_instance/application/submission_upload_service.dart`; `lib/database/extensions/data_submission.extension.dart` | One upload decorator can own transient reference definitions. |
+| Production migration fixtures exist | `test/dev/app_database_migration_test.dart`; `test/fixtures/database/schema_v3.sql` | The additive mobile migration can be proven from production schema 3 and current schema 6. |
 
-The active mobile builders already represent it as:
+### Missing or incomplete behavior
 
-```text
-FieldInstance<String>
-FormControl<String>
-```
+These are implementation requirements, not assumptions that current code
+already satisfies:
 
-That supports the intended UID-only form value without changing whole-JSON
-submission persistence.
+1. The reachable Reference widget is **INCOMPLETE**. It watches an empty
+   metadata provider, hardcodes old campaign fields, and displays names as
+   values:
+   `lib/features/form_submission/presentation/field/reference_search/q_reference_drop_down_search_field.widget.dart`.
+2. `ValueType.Reference` currently uses `TextValidator`, not the server's
+   exact UID rule. The server requires 11 alphanumeric characters with an
+   alphabetic first character.
+3. No active local catalog, database search, or paginated Reference
+   synchronization exists.
+4. `BaseDataSource` downloads one unpaged collection and maps it in memory.
+   It is not the owner for a paginated catalog.
+5. Assignment-form synchronization currently skips the extra request when the
+   assignment list is empty, and a successful empty `assignments/forms`
+   response does not clear stale `assignment_forms`; replacement only occurs
+   when the flattened extra list is non-empty.
+6. Mobile upload currently serializes `DataInstance` directly and does not
+   load its pinned form version.
+7. `FormDataUtil.getRawByPath` does not correctly traverse arbitrary nested
+   repeat lists. It must not be reused as proof of Reference extraction.
+8. The server DTO has no request-only Reference definitions, and its existing
+   flattening utility is not a template-aware Reference extractor.
+9. Server submission preprocessing occurs before
+   `DefaultDataSubmissionService.upsertAll` opens its transaction. Catalog
+   creation added there would not automatically be atomic with submission
+   persistence.
+10. Server `CompositeSubmissionValidator` is an unordered injected list.
+    Reference resolution must not be added as another validator that assumes
+    another validator has already run.
+11. No old-client capability gate exists today.
+12. A submission pins only its assignment UID, while the current server
+    assignment service can update that assignment's activity and org unit.
+    Moving a Reference-enabled assignment after drafts exist would make their
+    catalog scope ambiguous.
 
-### Existing implementation classification
+No captured production form under `test/fixtures/live_forms/` currently uses
+`Reference`. The metadata-submission, Party, and `resourceMetadataSchema`
+surfaces do not provide this capability and must not be revived.
 
-The widget at
-`lib/features/form_submission/presentation/field/reference_search/q_reference_drop_down_search_field.widget.dart`
-is **INCOMPLETE**, with high confidence. It:
-
-- watches `systemMetadataSubmissionsProvider`;
-- depends on `MetadataSubmissionUpdate`;
-- hardcodes old campaign field names;
-- uses an empty provider;
-- does not establish stable UID-backed selection behavior.
-
-No captured production form under `test/fixtures/live_forms/` currently uses a
-`Reference` field. The only identified use is in the legacy ITN fixture, and
-the captured saved data does not establish a working reference value.
-
-The ordinary form factory, control, validation, repeat edit, and whole-JSON
-save paths are active. Replacing the incomplete reference implementation must
-not change those paths for other field types.
-
-`resourceMetadataSchema`, metadata submissions, Party, and similarly named
-surfaces are abandoned or incomplete paths. They are not compatibility
-constraints for this work and must not be revived.
-
-### Existing rapid entry
-
-The legacy ITN shape confirms the intended interaction: shared work answers
-are outside the repeat and item-specific answers are inside it.
-
-The active repeat editor in
-`lib/features/form_submission/presentation/section/repeat_table.widget.dart`
-already supports `RepeatRowEditResult.savedAndAddAnother`. The bounded
-reference field must use this existing flow rather than introduce a separate
-queue, entry session, or subject workflow.
+The exact server revision deployed in production is not recorded in this
+mobile repository. Before the first server slice, record the deployed commit
+and applied Liquibase state. If its active assignment or submission endpoints
+differ from the source audited here, reconcile this blueprint before changing
+code; do not silently adapt during implementation.
 
 ## Field Contract
 
 ### Form configuration
 
-The existing field type is sufficient:
+The existing form shape is sufficient:
 
 ```json
 {
@@ -131,206 +145,227 @@ The existing field type is sufficient:
 }
 ```
 
-Version 1 has exactly one reference source: the bounded org-unit catalog
-described here. It has no `resourceType`, schema selector, provider dispatch,
-or domain-specific mode.
+Version 1 has one source: the org-unit catalog defined here. It has no
+`resourceType`, schema selector, provider dispatch, or domain-specific mode.
 
-### Runtime context
+### Runtime scope
 
-The active form metadata supplies the assignment. The mobile resolves that
-assignment's org unit and queries the local catalog by `orgUnitUid`.
+The field reads `FormMetadata.assignmentId`, resolves the local assignment,
+and obtains its `orgUnitUid`. Missing assignment or org-unit context is an
+unsupported configuration error. The field must not query a global list or
+infer scope from another submission.
 
-If assignment or org-unit context is missing, the field reports unsupported
-configuration. It must not query a global list, guess scope, or read another
-submission to infer context.
+For Reference-enabled work, activity and org unit are immutable properties of
+an issued assignment UID. Moving the work to another activity or org unit
+requires a new assignment UID. The server foundation must reject such scope
+mutation once an assignment exposes a Reference form; this avoids adding
+duplicated scope columns to every submission.
 
-### Stored form value
+### Stored value
 
 The control and `formData` store only:
 
 ```json
-"configuredReferenceField": "11-char-uid"
+"configuredReferenceField": "a1234567890"
 ```
 
-Inside a repeat:
+A repeat row still has its separate `_id`; Reference never reads, writes, or
+mentions repeat identity.
 
-```json
-{
-  "_id": "repeat-row-id",
-  "configuredReferenceField": "referenced-item-uid"
-}
-```
-
-The repeat `_id` identifies the repeat row. The reference value identifies the
-catalog item. Creating, reopening, or editing a row must never replace one with
-the other.
-
-### Existing selection
+### Selection and local creation
 
 Selecting an existing item:
 
-1. resolves a catalog row under the current org unit;
+1. resolves a row under the current org unit;
 2. writes only its UID to the control;
-3. does not insert another catalog row;
-4. visibly restores the same selection when the repeat is reopened.
-
-### Local creation
+3. does not insert a duplicate catalog row;
+4. restores the same visible and selected item when reopened.
 
 Creating a missing item:
 
-1. is an explicit secondary action in the reference field;
-2. requires a non-empty display name;
-3. generates one 11-character UID on the client;
-4. inserts `uid`, `displayName`, and `orgUnitUid` into the local catalog;
-5. selects that UID in the field;
-6. persists the UID when the repeat row is saved.
+1. is an explicit secondary action after showing matching search results;
+2. validates and normalizes the entered display name;
+3. generates one client UID using `CodeGenerator.generateUid()`;
+4. inserts `uid`, `orgUnitUid`, and `displayName`;
+5. selects that UID;
+6. persists it when the repeat row or form is saved.
 
-The UID is generated once and remains unchanged through edit, restart, retry,
-and eventual server acceptance.
+The name is whitespace-collapsed and trimmed before insertion. New names use
+the active `ArEnFullNameValidator` behavior: supported Arabic/Latin name
+characters and at least four valid name parts. Imported names are not
+revalidated, because earlier campaigns may contain three-part names.
 
-The local catalog does not record whether a row came from the server or was
-created on the device. Upload sends definitions for referenced values
-regardless of origin, and the server resolves existence idempotently.
+The server must implement the same new-name behavior from shared contract
+fixtures; no equivalent server validator exists today.
 
-### Validation
+### UID validation
 
-- An optional reference accepts null.
-- A mandatory reference rejects null or an empty value.
-- A populated reference must satisfy the same 11-character UID contract used
-  by the client and server.
-- Local creation requires a non-empty name.
-- Hidden-field clearing and mandatory reactivation follow the established form
-  engine behavior.
-- A saved repeat reopens with the selected display value, and opening the
-  picker shows that value selected.
+Reference gets a focused validator matching the server contract:
 
-The field does not reject the same UID appearing in multiple repeat rows.
-Duplicate use is a campaign or analytical rule, not an identity rule.
+```text
+^[a-zA-Z][a-zA-Z0-9]{10}$
+```
 
-### Missing local display row
+Do not broaden this slice by changing validation for every other UID-valued
+field. The current general mobile `UidValidator` accepts a numeric first
+character and may have compatibility consumers.
 
-If saved `formData` contains a reference UID absent from the local cache:
+### Duplicate selection
+
+Within one submission, one `Reference` element path cannot contain the same UID
+twice:
+
+- options used by another occurrence are visible but disabled;
+- an occurrence being edited may retain its own current UID;
+- clearing or deleting an occurrence releases its UID;
+- a form validator enforces the rule independently of picker state;
+- dormant repeat rows and nested repeat rows are included without hydrating
+  every row;
+- historical duplicates remain visible and invalid, never auto-cleared;
+- another Reference element or another submission may use the same UID.
+
+The duplicate set is derived from current form values. It adds no persisted
+state.
+
+### Missing display row
+
+If saved `formData` contains a UID absent from the local catalog:
 
 - preserve the UID;
-- do not silently clear or replace it;
-- show a neutral fallback containing a shortened UID;
-- do not offer the missing row as a new selectable option.
+- show a neutral localized fallback containing a shortened UID;
+- do not fabricate a name or silently clear the value;
+- do not offer the missing item as a new selectable option.
 
-During upload, the server may still accept the UID if it already exists there.
-If both the server and local catalog lack it, upload fails with an explicit
-reference-resolution error because a new server record cannot be created
-without its name.
+At upload, the server alone decides whether the UID is a known acceptable
+identity or an unknown identity missing a definition.
 
 ## Mobile Persistence
 
-Add one per-user offline read projection:
+Mobile schema 7 adds one per-user table:
 
 ```text
 reference_entries
-  uid
+  uid            primary key
   orgUnitUid
   displayName
 
-primary key: uid
-search index: orgUnitUid + displayName
+index: orgUnitUid + displayName
 ```
 
-UID is globally unique. The same item is reused across assignments and
-campaigns without duplicating rows by assignment.
+There is no foreign key from a submission to this cache. Catalog changes must
+never cascade into `formData`.
 
-The table has no foreign key to submissions. Removing or refreshing catalog
-rows must never cascade into `formData`.
+The migration must prove:
 
-No normalized-name column is added initially. Search behavior should be
-measured with a representative production-sized list before another persisted
-projection is justified.
+- production schema 3 upgrades to 7;
+- current schema 6 upgrades to 7;
+- submissions, whole `formData`, assignment forms, templates, and sync
+  summaries remain unchanged;
+- obsolete physical tables intentionally preserved for compatibility, notably
+  `metadata_submissions`, remain untouched;
+- generated Drift schema code is updated intentionally.
 
-This is the only proposed mobile persistence migration.
+No normalized-name column is added initially. Database-backed search is
+characterized with at least 1,500 rows under one org unit before another
+persisted projection is considered.
 
 ## Catalog Synchronization
 
-### Read endpoint
+### Endpoint and authority
 
-Provide an authenticated, paginated endpoint queried through an assignment or
-equivalent authorized activity context. The server:
+Use one authenticated paginated endpoint under an assignment context:
 
-- validates the current user's assignment access;
-- derives the activity and org unit;
-- returns the catalog for that org unit;
-- never accepts client-supplied org-unit authority;
-- returns only UID and display name to the mobile;
-- returns no targeting, submission, coverage, or workflow state.
+```text
+GET /assignments/{assignmentUid}/referenceEntries
+```
+
+The server:
+
+- proves that the assignment belongs to the current user's accessible work;
+- proves that the current user may add submissions to a Reference-capable form
+  on that assignment;
+- derives activity and org unit from that assignment;
+- returns a standard `PagedResponse` of UID/name/org-unit rows;
+- uses a stable UID ordering for page boundaries;
+- never accepts an org-unit UID from the client as authority;
+- returns no submission, targeting, coverage, or workflow state.
 
 Illustrative response:
 
 ```json
 {
-  "items": [
+  "paged": true,
+  "page": 0,
+  "totalPages": 2,
+  "totalElements": 150,
+  "size": 100,
+  "referenceEntries": [
     {
-      "uid": "11-char-uid",
-      "name": "Display name"
+      "uid": "a1234567890",
+      "name": "Display Name",
+      "orgUnitUid": "o1234567890"
     }
-  ],
-  "nextCursor": null
+  ]
 }
 ```
 
-### Upsert-only client projection
+The catalog is shared by org unit. When multiple eligible assignments resolve
+to the same org unit, the mobile fetches that scope once using one valid
+assignment context.
 
-Version 1 catalog synchronization is intentionally upsert-only:
+### Mobile sync owner
 
-1. fetch one page;
-2. upsert its UID/name rows under the server-derived org unit in a bounded
-   transaction;
-3. continue until the cursor is exhausted;
-4. retain successfully received pages if a later page fails;
-5. retry from the appropriate cursor or restart idempotently.
+Add one custom `ReferenceEntryDatasource` implementing
+`AbstractDatasource`. Register it after `AssignmentDatasource`.
 
-Existing local rows are not removed merely because a fetch did not return
-them. This avoids `available`, run markers, staging tables, replacement
-transactions, and accidental loss after interrupted synchronization.
+It must not extend `BaseDataSource`. It:
 
-The corresponding version 1 server catalog is therefore append/upsert
-oriented:
+1. discovers assignment forms with `canAddSubmissions=true` whose latest local
+   template contains `Reference`;
+2. groups them by local org unit;
+3. requests every page through one authorized assignment per group;
+4. upserts each page in a bounded transaction;
+5. records one retryable sync-resource outcome;
+6. restarts from the first page on retry, relying on UID-idempotent upsert.
 
-- a name correction for a known UID may update the local display projection;
-- individual server deletion, revocation, and historical absence are not
-  modeled by this capability;
-- assignment access determines whether the user can enter the workflow;
-- removing an assignment can make its workflow unreachable without deleting
-  catalog identity or existing form values.
+Each successful page is retained if a later page fails. Existing rows are not
+deleted merely because one fetch omitted them. A known UID's server name
+refreshes the local display name. A local row unknown to the server remains
+available for a later submission upload.
 
-If future product requirements need individual catalog revocation, that is a
-new explicit contract. It must not be approximated through failed-fetch
-absence.
+An incoming UID already cached under another org unit is a typed
+synchronization conflict. The mobile preserves its existing row and fails that
+resource sync; it never moves identity between org units through upsert.
 
-### Local queries
+Paging follows the server's existing `page`, `size`, and `totalPages`
+convention. Do not add a second cursor protocol or depend on an unbounded
+`paged=false` response.
 
-The field queries:
+This rule deliberately avoids an `available` column, run markers, staging
+tables, and interpreting a network failure as deletion.
 
-```text
-orgUnitUid + display-name search
-```
+Assignment access controls whether the form workflow is reachable. Removing
+assignment access does not erase catalog identity or saved form values.
 
-Results are limited or paginated. The widget must not materialize the complete
-catalog on each rebuild or keystroke.
+### Search
 
-## Submission Upload Boundary
+Search is database-backed by `orgUnitUid` and display name, debounced, and
+limited or paginated. The widget must not materialize the complete catalog on
+each rebuild or keystroke.
 
-### No separate ensure workflow
+## Submission Upload
 
-There is no separate reference-create/ensure endpoint and no durable mobile
-outbox for catalog rows.
+### Request shape
 
-Each submission upload may carry an optional transport-only collection:
+Each existing submission request may add one optional transport-only property:
 
 ```json
 {
   "...existingSubmissionFields": "...",
   "referenceDefinitions": [
     {
-      "uid": "11-char-uid",
-      "name": "Display name"
+      "uid": "a1234567890",
+      "name": "Display Name"
     }
   ]
 }
@@ -338,254 +373,339 @@ Each submission upload may carry an optional transport-only collection:
 
 `referenceDefinitions`:
 
-- is optional, so existing clients and non-reference submissions remain
-  compatible;
-- is not stored in mobile `DataInstances`;
-- is not stored in the server submission entity or `formData`;
-- is reconstructed on every retry from the pinned form version, `formData`,
-  and local catalog;
-- contains definitions for all resolvable referenced UIDs, without classifying
-  them as local or imported.
+- remains optional for old and non-Reference clients;
+- is never stored in mobile `DataInstances`, server `DataSubmission`, or
+  `formData`;
+- is rebuilt on every retry;
+- includes every locally resolvable UID actually referenced by that one
+  submission, regardless of whether the row originated locally or remotely.
 
-This is a request-contract addition, not a persisted submission-envelope
-change.
+No pending flag or separate ensure/outbox workflow is needed. A server-known
+UID makes a repeated definition harmless; a server-unknown UID uses the
+definition for idempotent creation.
 
-### Mobile preparation
+### Mobile upload owner
 
-For every submission selected for upload, the mobile:
+Introduce one focused `ReferenceUploadPayloadBuilder`, used only by
+`SubmissionUploadService`. For each upload candidate it:
 
-1. loads its pinned form version;
-2. identifies `Reference` element paths;
-3. extracts UID values, including values inside nested repeats;
-4. resolves available display names from `reference_entries`;
-5. attaches deduplicated UID/name definitions to that submission request;
-6. sends the request through the existing upload boundary.
+1. loads the submission's pinned `form_template_versions` row;
+2. identifies the template's `Reference` element paths;
+3. extracts actual UID values from ordinary, repeat, and arbitrary
+   nested-repeat JSON;
+4. resolves available names from `reference_entries`;
+5. attaches deduplicated definitions to that submission's existing upload map.
 
-A known server UID may upload even if its local display row is missing. An
-unknown UID without a supplied name is rejected clearly by the server.
+Introduce one template-aware `ReferenceValueExtractor` shared by upload
+preparation and duplicate derivation where their inputs overlap. Do not reuse
+`FormDataUtil.getRawByPath` or the server flattening utility; neither proves
+arbitrary nested-repeat traversal.
 
-### Server resolution
+Contract fixtures must cover:
 
-For each submitted reference UID, the server:
+- an ordinary Reference field;
+- a Reference in a repeat;
+- a Reference in a nested repeat;
+- multiple parent repeat rows;
+- null, missing, malformed, and duplicate values;
+- another String field at a similar path that must not be extracted.
 
-1. validates the submission assignment and derives its activity and org unit;
-2. uses the pinned template version and `formData` to identify actual
-   `Reference` values;
-3. treats `referenceDefinitions` only as names for those actual values;
-4. ignores or rejects definitions not used by the submission;
-5. finds each UID in the canonical catalog;
-6. accepts a known UID in the authorized org unit without overwriting its name
-   or registration lineage;
-7. creates an unknown UID only when a non-empty definition is supplied;
-8. rejects a UID already owned by another org unit;
-9. saves reference creation and submission acceptance atomically.
+A missing local name simply omits that definition. The server may accept a
+known UID; an unknown UID without a valid supplied name fails clearly.
 
-The first implementation retains the current bulk failure semantics rather
-than inventing partial mobile success handling in this feature. A failed
-request leaves local submissions finalized and retryable with the same UIDs.
+### Server request handling
 
-## Minimal Server Persistence And Lineage
+Add `referenceDefinitions` to `DataSubmissionV1Dto` as a request-only
+collection and explicitly ignore it in `DataSubmissionV1Mapper`. Keep each
+DTO associated with its mapped submission during preprocessing.
 
-The canonical server record needs:
+Reference resolution is an explicit phase after the current access and
+composite validators finish. Do not register it inside the unordered
+`List<SubmissionValidator>`.
+
+For each submission, `ReferenceSubmissionResolver`:
+
+1. uses the now validated assignment-derived activity and org unit;
+2. loads the pinned form version;
+3. extracts actual Reference UIDs with the same contract fixtures as mobile;
+4. rejects supplied definitions not used by that submission;
+5. accepts a known UID only in the derived org unit;
+6. never overwrites a known UID's name or first-registration lineage;
+7. creates an unknown UID only with a valid matching definition;
+8. rejects an unknown UID without a name;
+9. rejects a UID owned by another org unit.
+
+### Transaction and bulk behavior
+
+Current submission preprocessing runs outside the transaction opened by
+`DefaultDataSubmissionService.upsertAll`. The implementation must move the
+transaction boundary outward.
+
+The smallest owner is the public V1 `upsertAll` coordinator:
+
+```text
+transaction starts
+  map DTOs while retaining definitions
+  validate access
+  run existing assignment/form-version enrichment
+  resolve/create references
+  persist the complete submission bulk through DataSubmissionService
+transaction commits
+```
+
+An exception at any stage rolls back new catalog rows, submissions, and outbox
+rows participating in that transaction. A rollback integration test is
+mandatory.
+
+Version 1 preserves the active all-or-fail request behavior:
+
+- the mobile sends the selected submissions in one bulk request;
+- one validation or persistence exception fails the request;
+- the mobile marks every attempted submission `syncFailed`;
+- retry rebuilds definitions and reuses the same submission and Reference UIDs.
+
+The current mobile response parser also supports a server summary containing
+some accepted and some rejected submission UIDs. Preserve that compatibility
+path. Reference resolution itself does not introduce such partial server
+processing: a thrown Reference error still fails and rolls back the complete
+request.
+
+## Server Catalog And Lineage
+
+The canonical server entity contains:
 
 ```text
 uid
 displayName
-orgUnitUid
-firstRegisteredActivityUid
+orgUnit
+firstRegisteredActivityUid   nullable, immutable
 ```
 
-The server's existing JPA identifiable base already supplies:
+It extends the existing identifiable/audited base, which supplies the internal
+26-character ID and `createdBy`, `createdDate`, `lastModifiedBy`, and
+`lastModifiedDate`. No `source` column is added.
+
+Creation rules:
+
+- existing UID: preserve canonical name, org unit, and first-registration
+  audit;
+- new UID: use the client-generated UID, server-derived org unit, validated
+  assignment activity, and authenticated audit identity;
+- retry: find the same UID and do not rewrite lineage;
+- later activity: reuse identity without changing first activity.
+
+Historical import:
+
+- preserves or generates a canonical 11-character UID;
+- records the identifiable previous activity as first registration;
+- uses a deterministic migration/system audit identity;
+- leaves first activity null when historical origin is not provable;
+- never attributes import lineage to the first device that downloads it.
+
+The upload response needs no per-reference `created` or `existing` result.
+Persisted server lineage is sufficient for version 1.
+
+## Automatic Old-Client Gate
+
+This capability already requires server changes, so the old-client gate is
+included in the server foundation rather than relying on a manual device list.
+It is intentionally not a generic capability framework.
+
+The exact bounded protocol is:
 
 ```text
-createdBy
-createdDate
-lastModifiedBy
-lastModifiedDate
+old client: GET /assignments/forms?paged=false
+new client: GET /assignments/forms?paged=false&referenceVersion=1
 ```
 
-No `source` column is needed.
+The server treats a missing value as version 0:
 
-### First-registration contract
+- version 0 excludes assignment forms whose latest version contains a
+  `Reference` element;
+- version 1 includes them when ordinary access rules allow;
+- non-Reference assignment forms are unchanged.
 
-When the server resolves a submitted UID:
+The filter applies only to `assignments/forms`. Old clients may cache template
+JSON, but `FormTemplateListService` cannot offer a form without its
+`assignment_forms` row.
 
-- if the UID already exists, return or internally record `existing` and
-  preserve all first-registration and creation audit fields;
-- if the UID does not exist, create it under the server-derived org unit,
-  set immutable `firstRegisteredActivityUid` from the validated assignment,
-  and let existing auditing set `createdBy` and `createdDate`;
-- retries find the same UID and must not rewrite first-registration lineage;
-- later use in another activity does not change the first activity.
+Two supporting requirements close current blind spots:
 
-This provides light lineage:
+1. After a successful assignment fetch, the mobile also fetches assignment
+   forms when the assignment list is empty. A successful assignment-form
+   response atomically replaces local `assignment_forms` even when its
+   flattened list is empty. A failed assignment or assignment-form response
+   preserves the previous rows for offline use.
+2. The initial Reference campaign uses a new form-template UID. It must not
+   turn the latest version of a form with old-client drafts into a Reference
+   form, because filtering that template could also remove edit access to its
+   older pinned drafts.
 
-- creation versus prior existence is known at server upsert time;
-- `firstRegisteredActivityUid` identifies the first recorded activity;
-- `createdBy` identifies the authenticated creator or importer;
-- `createdDate` identifies when the server first accepted it.
+Tests must prove old requests cannot see Reference forms, version 1 requests
+can, ordinary forms remain visible, successful-empty replacement clears local
+rows including when the assignment list is empty, and fetch failure preserves
+local rows.
 
-The mobile does not persist or display lineage in version 1. If offline
-lineage display later becomes a real requirement, it needs a separately
-approved read projection rather than silently expanding this cache.
+## Delivery Sequence
 
-### Imports and older campaigns
+The numbered items below are milestones, not instructions to combine all their
+bullets into one PR. Every distinct cleanup, prerequisite, or behavior change
+must be handled as a bounded unit:
 
-An import from an identifiable earlier campaign must:
+1. discover and prove its active path, existing behavior, and production risk;
+2. define the smallest plan, ownership boundary, checks, and acceptance state;
+3. make and verify only that change;
+4. close it before starting the next unit.
 
-- preserve or generate the canonical 11-character UID;
-- set that campaign as `firstRegisteredActivityUid`;
-- use a deterministic migration/system audit identity;
-- never attribute imported records to the first activity that merely
-  synchronizes them to a mobile device.
+Do not hide preparatory cleanup inside feature implementation or expand a unit
+because adjacent debt was discovered. Required debt becomes an earlier bounded
+unit; unrelated debt stays deferred. If discovery contradicts this draft,
+revise and review the affected contract before changing code.
 
-If historical origin cannot be established, the first activity remains null
-rather than recording false lineage. New client-created records always receive
-the current validated activity.
+Do not start campaign activation with only part of this sequence deployed.
 
-## Production Compatibility
+### 1. Shared contract characterization
 
-Current production clients contain an incomplete `Reference` path and could
-show an empty selector. A form requiring the corrected field must not be made
-available to clients that lack the implementation.
-
-Before campaign activation, use one explicit gate:
-
-1. Prefer client capability or minimum supported app-build filtering when
-   returning assignment forms.
-2. Otherwise prove that every assigned field device has upgraded before
-   enabling the form.
-
-Existing form and submission payloads without references or definitions remain
-valid. Existing production database rows are preserved by an additive mobile
-migration.
-
-## Bounded Delivery Plan
-
-### 1. Contract characterization
-
-- add a focused form fixture containing a required `Reference` inside a repeat;
-- characterize existing incomplete widget/provider behavior before removal;
-- align the mobile and server 11-character UID validation contract;
-- characterize reference extraction through ordinary, repeat, and nested-repeat
+- add a neutral form fixture with ordinary, repeat, and nested-repeat Reference
   paths;
-- confirm the production list-size expectation and search behavior.
+- add shared JSON extraction cases consumable by mobile and server tests;
+- lock UID and new-name normalization/validation cases;
+- characterize duplicate selection and missing-name behavior;
+- characterize database search with at least 1,500 rows.
 
-### 2. Server foundation, disabled
+No runtime behavior changes in this slice.
 
-- add the neutral canonical catalog and immutable first-registration activity;
-- reuse existing JPA audit ownership;
-- add the access-scoped paginated read endpoint;
-- accept optional per-submission `referenceDefinitions`;
-- resolve actual template reference values and definitions atomically with
-  submission save;
-- test known, new, retry, wrong-org-unit, stale-name, unknown-without-name,
-  unused-definition, import-lineage, and existing-client payload cases;
-- keep the capability disabled until the mobile is ready.
+### 2. Server catalog, read API, and compatibility gate
 
-### 3. Mobile schema and catalog boundary
+- record the deployed server revision and Liquibase state, and verify the
+  audited endpoint call paths still match;
+- add the neutral audited catalog and Liquibase migration;
+- add access-scoped paginated reads;
+- add `referenceVersion=1` filtering to `assignments/forms`;
+- reject activity/org-unit mutation for Reference-enabled assignment UIDs;
+- use batched latest-template lookup rather than one query per form;
+- test existing non-Reference responses, old-client filtering, and assignment
+  scope-mutation rejection;
+- deploy without assigning a Reference form.
 
-- add `reference_entries`;
-- test production schema upgrades while preserving submissions and
-  configuration;
-- add one catalog repository owning paginated pull, upsert-only persistence,
-  and bounded search;
-- test interrupted pagination, idempotent retry, name correction, and local-row
-  preservation;
-- do not register a second generic metadata or reference state owner.
+### 3. Server upload resolution
 
-### 4. Field replacement and upload integration
+- add the request-only DTO definitions;
+- implement template-aware extraction and explicit resolution;
+- move the V1 bulk transaction boundary outward;
+- test known, new, retry, wrong-org-unit, stale-name, malformed UID,
+  unknown-without-name, unused-definition, import-lineage, old payload, and
+  complete rollback cases;
+- deploy while the feature remains unassigned.
 
-- replace the hardcoded metadata-submission reference widget and provider;
-- query by the active assignment's org unit;
-- display names while storing UIDs;
-- add deliberate name-only local creation;
-- preserve selection through save, reopen, edit, nested repeat, and restart;
-- extract reference values from pinned templates;
-- attach transient definitions through the existing upload service;
-- remove superseded metadata-reference imports and files once no active
-  references remain;
-- smoke offline rapid entry on the Redmi baseline.
+### 4. Mobile schema and catalog sync
 
-### 5. Campaign activation
+- add schema 7 `reference_entries`;
+- prove schema 3 and 6 upgrades;
+- add the focused repository and custom paginated datasource;
+- register it after assignment synchronization;
+- correct successful-empty `assignment_forms` replacement;
+- test paging failure, retry from page one, name refresh, local-row retention,
+  cross-org UID conflict, zero assignments, access loss, and bounded search.
 
-- import existing catalog items with truthful prior-activity lineage;
-- publish the campaign form using the bounded `Reference` field inside the
-  existing repeat;
-- keep shared work fields outside the repeat;
-- enable the old-client gate;
-- smoke first sync, offline search, local creation, save-and-add-another,
-  nested repeat where applicable, draft/restart, finalization, failed upload
-  retry, existing selection, and server lineage;
-- enable field access only after all gates pass.
+### 5. Mobile field and upload integration
+
+- replace the hardcoded incomplete Reference widget/provider;
+- add the focused UID validator;
+- add database search, selected-value restoration, and explicit local creation;
+- add duplicate exclusion and validation;
+- add the shared extractor and upload payload builder;
+- advertise `referenceVersion=1` on the one assignment-form request;
+- remove superseded metadata-reference source files only after references prove
+  they are unused;
+- keep the physical legacy `metadata_submissions` table unchanged;
+- run focused form, upload, and migration tests.
+
+### 6. Device and campaign activation
+
+- install the complete mobile build through the production signing path;
+- import prior catalog identities with truthful lineage;
+- create a new form-template UID using Reference inside the existing repeat
+  flow;
+- keep shared answers outside the repeat;
+- verify old-client and new-client assignment-form responses;
+- smoke initial sync, offline search, local creation, save-and-add-another,
+  nested repeat, edit/reopen, draft/restart, finalization, failed-upload retry,
+  known identity, new identity, and server lineage;
+- assign the form only after every gate passes.
 
 ## Acceptance Gates
 
-- Existing non-reference forms behave unchanged.
-- Shared outer fields are entered once.
-- Continuous repeat `save and add another` remains available.
+- Existing non-Reference forms and payloads are unchanged.
+- Old clients cannot receive an assignment form requiring Reference.
+- The first Reference workflow uses a new template UID.
+- Shared outer answers are entered once.
+- Existing repeat `Save and add another` remains the rapid-entry flow.
 - The field stores only a UID, never a name or object.
 - The mobile catalog stores only UID, org unit, and display name.
 - No domain name appears in implementation ownership.
 - No source, pending, availability, run-marker, or workflow state is added.
-- Selecting an existing item inserts no duplicate local row.
-- Local creation generates one UID and preserves it through retry and edit.
-- A saved repeat reopens with the same visible and selected item.
-- Repeat UID and reference UID remain independent.
-- Nested-repeat extraction is covered.
-- Catalog synchronization is bounded, idempotent, and upsert-only.
-- Interrupted synchronization does not erase the usable local catalog.
-- Search does not load the complete catalog on each widget rebuild.
+- New names follow the agreed four-part contract; imported names remain usable.
+- Local creation generates one UID and preserves it through restart and retry.
+- A saved field reopens with the same visible and selected item.
+- The same Reference element cannot select one UID twice in one submission.
+- Nested-repeat extraction passes the shared contract fixtures on both sides.
+- Search never loads the whole catalog on each widget rebuild.
+- Interrupted catalog sync does not erase prior or locally created rows.
+- Successful empty assignment-form sync removes stale access rows.
 - Missing display data never clears a saved UID.
-- Submission requests without references remain unchanged.
-- Reference definitions are transient and reconstructed on retry.
-- Server reference creation and submission save are atomic.
-- Known server identity and lineage are never overwritten by client names.
-- New server identity records the validated activity and authenticated creator.
-- Imported identity is never falsely attributed to the current campaign.
-- The server derives all authority and org-unit scope from validated context.
-- Old clients cannot receive a form requiring the corrected field.
+- Definitions are transient and reconstructed from the pinned template.
+- Existing submission requests without definitions remain accepted.
+- Server identity, canonical name, and lineage are not overwritten by retry.
+- Server derives org unit and activity from validated assignment context.
+- Reference-enabled assignment scope cannot change under an existing UID.
+- Catalog creation and complete bulk submission persistence are atomic.
+- One invalid bulk item rolls back the complete request.
+- Mobile retry keeps the same submission, repeat, and Reference UIDs.
 
-## Explicitly Out Of Scope
+## Deferred Boundaries
 
-- household-, person-, or campaign-specific implementation names;
+The following are not partial version-1 features:
+
+- domain-specific subject or household modeling;
 - one submission per referenced item;
 - submission-level subject identity;
-- targeting, completion, coverage, acceptance, or flagging state;
-- workflow queues and carry-forward sessions;
-- catalog deletion or per-item revocation;
-- editing canonical names through the mobile;
-- automatic same-name deduplication or merging;
-- generic reference-source registries;
-- metadata-submission, Party, or `resourceMetadataSchema` resurrection;
-- automatic conversion of historical submissions;
-- future event or processing-pipeline modeling;
-- solving unrelated whole-form or large-repeat performance risks.
+- targeting, coverage, acceptance, flagging, or processing pipelines;
+- workflow queues or carry-forward sessions;
+- canonical-name edits from the data-entry field;
+- activity-specific display aliases;
+- automatic same-name merging;
+- historical submission conversion;
+- generic reference providers;
+- unrelated large-repeat optimization.
 
-## Known Limitations And Blind Spots
+Individual catalog deactivation is a separate bounded capability. If it is
+required for the campaign, complete it before activation using sparse state:
 
-1. Two offline users may create different UIDs for the same real-world item.
-   Display name is not identity, so version 1 must not merge them
-   automatically.
-2. A locally created catalog row that is never referenced remains local. It is
-   sent to the server only when a submission actually uses it.
-3. Without availability state, version 1 cannot represent individual catalog
-   revocation. The server list is deliberately append/upsert oriented.
-4. A saved unknown UID with no local name cannot create a server record and
-   must fail explicitly rather than fabricate a name.
-5. Existing historical records with unknown origin cannot truthfully answer
-   which activity first registered them; null is the required answer.
-6. The current bulk upload behavior does not provide clean per-submission
-   partial success. This slice preserves that behavior instead of hiding a
-   broader upload-policy change inside reference work.
-7. If the product later requires lineage to be visible offline, the current
-   three-column mobile cache is insufficient by design.
+```text
+server reference_entry_deactivations
+  referenceUid
+  audit fields
 
-## Review Points Before Implementation
+mobile reference_entry_exclusions
+  referenceUid
+```
 
-1. Confirm the maximum expected catalog size per org unit.
-2. Confirm whether version 1 server catalogs are truly append/upsert-only.
-3. Select the old-client capability or minimum-build gate.
-4. Confirm the neutral fallback text for a saved UID missing from the cache.
-5. Confirm whether server upload responses need to expose `created` versus
-   `existing`, or whether persisted server lineage and reporting are enough.
+A successful scoped sync replaces the small exclusion set atomically; a failed
+sync preserves it. Search excludes those UIDs from new selection while saved
+values still resolve and remain visible. Reactivation removes the exclusion.
+Do not infer deactivation from an omitted catalog page.
+
+## Known Version-1 Limits
+
+1. Two offline users can create different UIDs for the same real-world item.
+   Names are not identity and are never auto-merged.
+2. A local row never referenced by a submission remains local; this is the
+   intentional cost of avoiding durable pending state.
+3. A saved unknown UID with no local name can be accepted only if the server
+   already knows it; otherwise upload fails without fabricating a name.
+4. Historical identity with unprovable origin has null first-activity lineage.
+5. Lineage is not available offline because it is not part of the three-column
+   mobile projection.
+6. Version 1 bulk upload is all-or-fail, matching the active server and mobile
+   failure path.

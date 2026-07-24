@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SyncSettingTabView extends HookConsumerWidget {
   const SyncSettingTabView({super.key});
@@ -23,7 +22,7 @@ class SyncSettingTabView extends HookConsumerWidget {
 
         Card(
           child: ListTile(
-            leading: Icon(MdiIcons.update),
+            leading: const Icon(Icons.sync),
             title: Text(S.of(context).syncInterval),
             subtitle: DropdownButton<SyncInterval>(
               value: selectedInterval.value,

@@ -39,7 +39,6 @@ dependencies:
   injectable: ^2.5.0
   internet_connection_checker_plus: ^2.7.2
   intl: ^0.20.2
-  material_design_icons_flutter: ^7.0.7296
   mobile_scanner: ^7.0.1
   multiple_result: ^5.2.0
   package_info_plus: ^8.3.0

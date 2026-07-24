@@ -7,7 +7,6 @@ import 'package:datarunmobile/features/settings/presentation/user_settings_tab_v
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView();
@@ -26,7 +25,7 @@ class SettingsView extends StatelessWidget {
                 text: S.of(context).userSettings,
               ),
               Tab(
-                icon: Icon(MdiIcons.update),
+                icon: const Icon(Icons.sync),
                 text: S.of(context).syncSettings,
               ),
               Tab(

@@ -9,7 +9,6 @@ import 'package:datarunmobile/features/form_submission/presentation/section/repe
 import 'package:datarunmobile/features/form_submission/presentation/section/section.widget.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class EditRowScreen extends StatefulWidget {
@@ -109,7 +108,7 @@ class _EditRowScreenState extends State<EditRowScreen> {
                             dimension: 24,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : Icon(MdiIcons.contentSaveCheck),
+                        : const Icon(Icons.save),
                     tooltip: S.of(context).saveAndClose,
                   ),
                   FloatingActionButton(
@@ -120,7 +119,7 @@ class _EditRowScreenState extends State<EditRowScreen> {
                               RepeatRowEditResult.savedAndAddAnother,
                             ),
                     heroTag: '${identityHashCode(widget.item)}_addNew',
-                    child: Icon(MdiIcons.plus),
+                    child: const Icon(Icons.add),
                     tooltip: S.of(context).addNew,
                   ),
                 ],

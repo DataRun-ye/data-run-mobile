@@ -28,14 +28,6 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
       await configureDependencies();
 
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarDividerColor: Colors.transparent,
-      ));
-
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
       FlutterError.demangleStackTrace = (StackTrace stack) {
@@ -157,8 +149,12 @@ class App extends ConsumerWidget {
         iconTheme: IconThemeData(color: barFg.withValues(alpha: 0.6)),
         actionsIconTheme: IconThemeData(color: barFg),
         surfaceTintColor: barBg,
-        systemOverlayStyle:
-            isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+          statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+          systemNavigationBarIconBrightness:
+              isDark ? Brightness.light : Brightness.dark,
+        ),
       ),
       cardTheme: CardThemeData(
         color: cs.surfaceContainerLow,

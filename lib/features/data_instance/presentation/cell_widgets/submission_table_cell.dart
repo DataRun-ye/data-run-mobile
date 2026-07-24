@@ -11,7 +11,6 @@ import 'package:datarunmobile/features/form/application/map_value_to_display.dar
 import 'package:datarunmobile/features/form/presentation/widgets/value_type_value_display.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SubmissionTableCell extends StatelessWidget {
   const SubmissionTableCell({
@@ -126,7 +125,7 @@ class SubmissionTableCell extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 key: ValueKey(fieldValue.id),
                 children: [
-                  Expanded(child: Icon(MdiIcons.barcode)),
+                  const Expanded(child: Icon(Icons.qr_code_scanner)),
                   const SizedBox(width: 4),
                   Text(fieldValue.value!.toString().substring(0, 10)),
                 ],

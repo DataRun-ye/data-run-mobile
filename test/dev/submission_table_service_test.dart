@@ -49,8 +49,7 @@ void main() {
     expect(await service.countByFilter(filter).getSingle(), 2);
   });
 
-  test('resolves syncable selections and deletes through the same owner',
-      () async {
+  test('resolves syncable selections and deletes local-only rows', () async {
     await db.into(db.dataInstances).insert(
           DataInstancesCompanion.insert(
             id: 'submission-final',
@@ -69,8 +68,102 @@ void main() {
     ]);
 
     expect(await service.getSyncableIds(ids), ['submission-final']);
-    expect(await service.delete(['submission-old']), 1);
+    expect(await service.canDeleteLocalOnly(['submission-old']), isTrue);
+    final deletion = await service.deleteLocalOnly(['submission-old']);
+
+    expect(deletion, LocalSubmissionDeletionResult.deleted);
     expect(await db.dataInstancesDao.getById('submission-old'), isNull);
+  });
+
+  test('keeps synced and uploading rows on the device', () async {
+    await db.batch((batch) {
+      batch.insertAll(db.dataInstances, [
+        DataInstancesCompanion.insert(
+          id: 'submission-synced',
+          formTemplate: 'form-1',
+          templateVersion: 'version-1',
+          assignment: const Value('assignment-1'),
+          syncState: InstanceSyncStatus.synced,
+          isToUpdate: true,
+        ),
+        DataInstancesCompanion.insert(
+          id: 'submission-uploading',
+          formTemplate: 'form-1',
+          templateVersion: 'version-1',
+          assignment: const Value('assignment-1'),
+          syncState: InstanceSyncStatus.uploading,
+          isToUpdate: false,
+        ),
+      ]);
+    });
+
+    expect(await service.canDeleteLocalOnly(['submission-synced']), isFalse);
+    expect(await service.canDeleteLocalOnly(['submission-uploading']), isFalse);
+
+    final synced = await service.deleteLocalOnly(['submission-synced']);
+    final uploading = await service.deleteLocalOnly(['submission-uploading']);
+    expect(
+      synced,
+      LocalSubmissionDeletionResult.blockedByServerRetention,
+    );
+    expect(
+      uploading,
+      LocalSubmissionDeletionResult.blockedByServerRetention,
+    );
+    expect(await db.dataInstancesDao.getById('submission-synced'), isNotNull);
+    expect(
+        await db.dataInstancesDao.getById('submission-uploading'), isNotNull);
+  });
+
+  test('mixed deletion is all-or-nothing when a protected row is selected',
+      () async {
+    await db.into(db.dataInstances).insert(
+          DataInstancesCompanion.insert(
+            id: 'submission-synced',
+            formTemplate: 'form-1',
+            templateVersion: 'version-1',
+            assignment: const Value('assignment-1'),
+            syncState: InstanceSyncStatus.synced,
+            isToUpdate: true,
+          ),
+        );
+
+    final selection = ['submission-old', 'submission-synced'];
+    expect(await service.canDeleteLocalOnly(selection), isFalse);
+    final result = await service.deleteLocalOnly(selection);
+
+    expect(
+      result,
+      LocalSubmissionDeletionResult.blockedByServerRetention,
+    );
+    expect(await db.dataInstancesDao.getById('submission-old'), isNotNull);
+    expect(await db.dataInstancesDao.getById('submission-synced'), isNotNull);
+  });
+
+  test('keeps a server-retained submission after it returns to draft',
+      () async {
+    await db.into(db.dataInstances).insert(
+          DataInstancesCompanion.insert(
+            id: 'submission-server-retained-draft',
+            formTemplate: 'form-1',
+            templateVersion: 'version-1',
+            assignment: const Value('assignment-1'),
+            syncState: InstanceSyncStatus.draft,
+            isToUpdate: true,
+          ),
+        );
+
+    final result =
+        await service.deleteLocalOnly(['submission-server-retained-draft']);
+
+    expect(
+      result,
+      LocalSubmissionDeletionResult.blockedByServerRetention,
+    );
+    expect(
+      await db.dataInstancesDao.getById('submission-server-retained-draft'),
+      isNotNull,
+    );
   });
 }
 

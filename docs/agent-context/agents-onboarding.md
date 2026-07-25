@@ -8,13 +8,21 @@ Purpose: give coding agents a durable starting point without making them redisco
 
 DataRun is a Flutter mobile application for assignment-driven, offline-capable field data collection. It downloads configuration and form templates, stores them in a per-user Drift database, captures submissions locally, and uploads completed submissions.
 
-`v6.0.0+50` is the current production baseline. It was released from commit `ff20d6fc` and rolled out through Google Play to 100% of users. A real Play `5.3.1+21` to Play `6.0.0+50` in-place upgrade preserved the cached session, configuration, drafts, repeat data, completed submissions, and upload behavior. Production adoption and telemetry still need observation; an empty Play crash graph before adoption is not proof of zero crashes.
+`v6.0.0+50` is the last production baseline fully verified in these documents.
+It was released from commit `ff20d6fc` and rolled out through Google Play to
+100% of users. A real Play `5.3.1+21` to Play `6.0.0+50` in-place upgrade
+preserved the cached session, configuration, drafts, repeat data, completed
+submissions, and upload behavior. Reconcile this baseline at each release
+rather than assuming it describes the current store version.
 
 The former local `drun_sdk` package was consolidated into the root `datarunmobile` package. All active Dart production code is under `lib/`; the stale remote SDK repository is not authoritative. The move preserved the database filename/schema lineage, storage keys, network payloads, sync registration order, and form behavior.
 
 ## Context Map Ownership
 
-Read `09-production-boundaries-and-work-strategy.md` first. It owns current product contracts, the production compatibility boundary, release baseline, and remaining roadmap.
+Read `09-production-boundaries-and-work-strategy.md` first. It owns current
+product contracts, the production compatibility boundary, and durable working
+rules. Read `11-current-work.md` for current priority. Do not treat
+`12-completed-work.md` as authority; it is a historical index.
 
 Then read only the focused map for the boundary being changed:
 
@@ -24,10 +32,15 @@ Then read only the focused map for the boundary being changed:
 - `04-state-di-runtime-map.md`: state owners, DI, scopes, and generated registration.
 - `05-classification-reconciliation.md`: strict active/inactive legend and unresolved misleading surfaces.
 - `06-large-repeat-hang-data-loss.md`: closed repeat improvements and current residual scaling risks.
-- `07-repeat-uid-contract.md`: repeat identity and metadata contract.
+- `07-repeat-uid-contract.md`: implemented repeat identity and metadata
+  contract.
 - `08-validation-baseline.md`: current executable checks and limits.
 
 Focused maps own technical detail. Do not duplicate their tables into `09`; update the owner document when evidence changes.
+
+Use `documentation-lifecycle.md` before adding, splitting, renaming, or
+retiring context documents. It defines the lightweight roles and lifecycle
+used here without making historical documents authoritative.
 
 ## Runtime Boundaries
 
@@ -135,7 +148,9 @@ While editing:
 - do not manually edit generated files when a generator owns them;
 - do not add a second owner, compatibility wrapper, provider, or service to bypass an unclear boundary;
 - when relevant known debt is safely inside the slice, move consumers toward the established owner and remove the superseded path;
-- when debt is unrelated, record it in the `09` roadmap instead of broadening the change;
+- when debt is unrelated, record it in `11-current-work.md` only if it is
+  accepted and prioritized; otherwise use a GitHub issue instead of broadening
+  the change;
 - treat product/data invariants as protected behavior, not current implementation structure.
 
 ## Definition Of Done
@@ -175,8 +190,12 @@ For each production change:
 - Outside-to-repeat rule fan-out remains linear in dependent rows.
 - Saving still reduces, JSON-encodes, and writes the whole submission.
 - Synced edit/delete authorization and server round-trip behavior are incomplete.
-- Reference fields and calculated fields are incomplete.
+- The bounded Reference implementation is on `develop` but remains
+  deployment/activation-gated by `10-bounded-reference-field-plan.md`.
+  Calculated fields remain incomplete.
 - Server error response shapes and whole-resource configuration sync need server-side contracts before deeper client changes.
 - Multiple state/DI libraries remain active by distinct responsibility; consolidate only after proving an actual duplicate owner.
 
-The ordered current backlog belongs in `09-production-boundaries-and-work-strategy.md`.
+The ordered current queue belongs in `11-current-work.md`. Completed work moves
+to `12-completed-work.md`; do not leave completed checkboxes in the current
+queue.

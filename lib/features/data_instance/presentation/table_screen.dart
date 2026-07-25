@@ -4,6 +4,7 @@ import 'package:datarunmobile/app/stacked/app.router.dart';
 import 'package:datarunmobile/commons/custom_widgets/async_value.widget.dart';
 import 'package:datarunmobile/core/common/confirmation_service.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
+import 'package:datarunmobile/features/data_instance/application/submission_table_service.dart';
 import 'package:datarunmobile/features/data_instance/application/table_controller.provider.dart';
 import 'package:datarunmobile/features/data_instance/presentation/table_widget.dart';
 import 'package:datarunmobile/features/data_instance/presentation/widgets/action_fab.dart';
@@ -82,7 +83,18 @@ class TableScreen extends HookConsumerWidget {
           appLocator<NavigationService>().navigateToFormFlowBootstrapper(
               formId: formId, assignmentId: assignmentId);
         },
-        onDelete: () {
+        onDelete: () async {
+          final controller = ref.read(tableControllerProvider(
+            formId: formId,
+            assignmentId: assignmentId,
+          ).notifier);
+          final canDelete = await controller.canDeleteSelectedItems();
+          if (!context.mounted) return;
+          if (!canDelete) {
+            _showProtectedDeletionMessage(context);
+            return;
+          }
+
           appLocator<ConfirmationService>().confirmAndExecute(
               context: context,
               title: S.of(context).confirm,
@@ -93,12 +105,15 @@ class TableScreen extends HookConsumerWidget {
                   ))
                   .length),
               confirmLabel: S.of(context).delete,
-              action: () => ref
-                  .read(tableControllerProvider(
-                    formId: formId,
-                    assignmentId: assignmentId,
-                  ).notifier)
-                  .deleteSelectedItems());
+              action: () async {
+                final result = await controller.deleteSelectedItems();
+                if (context.mounted &&
+                    result ==
+                        LocalSubmissionDeletionResult
+                            .blockedByServerRetention) {
+                  _showProtectedDeletionMessage(context);
+                }
+              });
         },
         onBulkSync: () {
           ref
@@ -121,4 +136,12 @@ class TableScreen extends HookConsumerWidget {
       persistentFooterAlignment: AlignmentDirectional.centerEnd,
     );
   }
+}
+
+void _showProtectedDeletionMessage(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(S.of(context).serverRetainedSubmissionsCannotBeDeleted),
+    ),
+  );
 }

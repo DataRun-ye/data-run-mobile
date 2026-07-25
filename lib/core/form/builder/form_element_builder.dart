@@ -222,7 +222,7 @@ class FormElementBuilder {
                     []),
             template: elementTemplate);
       case ValueType.Reference:
-        return FieldInstance<String>(
+        return ReferenceFieldInstance(
           form: rootFormControl,
           initialValue: retainedValue,
           elementProperties: FieldElementState<String>(

@@ -4,7 +4,7 @@ import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/sync/sync_summary_model.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/dao/data_submissions_dao.dart';
-import 'package:datarunmobile/database/extensions/data_submission.extension.dart';
+import 'package:datarunmobile/features/data_instance/application/reference_upload_payload_builder.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_upload_result.dart';
 
 class SubmissionUploadService {
@@ -14,13 +14,15 @@ class SubmissionUploadService {
     required SessionOperationTracker operationTracker,
   })  : _dao = database.dataInstancesDao,
         _apiClient = apiClient,
-        _operationTracker = operationTracker;
+        _operationTracker = operationTracker,
+        _payloadBuilder = ReferenceUploadPayloadBuilder(database);
 
-  static const _resource = 'dataSubmission/bulk';
+  static const _resource = 'dataSubmission/bulk?referenceVersion=1';
 
   final DataInstancesDao _dao;
   final HttpClient<dynamic> _apiClient;
   final SessionOperationTracker _operationTracker;
+  final ReferenceUploadPayloadBuilder _payloadBuilder;
 
   Future<SubmissionUploadResult> upload(Iterable<String> ids) =>
       _operationTracker.track(() => _upload(ids));
@@ -33,9 +35,10 @@ class SubmissionUploadService {
     final attemptedIds = submissions.map((submission) => submission.id);
 
     try {
+      final payload = await _payloadBuilder.build(submissions);
       final response = await _apiClient.request(
         resourceName: _resource,
-        data: submissions.map((submission) => submission.toUpload()).toList(),
+        data: payload,
         method: 'post',
       );
       final responseData = response.data;

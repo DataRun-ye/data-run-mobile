@@ -83,4 +83,4 @@ Before demoting or deleting a surface:
 5. Add the smallest adjacent characterization or registration check.
 6. Remove one bounded capability/lookalike and update its focused map.
 
-The current unresolved work order belongs only in `09-production-boundaries-and-work-strategy.md`.
+The current unresolved work order belongs only in `11-current-work.md`.

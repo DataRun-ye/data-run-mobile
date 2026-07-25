@@ -40,6 +40,7 @@ class FormInstance {
       required this.enabled})
       : _formSection = rootSection {
     _initialValue.addAll({...initialValue});
+    _bindReferenceFields(_formSection);
     if (!enabled) {
       form.markAsDisabled();
     }
@@ -61,6 +62,8 @@ class FormInstance {
 
   final _db = appLocator<AppDatabase>();
   bool _disposed = false;
+  Map<String, Map<String, int>>? _referenceValueCounts;
+  bool _refreshingReferenceValidation = false;
 
   // final FormConfiguration formConfiguration;
 
@@ -152,7 +155,9 @@ class FormInstance {
     final itemInstance = FormElementBuilder.buildRepeatItem(
         form, formFlatTemplate, parent.template);
     parent.add(itemInstance);
+    _bindReferenceFields(itemInstance);
     itemInstance.bindControlReferences();
+    _invalidateReferenceValidation();
     itemInstance.resolveDependencies();
     itemInstance.evaluate(emitEvent: false);
     parent.elementControl.markAsDirty();
@@ -294,6 +299,7 @@ class FormInstance {
     parent.elementControl.updateValueAndValidity();
     parent.elementControl.markAsDirty();
     parent.evaluate(emitEvent: true);
+    _invalidateReferenceValidation();
     return indexedItems.map((entry) => entry.item).toList(growable: false);
   }
 
@@ -347,11 +353,76 @@ class FormInstance {
       updateParent: true,
     );
 
+    _bindReferenceFields(restoredItem);
     restoredItem.bindControlReferences();
+    _invalidateReferenceValidation();
     _formSection.resolveDependencies();
     _formSection.evaluate(emitEvent: true);
     parent.elementControl.updateValueAndValidity();
     return restoredItem;
+  }
+
+  Set<String> usedReferenceUids(ReferenceFieldInstance current) {
+    return getFormElementIterator<ReferenceFieldInstance>(_formSection)
+        .where((field) => !identical(field, current))
+        .where((field) =>
+            field.visible && field.template.id == current.template.id)
+        .map((field) => field.retainedValue)
+        .whereType<String>()
+        .where((uid) => uid.isNotEmpty)
+        .toSet();
+  }
+
+  void _bindReferenceFields(FormElementInstance<dynamic> root) {
+    for (final field in getFormElementIterator<ReferenceFieldInstance>(root)) {
+      field.configureReferenceValidation(
+        duplicateLookup: _hasDuplicateReference,
+        onReferenceStateChanged: () => _invalidateReferenceValidation(field),
+      );
+    }
+  }
+
+  bool _hasDuplicateReference(ReferenceFieldInstance field) {
+    final uid = field.retainedValue;
+    if (field.hidden || uid == null || uid.isEmpty) {
+      return false;
+    }
+    final counts = _referenceValueCounts ??= _buildReferenceValueCounts();
+    return (counts[field.template.id]?[uid] ?? 0) > 1;
+  }
+
+  Map<String, Map<String, int>> _buildReferenceValueCounts() {
+    final counts = <String, Map<String, int>>{};
+    for (final field
+        in getFormElementIterator<ReferenceFieldInstance>(_formSection)) {
+      final uid = field.retainedValue;
+      if (field.hidden || uid == null || uid.isEmpty) {
+        continue;
+      }
+      final elementCounts = counts.putIfAbsent(field.template.id, () => {});
+      elementCounts.update(uid, (count) => count + 1, ifAbsent: () => 1);
+    }
+    return counts;
+  }
+
+  void _invalidateReferenceValidation([ReferenceFieldInstance? changedField]) {
+    _referenceValueCounts = null;
+    if (_refreshingReferenceValidation) {
+      return;
+    }
+
+    _refreshingReferenceValidation = true;
+    try {
+      for (final field
+          in getFormElementIterator<ReferenceFieldInstance>(_formSection)) {
+        if (changedField == null ||
+            field.template.id == changedField.template.id) {
+          field.refreshReferenceValidation();
+        }
+      }
+    } finally {
+      _refreshingReferenceValidation = false;
+    }
   }
 
   Future<void> markSubmissionAsFinal() {

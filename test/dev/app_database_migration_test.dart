@@ -6,8 +6,8 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  for (final sourceVersion in [3, 4, 5]) {
-    test('schema $sourceVersion migrates to 6 without losing cached work',
+  for (final sourceVersion in [3, 4, 5, 6]) {
+    test('schema $sourceVersion migrates to 7 without losing cached work',
         () async {
       final database = _openProductionDatabase(sourceVersion: sourceVersion);
       addTearDown(database.close);
@@ -17,7 +17,7 @@ void main() {
           .map((row) => row.read<int>('user_version'))
           .getSingle();
 
-      expect(version, 6);
+      expect(version, 7);
 
       final actualTables = await _tableNames(database);
       for (final table in database.allTables) {
@@ -51,6 +51,18 @@ void main() {
       expect(actualTables, isNot(contains('repeat_instances')));
       expect(actualTables, isNot(contains('data_elements')));
       expect(actualTables, contains('metadata_submissions'));
+      expect(actualTables, contains('reference_entries'));
+      expect(
+        await _columnNames(database, 'reference_entries'),
+        {'uid', 'org_unit_uid', 'display_name'},
+      );
+      expect(
+        await _indexColumns(
+          database,
+          'reference_entry_scope_name_idx',
+        ),
+        ['org_unit_uid', 'display_name'],
+      );
       expect(
         await database
             .customSelect('SELECT count(*) AS count FROM metadata_submissions;')
@@ -87,7 +99,7 @@ void main() {
       variables: [const Variable('legacy-party-set')],
     ).getSingle();
 
-    expect(version, 6);
+    expect(version, 7);
     expect(partySet.read<String>('name'), 'Preserved');
   });
 }
@@ -96,7 +108,7 @@ AppDatabase _openProductionDatabase({
   required int sourceVersion,
   String? additionalSetup,
 }) {
-  assert(sourceVersion >= 3 && sourceVersion <= 5);
+  assert(sourceVersion >= 3 && sourceVersion <= 6);
   final schema =
       File('test/fixtures/database/schema_v3.sql').readAsStringSync();
   return AppDatabase(
@@ -116,6 +128,9 @@ AppDatabase _openProductionDatabase({
         if (sourceVersion >= 5) {
           rawDatabase.execute('DROP TABLE data_values;');
           rawDatabase.execute('DROP TABLE repeat_instances;');
+        }
+        if (sourceVersion >= 6) {
+          rawDatabase.execute('DROP TABLE data_elements;');
         }
         rawDatabase.execute('PRAGMA user_version = $sourceVersion;');
       },
@@ -141,6 +156,16 @@ Future<Set<String>> _columnNames(
       .customSelect('PRAGMA table_info("${tableName.replaceAll('"', '""')}");')
       .get();
   return rows.map((row) => row.read<String>('name')).toSet();
+}
+
+Future<List<String>> _indexColumns(
+  AppDatabase database,
+  String indexName,
+) async {
+  final rows = await database
+      .customSelect('PRAGMA index_info("${indexName.replaceAll('"', '""')}");')
+      .get();
+  return rows.map((row) => row.read<String>('name')).toList();
 }
 
 const _syntheticProductionRows = '''

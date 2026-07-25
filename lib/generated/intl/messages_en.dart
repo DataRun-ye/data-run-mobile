@@ -509,6 +509,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "referenceFieldHint": MessageLookupByLibrary.simpleMessage(
       "Select a reference",
     ),
+    "referenceUidInvalid": MessageLookupByLibrary.simpleMessage(
+      "The selected reference is invalid",
+    ),
+    "referenceAlreadySelected": MessageLookupByLibrary.simpleMessage(
+      "This reference is already selected",
+    ),
+    "referenceNameUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Name unavailable offline",
+    ),
+    "referenceConfigurationUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Reference configuration is unavailable",
+    ),
     "reported": MessageLookupByLibrary.simpleMessage("Reported"),
     "reportedResources": MessageLookupByLibrary.simpleMessage(
       "Reported Resources",
@@ -540,6 +552,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchOrgUnitsHelpText": MessageLookupByLibrary.simpleMessage(
       "Search Org Units...",
     ),
+    "serverRetainedSubmissionsCannotBeDeleted":
+        MessageLookupByLibrary.simpleMessage(
+          "Records already sent to the server or currently being sent are retained on this device. No records were deleted.",
+        ),
     "selectAColorExtractionImage": MessageLookupByLibrary.simpleMessage(
       "Select a color extraction image",
     ),

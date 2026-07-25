@@ -1676,6 +1676,30 @@ abstract class AppLocalizations {
   /// **'Select a reference'**
   String get referenceFieldHint;
 
+  /// No description provided for @referenceUidInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected reference is invalid'**
+  String get referenceUidInvalid;
+
+  /// No description provided for @referenceAlreadySelected.
+  ///
+  /// In en, this message translates to:
+  /// **'This reference is already selected'**
+  String get referenceAlreadySelected;
+
+  /// No description provided for @referenceNameUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Name unavailable offline'**
+  String get referenceNameUnavailable;
+
+  /// No description provided for @referenceConfigurationUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference configuration is unavailable'**
+  String get referenceConfigurationUnavailable;
+
   /// No description provided for @timeFieldHint.
   ///
   /// In en, this message translates to:
@@ -2305,6 +2329,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} items will be deleted, are you sure?'**
   String confirmDeleteItemsSelected(Object count);
+
+  /// No description provided for @serverRetainedSubmissionsCannotBeDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Records already sent to the server or currently being sent are retained on this device. No records were deleted.'**
+  String get serverRetainedSubmissionsCannotBeDeleted;
 
   /// No description provided for @fixedTableColumns.
   ///

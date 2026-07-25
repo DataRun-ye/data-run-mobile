@@ -45,9 +45,45 @@ class SubmissionTableService {
     return items.map((item) => item.id).toList();
   }
 
-  Future<int> delete(Iterable<String> ids) =>
-      _db.dataInstancesDao.hardDeleteIds(ids);
+  Future<bool> canDeleteLocalOnly(Iterable<String> ids) async {
+    final requestedIds = ids.toSet();
+    if (requestedIds.isEmpty) return true;
+
+    final rows = await (_db.select(_db.dataInstancesDao.table)
+          ..where((row) => row.id.isIn(requestedIds)))
+        .get();
+    return !_containsServerRetainedRow(rows);
+  }
+
+  Future<LocalSubmissionDeletionResult> deleteLocalOnly(
+      Iterable<String> ids) async {
+    final requestedIds = ids.toSet();
+    if (requestedIds.isEmpty) return LocalSubmissionDeletionResult.deleted;
+
+    return _db.transaction(() async {
+      final table = _db.dataInstancesDao.table;
+      final rows = await (_db.select(table)
+            ..where((row) => row.id.isIn(requestedIds)))
+          .get();
+
+      if (_containsServerRetainedRow(rows)) {
+        return LocalSubmissionDeletionResult.blockedByServerRetention;
+      }
+
+      await (_db.delete(table)..where((row) => row.id.isIn(requestedIds))).go();
+      return LocalSubmissionDeletionResult.deleted;
+    });
+  }
+
+  bool _containsServerRetainedRow(Iterable<DataInstance> rows) => rows.any(
+        (row) =>
+            row.isToUpdate ||
+            row.syncState == InstanceSyncStatus.synced ||
+            row.syncState == InstanceSyncStatus.uploading,
+      );
 
   Future<SubmissionUploadResult> sync(Iterable<String> ids) =>
       _uploadService.upload(ids);
 }
+
+enum LocalSubmissionDeletionResult { deleted, blockedByServerRetention }

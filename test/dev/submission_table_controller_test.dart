@@ -125,10 +125,11 @@ class _DelayedSubmissionTableService extends SubmissionTableService {
   final continueDelete = Completer<void>();
 
   @override
-  Future<int> delete(Iterable<String> ids) async {
+  Future<LocalSubmissionDeletionResult> deleteLocalOnly(
+      Iterable<String> ids) async {
     deleteStarted.complete();
     await continueDelete.future;
-    return super.delete(ids);
+    return super.deleteLocalOnly(ids);
   }
 }
 

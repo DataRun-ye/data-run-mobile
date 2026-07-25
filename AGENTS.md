@@ -4,9 +4,15 @@ This repository contains the running production DataRun mobile/data-collection a
 
 Before changing code, read:
 
-- `docs/agent-context/09-production-boundaries-and-work-strategy.md` for current product contracts, release baseline, and work ordering.
+- `docs/agent-context/09-production-boundaries-and-work-strategy.md` for current
+  product contracts, the release baseline, and durable working rules.
 - `docs/agent-context/agents-onboarding.md`
-- the focused map for the area you are touching, especially `02-form-flow.md`, `03-config-fetching.md`, `04-state-di-runtime-map.md`, `06-large-repeat-hang-data-loss.md`, and `07-repeat-uid-contract.md`. Use `05-classification-reconciliation.md` when classifying or removing code.
+- `docs/agent-context/11-current-work.md` only when choosing or resuming current
+  work. `12-completed-work.md` is historical evidence, not current authority.
+- the focused map for the area you are touching, especially `02-form-flow.md`,
+  `03-config-fetching.md`, `04-state-di-runtime-map.md`, and
+  `06-large-repeat-hang-data-loss.md`. Use
+  `05-classification-reconciliation.md` when classifying or removing code.
 
 Core rules:
 
@@ -15,7 +21,7 @@ Core rules:
 - Prefer active runtime entrypoints, imports, route registrations, DI registrations actually used, and call paths over names that sound relevant.
 - Keep code changes small, reversible, and scoped to one behavior.
 - Do not mix tooling, docs, save correctness, repeat metadata behavior, and performance refactors in one PR.
-- Do not build new behavior on a known duplicate, incomplete, or superseded owner when the same slice can safely use the established owner. Keep unrelated debt explicit in `09` rather than expanding the slice.
+- Do not build new behavior on a known duplicate, incomplete, or superseded owner when the same slice can safely use the established owner. Keep unrelated accepted work explicit in `11-current-work.md` rather than expanding the slice.
 - The obsolete normalized `repeat_instances` and `data_values` persistence paths were removed in schema 5; do not recreate them when changing the active whole-JSON form path.
 
 Known high-risk form areas:
@@ -24,7 +30,9 @@ Known high-risk form areas:
 - form loading builds the full form JSON and element/rule graph eagerly, but stored repeat rows retain lightweight map controls; a row's field controls exist only while its editor is open.
 - submissions are saved as one whole `formData` JSON object.
 - repeat controls are sparse while rows are dormant, but the element/dependency graph and whole-JSON save remain eager; use `06-large-repeat-hang-data-loss.md` for current residual risks.
-- repeat metadata persistence is established locally; use `07-repeat-uid-contract.md` before changing identity or enabling synced editing.
+- repeat metadata persistence is established locally; use
+  `docs/agent-context/07-repeat-uid-contract.md` before changing identity or
+  enabling synced editing.
 
 Common commands:
 

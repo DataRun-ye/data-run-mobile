@@ -913,6 +913,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get referenceFieldHint => 'Select a reference';
 
   @override
+  String get referenceUidInvalid => 'The selected reference is invalid';
+
+  @override
+  String get referenceAlreadySelected => 'This reference is already selected';
+
+  @override
+  String get referenceNameUnavailable => 'Name unavailable offline';
+
+  @override
+  String get referenceConfigurationUnavailable =>
+      'Reference configuration is unavailable';
+
+  @override
   String get timeFieldHint => 'Select a Time';
 
   @override
@@ -1271,6 +1284,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String confirmDeleteItemsSelected(Object count) {
     return '$count items will be deleted, are you sure?';
   }
+
+  @override
+  String get serverRetainedSubmissionsCannotBeDeleted =>
+      'Records already sent to the server or currently being sent are retained on this device. No records were deleted.';
 
   @override
   String get fixedTableColumns => 'Fixed ِActions Columns';

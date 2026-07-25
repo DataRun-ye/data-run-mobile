@@ -912,6 +912,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get referenceFieldHint => 'اختر مرجعًا';
 
   @override
+  String get referenceUidInvalid => 'المرجع المحدد غير صالح';
+
+  @override
+  String get referenceAlreadySelected => 'تم اختيار هذا المرجع مسبقًا';
+
+  @override
+  String get referenceNameUnavailable => 'الاسم غير متاح دون اتصال';
+
+  @override
+  String get referenceConfigurationUnavailable => 'إعدادات المرجع غير متاحة';
+
+  @override
   String get timeFieldHint => 'اختر وقتًا';
 
   @override
@@ -1270,6 +1282,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String confirmDeleteItemsSelected(Object count) {
     return 'سيتم حذف $count عنصر، هل أنت متأكد؟';
   }
+
+  @override
+  String get serverRetainedSubmissionsCannotBeDeleted =>
+      'يتم الاحتفاظ بالسجلات التي أُرسلت إلى الخادم أو الجاري إرسالها على هذا الجهاز. لم يتم حذف أي سجل.';
 
   @override
   String get fixedTableColumns => 'تثبيت أعمدة التفاعل';

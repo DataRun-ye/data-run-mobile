@@ -24,6 +24,29 @@ void main() {
     await appLocator.reset();
   });
 
+  testWidgets('keeps the loading badge within the action row height',
+      (tester) async {
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(
+          home: Scaffold(
+            body: SyncStatusBadgesView(formId: 'form-1'),
+          ),
+        ),
+      ),
+    );
+
+    final loading = find.byKey(
+      const ValueKey('sync-status-badges-loading'),
+    );
+    expect(loading, findsOneWidget);
+    expect(tester.getSize(loading), const Size.square(24));
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(milliseconds: 1));
+    await tester.pump();
+  });
+
   testWidgets('renders live submission status counts from the scoped database',
       (tester) async {
     await db.into(db.dataInstances).insert(

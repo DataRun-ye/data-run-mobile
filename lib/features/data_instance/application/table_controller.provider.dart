@@ -25,11 +25,15 @@ class TableController extends _$TableController {
     state = state.clear();
   }
 
-  Future<void> deleteSelectedItems() async {
+  Future<bool> canDeleteSelectedItems() => _service.canDeleteLocalOnly(state);
+
+  Future<LocalSubmissionDeletionResult> deleteSelectedItems() async {
     final selectedIds = state;
-    if (selectedIds.isEmpty) return;
-    await _service.delete(selectedIds);
-    if (ref.mounted) clearSelection();
+    final result = await _service.deleteLocalOnly(selectedIds);
+    if (ref.mounted && result == LocalSubmissionDeletionResult.deleted) {
+      clearSelection();
+    }
+    return result;
   }
 
   Future<SubmissionUploadResult?> syncSelectedFinalizedItems() async {

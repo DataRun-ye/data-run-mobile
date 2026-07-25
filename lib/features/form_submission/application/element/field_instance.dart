@@ -282,6 +282,135 @@ class FieldInstance<T> extends FormElementInstance<T> {
   }
 }
 
+class ReferenceFieldInstance extends FieldInstance<String> {
+  ReferenceFieldInstance({
+    required super.elementProperties,
+    required super.form,
+    required super.template,
+    super.initialValue,
+  });
+
+  bool Function(ReferenceFieldInstance field)? _duplicateLookup;
+  void Function()? _referenceStateChanged;
+  FormControl<String>? _duplicateValidationControl;
+  late final Validator<String> _duplicateValidator =
+      _ReferenceDuplicateValidator(() => hasDuplicateValue);
+
+  bool get hasDuplicateValue => _duplicateLookup?.call(this) ?? false;
+
+  void configureReferenceValidation({
+    required bool Function(ReferenceFieldInstance field) duplicateLookup,
+    required void Function() onReferenceStateChanged,
+  }) {
+    _duplicateLookup = duplicateLookup;
+    _referenceStateChanged = onReferenceStateChanged;
+    _bindDuplicateValidator();
+  }
+
+  @override
+  Map<String, dynamic> _collectErrors(_FormValidationPass validationPass) {
+    final errors =
+        Map<String, dynamic>.of(super._collectErrors(validationPass));
+    if (visible && hasDuplicateValue) {
+      errors[ReferenceValidationMessage.duplicate] = true;
+    }
+    return errors;
+  }
+
+  @override
+  void bindControlReferences() {
+    super.bindControlReferences();
+    _bindDuplicateValidator();
+  }
+
+  void _bindDuplicateValidator() {
+    final control = mountedControl;
+    if (control != null && !identical(control, _duplicateValidationControl)) {
+      _duplicateValidationControl = control;
+      control.setValidators(
+        [...control.validators, _duplicateValidator],
+        autoValidate: true,
+        updateParent: false,
+        emitEvent: false,
+      );
+    }
+  }
+
+  @override
+  void releaseControlReferences() {
+    _duplicateValidationControl = null;
+    super.releaseControlReferences();
+  }
+
+  @override
+  void handleControlValueChanged(String? value) {
+    final changed = _retainedValue != value;
+    super.handleControlValueChanged(value);
+    if (changed) {
+      _referenceStateChanged?.call();
+    }
+  }
+
+  @override
+  void updateValue(
+    String? value, {
+    bool updateParent = true,
+    bool emitEvent = true,
+  }) {
+    final changed = retainedValue != value;
+    super.updateValue(
+      value,
+      updateParent: updateParent,
+      emitEvent: emitEvent,
+    );
+    if (changed) {
+      _referenceStateChanged?.call();
+    }
+  }
+
+  @override
+  void markAsHidden({bool updateParent = true, bool emitEvent = true}) {
+    final wasVisible = visible;
+    super.markAsHidden(updateParent: updateParent, emitEvent: emitEvent);
+    if (wasVisible && hidden) {
+      _referenceStateChanged?.call();
+    }
+  }
+
+  @override
+  void markAsVisible({bool updateParent = true, bool emitEvent = true}) {
+    final wasHidden = hidden;
+    super.markAsVisible(updateParent: updateParent, emitEvent: emitEvent);
+    if (wasHidden && visible) {
+      _referenceStateChanged?.call();
+    }
+  }
+
+  void refreshReferenceValidation() {
+    onValidationStateChanged();
+    mountedControl?.updateValueAndValidity(
+      updateParent: false,
+      emitEvent: true,
+    );
+  }
+}
+
+class _ReferenceDuplicateValidator extends Validator<String> {
+  _ReferenceDuplicateValidator(this._hasDuplicate);
+
+  final bool Function() _hasDuplicate;
+
+  @override
+  Map<String, dynamic>? validate(AbstractControl<String> control) {
+    if (control.value == null || !_hasDuplicate()) {
+      return null;
+    }
+    return const <String, dynamic>{
+      ReferenceValidationMessage.duplicate: true,
+    };
+  }
+}
+
 class CalculatedFieldInstance<T> extends FieldInstance<T> {
   CalculatedFieldInstance({
     required super.elementProperties,

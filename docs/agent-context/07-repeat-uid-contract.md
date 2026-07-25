@@ -1,10 +1,16 @@
 # Repeat Metadata Contract
 
+Role: implemented behavior contract
+Status: LIVING
+
 Generated: 2026-07-10
 Updated: 2026-07-22
 Reconciled: 2026-07-24 against production `v6.0.0+50`
 
 Scope: define and record the implemented repeat row identity contract. This document supersedes the earlier `repeatUid`-only assumption after validating the backend submission path.
+
+Change rule: update this contract only with the corresponding implementation,
+compatibility checks, and focused tests.
 
 Related maps:
 

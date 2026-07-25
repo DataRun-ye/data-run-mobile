@@ -502,6 +502,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "reassigned": MessageLookupByLibrary.simpleMessage("إعادة تعيين فريق آخر"),
     "receiveTimeout": m20,
     "referenceFieldHint": MessageLookupByLibrary.simpleMessage("اختر مرجعًا"),
+    "referenceUidInvalid": MessageLookupByLibrary.simpleMessage(
+      "المرجع المحدد غير صالح",
+    ),
+    "referenceAlreadySelected": MessageLookupByLibrary.simpleMessage(
+      "تم اختيار هذا المرجع مسبقًا",
+    ),
+    "referenceNameUnavailable": MessageLookupByLibrary.simpleMessage(
+      "الاسم غير متاح دون اتصال",
+    ),
+    "referenceConfigurationUnavailable": MessageLookupByLibrary.simpleMessage(
+      "إعدادات المرجع غير متاحة",
+    ),
     "reported": MessageLookupByLibrary.simpleMessage("مرسل"),
     "reportedResources": MessageLookupByLibrary.simpleMessage("موارد المرسلة"),
     "requestCancelled": MessageLookupByLibrary.simpleMessage("تم إلغاء الطلب"),
@@ -527,6 +539,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchOrgUnitsHelpText": MessageLookupByLibrary.simpleMessage(
       "البحث عن مكان...",
     ),
+    "serverRetainedSubmissionsCannotBeDeleted":
+        MessageLookupByLibrary.simpleMessage(
+          "يتم الاحتفاظ بالسجلات التي أُرسلت إلى الخادم أو الجاري إرسالها على هذا الجهاز. لم يتم حذف أي سجل.",
+        ),
     "selectAColorExtractionImage": MessageLookupByLibrary.simpleMessage(
       "حدد صورة لإستخلاص الألوان",
     ),

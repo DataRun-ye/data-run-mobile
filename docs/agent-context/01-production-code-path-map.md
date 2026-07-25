@@ -275,4 +275,7 @@ Also do not delete `lib/core/element_instance/display_value_lookup.dart` until i
 
 ## Current Follow-Up
 
-The broad entrypoint map is reconciled. Use `06-large-repeat-hang-data-loss.md` for current repeat measurements and the next evidence-driven performance slice, and `09-production-boundaries-and-work-strategy.md` for the ordered repository roadmap.
+The broad entrypoint map is reconciled. Use
+`06-large-repeat-hang-data-loss.md` for current repeat measurements,
+`09-production-boundaries-and-work-strategy.md` for durable product and
+production boundaries, and `11-current-work.md` for current priority.

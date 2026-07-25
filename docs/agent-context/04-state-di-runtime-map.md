@@ -251,4 +251,8 @@ Sync runtime ownership:
 
 ## Current Follow-Up
 
-Mapped state/DI ownership cleanup, auth lifecycle, config-sync projection, locale, form state, and submission-table state are closed for v6. Remaining work is feature-by-feature: remove only proven duplicate owners, clarify folder ownership without behavioral churn, and address the incomplete reference/access policies listed in `09-production-boundaries-and-work-strategy.md`.
+Mapped state/DI ownership cleanup, auth lifecycle, config-sync projection,
+locale, form state, and submission-table state are closed for v6. Remaining
+work is feature-by-feature: remove only proven duplicate owners and clarify
+folder ownership without behavioral churn. Current Reference activation and
+access-policy work belongs in `11-current-work.md`.

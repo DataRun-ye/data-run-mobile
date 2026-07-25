@@ -8,6 +8,7 @@ import 'package:datarunmobile/core/form/element_iterator/form_element_iterator.d
 import 'package:datarunmobile/features/assignment/presentation/build_status.dart';
 import 'package:datarunmobile/features/form/presentation/widgets/value_type_value_display.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
+import 'package:datarunmobile/features/form_submission/presentation/field/reference_search/reference_value_display.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class RepeatTableDataSource extends DataTableSource {
       {this.onDelete,
       this.onEdit,
       this.onSelectionChanged,
+      this.referenceAssignmentUid,
       this.editable = true,
       // required this.activityModel,
       List<RepeatItemInstance> elements = const []}) {
@@ -39,6 +41,7 @@ class RepeatTableDataSource extends DataTableSource {
   final ValueChanged<RepeatItemInstance>? onDelete;
   final ValueChanged<RepeatItemInstance>? onEdit;
   final VoidCallback? onSelectionChanged;
+  final String? referenceAssignmentUid;
   final List<RepeatItemInstance> _elements = [];
   final Set<RepeatItemInstance> _selectedItems = HashSet.identity();
   List<RepeatItemInstance> get elements => List.unmodifiable(_elements);
@@ -124,7 +127,7 @@ class RepeatTableDataSource extends DataTableSource {
   Widget userFriendlyValue(FieldInstance<dynamic> field) {
     final value = field.value ?? '-';
 
-    if (field.hasErrors == true) {
+    if (field.hasErrors == true && field.type != ValueType.Reference) {
       return Text(
         '$value! ${S.current.fieldContainErrors}',
         style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
@@ -176,6 +179,18 @@ class RepeatTableDataSource extends DataTableSource {
             )
           ],
         );
+        break;
+      case ValueType.Reference:
+        final uid = field.value;
+        cellContent =
+            uid is String && uid.isNotEmpty && referenceAssignmentUid != null
+                ? ReferenceValueDisplay(
+                    uid: uid,
+                    assignmentUid: referenceAssignmentUid,
+                    errorText:
+                        field.hasErrors ? S.current.fieldContainErrors : null,
+                  )
+                : Text(uid?.toString() ?? '-');
         break;
 
       case ValueType.Date:

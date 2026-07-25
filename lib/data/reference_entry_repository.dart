@@ -8,6 +8,7 @@ class ReferenceEntryRepository {
 
   static const int maxRemotePageSize = 500;
   static const int maxSearchResults = 100;
+  static const int maxLookupUids = 500;
 
   final AppDatabase _database;
 
@@ -138,6 +139,22 @@ class ReferenceEntryRepository {
             (row) => row.uid.equals(uid) & row.orgUnitUid.equals(orgUnitUid),
           ))
         .getSingleOrNull();
+  }
+
+  Future<List<ReferenceEntry>> findByUids(Set<String> uids) {
+    if (uids.isEmpty) {
+      return Future.value(const []);
+    }
+    if (uids.length > maxLookupUids) {
+      throw ArgumentError.value(
+        uids.length,
+        'uids',
+        'A Reference lookup cannot exceed $maxLookupUids UIDs',
+      );
+    }
+    return (_database.select(_database.referenceEntries)
+          ..where((row) => row.uid.isIn(uids)))
+        .get();
   }
 }
 

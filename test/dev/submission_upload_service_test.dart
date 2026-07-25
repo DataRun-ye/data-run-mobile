@@ -6,8 +6,10 @@ import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/failure_snapshot.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
+import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_upload_service.dart';
 import 'package:datarunmobile/features/data_instance/application/submission_upload_result.dart';
 import 'package:dio/dio.dart';
@@ -21,7 +23,7 @@ void main() {
   late SessionOperationTracker operationTracker;
   late SubmissionUploadService service;
 
-  setUp(() {
+  setUp(() async {
     db = AppDatabase(
       executor: NativeDatabase.memory(),
       userId: 'test-user',
@@ -33,6 +35,7 @@ void main() {
       apiClient: apiClient,
       operationTracker: operationTracker,
     );
+    await _insertTemplate(db);
   });
 
   tearDown(() => db.close());
@@ -64,7 +67,10 @@ void main() {
 
     expect(result.outcome, SubmissionUploadOutcome.complete);
     expect(result.summary.created, ['submission-1']);
-    expect(apiClient.resourceName, 'dataSubmission/bulk');
+    expect(
+      apiClient.resourceName,
+      'dataSubmission/bulk?referenceVersion=1',
+    );
     expect(apiClient.method, 'post');
 
     final payload = (apiClient.data as List).cast<Map<String, dynamic>>();
@@ -341,6 +347,30 @@ void main() {
     );
     expect(drainCompleted, isTrue);
   });
+}
+
+Future<void> _insertTemplate(AppDatabase db) async {
+  await db.customStatement('''
+    INSERT INTO form_templates
+      (id, version_uid, version_number, name)
+    VALUES ('form-1', 'version-1', 1, 'Upload test form');
+  ''');
+  await db.into(db.formTemplateVersions).insert(
+        FormTemplateVersion(
+          id: 'version-1',
+          template: 'form-1',
+          versionNumber: 1,
+          fields: [
+            FieldTemplate(
+              id: 'text-field',
+              name: 'textField',
+              type: ValueType.Text,
+            ),
+          ],
+          sections: const [],
+          options: const [],
+        ),
+      );
 }
 
 Future<void> _insertSubmission(

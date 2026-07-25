@@ -419,6 +419,7 @@
   "openSpeedDial": "فتح الوصول السريع",
   "noItemsFound": "لا يوجد أي عنصر",
   "confirmDeleteItemsSelected": "سيتم حذف {count} عنصر، هل أنت متأكد؟",
+  "serverRetainedSubmissionsCannotBeDeleted": "يتم الاحتفاظ بالسجلات التي أُرسلت إلى الخادم أو الجاري إرسالها على هذا الجهاز. لم يتم حذف أي سجل.",
   "fixedTableColumns": "تثبيت أعمدة التفاعل",
   "tableAppearance": "المظهر",
   "tableControl": "إعدادات جدول",

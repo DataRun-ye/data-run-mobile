@@ -539,6 +539,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchOrgUnitsHelpText": MessageLookupByLibrary.simpleMessage(
       "البحث عن مكان...",
     ),
+    "serverRetainedSubmissionsCannotBeDeleted":
+        MessageLookupByLibrary.simpleMessage(
+          "يتم الاحتفاظ بالسجلات التي أُرسلت إلى الخادم أو الجاري إرسالها على هذا الجهاز. لم يتم حذف أي سجل.",
+        ),
     "selectAColorExtractionImage": MessageLookupByLibrary.simpleMessage(
       "حدد صورة لإستخلاص الألوان",
     ),

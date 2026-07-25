@@ -552,6 +552,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchOrgUnitsHelpText": MessageLookupByLibrary.simpleMessage(
       "Search Org Units...",
     ),
+    "serverRetainedSubmissionsCannotBeDeleted":
+        MessageLookupByLibrary.simpleMessage(
+          "Records already sent to the server or currently being sent are retained on this device. No records were deleted.",
+        ),
     "selectAColorExtractionImage": MessageLookupByLibrary.simpleMessage(
       "Select a color extraction image",
     ),

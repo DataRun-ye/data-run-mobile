@@ -244,13 +244,6 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     return _softDelete(id);
   }
 
-  Future<int> hardDeleteIds(Iterable<String> id) async {
-    final hardDeleted =
-        await (delete(dataInstances)..where((tbl) => tbl.id.isIn(id))).go();
-
-    return hardDeleted;
-  }
-
   /// hard delete
   Future<int> _hardDeleteById(String id) {
     return (delete(dataInstances)..where((tbl) => tbl.id.equals(id))).go();

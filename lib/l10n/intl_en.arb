@@ -456,6 +456,7 @@
   "openSpeedDial": "Open Speed Dial",
   "noItemsFound": "No Items Found",
   "confirmDeleteItemsSelected": "{count} items will be deleted, are you sure?",
+  "serverRetainedSubmissionsCannotBeDeleted": "Records already sent to the server or currently being sent are retained on this device. No records were deleted.",
   "fixedTableColumns": "Fixed ِActions Columns",
   "tableAppearance": "Table Appearance",
   "tableControl": "Table Control",

@@ -3091,6 +3091,16 @@ class S {
     );
   }
 
+  /// `Records already sent to the server or currently being sent are retained on this device. No records were deleted.`
+  String get serverRetainedSubmissionsCannotBeDeleted {
+    return Intl.message(
+      'Records already sent to the server or currently being sent are retained on this device. No records were deleted.',
+      name: 'serverRetainedSubmissionsCannotBeDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Fixed ِActions Columns`
   String get fixedTableColumns {
     return Intl.message(

@@ -1,5 +1,6 @@
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
+import 'package:datarunmobile/data/reference_uid.dart';
 import 'package:drift/drift.dart';
 
 class ReferenceEntryRepository {
@@ -66,6 +67,9 @@ class ReferenceEntryRepository {
       );
     }
     for (final entry in entries) {
+      if (!ReferenceUid.isValid(entry.uid)) {
+        throw FormatException('Invalid Reference UID: ${entry.uid}');
+      }
       if (entry.orgUnitUid != orgUnitUid) {
         throw ReferenceEntryScopeConflict(
           uid: entry.uid,

@@ -275,6 +275,11 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
   /// extract item ID (must match the PK column).
   @protected
   dynamic extractId(Map<String, dynamic> json) => json['uid'];
+
+  D fromApiJson(
+    Map<String, dynamic> data, {
+    ValueSerializer? serializer,
+  });
 }
 
 /// Helper for “extra” batch inserts

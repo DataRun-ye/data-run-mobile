@@ -222,6 +222,23 @@ void main() {
     );
     expect(await database.select(database.referenceEntries).get(), isEmpty);
   });
+
+  test('rejects a malformed UID before writing', () async {
+    await expectLater(
+      repository.upsertRemotePage(
+        orgUnitUid: 'org-1',
+        entries: const [
+          ReferenceEntry(
+            uid: '123',
+            orgUnitUid: 'org-1',
+            displayName: 'Person Name Number Here',
+          ),
+        ],
+      ),
+      throwsFormatException,
+    );
+    expect(await database.select(database.referenceEntries).get(), isEmpty);
+  });
 }
 
 Future<void> _seedReferenceAssignment(AppDatabase database) async {

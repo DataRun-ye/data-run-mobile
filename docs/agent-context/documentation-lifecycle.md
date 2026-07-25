@@ -57,6 +57,19 @@ When a slice closes:
 6. At release, pause, or reprioritization, reconcile dates, statuses, links,
    and the last verified production baseline.
 
+## Cross-Repository Work
+
+- Keep technical truth in the repository that owns the code, persistence, or
+  deployment boundary.
+- Track shared sequence, compatibility state, and blocking relationships in
+  one GitHub parent issue with repository-owned sub-issues.
+- Let each repository's current-work file link its own sub-issue; do not copy
+  the cross-repository checklist into both repositories.
+- Commit, test, review, and close each repository independently.
+- Use the tracked `DataRun.code-workspace` file to make both repositories and
+  both Source Control trees visible. The workspace file is navigation, not an
+  architecture or status authority.
+
 ## Common Failure Modes
 
 - Treating docs, comments, generated registrations, or names as stronger than

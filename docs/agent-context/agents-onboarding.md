@@ -1,6 +1,6 @@
 # Agent Onboarding
 
-Validated: 2026-07-24
+Validated: 2026-07-25
 
 Purpose: give coding agents a durable starting point without making them rediscover the repository or treat historical code as current architecture.
 
@@ -8,12 +8,12 @@ Purpose: give coding agents a durable starting point without making them redisco
 
 DataRun is a Flutter mobile application for assignment-driven, offline-capable field data collection. It downloads configuration and form templates, stores them in a per-user Drift database, captures submissions locally, and uploads completed submissions.
 
-`v6.0.0+50` is the last production baseline fully verified in these documents.
-It was released from commit `ff20d6fc` and rolled out through Google Play to
-100% of users. A real Play `5.3.1+21` to Play `6.0.0+50` in-place upgrade
-preserved the cached session, configuration, drafts, repeat data, completed
-submissions, and upload behavior. Reconcile this baseline at each release
-rather than assuming it describes the current store version.
+`v6.0.2+53` is the current production baseline. It was released from commit
+`fbd75b48`, tag `v6.0.2`, and rolled out through Google Play to 100% of users
+on 2026-07-25. The V6 Play-upgrade evidence and the `6.0.2+52` Internal
+Testing smoke are recorded in `09-production-boundaries-and-work-strategy.md`.
+Reconcile this baseline at each release rather than assuming it describes the
+current store version.
 
 The former local `drun_sdk` package was consolidated into the root `datarunmobile` package. All active Dart production code is under `lib/`; the stale remote SDK repository is not authoritative. The move preserved the database filename/schema lineage, storage keys, network payloads, sync registration order, and form behavior.
 
@@ -41,6 +41,11 @@ Focused maps own technical detail. Do not duplicate their tables into `09`; upda
 Use `documentation-lifecycle.md` before adding, splitting, renaming, or
 retiring context documents. It defines the lightweight roles and lifecycle
 used here without making historical documents authoritative.
+
+For work spanning the sibling API repository, open `DataRun.code-workspace`
+so both Git trees are visible. Follow the API repository's own `AGENTS.md` and
+focused context. Shared mutable sequence belongs in one linked GitHub parent
+issue; each repository keeps only its own technical truth and task.
 
 ## Runtime Boundaries
 
@@ -190,8 +195,9 @@ For each production change:
 - Outside-to-repeat rule fan-out remains linear in dependent rows.
 - Saving still reduces, JSON-encodes, and writes the whole submission.
 - Synced edit/delete authorization and server round-trip behavior are incomplete.
-- The bounded Reference implementation is on `develop` but remains
-  deployment/activation-gated by `10-bounded-reference-field-plan.md`.
+- The bounded Reference mobile implementation is production-installed but
+  remains inactive until the server deployment and campaign activation gates
+  in `10-bounded-reference-field-plan.md` pass.
   Calculated fields remain incomplete.
 - Server error response shapes and whole-resource configuration sync need server-side contracts before deeper client changes.
 - Multiple state/DI libraries remain active by distinct responsibility; consolidate only after proving an actual duplicate owner.

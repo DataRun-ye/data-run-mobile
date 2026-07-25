@@ -23,6 +23,10 @@ Core rules:
 - Do not mix tooling, docs, save correctness, repeat metadata behavior, and performance refactors in one PR.
 - Do not build new behavior on a known duplicate, incomplete, or superseded owner when the same slice can safely use the established owner. Keep unrelated accepted work explicit in `11-current-work.md` rather than expanding the slice.
 - The obsolete normalized `repeat_instances` and `data_values` persistence paths were removed in schema 5; do not recreate them when changing the active whole-JSON form path.
+- Server-owned changes belong in the sibling `data-run-api` repository and
+  follow that repository's `AGENTS.md`. Commit and review each repository
+  separately. Use one linked GitHub issue for mutable cross-repository status;
+  do not copy server implementation detail into mobile context documents.
 
 Known high-risk form areas:
 

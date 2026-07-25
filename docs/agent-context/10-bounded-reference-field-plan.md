@@ -2,14 +2,19 @@
 
 Role: implementation contract and activation plan
 
-Status: IMPLEMENTED ON MOBILE AND SERVER `develop`; PRODUCTION ACTIVATION
-PENDING
+Status: MOBILE PRODUCTION; SERVER `develop`; PRODUCTION ACTIVATION PENDING
 
-Repository evidence was rechecked against mobile `develop` at `c50f69ef` and
-server `develop` at `0d83c580` on 2026-07-25. The mobile field/catalog/upload
-path and server catalog/upload path are implemented and tested on their
-integration branches. Do not expose a production form using `Reference` until
-the release, deployment, import, and activation gates below pass.
+Repository evidence was rechecked against mobile production `6.0.2+53` at
+`fbd75b48` and server `develop` at `0d83c580` on 2026-07-25. The mobile
+field/catalog/upload path is production-installed but inactive until a
+Reference form is assigned. The server catalog/upload path is implemented and
+tested but not production-deployed. Do not expose a production form using
+`Reference` until the deployment, import, and activation gates below pass.
+
+Mutable cross-repository status belongs in
+[DataRun API issue #34](https://github.com/DataRun-ye/data-run-api/issues/34).
+Mobile-owned activation verification belongs in
+[DataRun Mobile issue #33](https://github.com/DataRun-ye/data-run-mobile/issues/33).
 
 ## Purpose
 

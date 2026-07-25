@@ -8,6 +8,9 @@ releases, and focused context maps as evidence.
 
 ## 2026-07-25
 
+- `v6.0.2` / `fbd75b48`: build `6.0.2+53` was signed, archived, published on
+  GitHub, and rolled out to Google Play production after the build 52 Internal
+  Testing smoke.
 - `85414dd1`: local bulk deletion became atomic and retains any
   server-accepted or uploading submission.
 - `3f3ea57b` through `6051359f`: bounded Reference catalog, field, upload, and

@@ -6,28 +6,17 @@ Purpose: hold only accepted current and queued work. This file is not a product,
 architecture, or code authority. Revalidate every item against production,
 active code, tests, and its focused context map before acting.
 
-## Now: Close Mobile `6.0.2`
+## Now: Reference Production Activation
 
-1. Set `6.0.2` with a build number above the highest Play build.
-2. Run focused and full checks, then build the signed production AAB.
-3. Upgrade-smoke on Redmi: ordinary sync/forms, Reference selection/create/
-   reopen/upload against staging, protected local deletion, and assignment
-   scrolling.
-4. Merge the tested commit to `main`, tag it, retain artifacts, and publish the
-   same AAB.
-5. Reconcile the production baseline in `09`, update Reference status in `10`,
-   and move the release outcome to `12`.
+- Shared sequence and compatibility state:
+  [DataRun API #34](https://github.com/DataRun-ye/data-run-api/issues/34).
+- Mobile-owned verification:
+  [DataRun Mobile #33](https://github.com/DataRun-ye/data-run-mobile/issues/33).
+- The server deployment task must close before the mobile test assignment is
+  activated. Keep the detailed sequence in the shared issue and the durable
+  contract in `10-bounded-reference-field-plan.md`.
 
-## Next: Reference Production Activation
-
-1. Deploy the additive server Reference commits without assigning a Reference
-   form.
-2. Smoke existing configuration and submission payloads and verify old/new
-   client assignment filtering.
-3. Import the catalog and activate only a test assignment.
-4. Complete the activation gates in `10` before enabling campaign access.
-
-## Then: Operational UX
+## Next: Operational UX
 
 1. Add a local read-only work projection without a schema or server change.
 2. Replace the activity-only home with direct access to drafts, attention

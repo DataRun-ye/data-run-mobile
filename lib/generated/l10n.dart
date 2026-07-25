@@ -2181,6 +2181,46 @@ class S {
     );
   }
 
+  /// `The selected reference is invalid`
+  String get referenceUidInvalid {
+    return Intl.message(
+      'The selected reference is invalid',
+      name: 'referenceUidInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This reference is already selected`
+  String get referenceAlreadySelected {
+    return Intl.message(
+      'This reference is already selected',
+      name: 'referenceAlreadySelected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name unavailable offline`
+  String get referenceNameUnavailable {
+    return Intl.message(
+      'Name unavailable offline',
+      name: 'referenceNameUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reference configuration is unavailable`
+  String get referenceConfigurationUnavailable {
+    return Intl.message(
+      'Reference configuration is unavailable',
+      name: 'referenceConfigurationUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Select a Time`
   String get timeFieldHint {
     return Intl.message(

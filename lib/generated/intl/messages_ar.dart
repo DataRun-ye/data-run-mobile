@@ -502,6 +502,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "reassigned": MessageLookupByLibrary.simpleMessage("إعادة تعيين فريق آخر"),
     "receiveTimeout": m20,
     "referenceFieldHint": MessageLookupByLibrary.simpleMessage("اختر مرجعًا"),
+    "referenceUidInvalid": MessageLookupByLibrary.simpleMessage(
+      "المرجع المحدد غير صالح",
+    ),
+    "referenceAlreadySelected": MessageLookupByLibrary.simpleMessage(
+      "تم اختيار هذا المرجع مسبقًا",
+    ),
+    "referenceNameUnavailable": MessageLookupByLibrary.simpleMessage(
+      "الاسم غير متاح دون اتصال",
+    ),
+    "referenceConfigurationUnavailable": MessageLookupByLibrary.simpleMessage(
+      "إعدادات المرجع غير متاحة",
+    ),
     "reported": MessageLookupByLibrary.simpleMessage("مرسل"),
     "reportedResources": MessageLookupByLibrary.simpleMessage("موارد المرسلة"),
     "requestCancelled": MessageLookupByLibrary.simpleMessage("تم إلغاء الطلب"),

@@ -6,3 +6,10 @@ final class ReferenceUid {
   static bool isValid(Object? value) =>
       value is String && _pattern.hasMatch(value);
 }
+
+final class ReferenceValidationMessage {
+  ReferenceValidationMessage._();
+
+  static const String invalidUid = 'referenceUid';
+  static const String duplicate = 'referenceDuplicate';
+}

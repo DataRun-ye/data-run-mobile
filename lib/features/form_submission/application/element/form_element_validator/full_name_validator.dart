@@ -5,7 +5,6 @@ import 'package:reactive_forms/reactive_forms.dart';
 /// space, merges connectors (e.g. 'عبد', 'ibn', 'de', 'van') and requires
 /// at least [minParts] name parts (default 4).
 class ArEnFullNameValidator extends Validator<dynamic> {
-
   const ArEnFullNameValidator({this.minParts = 4, this.minLettersPerPart = 2})
       : super();
 
@@ -14,7 +13,7 @@ class ArEnFullNameValidator extends Validator<dynamic> {
 
   // Unicode-aware: \p{L} matches any kind of letter from any language.
   static final RegExp _validChars =
-  RegExp(r"^[\p{L}\s'’\-\u200C]+$", unicode: true);
+      RegExp(r"^[\p{L}\s'’\-\u200C]+$", unicode: true);
 
   static final Set<String> _connectors = {
     // Arabic connectors
@@ -41,7 +40,10 @@ class ArEnFullNameValidator extends Validator<dynamic> {
   @override
   Map<String, dynamic>? validate(AbstractControl<dynamic> control) {
     final raw = (control.value ?? '').toString();
+    return validateValue(raw);
+  }
 
+  Map<String, dynamic>? validateValue(String raw) {
     // don't validate empty values here — let Validators.required enforce mandatory fields
     if (raw.trim().isEmpty) return null;
 
@@ -52,7 +54,7 @@ class ArEnFullNameValidator extends Validator<dynamic> {
     }
 
     // Normalize whitespace (collapse runs into single space), then trim.
-    final normalized = raw.replaceAll(RegExp(r'\s+'), ' ').trim();
+    final normalized = normalize(raw);
 
     // Split tokens and merge connectors with the following token
     final tokens = normalized.split(' ');
@@ -78,7 +80,7 @@ class ArEnFullNameValidator extends Validator<dynamic> {
 
     // Count only parts that have at least minLettersPerPart characters (ignoring internal spaces)
     final validParts = merged.where(
-          (p) => p.replaceAll(RegExp(r'\s+'), '').length >= minLettersPerPart,
+      (p) => p.replaceAll(RegExp(r'\s+'), '').length >= minLettersPerPart,
     );
 
     if (validParts.length < minParts) {
@@ -88,4 +90,7 @@ class ArEnFullNameValidator extends Validator<dynamic> {
     // valid
     return null;
   }
+
+  static String normalize(String value) =>
+      value.replaceAll(RegExp(r'\s+'), ' ').trim();
 }

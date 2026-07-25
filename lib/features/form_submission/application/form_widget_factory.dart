@@ -93,7 +93,7 @@ class FieldFactory {
         return QBarcodeReaderField(element: element as FieldInstance<String>);
       case ValueType.Reference:
         return QReferenceDropDownSearchField(
-            element: element as FieldInstance<String>);
+            element: element as ReferenceFieldInstance);
       default:
         return Text('Unsupported element type: ${element.type}');
     }

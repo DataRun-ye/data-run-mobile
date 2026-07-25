@@ -141,6 +141,25 @@ class ReferenceEntryRepository {
         .getSingleOrNull();
   }
 
+  Future<void> insertLocal(ReferenceEntry entry) async {
+    if (!ReferenceUid.isValid(entry.uid)) {
+      throw FormatException('Invalid Reference UID: ${entry.uid}');
+    }
+    if (entry.displayName.trim().isEmpty) {
+      throw const FormatException('Reference display name cannot be empty');
+    }
+
+    await _database.transaction(() async {
+      final existing = await (_database.select(_database.referenceEntries)
+            ..where((row) => row.uid.equals(entry.uid)))
+          .getSingleOrNull();
+      if (existing != null) {
+        throw ReferenceEntryUidCollision(entry.uid);
+      }
+      await _database.into(_database.referenceEntries).insert(entry);
+    });
+  }
+
   Future<List<ReferenceEntry>> findByUids(Set<String> uids) {
     if (uids.isEmpty) {
       return Future.value(const []);
@@ -182,4 +201,10 @@ class ReferenceEntryScopeConflict implements Exception {
   @override
   String toString() =>
       'Reference $uid belongs to $actualOrgUnitUid, not $expectedOrgUnitUid';
+}
+
+class ReferenceEntryUidCollision implements Exception {
+  const ReferenceEntryUidCollision(this.uid);
+
+  final String uid;
 }

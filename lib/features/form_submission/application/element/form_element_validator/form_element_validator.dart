@@ -1,5 +1,6 @@
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
+import 'package:datarunmobile/data/reference_uid.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/full_name_validator.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -18,6 +19,9 @@ class FieldValidators {
 
     if (element.mandatory) validators.add(const RequiredFieldValidator());
     if (element.type == ValueType.Email) validators.add(Validators.email);
+    if (element.type == ValueType.Reference) {
+      validators.add(const ReferenceUidValidator());
+    }
     if (element.type.isInteger) validators.add(Validators.number());
     if (element.type == ValueType.IntegerZeroOrPositive)
       validators.addAll(
@@ -29,6 +33,21 @@ class FieldValidators {
     if (element.type == ValueType.Percentage)
       validators.addAll([Validators.min(0), Validators.maxLength(100)]);
     return validators.toList();
+  }
+}
+
+class ReferenceUidValidator extends Validator<dynamic> {
+  const ReferenceUidValidator();
+
+  @override
+  Map<String, dynamic>? validate(AbstractControl<dynamic> control) {
+    final value = control.value;
+    if (value == null || value.isEmpty || ReferenceUid.isValid(value)) {
+      return null;
+    }
+    return const <String, dynamic>{
+      ReferenceValidationMessage.invalidUid: true,
+    };
   }
 }
 
@@ -72,4 +91,8 @@ Map<String, ValidationMessageFunction> validationMessages() => {
       'min': (error) => S.current.valueMustBeGreaterThanOrEqualToError(error),
       'max': (error) => S.current.valueMustBeLessThanOrEqualToError(error),
       'maxLength': (error) => S.current.maximumAllowedLengthIsError(error),
+      ReferenceValidationMessage.invalidUid: (error) =>
+          S.current.referenceUidInvalid,
+      ReferenceValidationMessage.duplicate: (error) =>
+          S.current.referenceAlreadySelected,
     };

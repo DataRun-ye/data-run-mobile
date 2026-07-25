@@ -63,7 +63,8 @@ class AssignmentDatasource extends BaseDataSource<$AssignmentsTable, Assignment>
   Future<List<AssignmentForm>> _getExtraAssignmentForms() async {
     final extraResourceName = 'assignments/forms';
 
-    final versionResourcePath = '$extraResourceName?paged=false';
+    final versionResourcePath =
+        '$extraResourceName?paged=false&referenceVersion=1';
     final response = await apiClient.request(
         resourceName: versionResourcePath, method: 'get');
 

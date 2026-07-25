@@ -912,6 +912,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get referenceFieldHint => 'اختر مرجعًا';
 
   @override
+  String get referenceUidInvalid => 'المرجع المحدد غير صالح';
+
+  @override
+  String get referenceAlreadySelected => 'تم اختيار هذا المرجع مسبقًا';
+
+  @override
+  String get referenceNameUnavailable => 'الاسم غير متاح دون اتصال';
+
+  @override
+  String get referenceConfigurationUnavailable => 'إعدادات المرجع غير متاحة';
+
+  @override
   String get timeFieldHint => 'اختر وقتًا';
 
   @override

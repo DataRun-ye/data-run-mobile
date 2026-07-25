@@ -913,6 +913,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get referenceFieldHint => 'Select a reference';
 
   @override
+  String get referenceUidInvalid => 'The selected reference is invalid';
+
+  @override
+  String get referenceAlreadySelected => 'This reference is already selected';
+
+  @override
+  String get referenceNameUnavailable => 'Name unavailable offline';
+
+  @override
+  String get referenceConfigurationUnavailable =>
+      'Reference configuration is unavailable';
+
+  @override
   String get timeFieldHint => 'Select a Time';
 
   @override

@@ -37,7 +37,7 @@ void main() {
 
     expect(client.requestedResources, [
       'assignments?paged=false',
-      'assignments/forms?paged=false',
+      'assignments/forms?paged=false&referenceVersion=1',
     ]);
     expect(await database.select(database.assignmentForms).get(), isEmpty);
     expect(events.last.syncProgressState, SyncProgressState.SUCCEEDED);
@@ -98,7 +98,9 @@ class _AssignmentHttpClient extends HttpClient<dynamic> {
     Map<String, dynamic>? headers,
   }) async {
     requestedResources.add(resourceName);
-    if (resourceName == 'assignments/forms?paged=false' && failForms) {
+    if (resourceName ==
+            'assignments/forms?paged=false&referenceVersion=1' &&
+        failForms) {
       throw StateError('assignment forms unavailable');
     }
     final responseData = resourceName == 'assignments?paged=false'

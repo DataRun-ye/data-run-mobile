@@ -40,6 +40,7 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
     NetworkHttpError? connectivityFailure;
     var fetchFailed = false;
     var databaseWriteFailed = false;
+    var extraFetchSucceeded = false;
     List<Map<String, dynamic>> rawJson = [];
     // 1) Fetch
     try {
@@ -99,10 +100,11 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
 
     // 2) Extract extras
     List<CompanionInsert> extra = [];
-    if (rawJson.isNotEmpty) {
+    if (!fetchFailed && (rawJson.isNotEmpty || fetchExtraWhenPrimaryEmpty)) {
       try {
         // A hook, let subclass extract any “auxiliary” entities
         extra = await extractExtraEntities(rawJson);
+        extraFetchSucceeded = true;
         logger(percentage: 40, message: extra.length.toString());
       } on RevokeTokenException {
         rethrow;
@@ -155,15 +157,10 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
           await db.batch((b) => b.insertAllOnConflictUpdate(table, mapped));
         }
 
-        // let subclass write any extra tables it needs
-        if (extra.isNotEmpty) {
+        // let subclass write any extra tables it successfully fetched
+        if (extraFetchSucceeded) {
           logger(message: 'persisting extra');
-          await db.batch((b) {
-            b.deleteAll(extra.first.table);
-            for (var ci in extra) {
-              b.insertAllOnConflictUpdate(ci.table, [ci.entity]);
-            }
-          });
+          await persistExtraEntities(extra);
         }
 
         logger(percentage: 80, message: rawJson.length.toString());
@@ -246,6 +243,20 @@ abstract class BaseDataSource<T extends TableInfo<T, D>,
   Future<List<CompanionInsert>> extractExtraEntities(
       List<Map<String, dynamic>> raw) async {
     return [];
+  }
+
+  @protected
+  bool get fetchExtraWhenPrimaryEmpty => false;
+
+  @protected
+  Future<void> persistExtraEntities(List<CompanionInsert> extra) async {
+    if (extra.isEmpty) return;
+    await db.batch((batch) {
+      batch.deleteAll(extra.first.table);
+      for (final item in extra) {
+        batch.insertAllOnConflictUpdate(item.table, [item.entity]);
+      }
+    });
   }
 
   /// Step 3a: map one JSON item → to Drift entity.

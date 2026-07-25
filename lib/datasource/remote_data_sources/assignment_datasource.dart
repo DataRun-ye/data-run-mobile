@@ -11,6 +11,9 @@ class AssignmentDatasource extends BaseDataSource<$AssignmentsTable, Assignment>
   @override
   String get resourceName => 'assignments';
 
+  @override
+  bool get fetchExtraWhenPrimaryEmpty => true;
+
   /// Fetch the secondary “forms” and wrap them into CompanionInsert
   @override
   Future<List<CompanionInsert>> extractExtraEntities(
@@ -67,7 +70,8 @@ class AssignmentDatasource extends BaseDataSource<$AssignmentsTable, Assignment>
     final raw = response.data;
 
     /// expecting paged list ({ apiResourceName: [...] }),
-    List dataItems = raw?['assignments']?.toList() ?? [];
+    final List<dynamic> dataItems =
+        raw?['assignments']?.toList() ?? <dynamic>[];
 
     final assignmentModels =
         dataItems.map((item) => _AssignmentWithAccess.fromJson(item)).toList();
@@ -78,18 +82,20 @@ class AssignmentDatasource extends BaseDataSource<$AssignmentsTable, Assignment>
   }
 
   @override
+  Future<void> persistExtraEntities(List<CompanionInsert> extra) async {
+    await db.batch((batch) {
+      batch.deleteAll(db.assignmentForms);
+      for (final item in extra) {
+        batch.insertAllOnConflictUpdate(item.table, [item.entity]);
+      }
+    });
+  }
+
+  @override
   $AssignmentsTable get table => db.assignments;
 }
 
 class _AssignmentWithAccess {
-  final String assignment;
-  final String activity;
-  final String team;
-  final String orgUnit;
-
-  final AssignmentStatus progressStatus;
-  final List<AssignmentForm> accessibleForms;
-
   _AssignmentWithAccess(
       {required this.assignment,
       required this.activity,
@@ -122,4 +128,12 @@ class _AssignmentWithAccess {
       accessibleForms: accessibleForms,
     );
   }
+
+  final String assignment;
+  final String activity;
+  final String team;
+  final String orgUnit;
+
+  final AssignmentStatus progressStatus;
+  final List<AssignmentForm> accessibleForms;
 }

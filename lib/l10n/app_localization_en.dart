@@ -1286,6 +1286,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get serverRetainedSubmissionsCannotBeDeleted =>
+      'Records already sent to the server or currently being sent are retained on this device. No records were deleted.';
+
+  @override
   String get fixedTableColumns => 'Fixed ِActions Columns';
 
   @override

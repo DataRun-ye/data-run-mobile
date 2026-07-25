@@ -1284,6 +1284,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get serverRetainedSubmissionsCannotBeDeleted =>
+      'يتم الاحتفاظ بالسجلات التي أُرسلت إلى الخادم أو الجاري إرسالها على هذا الجهاز. لم يتم حذف أي سجل.';
+
+  @override
   String get fixedTableColumns => 'تثبيت أعمدة التفاعل';
 
   @override

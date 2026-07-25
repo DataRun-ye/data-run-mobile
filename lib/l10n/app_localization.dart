@@ -2330,6 +2330,12 @@ abstract class AppLocalizations {
   /// **'{count} items will be deleted, are you sure?'**
   String confirmDeleteItemsSelected(Object count);
 
+  /// No description provided for @serverRetainedSubmissionsCannotBeDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Records already sent to the server or currently being sent are retained on this device. No records were deleted.'**
+  String get serverRetainedSubmissionsCannotBeDeleted;
+
   /// No description provided for @fixedTableColumns.
   ///
   /// In en, this message translates to:

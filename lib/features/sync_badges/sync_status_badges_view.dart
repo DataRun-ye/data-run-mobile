@@ -47,10 +47,10 @@ class SyncStatusBadgesView extends ConsumerWidget {
     )));
 
     return badges.when(
-      loading: () => const Center(
-        heightFactor: 3,
-        widthFactor: 3,
-        child: CircularProgressIndicator(),
+      loading: () => const SizedBox.square(
+        key: ValueKey('sync-status-badges-loading'),
+        dimension: 24,
+        child: CircularProgressIndicator(strokeWidth: 2),
       ),
       error: (_, __) => const SizedBox.shrink(),
       data: (items) => Wrap(

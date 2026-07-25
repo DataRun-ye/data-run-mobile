@@ -43,8 +43,8 @@ active code, tests, and its focused context map before acting.
 - When work closes, remove it here and add one factual line to
   `12-completed-work.md`.
 - Put implementation evidence in code, tests, commits, and the focused map.
-- Put an accepted durable architectural decision in its owning context document,
-  not here.
+- Put an accepted durable decision in `decisions/` and link it from its owning
+  evidence map; do not record it here.
 - Move an unresolved item to a GitHub issue when it needs discussion or spans
   releases; leave only a short link here if it remains prioritized.
 - At each release, pause, or reprioritization, remove completed, stale, and

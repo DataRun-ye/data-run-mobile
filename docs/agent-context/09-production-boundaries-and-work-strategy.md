@@ -58,7 +58,9 @@ Use the strict comment-out labels in `05-classification-reconciliation.md`. Reva
 - Server/network DTOs should expose external business `uid`, not internal database primary keys.
 - Mobile Drift models commonly store that external UID in a property named `id`.
 - New submission UIDs use the existing 11-character `CodeGenerator.generateUid()` format.
-- Repeat rows use the contract in `07-repeat-uid-contract.md`: stable `_id`, `_index`, `_parentId`, and `_submissionUid`; new row IDs are ULIDs.
+- Repeat rows use the accepted contract in
+  `decisions/07-repeat-uid-contract.md`: stable `_id`, `_index`, `_parentId`,
+  and `_submissionUid`; new row IDs are ULIDs.
 - Existing IDs survive edits; only new rows receive new IDs.
 - `id`/`uid` compatibility guards may be retired only endpoint by endpoint after payload and persisted-data checks.
 

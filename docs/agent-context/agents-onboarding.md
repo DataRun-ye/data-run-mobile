@@ -32,7 +32,8 @@ Then read only the focused map for the boundary being changed:
 - `04-state-di-runtime-map.md`: state owners, DI, scopes, and generated registration.
 - `05-classification-reconciliation.md`: strict active/inactive legend and unresolved misleading surfaces.
 - `06-large-repeat-hang-data-loss.md`: closed repeat improvements and current residual scaling risks.
-- `07-repeat-uid-contract.md`: repeat identity and metadata contract.
+- `decisions/07-repeat-uid-contract.md`: accepted repeat identity and metadata
+  contract.
 - `08-validation-baseline.md`: current executable checks and limits.
 
 Focused maps own technical detail. Do not duplicate their tables into `09`; update the owner document when evidence changes.

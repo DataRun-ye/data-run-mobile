@@ -30,6 +30,7 @@ part 'app_database.g.dart';
   FormTemplateVersions,
   UserFormPermissions,
   SyncSummaries,
+  ReferenceEntries,
 ], daos: [
   AssignmentsDao,
   FormTemplateVersionsDao,
@@ -43,7 +44,7 @@ class AppDatabase extends _$AppDatabase {
   final String userId;
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -68,6 +69,10 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 6) {
             await m.deleteTable('data_elements');
+          }
+          if (from < 7) {
+            await m.createTable(referenceEntries);
+            await m.createIndex(referenceEntryScopeNameIdx);
           }
         },
       );

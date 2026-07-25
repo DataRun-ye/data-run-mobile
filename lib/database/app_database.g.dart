@@ -8423,6 +8423,243 @@ class SyncSummariesCompanion extends UpdateCompanion<SyncSummary> {
   }
 }
 
+class $ReferenceEntriesTable extends ReferenceEntries
+    with TableInfo<$ReferenceEntriesTable, ReferenceEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReferenceEntriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uidMeta = const VerificationMeta('uid');
+  @override
+  late final GeneratedColumn<String> uid = GeneratedColumn<String>(
+      'uid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _orgUnitUidMeta =
+      const VerificationMeta('orgUnitUid');
+  @override
+  late final GeneratedColumn<String> orgUnitUid = GeneratedColumn<String>(
+      'org_unit_uid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _displayNameMeta =
+      const VerificationMeta('displayName');
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+      'display_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [uid, orgUnitUid, displayName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reference_entries';
+  @override
+  VerificationContext validateIntegrity(Insertable<ReferenceEntry> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('uid')) {
+      context.handle(
+          _uidMeta, uid.isAcceptableOrUnknown(data['uid']!, _uidMeta));
+    } else if (isInserting) {
+      context.missing(_uidMeta);
+    }
+    if (data.containsKey('org_unit_uid')) {
+      context.handle(
+          _orgUnitUidMeta,
+          orgUnitUid.isAcceptableOrUnknown(
+              data['org_unit_uid']!, _orgUnitUidMeta));
+    } else if (isInserting) {
+      context.missing(_orgUnitUidMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+          _displayNameMeta,
+          displayName.isAcceptableOrUnknown(
+              data['display_name']!, _displayNameMeta));
+    } else if (isInserting) {
+      context.missing(_displayNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {uid};
+  @override
+  ReferenceEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReferenceEntry(
+      uid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uid'])!,
+      orgUnitUid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}org_unit_uid'])!,
+      displayName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}display_name'])!,
+    );
+  }
+
+  @override
+  $ReferenceEntriesTable createAlias(String alias) {
+    return $ReferenceEntriesTable(attachedDatabase, alias);
+  }
+}
+
+class ReferenceEntry extends DataClass implements Insertable<ReferenceEntry> {
+  final String uid;
+  final String orgUnitUid;
+  final String displayName;
+  const ReferenceEntry(
+      {required this.uid, required this.orgUnitUid, required this.displayName});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['uid'] = Variable<String>(uid);
+    map['org_unit_uid'] = Variable<String>(orgUnitUid);
+    map['display_name'] = Variable<String>(displayName);
+    return map;
+  }
+
+  ReferenceEntriesCompanion toCompanion(bool nullToAbsent) {
+    return ReferenceEntriesCompanion(
+      uid: Value(uid),
+      orgUnitUid: Value(orgUnitUid),
+      displayName: Value(displayName),
+    );
+  }
+
+  factory ReferenceEntry.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReferenceEntry(
+      uid: serializer.fromJson<String>(json['uid']),
+      orgUnitUid: serializer.fromJson<String>(json['orgUnitUid']),
+      displayName: serializer.fromJson<String>(json['displayName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'uid': serializer.toJson<String>(uid),
+      'orgUnitUid': serializer.toJson<String>(orgUnitUid),
+      'displayName': serializer.toJson<String>(displayName),
+    };
+  }
+
+  ReferenceEntry copyWith(
+          {String? uid, String? orgUnitUid, String? displayName}) =>
+      ReferenceEntry(
+        uid: uid ?? this.uid,
+        orgUnitUid: orgUnitUid ?? this.orgUnitUid,
+        displayName: displayName ?? this.displayName,
+      );
+  ReferenceEntry copyWithCompanion(ReferenceEntriesCompanion data) {
+    return ReferenceEntry(
+      uid: data.uid.present ? data.uid.value : this.uid,
+      orgUnitUid:
+          data.orgUnitUid.present ? data.orgUnitUid.value : this.orgUnitUid,
+      displayName:
+          data.displayName.present ? data.displayName.value : this.displayName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReferenceEntry(')
+          ..write('uid: $uid, ')
+          ..write('orgUnitUid: $orgUnitUid, ')
+          ..write('displayName: $displayName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(uid, orgUnitUid, displayName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReferenceEntry &&
+          other.uid == this.uid &&
+          other.orgUnitUid == this.orgUnitUid &&
+          other.displayName == this.displayName);
+}
+
+class ReferenceEntriesCompanion extends UpdateCompanion<ReferenceEntry> {
+  final Value<String> uid;
+  final Value<String> orgUnitUid;
+  final Value<String> displayName;
+  final Value<int> rowid;
+  const ReferenceEntriesCompanion({
+    this.uid = const Value.absent(),
+    this.orgUnitUid = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReferenceEntriesCompanion.insert({
+    required String uid,
+    required String orgUnitUid,
+    required String displayName,
+    this.rowid = const Value.absent(),
+  })  : uid = Value(uid),
+        orgUnitUid = Value(orgUnitUid),
+        displayName = Value(displayName);
+  static Insertable<ReferenceEntry> custom({
+    Expression<String>? uid,
+    Expression<String>? orgUnitUid,
+    Expression<String>? displayName,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (uid != null) 'uid': uid,
+      if (orgUnitUid != null) 'org_unit_uid': orgUnitUid,
+      if (displayName != null) 'display_name': displayName,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReferenceEntriesCompanion copyWith(
+      {Value<String>? uid,
+      Value<String>? orgUnitUid,
+      Value<String>? displayName,
+      Value<int>? rowid}) {
+    return ReferenceEntriesCompanion(
+      uid: uid ?? this.uid,
+      orgUnitUid: orgUnitUid ?? this.orgUnitUid,
+      displayName: displayName ?? this.displayName,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (uid.present) {
+      map['uid'] = Variable<String>(uid.value);
+    }
+    if (orgUnitUid.present) {
+      map['org_unit_uid'] = Variable<String>(orgUnitUid.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReferenceEntriesCompanion(')
+          ..write('uid: $uid, ')
+          ..write('orgUnitUid: $orgUnitUid, ')
+          ..write('displayName: $displayName, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -8445,6 +8682,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $UserFormPermissionsTable userFormPermissions =
       $UserFormPermissionsTable(this);
   late final $SyncSummariesTable syncSummaries = $SyncSummariesTable(this);
+  late final $ReferenceEntriesTable referenceEntries =
+      $ReferenceEntriesTable(this);
   late final Index orgNameIdx =
       Index('org_name_idx', 'CREATE INDEX org_name_idx ON org_units (name)');
   late final Index orgCodeIdx = Index(
@@ -8483,6 +8722,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       'CREATE INDEX data_instance_status_idx ON data_instances (sync_state)');
   late final Index formPermissionFormIdx = Index('form_permission_form_idx',
       'CREATE INDEX form_permission_form_idx ON user_form_permissions (team, form)');
+  late final Index referenceEntryScopeNameIdx = Index(
+      'reference_entry_scope_name_idx',
+      'CREATE INDEX reference_entry_scope_name_idx ON reference_entries (org_unit_uid, display_name)');
   late final AssignmentsDao assignmentsDao =
       AssignmentsDao(this as AppDatabase);
   late final FormTemplateVersionsDao formTemplateVersionsDao =
@@ -8512,6 +8754,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         dataInstances,
         userFormPermissions,
         syncSummaries,
+        referenceEntries,
         orgNameIdx,
         orgCodeIdx,
         orgPathIdx,
@@ -8529,7 +8772,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         optionNameIdx,
         optionCodeIdx,
         dataInstanceStatusIdx,
-        formPermissionFormIdx
+        formPermissionFormIdx,
+        referenceEntryScopeNameIdx
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -15356,6 +15600,150 @@ typedef $$SyncSummariesTableProcessedTableManager = ProcessedTableManager<
     ),
     SyncSummary,
     PrefetchHooks Function()>;
+typedef $$ReferenceEntriesTableCreateCompanionBuilder
+    = ReferenceEntriesCompanion Function({
+  required String uid,
+  required String orgUnitUid,
+  required String displayName,
+  Value<int> rowid,
+});
+typedef $$ReferenceEntriesTableUpdateCompanionBuilder
+    = ReferenceEntriesCompanion Function({
+  Value<String> uid,
+  Value<String> orgUnitUid,
+  Value<String> displayName,
+  Value<int> rowid,
+});
+
+class $$ReferenceEntriesTableFilterComposer
+    extends Composer<_$AppDatabase, $ReferenceEntriesTable> {
+  $$ReferenceEntriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get orgUnitUid => $composableBuilder(
+      column: $table.orgUnitUid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnFilters(column));
+}
+
+class $$ReferenceEntriesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReferenceEntriesTable> {
+  $$ReferenceEntriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get orgUnitUid => $composableBuilder(
+      column: $table.orgUnitUid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ReferenceEntriesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReferenceEntriesTable> {
+  $$ReferenceEntriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get uid =>
+      $composableBuilder(column: $table.uid, builder: (column) => column);
+
+  GeneratedColumn<String> get orgUnitUid => $composableBuilder(
+      column: $table.orgUnitUid, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => column);
+}
+
+class $$ReferenceEntriesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ReferenceEntriesTable,
+    ReferenceEntry,
+    $$ReferenceEntriesTableFilterComposer,
+    $$ReferenceEntriesTableOrderingComposer,
+    $$ReferenceEntriesTableAnnotationComposer,
+    $$ReferenceEntriesTableCreateCompanionBuilder,
+    $$ReferenceEntriesTableUpdateCompanionBuilder,
+    (
+      ReferenceEntry,
+      BaseReferences<_$AppDatabase, $ReferenceEntriesTable, ReferenceEntry>
+    ),
+    ReferenceEntry,
+    PrefetchHooks Function()> {
+  $$ReferenceEntriesTableTableManager(
+      _$AppDatabase db, $ReferenceEntriesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReferenceEntriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReferenceEntriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReferenceEntriesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> uid = const Value.absent(),
+            Value<String> orgUnitUid = const Value.absent(),
+            Value<String> displayName = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ReferenceEntriesCompanion(
+            uid: uid,
+            orgUnitUid: orgUnitUid,
+            displayName: displayName,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String uid,
+            required String orgUnitUid,
+            required String displayName,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ReferenceEntriesCompanion.insert(
+            uid: uid,
+            orgUnitUid: orgUnitUid,
+            displayName: displayName,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ReferenceEntriesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ReferenceEntriesTable,
+    ReferenceEntry,
+    $$ReferenceEntriesTableFilterComposer,
+    $$ReferenceEntriesTableOrderingComposer,
+    $$ReferenceEntriesTableAnnotationComposer,
+    $$ReferenceEntriesTableCreateCompanionBuilder,
+    $$ReferenceEntriesTableUpdateCompanionBuilder,
+    (
+      ReferenceEntry,
+      BaseReferences<_$AppDatabase, $ReferenceEntriesTable, ReferenceEntry>
+    ),
+    ReferenceEntry,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -15392,4 +15780,6 @@ class $AppDatabaseManager {
       $$UserFormPermissionsTableTableManager(_db, _db.userFormPermissions);
   $$SyncSummariesTableTableManager get syncSummaries =>
       $$SyncSummariesTableTableManager(_db, _db.syncSummaries);
+  $$ReferenceEntriesTableTableManager get referenceEntries =>
+      $$ReferenceEntriesTableTableManager(_db, _db.referenceEntries);
 }

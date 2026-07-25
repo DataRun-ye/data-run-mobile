@@ -13,6 +13,7 @@ export 'options.table.dart';
 export 'org_units.table.dart';
 export 'ou_levels.table.dart';
 export 'projects.table.dart';
+export 'reference_entries.table.dart';
 export 'sync_summaries.dart';
 export 'teams.table.dart';
 export 'user_form_permissions.dart';

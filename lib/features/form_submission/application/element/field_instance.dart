@@ -344,8 +344,11 @@ class ReferenceFieldInstance extends FieldInstance<String> {
 
   @override
   void handleControlValueChanged(String? value) {
+    final changed = _retainedValue != value;
     super.handleControlValueChanged(value);
-    _referenceStateChanged?.call();
+    if (changed) {
+      _referenceStateChanged?.call();
+    }
   }
 
   @override

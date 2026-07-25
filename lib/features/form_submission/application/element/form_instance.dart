@@ -63,6 +63,7 @@ class FormInstance {
   final _db = appLocator<AppDatabase>();
   bool _disposed = false;
   Map<String, Map<String, int>>? _referenceValueCounts;
+  bool _refreshingReferenceValidation = false;
 
   // final FormConfiguration formConfiguration;
 
@@ -376,7 +377,7 @@ class FormInstance {
     for (final field in getFormElementIterator<ReferenceFieldInstance>(root)) {
       field.configureReferenceValidation(
         duplicateLookup: _hasDuplicateReference,
-        onReferenceStateChanged: _invalidateReferenceValidation,
+        onReferenceStateChanged: () => _invalidateReferenceValidation(field),
       );
     }
   }
@@ -404,11 +405,23 @@ class FormInstance {
     return counts;
   }
 
-  void _invalidateReferenceValidation() {
+  void _invalidateReferenceValidation([ReferenceFieldInstance? changedField]) {
     _referenceValueCounts = null;
-    for (final field
-        in getFormElementIterator<ReferenceFieldInstance>(_formSection)) {
-      field.refreshReferenceValidation();
+    if (_refreshingReferenceValidation) {
+      return;
+    }
+
+    _refreshingReferenceValidation = true;
+    try {
+      for (final field
+          in getFormElementIterator<ReferenceFieldInstance>(_formSection)) {
+        if (changedField == null ||
+            field.template.id == changedField.template.id) {
+          field.refreshReferenceValidation();
+        }
+      }
+    } finally {
+      _refreshingReferenceValidation = false;
     }
   }
 

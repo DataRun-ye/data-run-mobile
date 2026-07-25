@@ -98,6 +98,8 @@ class RepeatTableState extends ConsumerState<RepeatTable> {
     _repeatInstance = widget.repeatInstance;
     _dataSource = RepeatTableDataSource(
       elements: widget.repeatInstance.elements,
+      referenceAssignmentUid:
+          appLocator<FormInstance>().formMetadata.assignmentId,
       onEdit: onEdit,
       onDelete: onDelete,
       onSelectionChanged: () {

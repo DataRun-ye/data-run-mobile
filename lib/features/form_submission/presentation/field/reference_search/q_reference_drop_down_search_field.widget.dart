@@ -6,6 +6,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
 import 'package:datarunmobile/features/form_submission/application/reference_field_service.dart';
+import 'package:datarunmobile/features/form_submission/presentation/field/reference_search/reference_value_display.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -25,7 +26,6 @@ class _QReferenceDropDownSearchFieldState
   late final FormInstance _formInstance;
   late final ReferenceFieldService _service;
   late final Future<String> _orgUnitUid;
-  final Map<String, Future<ReferenceEntry?>> _selectedEntries = {};
 
   @override
   void initState() {
@@ -72,57 +72,43 @@ class _QReferenceDropDownSearchFieldState
       validationMessages: validationMessages(),
       builder: (field) {
         final uid = field.value;
-        return FutureBuilder<ReferenceEntry?>(
-          future: uid == null
-              ? Future<ReferenceEntry?>.value()
-              : _selectedEntries.putIfAbsent(
-                  uid,
-                  () => _service.find(orgUnitUid: orgUnitUid, uid: uid),
-                ),
-          builder: (context, entrySnapshot) {
-            final entry = entrySnapshot.data;
-            final displayText = uid == null
-                ? S.of(context).referenceFieldHint
-                : entry?.displayName ??
-                    '${S.of(context).referenceNameUnavailable} '
-                        '(${_shortUid(uid)})';
-            final canEdit =
-                field.control.enabled && !widget.element.template.readOnly;
+        final canEdit =
+            field.control.enabled && !widget.element.template.readOnly;
 
-            return InkWell(
-              onTap: canEdit
-                  ? () => _selectReference(
-                        field: field,
-                        orgUnitUid: orgUnitUid,
-                      )
-                  : null,
-              child: InputDecorator(
-                isEmpty: uid == null,
-                decoration: InputDecoration(
-                  labelText: widget.element.label,
-                  errorText: field.errorText,
-                  enabled: canEdit,
-                  border: const OutlineInputBorder(),
-                  prefixIcon: const Icon(Icons.manage_search),
-                  suffixIcon: uid != null && canEdit
-                      ? IconButton(
-                          tooltip: S.of(context).clear,
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            field.control.markAsTouched();
-                            field.didChange(null);
-                          },
-                        )
-                      : const Icon(Icons.arrow_drop_down),
-                ),
-                child: Text(
-                  displayText,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            );
-          },
+        return InkWell(
+          onTap: canEdit
+              ? () => _selectReference(
+                    field: field,
+                    orgUnitUid: orgUnitUid,
+                  )
+              : null,
+          child: InputDecorator(
+            isEmpty: uid == null,
+            decoration: InputDecoration(
+              labelText: widget.element.label,
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              errorText: field.errorText,
+              enabled: canEdit,
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.manage_search),
+              suffixIcon: uid != null && canEdit
+                  ? IconButton(
+                      tooltip: S.of(context).clear,
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        field.control.markAsTouched();
+                        field.didChange(null);
+                      },
+                    )
+                  : const Icon(Icons.arrow_drop_down),
+            ),
+            child: uid == null
+                ? Text(S.of(context).referenceFieldHint)
+                : ReferenceValueDisplay(
+                    uid: uid,
+                    orgUnitUid: orgUnitUid,
+                  ),
+          ),
         );
       },
     );
@@ -146,16 +132,8 @@ class _QReferenceDropDownSearchFieldState
     if (!mounted || selectedUid == null) {
       return;
     }
-    _selectedEntries.remove(selectedUid);
     field.control.markAsTouched();
     field.didChange(selectedUid);
-  }
-
-  String _shortUid(String uid) {
-    if (uid.length <= 8) {
-      return uid;
-    }
-    return '${uid.substring(0, 4)}…${uid.substring(uid.length - 4)}';
   }
 }
 
@@ -266,7 +244,7 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
   @override
   Widget build(BuildContext context) {
     final query = _searchController.text.trim();
-    return FractionallySizedBox(
+    final sheet = FractionallySizedBox(
       heightFactor: 0.88,
       child: Column(
         children: [
@@ -320,19 +298,6 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),
-          if (query.isNotEmpty)
-            ListTile(
-              leading: _creating
-                  ? const SizedBox.square(
-                      dimension: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.add_link),
-              title: Text(S.of(context).addNew),
-              subtitle: Text(query),
-              enabled: !_creating,
-              onTap: _creating ? null : _create,
-            ),
           const Divider(height: 1),
           if (_loading)
             const Expanded(
@@ -369,8 +334,38 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
                 },
               ),
             ),
+          if (query.isNotEmpty) ...[
+            const Divider(height: 1),
+            SafeArea(
+              top: false,
+              child: ListTile(
+                leading: _creating
+                    ? const SizedBox.square(
+                        dimension: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.add_link),
+                title: Text(S.of(context).addNew),
+                subtitle: Text(
+                  query,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                enabled: !_creating,
+                onTap: _creating ? null : _create,
+              ),
+            ),
+          ],
         ],
       ),
+    );
+    return AnimatedPadding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.viewInsetsOf(context).bottom,
+      ),
+      duration: kThemeAnimationDuration,
+      curve: Curves.easeOut,
+      child: sheet,
     );
   }
 }

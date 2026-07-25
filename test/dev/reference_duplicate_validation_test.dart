@@ -97,6 +97,38 @@ void main() {
     fixture.instance.dispose();
   });
 
+  test('mounted Reference changes refresh matching dormant rows', () async {
+    final fixture = _buildFixture(
+      initialValue: {
+        'rows': [
+          {'rowReference': 'a1234567890'},
+          {'rowReference': 'b1234567890'},
+        ],
+      },
+    );
+    final rows = fixture.root.element('rows') as RepeatSection;
+    final first =
+        rows.elements.first.element('rowReference') as ReferenceFieldInstance;
+    final second =
+        rows.elements.last.element('rowReference') as ReferenceFieldInstance;
+    fixture.instance.materializeRepeatItem(rows.elements.first);
+    var valueEvents = 0;
+    final subscription = first.elementControl.valueChanges.listen((value) {
+      valueEvents++;
+      first.handleControlValueChanged(value);
+    });
+
+    first.elementControl.updateValue('b1234567890');
+    await Future<void>.delayed(Duration.zero);
+
+    expect(first.hasDuplicateValue, isTrue);
+    expect(second.hasDuplicateValue, isTrue);
+    expect(valueEvents, lessThan(5));
+
+    await subscription.cancel();
+    fixture.instance.dispose();
+  });
+
   test('hidden occurrences do not reserve or duplicate a UID', () {
     final fixture = _buildFixture();
     final rows = fixture.root.element('rows') as RepeatSection;

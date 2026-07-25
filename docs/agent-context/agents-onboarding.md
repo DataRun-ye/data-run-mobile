@@ -38,6 +38,10 @@ Then read only the focused map for the boundary being changed:
 
 Focused maps own technical detail. Do not duplicate their tables into `09`; update the owner document when evidence changes.
 
+Use `documentation-lifecycle.md` before adding, splitting, renaming, or
+retiring context documents. It defines the lightweight roles and lifecycle
+used here without making historical documents authoritative.
+
 ## Runtime Boundaries
 
 ### App And Composition

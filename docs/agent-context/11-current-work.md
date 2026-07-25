@@ -6,15 +6,28 @@ Purpose: hold only accepted current and queued work. This file is not a product,
 architecture, or code authority. Revalidate every item against production,
 active code, tests, and its focused context map before acting.
 
-## Now: Release `6.0.2`
+## Now: Close Mobile `6.0.2`
 
-1. Set an intentional version and Play build number.
-2. Run the signed build and upgrade smoke.
-3. Tag and publish the tested artifacts.
-4. Reconcile the production baseline in `09` and Reference
-   deployment/activation status in `10`.
+1. Set `6.0.2` with a build number above the highest Play build.
+2. Run focused and full checks, then build the signed production AAB.
+3. Upgrade-smoke on Redmi: ordinary sync/forms, Reference selection/create/
+   reopen/upload against staging, protected local deletion, and assignment
+   scrolling.
+4. Merge the tested commit to `main`, tag it, retain artifacts, and publish the
+   same AAB.
+5. Reconcile the production baseline in `09`, update Reference status in `10`,
+   and move the release outcome to `12`.
 
-## Next: Operational UX
+## Next: Reference Production Activation
+
+1. Deploy the additive server Reference commits without assigning a Reference
+   form.
+2. Smoke existing configuration and submission payloads and verify old/new
+   client assignment filtering.
+3. Import the catalog and activate only a test assignment.
+4. Complete the activation gates in `10` before enabling campaign access.
+
+## Then: Operational UX
 
 1. Add a local read-only work projection without a schema or server change.
 2. Replace the activity-only home with direct access to drafts, attention
@@ -43,8 +56,8 @@ active code, tests, and its focused context map before acting.
 - When work closes, remove it here and add one factual line to
   `12-completed-work.md`.
 - Put implementation evidence in code, tests, commits, and the focused map.
-- Put an accepted durable decision in `decisions/` and link it from its owning
-  evidence map; do not record it here.
+- Put an implemented contract in its focused context document and link it from
+  the owning evidence map; do not record it here.
 - Move an unresolved item to a GitHub issue when it needs discussion or spans
   releases; leave only a short link here if it remains prioritized.
 - At each release, pause, or reprioritization, remove completed, stale, and

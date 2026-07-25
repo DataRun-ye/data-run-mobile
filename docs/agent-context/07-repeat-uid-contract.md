@@ -1,6 +1,7 @@
 # Repeat Metadata Contract
 
-Status: ACCEPTED AND IMPLEMENTED
+Role: implemented behavior contract
+Status: LIVING
 
 Generated: 2026-07-10
 Updated: 2026-07-22
@@ -8,14 +9,14 @@ Reconciled: 2026-07-24 against production `v6.0.0+50`
 
 Scope: define and record the implemented repeat row identity contract. This document supersedes the earlier `repeatUid`-only assumption after validating the backend submission path.
 
-Change rule: if the identity contract changes, add a new accepted decision and
-mark this one superseded. Do not silently rewrite the established contract.
+Change rule: update this contract only with the corresponding implementation,
+compatibility checks, and focused tests.
 
 Related maps:
 
-- `../02-form-flow.md`
-- `../05-classification-reconciliation.md`
-- `../06-large-repeat-hang-data-loss.md`
+- `02-form-flow.md`
+- `05-classification-reconciliation.md`
+- `06-large-repeat-hang-data-loss.md`
 
 ## Backend-Validated Contract
 

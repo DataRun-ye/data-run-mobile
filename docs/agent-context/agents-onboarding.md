@@ -32,7 +32,7 @@ Then read only the focused map for the boundary being changed:
 - `04-state-di-runtime-map.md`: state owners, DI, scopes, and generated registration.
 - `05-classification-reconciliation.md`: strict active/inactive legend and unresolved misleading surfaces.
 - `06-large-repeat-hang-data-loss.md`: closed repeat improvements and current residual scaling risks.
-- `decisions/07-repeat-uid-contract.md`: accepted repeat identity and metadata
+- `07-repeat-uid-contract.md`: implemented repeat identity and metadata
   contract.
 - `08-validation-baseline.md`: current executable checks and limits.
 
@@ -187,7 +187,7 @@ For each production change:
 - Saving still reduces, JSON-encodes, and writes the whole submission.
 - Synced edit/delete authorization and server round-trip behavior are incomplete.
 - The bounded Reference implementation is on `develop` but remains
-  deployment/activation-gated by `10-bounded-reference-field-draft.md`.
+  deployment/activation-gated by `10-bounded-reference-field-plan.md`.
   Calculated fields remain incomplete.
 - Server error response shapes and whole-resource configuration sync need server-side contracts before deeper client changes.
 - Multiple state/DI libraries remain active by distinct responsibility; consolidate only after proving an actual duplicate owner.

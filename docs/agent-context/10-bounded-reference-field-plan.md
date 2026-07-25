@@ -1,12 +1,15 @@
-# Draft: Bounded Reference Field
+# Bounded Reference Field
 
-> **Status: FINAL DRAFT FOR ACCEPTANCE.**
->
-> This is an implementation blueprint, not an active production contract.
-> Repository evidence was rechecked against the current mobile `develop`
-> baseline following the v6 production release and the current local server
-> source on 2026-07-25. Do not expose a production form using `Reference`
-> until every delivery and activation gate below passes.
+Role: implementation contract and activation plan
+
+Status: IMPLEMENTED ON MOBILE AND SERVER `develop`; PRODUCTION ACTIVATION
+PENDING
+
+Repository evidence was rechecked against mobile `develop` at `c50f69ef` and
+server `develop` at `0d83c580` on 2026-07-25. The mobile field/catalog/upload
+path and server catalog/upload path are implemented and tested on their
+integration branches. Do not expose a production form using `Reference` until
+the release, deployment, import, and activation gates below pass.
 
 ## Purpose
 
@@ -61,7 +64,7 @@ The mobile must not add:
 `orgUnitUid` is catalog ownership. Assignment and activity provide access and
 first-registration context; they do not become catalog identity.
 
-## Evidence: Current Production Shape
+## Evidence And Implementation Status
 
 ### Supported foundations
 
@@ -76,56 +79,24 @@ first-registration context; they do not become catalog identity.
 | Submission values are one JSON object | `lib/database/tables/data_submissions.table.dart` | Reference stays in `formData`; no normalized reference-value table is needed. |
 | Repeat rapid entry already exists | `lib/features/form_submission/presentation/section/repeat_table.widget.dart` | No queue, entry-session, or subject workflow should be introduced. |
 | Submission upload is centralized | `lib/features/data_instance/application/submission_upload_service.dart`; `lib/database/extensions/data_submission.extension.dart` | One upload decorator can own transient reference definitions. |
-| Production migration fixtures exist | `test/dev/app_database_migration_test.dart`; `test/fixtures/database/schema_v3.sql` | The additive mobile migration can be proven from production schema 3 and current schema 6. |
+| Production migration fixtures exist | `test/dev/app_database_migration_test.dart`; `test/fixtures/database/schema_v3.sql` | Schema 3/4/5/6 to 7 preservation is characterized. |
 
-### Missing or incomplete behavior
+### Delivery status
 
-These are implementation requirements, not assumptions that current code
-already satisfies:
+| Area | Current status | Evidence |
+| --- | --- | --- |
+| Server catalog, paging, capability gate, and scope guard | Implemented and tested on server `develop`; not deployed to production | `09b9b27d` |
+| Server upload extraction, resolution, and transaction boundary | Implemented and tested on server `develop`; not deployed to production | `8fa1d7ac` |
+| Mobile schema 7, bounded catalog repository, and paging sync | Implemented and tested on mobile `develop` | `585df63e` through `230a493a` |
+| Successful-empty assignment-form replacement | Implemented and tested on mobile `develop` | `7d4244a2` |
+| Mobile extraction and upload definitions | Implemented and tested on mobile `develop` | `e0c744f3`, `cedbb9f4` |
+| Field UI, offline creation/search, duplicate prevention, and restored display | Implemented, tested, and exercised against local staging | `3f3ea57b`, `6051359f` |
+| Production server deployment, catalog import, form assignment, and campaign activation | Pending | Activation sequence below |
 
-1. The reachable Reference widget is **INCOMPLETE**. It watches an empty
-   metadata provider, hardcodes old campaign fields, and displays names as
-   values:
-   `lib/features/form_submission/presentation/field/reference_search/q_reference_drop_down_search_field.widget.dart`.
-2. `ValueType.Reference` currently uses `TextValidator`, not the server's
-   exact UID rule. The server requires 11 alphanumeric characters with an
-   alphabetic first character.
-3. No active local catalog, database search, or paginated Reference
-   synchronization exists.
-4. `BaseDataSource` downloads one unpaged collection and maps it in memory.
-   It is not the owner for a paginated catalog.
-5. Assignment-form synchronization currently skips the extra request when the
-   assignment list is empty, and a successful empty `assignments/forms`
-   response does not clear stale `assignment_forms`; replacement only occurs
-   when the flattened extra list is non-empty.
-6. Mobile upload currently serializes `DataInstance` directly and does not
-   load its pinned form version.
-7. `FormDataUtil.getRawByPath` does not correctly traverse arbitrary nested
-   repeat lists. It must not be reused as proof of Reference extraction.
-8. The server DTO has no request-only Reference definitions, and its existing
-   flattening utility is not a template-aware Reference extractor.
-9. Server submission preprocessing occurs before
-   `DefaultDataSubmissionService.upsertAll` opens its transaction. Catalog
-   creation added there would not automatically be atomic with submission
-   persistence.
-10. Server `CompositeSubmissionValidator` is an unordered injected list.
-    Reference resolution must not be added as another validator that assumes
-    another validator has already run.
-11. No old-client capability gate exists today.
-12. A submission pins only its assignment UID, while the current server
-    assignment service can update that assignment's activity and org unit.
-    Moving a Reference-enabled assignment after drafts exist would make their
-    catalog scope ambiguous.
-
-No captured production form under `test/fixtures/live_forms/` currently uses
-`Reference`. The metadata-submission, Party, and `resourceMetadataSchema`
-surfaces do not provide this capability and must not be revived.
-
-The exact server revision deployed in production is not recorded in this
-mobile repository. Before the first server slice, record the deployed commit
-and applied Liquibase state. If its active assignment or submission endpoints
-differ from the source audited here, reconcile this blueprint before changing
-code; do not silently adapt during implementation.
+No captured production form under `test/fixtures/live_forms/` used Reference
+before this work. The metadata-submission, Party, and
+`resourceMetadataSchema` surfaces do not provide this capability and were not
+revived.
 
 ## Field Contract
 
@@ -559,12 +530,12 @@ must be handled as a bounded unit:
 
 Do not hide preparatory cleanup inside feature implementation or expand a unit
 because adjacent debt was discovered. Required debt becomes an earlier bounded
-unit; unrelated debt stays deferred. If discovery contradicts this draft,
+unit; unrelated debt stays deferred. If discovery contradicts this plan,
 revise and review the affected contract before changing code.
 
 Do not start campaign activation with only part of this sequence deployed.
 
-### 1. Shared contract characterization
+### 1. Shared contract characterization — characterized in both repositories
 
 - add a neutral form fixture with ordinary, repeat, and nested-repeat Reference
   paths;
@@ -575,7 +546,7 @@ Do not start campaign activation with only part of this sequence deployed.
 
 No runtime behavior changes in this slice.
 
-### 2. Server catalog, read API, and compatibility gate
+### 2. Server catalog, read API, and compatibility gate — implemented on `develop`
 
 - record the deployed server revision and Liquibase state, and verify the
   audited endpoint call paths still match;
@@ -588,7 +559,7 @@ No runtime behavior changes in this slice.
   scope-mutation rejection;
 - deploy without assigning a Reference form.
 
-### 3. Server upload resolution
+### 3. Server upload resolution — implemented on `develop`
 
 - add the request-only DTO definitions;
 - implement template-aware extraction and explicit resolution;
@@ -598,7 +569,7 @@ No runtime behavior changes in this slice.
   complete rollback cases;
 - deploy while the feature remains unassigned.
 
-### 4. Mobile schema and catalog sync
+### 4. Mobile schema and catalog sync — implemented on `develop`
 
 - add schema 7 `reference_entries`;
 - prove schema 3 and 6 upgrades;
@@ -608,7 +579,7 @@ No runtime behavior changes in this slice.
 - test paging failure, retry from page one, name refresh, local-row retention,
   cross-org UID conflict, zero assignments, access loss, and bounded search.
 
-### 5. Mobile field and upload integration
+### 5. Mobile field and upload integration — implemented and staging-smoked
 
 - replace the hardcoded incomplete Reference widget/provider;
 - add the focused UID validator;
@@ -621,7 +592,7 @@ No runtime behavior changes in this slice.
 - keep the physical legacy `metadata_submissions` table unchanged;
 - run focused form, upload, and migration tests.
 
-### 6. Device and campaign activation
+### 6. Device and campaign activation — pending
 
 - install the complete mobile build through the production signing path;
 - import prior catalog identities with truthful lineage;

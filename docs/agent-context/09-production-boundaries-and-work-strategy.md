@@ -15,7 +15,7 @@ history belongs in `12-completed-work.md`.
 - Observation status: adoption, installs, crash rate, and field telemetry are still pending. An empty metric before users update is not evidence of zero crashes.
 - Verified production Drift schema: 6.
 - Current `develop` Drift schema: 7. Schema 7 adds only the bounded Reference
-  catalog described in `10-bounded-reference-field-draft.md`; production
+  catalog described in `10-bounded-reference-field-plan.md`; production
   activation remains gated there.
 - Production migration source observed from Play `5.3.1+21`: schema 3.
 - Release artifacts: exact Play-uploaded AAB retained outside the repo under `/home/hamza/datarun/releases/v6.0.0/`; demo ARM64 APK and source release published at GitHub tag `v6.0.0`.
@@ -58,9 +58,9 @@ Use the strict comment-out labels in `05-classification-reconciliation.md`. Reva
 - Server/network DTOs should expose external business `uid`, not internal database primary keys.
 - Mobile Drift models commonly store that external UID in a property named `id`.
 - New submission UIDs use the existing 11-character `CodeGenerator.generateUid()` format.
-- Repeat rows use the accepted contract in
-  `decisions/07-repeat-uid-contract.md`: stable `_id`, `_index`, `_parentId`,
-  and `_submissionUid`; new row IDs are ULIDs.
+- Repeat rows use the implemented contract in `07-repeat-uid-contract.md`:
+  stable `_id`, `_index`, `_parentId`, and `_submissionUid`; new row IDs are
+  ULIDs.
 - Existing IDs survive edits; only new rows receive new IDs.
 - `id`/`uid` compatibility guards may be retired only endpoint by endpoint after payload and persisted-data checks.
 

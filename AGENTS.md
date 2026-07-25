@@ -11,9 +11,8 @@ Before changing code, read:
   work. `12-completed-work.md` is historical evidence, not current authority.
 - the focused map for the area you are touching, especially `02-form-flow.md`,
   `03-config-fetching.md`, `04-state-di-runtime-map.md`, and
-  `06-large-repeat-hang-data-loss.md`. Accepted durable decisions live under
-  `docs/agent-context/decisions/`. Use `05-classification-reconciliation.md`
-  when classifying or removing code.
+  `06-large-repeat-hang-data-loss.md`. Use
+  `05-classification-reconciliation.md` when classifying or removing code.
 
 Core rules:
 
@@ -32,8 +31,8 @@ Known high-risk form areas:
 - submissions are saved as one whole `formData` JSON object.
 - repeat controls are sparse while rows are dormant, but the element/dependency graph and whole-JSON save remain eager; use `06-large-repeat-hang-data-loss.md` for current residual risks.
 - repeat metadata persistence is established locally; use
-  `docs/agent-context/decisions/07-repeat-uid-contract.md` before changing
-  identity or enabling synced editing.
+  `docs/agent-context/07-repeat-uid-contract.md` before changing identity or
+  enabling synced editing.
 
 Common commands:
 

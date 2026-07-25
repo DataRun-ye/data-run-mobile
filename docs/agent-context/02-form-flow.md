@@ -6,7 +6,7 @@ Reconciled: 2026-07-24 against production `v6.0.0+50`
 Scope: evidence-based map for form JSON loading, form rendering, repeats, expression evaluation touching repeats, submission save/edit, repeat UID behavior, and local persistence before sync. This complements `01-production-code-path-map.md`; it intentionally does not remap the whole app entrypoint and SDK entrypoint surface.
 
 This map is reconciled with the backend-compatible repeat contract in
-`decisions/07-repeat-uid-contract.md`.
+`07-repeat-uid-contract.md`.
 
 Status legend:
 

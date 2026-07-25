@@ -220,4 +220,7 @@ Treat these as the minimum "do not touch until understood" set for repeat perfor
 
 ## Current Follow-Up
 
-The active form flow and ownership boundary are established. Use `06-large-repeat-hang-data-loss.md` for residual performance investigation and `09-production-boundaries-and-work-strategy.md` for product-policy and ownership work ordering.
+The active form flow and ownership boundary are established. Use
+`06-large-repeat-hang-data-loss.md` for residual performance investigation,
+`09-production-boundaries-and-work-strategy.md` for durable product policy, and
+`11-current-work.md` for current priority.

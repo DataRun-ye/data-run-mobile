@@ -2,15 +2,21 @@
 
 Validated: 2026-07-24
 
-Purpose: own the current product contracts, production compatibility boundary, closed v6 baseline, and ordered remaining work. Focused technical evidence remains in the other numbered maps.
+Purpose: own current product contracts, the production compatibility boundary,
+and durable working/closure rules. Focused technical evidence remains in the
+other numbered maps. Current work belongs in `11-current-work.md`; completed
+history belongs in `12-completed-work.md`.
 
-## Current Production Baseline
+## Last Verified Production Baseline
 
-- Production release: `6.0.0+50`.
+- Last production release fully verified in this document: `6.0.0+50`.
 - Source/tag: commit `ff20d6fc`, tag `v6.0.0`.
 - Google Play status: production rollout completed at 100% on 2026-07-24.
 - Observation status: adoption, installs, crash rate, and field telemetry are still pending. An empty metric before users update is not evidence of zero crashes.
-- Current mobile Drift schema: 6.
+- Verified production Drift schema: 6.
+- Current `develop` Drift schema: 7. Schema 7 adds only the bounded Reference
+  catalog described in `10-bounded-reference-field-draft.md`; production
+  activation remains gated there.
 - Production migration source observed from Play `5.3.1+21`: schema 3.
 - Release artifacts: exact Play-uploaded AAB retained outside the repo under `/home/hamza/datarun/releases/v6.0.0/`; demo ARM64 APK and source release published at GitHub tag `v6.0.0`.
 
@@ -139,25 +145,6 @@ table/assignment action
 
 The active ownership and lifecycle details are in `02-form-flow.md`. Repeat scaling evidence is in `06-large-repeat-hang-data-loss.md`.
 
-## Closed In V6
-
-Do not reopen these as uninvestigated tasks unless new evidence contradicts them:
-
-| Area | Closed result | Detail owner |
-|---|---|---|
-| Production mapping/onboarding | Active paths, strict classification, and compatibility boundary established | `01`, `05`, this file |
-| SDK boundary | Former package mechanically consolidated into root package without schema/payload changes | `01`, `04` |
-| Dead source/schema | Broad proven-dead paths removed; repeat/data-value tables dropped in schema 5; unused data-elements table dropped in schema 6 | `03`, `05`, migration tests |
-| DI/state ownership | Single locator; explicit datasource list; startup/login/sync/form/submission-table/locale owners established; duplicate stacks removed | `04` |
-| Form value/rule ownership | Controls own value/validity; element state is presentation/rule projection; validationRule authority established | `02` |
-| Form correctness | hidden/show validation, multi-select identity/validity, managed-team scoping, completion time, dirty back behavior fixed | `02`, focused tests |
-| Repeat identity/editing | backend-compatible metadata, transactional row edit, nested discard, multi-delete confirmation, dirty propagation | `02`, `07` |
-| Large-repeat first phase | canonical template tree, reduced rule fan-out, dormant controls, reusable dormant validation | `06` |
-| Auth/session | transactional login, one refresh owner, offline startup, idempotent revocation, operation draining | `04`, auth tests |
-| Config sync | truthful outcomes, queue stop, selective retry, cached-data preservation | `03` |
-| Errors/upload | localized typed failures and complete/partial/rejected upload outcomes | error/upload tests |
-| Tooling/release | generator scope reduced; Linux/Android/release build baseline; telemetry/signing/release gate completed | `08`, current release baseline |
-
 ## Production Compatibility Boundary
 
 Before changing ownership, state, persistence, sync, or storage, preserve and test:
@@ -171,42 +158,10 @@ Before changing ownership, state, persistence, sync, or storage, preserve and te
 - offline drafts/finals, sync state, retry idempotency, and partial-failure recovery;
 - active datasource membership/order and user/form GetIt scope lifecycle.
 
-`test/fixtures/database/schema_v3.sql` captures the observed production schema. `test/dev/app_database_migration_test.dart` proves schema 3/4/5 to 6 upgrades preserve active cached form/submission JSON while removing only obsolete normalized repeat/data-value and data-element tables.
-
-## Current Ordered Roadmap
-
-### 1. Observe And Stabilize V6
-
-- Track Play adoption, Android vitals, GlitchTip events, sync outcomes, and field feedback during the campaign.
-- Treat production regressions as focused priority fixes.
-- Do not infer stability until users update and exercise forms/sync.
-
-### 2. Continue Bounded Ownership Cleanup
-
-- Recheck remaining active services/providers feature by feature for actual overlapping authority.
-- Treat registered-but-unread configuration such as `OuLevelDatasource` as a bounded demotion/migration candidate, not core behavior.
-- Organize folders and same-layer services around proven responsibility/lifecycle, keeping mechanical moves separate from behavior changes.
-- Remove residual source-dead/generated-only paths with adjacent registration/behavior checks.
-- Do not force one state library across unrelated concerns; consolidate only a demonstrated duplicate owner.
-
-### 3. Define Synced Edit, Delete, And Authorization
-
-- Decide the `assignment_forms` versus `user_form_permissions` authority.
-- Define synced read/edit states, repeat server round trip, update conflict/idempotency, soft-delete payload/state, offline retry, and server-time behavior.
-- Implement as separate tested slices after the policy is explicit.
-
-### 4. Close Remaining Supported-Feature Gaps
-
-- Decide whether Reference fields receive a real offline metadata owner or are removed/rejected.
-- Keep calculated fields explicitly unsupported until expression/value ownership and product use are defined.
-- Standardize server error responses additively (`code`, `args`, `traceId`, bulk failure details) after a bounded server plan.
-
-### 5. Revisit Transfer And Repeat Performance From Evidence
-
-- Measure deployed configuration payloads before proposing delta/versioned server sync.
-- Use v6 field reports and the existing 50/150/300-row harness to choose any next repeat slice.
-- Current residual candidates are eager element/dependency graph, linear fan-out, table refresh, whole-JSON reduction/write, and form-level concurrent-save/process interruption.
-- Do not introduce normalized repeat storage or speculative graph laziness without a measured dominant phase and compatibility plan.
+`test/fixtures/database/schema_v3.sql` captures the observed production schema.
+`test/dev/app_database_migration_test.dart` proves schema 3/4/5/6 to 7 upgrades
+preserve active cached form/submission JSON, remove only obsolete normalized
+repeat/data-value and data-element tables, and add the bounded Reference cache.
 
 ## Evolution Rule
 
@@ -214,7 +169,9 @@ New feature work must not silently deepen a known ownership or boundary problem.
 
 - Identify the current owner and relevant debt before implementation.
 - If a bounded, behavior-preserving move to the established owner is necessary for the feature, include it and remove the superseded path.
-- If debt is unrelated or would broaden production risk, keep the feature slice narrow and record the debt in this roadmap.
+- If debt is unrelated or would broaden production risk, keep the feature slice
+  narrow and record it in `11-current-work.md` only when it is accepted and
+  prioritized; otherwise use a GitHub issue.
 - Do not add compatibility wrappers, duplicate state, generic service layers, or alternate persistence merely to avoid understanding the current boundary.
 - Protect product/data behavior, not accidental class/folder structure.
 
@@ -231,4 +188,8 @@ A bounded slice is closed only when:
 7. The focused map changes only when evidence changed.
 8. Unresolved policy remains explicit instead of being implemented by assumption.
 
-Future agents should start here, then read only the focused map for the boundary being changed. A full-repository rescan is justified only when work crosses an unclassified boundary.
+Future agents should start here, then read only the focused map for the
+boundary being changed. Read `11-current-work.md` only for current priority and
+`12-completed-work.md` only when historical provenance is needed. A
+full-repository rescan is justified only when work crosses an unclassified
+boundary.

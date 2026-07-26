@@ -1,6 +1,6 @@
 # Validation Baseline Before Refactoring
 
-Validated: 2026-07-25
+Validated: 2026-07-27
 
 Scope: smallest practical executable baseline for behavior-preserving cleanup and ownership work. Rerun commands before relying on these results.
 
@@ -9,11 +9,11 @@ Scope: smallest practical executable baseline for behavior-preserving cleanup an
 | Area | Command | Status | Evidence / notes |
 | --- | --- | --- | --- |
 | Dependency resolution | `flutter pub get` | PASS | Root package resolves. Former `drun_sdk` dependencies are declared directly in the root package. |
-| Tests | `flutter test --no-pub` | PASS | The full suite passed for the `v6.0.2` release source at `fbd75b48`. Coverage includes schema 3 through 7 migration, auth/session lifecycle, config sync outcomes, form ownership and validation, repeat lifecycle/dependencies/metadata/performance, Reference catalog/field/upload, submission table state, locale, telemetry, and active DI registration. |
+| Tests | `flutter test --no-pub` | PASS | All 192 tests passed for the `v6.0.3` runtime source. Coverage includes schema 3 through 7 migration, auth/session lifecycle, config sync outcomes, form ownership and validation, repeat lifecycle/dependencies/metadata/performance, Reference catalog/field/upload, submission table state, locale, telemetry, and active DI registration. |
 | Static analysis | `flutter analyze --no-pub` | NO ERRORS; LINT DEBT | The release gate reported no analyzer errors. Existing warning/info debt remains; reduce it only in bounded ownership slices. |
 | Debug Android build | `flutter build apk --debug --no-pub` | PASS | Produces `build/app/outputs/flutter-apk/app-debug.apk`. Java source/target 8 deprecation warnings remain. |
 | Code generation | `dart run build_runner build` | PASS | Generator ownership is constrained to active outputs. The measured clean run is about 95 seconds including builder compilation; a no-change run is about 5 seconds. Review generated diffs intentionally. |
-| Release build and upgrade | `flutter build appbundle --release` plus Play-distributed upgrade | PASS FOR `v6.0.2+53` | Build 52 passed Play Internal Testing upgrade smoke on Redmi. Build 53 changed only the build number, was accepted by Play, and is live in production. Local upload-key APKs cannot replace Play-signed installs. |
+| Release build and upgrade | `flutter build appbundle --release` plus Play-distributed upgrade | PASS FOR `v6.0.3+54` | The signed production bundle passed Internal Testing smoke on Redmi and the same artifact is live in production. Local upload-key APKs cannot replace Play-signed installs. |
 
 ## Required Checks By Slice
 

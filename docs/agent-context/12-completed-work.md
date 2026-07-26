@@ -1,10 +1,15 @@
 # Completed Work
 
-Updated: 2026-07-25
+Updated: 2026-07-27
 
 Purpose: compact historical index only. This file is not current product,
 architecture, or code authority. Use the referenced code, tests, commits, tags,
 releases, and focused context maps as evidence.
+
+## 2026-07-27
+
+- `v6.0.3` / `f3ba1ddb`: build `6.0.3+54` removed unsupported Navigator
+  restoration and was smoke-tested, archived, published, and rolled out.
 
 ## 2026-07-25
 

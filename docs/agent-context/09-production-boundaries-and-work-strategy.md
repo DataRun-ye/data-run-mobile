@@ -1,6 +1,6 @@
 # Production Boundaries And Working Strategy
 
-Validated: 2026-07-25
+Validated: 2026-07-27
 
 Purpose: own current product contracts, the production compatibility boundary,
 and durable working/closure rules. Focused technical evidence remains in the
@@ -9,9 +9,9 @@ history belongs in `12-completed-work.md`.
 
 ## Last Verified Production Baseline
 
-- Current production release: `6.0.2+53`.
-- Source/tag: commit `fbd75b48`, tag `v6.0.2`.
-- Google Play status: production rollout completed at 100% on 2026-07-25.
+- Current production release: `6.0.3+54`.
+- Source/tag: commit `f3ba1ddb`, tag `v6.0.3`.
+- Google Play status: production rollout completed on 2026-07-27.
 - Observation status: adoption, installs, crash rate, and field telemetry are
   still pending. An empty metric before users update is not evidence of zero
   crashes.
@@ -20,8 +20,8 @@ history belongs in `12-completed-work.md`.
   Reference campaign activation remains gated there.
 - Production migration source observed from Play `5.3.1+21`: schema 3.
 - Release artifacts: exact Play-uploaded AAB retained outside the repo at
-  `/home/hamza/datarun/releases/v6.0.2/datarun-6.0.2+53.aab`; demo APK and
-  source release are published at GitHub tag `v6.0.2`.
+  `/home/hamza/datarun/releases/v6.0.3/datarun-6.0.3+54.aab`; demo APK and
+  source release are published at GitHub tag `v6.0.3`.
 
 Production-style upgrade evidence:
 
@@ -33,7 +33,9 @@ Production-style upgrade evidence:
    flows, protected deletion, and assignment scrolling passed device smoke.
 3. Production `6.0.2+53` uses the same runtime source as tested build 52; only
    the build number changed before upload.
-4. This proves the exercised migrations and workflows, not all production
+4. Play Internal Testing smoke passed for `6.0.3+54`; the same artifact was
+   promoted to production after removing unsupported Navigator restoration.
+5. This proves the exercised migrations and workflows, not all production
    devices.
 
 The Play-installed APK uses the Google Play App Signing certificate. Local release builds use the Hamza/nmcpye upload key stored outside git. A local APK cannot update a Play installation in place; future production upgrade gates must use a Play-distributed track.
@@ -120,7 +122,7 @@ Use the strict comment-out labels in `05-classification-reconciliation.md`. Reva
 - Cancellations are silent; internal exception/plugin details are not shown.
 - Mobile decodes current nested/RFC/plain-text server responses and known `E3000`-`E3006`/`E4110`-`E4116` codes.
 - Submission bulk upload distinguishes complete, partial, rejected, malformed, and transport outcomes; prepared rows cannot remain stuck in `uploading`.
-- GlitchTip/Sentry release identity is `org.datarun.app@6.0.2+53`. Production
+- GlitchTip/Sentry release identity is `org.datarun.app@6.0.3+54`. Production
   telemetry excludes screenshots and projects only approved user identity.
 - Server response shape remains inconsistent; a structured additive server contract is still required.
 

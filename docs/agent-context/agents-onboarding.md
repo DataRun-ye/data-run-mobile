@@ -1,6 +1,6 @@
 # Agent Onboarding
 
-Validated: 2026-07-25
+Validated: 2026-07-27
 
 Purpose: give coding agents a durable starting point without making them rediscover the repository or treat historical code as current architecture.
 
@@ -8,9 +8,9 @@ Purpose: give coding agents a durable starting point without making them redisco
 
 DataRun is a Flutter mobile application for assignment-driven, offline-capable field data collection. It downloads configuration and form templates, stores them in a per-user Drift database, captures submissions locally, and uploads completed submissions.
 
-`v6.0.2+53` is the current production baseline. It was released from commit
-`fbd75b48`, tag `v6.0.2`, and rolled out through Google Play to 100% of users
-on 2026-07-25. The V6 Play-upgrade evidence and the `6.0.2+52` Internal
+`v6.0.3+54` is the current production baseline. It was released from commit
+`f3ba1ddb`, tag `v6.0.3`, and rolled out through Google Play on 2026-07-27.
+The V6 Play-upgrade evidence and the `6.0.3+54` Internal
 Testing smoke are recorded in `09-production-boundaries-and-work-strategy.md`.
 Reconcile this baseline at each release rather than assuming it describes the
 current store version.

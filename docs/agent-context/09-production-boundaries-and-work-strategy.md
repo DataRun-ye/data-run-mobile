@@ -1,6 +1,6 @@
 # Production Boundaries And Working Strategy
 
-Validated: 2026-07-24
+Validated: 2026-07-25
 
 Purpose: own current product contracts, the production compatibility boundary,
 and durable working/closure rules. Focused technical evidence remains in the
@@ -9,23 +9,32 @@ history belongs in `12-completed-work.md`.
 
 ## Last Verified Production Baseline
 
-- Last production release fully verified in this document: `6.0.0+50`.
-- Source/tag: commit `ff20d6fc`, tag `v6.0.0`.
-- Google Play status: production rollout completed at 100% on 2026-07-24.
-- Observation status: adoption, installs, crash rate, and field telemetry are still pending. An empty metric before users update is not evidence of zero crashes.
-- Verified production Drift schema: 6.
-- Current `develop` Drift schema: 7. Schema 7 adds only the bounded Reference
-  catalog described in `10-bounded-reference-field-plan.md`; production
-  activation remains gated there.
+- Current production release: `6.0.2+53`.
+- Source/tag: commit `fbd75b48`, tag `v6.0.2`.
+- Google Play status: production rollout completed at 100% on 2026-07-25.
+- Observation status: adoption, installs, crash rate, and field telemetry are
+  still pending. An empty metric before users update is not evidence of zero
+  crashes.
+- Verified production Drift schema: 7. Schema 7 adds only the bounded
+  Reference catalog described in `10-bounded-reference-field-plan.md`.
+  Reference campaign activation remains gated there.
 - Production migration source observed from Play `5.3.1+21`: schema 3.
-- Release artifacts: exact Play-uploaded AAB retained outside the repo under `/home/hamza/datarun/releases/v6.0.0/`; demo ARM64 APK and source release published at GitHub tag `v6.0.0`.
+- Release artifacts: exact Play-uploaded AAB retained outside the repo at
+  `/home/hamza/datarun/releases/v6.0.2/datarun-6.0.2+53.aab`; demo APK and
+  source release are published at GitHub tag `v6.0.2`.
 
 Production-style upgrade evidence:
 
-1. Play `5.3.1+21` was installed and populated with a cached authenticated user, configuration, old form versions, drafts, repeats, nested repeats, completed unsynced data, and synced data.
-2. Google Play updated that installation in place to `6.0.0+50`.
-3. The app retained the session/config/submissions, migrated schema 3 to 6, opened old forms, preserved repeat and multi-select behavior, saved drafts/completed data, uploaded a new submission, and retained locale behavior.
-4. No focused Flutter, Drift, SQLite, or crash failure appeared during that smoke. This proves the exercised migration/workflow, not all production devices.
+1. The V6 foundation was proven through a Play `5.3.1+21` to `6.0.0+50`
+   in-place upgrade with cached auth, configuration, historical forms, drafts,
+   repeats, nested repeats, unsynced data, and synced data.
+2. Play Internal Testing updated the prepared Redmi dataset to `6.0.2+52`.
+   Ordinary configuration/forms, historical submissions, Reference staging
+   flows, protected deletion, and assignment scrolling passed device smoke.
+3. Production `6.0.2+53` uses the same runtime source as tested build 52; only
+   the build number changed before upload.
+4. This proves the exercised migrations and workflows, not all production
+   devices.
 
 The Play-installed APK uses the Google Play App Signing certificate. Local release builds use the Hamza/nmcpye upload key stored outside git. A local APK cannot update a Play installation in place; future production upgrade gates must use a Play-distributed track.
 
@@ -111,7 +120,8 @@ Use the strict comment-out labels in `05-classification-reconciliation.md`. Reva
 - Cancellations are silent; internal exception/plugin details are not shown.
 - Mobile decodes current nested/RFC/plain-text server responses and known `E3000`-`E3006`/`E4110`-`E4116` codes.
 - Submission bulk upload distinguishes complete, partial, rejected, malformed, and transport outcomes; prepared rows cannot remain stuck in `uploading`.
-- GlitchTip/Sentry release identity is `org.datarun.app@6.0.0+50`. Production telemetry excludes screenshots and projects only approved user identity.
+- GlitchTip/Sentry release identity is `org.datarun.app@6.0.2+53`. Production
+  telemetry excludes screenshots and projects only approved user identity.
 - Server response shape remains inconsistent; a structured additive server contract is still required.
 
 ## Active Production Boundaries

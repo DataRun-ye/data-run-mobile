@@ -73,6 +73,28 @@ broadcast streams:   15640 -> 1240
 
 These numbers establish improvement on the harness, not a universal field-device threshold. Real device CPU, memory, Android version, form shape, option count, dependency fan-out, and JSON size still matter.
 
+## Field ANR Evidence
+
+Google Play's May 28-July 27, 2026 report contains one actionable historical
+cluster on `5.3.1+21`: `dart::DartEntry::InvokeFunction`, input dispatch timed
+out, with 19 events. This proves the old release blocked while executing Dart
+on the main isolate, but its native-only trace does not identify a Dart
+function. Large form construction, rules, table work, or whole-form reduction
+remain plausible causes; the cluster cannot distinguish them.
+
+The same report contains `nativePollOnce` input-timeout clusters on `5.3.1+21`
+that Play classifies as main-thread-idle and non-actionable because the blocking
+condition ended before the stack was captured. GlitchTip has one equivalent
+background ANR from production `6.0.2+53`. None of these idle traces identifies
+an app-owned fix.
+
+The Play report says none of the historical clusters currently affects a
+downloadable version. That is not yet proof that v6 removed the Dart-isolate
+stall because production adoption is recent. Treat a v6
+`DartEntry::InvokeFunction`/app-owned ANR as a high-priority recurrence and
+match its action, form version, row count, and device to the phase harness
+before selecting another performance change.
+
 ## Ranked Residual Hypotheses
 
 | Rank | Hypothesis | Evidence | Current classification | Confirmation needed |

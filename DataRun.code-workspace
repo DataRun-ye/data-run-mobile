@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "DataRun Mobile",
+      "path": "."
+    },
+    {
+      "name": "DataRun API",
+      "path": "../data-run-api"
+    }
+  ],
+  "settings": {
+    "scm.alwaysShowRepositories": true,
+    "scm.repositories.selectionMode": "multiple"
+  }
+}

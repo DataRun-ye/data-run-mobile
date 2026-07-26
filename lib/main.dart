@@ -68,7 +68,6 @@ class App extends ConsumerWidget {
     final themeMode = ThemeMode.values[mode];
 
     return MaterialApp(
-      restorationScopeId: 'Test__',
       navigatorKey: StackedService.navigatorKey,
       title: 'Datarun',
       debugShowCheckedModeBanner: false,

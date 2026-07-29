@@ -1,6 +1,6 @@
 {
   "env_label": "test",
-  "api_base_url": "https://play.nmcpye.org",
+  "api_base_url": "https://staging.nmcpye.org",
   "sentry_dsn": "",
   "default_locale": "en",
   "secure_cache": false

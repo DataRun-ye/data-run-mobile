@@ -3,6 +3,7 @@ import 'package:datarunmobile/core/exception/authentication_exception.dart';
 import 'package:datarunmobile/core/exception/d_error_code.dart';
 import 'package:datarunmobile/core/exception/d_exception.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
+import 'package:datarunmobile/core/http/app_version_interceptor.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
 import 'package:datarunmobile/di/app_environment.dart';
@@ -18,7 +19,8 @@ class AuthApi {
             'content-type': 'application/json; charset=utf-8'
           }
           ..options.connectTimeout = const Duration(seconds: 20)
-          ..options.receiveTimeout = const Duration(seconds: 30);
+          ..options.receiveTimeout = const Duration(seconds: 30)
+          ..interceptors.add(AppVersionInterceptor());
 
   final Dio _dioClient;
 

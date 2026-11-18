@@ -1,4 +1,5 @@
 import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
+import 'package:datarunmobile/core/form/element_template/template.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -12,13 +13,54 @@ abstract final class FutureDatePolicy {
   static const property = 'allowFutureDates';
   static const errorKey = 'futureDate';
 
-  static bool appliesTo(FieldTemplate template) {
-    if (template.type != ValueType.Date &&
-        template.type != ValueType.DateTime) {
-      return false;
+  static bool appliesTo(FieldTemplate template) =>
+      _isDate(template) && !_allows(template);
+
+  /// The fields of a form version as this rule sees them: a date field also
+  /// accepts future dates when the newest version of its form on the phone
+  /// accepts them for the same field (same id, otherwise same name). A draft
+  /// started before such a field was allowed future dates, like an expiry
+  /// date flagged later, then accepts what a new form accepts.
+  static List<Template> followingNewestVersion(
+    List<Template> fields,
+    List<Template> newestFields,
+  ) {
+    final allowedIds = <String>{};
+    final allowedNames = <String>{};
+    for (final field in newestFields.whereType<FieldTemplate>()) {
+      if (_isDate(field) && _allows(field)) {
+        allowedIds.add(field.id);
+        if (field.name != null) allowedNames.add(field.name!);
+      }
     }
+    if (allowedIds.isEmpty) return fields;
+    return [
+      for (final field in fields)
+        if (field is FieldTemplate &&
+            appliesTo(field) &&
+            (allowedIds.contains(field.id) ||
+                allowedNames.contains(field.name)))
+          _allowingFutureDates(field)
+        else
+          field,
+    ];
+  }
+
+  static bool _isDate(FieldTemplate template) =>
+      template.type == ValueType.Date || template.type == ValueType.DateTime;
+
+  static bool _allows(FieldTemplate template) {
     final allowed = template.properties[property];
-    return allowed != true && allowed != 'true';
+    return allowed == true || allowed == 'true';
+  }
+
+  static Template _allowingFutureDates(FieldTemplate field) {
+    final json = Template.toJsonFactory(field);
+    json['properties'] = <String, dynamic>{
+      ...?(json['properties'] as Map?)?.cast<String, dynamic>(),
+      property: true,
+    };
+    return Template.fromJsonFactory(json);
   }
 
   /// The last moment of today on the phone.

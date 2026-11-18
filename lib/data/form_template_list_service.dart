@@ -4,6 +4,8 @@ import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/collections.dart';
 import 'package:datarunmobile/database/shared/form_option.dart';
 import 'package:datarunmobile/database/shared/form_template_model.dart';
+import 'package:datarunmobile/core/form/element_template/template.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/future_date_policy.dart';
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/commons/errors_management/d_exception_reporter.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
@@ -118,6 +120,13 @@ class FormTemplateListService {
 
       final formTemplate = refs.template.prefetchedData!.first;
 
+      final fields = versionId == null
+          ? templateVersion.fields
+          : FutureDatePolicy.followingNewestVersion(
+              templateVersion.fields,
+              await _newestVersionFields(templateVersion.template),
+            );
+
       return FormTemplateModel(
         id: formTemplate.id,
         name: formTemplate.name,
@@ -126,7 +135,7 @@ class FormTemplateListService {
         label: formTemplate.label,
         description: formTemplate.description,
         versionNumber: templateVersion.versionNumber,
-        fields: templateVersion.fields.build(),
+        fields: fields.build(),
         sections: templateVersion.sections.build(),
         options: (await mergeOptions(templateVersion.options ?? [])).build(),
       );
@@ -134,5 +143,16 @@ class FormTemplateListService {
       DExceptionReporter.instance.report(e, showToUser: true);
       rethrow;
     }
+  }
+
+  /// The fields of the newest version of [templateId] on the phone.
+  Future<List<Template>> _newestVersionFields(String templateId) async {
+    final database = appLocator<AppDatabase>();
+    final newest = await (database.select(database.formTemplateVersions)
+          ..where((v) => v.template.equals(templateId))
+          ..orderBy([(v) => OrderingTerm.desc(v.versionNumber)])
+          ..limit(1))
+        .getSingleOrNull();
+    return newest?.fields ?? const [];
   }
 }

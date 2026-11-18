@@ -940,6 +940,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get referenceRecordAgain => 'تسجيل مرة أخرى';
 
   @override
+  String phoneClockWrong(String phoneTime, String serverTime) {
+    return 'تاريخ أو وقت الهاتف غير صحيح: الهاتف يعرض $phoneTime والخادم $serverTime. صحّحه من إعدادات الهاتف، وإلا ستُسجَّل تواريخ خاطئة في الاستمارات.';
+  }
+
+  @override
   String get formSetupErrorTitle =>
       'في إعداد هذه الاستمارة خطأ: بعض التحققات أو الشروط لن تعمل. أبلغ المشرف.';
 

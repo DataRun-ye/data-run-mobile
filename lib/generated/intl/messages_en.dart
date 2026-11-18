@@ -67,42 +67,45 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m20(year) => "Of ${year}";
 
-  static String m21(error) => "receive timeout: ${error}";
+  static String m21(phoneTime, serverTime) =>
+      "The phone\'s date or time is wrong: the phone shows ${phoneTime}, the server ${serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.";
 
-  static String m22(name, date) =>
+  static String m22(error) => "receive timeout: ${error}";
+
+  static String m23(name, date) =>
       "${name} was recorded on ${date} in another form. Record it again?";
 
-  static String m23(date) => "Recorded on ${date}";
+  static String m24(date) => "Recorded on ${date}";
 
-  static String m24(error) => "send timeout: ${error}";
+  static String m25(error) => "send timeout: ${error}";
 
-  static String m25(error) => "Server error: ${error}.";
+  static String m26(error) => "Server error: ${error}.";
 
-  static String m26(error) => "Session expired: ${error}.";
+  static String m27(error) => "Session expired: ${error}.";
 
-  static String m27(error) =>
+  static String m28(error) =>
       "An Error Was Encountered during for submission:\n ${error}";
 
-  static String m28(error) => "Error While Trying to Sync data ${error}.";
+  static String m29(error) => "Error While Trying to Sync data ${error}.";
 
-  static String m29(count) =>
+  static String m30(count) =>
       "${Intl.plural(count, zero: 'No Syncable submissions', one: '1 submission', two: '2 submissions', other: '${count} submissions')}";
 
-  static String m30(error) => "System Files Access Error: ${error}";
+  static String m31(error) => "System Files Access Error: ${error}";
 
-  static String m31(error) => "Unauthorized Access to end point: ${error}.";
+  static String m32(error) => "Unauthorized Access to end point: ${error}.";
 
-  static String m32(error) => "Error: ${error}.";
-
-  static String m33(error) =>
-      "The value must be greater than or equal to ${error}.";
+  static String m33(error) => "Error: ${error}.";
 
   static String m34(error) =>
+      "The value must be greater than or equal to ${error}.";
+
+  static String m35(error) =>
       "The value must be less than or equal to ${error}.";
 
-  static String m35(weekNum) => "Week ${weekNum}";
+  static String m36(weekNum) => "Week ${weekNum}";
 
-  static String m36(count) =>
+  static String m37(count) =>
       "${Intl.plural(count, zero: ' ', one: '1 Year', two: '2 Years', few: '${count} Years', other: '${count} Years')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -496,6 +499,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "personInformation": MessageLookupByLibrary.simpleMessage(
       "Person Information",
     ),
+    "phoneClockWrong": m21,
     "phoneNumberFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter a phone number",
     ),
@@ -517,7 +521,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "progressFieldHint": MessageLookupByLibrary.simpleMessage("fieldHintText"),
     "projects": MessageLookupByLibrary.simpleMessage("Projects"),
     "reassigned": MessageLookupByLibrary.simpleMessage("Reassigned"),
-    "receiveTimeout": m21,
+    "receiveTimeout": m22,
     "referenceAlreadySelected": MessageLookupByLibrary.simpleMessage(
       "This reference is already selected",
     ),
@@ -533,11 +537,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "referenceRecordAgain": MessageLookupByLibrary.simpleMessage(
       "Record again",
     ),
-    "referenceRecordAgainMessage": m22,
+    "referenceRecordAgainMessage": m23,
     "referenceRecordAgainTitle": MessageLookupByLibrary.simpleMessage(
       "Already recorded",
     ),
-    "referenceRecordedOn": m23,
+    "referenceRecordedOn": m24,
     "referenceUidInvalid": MessageLookupByLibrary.simpleMessage(
       "The selected reference is invalid",
     ),
@@ -594,15 +598,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectYear": MessageLookupByLibrary.simpleMessage("Select Year"),
     "selected": MessageLookupByLibrary.simpleMessage("selected"),
     "send": MessageLookupByLibrary.simpleMessage("Send"),
-    "sendTimeout": m24,
+    "sendTimeout": m25,
     "serial": MessageLookupByLibrary.simpleMessage("Serial"),
-    "serverError": m25,
+    "serverError": m26,
     "serverRetainedSubmissionsCannotBeDeleted":
         MessageLookupByLibrary.simpleMessage(
           "Records already sent to the server or currently being sent are retained on this device. No records were deleted.",
         ),
     "serverUrl": MessageLookupByLibrary.simpleMessage("Server URL"),
-    "sessionExpired": m26,
+    "sessionExpired": m27,
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "showLess": MessageLookupByLibrary.simpleMessage("Show less"),
     "showMore": MessageLookupByLibrary.simpleMessage("Show more"),
@@ -614,7 +618,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "startingSync": MessageLookupByLibrary.simpleMessage("Starting sync..."),
     "status": MessageLookupByLibrary.simpleMessage("Status"),
     "submissionDataEntry": MessageLookupByLibrary.simpleMessage("Data"),
-    "submissionError": m27,
+    "submissionError": m28,
     "submissionFormMissing": MessageLookupByLibrary.simpleMessage(
       "This submission is missing its form or form version. Reopen the form and save it again.",
     ),
@@ -638,7 +642,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "The team for this submission is no longer available. Synchronize configuration or contact your administrator.",
     ),
     "successCount": MessageLookupByLibrary.simpleMessage("Success Count"),
-    "syncError": m28,
+    "syncError": m29,
     "syncErrors": MessageLookupByLibrary.simpleMessage("Sync Errors"),
     "syncFailed": MessageLookupByLibrary.simpleMessage("Sync Failed"),
     "syncFormData": MessageLookupByLibrary.simpleMessage("Sync Form Data"),
@@ -648,7 +652,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sync Progress Dashboard",
     ),
     "syncSettings": MessageLookupByLibrary.simpleMessage("Sync Settings"),
-    "syncSubmissions": m29,
+    "syncSubmissions": m30,
     "syncSummaryLoadError": MessageLookupByLibrary.simpleMessage(
       "Sync Summary Load Error",
     ),
@@ -661,7 +665,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "syncingData": MessageLookupByLibrary.simpleMessage("Syncing Data"),
     "syncingEvents": MessageLookupByLibrary.simpleMessage("Syncing Events"),
-    "systemFilesAccessError": m30,
+    "systemFilesAccessError": m31,
     "tableAppearance": MessageLookupByLibrary.simpleMessage("Table Appearance"),
     "tableControl": MessageLookupByLibrary.simpleMessage("Table Control"),
     "team": MessageLookupByLibrary.simpleMessage("Team"),
@@ -688,9 +692,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Toggle List/Table View",
     ),
     "trueOnlyFieldHint": MessageLookupByLibrary.simpleMessage("fieldHintText"),
-    "unauthorizedAccessToEndPoint": m31,
+    "unauthorizedAccessToEndPoint": m32,
     "undo": MessageLookupByLibrary.simpleMessage("Undo"),
-    "unexpected": m32,
+    "unexpected": m33,
     "unitIntervalFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter unit Interval",
     ),
@@ -719,8 +723,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "validationErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Validation Error Message",
     ),
-    "valueMustBeGreaterThanOrEqualToError": m33,
-    "valueMustBeLessThanOrEqualToError": m34,
+    "valueMustBeGreaterThanOrEqualToError": m34,
+    "valueMustBeLessThanOrEqualToError": m35,
     "version": MessageLookupByLibrary.simpleMessage("Version"),
     "view": MessageLookupByLibrary.simpleMessage("View"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
@@ -730,9 +734,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("View Errors"),
     "viewList": MessageLookupByLibrary.simpleMessage("View List"),
     "warning": MessageLookupByLibrary.simpleMessage("Warning"),
-    "week": m35,
+    "week": m36,
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
-    "year": m36,
+    "year": m37,
     "years": MessageLookupByLibrary.simpleMessage("Years"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("Y/M"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),

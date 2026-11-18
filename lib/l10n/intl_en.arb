@@ -372,6 +372,17 @@
     }
   },
   "referenceRecordAgain": "Record again",
+  "phoneClockWrong": "The phone's date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.",
+  "@phoneClockWrong": {
+    "placeholders": {
+      "phoneTime": {
+        "type": "String"
+      },
+      "serverTime": {
+        "type": "String"
+      }
+    }
+  },
   "formSetupErrorTitle": "This form has a setup error: some checks or conditions will not work. Report it to your supervisor.",
   "formSetupUnknownFields": "{element} uses fields that do not exist: {names}",
   "@formSetupUnknownFields": {

@@ -942,6 +942,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get referenceRecordAgain => 'Record again';
 
   @override
+  String phoneClockWrong(String phoneTime, String serverTime) {
+    return 'The phone\'s date or time is wrong: the phone shows $phoneTime, the server $serverTime. Correct it in the phone settings, otherwise forms record wrong dates.';
+  }
+
+  @override
   String get formSetupErrorTitle =>
       'This form has a setup error: some checks or conditions will not work. Report it to your supervisor.';
 

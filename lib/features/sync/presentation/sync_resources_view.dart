@@ -1,3 +1,4 @@
+import 'package:datarunmobile/core/http/server_clock.dart';
 import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 import 'package:datarunmobile/core/sync_manager/sync_resource_status.dart';
 import 'package:datarunmobile/features/sync/application/sync_resources.controller.dart';
@@ -54,6 +55,7 @@ class _SyncResourcesViewState extends ConsumerState<SyncResourcesView> {
                     syncProgressInfo: global,
                   ),
                 ),
+                if (global.completed) const _PhoneClockWarning(),
                 if (global.completed && !global.overallState.isSuccess)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
@@ -200,6 +202,42 @@ class _AnimatedGridSyncCardState extends State<_AnimatedGridSyncCard> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Asks the user to fix the phone's date and time when it differs from the
+/// server's by more than [ServerClock.tolerance].
+class _PhoneClockWarning extends StatelessWidget {
+  const _PhoneClockWarning();
+
+  @override
+  Widget build(BuildContext context) {
+    final clock = ServerClock.instance;
+    return ValueListenableBuilder<Duration?>(
+      valueListenable: clock.skew,
+      builder: (context, _, __) {
+        final serverNow = clock.serverNow;
+        if (!clock.isWrong || serverNow == null) {
+          return const SizedBox.shrink();
+        }
+        final format = DateFormat('yyyy-MM-dd HH:mm');
+        final colors = Theme.of(context).colorScheme;
+        return Card(
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          color: colors.errorContainer,
+          child: ListTile(
+            leading: Icon(Icons.schedule, color: colors.onErrorContainer),
+            title: Text(
+              S.of(context).phoneClockWrong(
+                    format.format(DateTime.now()),
+                    format.format(serverNow),
+                  ),
+              style: TextStyle(color: colors.onErrorContainer),
+            ),
+          ),
+        );
+      },
     );
   }
 }

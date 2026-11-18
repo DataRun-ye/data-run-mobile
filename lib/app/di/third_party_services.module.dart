@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:datarunmobile/di/app_environment.dart';
 import 'package:datarunmobile/core/auth/auth_interceptor.dart';
 import 'package:datarunmobile/core/http/app_version_interceptor.dart';
+import 'package:datarunmobile/core/http/server_clock.dart';
 import 'package:datarunmobile/features/form_submission/application/device_info_service.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
@@ -24,6 +25,7 @@ abstract class ThirdPartyServicesModule {
       ..options.connectTimeout = const Duration(seconds: 20)
       ..options.receiveTimeout = const Duration(seconds: 30)
       ..interceptors.add(AppVersionInterceptor())
+      ..interceptors.add(ServerClockInterceptor())
       ..interceptors.add(authInterceptor);
 
     return dio;

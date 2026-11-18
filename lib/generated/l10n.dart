@@ -2262,6 +2262,16 @@ class S {
     );
   }
 
+  /// `The phone's date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.`
+  String phoneClockWrong(String phoneTime, String serverTime) {
+    return Intl.message(
+      'The phone\'s date or time is wrong: the phone shows $phoneTime, the server $serverTime. Correct it in the phone settings, otherwise forms record wrong dates.',
+      name: 'phoneClockWrong',
+      desc: '',
+      args: [phoneTime, serverTime],
+    );
+  }
+
   /// `This form has a setup error: some checks or conditions will not work. Report it to your supervisor.`
   String get formSetupErrorTitle {
     return Intl.message(

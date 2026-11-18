@@ -1724,6 +1724,12 @@ abstract class AppLocalizations {
   /// **'Record again'**
   String get referenceRecordAgain;
 
+  /// No description provided for @phoneClockWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'The phone\'s date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.'**
+  String phoneClockWrong(String phoneTime, String serverTime);
+
   /// No description provided for @formSetupErrorTitle.
   ///
   /// In en, this message translates to:

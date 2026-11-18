@@ -291,6 +291,7 @@ class AuthManager extends ChangeNotifier {
         try {
           final database =
               AppDatabase(executor: executor, userId: sessionUserId);
+          await _requeueInterruptedUploads(database);
           getIt.registerSingleton<AppDatabase>(
             database,
             dispose: (db) async {
@@ -328,6 +329,25 @@ class AuthManager extends ChangeNotifier {
     _sessionScopeUserId = sessionUserId;
     _activeUserSession = userSession;
     _status = AuthStatus.authenticated;
+  }
+
+  /// No upload is in flight while a session opens (a previous session's
+  /// operations finish before its scope closes), so a submission still marked
+  /// as uploading was cut off when the app last stopped; queue it again.
+  Future<void> _requeueInterruptedUploads(AppDatabase database) async {
+    try {
+      final requeued =
+          await database.dataInstancesDao.requeueInterruptedUploads();
+      if (requeued > 0) {
+        logInfo('Queued $requeued interrupted uploads to be sent again');
+      }
+    } catch (error, stackTrace) {
+      logError(
+        'Failed to queue interrupted uploads again',
+        source: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   /// Logs out the currently active user.

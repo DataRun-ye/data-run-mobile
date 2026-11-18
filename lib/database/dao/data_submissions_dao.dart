@@ -215,6 +215,19 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     );
   }
 
+  /// Queues again every submission still marked as uploading, and returns how
+  /// many. Call it when a session opens, when no upload can be in flight: such
+  /// a row was cut off when the app last stopped (killed, crashed, or
+  /// restarted into an update) and would otherwise never be offered for
+  /// sending again. Sending it again is safe; the server saves by uid.
+  Future<int> requeueInterruptedUploads() {
+    return (update(dataInstances)
+          ..where((t) => t.syncState.equals(InstanceSyncStatus.uploading.name)))
+        .write(const DataInstancesCompanion(
+      syncState: Value(InstanceSyncStatus.finalized),
+    ));
+  }
+
   /// Mark given submission ids as uploading (persist to DB so UI shows state).
   Future<void> markUploading(Iterable<String> ids) async {
     if (ids.isEmpty) return;

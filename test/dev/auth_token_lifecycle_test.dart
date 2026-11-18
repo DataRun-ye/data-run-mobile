@@ -1,3 +1,6 @@
+import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -279,6 +282,36 @@ void main() {
     await authManager.login(username: 'test-user', password: 'password');
     expect(authManager.practiceDayEnded, isFalse);
     expect(authManager.activeUserSession?.practice, isFalse);
+    await authManager.logout();
+  });
+
+  test('opening a session queues uploads cut off by the app stopping',
+      () async {
+    final directory = await Directory.systemTemp.createTemp('requeue-');
+    addTearDown(() => directory.delete(recursive: true));
+    final file = File('${directory.path}/test-user.db');
+    final seed = AppDatabase(executor: NativeDatabase(file), userId: 'seed');
+    await seed.into(seed.dataInstances).insert(
+          DataInstancesCompanion.insert(
+            id: 'cut-off',
+            formTemplate: 'form-1',
+            templateVersion: 'form-1-v1',
+            syncState: InstanceSyncStatus.uploading,
+            isToUpdate: false,
+          ),
+        );
+    await seed.close();
+    appLocator.registerSingleton<DatabaseFactory>(_FileDatabaseFactory(file));
+    await authStorage.persistAuthenticatedSession(_userSession, _loginTokens);
+    final authManager = createAuthManager(isOnline: false);
+
+    await authManager.initialize();
+
+    final database = appLocator<AppDatabase>();
+    expect(
+      (await database.dataInstancesDao.getById('cut-off'))!.syncState,
+      InstanceSyncStatus.finalized,
+    );
     await authManager.logout();
   });
 
@@ -688,6 +721,26 @@ class _MemoryStorageService implements StorageService {
       throw StateError('Secure storage write failed: $key');
     }
     values[key] = value;
+  }
+}
+
+class _FileDatabaseFactory extends DatabaseFactory {
+  _FileDatabaseFactory(this.file);
+
+  final File file;
+  QueryExecutor? _executor;
+
+  @override
+  Future<QueryExecutor> openForUser(String userId) async =>
+      _executor = NativeDatabase(file);
+
+  @override
+  Future<void> closeForUser(String userId) => close();
+
+  @override
+  Future<void> close() async {
+    await _executor?.close();
+    _executor = null;
   }
 }
 

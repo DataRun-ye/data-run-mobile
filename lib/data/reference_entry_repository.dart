@@ -13,43 +13,66 @@ class ReferenceEntryRepository {
 
   final AppDatabase _database;
 
+  /// One scope per org unit whose assignment can add submissions to a form
+  /// whose current version has a Reference field.
+  ///
+  /// Each distinct form version is decoded once. A user in many teams has
+  /// thousands of assignment-form rows over a handful of versions, and
+  /// decoding the version for every row took over a minute on a tablet.
   Future<List<ReferenceCatalogScope>> findSyncScopes() async {
-    final query = _database.select(_database.assignmentForms).join([
+    final assignments = _database.assignments;
+    final assignmentForms = _database.assignmentForms;
+    final formTemplates = _database.formTemplates;
+    final query = _database.selectOnly(assignmentForms).join([
       innerJoin(
-        _database.assignments,
-        _database.assignments.id
-            .equalsExp(_database.assignmentForms.assignment),
+        assignments,
+        assignments.id.equalsExp(assignmentForms.assignment),
+        useColumns: false,
       ),
       innerJoin(
-        _database.formTemplates,
-        _database.formTemplates.id.equalsExp(_database.assignmentForms.form),
-      ),
-      innerJoin(
-        _database.formTemplateVersions,
-        _database.formTemplateVersions.id
-            .equalsExp(_database.formTemplates.versionUid),
+        formTemplates,
+        formTemplates.id.equalsExp(assignmentForms.form),
+        useColumns: false,
       ),
     ])
+      ..addColumns([
+        assignments.id,
+        assignments.orgUnit,
+        formTemplates.versionUid,
+      ])
       ..where(
-        _database.assignmentForms.canAddSubmissions.equals(true) &
-            (_database.assignments.disabled.isNull() |
-                _database.assignments.disabled.equals(false)),
+        assignmentForms.canAddSubmissions.equals(true) &
+            (assignments.disabled.isNull() |
+                assignments.disabled.equals(false)),
       );
 
     final rows = await query.get();
+    final versionIds = {
+      for (final row in rows) row.read(formTemplates.versionUid),
+    }.whereType<String>().toSet();
+    if (versionIds.isEmpty) {
+      return const [];
+    }
+    final versions = await (_database.select(_database.formTemplateVersions)
+          ..where((version) => version.id.isIn(versionIds)))
+        .get();
+    final referenceVersions = {
+      for (final version in versions)
+        if (version.fields.any((field) => field.type == ValueType.Reference))
+          version.id,
+    };
+
     final scopesByOrgUnit = <String, ReferenceCatalogScope>{};
     for (final row in rows) {
-      final version = row.readTable(_database.formTemplateVersions);
-      if (!version.fields.any((field) => field.type == ValueType.Reference)) {
+      if (!referenceVersions.contains(row.read(formTemplates.versionUid))) {
         continue;
       }
-
-      final assignment = row.readTable(_database.assignments);
+      final orgUnit = row.read(assignments.orgUnit)!;
       scopesByOrgUnit.putIfAbsent(
-        assignment.orgUnit,
+        orgUnit,
         () => ReferenceCatalogScope(
-          assignmentUid: assignment.id,
-          orgUnitUid: assignment.orgUnit,
+          assignmentUid: row.read(assignments.id)!,
+          orgUnitUid: orgUnit,
         ),
       );
     }

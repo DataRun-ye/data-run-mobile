@@ -372,6 +372,18 @@
     }
   },
   "referenceRecordAgain": "Record again",
+  "formSetupErrorTitle": "This form has a setup error: some checks or conditions will not work. Report it to your supervisor.",
+  "formSetupUnknownFields": "{element} uses fields that do not exist: {names}",
+  "@formSetupUnknownFields": {
+    "placeholders": {
+      "element": {
+        "type": "String"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
   "timeFieldHint": "Select a Time",
   "teamFieldHint": "Select a Team",
   "fullNameFieldHint": "Enter a full name",

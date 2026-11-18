@@ -942,6 +942,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get referenceRecordAgain => 'Record again';
 
   @override
+  String get formSetupErrorTitle =>
+      'This form has a setup error: some checks or conditions will not work. Report it to your supervisor.';
+
+  @override
+  String formSetupUnknownFields(String element, String names) {
+    return '$element uses fields that do not exist: $names';
+  }
+
+  @override
   String get timeFieldHint => 'Select a Time';
 
   @override

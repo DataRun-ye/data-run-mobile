@@ -940,6 +940,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get referenceRecordAgain => 'تسجيل مرة أخرى';
 
   @override
+  String get formSetupErrorTitle =>
+      'في إعداد هذه الاستمارة خطأ: بعض التحققات أو الشروط لن تعمل. أبلغ المشرف.';
+
+  @override
+  String formSetupUnknownFields(String element, String names) {
+    return '$element يستخدم حقولًا غير موجودة: $names';
+  }
+
+  @override
   String get timeFieldHint => 'اختر وقتًا';
 
   @override

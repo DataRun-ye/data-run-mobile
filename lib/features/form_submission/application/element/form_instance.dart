@@ -12,6 +12,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_element_exception.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
+import 'package:datarunmobile/features/form_submission/application/form_reference_check.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -70,6 +71,23 @@ class FormInstance {
   Section get formSection => _formSection;
 
   final FormMetadata formMetadata;
+
+  /// References in this form version to fields it does not have; see
+  /// [FormReferenceCheck]. The form screen shows them so testers report them.
+  late final Map<String, Set<String>> unknownReferences =
+      _findUnknownReferences();
+
+  Map<String, Set<String>> _findUnknownReferences() {
+    final unknown =
+        FormReferenceCheck.unknownReferences(formFlatTemplate.template);
+    if (unknown.isNotEmpty) {
+      logError(
+        'Form ${formMetadata.formId} version ${formMetadata.versionUid} '
+        'refers to unknown fields: $unknown',
+      );
+    }
+    return unknown;
+  }
 
   // String? get submissionUid => formMetadata.submission;
 

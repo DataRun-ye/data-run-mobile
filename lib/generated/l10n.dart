@@ -2262,6 +2262,26 @@ class S {
     );
   }
 
+  /// `This form has a setup error: some checks or conditions will not work. Report it to your supervisor.`
+  String get formSetupErrorTitle {
+    return Intl.message(
+      'This form has a setup error: some checks or conditions will not work. Report it to your supervisor.',
+      name: 'formSetupErrorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{element} uses fields that do not exist: {names}`
+  String formSetupUnknownFields(String element, String names) {
+    return Intl.message(
+      '$element uses fields that do not exist: $names',
+      name: 'formSetupUnknownFields',
+      desc: '',
+      args: [element, names],
+    );
+  }
+
   /// `Select a Time`
   String get timeFieldHint {
     return Intl.message(

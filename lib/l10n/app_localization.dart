@@ -1724,6 +1724,18 @@ abstract class AppLocalizations {
   /// **'Record again'**
   String get referenceRecordAgain;
 
+  /// No description provided for @formSetupErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This form has a setup error: some checks or conditions will not work. Report it to your supervisor.'**
+  String get formSetupErrorTitle;
+
+  /// No description provided for @formSetupUnknownFields.
+  ///
+  /// In en, this message translates to:
+  /// **'{element} uses fields that do not exist: {names}'**
+  String formSetupUnknownFields(String element, String names);
+
   /// No description provided for @timeFieldHint.
   ///
   /// In en, this message translates to:

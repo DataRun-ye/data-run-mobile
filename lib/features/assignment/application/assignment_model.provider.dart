@@ -20,12 +20,27 @@ Future<List<AssignmentModel>> assignments(
   final List<AssignmentFormAvailability> userForms =
       await ref.watch(userAvailableFormsProvider().future);
 
+  return withUserForms(assignments, userForms);
+}
+
+/// Gives each assignment its forms from [userForms], sorted by form.
+///
+/// The forms are grouped by assignment in one pass. Matching every
+/// assignment against every form of the user ran on the UI thread, which
+/// Android shares with Flutter: users with thousands of assignments froze
+/// for seconds and got "app not responding".
+List<AssignmentModel> withUserForms(
+  List<AssignmentModel> assignments,
+  List<AssignmentFormAvailability> userForms,
+) {
+  final formsByAssignment =
+      groupBy(userForms, (uf) => uf.assignmentForm.assignment);
   return assignments.map((assignment) {
-    final List<Pair<AssignmentForm, bool>> assignmentForms = userForms
-        .where((uf) => uf.assignmentForm.assignment == assignment.id)
-        .map((uf) => Pair(uf.assignmentForm, uf.isAvailableLocally))
-        .sorted((a, b) => a.first.form.compareTo(b.first.form))
-        .toList();
+    final List<Pair<AssignmentForm, bool>> assignmentForms =
+        (formsByAssignment[assignment.id] ?? const [])
+            .map((uf) => Pair(uf.assignmentForm, uf.isAvailableLocally))
+            .sorted((a, b) => a.first.form.compareTo(b.first.form))
+            .toList();
     return assignment.copyWith(userForms: assignmentForms);
   }).toList();
 }

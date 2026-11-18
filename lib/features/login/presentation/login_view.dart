@@ -28,6 +28,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
     authManager: appLocator<AuthManager>(),
     navigationService: appLocator<NavigationService>(),
   );
+  late final bool _practiceDayEnded =
+      appLocator<AuthManager>().practiceDayEnded;
 
   @override
   void dispose() {
@@ -74,6 +76,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       children: [
                         const LoginViewHeader(),
                         const SizedBox(height: 40),
+                        if (_practiceDayEnded) ...[
+                          const PracticeDayEndedNotice(),
+                          const SizedBox(height: 16),
+                        ],
                         Text(
                           S.of(context).login,
                           textAlign: TextAlign.center,
@@ -150,6 +156,31 @@ class _LoginViewState extends ConsumerState<LoginView> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Tells the user why the login screen appeared: the practice session ended
+/// with its day, so the next login is real unless Practice is switched on.
+class PracticeDayEndedNotice extends StatelessWidget {
+  const PracticeDayEndedNotice({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.deepOrange.withValues(alpha: 0.1),
+        border: Border.all(color: Colors.deepOrange),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.school, color: Colors.deepOrange),
+          const SizedBox(width: 12),
+          Expanded(child: Text(S.of(context).practiceDayEnded)),
+        ],
       ),
     );
   }

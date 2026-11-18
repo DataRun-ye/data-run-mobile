@@ -533,6 +533,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter a positive integer",
     ),
     "practice": MessageLookupByLibrary.simpleMessage("Practice"),
+    "practiceDayEnded": MessageLookupByLibrary.simpleMessage(
+      "Practice ends at midnight. Log in to work for real, or switch on Practice to practise again.",
+    ),
     "practiceHint": MessageLookupByLibrary.simpleMessage(
       "Train without saving anything: what you send is checked, then discarded",
     ),

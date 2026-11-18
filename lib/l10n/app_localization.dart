@@ -1808,6 +1808,12 @@ abstract class AppLocalizations {
   /// **'Deletes the practice data from this phone'**
   String get leavePracticeHint;
 
+  /// No description provided for @practiceDayEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice ends at midnight. Log in to work for real, or switch on Practice to practise again.'**
+  String get practiceDayEnded;
+
   /// No description provided for @dateAfterToday.
   ///
   /// In en, this message translates to:

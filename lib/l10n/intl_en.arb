@@ -407,6 +407,7 @@
   "practiceRibbon": "PRACTICE",
   "leavePractice": "Leave practice",
   "leavePracticeHint": "Deletes the practice data from this phone",
+  "practiceDayEnded": "Practice ends at midnight. Log in to work for real, or switch on Practice to practise again.",
   "dateAfterToday": "The date cannot be after today",
   "phoneClockWrong": "The phone's date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.",
   "@phoneClockWrong": {

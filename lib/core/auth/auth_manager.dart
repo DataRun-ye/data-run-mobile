@@ -55,6 +55,7 @@ class AuthManager extends ChangeNotifier {
   Future<void>? _sessionEnd;
   Future<void>? _scopeClosure;
   String? _sessionScopeUserId;
+  bool _practiceDayEnded = false;
 
   /// The full User object for the active user
   UserSession? _activeUserSession;
@@ -69,12 +70,20 @@ class AuthManager extends ChangeNotifier {
 
   UserSession? get activeUserSession => _activeUserSession;
 
+  /// Whether the last session was a practice session ended because its day
+  /// was over; the login screen says so until the next login.
+  bool get practiceDayEnded => _practiceDayEnded;
+
   /// Checks for any active session or previously logged in users.
   Future<void> initialize() async {
     _status = AuthStatus.unknown;
     notifyListeners();
 
     try {
+      if (_storedPracticeDayIsOver()) {
+        await _endPracticeDay(navigateToLogin: false);
+        return;
+      }
       final userSession = await _loadStartupSession();
       await _restoreSession(userSession);
       try {
@@ -97,6 +106,33 @@ class AuthManager extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
+
+  bool _storedPracticeDayIsOver() {
+    try {
+      return _authStorage.getActiveSession().practiceDayIsOver(DateTime.now());
+    } catch (_) {
+      return false; // no stored session: the normal startup path decides
+    }
+  }
+
+  /// Ends the active practice session once its day is over (see
+  /// [UserSession.practiceDayIsOver]); the next login is a real one unless
+  /// Practice is switched on again. The app calls this when it returns to the
+  /// foreground, and [initialize] does the same at startup. The practice data
+  /// stays on the phone: only [leavePractice] deletes it.
+  Future<void> endPracticeIfDayIsOver([DateTime? now]) async {
+    final session = _activeUserSession;
+    if (session == null || !session.practiceDayIsOver(now ?? DateTime.now())) {
+      return;
+    }
+    await _endPracticeDay(navigateToLogin: true);
+  }
+
+  Future<void> _endPracticeDay({required bool navigateToLogin}) {
+    logInfo('Practice session ended: its day is over');
+    _practiceDayEnded = true;
+    return _beginSessionEnd(navigateToLogin: navigateToLogin);
   }
 
   Future<UserSession> _loadStartupSession() async {
@@ -167,6 +203,7 @@ class AuthManager extends ChangeNotifier {
       _sessionOperationTracker.resume();
       operationTrackingResumed = true;
       await _activateUserSession(userSession);
+      _practiceDayEnded = false;
 
       try {
         await AppTelemetry.setUser(userSession);

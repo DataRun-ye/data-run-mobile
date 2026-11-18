@@ -988,6 +988,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get leavePracticeHint => 'يحذف بيانات التدريب من هذا الجهاز';
 
   @override
+  String get practiceDayEnded =>
+      'ينتهي التدريب عند منتصف الليل. سجّل الدخول للعمل الفعلي، أو شغّل «تدريب» لتتدرّب من جديد.';
+
+  @override
   String get dateAfterToday => 'لا يمكن أن يكون التاريخ بعد اليوم';
 
   @override

@@ -527,6 +527,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "أدخل عددًا صحيحًا موجبًا",
     ),
     "practice": MessageLookupByLibrary.simpleMessage("تدريب"),
+    "practiceDayEnded": MessageLookupByLibrary.simpleMessage(
+      "ينتهي التدريب عند منتصف الليل. سجّل الدخول للعمل الفعلي، أو شغّل «تدريب» لتتدرّب من جديد.",
+    ),
     "practiceHint": MessageLookupByLibrary.simpleMessage(
       "تدرّب دون حفظ أي شيء: يُفحص ما ترسله ثم يُهمل",
     ),

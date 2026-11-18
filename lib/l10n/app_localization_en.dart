@@ -992,6 +992,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leavePracticeHint => 'Deletes the practice data from this phone';
 
   @override
+  String get practiceDayEnded =>
+      'Practice ends at midnight. Log in to work for real, or switch on Practice to practise again.';
+
+  @override
   String get dateAfterToday => 'The date cannot be after today';
 
   @override

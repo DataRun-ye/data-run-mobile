@@ -39,4 +39,29 @@ void main() {
     expect(restored.localId, 'field-user${UserSession.practiceSuffix}');
     expect(legacy.practice, isFalse);
   });
+
+  test('practice lasts until midnight of the day it began', () {
+    final practice = session.asPractice(DateTime(2026, 11, 20, 9, 30));
+
+    expect(practice.practiceDayIsOver(DateTime(2026, 11, 20, 23, 59)), isFalse);
+    expect(practice.practiceDayIsOver(DateTime(2026, 11, 21, 0, 1)), isTrue);
+    expect(practice.practiceDayIsOver(DateTime(2026, 11, 19, 12)), isTrue,
+        reason: 'a clock set back is not the day practice began');
+    expect(session.practiceDayIsOver(DateTime(2026, 12, 1)), isFalse,
+        reason: 'a real session never ends this way');
+  });
+
+  test('the practice start survives a restart; without one practice is over',
+      () {
+    final began = DateTime(2026, 11, 20, 9, 30);
+    final restored =
+        UserSession.fromJsonString(session.asPractice(began).toJsonString());
+    final undated = UserSession.fromJson(
+      session.asPractice(began).toJson()..remove('practiceStartedAt'),
+    );
+
+    expect(restored.practiceStartedAt, began.toUtc());
+    expect(restored.practiceDayIsOver(DateTime(2026, 11, 20, 18)), isFalse);
+    expect(undated.practiceDayIsOver(DateTime(2026, 11, 20, 18)), isTrue);
+  });
 }

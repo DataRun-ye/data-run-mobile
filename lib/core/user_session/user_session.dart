@@ -31,9 +31,26 @@ class UserSession {
   /// stored, and its data on the phone is kept apart from the real session.
   final bool practice;
 
+  /// When this practice session began; see [practiceDayIsOver].
+  final DateTime? practiceStartedAt;
+
   /// Key of this session's data on the phone (database, tokens, files). The
   /// server account is [username] either way.
   String get localId => practice ? '$username$practiceSuffix' : username;
+
+  /// Whether this is a practice session whose day is over. Practice ends at
+  /// midnight (phone time) of the day it began, so a practice session left
+  /// on after training cannot quietly discard real work on later days. A
+  /// practice session without a start time predates this rule and is over.
+  bool practiceDayIsOver(DateTime now) {
+    if (!practice) return false;
+    final started = practiceStartedAt?.toLocal();
+    if (started == null) return true;
+    final today = now.toLocal();
+    return started.year != today.year ||
+        started.month != today.month ||
+        started.day != today.day;
+  }
 
   const UserSession({
     required this.id,
@@ -55,9 +72,12 @@ class UserSession {
     required this.userGroupsUIDs,
     required this.userFormsUIDs,
     this.practice = false,
+    this.practiceStartedAt,
   });
 
-  UserSession asPractice() => UserSession(
+  /// This account as a practice session beginning at [startedAt] (now when
+  /// omitted).
+  UserSession asPractice([DateTime? startedAt]) => UserSession(
         id: id,
         username: username,
         firstName: firstName,
@@ -77,6 +97,7 @@ class UserSession {
         userGroupsUIDs: userGroupsUIDs,
         userFormsUIDs: userFormsUIDs,
         practice: true,
+        practiceStartedAt: (startedAt ?? DateTime.now()).toUtc(),
       );
 
   factory UserSession.fromJson(Map<String, dynamic> json) {
@@ -100,6 +121,9 @@ class UserSession {
       userGroupsUIDs: List<String>.from(json['userGroupsUIDs'] ?? const []),
       userFormsUIDs: List<String>.from(json['userFormsUIDs'] ?? const []),
       practice: json['practice'] == true,
+      practiceStartedAt: json['practiceStartedAt'] is String
+          ? DateTime.tryParse(json['practiceStartedAt'] as String)
+          : null,
     );
   }
 
@@ -123,6 +147,7 @@ class UserSession {
         'userGroupsUIDs': userGroupsUIDs,
         'userFormsUIDs': userFormsUIDs,
         'practice': practice,
+        'practiceStartedAt': practiceStartedAt?.toUtc().toIso8601String(),
       };
 
   String toJsonString() => json.encode(toJson());

@@ -221,6 +221,67 @@ void main() {
     await authManager.logout();
   });
 
+  test('a practice session from an earlier day ends at startup', () async {
+    final databaseFactory = _TestDatabaseFactory();
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    final yesterday = DateTime.now().subtract(const Duration(days: 1));
+    await authStorage.persistAuthenticatedSession(
+      _userSession.asPractice(yesterday),
+      _loginTokens,
+    );
+    final authManager = createAuthManager(isOnline: false);
+
+    await authManager.initialize();
+
+    expect(authManager.status, AuthStatus.unauthenticated);
+    expect(authManager.practiceDayEnded, isTrue);
+    expect(databaseFactory.openCalls, 0);
+    expect(preferences.getString(CacheKeys.activeUserKey), isNull);
+    expect(await tokenStorage.getTokens('test-user__practice'), isNull);
+    expect(sessionStorage.readSession('test-user__practice')?.practice, isTrue,
+        reason: 'practice data stays on the phone until Leave practice');
+    expect(navigationService.routes, isEmpty,
+        reason: 'startup shows the login screen by itself');
+  });
+
+  test('a practice session ends when the app returns on a later day', () async {
+    final databaseFactory = _TestDatabaseFactory();
+    appLocator.registerSingleton<DatabaseFactory>(
+      databaseFactory,
+      dispose: (factory) => factory.close(),
+    );
+    final authManager = createAuthManager(authApi: _LoginAuthApi());
+    await authManager.login(
+      username: 'test-user',
+      password: 'password',
+      practice: true,
+    );
+
+    await authManager.endPracticeIfDayIsOver(DateTime.now());
+    expect(authManager.status, AuthStatus.authenticated,
+        reason: 'practice lasts the whole day it began');
+
+    await authManager.endPracticeIfDayIsOver(
+      DateTime.now().add(const Duration(days: 1)),
+    );
+
+    expect(authManager.status, AuthStatus.unauthenticated);
+    expect(authManager.practiceDayEnded, isTrue);
+    expect(navigationService.routes, [Routes.loginView]);
+    expect(await tokenStorage.getTokens('test-user__practice'), isNull);
+    await _waitFor(() => !appLocator.hasScope('test-user__practice'));
+    expect(sessionStorage.readSession('test-user__practice')?.practice, isTrue,
+        reason: 'practice data stays on the phone until Leave practice');
+
+    await authManager.login(username: 'test-user', password: 'password');
+    expect(authManager.practiceDayEnded, isFalse);
+    expect(authManager.activeUserSession?.practice, isFalse);
+    await authManager.logout();
+  });
+
   test('transient startup refresh failure restores the cached session',
       () async {
     final databaseFactory = _TestDatabaseFactory();

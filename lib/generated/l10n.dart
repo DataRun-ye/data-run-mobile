@@ -2387,6 +2387,16 @@ class S {
     );
   }
 
+  /// `Practice ends at midnight. Log in to work for real, or switch on Practice to practise again.`
+  String get practiceDayEnded {
+    return Intl.message(
+      'Practice ends at midnight. Log in to work for real, or switch on Practice to practise again.',
+      name: 'practiceDayEnded',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `The date cannot be after today`
   String get dateAfterToday {
     return Intl.message(

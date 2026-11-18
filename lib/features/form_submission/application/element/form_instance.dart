@@ -65,6 +65,11 @@ class FormInstance {
   Map<String, Map<String, DateTime>>? _recordedFieldValues;
   bool _refreshingValueWarnings = false;
 
+  /// How many visible marked fields hold each value, by field template id;
+  /// counted once per refresh. Checking every field against every other one
+  /// cost rows² per keystroke: seconds in a form of a few hundred rows.
+  Map<String, Map<String, int>>? _valueCounts;
+
   static bool _isMarked(Object? flag) => flag == true || flag == 'true';
 
   static bool _warnsIfRepeated(FieldInstance<dynamic> field) =>
@@ -102,12 +107,31 @@ class FormInstance {
     }
     _refreshingValueWarnings = true;
     try {
-      for (final field in _valueWarningFields(_formSection)) {
+      final fields = _valueWarningFields(_formSection).toList();
+      _valueCounts = _countVisibleValues(fields);
+      for (final field in fields) {
         field.refreshValueWarning();
       }
     } finally {
       _refreshingValueWarnings = false;
     }
+  }
+
+  static Map<String, Map<String, int>> _countVisibleValues(
+    Iterable<FieldInstance<dynamic>> fields,
+  ) {
+    final counts = <String, Map<String, int>>{};
+    for (final field in fields) {
+      final normalized = field.visible
+          ? RecordedValuesLookup.normalize(field.retainedValue)
+          : null;
+      if (normalized == null) {
+        continue;
+      }
+      final byValue = counts.putIfAbsent(field.template.id, () => {});
+      byValue[normalized] = (byValue[normalized] ?? 0) + 1;
+    }
+    return counts;
   }
 
   String? _valueWarningFor(FieldInstance<dynamic> field, Object? value) {
@@ -122,12 +146,14 @@ class FormInstance {
         DateHelper.uiDateFormat().format(recordedAt.toLocal()),
       );
     }
-    final repeatedInForm = _valueWarningFields(_formSection).any((other) =>
-        !identical(other, field) &&
-        other.template.id == field.template.id &&
-        other.visible &&
-        RecordedValuesLookup.normalize(other.retainedValue) == normalized);
-    return repeatedInForm ? S.current.valueRepeatedInForm : null;
+    // Other visible fields of the same template holding the value: the
+    // count includes this field when it is visible and holds it.
+    final holders = _valueCounts?[field.template.id]?[normalized] ?? 0;
+    final self = field.visible &&
+            RecordedValuesLookup.normalize(field.retainedValue) == normalized
+        ? 1
+        : 0;
+    return holders - self > 0 ? S.current.valueRepeatedInForm : null;
   }
 
   Future<void> _loadRecordedFieldValues() async {

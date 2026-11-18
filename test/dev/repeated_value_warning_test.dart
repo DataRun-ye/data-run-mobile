@@ -64,6 +64,30 @@ void main() {
     fixture.instance.dispose();
   });
 
+  test('typing over a repeated card number clears both rows and warns anew',
+      () {
+    final fixture = _buildFixture(rows: [
+      {'card': '100'},
+      {'card': '100'},
+      {'card': '200'},
+    ]);
+
+    cardOf(fixture.root, 1).updateValue('201');
+
+    expect(cardOf(fixture.root, 0).elementState.warning, isEmpty,
+        reason: 'a value alone in the form is not a repeat of itself');
+    expect(cardOf(fixture.root, 1).elementState.warning, isEmpty);
+
+    cardOf(fixture.root, 1).updateValue('٢٠٠');
+
+    expect(cardOf(fixture.root, 0).elementState.warning, isEmpty);
+    expect(cardOf(fixture.root, 1).elementState.warning,
+        S.current.valueRepeatedInForm);
+    expect(cardOf(fixture.root, 2).elementState.warning,
+        S.current.valueRepeatedInForm);
+    fixture.instance.dispose();
+  });
+
   test('a card number recorded in another submission of the village warns',
       () async {
     await _seedOtherSubmission(database, card: '101');

@@ -21,6 +21,14 @@ class DataFormTemplateDatasource
   }
 
   @override
+  Future<void> persistExtraEntities(List<CompanionInsert> extra) async {
+    if (extra.isEmpty) return;
+    await db.formTemplateVersionsDao.replaceKeepingVersionsInUse(
+      extra.map((item) => item.entity as FormTemplateVersion).toList(),
+    );
+  }
+
+  @override
   FormTemplate mapRemoteItem(Map<String, dynamic> json) {
     final base = super.mapRemoteItem(json);
     final bool disabled = json['disabled'] == true;

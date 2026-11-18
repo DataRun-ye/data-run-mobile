@@ -11,6 +11,29 @@ class FormTemplateVersionsDao extends DatabaseAccessor<AppDatabase>
     with _$FormTemplateVersionsDaoMixin {
   FormTemplateVersionsDao(AppDatabase db) : super(db);
 
+  /// Stores the versions the server sent, and drops the others unless a local
+  /// submission still points at them.
+  ///
+  /// The server sends only versions of forms the user can access. A submission
+  /// whose version is gone disappears from the submission list, cannot be
+  /// opened, and fails the whole upload batch it is part of.
+  Future<void> replaceKeepingVersionsInUse(
+    List<Insertable<FormTemplateVersion>> incoming,
+  ) {
+    final submissions = attachedDatabase.dataInstances;
+    final versionsInUse = selectOnly(submissions)
+      ..addColumns([submissions.templateVersion])
+      ..where(submissions.templateVersion.isNotNull());
+
+    return batch((batch) {
+      batch.deleteWhere(
+        formTemplateVersions,
+        (version) => version.id.isNotInQuery(versionsInUse),
+      );
+      batch.insertAllOnConflictUpdate(formTemplateVersions, incoming);
+    });
+  }
+
   Selectable<FormTemplateModel> selectFormTemplatesWithRefs({
     String? assignmentId,
     String? versionId,

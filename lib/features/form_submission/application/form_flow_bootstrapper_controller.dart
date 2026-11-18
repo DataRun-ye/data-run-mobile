@@ -55,12 +55,9 @@ class FormFlowBootstrapperController {
         }
       }
 
-      if (appLocator.currentScopeName == dataInstance.id) {
-        await closeFormScope(dataInstance.id);
-      }
-      await appLocator.pushNewScopeAsync(
-        scopeName: dataInstance.id,
-        init: (getIt) async {
+      await openFormScope(
+        dataInstance.id,
+        (getIt) async {
           final fieldContextRegistry =
               getIt.registerSingleton<FieldContextRegistry>(
             FieldContextRegistry(),

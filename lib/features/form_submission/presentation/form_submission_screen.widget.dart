@@ -42,9 +42,18 @@ class FormSubmissionScreen extends StatefulHookConsumerWidget {
 }
 
 class FormSubmissionScreenState extends ConsumerState<FormSubmissionScreen> {
+  /// The scope this screen opened with; see [closeFormScope].
+  Object? _scopeToken;
+
+  @override
+  void initState() {
+    super.initState();
+    _scopeToken = formScopeToken(widget.submissionId);
+  }
+
   @override
   void dispose() {
-    unawaited(closeFormScope(widget.submissionId));
+    unawaited(closeFormScope(widget.submissionId, token: _scopeToken));
     super.dispose();
   }
 

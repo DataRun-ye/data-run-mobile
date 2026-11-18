@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:datarunmobile/core/util/latin_digits_input_formatter.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key, this.onResult});
@@ -90,6 +91,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               ? (event) => username.unfocus()
                               : null,
                           formControl: username,
+                          inputFormatters: const [LatinDigitsInputFormatter()],
                           decoration: InputDecoration(
                             labelText: S.of(context).username,
                             prefixIcon: Icon(Icons.person, color: cs.primary),
@@ -98,6 +100,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         const SizedBox(height: 16),
                         ReactiveTextField<String>(
                           formControl: password,
+                          inputFormatters: const [LatinDigitsInputFormatter()],
                           obscureText: isPasswordObscured,
                           decoration: InputDecoration(
                             labelText: S.of(context).password,

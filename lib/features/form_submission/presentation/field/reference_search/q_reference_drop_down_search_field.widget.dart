@@ -10,6 +10,7 @@ import 'package:datarunmobile/features/form_submission/presentation/field/refere
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:datarunmobile/core/util/latin_digits_input_formatter.dart';
 
 class QReferenceDropDownSearchField extends StatefulWidget {
   const QReferenceDropDownSearchField({super.key, required this.element});
@@ -270,6 +271,7 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
               controller: _searchController,
+              inputFormatters: const [LatinDigitsInputFormatter()],
               autofocus: true,
               textInputAction: TextInputAction.search,
               onChanged: _onSearchChanged,

@@ -6,6 +6,7 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:datarunmobile/core/util/latin_digits_input_formatter.dart';
 
 class QTextTypeField<T> extends StatefulHookConsumerWidget {
   const QTextTypeField({super.key, required this.element});
@@ -58,6 +59,7 @@ class QTextTypeFieldState<T> extends ConsumerState<QTextTypeField<T>> {
       maxLines: widget.element.maxLines,
       textInputAction: formInstance.fieldInputAction(elementPath),
       keyboardType: widget.element.inputType,
+      inputFormatters: const [LatinDigitsInputFormatter()],
       textAlign: widget.element.template.type.isNumeric
           ? TextAlign.end
           : TextAlign.start,

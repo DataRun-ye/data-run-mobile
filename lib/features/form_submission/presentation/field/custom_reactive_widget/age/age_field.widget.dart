@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:datarunmobile/features/form_submission/presentation/field/custom_reactive_widget/age/age_value.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:datarunmobile/core/util/latin_digits_input_formatter.dart';
 
 /// AgeField widget displays inline Y/M/D input fields and calculates the
 /// underlying DOB
@@ -147,6 +148,7 @@ class _AgeFieldWidgetState extends State<AgeFieldWidget> {
       controller: controller,
       focusNode: focusNode,
       keyboardType: TextInputType.number,
+      inputFormatters: const [LatinDigitsInputFormatter()],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: label,

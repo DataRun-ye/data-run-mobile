@@ -8,6 +8,7 @@ import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:datarunmobile/core/util/latin_digits_input_formatter.dart';
 
 class AssignmentScreen extends HookConsumerWidget {
   const AssignmentScreen({
@@ -47,6 +48,7 @@ class AssignmentScreen extends HookConsumerWidget {
           TextFormField(
             focusNode: focusNode,
             controller: controller,
+            inputFormatters: const [LatinDigitsInputFormatter()],
             decoration: effectiveDecoration,
             onChanged: (searchQuery) {
               ref.read(filterQueryProvider.notifier).updateSearchQuery(

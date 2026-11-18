@@ -1,4 +1,5 @@
 import 'package:datarunmobile/core/http/server_clock.dart';
+import 'package:datarunmobile/core/util/date_helper.dart';
 import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 import 'package:datarunmobile/core/sync_manager/sync_resource_status.dart';
 import 'package:datarunmobile/features/sync/application/sync_resources.controller.dart';
@@ -221,7 +222,7 @@ class _PhoneClockWarning extends StatelessWidget {
         if (!clock.isWrong || serverNow == null) {
           return const SizedBox.shrink();
         }
-        final format = DateFormat('yyyy-MM-dd HH:mm');
+        final format = DateHelper.uiDateFormatNoSeconds();
         final colors = Theme.of(context).colorScheme;
         return Card(
           margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),

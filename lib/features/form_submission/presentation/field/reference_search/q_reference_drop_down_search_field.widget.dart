@@ -13,7 +13,6 @@ import 'package:datarunmobile/features/form_submission/application/reference_fie
 import 'package:datarunmobile/features/form_submission/presentation/field/reference_search/reference_value_display.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:datarunmobile/core/util/latin_digits_input_formatter.dart';
 
@@ -302,7 +301,7 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
   }
 
   static String _formatDate(DateTime value) =>
-      DateFormat(DateHelper.UI_DATE_FORMAT).format(value.toLocal());
+      DateHelper.uiDateFormat().format(value.toLocal());
 
   String _nameErrorMessage(BuildContext context, String reason) {
     return switch (reason) {

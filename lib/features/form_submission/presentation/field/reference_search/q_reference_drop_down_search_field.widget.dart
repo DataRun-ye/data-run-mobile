@@ -246,6 +246,19 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
       _createError = null;
     });
     try {
+      final existing = await widget.service.findSameName(
+        orgUnitUid: widget.orgUnitUid,
+        displayName: name,
+      );
+      if (existing != null) {
+        if (!mounted) return;
+        final choice = await _askAboutExisting(existing);
+        if (!mounted || choice == null) return;
+        if (choice == _ExistingChoice.useExisting) {
+          await _pick(existing);
+          return;
+        }
+      }
       final entry = await widget.service.create(
         orgUnitUid: widget.orgUnitUid,
         displayName: name,
@@ -266,6 +279,42 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
         setState(() => _creating = false);
       }
     }
+  }
+
+  /// Asks what to do when the typed name is already in the list once spelling
+  /// variants are ignored. A name added by mistake reaches every phone in the
+  /// village and cannot be removed, so the existing entry is offered first;
+  /// namesakes are real, so adding anyway stays possible.
+  Future<_ExistingChoice?> _askAboutExisting(ReferenceEntry existing) {
+    final alreadySelected = widget.disabledUids.contains(existing.uid);
+    return showDialog<_ExistingChoice>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(S.of(dialogContext).referenceExistsTitle),
+        content: Text(alreadySelected
+            ? S
+                .of(dialogContext)
+                .referenceExistsSelectedMessage(existing.displayName)
+            : S.of(dialogContext).referenceExistsMessage(existing.displayName)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(S.of(dialogContext).cancel),
+          ),
+          TextButton(
+            onPressed: () =>
+                Navigator.pop(dialogContext, _ExistingChoice.addAnyway),
+            child: Text(S.of(dialogContext).referenceAddAnyway),
+          ),
+          if (!alreadySelected)
+            FilledButton(
+              onPressed: () =>
+                  Navigator.pop(dialogContext, _ExistingChoice.useExisting),
+              child: Text(S.of(dialogContext).referenceUseExisting),
+            ),
+        ],
+      ),
+    );
   }
 
   /// Picks [entry], first asking for confirmation when another submission
@@ -450,3 +499,5 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
     );
   }
 }
+
+enum _ExistingChoice { useExisting, addAnyway }

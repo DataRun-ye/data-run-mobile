@@ -50,6 +50,16 @@ class ReferenceFieldService {
     return _repository.findInScope(uid: uid, orgUnitUid: orgUnitUid);
   }
 
+  Future<ReferenceEntry?> findSameName({
+    required String orgUnitUid,
+    required String displayName,
+  }) {
+    return _repository.findSameName(
+      orgUnitUid: orgUnitUid,
+      displayName: displayName,
+    );
+  }
+
   Future<ReferenceEntry> create({
     required String orgUnitUid,
     required String displayName,

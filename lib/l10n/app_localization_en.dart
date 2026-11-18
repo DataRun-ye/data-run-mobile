@@ -939,6 +939,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get referenceExistsTitle => 'Already in the list';
+
+  @override
+  String referenceExistsMessage(String name) {
+    return '$name is already in the list. Use it instead of adding a new one?';
+  }
+
+  @override
+  String referenceExistsSelectedMessage(String name) {
+    return '$name is already in the list and already selected in this form. Add a new one with the same name anyway?';
+  }
+
+  @override
+  String get referenceUseExisting => 'Use existing';
+
+  @override
+  String get referenceAddAnyway => 'Add anyway';
+
+  @override
   String get referenceRecordAgain => 'Record again';
 
   @override

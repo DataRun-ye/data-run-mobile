@@ -2252,6 +2252,56 @@ class S {
     );
   }
 
+  /// `Already in the list`
+  String get referenceExistsTitle {
+    return Intl.message(
+      'Already in the list',
+      name: 'referenceExistsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{name} is already in the list. Use it instead of adding a new one?`
+  String referenceExistsMessage(String name) {
+    return Intl.message(
+      '$name is already in the list. Use it instead of adding a new one?',
+      name: 'referenceExistsMessage',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `{name} is already in the list and already selected in this form. Add a new one with the same name anyway?`
+  String referenceExistsSelectedMessage(String name) {
+    return Intl.message(
+      '$name is already in the list and already selected in this form. Add a new one with the same name anyway?',
+      name: 'referenceExistsSelectedMessage',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Use existing`
+  String get referenceUseExisting {
+    return Intl.message(
+      'Use existing',
+      name: 'referenceUseExisting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add anyway`
+  String get referenceAddAnyway {
+    return Intl.message(
+      'Add anyway',
+      name: 'referenceAddAnyway',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Record again`
   String get referenceRecordAgain {
     return Intl.message(

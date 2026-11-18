@@ -371,6 +371,25 @@
       }
     }
   },
+  "referenceExistsTitle": "Already in the list",
+  "referenceExistsMessage": "{name} is already in the list. Use it instead of adding a new one?",
+  "@referenceExistsMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "referenceExistsSelectedMessage": "{name} is already in the list and already selected in this form. Add a new one with the same name anyway?",
+  "@referenceExistsSelectedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "referenceUseExisting": "Use existing",
+  "referenceAddAnyway": "Add anyway",
   "referenceRecordAgain": "Record again",
   "valueRecordedBefore": "This value was already recorded on {date} in another form",
   "@valueRecordedBefore": {

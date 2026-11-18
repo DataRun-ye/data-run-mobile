@@ -937,6 +937,25 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get referenceExistsTitle => 'موجود في القائمة';
+
+  @override
+  String referenceExistsMessage(String name) {
+    return '$name موجود في القائمة. هل تريد استخدامه بدلاً من إضافة اسم جديد؟';
+  }
+
+  @override
+  String referenceExistsSelectedMessage(String name) {
+    return '$name موجود في القائمة ومختار مسبقًا في هذه الاستمارة. هل تريد إضافة اسم جديد بنفس الاسم؟';
+  }
+
+  @override
+  String get referenceUseExisting => 'استخدام الموجود';
+
+  @override
+  String get referenceAddAnyway => 'إضافة على أي حال';
+
+  @override
   String get referenceRecordAgain => 'تسجيل مرة أخرى';
 
   @override

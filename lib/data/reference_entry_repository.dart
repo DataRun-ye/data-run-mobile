@@ -161,6 +161,26 @@ class ReferenceEntryRepository {
         .toList(growable: false);
   }
 
+  /// An entry in [orgUnitUid] whose name is [displayName] once both are
+  /// folded with [SearchFolding] (spelling variants, diacritics and spaces
+  /// ignored), or null. Used to offer an existing household before adding a
+  /// near-identical one to the shared list.
+  Future<ReferenceEntry?> findSameName({
+    required String orgUnitUid,
+    required String displayName,
+  }) async {
+    final folded = SearchFolding.fold(displayName);
+    if (folded.isEmpty) return null;
+    final entries = await (_database.select(_database.referenceEntries)
+          ..where((row) => row.orgUnitUid.equals(orgUnitUid))
+          ..orderBy([(row) => OrderingTerm.asc(row.uid)]))
+        .get();
+    for (final entry in entries) {
+      if (SearchFolding.fold(entry.displayName) == folded) return entry;
+    }
+    return null;
+  }
+
   Future<ReferenceEntry?> findInScope({
     required String uid,
     required String orgUnitUid,

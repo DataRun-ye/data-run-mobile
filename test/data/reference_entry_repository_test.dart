@@ -203,6 +203,53 @@ void main() {
     );
   });
 
+  test('finds an entry with the same name once spelling is ignored', () async {
+    await repository.upsertRemotePage(orgUnitUid: 'org-1', entries: [
+      ReferenceEntry(
+        uid: _referenceUid(1),
+        orgUnitUid: 'org-1',
+        displayName: 'أحمد علي صالح عبد الله',
+      ),
+      ReferenceEntry(
+        uid: _referenceUid(2),
+        orgUnitUid: 'org-1',
+        displayName: 'فاطمة محمد حسن علي',
+      ),
+    ]);
+    await repository.upsertRemotePage(orgUnitUid: 'org-2', entries: [
+      ReferenceEntry(
+        uid: _referenceUid(3),
+        orgUnitUid: 'org-2',
+        displayName: 'احمد علي صالح عبدالله',
+      ),
+    ]);
+
+    final same = await repository.findSameName(
+      orgUnitUid: 'org-1',
+      displayName: ' احمد علي  صالح عبدالله ',
+    );
+    expect(same?.uid, _referenceUid(1));
+    expect(
+      await repository.findSameName(
+        orgUnitUid: 'org-1',
+        displayName: 'فاطمه محمد حسن علي',
+      ),
+      isNotNull,
+    );
+    expect(
+      await repository.findSameName(
+        orgUnitUid: 'org-1',
+        displayName: 'أحمد علي صالح',
+      ),
+      isNull,
+      reason: 'a shorter name is a different name',
+    );
+    expect(
+      await repository.findSameName(orgUnitUid: 'org-3', displayName: 'احمد'),
+      isNull,
+    );
+  });
+
   test('search matches spelling variants and words in any order', () async {
     await repository.upsertRemotePage(orgUnitUid: 'org-1', entries: [
       ReferenceEntry(
@@ -261,8 +308,8 @@ void main() {
     );
 
     expect(result, hasLength(10));
-    expect(result.every((entry) => entry.displayName.startsWith('منزل')),
-        isTrue);
+    expect(
+        result.every((entry) => entry.displayName.startsWith('منزل')), isTrue);
     expect(result.first.uid, _referenceUid(1));
   });
 

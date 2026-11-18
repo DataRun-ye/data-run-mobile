@@ -1718,6 +1718,36 @@ abstract class AppLocalizations {
   /// **'{name} was recorded on {date} in another form. Record it again?'**
   String referenceRecordAgainMessage(String name, String date);
 
+  /// No description provided for @referenceExistsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Already in the list'**
+  String get referenceExistsTitle;
+
+  /// No description provided for @referenceExistsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is already in the list. Use it instead of adding a new one?'**
+  String referenceExistsMessage(String name);
+
+  /// No description provided for @referenceExistsSelectedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is already in the list and already selected in this form. Add a new one with the same name anyway?'**
+  String referenceExistsSelectedMessage(String name);
+
+  /// No description provided for @referenceUseExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'Use existing'**
+  String get referenceUseExisting;
+
+  /// No description provided for @referenceAddAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'Add anyway'**
+  String get referenceAddAnyway;
+
   /// No description provided for @referenceRecordAgain.
   ///
   /// In en, this message translates to:

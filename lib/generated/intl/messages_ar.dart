@@ -550,6 +550,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "rescheduled": MessageLookupByLibrary.simpleMessage("جدولة"),
     "reset": MessageLookupByLibrary.simpleMessage("تفريغ"),
     "resources": MessageLookupByLibrary.simpleMessage("الموارد"),
+    "restartToUpdate": MessageLookupByLibrary.simpleMessage("إعادة التشغيل"),
     "restoreItem": MessageLookupByLibrary.simpleMessage("استعادة العنصر"),
     "reviewFormData": MessageLookupByLibrary.simpleMessage("مراجعة الأخطاء"),
     "save": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -696,6 +697,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "unsupportedValueType": MessageLookupByLibrary.simpleMessage(
       "نوع غير مدعوم للقيمة",
+    ),
+    "updateReadyToInstall": MessageLookupByLibrary.simpleMessage(
+      "إصدار جديد من التطبيق جاهز للتثبيت",
     ),
     "urlFieldHint": MessageLookupByLibrary.simpleMessage("أدخل رابط URL"),
     "user": MessageLookupByLibrary.simpleMessage("مستخدم"),

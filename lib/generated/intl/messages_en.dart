@@ -562,6 +562,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "rescheduled": MessageLookupByLibrary.simpleMessage("Rescheduled"),
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resources": MessageLookupByLibrary.simpleMessage("Resources"),
+    "restartToUpdate": MessageLookupByLibrary.simpleMessage("Restart"),
     "restoreItem": MessageLookupByLibrary.simpleMessage("Restore Item"),
     "reviewFormData": MessageLookupByLibrary.simpleMessage("Review"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
@@ -712,6 +713,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "unsupportedValueType": MessageLookupByLibrary.simpleMessage(
       "Unsupported value type",
+    ),
+    "updateReadyToInstall": MessageLookupByLibrary.simpleMessage(
+      "A new version of the app is ready to install",
     ),
     "urlFieldHint": MessageLookupByLibrary.simpleMessage("Enter a URL"),
     "user": MessageLookupByLibrary.simpleMessage("user"),

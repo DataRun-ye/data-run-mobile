@@ -2282,6 +2282,21 @@ class S {
     );
   }
 
+  /// `A new version of the app is ready to install`
+  String get updateReadyToInstall {
+    return Intl.message(
+      'A new version of the app is ready to install',
+      name: 'updateReadyToInstall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restart`
+  String get restartToUpdate {
+    return Intl.message('Restart', name: 'restartToUpdate', desc: '', args: []);
+  }
+
   /// `The date cannot be after today`
   String get dateAfterToday {
     return Intl.message(

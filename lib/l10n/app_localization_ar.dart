@@ -948,6 +948,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get valueRepeatedInForm => 'هذه القيمة مكررة في هذه الاستمارة';
 
   @override
+  String get updateReadyToInstall => 'إصدار جديد من التطبيق جاهز للتثبيت';
+
+  @override
+  String get restartToUpdate => 'إعادة التشغيل';
+
+  @override
   String get dateAfterToday => 'لا يمكن أن يكون التاريخ بعد اليوم';
 
   @override

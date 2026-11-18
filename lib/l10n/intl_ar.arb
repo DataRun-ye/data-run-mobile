@@ -319,6 +319,8 @@
   "referenceRecordAgain": "تسجيل مرة أخرى",
   "valueRecordedBefore": "سُجّلت هذه القيمة بتاريخ {date} في استمارة أخرى",
   "valueRepeatedInForm": "هذه القيمة مكررة في هذه الاستمارة",
+  "updateReadyToInstall": "إصدار جديد من التطبيق جاهز للتثبيت",
+  "restartToUpdate": "إعادة التشغيل",
   "dateAfterToday": "لا يمكن أن يكون التاريخ بعد اليوم",
   "phoneClockWrong": "تاريخ أو وقت الهاتف غير صحيح: الهاتف يعرض {phoneTime} والخادم {serverTime}. صحّحه من إعدادات الهاتف، وإلا ستُسجَّل تواريخ خاطئة في الاستمارات.",
   "formSetupErrorTitle": "في إعداد هذه الاستمارة خطأ: بعض التحققات أو الشروط لن تعمل. أبلغ المشرف.",

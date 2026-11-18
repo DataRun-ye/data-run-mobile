@@ -950,6 +950,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get valueRepeatedInForm => 'This value is repeated in this form';
 
   @override
+  String get updateReadyToInstall =>
+      'A new version of the app is ready to install';
+
+  @override
+  String get restartToUpdate => 'Restart';
+
+  @override
   String get dateAfterToday => 'The date cannot be after today';
 
   @override

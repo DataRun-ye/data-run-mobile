@@ -1,3 +1,4 @@
+import 'package:datarunmobile/core/update/app_update_check.dart';
 import 'package:datarunmobile/data/app_about_info.provider.dart';
 import 'package:datarunmobile/features/activity/presentation/activity_list_view.dart';
 import 'package:datarunmobile/features/home/presentation/drawer/app_drawer.dart';
@@ -34,7 +35,7 @@ class HomeWrapperPage extends ConsumerWidget {
         ),
       ),
       drawer: const AppDrawer(),
-      body: SafeArea(child: const ActivityListView()),
+      body: const SafeArea(child: AppUpdateCheck(child: ActivityListView())),
     );
   }
 }

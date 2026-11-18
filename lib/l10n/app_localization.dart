@@ -1736,6 +1736,18 @@ abstract class AppLocalizations {
   /// **'This value is repeated in this form'**
   String get valueRepeatedInForm;
 
+  /// No description provided for @updateReadyToInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of the app is ready to install'**
+  String get updateReadyToInstall;
+
+  /// No description provided for @restartToUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restartToUpdate;
+
   /// No description provided for @dateAfterToday.
   ///
   /// In en, this message translates to:

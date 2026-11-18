@@ -23,7 +23,11 @@ class SyncProgressCircularIndicator extends StatelessWidget {
       circularStrokeCap: CircularStrokeCap.round,
       backgroundColor: Colors.transparent,
       progressColor: cs.inversePrimary,
-      percent: ((syncProgressInfo?.overallPercentage ?? 0) / 100),
+      // Summed progress can land a hair above 100 (1.0000000000000002), and
+      // the indicator throws outside 0..1.
+      percent: ((syncProgressInfo?.overallPercentage ?? 0) / 100)
+          .clamp(0.0, 1.0)
+          .toDouble(),
       center: (syncProgressInfo?.completed ?? false)
           ? Icon(
               syncProgressInfo?.overallState.isSuccess == true

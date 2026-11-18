@@ -1724,6 +1724,12 @@ abstract class AppLocalizations {
   /// **'Record again'**
   String get referenceRecordAgain;
 
+  /// No description provided for @dateAfterToday.
+  ///
+  /// In en, this message translates to:
+  /// **'The date cannot be after today'**
+  String get dateAfterToday;
+
   /// No description provided for @phoneClockWrong.
   ///
   /// In en, this message translates to:

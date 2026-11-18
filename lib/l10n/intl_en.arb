@@ -372,6 +372,7 @@
     }
   },
   "referenceRecordAgain": "Record again",
+  "dateAfterToday": "The date cannot be after today",
   "phoneClockWrong": "The phone's date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.",
   "@phoneClockWrong": {
     "placeholders": {

@@ -103,8 +103,11 @@ class CustomReactiveDateTimePicker
                     onTap: () async {
                       field.control.focus();
                       final raw = field.control.value;
-                      DateTime? initial =
-                          _getInitialDate(raw, lastDate ?? DateTime(2100));
+                      DateTime? initial = initialDateWithin(
+                        raw,
+                        firstDate ?? DateTime(1900),
+                        lastDate ?? DateTime(2100),
+                      );
 
                       DateTime? pickedDate;
                       TimeOfDay? pickedTime;
@@ -363,11 +366,20 @@ class CustomReactiveDateTimePicker
         : TimeOfDay.now();
   }
 
-  static DateTime _getInitialDate(String? raw, DateTime lastDate) {
-    final dt = raw != null ? DateTime.tryParse(raw) : null;
-    final now = DateTime.now();
-    if (dt != null) return dt;
-    return now.isAfter(lastDate) ? lastDate : now;
+  /// The date the picker opens on: the stored value, or now, kept within
+  /// [firstDate]..[lastDate] because the picker rejects a date outside them
+  /// (a value stored before a limit applied, for example).
+  @visibleForTesting
+  static DateTime initialDateWithin(
+    String? raw,
+    DateTime firstDate,
+    DateTime lastDate,
+  ) {
+    final date = (raw != null ? DateTime.tryParse(raw)?.toLocal() : null) ??
+        DateTime.now();
+    if (date.isAfter(lastDate)) return lastDate;
+    if (date.isBefore(firstDate)) return firstDate;
+    return date;
   }
 }
 

@@ -232,6 +232,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "حدث خطأ أثناء معالجة طلب قاعدة البيانات. يرجى المحاولة مرة أخرى.",
     ),
     "datarun": MessageLookupByLibrary.simpleMessage("DATARUN"),
+    "dateAfterToday": MessageLookupByLibrary.simpleMessage(
+      "لا يمكن أن يكون التاريخ بعد اليوم",
+    ),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
     "dateRange": MessageLookupByLibrary.simpleMessage("الوقت"),
     "day": MessageLookupByLibrary.simpleMessage("اليوم"),

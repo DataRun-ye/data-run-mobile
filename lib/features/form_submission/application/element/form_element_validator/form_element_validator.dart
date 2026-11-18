@@ -2,6 +2,7 @@ import 'package:datarunmobile/core/form/element_template/field_template.entity.d
 import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/data/reference_uid.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/full_name_validator.dart';
+import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/future_date_policy.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -21,6 +22,9 @@ class FieldValidators {
     if (element.type == ValueType.Email) validators.add(Validators.email);
     if (element.type == ValueType.Reference) {
       validators.add(const ReferenceUidValidator());
+    }
+    if (FutureDatePolicy.appliesTo(element)) {
+      validators.add(const NoFutureDateValidator());
     }
     if (element.type.isInteger) validators.add(Validators.number());
     if (element.type == ValueType.IntegerZeroOrPositive)
@@ -95,4 +99,5 @@ Map<String, ValidationMessageFunction> validationMessages() => {
           S.current.referenceUidInvalid,
       ReferenceValidationMessage.duplicate: (error) =>
           S.current.referenceAlreadySelected,
+      FutureDatePolicy.errorKey: (error) => S.current.dateAfterToday,
     };

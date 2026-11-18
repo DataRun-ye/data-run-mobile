@@ -942,6 +942,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get referenceRecordAgain => 'Record again';
 
   @override
+  String get dateAfterToday => 'The date cannot be after today';
+
+  @override
   String phoneClockWrong(String phoneTime, String serverTime) {
     return 'The phone\'s date or time is wrong: the phone shows $phoneTime, the server $serverTime. Correct it in the phone settings, otherwise forms record wrong dates.';
   }

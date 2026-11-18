@@ -2262,6 +2262,16 @@ class S {
     );
   }
 
+  /// `The date cannot be after today`
+  String get dateAfterToday {
+    return Intl.message(
+      'The date cannot be after today',
+      name: 'dateAfterToday',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `The phone's date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.`
   String phoneClockWrong(String phoneTime, String serverTime) {
     return Intl.message(

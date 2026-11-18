@@ -231,6 +231,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Error occurred while querying the database.",
     ),
     "datarun": MessageLookupByLibrary.simpleMessage("DATARUN"),
+    "dateAfterToday": MessageLookupByLibrary.simpleMessage(
+      "The date cannot be after today",
+    ),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("DOB"),
     "dateRange": MessageLookupByLibrary.simpleMessage("Date Range"),
     "day": MessageLookupByLibrary.simpleMessage("Day"),

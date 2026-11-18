@@ -940,6 +940,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get referenceRecordAgain => 'تسجيل مرة أخرى';
 
   @override
+  String get dateAfterToday => 'لا يمكن أن يكون التاريخ بعد اليوم';
+
+  @override
   String phoneClockWrong(String phoneTime, String serverTime) {
     return 'تاريخ أو وقت الهاتف غير صحيح: الهاتف يعرض $phoneTime والخادم $serverTime. صحّحه من إعدادات الهاتف، وإلا ستُسجَّل تواريخ خاطئة في الاستمارات.';
   }

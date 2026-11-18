@@ -2347,6 +2347,46 @@ class S {
     return Intl.message('Restart', name: 'restartToUpdate', desc: '', args: []);
   }
 
+  /// `Practice`
+  String get practice {
+    return Intl.message('Practice', name: 'practice', desc: '', args: []);
+  }
+
+  /// `Train without saving anything: what you send is checked, then discarded`
+  String get practiceHint {
+    return Intl.message(
+      'Train without saving anything: what you send is checked, then discarded',
+      name: 'practiceHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PRACTICE`
+  String get practiceRibbon {
+    return Intl.message('PRACTICE', name: 'practiceRibbon', desc: '', args: []);
+  }
+
+  /// `Leave practice`
+  String get leavePractice {
+    return Intl.message(
+      'Leave practice',
+      name: 'leavePractice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deletes the practice data from this phone`
+  String get leavePracticeHint {
+    return Intl.message(
+      'Deletes the practice data from this phone',
+      name: 'leavePracticeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `The date cannot be after today`
   String get dateAfterToday {
     return Intl.message(

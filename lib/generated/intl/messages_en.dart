@@ -395,6 +395,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "lastmodifiedDate": MessageLookupByLibrary.simpleMessage(
       "LastModified Date",
     ),
+    "leavePractice": MessageLookupByLibrary.simpleMessage("Leave practice"),
+    "leavePracticeHint": MessageLookupByLibrary.simpleMessage(
+      "Deletes the practice data from this phone",
+    ),
     "level": MessageLookupByLibrary.simpleMessage("Level"),
     "loadMore": MessageLookupByLibrary.simpleMessage("Load More"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
@@ -528,6 +532,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "positiveIntegerFieldHint": MessageLookupByLibrary.simpleMessage(
       "Enter a positive integer",
     ),
+    "practice": MessageLookupByLibrary.simpleMessage("Practice"),
+    "practiceHint": MessageLookupByLibrary.simpleMessage(
+      "Train without saving anything: what you send is checked, then discarded",
+    ),
+    "practiceRibbon": MessageLookupByLibrary.simpleMessage("PRACTICE"),
     "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
     "productionDate": MessageLookupByLibrary.simpleMessage("Production Date"),
     "progressFieldHint": MessageLookupByLibrary.simpleMessage("fieldHintText"),

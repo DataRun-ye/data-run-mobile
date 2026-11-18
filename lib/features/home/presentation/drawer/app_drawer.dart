@@ -42,6 +42,16 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           const DrawerSyncItem(),
           const Divider(),
+          if (user?.practice == true) ...[
+            ListTile(
+              style: ListTileStyle.drawer,
+              leading: const Icon(Icons.logout),
+              title: Text(S.of(context).leavePractice),
+              subtitle: Text(S.of(context).leavePracticeHint),
+              onTap: () => appLocator<AuthManager>().leavePractice(),
+            ),
+            const Divider(),
+          ],
           const DrawerAppVersionItem(),
         ],
       ),

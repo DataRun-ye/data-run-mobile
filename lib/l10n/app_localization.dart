@@ -1778,6 +1778,36 @@ abstract class AppLocalizations {
   /// **'Restart'**
   String get restartToUpdate;
 
+  /// No description provided for @practice.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice'**
+  String get practice;
+
+  /// No description provided for @practiceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Train without saving anything: what you send is checked, then discarded'**
+  String get practiceHint;
+
+  /// No description provided for @practiceRibbon.
+  ///
+  /// In en, this message translates to:
+  /// **'PRACTICE'**
+  String get practiceRibbon;
+
+  /// No description provided for @leavePractice.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave practice'**
+  String get leavePractice;
+
+  /// No description provided for @leavePracticeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes the practice data from this phone'**
+  String get leavePracticeHint;
+
   /// No description provided for @dateAfterToday.
   ///
   /// In en, this message translates to:

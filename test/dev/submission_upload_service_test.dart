@@ -40,6 +40,49 @@ void main() {
 
   tearDown(() => db.close());
 
+  test('a practice session uploads to the practice route, a real one does not',
+      () async {
+    apiClient.responseData = {
+      'created': ['submission-1'],
+      'updated': <String>[],
+      'failed': <String, dynamic>{},
+    };
+    await _insertSubmission(
+      db,
+      id: 'submission-1',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+
+    await service.upload(['submission-1']);
+    expect(apiClient.resourceName, 'dataSubmission/bulk?referenceVersion=1');
+
+    await _insertSubmission(
+      db,
+      id: 'submission-2',
+      syncState: InstanceSyncStatus.finalized,
+      formData: const {},
+    );
+    apiClient.responseData = {
+      'created': ['submission-2'],
+      'updated': <String>[],
+      'failed': <String, dynamic>{},
+    };
+    final practice = SubmissionUploadService(
+      database: db,
+      apiClient: apiClient,
+      operationTracker: operationTracker,
+      practice: true,
+    );
+    final result = await practice.upload(['submission-2']);
+
+    expect(
+      apiClient.resourceName,
+      'dataSubmission/bulk/practice?referenceVersion=1',
+    );
+    expect(result.outcome, SubmissionUploadOutcome.complete);
+  });
+
   test('uploads finalized rows with persisted repeat metadata', () async {
     await _insertSubmission(
       db,

@@ -8,6 +8,7 @@ import 'package:datarunmobile/core/telemetry/app_telemetry.dart';
 import 'package:datarunmobile/core/user_session/app_locale_policy.dart';
 import 'package:datarunmobile/core/user_session/preference.provider.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
+import 'package:datarunmobile/features/home/presentation/practice_ribbon.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'
@@ -98,6 +99,8 @@ class App extends ConsumerWidget {
       ],
       //
       initialRoute: Routes.splashView,
+      builder: (context, child) =>
+          PracticeRibbon(child: child ?? const SizedBox.shrink()),
     );
   }
 

@@ -118,7 +118,15 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 8),
+                        ReactiveSwitchListTile(
+                          formControlName: 'practice',
+                          contentPadding: EdgeInsets.zero,
+                          secondary: Icon(Icons.school, color: cs.primary),
+                          title: Text(S.of(context).practice),
+                          subtitle: Text(S.of(context).practiceHint),
+                        ),
+                        const SizedBox(height: 16),
                         Wrap(
                           spacing: 8,
                           runSpacing: 8,

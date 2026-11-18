@@ -5,6 +5,7 @@ import 'package:datarunmobile/core/auth/session_operation_tracker.dart';
 import 'package:datarunmobile/core/exception/http_errors.dart';
 import 'package:datarunmobile/core/http/http_client.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/util/user_file_manager.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/db_factory/database_factory.dart';
@@ -64,7 +65,7 @@ class AuthManager extends ChangeNotifier {
 
   AuthStatus get status => _status;
 
-  String? get activeUserId => _activeUserSession?.username;
+  String? get activeUserId => _activeUserSession?.localId;
 
   UserSession? get activeUserSession => _activeUserSession;
 
@@ -131,8 +132,14 @@ class AuthManager extends ChangeNotifier {
 
   /// user login.
   /// On successful login, it creates a new GetIt scope for the user session.
-  Future<UserSession> login(
-      {required String username, required String password}) async {
+  /// With [practice], the session is a practice session: its uploads are
+  /// checked by the server but never stored, and its data on the phone is
+  /// kept apart from the real session of the same account.
+  Future<UserSession> login({
+    required String username,
+    required String password,
+    bool practice = false,
+  }) async {
     _status = AuthStatus.unknown;
     notifyListeners();
     var credentialsPersisted = false;
@@ -141,9 +148,9 @@ class AuthManager extends ChangeNotifier {
 
     try {
       final authResponse = await _authApi.login(username, password);
-      final userSession =
-          await _authApi.getUserProfile(authResponse.accessToken);
-      sessionUserId = userSession.username;
+      final profile = await _authApi.getUserProfile(authResponse.accessToken);
+      final userSession = practice ? profile.asPractice() : profile;
+      sessionUserId = userSession.localId;
 
       final scopeClosure = _scopeClosure;
       if (scopeClosure != null) {
@@ -227,7 +234,7 @@ class AuthManager extends ChangeNotifier {
   /// This is the core logic for switching between users.
   Future<void> _activateUserSession(UserSession userSession) async {
     WidgetsFlutterBinding.ensureInitialized();
-    final sessionUserId = userSession.username;
+    final sessionUserId = userSession.localId;
     final previousScopeUserId = _sessionScopeUserId;
     if (previousScopeUserId != null &&
         appLocator.hasScope(previousScopeUserId)) {
@@ -266,6 +273,7 @@ class AuthManager extends ChangeNotifier {
                 database: database,
                 apiClient: getIt<HttpClient<dynamic>>(),
                 operationTracker: _sessionOperationTracker,
+                practice: userSession.practice,
               ),
             ),
           );
@@ -289,6 +297,24 @@ class AuthManager extends ChangeNotifier {
   Future<void> logout() async {
     await _beginSessionEnd();
     await _scopeClosure;
+  }
+
+  /// Ends a practice session and deletes everything it stored on the phone.
+  /// The real session of the same account is untouched.
+  Future<void> leavePractice() async {
+    final session = _activeUserSession;
+    if (session == null || !session.practice) return;
+    final localId = session.localId;
+    await logout();
+    try {
+      await UserFileManager(localId).deleteUserFiles();
+    } catch (error, stackTrace) {
+      logError(
+        'Failed to delete practice data',
+        source: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   /// Invalidates a rejected session without blocking the request that detected

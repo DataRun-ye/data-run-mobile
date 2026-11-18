@@ -48,10 +48,10 @@ class AuthStorage {
     final activeSession = getActiveSession();
 
     final TokenPair? tokenPair =
-        await _tokenStorage.getTokens(activeSession.username);
+        await _tokenStorage.getTokens(activeSession.localId);
 
     if (tokenPair == null) {
-      logDebug('No Cached Token for active user: ${activeSession.username}',
+      logDebug('No Cached Token for active user: ${activeSession.localId}',
           source: this);
       await _prefs.remove(CacheKeys.activeUserKey);
       throw NoCachedAuthenticatedUser(
@@ -69,7 +69,7 @@ class AuthStorage {
     UserSession userSession,
     TokenPair tokenPair,
   ) async {
-    final userId = userSession.username;
+    final userId = userSession.localId;
     await _prefs.remove(CacheKeys.activeUserKey);
 
     try {

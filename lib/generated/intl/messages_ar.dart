@@ -391,6 +391,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "lastThreeDays": MessageLookupByLibrary.simpleMessage("آخر 3 أيام"),
     "lastThreeMonths": MessageLookupByLibrary.simpleMessage("آخر 3 أشهر"),
     "lastmodifiedDate": MessageLookupByLibrary.simpleMessage("تاريخ آخر تعديل"),
+    "leavePractice": MessageLookupByLibrary.simpleMessage("إنهاء التدريب"),
+    "leavePracticeHint": MessageLookupByLibrary.simpleMessage(
+      "يحذف بيانات التدريب من هذا الجهاز",
+    ),
     "level": MessageLookupByLibrary.simpleMessage("المستوى"),
     "loadMore": MessageLookupByLibrary.simpleMessage("تحميل المزيد"),
     "loading": MessageLookupByLibrary.simpleMessage("تحميل ..."),
@@ -522,6 +526,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "positiveIntegerFieldHint": MessageLookupByLibrary.simpleMessage(
       "أدخل عددًا صحيحًا موجبًا",
     ),
+    "practice": MessageLookupByLibrary.simpleMessage("تدريب"),
+    "practiceHint": MessageLookupByLibrary.simpleMessage(
+      "تدرّب دون حفظ أي شيء: يُفحص ما ترسله ثم يُهمل",
+    ),
+    "practiceRibbon": MessageLookupByLibrary.simpleMessage("تدريب"),
     "preferences": MessageLookupByLibrary.simpleMessage("التفضيلات"),
     "productionDate": MessageLookupByLibrary.simpleMessage("تاريخ الانتاج"),
     "progressFieldHint": MessageLookupByLibrary.simpleMessage("أدخل تقدمًا"),

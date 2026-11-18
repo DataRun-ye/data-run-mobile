@@ -402,6 +402,11 @@
   "valueRepeatedInForm": "This value is repeated in this form",
   "updateReadyToInstall": "A new version of the app is ready to install",
   "restartToUpdate": "Restart",
+  "practice": "Practice",
+  "practiceHint": "Train without saving anything: what you send is checked, then discarded",
+  "practiceRibbon": "PRACTICE",
+  "leavePractice": "Leave practice",
+  "leavePracticeHint": "Deletes the practice data from this phone",
   "dateAfterToday": "The date cannot be after today",
   "phoneClockWrong": "The phone's date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.",
   "@phoneClockWrong": {

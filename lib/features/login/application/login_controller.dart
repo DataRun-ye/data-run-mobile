@@ -17,6 +17,7 @@ class LoginController {
   final FormGroup form = FormGroup({
     'username': FormControl<String>(validators: [Validators.required]),
     'password': FormControl<String>(validators: [Validators.required]),
+    'practice': FormControl<bool>(value: false),
   });
 
   Future<void> userLogin() => _login(useDemoCredentials: false);
@@ -37,6 +38,7 @@ class LoginController {
       await _authManager.login(
         username: username.value!,
         password: password.value!,
+        practice: form.control('practice').value == true,
       );
       _navigationService.replaceWithSyncResourcesView();
     } catch (error, stackTrace) {

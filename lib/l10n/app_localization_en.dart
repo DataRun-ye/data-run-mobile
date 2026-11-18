@@ -976,6 +976,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restartToUpdate => 'Restart';
 
   @override
+  String get practice => 'Practice';
+
+  @override
+  String get practiceHint =>
+      'Train without saving anything: what you send is checked, then discarded';
+
+  @override
+  String get practiceRibbon => 'PRACTICE';
+
+  @override
+  String get leavePractice => 'Leave practice';
+
+  @override
+  String get leavePracticeHint => 'Deletes the practice data from this phone';
+
+  @override
   String get dateAfterToday => 'The date cannot be after today';
 
   @override

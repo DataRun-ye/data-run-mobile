@@ -12,12 +12,21 @@ class SubmissionUploadService {
     required AppDatabase database,
     required HttpClient<dynamic> apiClient,
     required SessionOperationTracker operationTracker,
+    this.practice = false,
   })  : _dao = database.dataInstancesDao,
         _apiClient = apiClient,
         _operationTracker = operationTracker,
         _payloadBuilder = ReferenceUploadPayloadBuilder(database);
 
   static const _resource = 'dataSubmission/bulk?referenceVersion=1';
+
+  /// Where a practice session uploads: server 6.5.0+ checks each submission
+  /// fully and stores nothing. A route of its own, not a flag, so that an
+  /// older server rejects practice uploads (404) instead of storing them.
+  static const _practiceResource =
+      'dataSubmission/bulk/practice?referenceVersion=1';
+
+  final bool practice;
 
   final DataInstancesDao _dao;
   final HttpClient<dynamic> _apiClient;
@@ -37,7 +46,7 @@ class SubmissionUploadService {
     try {
       final payload = await _payloadBuilder.build(submissions);
       final response = await _apiClient.request(
-        resourceName: _resource,
+        resourceName: practice ? _practiceResource : _resource,
         data: payload,
         method: 'post',
       );

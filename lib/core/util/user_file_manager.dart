@@ -7,15 +7,21 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 class UserFileManager {
-  UserFileManager(this.userId);
+  /// [appDirectory] is where the 'user_data' folder lives; tests pass a
+  /// temporary directory.
+  UserFileManager(this.userId, {Future<Directory> Function()? appDirectory})
+      : _appDirectory = appDirectory ?? getApplicationSupportDirectory;
 
   final String userId;
+
+  /// The single source of the base directory, for writing and for deleting:
+  /// they used different directories, so deleting found nothing.
+  final Future<Directory> Function() _appDirectory;
 
   /// Ensures the base 'user_data' directory exists
   Future<Directory> _getBaseUserDirectory() async {
     try {
-      // final baseDir = await getApplicationDocumentsDirectory();
-      final baseDir = await getApplicationSupportDirectory();
+      final baseDir = await _appDirectory();
       final userDataDir = Directory(p.join(baseDir.path, 'user_data'));
 
       if (!await userDataDir.exists()) {
@@ -120,8 +126,8 @@ class UserFileManager {
   /// Returns `true` if deletion was attempted and successful or directory didn't exist.
   /// Throws [UserFileException] on failure to delete.
   Future<bool> deleteUserFiles() async {
-    final userDir = Directory(p.join(
-        (await getApplicationDocumentsDirectory()).path, 'user_data', userId));
+    final userDir =
+        Directory(p.join((await _appDirectory()).path, 'user_data', userId));
 
     if (!await userDir.exists()) {
       logDebug(

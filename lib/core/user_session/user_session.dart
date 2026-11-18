@@ -5,6 +5,9 @@ typedef TokenPair = ({String accessToken, String refreshToken});
 class UserSession {
   static const String activeSessionScope = 'activeSessionContext';
 
+  /// Appended to the username to key a practice session's local data.
+  static const String practiceSuffix = '__practice';
+
   final String id;
   final String username;
   final String? firstName;
@@ -23,6 +26,14 @@ class UserSession {
   final List<String> managedTeamsUIDs;
   final List<String> userGroupsUIDs;
   final List<String> userFormsUIDs;
+
+  /// A practice session: its uploads are checked by the server but never
+  /// stored, and its data on the phone is kept apart from the real session.
+  final bool practice;
+
+  /// Key of this session's data on the phone (database, tokens, files). The
+  /// server account is [username] either way.
+  String get localId => practice ? '$username$practiceSuffix' : username;
 
   const UserSession({
     required this.id,
@@ -43,7 +54,30 @@ class UserSession {
     required this.managedTeamsUIDs,
     required this.userGroupsUIDs,
     required this.userFormsUIDs,
+    this.practice = false,
   });
+
+  UserSession asPractice() => UserSession(
+        id: id,
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        mobile: mobile,
+        email: email,
+        langKey: langKey,
+        activated: activated,
+        imageUrl: imageUrl,
+        authorities: authorities,
+        submissionCount: submissionCount,
+        assignmentCount: assignmentCount,
+        orgUnitCount: orgUnitCount,
+        activityUIDs: activityUIDs,
+        userTeamsUIDs: userTeamsUIDs,
+        managedTeamsUIDs: managedTeamsUIDs,
+        userGroupsUIDs: userGroupsUIDs,
+        userFormsUIDs: userFormsUIDs,
+        practice: true,
+      );
 
   factory UserSession.fromJson(Map<String, dynamic> json) {
     return UserSession(
@@ -65,6 +99,7 @@ class UserSession {
       managedTeamsUIDs: List<String>.from(json['managedTeamsUIDs'] ?? const []),
       userGroupsUIDs: List<String>.from(json['userGroupsUIDs'] ?? const []),
       userFormsUIDs: List<String>.from(json['userFormsUIDs'] ?? const []),
+      practice: json['practice'] == true,
     );
   }
 
@@ -87,6 +122,7 @@ class UserSession {
         'managedTeamsUIDs': managedTeamsUIDs,
         'userGroupsUIDs': userGroupsUIDs,
         'userFormsUIDs': userFormsUIDs,
+        'practice': practice,
       };
 
   String toJsonString() => json.encode(toJson());

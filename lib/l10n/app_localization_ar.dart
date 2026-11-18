@@ -973,6 +973,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get restartToUpdate => 'إعادة التشغيل';
 
   @override
+  String get practice => 'تدريب';
+
+  @override
+  String get practiceHint => 'تدرّب دون حفظ أي شيء: يُفحص ما ترسله ثم يُهمل';
+
+  @override
+  String get practiceRibbon => 'تدريب';
+
+  @override
+  String get leavePractice => 'إنهاء التدريب';
+
+  @override
+  String get leavePracticeHint => 'يحذف بيانات التدريب من هذا الجهاز';
+
+  @override
   String get dateAfterToday => 'لا يمكن أن يكون التاريخ بعد اليوم';
 
   @override

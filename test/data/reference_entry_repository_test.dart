@@ -203,6 +203,69 @@ void main() {
     );
   });
 
+  test('search matches spelling variants and words in any order', () async {
+    await repository.upsertRemotePage(orgUnitUid: 'org-1', entries: [
+      ReferenceEntry(
+        uid: _referenceUid(1),
+        orgUnitUid: 'org-1',
+        displayName: 'أحمد علي صالح',
+      ),
+      ReferenceEntry(
+        uid: _referenceUid(2),
+        orgUnitUid: 'org-1',
+        displayName: 'فاطمة عبد الله',
+      ),
+      ReferenceEntry(
+        uid: _referenceUid(3),
+        orgUnitUid: 'org-1',
+        displayName: 'محمد حسن',
+      ),
+    ]);
+    await repository.upsertRemotePage(orgUnitUid: 'org-2', entries: [
+      ReferenceEntry(
+        uid: _referenceUid(4),
+        orgUnitUid: 'org-2',
+        displayName: 'احمد صالح',
+      ),
+    ]);
+
+    Future<List<String>> found(String query) async =>
+        (await repository.search(orgUnitUid: 'org-1', query: query))
+            .map((entry) => entry.uid)
+            .toList();
+
+    expect(await found('احمد صالح'), [_referenceUid(1)]);
+    expect(await found('صالح إحمد'), [_referenceUid(1)]);
+    expect(await found('فاطمه عبدالله'), [_referenceUid(2)]);
+    expect(await found('محمد احمد'), isEmpty);
+    expect(await found('  '), hasLength(3));
+  });
+
+  test('search limit applies to the matching names', () async {
+    final entries = List.generate(
+      120,
+      (index) => ReferenceEntry(
+        uid: _referenceUid(index),
+        orgUnitUid: 'org-1',
+        displayName: index.isEven
+            ? 'بيت ${index.toString().padLeft(3, '0')}'
+            : 'منزل ${index.toString().padLeft(3, '0')}',
+      ),
+    );
+    await repository.upsertRemotePage(orgUnitUid: 'org-1', entries: entries);
+
+    final result = await repository.search(
+      orgUnitUid: 'org-1',
+      query: 'منزل',
+      limit: 10,
+    );
+
+    expect(result, hasLength(10));
+    expect(result.every((entry) => entry.displayName.startsWith('منزل')),
+        isTrue);
+    expect(result.first.uid, _referenceUid(1));
+  });
+
   test('rejects an oversized remote page before writing', () async {
     final oversizedPage = List.generate(
       ReferenceEntryRepository.maxRemotePageSize + 1,

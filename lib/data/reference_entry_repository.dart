@@ -1,3 +1,4 @@
+import 'package:datarunmobile/core/util/search_folding.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
 import 'package:datarunmobile/data/reference_uid.dart';
@@ -104,30 +105,37 @@ class ReferenceEntryRepository {
     });
   }
 
+  /// Names in [orgUnitUid] containing every word of [query], compared with
+  /// [SearchFolding] so spelling variants match.
+  ///
+  /// Matching runs in Dart over the org unit's entries: one village holds a few
+  /// hundred names, which avoids a stored search column and its migration.
   Future<List<ReferenceEntry>> search({
     required String orgUnitUid,
     String query = '',
     int limit = 50,
-  }) {
-    final normalizedQuery = query.trim();
+  }) async {
+    final terms = SearchFolding.queryTerms(query);
     final boundedLimit = limit < 1
         ? 1
         : limit > maxSearchResults
             ? maxSearchResults
             : limit;
     final select = _database.select(_database.referenceEntries)
-      ..where((row) {
-        final scope = row.orgUnitUid.equals(orgUnitUid);
-        return normalizedQuery.isEmpty
-            ? scope
-            : scope & row.displayName.contains(normalizedQuery);
-      })
+      ..where((row) => row.orgUnitUid.equals(orgUnitUid))
       ..orderBy([
         (row) => OrderingTerm.asc(row.displayName),
         (row) => OrderingTerm.asc(row.uid),
-      ])
-      ..limit(boundedLimit);
-    return select.get();
+      ]);
+    if (terms.isEmpty) {
+      return (select..limit(boundedLimit)).get();
+    }
+    final entries = await select.get();
+    return entries
+        .where((entry) =>
+            SearchFolding.matches(SearchFolding.fold(entry.displayName), terms))
+        .take(boundedLimit)
+        .toList(growable: false);
   }
 
   Future<ReferenceEntry?> findInScope({

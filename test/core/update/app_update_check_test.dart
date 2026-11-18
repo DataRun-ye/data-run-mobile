@@ -1,4 +1,7 @@
 import 'package:datarunmobile/core/update/app_update_check.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:in_app_update/in_app_update.dart';
 
@@ -63,5 +66,43 @@ void main() {
       decide(immediateAllowed: false, flexibleAllowed: false),
       AppUpdateAction.none,
     );
+  });
+
+  testWidgets('the restart offer stays on the home screen, never over a form',
+      (tester) async {
+    final navigator = GlobalKey<NavigatorState>();
+    await tester.pumpWidget(
+      MaterialApp(
+        navigatorKey: navigator,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        home: const Scaffold(body: AppUpdateCheck(child: Text('home'))),
+      ),
+    );
+    final restart = find.text(S.current.restartToUpdate);
+    expect(restart, findsNothing);
+
+    tester
+        .state<AppUpdateCheckState>(find.byType(AppUpdateCheck))
+        .offerRestart();
+    await tester.pump();
+    expect(restart, findsOneWidget);
+    expect(find.text('home'), findsOneWidget);
+
+    navigator.currentState!.push(MaterialPageRoute<void>(
+      builder: (_) => const Scaffold(body: Text('form')),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('form'), findsOneWidget);
+    expect(restart, findsNothing,
+        reason: 'restarting drops what an open form has not saved');
+
+    navigator.currentState!.pop();
+    await tester.pumpAndSettle();
+    expect(restart, findsOneWidget);
   });
 }

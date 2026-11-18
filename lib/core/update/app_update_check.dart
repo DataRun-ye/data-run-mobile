@@ -41,6 +41,10 @@ AppUpdateAction decideAppUpdate({
 /// offers it, requires it, or asks to restart into a downloaded one; see
 /// [decideAppUpdate]. Installs that did not come from Google Play, and phones
 /// without a connection, skip the check silently.
+///
+/// The restart offer is a bar on the screen this widget wraps (the home
+/// screen), not a snack bar over whatever screen is open: restarting drops
+/// anything not yet saved, so it is offered only where no form is open.
 class AppUpdateCheck extends StatefulWidget {
   const AppUpdateCheck({super.key, required this.child});
 
@@ -49,11 +53,12 @@ class AppUpdateCheck extends StatefulWidget {
   static bool _checkedThisRun = false;
 
   @override
-  State<AppUpdateCheck> createState() => _AppUpdateCheckState();
+  State<AppUpdateCheck> createState() => AppUpdateCheckState();
 }
 
-class _AppUpdateCheckState extends State<AppUpdateCheck> {
+class AppUpdateCheckState extends State<AppUpdateCheck> {
   StreamSubscription<InstallStatus>? _installStates;
+  bool _updateReady = false;
 
   @override
   void initState() {
@@ -81,29 +86,30 @@ class _AppUpdateCheckState extends State<AppUpdateCheck> {
           await InAppUpdate.performImmediateUpdate();
         case AppUpdateAction.offer:
           _installStates ??= InAppUpdate.installUpdateListener.listen((status) {
-            if (status == InstallStatus.downloaded) _offerRestart();
+            if (status == InstallStatus.downloaded) offerRestart();
           });
           await InAppUpdate.startFlexibleUpdate();
         case AppUpdateAction.install:
-          _offerRestart();
+          offerRestart();
       }
     } catch (error) {
       logInfo('In-app update check skipped: $error');
     }
   }
 
-  void _offerRestart() {
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(days: 1),
-        content: Text(S.of(context).updateReadyToInstall),
-        action: SnackBarAction(
-          label: S.of(context).restartToUpdate,
-          onPressed: InAppUpdate.completeFlexibleUpdate,
-        ),
-      ),
-    );
+  /// Shows the restart bar once Google Play has downloaded the update.
+  @visibleForTesting
+  void offerRestart() {
+    if (!mounted || _updateReady) return;
+    setState(() => _updateReady = true);
+  }
+
+  Future<void> _restart() async {
+    try {
+      await InAppUpdate.completeFlexibleUpdate();
+    } catch (error) {
+      logInfo('In-app update restart failed: $error');
+    }
   }
 
   @override
@@ -113,5 +119,47 @@ class _AppUpdateCheckState extends State<AppUpdateCheck> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(child: widget.child),
+        if (_updateReady) UpdateReadyBar(onRestart: _restart),
+      ],
+    );
+  }
+}
+
+/// "Update ready - RESTART", at the bottom of the home screen.
+class UpdateReadyBar extends StatelessWidget {
+  const UpdateReadyBar({super.key, required this.onRestart});
+
+  final VoidCallback onRestart;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Material(
+      color: colors.inverseSurface,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 8, 4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                S.of(context).updateReadyToInstall,
+                style: TextStyle(color: colors.onInverseSurface),
+              ),
+            ),
+            TextButton(
+              onPressed: onRestart,
+              child: Text(
+                S.of(context).restartToUpdate,
+                style: TextStyle(color: colors.inversePrimary),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

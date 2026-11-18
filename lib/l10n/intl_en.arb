@@ -372,6 +372,14 @@
     }
   },
   "referenceRecordAgain": "Record again",
+  "valueRecordedBefore": "This value was already recorded on {date} in another form",
+  "@valueRecordedBefore": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "dateAfterToday": "The date cannot be after today",
   "phoneClockWrong": "The phone's date or time is wrong: the phone shows {phoneTime}, the server {serverTime}. Correct it in the phone settings, otherwise forms record wrong dates.",
   "@phoneClockWrong": {

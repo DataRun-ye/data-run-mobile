@@ -942,6 +942,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get referenceRecordAgain => 'Record again';
 
   @override
+  String valueRecordedBefore(String date) {
+    return 'This value was already recorded on $date in another form';
+  }
+
+  @override
   String get dateAfterToday => 'The date cannot be after today';
 
   @override

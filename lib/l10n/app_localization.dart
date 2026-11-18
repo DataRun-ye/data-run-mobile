@@ -1724,6 +1724,12 @@ abstract class AppLocalizations {
   /// **'Record again'**
   String get referenceRecordAgain;
 
+  /// No description provided for @valueRecordedBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'This value was already recorded on {date} in another form'**
+  String valueRecordedBefore(String date);
+
   /// No description provided for @dateAfterToday.
   ///
   /// In en, this message translates to:

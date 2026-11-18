@@ -3,21 +3,21 @@ import 'package:datarunmobile/core/form/element_template/section_template.entity
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/database/shared/value_type.dart';
-import 'package:datarunmobile/features/data_instance/application/recorded_reference_lookup.dart';
+import 'package:datarunmobile/features/data_instance/application/recorded_values_lookup.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late AppDatabase database;
-  late RecordedReferenceLookup lookup;
+  late RecordedValuesLookup lookup;
 
   setUp(() async {
     database = AppDatabase(
       executor: NativeDatabase.memory(),
       userId: 'recorded-lookup-test-user',
     );
-    lookup = RecordedReferenceLookup(database);
+    lookup = RecordedValuesLookup(database);
     await _seed(database);
   });
 
@@ -26,6 +26,7 @@ void main() {
   Future<void> insertSubmission({
     required String id,
     required String household,
+    String? card,
     String form = 'form-1',
     String version = 'version-1',
     String assignment = 'assignment-1',
@@ -44,8 +45,9 @@ void main() {
             startEntryTime: Value(startedAt),
             formData: Value({
               'household': household,
+              'details': {'card': card},
               'members': [
-                {'member': 'r000000000m'},
+                {'member': 'r000000000m', 'card': 'in-a-repeat'},
               ],
             }),
           ),
@@ -72,7 +74,7 @@ void main() {
         version: 'version-0',
         startedAt: DateTime.utc(2026, 11, 22));
 
-    final recorded = await lookup.recordedElsewhere(
+    final recorded = await lookup.references(
       formId: 'form-1',
       orgUnitUid: 'org-1',
       excludeSubmissionId: 'current',
@@ -102,13 +104,48 @@ void main() {
         form: 'form-2',
         startedAt: DateTime.utc(2026, 11, 23));
 
-    final recorded = await lookup.recordedElsewhere(
+    final recorded = await lookup.references(
       formId: 'form-1',
       orgUnitUid: 'org-1',
       excludeSubmissionId: 'current',
     );
 
     expect(recorded, isEmpty);
+  });
+
+  test('reports card numbers recorded in other submissions of the village',
+      () async {
+    await insertSubmission(
+        id: 'current',
+        household: 'r0000000001',
+        card: '100',
+        startedAt: DateTime.utc(2026, 11, 23, 8));
+    await insertSubmission(
+        id: 'earlier',
+        household: 'r0000000002',
+        card: ' ١٠١ ',
+        startedAt: DateTime.utc(2026, 11, 23, 9));
+    await insertSubmission(
+        id: 'no-card',
+        household: 'r0000000003',
+        startedAt: DateTime.utc(2026, 11, 23, 10));
+    await insertSubmission(
+        id: 'other-village',
+        household: 'r0000000005',
+        card: '102',
+        assignment: 'assignment-2',
+        startedAt: DateTime.utc(2026, 11, 23));
+
+    final recorded = await lookup.fieldValues(
+      formId: 'form-1',
+      orgUnitUid: 'org-1',
+      excludeSubmissionId: 'current',
+      fieldNames: {'card'},
+    );
+
+    expect(recorded, {
+      'card': {'101': DateTime.utc(2026, 11, 23, 9)},
+    });
   });
 
   test('skips a submission whose form version is not on the phone', () async {
@@ -118,7 +155,7 @@ void main() {
         version: 'version-gone',
         startedAt: DateTime.utc(2026, 11, 23));
 
-    final recorded = await lookup.recordedElsewhere(
+    final recorded = await lookup.references(
       formId: 'form-1',
       orgUnitUid: 'org-1',
       excludeSubmissionId: 'current',
@@ -172,6 +209,18 @@ Future<void> _seed(AppDatabase database) async {
                 parent: 'members',
                 type: ValueType.Reference,
               ),
+              FieldTemplate(
+                id: 'card',
+                name: 'card',
+                parent: 'details',
+                type: ValueType.Text,
+              ),
+              FieldTemplate(
+                id: 'member-card',
+                name: 'card',
+                parent: 'members',
+                type: ValueType.Text,
+              ),
             ],
             sections: [
               SectionTemplate(
@@ -180,6 +229,7 @@ Future<void> _seed(AppDatabase database) async {
                 path: 'members',
                 repeatable: true,
               ),
+              SectionTemplate(id: 'details', name: 'details', path: 'details'),
             ],
             options: const [],
           ),

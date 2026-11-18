@@ -940,6 +940,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get referenceRecordAgain => 'تسجيل مرة أخرى';
 
   @override
+  String valueRecordedBefore(String date) {
+    return 'سُجّلت هذه القيمة بتاريخ $date في استمارة أخرى';
+  }
+
+  @override
   String get dateAfterToday => 'لا يمكن أن يكون التاريخ بعد اليوم';
 
   @override

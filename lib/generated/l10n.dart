@@ -2262,6 +2262,16 @@ class S {
     );
   }
 
+  /// `This value was already recorded on {date} in another form`
+  String valueRecordedBefore(String date) {
+    return Intl.message(
+      'This value was already recorded on $date in another form',
+      name: 'valueRecordedBefore',
+      desc: '',
+      args: [date],
+    );
+  }
+
   /// `The date cannot be after today`
   String get dateAfterToday {
     return Intl.message(

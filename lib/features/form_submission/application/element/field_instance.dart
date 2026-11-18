@@ -106,7 +106,32 @@ class FieldInstance<T> extends FormElementInstance<T> {
     }
 
     _lastNotifiedControlValue = value is List ? List.of(value) : value;
+    _applyValueWarning(value, emitEvent: emitEvent);
     notifySubscribers(emitEvent: emitEvent);
+  }
+
+  String? Function(Object? value)? _valueWarning;
+
+  /// Shows the text [warningFor] returns for the field's value under the
+  /// field, and refreshes it whenever the value changes; null clears it. A
+  /// warning never blocks the form.
+  void configureValueWarning(String? Function(Object? value) warningFor) {
+    _valueWarning = warningFor;
+    _applyValueWarning(retainedValue);
+  }
+
+  void _applyValueWarning(Object? value, {bool emitEvent = true}) {
+    final warningFor = _valueWarning;
+    if (warningFor == null) {
+      return;
+    }
+    final warning = warningFor(value) ?? '';
+    if (elementState.warning != warning) {
+      updateStatus(
+        elementState.copyWith(warning: warning),
+        emitEvent: emitEvent,
+      );
+    }
   }
 
   @override

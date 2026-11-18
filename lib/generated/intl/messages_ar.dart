@@ -106,9 +106,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m35(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
 
-  static String m36(weekNum) => "الإسبوع ${weekNum}";
+  static String m36(date) => "سُجّلت هذه القيمة بتاريخ ${date} في استمارة أخرى";
 
-  static String m37(count) =>
+  static String m37(weekNum) => "الإسبوع ${weekNum}";
+
+  static String m38(count) =>
       "${Intl.plural(count, zero: '', one: 'سنة', two: 'سنتان', few: '${count} سنوات', other: '${count} سنة')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -711,6 +713,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "validationErrorMessage": MessageLookupByLibrary.simpleMessage("خطأ تحقق"),
     "valueMustBeGreaterThanOrEqualToError": m34,
     "valueMustBeLessThanOrEqualToError": m35,
+    "valueRecordedBefore": m36,
     "version": MessageLookupByLibrary.simpleMessage("الإصدار"),
     "view": MessageLookupByLibrary.simpleMessage("استعراض"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(
@@ -720,9 +723,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("عرض الأخطاء"),
     "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
     "warning": MessageLookupByLibrary.simpleMessage("تنبيه"),
-    "week": m36,
+    "week": m37,
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
-    "year": m37,
+    "year": m38,
     "years": MessageLookupByLibrary.simpleMessage("سنوات"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("أشهر/سنوات"),
     "yes": MessageLookupByLibrary.simpleMessage("نعم"),

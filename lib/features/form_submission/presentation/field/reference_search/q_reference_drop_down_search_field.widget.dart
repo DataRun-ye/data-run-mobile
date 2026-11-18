@@ -5,7 +5,7 @@ import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/core/util/date_helper.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
-import 'package:datarunmobile/features/data_instance/application/recorded_reference_lookup.dart';
+import 'package:datarunmobile/features/data_instance/application/recorded_values_lookup.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
@@ -31,7 +31,7 @@ class _QReferenceDropDownSearchFieldState
     extends State<QReferenceDropDownSearchField> {
   late final FormInstance _formInstance;
   late final ReferenceFieldService _service;
-  late final RecordedReferenceLookup _recordedLookup;
+  late final RecordedValuesLookup _recordedLookup;
   late final Future<String> _orgUnitUid;
 
   @override
@@ -39,7 +39,7 @@ class _QReferenceDropDownSearchFieldState
     super.initState();
     _formInstance = appLocator<FormInstance>();
     _service = ReferenceFieldService(appLocator<AppDatabase>());
-    _recordedLookup = RecordedReferenceLookup(appLocator<AppDatabase>());
+    _recordedLookup = RecordedValuesLookup(appLocator<AppDatabase>());
     _orgUnitUid = _service.resolveOrgUnitUid(
       _formInstance.formMetadata.assignmentId,
     );
@@ -153,7 +153,7 @@ class _QReferenceDropDownSearchFieldState
   /// village. Empty when the check fails, so the picker still opens.
   Future<Map<String, DateTime>> _recordedElsewhere(String orgUnitUid) async {
     try {
-      return await _recordedLookup.recordedElsewhere(
+      return await _recordedLookup.references(
         formId: _formInstance.formMetadata.formId,
         orgUnitUid: orgUnitUid,
         excludeSubmissionId: _formInstance.submissionId,

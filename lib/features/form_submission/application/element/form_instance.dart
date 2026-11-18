@@ -13,6 +13,10 @@ import 'package:datarunmobile/features/form_submission/application/element/form_
 import 'package:datarunmobile/features/form_submission/application/element/form_metadata.dart';
 import 'package:datarunmobile/features/form_submission/application/field_context_registry.dart';
 import 'package:datarunmobile/features/form_submission/application/form_reference_check.dart';
+import 'package:datarunmobile/core/util/date_helper.dart';
+import 'package:datarunmobile/features/data_instance/application/recorded_values_lookup.dart';
+import 'package:datarunmobile/generated/l10n.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -44,6 +48,71 @@ class FormInstance {
     _bindReferenceFields(_formSection);
     if (!enabled) {
       form.markAsDisabled();
+    } else {
+      _configureRepeatWarnings();
+    }
+  }
+
+  /// Field property that makes a field warn, without blocking, when its value
+  /// repeats one recorded in this phone's other submissions of the form for
+  /// the same village, such as a card number.
+  static const warnIfRepeatedProperty = 'warnIfRepeated';
+
+  static bool _warnsIfRepeated(FieldInstance<dynamic> field) {
+    final flag = field.template.properties[warnIfRepeatedProperty];
+    if (field.template.name == null || (flag != true && flag != 'true')) {
+      return false;
+    }
+    for (var section = field.parentSection;
+        section != null;
+        section = section.parentSection) {
+      if (section is RepeatItemInstance) return false;
+    }
+    return true;
+  }
+
+  Future<void> _configureRepeatWarnings() async {
+    final fields = getFormElementIterator<FieldInstance<dynamic>>(_formSection)
+        .where(_warnsIfRepeated)
+        .toList();
+    final assignmentId = formMetadata.assignmentId;
+    if (fields.isEmpty || assignmentId == null) {
+      return;
+    }
+    try {
+      final assignment = await (_db.select(_db.assignments)
+            ..where((row) => row.id.equals(assignmentId)))
+          .getSingleOrNull();
+      if (assignment == null || _disposed) {
+        return;
+      }
+      final recorded = await RecordedValuesLookup(_db).fieldValues(
+        formId: formMetadata.formId,
+        orgUnitUid: assignment.orgUnit,
+        excludeSubmissionId: submissionId,
+        fieldNames: {for (final field in fields) field.template.name!},
+      );
+      if (_disposed) {
+        return;
+      }
+      final dateFormat = DateFormat(DateHelper.UI_DATE_FORMAT);
+      for (final field in fields) {
+        final values = recorded[field.template.name] ?? const {};
+        field.configureValueWarning((value) {
+          final recordedAt = values[RecordedValuesLookup.normalize(value)];
+          return recordedAt == null
+              ? null
+              : S.current.valueRecordedBefore(
+                  dateFormat.format(recordedAt.toLocal()),
+                );
+        });
+      }
+    } catch (error, stackTrace) {
+      logError(
+        'Could not check values recorded in other submissions',
+        source: error,
+        stackTrace: stackTrace,
+      );
     }
   }
 

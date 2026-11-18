@@ -144,6 +144,52 @@ void main() {
     );
     expect(await database.select(database.referenceEntries).get(), isEmpty);
   });
+
+  test('fetches several villages at a time, never more than the limit',
+      () async {
+    final client = _VillagesHttpClient(villages: 10, entriesPerVillage: 3);
+    final datasource = ReferenceEntryDatasource(
+      database,
+      client,
+      repository: _FixedScopeRepository(database, client.scopes),
+    );
+
+    await datasource.syncWithRemote();
+
+    expect(client.requestedVillages, hasLength(10));
+    expect(client.requestedVillages.toSet(), hasLength(10));
+    expect(client.maxInFlight, greaterThan(1));
+    expect(client.maxInFlight,
+        lessThanOrEqualTo(ReferenceEntryDatasource.maxConcurrentScopes));
+    expect(
+      await database.select(database.referenceEntries).get(),
+      hasLength(30),
+    );
+  });
+
+  test('one failing village fails the sync and starts no new villages',
+      () async {
+    final client = _VillagesHttpClient(
+      villages: 12,
+      entriesPerVillage: 2,
+      failingVillage: 1,
+    );
+    final datasource = ReferenceEntryDatasource(
+      database,
+      client,
+      repository: _FixedScopeRepository(database, client.scopes),
+    );
+
+    await expectLater(
+      datasource.syncWithRemote(),
+      throwsA(isA<StateError>()),
+    );
+    expect(
+      client.requestedVillages.length,
+      lessThan(12),
+      reason: 'villages after the failure must not start',
+    );
+  });
 }
 
 ReferenceEntryDatasource _datasource(
@@ -226,5 +272,73 @@ class _FakeReferenceHttpClient extends HttpClient<dynamic> {
       statusCode: 200,
       requestOptions: RequestOptions(path: resourceName),
     );
+  }
+}
+
+/// Serves one page per village after a short delay and records how many
+/// requests were in flight at once.
+class _VillagesHttpClient extends HttpClient<dynamic> {
+  _VillagesHttpClient({
+    required int villages,
+    required this.entriesPerVillage,
+    this.failingVillage,
+  }) : scopes = List.generate(
+          villages,
+          (index) => ReferenceCatalogScope(
+            assignmentUid: 'assignment-$index',
+            orgUnitUid: 'org-$index',
+          ),
+        );
+
+  final List<ReferenceCatalogScope> scopes;
+  final int entriesPerVillage;
+  final int? failingVillage;
+  final List<int> requestedVillages = [];
+  int _inFlight = 0;
+  int maxInFlight = 0;
+
+  @override
+  Future<Response<dynamic>> request({
+    required String resourceName,
+    String? path,
+    required String method,
+    Object? data,
+    Map<String, dynamic>? headers,
+  }) async {
+    final village = int.parse(
+      RegExp(r'assignments/assignment-(\d+)/')
+          .firstMatch(resourceName)!
+          .group(1)!,
+    );
+    requestedVillages.add(village);
+    _inFlight++;
+    if (_inFlight > maxInFlight) maxInFlight = _inFlight;
+    try {
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+      if (village == failingVillage) {
+        throw StateError('connection interrupted');
+      }
+      return Response<dynamic>(
+        data: {
+          'paged': true,
+          'page': 0,
+          'totalPages': 1,
+          'totalElements': entriesPerVillage,
+          'size': ReferenceEntryDatasource.pageSize,
+          'referenceEntries': List.generate(entriesPerVillage, (index) {
+            return {
+              'uid': 'r${village.toString().padLeft(2, '0')}'
+                  '${index.toString().padLeft(8, '0')}',
+              'name': 'Person Name Number Here $village $index',
+              'orgUnitUid': 'org-$village',
+            };
+          }),
+        },
+        statusCode: 200,
+        requestOptions: RequestOptions(path: resourceName),
+      );
+    } finally {
+      _inFlight--;
+    }
   }
 }

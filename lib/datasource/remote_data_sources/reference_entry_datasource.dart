@@ -20,6 +20,9 @@ class ReferenceEntryDatasource extends AbstractDatasource<ReferenceEntry> {
 
   static const int pageSize = ReferenceEntryRepository.maxRemotePageSize;
 
+  /// Villages whose lists are fetched at the same time.
+  static const int maxConcurrentScopes = 4;
+
   final AppDatabase _database;
   final HttpClient<dynamic> _apiClient;
   final ReferenceEntryRepository _repository;
@@ -45,8 +48,17 @@ class ReferenceEntryDatasource extends AbstractDatasource<ReferenceEntry> {
       final scopes = await _repository.findSyncScopes();
       logger(percentage: 5, message: 'Found ${scopes.length} scopes');
 
-      for (var scopeIndex = 0; scopeIndex < scopes.length; scopeIndex++) {
-        final scope = scopes[scopeIndex];
+      // Each village is one small request whose time is mostly fixed
+      // overhead (about 0.2 s on the server plus the network round trip), so
+      // villages are fetched [maxConcurrentScopes] at a time. Pages of one
+      // village stay in order. The first failure stops new villages from
+      // starting and fails the sync once the running ones finish.
+      var nextScope = 0;
+      var completedScopes = 0;
+      Object? firstError;
+      StackTrace? firstStackTrace;
+
+      Future<void> syncScope(ReferenceCatalogScope scope) async {
         var pageNumber = 0;
         while (true) {
           final page = await _fetchPage(
@@ -65,7 +77,8 @@ class ReferenceEntryDatasource extends AbstractDatasource<ReferenceEntry> {
           final totalPages = page.totalPages < 1 ? 1 : page.totalPages;
           final scopeProgress = (pageNumber + 1) / totalPages;
           logger(
-            percentage: 5 + ((scopeIndex + scopeProgress) / scopes.length) * 90,
+            percentage:
+                5 + ((completedScopes + scopeProgress) / scopes.length) * 90,
             message: 'Saved page ${pageNumber + 1} of ${page.totalPages}',
             resources: persistedCount,
           );
@@ -75,6 +88,28 @@ class ReferenceEntryDatasource extends AbstractDatasource<ReferenceEntry> {
           }
           pageNumber++;
         }
+      }
+
+      Future<void> worker() async {
+        while (firstError == null && nextScope < scopes.length) {
+          final scope = scopes[nextScope++];
+          try {
+            await syncScope(scope);
+            completedScopes++;
+          } catch (error, stackTrace) {
+            firstError ??= error;
+            firstStackTrace ??= stackTrace;
+          }
+        }
+      }
+
+      await Future.wait([
+        for (var i = 0; i < maxConcurrentScopes && i < scopes.length; i++)
+          worker(),
+      ]);
+      final failure = firstError;
+      if (failure != null) {
+        Error.throwWithStackTrace(failure, firstStackTrace!);
       }
 
       await _recordSummary(

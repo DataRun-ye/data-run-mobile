@@ -1787,7 +1787,7 @@ abstract class AppLocalizations {
   /// No description provided for @practiceHint.
   ///
   /// In en, this message translates to:
-  /// **'Train without saving anything: what you send is checked, then discarded'**
+  /// **'Train without affecting real data: what you send is checked but not counted as real work'**
   String get practiceHint;
 
   /// No description provided for @practiceRibbon.

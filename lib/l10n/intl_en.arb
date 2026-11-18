@@ -403,7 +403,7 @@
   "updateReadyToInstall": "A new version of the app is ready to install",
   "restartToUpdate": "Restart",
   "practice": "Practice",
-  "practiceHint": "Train without saving anything: what you send is checked, then discarded",
+  "practiceHint": "Train without affecting real data: what you send is checked but not counted as real work",
   "practiceRibbon": "PRACTICE",
   "leavePractice": "Leave practice",
   "leavePracticeHint": "Deletes the practice data from this phone",

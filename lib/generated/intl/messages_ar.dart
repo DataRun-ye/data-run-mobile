@@ -531,7 +531,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ينتهي التدريب عند منتصف الليل. سجّل الدخول للعمل الفعلي، أو شغّل «تدريب» لتتدرّب من جديد.",
     ),
     "practiceHint": MessageLookupByLibrary.simpleMessage(
-      "تدرّب دون حفظ أي شيء: يُفحص ما ترسله ثم يُهمل",
+      "تدرّب دون التأثير على البيانات الفعلية: يُفحص ما ترسله ولا يُحتسب عملاً فعلياً",
     ),
     "practiceRibbon": MessageLookupByLibrary.simpleMessage("تدريب"),
     "preferences": MessageLookupByLibrary.simpleMessage("التفضيلات"),

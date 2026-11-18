@@ -537,7 +537,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Practice ends at midnight. Log in to work for real, or switch on Practice to practise again.",
     ),
     "practiceHint": MessageLookupByLibrary.simpleMessage(
-      "Train without saving anything: what you send is checked, then discarded",
+      "Train without affecting real data: what you send is checked but not counted as real work",
     ),
     "practiceRibbon": MessageLookupByLibrary.simpleMessage("PRACTICE"),
     "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),

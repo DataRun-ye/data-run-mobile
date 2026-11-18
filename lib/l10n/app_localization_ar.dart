@@ -976,7 +976,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get practice => 'تدريب';
 
   @override
-  String get practiceHint => 'تدرّب دون حفظ أي شيء: يُفحص ما ترسله ثم يُهمل';
+  String get practiceHint =>
+      'تدرّب دون التأثير على البيانات الفعلية: يُفحص ما ترسله ولا يُحتسب عملاً فعلياً';
 
   @override
   String get practiceRibbon => 'تدريب';

@@ -2352,10 +2352,10 @@ class S {
     return Intl.message('Practice', name: 'practice', desc: '', args: []);
   }
 
-  /// `Train without saving anything: what you send is checked, then discarded`
+  /// `Train without affecting real data: what you send is checked but not counted as real work`
   String get practiceHint {
     return Intl.message(
-      'Train without saving anything: what you send is checked, then discarded',
+      'Train without affecting real data: what you send is checked but not counted as real work',
       name: 'practiceHint',
       desc: '',
       args: [],

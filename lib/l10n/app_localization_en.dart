@@ -980,7 +980,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get practiceHint =>
-      'Train without saving anything: what you send is checked, then discarded';
+      'Train without affecting real data: what you send is checked but not counted as real work';
 
   @override
   String get practiceRibbon => 'PRACTICE';

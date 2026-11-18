@@ -945,6 +945,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get valueRepeatedInForm => 'هذه القيمة مكررة في هذه الاستمارة';
+
+  @override
   String get dateAfterToday => 'لا يمكن أن يكون التاريخ بعد اليوم';
 
   @override

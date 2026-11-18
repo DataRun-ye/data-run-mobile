@@ -1730,6 +1730,12 @@ abstract class AppLocalizations {
   /// **'This value was already recorded on {date} in another form'**
   String valueRecordedBefore(String date);
 
+  /// No description provided for @valueRepeatedInForm.
+  ///
+  /// In en, this message translates to:
+  /// **'This value is repeated in this form'**
+  String get valueRepeatedInForm;
+
   /// No description provided for @dateAfterToday.
   ///
   /// In en, this message translates to:

@@ -947,6 +947,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get valueRepeatedInForm => 'This value is repeated in this form';
+
+  @override
   String get dateAfterToday => 'The date cannot be after today';
 
   @override

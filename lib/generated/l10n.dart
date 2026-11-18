@@ -2272,6 +2272,16 @@ class S {
     );
   }
 
+  /// `This value is repeated in this form`
+  String get valueRepeatedInForm {
+    return Intl.message(
+      'This value is repeated in this form',
+      name: 'valueRepeatedInForm',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `The date cannot be after today`
   String get dateAfterToday {
     return Intl.message(

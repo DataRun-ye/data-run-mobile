@@ -10,7 +10,7 @@ import 'package:drift/drift.dart';
 
 /// Finds values this phone already recorded in other submissions of a form for
 /// one org unit: households (Reference values) and the values of fields marked
-/// to warn on repeats.
+/// to warn on repeats, such as card numbers.
 ///
 /// Only this phone's submissions are visible; repeats across phones are left
 /// to the daily review on the server. Drafts count, deleted submissions don't.
@@ -59,8 +59,9 @@ class RecordedValuesLookup {
     return recorded;
   }
 
-  /// For each of [fieldNames], the values recorded in fields of that name
-  /// outside repeated sections, with the time each was last recorded.
+  /// For each of [fieldNames], the values recorded in fields of that name,
+  /// in every row of repeated sections too, with the time each was last
+  /// recorded.
   Future<Map<String, Map<String, DateTime>>> fieldValues({
     required String formId,
     required String orgUnitUid,
@@ -102,15 +103,18 @@ class RecordedValuesLookup {
       if (element is FieldTemplate) {
         final normalized = fieldNames.contains(name) ? normalize(value) : null;
         if (normalized != null) visit(name, normalized);
-      } else if (element is SectionTemplate &&
-          !element.repeatable &&
-          value is Map) {
-        _collectFieldValues(
-          elements: element.children,
-          container: value,
-          fieldNames: fieldNames,
-          visit: visit,
-        );
+      } else if (element is SectionTemplate) {
+        final containers = element.repeatable
+            ? (value is List ? value.whereType<Map<Object?, Object?>>() : null)
+            : (value is Map ? [value] : null);
+        for (final nested in containers ?? const <Map<Object?, Object?>>[]) {
+          _collectFieldValues(
+            elements: element.children,
+            container: nested,
+            fieldNames: fieldNames,
+            visit: visit,
+          );
+        }
       }
     }
   }

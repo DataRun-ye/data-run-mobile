@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:datarunmobile/core/data_instance/repeat_metadata_normalizer.dart';
+import 'package:datarunmobile/core/form/element_template/field_template.entity.dart';
 import 'package:datarunmobile/core/logging/new_app_logging.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/app/di/injection.dart';
@@ -16,7 +17,6 @@ import 'package:datarunmobile/features/form_submission/application/form_referenc
 import 'package:datarunmobile/core/util/date_helper.dart';
 import 'package:datarunmobile/features/data_instance/application/recorded_values_lookup.dart';
 import 'package:datarunmobile/generated/l10n.dart';
-import 'package:intl/intl.dart' show DateFormat;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -49,34 +49,99 @@ class FormInstance {
     if (!enabled) {
       form.markAsDisabled();
     } else {
-      _configureRepeatWarnings();
+      _bindValueWarnings(_formSection);
+      _loadRecordedFieldValues();
     }
   }
 
   /// Field property that makes a field warn, without blocking, when its value
-  /// repeats one recorded in this phone's other submissions of the form for
-  /// the same village, such as a card number.
+  /// repeats one in another row of the form or one recorded in this phone's
+  /// other submissions of the form for the same village, such as a card
+  /// number.
   static const warnIfRepeatedProperty = 'warnIfRepeated';
 
-  static bool _warnsIfRepeated(FieldInstance<dynamic> field) {
-    final flag = field.template.properties[warnIfRepeatedProperty];
-    if (field.template.name == null || (flag != true && flag != 'true')) {
-      return false;
+  /// Values of marked fields in this phone's other submissions, by field name;
+  /// null until loaded.
+  Map<String, Map<String, DateTime>>? _recordedFieldValues;
+  bool _refreshingValueWarnings = false;
+
+  static bool _isMarked(Object? flag) => flag == true || flag == 'true';
+
+  static bool _warnsIfRepeated(FieldInstance<dynamic> field) =>
+      field.template.name != null &&
+      _isMarked(field.template.properties[warnIfRepeatedProperty]);
+
+  Iterable<FieldInstance<dynamic>> _valueWarningFields(
+    FormElementInstance<dynamic> root,
+  ) =>
+      getFormElementIterator<FieldInstance<dynamic>>(root)
+          .where(_warnsIfRepeated);
+
+  /// Gives every marked field under [root], such as the fields of a new row,
+  /// its repeat warning.
+  void _bindValueWarnings(FormElementInstance<dynamic> root) {
+    if (!enabled) {
+      return;
     }
-    for (var section = field.parentSection;
-        section != null;
-        section = section.parentSection) {
-      if (section is RepeatItemInstance) return false;
+    _refreshingValueWarnings = true;
+    try {
+      for (final field in _valueWarningFields(root)) {
+        field.configureValueWarning((value) => _valueWarningFor(field, value));
+      }
+    } finally {
+      _refreshingValueWarnings = false;
     }
-    return true;
+    _refreshValueWarnings();
   }
 
-  Future<void> _configureRepeatWarnings() async {
-    final fields = getFormElementIterator<FieldInstance<dynamic>>(_formSection)
-        .where(_warnsIfRepeated)
-        .toList();
+  /// Re-evaluates every marked field, since a value in one row can make
+  /// another row's value a repeat, or stop it being one.
+  void _refreshValueWarnings() {
+    if (_refreshingValueWarnings || !enabled) {
+      return;
+    }
+    _refreshingValueWarnings = true;
+    try {
+      for (final field in _valueWarningFields(_formSection)) {
+        field.refreshValueWarning();
+      }
+    } finally {
+      _refreshingValueWarnings = false;
+    }
+  }
+
+  String? _valueWarningFor(FieldInstance<dynamic> field, Object? value) {
+    _refreshValueWarnings();
+    final normalized = RecordedValuesLookup.normalize(value);
+    if (normalized == null) {
+      return null;
+    }
+    final recordedAt = _recordedFieldValues?[field.template.name]?[normalized];
+    if (recordedAt != null) {
+      return S.current.valueRecordedBefore(
+        DateHelper.uiDateFormat().format(recordedAt.toLocal()),
+      );
+    }
+    final repeatedInForm = _valueWarningFields(_formSection).any((other) =>
+        !identical(other, field) &&
+        other.template.id == field.template.id &&
+        other.visible &&
+        RecordedValuesLookup.normalize(other.retainedValue) == normalized);
+    return repeatedInForm ? S.current.valueRepeatedInForm : null;
+  }
+
+  Future<void> _loadRecordedFieldValues() async {
+    // From the form version rather than the instances, so fields of repeat
+    // rows not added yet are included.
+    final fieldNames = {
+      for (final field in formFlatTemplate.template.fields)
+        if (field is FieldTemplate &&
+            field.name != null &&
+            _isMarked(field.properties[warnIfRepeatedProperty]))
+          field.name!,
+    };
     final assignmentId = formMetadata.assignmentId;
-    if (fields.isEmpty || assignmentId == null) {
+    if (fieldNames.isEmpty || assignmentId == null) {
       return;
     }
     try {
@@ -90,23 +155,13 @@ class FormInstance {
         formId: formMetadata.formId,
         orgUnitUid: assignment.orgUnit,
         excludeSubmissionId: submissionId,
-        fieldNames: {for (final field in fields) field.template.name!},
+        fieldNames: fieldNames,
       );
       if (_disposed) {
         return;
       }
-      final dateFormat = DateFormat(DateHelper.UI_DATE_FORMAT);
-      for (final field in fields) {
-        final values = recorded[field.template.name] ?? const {};
-        field.configureValueWarning((value) {
-          final recordedAt = values[RecordedValuesLookup.normalize(value)];
-          return recordedAt == null
-              ? null
-              : S.current.valueRecordedBefore(
-                  dateFormat.format(recordedAt.toLocal()),
-                );
-        });
-      }
+      _recordedFieldValues = recorded;
+      _refreshValueWarnings();
     } catch (error, stackTrace) {
       logError(
         'Could not check values recorded in other submissions',
@@ -243,6 +298,7 @@ class FormInstance {
         form, formFlatTemplate, parent.template);
     parent.add(itemInstance);
     _bindReferenceFields(itemInstance);
+    _bindValueWarnings(itemInstance);
     itemInstance.bindControlReferences();
     _invalidateReferenceValidation();
     itemInstance.resolveDependencies();
@@ -387,6 +443,7 @@ class FormInstance {
     parent.elementControl.markAsDirty();
     parent.evaluate(emitEvent: true);
     _invalidateReferenceValidation();
+    _refreshValueWarnings();
     return indexedItems.map((entry) => entry.item).toList(growable: false);
   }
 
@@ -441,6 +498,7 @@ class FormInstance {
     );
 
     _bindReferenceFields(restoredItem);
+    _bindValueWarnings(restoredItem);
     restoredItem.bindControlReferences();
     _invalidateReferenceValidation();
     _formSection.resolveDependencies();

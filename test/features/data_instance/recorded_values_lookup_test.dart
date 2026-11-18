@@ -45,9 +45,8 @@ void main() {
             startEntryTime: Value(startedAt),
             formData: Value({
               'household': household,
-              'details': {'card': card},
               'members': [
-                {'member': 'r000000000m', 'card': 'in-a-repeat'},
+                {'member': 'r000000000m', 'card': card},
               ],
             }),
           ),
@@ -113,8 +112,7 @@ void main() {
     expect(recorded, isEmpty);
   });
 
-  test('reports card numbers recorded in other submissions of the village',
-      () async {
+  test('reports card numbers recorded in rows of other submissions', () async {
     await insertSubmission(
         id: 'current',
         household: 'r0000000001',
@@ -212,14 +210,8 @@ Future<void> _seed(AppDatabase database) async {
               FieldTemplate(
                 id: 'card',
                 name: 'card',
-                parent: 'details',
-                type: ValueType.Text,
-              ),
-              FieldTemplate(
-                id: 'member-card',
-                name: 'card',
                 parent: 'members',
-                type: ValueType.Text,
+                type: ValueType.IntegerPositive,
               ),
             ],
             sections: [
@@ -229,7 +221,6 @@ Future<void> _seed(AppDatabase database) async {
                 path: 'members',
                 repeatable: true,
               ),
-              SectionTemplate(id: 'details', name: 'details', path: 'details'),
             ],
             options: const [],
           ),

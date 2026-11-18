@@ -732,6 +732,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "valueMustBeGreaterThanOrEqualToError": m34,
     "valueMustBeLessThanOrEqualToError": m35,
     "valueRecordedBefore": m36,
+    "valueRepeatedInForm": MessageLookupByLibrary.simpleMessage(
+      "This value is repeated in this form",
+    ),
     "version": MessageLookupByLibrary.simpleMessage("Version"),
     "view": MessageLookupByLibrary.simpleMessage("View"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(

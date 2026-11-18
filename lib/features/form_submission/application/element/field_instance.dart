@@ -120,6 +120,10 @@ class FieldInstance<T> extends FormElementInstance<T> {
     _applyValueWarning(retainedValue);
   }
 
+  /// Re-evaluates the warning for the current value, when what it depends on
+  /// changed elsewhere.
+  void refreshValueWarning() => _applyValueWarning(retainedValue);
+
   void _applyValueWarning(Object? value, {bool emitEvent = true}) {
     final warningFor = _valueWarning;
     if (warningFor == null) {

@@ -351,6 +351,27 @@
   "referenceAlreadySelected": "This reference is already selected",
   "referenceNameUnavailable": "Name unavailable offline",
   "referenceConfigurationUnavailable": "Reference configuration is unavailable",
+  "referenceRecordedOn": "Recorded on {date}",
+  "@referenceRecordedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "referenceRecordAgainTitle": "Already recorded",
+  "referenceRecordAgainMessage": "{name} was recorded on {date} in another form. Record it again?",
+  "@referenceRecordAgainMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "referenceRecordAgain": "Record again",
   "timeFieldHint": "Select a Time",
   "teamFieldHint": "Select a Team",
   "fullNameFieldHint": "Enter a full name",

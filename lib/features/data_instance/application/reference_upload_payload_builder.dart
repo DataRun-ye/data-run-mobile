@@ -1,8 +1,6 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:datarunmobile/database/app_database.dart';
 import 'package:datarunmobile/database/extensions/data_submission.extension.dart';
-import 'package:datarunmobile/database/shared/form_option.dart';
-import 'package:datarunmobile/database/shared/form_template_model.dart';
+import 'package:datarunmobile/database/extensions/form_template_version.extension.dart';
 import 'package:datarunmobile/data/reference_entry_repository.dart';
 import 'package:datarunmobile/data/reference_uid.dart';
 import 'package:datarunmobile/features/data_instance/application/reference_value_extractor.dart';
@@ -32,18 +30,7 @@ class ReferenceUploadPayloadBuilder {
       submissions.map((submission) => submission.templateVersion).toSet(),
     );
     final templatesByVersionUid = versionsByUid.map(
-      (uid, version) => MapEntry(
-        uid,
-        FormTemplateModel(
-          id: version.template,
-          name: version.template,
-          versionUid: version.id,
-          versionNumber: version.versionNumber,
-          fields: BuiltList(version.fields),
-          sections: BuiltList(version.sections),
-          options: BuiltList<FormOption>(version.options ?? const []),
-        ),
-      ),
+      (uid, version) => MapEntry(uid, version.toTemplateModel()),
     );
     final occurrencesBySubmission = <String, List<ReferenceValueOccurrence>>{};
     final referencedUids = <String>{};

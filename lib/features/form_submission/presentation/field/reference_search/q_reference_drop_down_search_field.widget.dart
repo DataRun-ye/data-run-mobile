@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:datarunmobile/app/di/injection.dart';
+import 'package:datarunmobile/core/logging/new_app_logging.dart';
+import 'package:datarunmobile/core/util/date_helper.dart';
 import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/features/common_ui_element/common/app_colors.dart';
+import 'package:datarunmobile/features/data_instance/application/recorded_reference_lookup.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_element_validator/form_element_validator.dart';
 import 'package:datarunmobile/features/form_submission/application/element/form_instance.dart';
@@ -9,6 +13,7 @@ import 'package:datarunmobile/features/form_submission/application/reference_fie
 import 'package:datarunmobile/features/form_submission/presentation/field/reference_search/reference_value_display.dart';
 import 'package:datarunmobile/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:datarunmobile/core/util/latin_digits_input_formatter.dart';
 
@@ -26,6 +31,7 @@ class _QReferenceDropDownSearchFieldState
     extends State<QReferenceDropDownSearchField> {
   late final FormInstance _formInstance;
   late final ReferenceFieldService _service;
+  late final RecordedReferenceLookup _recordedLookup;
   late final Future<String> _orgUnitUid;
 
   @override
@@ -33,6 +39,7 @@ class _QReferenceDropDownSearchFieldState
     super.initState();
     _formInstance = appLocator<FormInstance>();
     _service = ReferenceFieldService(appLocator<AppDatabase>());
+    _recordedLookup = RecordedReferenceLookup(appLocator<AppDatabase>());
     _orgUnitUid = _service.resolveOrgUnitUid(
       _formInstance.formMetadata.assignmentId,
     );
@@ -119,6 +126,10 @@ class _QReferenceDropDownSearchFieldState
     required ReactiveFormFieldState<String, String> field,
     required String orgUnitUid,
   }) async {
+    final recordedAt = await _recordedElsewhere(orgUnitUid);
+    if (!mounted) {
+      return;
+    }
     final selectedUid = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
@@ -128,6 +139,7 @@ class _QReferenceDropDownSearchFieldState
         orgUnitUid: orgUnitUid,
         currentUid: field.value,
         disabledUids: _formInstance.usedReferenceUids(widget.element),
+        recordedAt: recordedAt,
       ),
     );
     if (!mounted || selectedUid == null) {
@@ -135,6 +147,25 @@ class _QReferenceDropDownSearchFieldState
     }
     field.control.markAsTouched();
     field.didChange(selectedUid);
+  }
+
+  /// Values this phone recorded in other submissions of the form for the
+  /// village. Empty when the check fails, so the picker still opens.
+  Future<Map<String, DateTime>> _recordedElsewhere(String orgUnitUid) async {
+    try {
+      return await _recordedLookup.recordedElsewhere(
+        formId: _formInstance.formMetadata.formId,
+        orgUnitUid: orgUnitUid,
+        excludeSubmissionId: _formInstance.submissionId,
+      );
+    } catch (error, stackTrace) {
+      logError(
+        'Could not check values recorded in other submissions',
+        source: error,
+        stackTrace: stackTrace,
+      );
+      return const {};
+    }
   }
 }
 
@@ -144,12 +175,16 @@ class _ReferencePickerSheet extends StatefulWidget {
     required this.orgUnitUid,
     required this.currentUid,
     required this.disabledUids,
+    required this.recordedAt,
   });
 
   final ReferenceFieldService service;
   final String orgUnitUid;
   final String? currentUid;
   final Set<String> disabledUids;
+
+  /// When each value was recorded in another submission on this phone.
+  final Map<String, DateTime> recordedAt;
 
   @override
   State<_ReferencePickerSheet> createState() => _ReferencePickerSheetState();
@@ -233,6 +268,41 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
       }
     }
   }
+
+  /// Picks [entry], first asking for confirmation when another submission
+  /// already recorded it: a return visit is legitimate, a repeat is not.
+  Future<void> _pick(ReferenceEntry entry) async {
+    final recordedAt = widget.recordedAt[entry.uid];
+    if (recordedAt != null && entry.uid != widget.currentUid) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(S.of(dialogContext).referenceRecordAgainTitle),
+          content: Text(S.of(dialogContext).referenceRecordAgainMessage(
+                entry.displayName,
+                _formatDate(recordedAt),
+              )),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(S.of(dialogContext).cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(S.of(dialogContext).referenceRecordAgain),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true || !mounted) {
+        return;
+      }
+    }
+    Navigator.pop(context, entry.uid);
+  }
+
+  static String _formatDate(DateTime value) =>
+      DateFormat(DateHelper.UI_DATE_FORMAT).format(value.toLocal());
 
   String _nameErrorMessage(BuildContext context, String reason) {
     return switch (reason) {
@@ -319,19 +389,29 @@ class _ReferencePickerSheetState extends State<_ReferencePickerSheet> {
                   final entry = _entries[index];
                   final disabled = widget.disabledUids.contains(entry.uid);
                   final selected = widget.currentUid == entry.uid;
+                  final recordedAt = widget.recordedAt[entry.uid];
                   return ListTile(
                     enabled: !disabled,
                     selected: selected,
                     leading: Icon(
-                      selected ? Icons.check_circle : Icons.link,
+                      selected
+                          ? Icons.check_circle
+                          : recordedAt != null
+                              ? Icons.history
+                              : Icons.link,
                     ),
                     title: Text(entry.displayName),
                     subtitle: disabled
                         ? Text(S.of(context).referenceAlreadySelected)
-                        : null,
-                    onTap: disabled
-                        ? null
-                        : () => Navigator.pop(context, entry.uid),
+                        : recordedAt != null
+                            ? Text(
+                                S.of(context).referenceRecordedOn(
+                                      _formatDate(recordedAt),
+                                    ),
+                                style: TextStyle(color: SurfaceColors.Warning),
+                              )
+                            : null,
+                    onTap: disabled ? null : () => _pick(entry),
                   );
                 },
               ),

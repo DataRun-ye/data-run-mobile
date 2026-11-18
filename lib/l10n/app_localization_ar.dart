@@ -924,6 +924,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get referenceConfigurationUnavailable => 'إعدادات المرجع غير متاحة';
 
   @override
+  String referenceRecordedOn(String date) {
+    return 'سُجّل بتاريخ $date';
+  }
+
+  @override
+  String get referenceRecordAgainTitle => 'مسجّل مسبقًا';
+
+  @override
+  String referenceRecordAgainMessage(String name, String date) {
+    return 'تم تسجيل $name بتاريخ $date في استمارة أخرى. هل تريد تسجيله مرة أخرى؟';
+  }
+
+  @override
+  String get referenceRecordAgain => 'تسجيل مرة أخرى';
+
+  @override
   String get timeFieldHint => 'اختر وقتًا';
 
   @override

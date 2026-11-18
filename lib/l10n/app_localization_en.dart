@@ -926,6 +926,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'Reference configuration is unavailable';
 
   @override
+  String referenceRecordedOn(String date) {
+    return 'Recorded on $date';
+  }
+
+  @override
+  String get referenceRecordAgainTitle => 'Already recorded';
+
+  @override
+  String referenceRecordAgainMessage(String name, String date) {
+    return '$name was recorded on $date in another form. Record it again?';
+  }
+
+  @override
+  String get referenceRecordAgain => 'Record again';
+
+  @override
   String get timeFieldHint => 'Select a Time';
 
   @override

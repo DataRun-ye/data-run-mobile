@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -2216,6 +2217,46 @@ class S {
     return Intl.message(
       'Reference configuration is unavailable',
       name: 'referenceConfigurationUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recorded on {date}`
+  String referenceRecordedOn(String date) {
+    return Intl.message(
+      'Recorded on $date',
+      name: 'referenceRecordedOn',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `Already recorded`
+  String get referenceRecordAgainTitle {
+    return Intl.message(
+      'Already recorded',
+      name: 'referenceRecordAgainTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{name} was recorded on {date} in another form. Record it again?`
+  String referenceRecordAgainMessage(String name, String date) {
+    return Intl.message(
+      '$name was recorded on $date in another form. Record it again?',
+      name: 'referenceRecordAgainMessage',
+      desc: '',
+      args: [name, date],
+    );
+  }
+
+  /// `Record again`
+  String get referenceRecordAgain {
+    return Intl.message(
+      'Record again',
+      name: 'referenceRecordAgain',
       desc: '',
       args: [],
     );

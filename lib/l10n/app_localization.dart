@@ -1700,6 +1700,30 @@ abstract class AppLocalizations {
   /// **'Reference configuration is unavailable'**
   String get referenceConfigurationUnavailable;
 
+  /// No description provided for @referenceRecordedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded on {date}'**
+  String referenceRecordedOn(String date);
+
+  /// No description provided for @referenceRecordAgainTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Already recorded'**
+  String get referenceRecordAgainTitle;
+
+  /// No description provided for @referenceRecordAgainMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} was recorded on {date} in another form. Record it again?'**
+  String referenceRecordAgainMessage(String name, String date);
+
+  /// No description provided for @referenceRecordAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Record again'**
+  String get referenceRecordAgain;
+
   /// No description provided for @timeFieldHint.
   ///
   /// In en, this message translates to:

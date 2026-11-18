@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/app/stacked/app.router.dart';
+import 'package:datarunmobile/core/auth/auth_manager.dart';
 import 'package:datarunmobile/core/sync/model/sync_progress_event.dart';
 import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:datarunmobile/core/sync_manager/sync_manager.dart';
@@ -113,10 +114,10 @@ class SyncResourcesController extends Notifier<SyncResourcesState> {
   }
 
   Future<void> _completeSuccessfulSync() async {
-    await Future.wait([
-      _metadataRepository.updateInitialSyncDone(true),
-      _metadataRepository.updateLastSync(),
-    ]);
+    await _metadataRepository.recordSuccessfulSync(
+      practice: appLocator.isRegistered<AuthManager>() &&
+          appLocator<AuthManager>().activeUserSession?.practice == true,
+    );
     if (!ref.mounted) return;
     _completionNavigation = Timer(const Duration(seconds: 2), () {
       if (ref.mounted) leaveSync();

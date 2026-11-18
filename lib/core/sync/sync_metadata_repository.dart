@@ -22,6 +22,16 @@ class SyncMetadataRepository {
     return _prefs.setBool(SYNC_DONE, isDone);
   }
 
+  /// Records a completed sync. These values are kept once per phone, not per
+  /// session, so a practice session leaves them alone: otherwise a practice
+  /// sync would mark the real session as synced, and a real first sync that
+  /// stopped part way would not be retried on its own, while the menu showed
+  /// practice's sync time.
+  Future<void> recordSuccessfulSync({required bool practice}) async {
+    if (practice) return;
+    await Future.wait([updateInitialSyncDone(true), updateLastSync()]);
+  }
+
   Future<bool> setSyncInterval(SyncInterval interval) async {
     return _prefs.setInt(SYNC_INTERVAL, interval.milliseconds);
   }

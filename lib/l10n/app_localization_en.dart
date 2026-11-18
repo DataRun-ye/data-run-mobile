@@ -1191,10 +1191,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signingOutWarning =>
-      'Signing out will discard any unsynced changes. Are you sure you want to log out?';
+      'Your work stays on this phone, including anything not yet sent, and is there when you log in again. Log out?';
 
   @override
-  String get logOutAnyway => 'LOG OUT ANYWAY';
+  String get logOutAnyway => 'LOG OUT';
 
   @override
   String get logOut => 'Log out?';

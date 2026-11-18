@@ -1187,10 +1187,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get signingOutWarning =>
-      'سيؤدي تسجيل الخروج إلى فقدان أي تغييرات لم يتم مزامنتها. هل أنت متأكد أنك تريد تسجيل الخروج؟';
+      'يبقى عملك على هذا الهاتف، بما فيه ما لم يُرسل بعد، وتجده عند تسجيل الدخول مرة أخرى. هل تريد تسجيل الخروج؟';
 
   @override
-  String get logOutAnyway => 'نأكيد تسجيل الخروج';
+  String get logOutAnyway => 'تسجيل الخروج';
 
   @override
   String get logOut => 'تسجيل الخروج؟';

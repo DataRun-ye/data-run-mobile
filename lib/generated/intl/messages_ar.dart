@@ -399,7 +399,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "loadMore": MessageLookupByLibrary.simpleMessage("تحميل المزيد"),
     "loading": MessageLookupByLibrary.simpleMessage("تحميل ..."),
     "logOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج؟"),
-    "logOutAnyway": MessageLookupByLibrary.simpleMessage("نأكيد تسجيل الخروج"),
+    "logOutAnyway": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "loginUsername": MessageLookupByLibrary.simpleMessage("حساب تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -629,7 +629,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "showMore": MessageLookupByLibrary.simpleMessage("عرض المزيد"),
     "showPassword": MessageLookupByLibrary.simpleMessage("أظهر كلمة السر"),
     "signingOutWarning": MessageLookupByLibrary.simpleMessage(
-      "سيؤدي تسجيل الخروج إلى فقدان أي تغييرات لم يتم مزامنتها. هل أنت متأكد أنك تريد تسجيل الخروج؟",
+      "يبقى عملك على هذا الهاتف، بما فيه ما لم يُرسل بعد، وتجده عند تسجيل الدخول مرة أخرى. هل تريد تسجيل الخروج؟",
     ),
     "startDate": MessageLookupByLibrary.simpleMessage("تاريخ البدء"),
     "startingSync": MessageLookupByLibrary.simpleMessage("بدء التحديث"),

@@ -2153,13 +2153,13 @@ abstract class AppLocalizations {
   /// No description provided for @signingOutWarning.
   ///
   /// In en, this message translates to:
-  /// **'Signing out will discard any unsynced changes. Are you sure you want to log out?'**
+  /// **'Your work stays on this phone, including anything not yet sent, and is there when you log in again. Log out?'**
   String get signingOutWarning;
 
   /// No description provided for @logOutAnyway.
   ///
   /// In en, this message translates to:
-  /// **'LOG OUT ANYWAY'**
+  /// **'LOG OUT'**
   String get logOutAnyway;
 
   /// No description provided for @logOut.

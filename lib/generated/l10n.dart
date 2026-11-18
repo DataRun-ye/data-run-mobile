@@ -2887,24 +2887,19 @@ class S {
     return Intl.message('DATARUN', name: 'datarun', desc: '', args: []);
   }
 
-  /// `Signing out will discard any unsynced changes. Are you sure you want to log out?`
+  /// `Your work stays on this phone, including anything not yet sent, and is there when you log in again. Log out?`
   String get signingOutWarning {
     return Intl.message(
-      'Signing out will discard any unsynced changes. Are you sure you want to log out?',
+      'Your work stays on this phone, including anything not yet sent, and is there when you log in again. Log out?',
       name: 'signingOutWarning',
       desc: '',
       args: [],
     );
   }
 
-  /// `LOG OUT ANYWAY`
+  /// `LOG OUT`
   String get logOutAnyway {
-    return Intl.message(
-      'LOG OUT ANYWAY',
-      name: 'logOutAnyway',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('LOG OUT', name: 'logOutAnyway', desc: '', args: []);
   }
 
   /// `Log out?`

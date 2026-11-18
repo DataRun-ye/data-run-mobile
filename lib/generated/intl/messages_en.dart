@@ -403,7 +403,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "loadMore": MessageLookupByLibrary.simpleMessage("Load More"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading ..."),
     "logOut": MessageLookupByLibrary.simpleMessage("Log out?"),
-    "logOutAnyway": MessageLookupByLibrary.simpleMessage("LOG OUT ANYWAY"),
+    "logOutAnyway": MessageLookupByLibrary.simpleMessage("LOG OUT"),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "loginUsername": MessageLookupByLibrary.simpleMessage("Login Username"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
@@ -643,7 +643,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "showMore": MessageLookupByLibrary.simpleMessage("Show more"),
     "showPassword": MessageLookupByLibrary.simpleMessage("Show Password"),
     "signingOutWarning": MessageLookupByLibrary.simpleMessage(
-      "Signing out will discard any unsynced changes. Are you sure you want to log out?",
+      "Your work stays on this phone, including anything not yet sent, and is there when you log in again. Log out?",
     ),
     "startDate": MessageLookupByLibrary.simpleMessage("Start Date"),
     "startingSync": MessageLookupByLibrary.simpleMessage("Starting sync..."),

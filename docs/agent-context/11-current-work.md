@@ -14,8 +14,6 @@ active code, tests, and its focused context map before acting.
   Google Play.
 - Shared status:
   [DataRun API #34](https://github.com/DataRun-ye/data-run-api/issues/34).
-  Mobile-owned verification:
-  [DataRun Mobile #33](https://github.com/DataRun-ye/data-run-mobile/issues/33).
   The durable contract stays in `10-bounded-reference-field-plan.md`.
 - Backlog: a serial-number field for card and coupon numbers (#36), research
   first. It owns repeat checks for those numbers: the generic `warnIfRepeated`

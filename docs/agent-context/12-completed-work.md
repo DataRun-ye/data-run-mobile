@@ -1,10 +1,20 @@
 # Completed Work
 
-Updated: 2026-07-27
+Updated: 2026-11-19
 
 Purpose: compact historical index only. This file is not current product,
 architecture, or code authority. Use the referenced code, tests, commits, tags,
 releases, and focused context maps as evidence.
+
+## 2026-11-19
+
+- `v6.1.0` / `1ae2b9af`: build `6.1.0+55` for the ITN 2026 campaign, published
+  on Google Play: Latin digits in every input, spelling-variant household
+  search, form versions kept for local submissions (#34), household and
+  card-number repeat warnings (#35), form setup errors shown, phone-clock and
+  future-date checks, practice sessions, in-app updates from Google Play,
+  interrupted uploads sent again, and faster household sync. The update from
+  6.0.3 was smoke-tested on a device against staging.
 
 ## 2026-07-27
 

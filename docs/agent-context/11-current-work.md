@@ -1,20 +1,23 @@
 # Current Work
 
-Updated: 2026-07-25
+Updated: 2026-11-19
 
 Purpose: hold only accepted current and queued work. This file is not a product,
 architecture, or code authority. Revalidate every item against production,
 active code, tests, and its focused context map before acting.
 
-## Now: Reference Production Activation
+## Now: ITN 2026 Campaign on 6.1.0
 
-- Shared sequence and compatibility state:
+- App `6.1.0+55` (`v6.1.0`) is on Google Play with server 6.5.0, and the ITN
+  2026 campaign starts the week of 2026-11-23. Field problems come first;
+  fixes ship through staging and Google Play.
+- Shared status:
   [DataRun API #34](https://github.com/DataRun-ye/data-run-api/issues/34).
-- Mobile-owned verification:
+  Mobile-owned verification:
   [DataRun Mobile #33](https://github.com/DataRun-ye/data-run-mobile/issues/33).
-- The server deployment task must close before the mobile test assignment is
-  activated. Keep the detailed sequence in the shared issue and the durable
-  contract in `10-bounded-reference-field-plan.md`.
+  The durable contract stays in `10-bounded-reference-field-plan.md`.
+- Backlog: a serial-number field for card and coupon numbers (#36), research
+  first.
 
 ## Next: Operational UX
 

@@ -33,6 +33,9 @@ class _QReferenceDropDownSearchFieldState
   late final RecordedValuesLookup _recordedLookup;
   late final Future<String> _orgUnitUid;
 
+  /// A picker is opening or open for this field; see [_selectReference].
+  bool _picking = false;
+
   @override
   void initState() {
     super.initState();
@@ -125,27 +128,38 @@ class _QReferenceDropDownSearchFieldState
     required ReactiveFormFieldState<String, String> field,
     required String orgUnitUid,
   }) async {
-    final recordedAt = await _recordedElsewhere(orgUnitUid);
-    if (!mounted) {
+    // The picker opens only after the "recorded before" lookup, which reads
+    // the village's other submissions and can take a moment. A second tap in
+    // that moment must not open a second, out-of-date picker over the first.
+    if (_picking) {
       return;
     }
-    final selectedUid = await showModalBottomSheet<String>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (context) => _ReferencePickerSheet(
-        service: _service,
-        orgUnitUid: orgUnitUid,
-        currentUid: field.value,
-        disabledUids: _formInstance.usedReferenceUids(widget.element),
-        recordedAt: recordedAt,
-      ),
-    );
-    if (!mounted || selectedUid == null) {
-      return;
+    _picking = true;
+    try {
+      final recordedAt = await _recordedElsewhere(orgUnitUid);
+      if (!mounted) {
+        return;
+      }
+      final selectedUid = await showModalBottomSheet<String>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (context) => _ReferencePickerSheet(
+          service: _service,
+          orgUnitUid: orgUnitUid,
+          currentUid: field.value,
+          disabledUids: _formInstance.usedReferenceUids(widget.element),
+          recordedAt: recordedAt,
+        ),
+      );
+      if (!mounted || selectedUid == null) {
+        return;
+      }
+      field.control.markAsTouched();
+      field.didChange(selectedUid);
+    } finally {
+      _picking = false;
     }
-    field.control.markAsTouched();
-    field.didChange(selectedUid);
   }
 
   /// Values this phone recorded in other submissions of the form for the

@@ -1,5 +1,6 @@
 import 'package:datarunmobile/app/di/injection.dart';
 import 'package:datarunmobile/core/auth/auth_manager.dart';
+import 'package:datarunmobile/core/sync/sync_metadata_repository.dart';
 import 'package:datarunmobile/core/user_session/user_session.dart';
 import 'package:datarunmobile/data/password_visibility.provider.dart';
 import 'package:datarunmobile/di/app_environment.dart';
@@ -27,6 +28,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   late final LoginController _controller = LoginController(
     authManager: appLocator<AuthManager>(),
     navigationService: appLocator<NavigationService>(),
+    syncMetadata: appLocator<SyncMetadataRepository>(),
   );
   late final bool _practiceDayEnded =
       appLocator<AuthManager>().practiceDayEnded;

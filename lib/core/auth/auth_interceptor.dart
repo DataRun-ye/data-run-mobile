@@ -106,13 +106,16 @@ class AuthInterceptor extends QueuedInterceptor {
       return handler.next(err);
     }
 
-    final tokenPair = await _getTokenPair();
-
-    if (tokenPair == null) {
-      return handler.reject(err);
-    }
-
     try {
+      // Read inside the try: when several requests fail with 401 together,
+      // the first one can end the session before the next is handled here,
+      // and reading the tokens then throws. Escaping this handler leaves the
+      // request unsettled and Dio's queue waiting, so login could not finish.
+      final tokenPair = await _getTokenPair();
+      if (tokenPair == null) {
+        return handler.reject(err);
+      }
+
       // error is 401 Unauthorized, and access token still valid,
       // Retry immediately (transient error)
       if (tokenPair.accessToken.isAccessTokenValid) {
@@ -147,6 +150,14 @@ class AuthInterceptor extends QueuedInterceptor {
         );
       }
       return handler.next(retryError);
+    } catch (error, stackTrace) {
+      return handler.reject(
+        DioException(
+          requestOptions: err.requestOptions,
+          error: error,
+          stackTrace: stackTrace,
+        ),
+      );
     }
   }
 

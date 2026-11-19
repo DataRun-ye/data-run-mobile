@@ -20,18 +20,18 @@ enum AssignmentStatus {
     return isPlanned();
   }
 
-  bool isActive() => isActiveStatuses().contains(this);
-
-  static List<AssignmentStatus> isActiveStatuses() {
-    return [
-      PLANNED,
-      NOT_STARTED,
-      IN_PROGRESS, // Active
-      RESCHEDULED,
-      MERGED,
-      REASSIGNED,
-    ];
-  }
+  /// The statuses a form's Progress field offers: the server's statuses
+  /// (FlowStatus) except PLANNED, the state before any work. Forms show their
+  /// detail sections by these names, e.g. the ITN form's `completion_details`
+  /// for DONE. EXPIRED is not a server status, so a form cannot set it.
+  static const List<AssignmentStatus> formProgressStatuses = [
+    IN_PROGRESS,
+    DONE,
+    RESCHEDULED,
+    MERGED,
+    REASSIGNED,
+    CANCELLED,
+  ];
 
   static AssignmentStatus? getType(String? value) {
     switch (value?.toLowerCase()) {

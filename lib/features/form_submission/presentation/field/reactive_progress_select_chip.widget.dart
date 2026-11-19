@@ -20,8 +20,7 @@ class QReactiveProgressSelectChip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formInstance = appLocator<FormInstance>();
 
-    final progressStatuses =
-        AssignmentStatus.values.where((v) => !v.isNotStarted()).toList();
+    const progressStatuses = AssignmentStatus.formProgressStatuses;
 
     return ReactiveChoiceChips<String>(
       formControl: formInstance.form.control(element.elementPath!)

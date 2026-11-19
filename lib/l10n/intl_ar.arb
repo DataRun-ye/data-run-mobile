@@ -322,8 +322,6 @@
   "referenceUseExisting": "استخدام الموجود",
   "referenceAddAnyway": "إضافة على أي حال",
   "referenceRecordAgain": "تسجيل مرة أخرى",
-  "valueRecordedBefore": "سُجّلت هذه القيمة بتاريخ {date} في استمارة أخرى",
-  "valueRepeatedInForm": "هذه القيمة مكررة في هذه الاستمارة",
   "updateReadyToInstall": "إصدار جديد من التطبيق جاهز للتثبيت",
   "restartToUpdate": "إعادة التشغيل",
   "practice": "تدريب",

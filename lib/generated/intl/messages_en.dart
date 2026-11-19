@@ -109,9 +109,6 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m37(error) =>
       "The value must be less than or equal to ${error}.";
 
-  static String m38(date) =>
-      "This value was already recorded on ${date} in another form";
-
   static String m39(weekNum) => "Week ${weekNum}";
 
   static String m40(count) =>
@@ -762,10 +759,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "valueMustBeGreaterThanOrEqualToError": m36,
     "valueMustBeLessThanOrEqualToError": m37,
-    "valueRecordedBefore": m38,
-    "valueRepeatedInForm": MessageLookupByLibrary.simpleMessage(
-      "This value is repeated in this form",
-    ),
     "version": MessageLookupByLibrary.simpleMessage("Version"),
     "view": MessageLookupByLibrary.simpleMessage("View"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(

@@ -112,8 +112,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m37(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
 
-  static String m38(date) => "سُجّلت هذه القيمة بتاريخ ${date} في استمارة أخرى";
-
   static String m39(weekNum) => "الإسبوع ${weekNum}";
 
   static String m40(count) =>
@@ -746,10 +744,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "validationErrorMessage": MessageLookupByLibrary.simpleMessage("خطأ تحقق"),
     "valueMustBeGreaterThanOrEqualToError": m36,
     "valueMustBeLessThanOrEqualToError": m37,
-    "valueRecordedBefore": m38,
-    "valueRepeatedInForm": MessageLookupByLibrary.simpleMessage(
-      "هذه القيمة مكررة في هذه الاستمارة",
-    ),
     "version": MessageLookupByLibrary.simpleMessage("الإصدار"),
     "view": MessageLookupByLibrary.simpleMessage("استعراض"),
     "viewAvailableForms": MessageLookupByLibrary.simpleMessage(

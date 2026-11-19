@@ -961,14 +961,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get referenceRecordAgain => 'Record again';
 
   @override
-  String valueRecordedBefore(String date) {
-    return 'This value was already recorded on $date in another form';
-  }
-
-  @override
-  String get valueRepeatedInForm => 'This value is repeated in this form';
-
-  @override
   String get updateReadyToInstall =>
       'A new version of the app is ready to install';
 

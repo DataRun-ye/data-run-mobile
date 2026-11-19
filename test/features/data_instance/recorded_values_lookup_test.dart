@@ -112,40 +112,6 @@ void main() {
     expect(recorded, isEmpty);
   });
 
-  test('reports card numbers recorded in rows of other submissions', () async {
-    await insertSubmission(
-        id: 'current',
-        household: 'r0000000001',
-        card: '100',
-        startedAt: DateTime.utc(2026, 11, 23, 8));
-    await insertSubmission(
-        id: 'earlier',
-        household: 'r0000000002',
-        card: ' ١٠١ ',
-        startedAt: DateTime.utc(2026, 11, 23, 9));
-    await insertSubmission(
-        id: 'no-card',
-        household: 'r0000000003',
-        startedAt: DateTime.utc(2026, 11, 23, 10));
-    await insertSubmission(
-        id: 'other-village',
-        household: 'r0000000005',
-        card: '102',
-        assignment: 'assignment-2',
-        startedAt: DateTime.utc(2026, 11, 23));
-
-    final recorded = await lookup.fieldValues(
-      formId: 'form-1',
-      orgUnitUid: 'org-1',
-      excludeSubmissionId: 'current',
-      fieldNames: {'card'},
-    );
-
-    expect(recorded, {
-      'card': {'101': DateTime.utc(2026, 11, 23, 9)},
-    });
-  });
-
   test('skips a submission whose form version is not on the phone', () async {
     await insertSubmission(
         id: 'missing-version',

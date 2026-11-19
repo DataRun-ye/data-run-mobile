@@ -391,15 +391,6 @@
   "referenceUseExisting": "Use existing",
   "referenceAddAnyway": "Add anyway",
   "referenceRecordAgain": "Record again",
-  "valueRecordedBefore": "This value was already recorded on {date} in another form",
-  "@valueRecordedBefore": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "valueRepeatedInForm": "This value is repeated in this form",
   "updateReadyToInstall": "A new version of the app is ready to install",
   "restartToUpdate": "Restart",
   "practice": "Practice",

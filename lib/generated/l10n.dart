@@ -2312,26 +2312,6 @@ class S {
     );
   }
 
-  /// `This value was already recorded on {date} in another form`
-  String valueRecordedBefore(String date) {
-    return Intl.message(
-      'This value was already recorded on $date in another form',
-      name: 'valueRecordedBefore',
-      desc: '',
-      args: [date],
-    );
-  }
-
-  /// `This value is repeated in this form`
-  String get valueRepeatedInForm {
-    return Intl.message(
-      'This value is repeated in this form',
-      name: 'valueRepeatedInForm',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `A new version of the app is ready to install`
   String get updateReadyToInstall {
     return Intl.message(

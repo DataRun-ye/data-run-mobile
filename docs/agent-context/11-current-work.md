@@ -6,18 +6,20 @@ Purpose: hold only accepted current and queued work. This file is not a product,
 architecture, or code authority. Revalidate every item against production,
 active code, tests, and its focused context map before acting.
 
-## Now: ITN 2026 Campaign on 6.1.0
+## Now: ITN 2026 Campaign on 6.1.1
 
-- App `6.1.0+55` (`v6.1.0`) is on Google Play with server 6.5.0, and the ITN
-  2026 campaign starts the week of 2026-11-23. Field problems come first;
-  fixes ship through staging and Google Play.
+- App `6.1.1+56` (`v6.1.1`) is the campaign build for Google Play, following
+  `6.1.0+55`, with server 6.5.0. The ITN 2026 campaign starts the week of
+  2026-11-23. Field problems come first; fixes ship through staging and
+  Google Play.
 - Shared status:
   [DataRun API #34](https://github.com/DataRun-ye/data-run-api/issues/34).
   Mobile-owned verification:
   [DataRun Mobile #33](https://github.com/DataRun-ye/data-run-mobile/issues/33).
   The durable contract stays in `10-bounded-reference-field-plan.md`.
 - Backlog: a serial-number field for card and coupon numbers (#36), research
-  first.
+  first. It owns repeat checks for those numbers: the generic `warnIfRepeated`
+  field flag was removed in 6.1.1.
 
 ## Next: Operational UX
 

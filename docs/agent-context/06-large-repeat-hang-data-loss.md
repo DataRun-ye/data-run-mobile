@@ -73,6 +73,27 @@ broadcast streams:   15640 -> 1240
 
 These numbers establish improvement on the harness, not a universal field-device threshold. Real device CPU, memory, Android version, form shape, option count, dependency fan-out, and JSON size still matter.
 
+### 2026-11-19 Measurements With 6.1.1
+
+The ITN v31 form with 500 household rows in a village of 515 listed households,
+rows added, edited and closed the way the repeat table does it, on a laptop
+(a field tablet is several times slower):
+
+| Event at row 500 | Cost |
+| --- | --- |
+| Type one card-number digit, `warnIfRepeated` on (6.1.0) | 44 ms |
+| Type one digit without it (6.1.1) | 3 ms, flat in row count |
+| Set a household (pick or Add new) | 44 ms |
+| Add a row | 23 ms (50 ms with the warning) |
+| Close a row: whole-form reduce and encode, before the DB write | 160-190 ms |
+| Reopen the 500-row draft | 0.57-0.68 s |
+| Completion check of the whole form | 0.18-0.22 s |
+
+The warning recounted every row on each keystroke and rebuilt each row's path
+(the row index is a linear scan), so it grew with rows squared; 6.1.1 removes
+it. The other costs grow linearly. Opening the household picker reads the
+village's other submissions on each open (15-113 ms for 2-20 submissions).
+
 ## Field ANR Evidence
 
 Google Play's May 28-July 27, 2026 report contains one actionable historical

@@ -8,6 +8,12 @@ releases, and focused context maps as evidence.
 
 ## 2026-11-19
 
+- `v6.1.1` / `2ed75ecb`: build `6.1.1+56` for Google Play: practice keeps its
+  own sync state, so reopening it no longer syncs; Progress fields no longer
+  offer "expired"; a 401 during household sync no longer leaves login stuck;
+  one household picker per tap; the `warnIfRepeated` field warning removed
+  (card-number typing cost about 44 ms per digit at 500 rows on a laptop,
+  3 ms without). Two independent reviews of 6.1.0 found these.
 - `v6.1.0` / `1ae2b9af`: build `6.1.0+55` for the ITN 2026 campaign, published
   on Google Play: Latin digits in every input, spelling-variant household
   search, form versions kept for local submissions (#34), household and

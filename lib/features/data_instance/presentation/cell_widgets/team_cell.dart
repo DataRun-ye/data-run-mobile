@@ -15,7 +15,7 @@ class TeamCell extends StatelessWidget {
     final items = [
       Icon(Icons.group, size: size),
       row ? SizedBox(width: 4) : SizedBox.shrink(),
-      ValueTypeValueDisplay(valueType: ValueType.SelectMulti, value: team),
+      ValueTypeValueDisplay(valueType: ValueType.Team, value: team),
     ];
     return row
         ? Row(

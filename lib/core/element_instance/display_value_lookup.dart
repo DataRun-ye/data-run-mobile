@@ -20,13 +20,21 @@ class DisplayValueLookup {
         : null;
   }
 
+  /// A Team field holds one of the managed teams, which are kept apart from
+  /// the user's own teams.
   Future<String?> getTeamById(String teamUid) async {
-    final String? team = await db.managers.teams
+    final own = await db.managers.teams
         .filter((f) => f.id(teamUid))
-        .map((t) => '${Intl.message('team')} ${t.code}')
-        .getSingleOrNull();
-
-    return team;
+        .map((t) => t.code)
+        .get();
+    final managed = own.isNotEmpty
+        ? own
+        : await db.managers.managedTeams
+            .filter((f) => f.id(teamUid))
+            .map((t) => t.code)
+            .get();
+    if (managed.isEmpty) return null;
+    return '${Intl.message('team')} ${managed.first ?? ''}'.trim();
   }
 
   Future<String> getOptionsByIds(List<String> optionUids) async {

@@ -391,7 +391,9 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     final JoinedSelectStatement<HasResultSet, dynamic> query =
         select(dataInstances).join([
       innerJoin(a, a.id.equalsExp(dataInstances.assignment)),
-      innerJoin(ou, a.orgUnit.equalsExp(ou.id)),
+      // The org unit only serves the search; a submission whose org unit has
+      // not arrived yet must still be listed and sendable.
+      leftOuterJoin(ou, a.orgUnit.equalsExp(ou.id)),
       innerJoin(fv, fv.id.equalsExp(dataInstances.templateVersion)),
       innerJoin(f, f.id.equalsExp(fv.template)),
     ]);
@@ -477,7 +479,9 @@ class DataInstancesDao extends DatabaseAccessor<AppDatabase>
     JoinedSelectStatement<HasResultSet, dynamic> countQuery =
         select(dataInstances).join([
       innerJoin(a, a.id.equalsExp(dataInstances.assignment)),
-      innerJoin(ou, a.orgUnit.equalsExp(ou.id)),
+      // The org unit only serves the search; a submission whose org unit has
+      // not arrived yet must still be listed and sendable.
+      leftOuterJoin(ou, a.orgUnit.equalsExp(ou.id)),
       innerJoin(fv, fv.id.equalsExp(dataInstances.templateVersion)),
       innerJoin(f, f.id.equalsExp(fv.template)),
     ]);

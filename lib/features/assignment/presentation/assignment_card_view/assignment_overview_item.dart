@@ -37,6 +37,8 @@ class AssignmentOverviewItem extends ConsumerWidget {
             // CardHeaderRow(),
             // const SizedBox(height: 8),
             _buildEntityInfo(assignment, searchQuery, context),
+            const SizedBox(height: 4),
+            _buildTeamInfo(assignment, context),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,6 +103,17 @@ class AssignmentOverviewItem extends ConsumerWidget {
             '${assignment.orgUnit.code ?? ''}: ${assignment.orgUnit.name}',
             searchQuery,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+      ],
+    );
+  }
+
+  /// A supervisor also sees his teams' assignments: the team tells them apart.
+  Widget _buildTeamInfo(AssignmentModel assignment, BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.group, size: 18),
+        const SizedBox(width: 4),
+        Text('${S.of(context).team} ${assignment.team.code ?? ''}'),
       ],
     );
   }

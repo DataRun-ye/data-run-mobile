@@ -33,7 +33,7 @@
   "password": "password",
   "user": "user",
   "username": "Username",
-  "digitsOnly": "English digits only",
+  "digitsOnly": "Digits only (0-9)",
   "viewList": "View List",
   "addNew": "Add New",
   "form": "{count, plural, =0{no forms available} =1{1 form available} =2{2 forms available} other{{count} forms available}}",

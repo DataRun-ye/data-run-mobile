@@ -262,7 +262,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "differentOfflineUser": MessageLookupByLibrary.simpleMessage(
       "Different authenticated user offline",
     ),
-    "digitsOnly": MessageLookupByLibrary.simpleMessage("English digits only"),
+    "digitsOnly": MessageLookupByLibrary.simpleMessage("Digits only (0-9)"),
     "discard": MessageLookupByLibrary.simpleMessage("Discard"),
     "dismiss": MessageLookupByLibrary.simpleMessage("Dismiss"),
     "done": MessageLookupByLibrary.simpleMessage("Done"),

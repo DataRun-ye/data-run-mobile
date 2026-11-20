@@ -129,7 +129,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get username => 'Username';
 
   @override
-  String get digitsOnly => 'English digits only';
+  String get digitsOnly => 'Digits only (0-9)';
 
   @override
   String get viewList => 'View List';

@@ -299,7 +299,7 @@ abstract class AppLocalizations {
   /// No description provided for @digitsOnly.
   ///
   /// In en, this message translates to:
-  /// **'English digits only'**
+  /// **'Digits only (0-9)'**
   String get digitsOnly;
 
   /// No description provided for @viewList.

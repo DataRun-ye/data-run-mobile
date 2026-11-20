@@ -158,7 +158,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "assignmentList": MessageLookupByLibrary.simpleMessage("قائمة المهام"),
     "assignments": MessageLookupByLibrary.simpleMessage("المهام"),
     "authInvalidCredentials": MessageLookupByLibrary.simpleMessage(
-      "بيانات الدخول التي تم إدخالها غير صحيحة. يرجى التحقق والمحاولة مرة أخرى.",
+      "كلمة المرور أو اسم المستخدم غير صحيح",
     ),
     "authSessionExpired": MessageLookupByLibrary.simpleMessage(
       "انتهت صلاحية الجلسة. يرجى تسجيل الدخول للمتابعة.",
@@ -265,7 +265,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "differentOfflineUser": MessageLookupByLibrary.simpleMessage(
       "جلسة عدم الاتصال الحالية موثقة لمستخدم مختلف.",
     ),
-    "digitsOnly": MessageLookupByLibrary.simpleMessage("أرقام إنجليزية فقط"),
+    "digitsOnly": MessageLookupByLibrary.simpleMessage("أرقام فقط (0-9)"),
     "discard": MessageLookupByLibrary.simpleMessage("تجاهل"),
     "dismiss": MessageLookupByLibrary.simpleMessage("حسنًا"),
     "done": MessageLookupByLibrary.simpleMessage("اكتمل"),

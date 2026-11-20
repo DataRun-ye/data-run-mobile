@@ -16,8 +16,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'فشل في الاتصال بالشبكة. يرجى التحقق من الاتصال والمحاولة مرة أخرى.';
 
   @override
-  String get authInvalidCredentials =>
-      'بيانات الدخول التي تم إدخالها غير صحيحة. يرجى التحقق والمحاولة مرة أخرى.';
+  String get authInvalidCredentials => 'كلمة المرور أو اسم المستخدم غير صحيح';
 
   @override
   String get authSessionExpired =>
@@ -131,7 +130,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get username => 'اسم المستخدم';
 
   @override
-  String get digitsOnly => 'أرقام إنجليزية فقط';
+  String get digitsOnly => 'أرقام فقط (0-9)';
 
   @override
   String get viewList => 'عرض القائمة';

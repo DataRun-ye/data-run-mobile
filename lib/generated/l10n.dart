@@ -360,10 +360,10 @@ class S {
     return Intl.message('Username', name: 'username', desc: '', args: []);
   }
 
-  /// `English digits only`
+  /// `Digits only (0-9)`
   String get digitsOnly {
     return Intl.message(
-      'English digits only',
+      'Digits only (0-9)',
       name: 'digitsOnly',
       desc: '',
       args: [],

@@ -13,6 +13,12 @@ void main() {
   setUp(() async {
     db = AppDatabase(executor: NativeDatabase.memory(), userId: 'test-user');
     await db.batch((batch) {
+      batch.insert(db.projects,
+          ProjectsCompanion.insert(id: 'project', name: 'Project'));
+      batch.insert(
+        db.activities,
+        ActivitiesCompanion.insert(id: 'itn', name: 'ITN', project: 'project'),
+      );
       batch.insertAll(db.orgUnits, [
         OrgUnitsCompanion.insert(
             id: 'warehouse', name: 'Warehouse', path: ',warehouse,', level: 4),
@@ -58,7 +64,8 @@ void main() {
 
   test('lists own and managed teams\' assignments with their team codes',
       () async {
-    final assignments = await db.assignmentsDao.allAssignments();
+    final assignments =
+        await db.assignmentsDao.allAssignments(activityId: 'itn');
 
     expect(
       {for (final a in assignments) a.id: (a.team.id, a.team.code)},

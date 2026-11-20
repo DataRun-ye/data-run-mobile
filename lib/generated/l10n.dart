@@ -360,6 +360,16 @@ class S {
     return Intl.message('Username', name: 'username', desc: '', args: []);
   }
 
+  /// `English digits only`
+  String get digitsOnly {
+    return Intl.message(
+      'English digits only',
+      name: 'digitsOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `View List`
   String get viewList {
     return Intl.message('View List', name: 'viewList', desc: '', args: []);

@@ -109,9 +109,9 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m37(error) =>
       "The value must be less than or equal to ${error}.";
 
-  static String m39(weekNum) => "Week ${weekNum}";
+  static String m38(weekNum) => "Week ${weekNum}";
 
-  static String m40(count) =>
+  static String m39(count) =>
       "${Intl.plural(count, zero: ' ', one: '1 Year', two: '2 Years', few: '${count} Years', other: '${count} Years')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -262,6 +262,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "differentOfflineUser": MessageLookupByLibrary.simpleMessage(
       "Different authenticated user offline",
     ),
+    "digitsOnly": MessageLookupByLibrary.simpleMessage("English digits only"),
     "discard": MessageLookupByLibrary.simpleMessage("Discard"),
     "dismiss": MessageLookupByLibrary.simpleMessage("Dismiss"),
     "done": MessageLookupByLibrary.simpleMessage("Done"),
@@ -768,9 +769,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("View Errors"),
     "viewList": MessageLookupByLibrary.simpleMessage("View List"),
     "warning": MessageLookupByLibrary.simpleMessage("Warning"),
-    "week": m39,
+    "week": m38,
     "weekly": MessageLookupByLibrary.simpleMessage("Weekly"),
-    "year": m40,
+    "year": m39,
     "years": MessageLookupByLibrary.simpleMessage("Years"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("Y/M"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),

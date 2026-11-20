@@ -1,5 +1,13 @@
 import 'package:flutter/services.dart';
 
+/// Login and password inputs take English digits only (management request,
+/// mobile #37): Arabic-Indic and Persian digits become 0-9, anything else is
+/// dropped as it is typed or pasted.
+final List<TextInputFormatter> digitsOnlyInputFormatters = [
+  const LatinDigitsInputFormatter(),
+  FilteringTextInputFormatter.digitsOnly,
+];
+
 /// Converts Arabic-Indic (٠-٩) and Extended Arabic-Indic (۰-۹) digits to 0-9
 /// as the user types or pastes.
 ///

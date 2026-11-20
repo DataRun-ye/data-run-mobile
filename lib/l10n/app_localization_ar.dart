@@ -131,6 +131,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get username => 'اسم المستخدم';
 
   @override
+  String get digitsOnly => 'أرقام إنجليزية فقط';
+
+  @override
   String get viewList => 'عرض القائمة';
 
   @override

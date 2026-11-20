@@ -112,9 +112,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m37(error) => "يجب أن تكون القيمة أقل من أو تساوي ${error}.";
 
-  static String m39(weekNum) => "الإسبوع ${weekNum}";
+  static String m38(weekNum) => "الإسبوع ${weekNum}";
 
-  static String m40(count) =>
+  static String m39(count) =>
       "${Intl.plural(count, zero: '', one: 'سنة', two: 'سنتان', few: '${count} سنوات', other: '${count} سنة')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -265,6 +265,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "differentOfflineUser": MessageLookupByLibrary.simpleMessage(
       "جلسة عدم الاتصال الحالية موثقة لمستخدم مختلف.",
     ),
+    "digitsOnly": MessageLookupByLibrary.simpleMessage("أرقام إنجليزية فقط"),
     "discard": MessageLookupByLibrary.simpleMessage("تجاهل"),
     "dismiss": MessageLookupByLibrary.simpleMessage("حسنًا"),
     "done": MessageLookupByLibrary.simpleMessage("اكتمل"),
@@ -753,9 +754,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewErrors": MessageLookupByLibrary.simpleMessage("عرض الأخطاء"),
     "viewList": MessageLookupByLibrary.simpleMessage("عرض القائمة"),
     "warning": MessageLookupByLibrary.simpleMessage("تنبيه"),
-    "week": m39,
+    "week": m38,
     "weekly": MessageLookupByLibrary.simpleMessage("اسبوعي"),
-    "year": m40,
+    "year": m39,
     "years": MessageLookupByLibrary.simpleMessage("سنوات"),
     "yearsMonths": MessageLookupByLibrary.simpleMessage("أشهر/سنوات"),
     "yes": MessageLookupByLibrary.simpleMessage("نعم"),

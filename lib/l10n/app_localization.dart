@@ -296,6 +296,12 @@ abstract class AppLocalizations {
   /// **'Username'**
   String get username;
 
+  /// No description provided for @digitsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'English digits only'**
+  String get digitsOnly;
+
   /// No description provided for @viewList.
   ///
   /// In en, this message translates to:

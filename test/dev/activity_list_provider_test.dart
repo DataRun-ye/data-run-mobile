@@ -1,4 +1,5 @@
 import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/submission_status.dart';
 import 'package:datarunmobile/features/activity/application/activity_list.provider.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
@@ -54,5 +55,48 @@ void main() {
     );
     expect(activities.single.assignedAssignments, 0);
     expect(activities.single.managedAssignments, 0);
+  });
+  test('counts each activity\'s managed assignments on its own card', () async {
+    await db.into(db.projects).insert(
+          ProjectsCompanion.insert(id: 'project-1', name: 'Project'),
+        );
+    for (final id in ['itn', 'lsm']) {
+      await db.into(db.activities).insert(
+            ActivitiesCompanion.insert(id: id, name: id, project: 'project-1'),
+          );
+      await db.into(db.teams).insert(
+            TeamsCompanion.insert(id: 'supervisor-$id', activity: id),
+          );
+      await db.into(db.managedTeams).insert(
+            ManagedTeamsCompanion.insert(
+              id: 'team-$id',
+              activity: id,
+              managedBy: 'supervisor-$id',
+            ),
+          );
+    }
+    Future<void> assignment(String id, String activity, String team,
+            {bool disabled = false}) =>
+        db.into(db.assignments).insert(
+              AssignmentsCompanion.insert(
+                id: id,
+                activity: activity,
+                team: team,
+                orgUnit: 'village-$id',
+                syncState: InstanceSyncStatus.synced,
+                disabled: Value(disabled),
+              ),
+            );
+    await assignment('itn-1', 'itn', 'team-itn');
+    await assignment('itn-2', 'itn', 'team-itn');
+    await assignment('itn-off', 'itn', 'team-itn', disabled: true);
+    await assignment('lsm-1', 'lsm', 'team-lsm');
+
+    final cards = {
+      for (final activity in await loadActivityList(db))
+        activity.id: activity.managedAssignments,
+    };
+
+    expect(cards, {'itn': 2, 'lsm': 1});
   });
 }

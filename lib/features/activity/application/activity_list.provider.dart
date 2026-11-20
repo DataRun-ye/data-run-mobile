@@ -40,8 +40,10 @@ Future<List<ActivityModel>> loadActivityList(AppDatabase db) async {
         .filter((filter) => filter.team.id(assignedTeam?.id))
         .get();
     final managedAssignments = await db.managers.assignments
+        .filter((filter) => filter.activity.id(activity.id))
+        .filter((filter) => filter.disabled.not(true))
         .filter((filter) =>
-            filter.team.id.isIn(managedTeams.map((team) => team.id)))
+            filter.team.id.isIn(activityManagedTeams.map((team) => team.id)))
         .get();
 
     result.add(ActivityModel(

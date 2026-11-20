@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 
-/// The login takes digits only (management request, mobile #37): Arabic-Indic
-/// and Persian digits become 0-9, anything else is dropped as it is typed or
-/// pasted. Passwords keep letters.
+/// Login and password take digits only (management request, mobile #37):
+/// Arabic-Indic and Persian digits become 0-9, anything else is dropped as it
+/// is typed or pasted.
 final List<TextInputFormatter> digitsOnlyInputFormatters = List.unmodifiable([
   const LatinDigitsInputFormatter(),
   FilteringTextInputFormatter.digitsOnly,

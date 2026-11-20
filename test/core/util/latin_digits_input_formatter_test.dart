@@ -37,7 +37,7 @@ void main() {
     expect(identical(formatter.formatEditUpdate(TextEditingValue.empty, typed), typed), isTrue);
   });
 
-  group('login input', () {
+  group('login and password inputs', () {
     String typed(String text) => digitsOnlyInputFormatters
         .fold(
           TextEditingValue(

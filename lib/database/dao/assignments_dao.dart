@@ -26,6 +26,13 @@ class AssignmentsDao extends DatabaseAccessor<AppDatabase>
           .filter((f) => f.orgUnit.name.contains(ouSearchFilter));
     }
 
+    // A supervisor also receives the assignments of the teams he manages.
+    // Those teams are in the managed-teams table, not among his own teams.
+    final managedTeamCodes = {
+      for (final team in await attachedDatabase.managers.managedTeams.get())
+        team.id: team.code,
+    };
+
     final result = assignmentWithRefs
         .withReferences((prefetch) =>
             prefetch(forms: true, team: true, activity: true, orgUnit: true))
@@ -34,9 +41,11 @@ class AssignmentsDao extends DatabaseAccessor<AppDatabase>
       final a = assignmentsWithRefs.$1;
       final forms = assignmentsWithRefs.$2.forms.prefetchedData?.length ?? 0;
       final activity =
-          assignmentsWithRefs.$2.activity.prefetchedData!.firstOrNull;
+          assignmentsWithRefs.$2.activity.prefetchedData?.firstOrNull;
       final ou = assignmentsWithRefs.$2.orgUnit.prefetchedData!.first;
-      final team = assignmentsWithRefs.$2.team.prefetchedData!.first;
+      final teamCode =
+          assignmentsWithRefs.$2.team.prefetchedData?.firstOrNull?.code ??
+              managedTeamCodes[a.team];
       return AssignmentModel(
           id: a.id,
           activity: activity != null
@@ -49,9 +58,9 @@ class AssignmentsDao extends DatabaseAccessor<AppDatabase>
             name: ou.name,
           ),
           team: IdentifiableModel(
-            id: team.id,
-            code: team.code,
-            name: team.code ?? '',
+            id: a.team,
+            code: teamCode,
+            name: teamCode ?? '',
           ),
           // startDay: a.startDay,
           startDate: a.instanceDate,

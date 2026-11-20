@@ -8,6 +8,8 @@ releases, and focused context maps as evidence.
 
 ## 2026-11-19
 
+- `v6.1.2` / `d96c053c`: build `6.1.2+57` for Google Play, digits-only login
+  and password (#37) and managed teams' assignments (GitHub release `v6.1.2`).
 - `v6.1.1` / `2ed75ecb`: build `6.1.1+56` for Google Play (GitHub release
   `v6.1.1`).
 - `v6.1.0` / `1ae2b9af`: build `6.1.0+55` published on Google Play after a

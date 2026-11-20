@@ -62,6 +62,25 @@ void main() {
 
   tearDown(() => db.close());
 
+  test('an assignment whose org unit did not arrive is still listed', () async {
+    await db.into(db.assignments).insert(AssignmentsCompanion.insert(
+          id: 'no-org-unit',
+          activity: 'itn',
+          team: 'team-573',
+          orgUnit: 'missing-village',
+          syncState: InstanceSyncStatus.synced,
+          disabled: const Value(false),
+        ));
+
+    final assignments =
+        await db.assignmentsDao.allAssignments(activityId: 'itn');
+
+    expect(assignments.map((a) => a.id),
+        containsAll(['own-assignment', 'managed-assignment', 'no-org-unit']));
+    expect(assignments.singleWhere((a) => a.id == 'no-org-unit').orgUnit.name,
+        'missing-village');
+  });
+
   test('lists own and managed teams\' assignments with their team codes',
       () async {
     final assignments =

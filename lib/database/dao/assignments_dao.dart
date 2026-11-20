@@ -42,7 +42,7 @@ class AssignmentsDao extends DatabaseAccessor<AppDatabase>
       final forms = assignmentsWithRefs.$2.forms.prefetchedData?.length ?? 0;
       final activity =
           assignmentsWithRefs.$2.activity.prefetchedData?.firstOrNull;
-      final ou = assignmentsWithRefs.$2.orgUnit.prefetchedData!.first;
+      final ou = assignmentsWithRefs.$2.orgUnit.prefetchedData?.firstOrNull;
       final teamCode =
           assignmentsWithRefs.$2.team.prefetchedData?.firstOrNull?.code ??
               managedTeamCodes[a.team];
@@ -52,10 +52,11 @@ class AssignmentsDao extends DatabaseAccessor<AppDatabase>
               ? IdentifiableModel(
                   id: activity.id, code: activity.code, name: activity.name)
               : null,
+          // One assignment whose org unit did not arrive must not hide the rest.
           orgUnit: IdentifiableModel(
-            id: ou.id,
-            code: ou.code,
-            name: ou.name,
+            id: a.orgUnit,
+            code: ou?.code,
+            name: ou?.name ?? a.orgUnit,
           ),
           team: IdentifiableModel(
             id: a.team,

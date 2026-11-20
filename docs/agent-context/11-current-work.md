@@ -1,6 +1,6 @@
 # Current Work
 
-Updated: 2026-11-19
+Updated: 2026-11-20
 
 Purpose: hold only accepted current and queued work. This file is not a product,
 architecture, or code authority. Revalidate every item against production,
@@ -15,6 +15,9 @@ active code, tests, and its focused context map before acting.
 - Shared status:
   [DataRun API #34](https://github.com/DataRun-ye/data-run-api/issues/34).
   The durable contract stays in `10-bounded-reference-field-plan.md`.
+- Before the campaign, in one release with server #45: digits-only login and
+  password (#37), and listing the assignments of managed teams (the
+  assignment list expects every assignment's team among the user's own).
 - Backlog: a serial-number field for card and coupon numbers (#36), research
   first. It owns repeat checks for those numbers: the generic `warnIfRepeated`
   field flag was removed in 6.1.1.

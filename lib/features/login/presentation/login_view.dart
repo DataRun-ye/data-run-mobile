@@ -110,12 +110,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         const SizedBox(height: 16),
                         ReactiveTextField<String>(
                           formControl: password,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: digitsOnlyInputFormatters,
+                          inputFormatters: const [LatinDigitsInputFormatter()],
                           obscureText: isPasswordObscured,
                           decoration: InputDecoration(
                             labelText: S.of(context).password,
-                            helperText: S.of(context).digitsOnly,
                             prefixIcon: Icon(Icons.lock, color: cs.primary),
                             suffixIcon: IconButton(
                               icon: Icon(

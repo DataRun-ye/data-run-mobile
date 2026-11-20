@@ -1,5 +1,7 @@
 import 'package:datarunmobile/core/element_instance/display_value_lookup.dart';
 import 'package:datarunmobile/database/app_database.dart';
+import 'package:datarunmobile/database/shared/value_type.dart';
+import 'package:datarunmobile/features/form/application/map_value_to_display.dart';
 import 'package:datarunmobile/di/injection.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
@@ -34,5 +36,12 @@ void main() {
     expect(await lookup.getTeamById('team-573'), 'team 573');
     expect(await lookup.getTeamById('supervisor'), 'team S1');
     expect(await lookup.getTeamById('unknown'), isNull);
+  });
+
+  test('an empty Team value shows nothing, not the word null', () async {
+    final mapper = MapValueToDisplay(lookup: DisplayValueLookup());
+
+    expect(await mapper.map(ValueType.Team, null), isNull);
+    expect(await mapper.map(ValueType.Team, 'team-573'), 'team 573');
   });
 }

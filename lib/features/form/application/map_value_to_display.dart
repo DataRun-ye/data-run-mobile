@@ -31,7 +31,7 @@ class MapValueToDisplay {
           : value.toString(),
       ValueType.Team => value is String && value.isNotNullOrEmpty
           ? lookup.getTeamById(value)
-          : value.toString(),
+          : value?.toString(),
       ValueType.SelectOne || ValueType.SelectMulti => value is String
           ? lookup.getOptionsByIds(value.split(','))
           : (value is List

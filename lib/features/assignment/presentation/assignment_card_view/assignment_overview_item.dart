@@ -113,7 +113,12 @@ class AssignmentOverviewItem extends ConsumerWidget {
       children: [
         const Icon(Icons.group, size: 18),
         const SizedBox(width: 4),
-        Text('${S.of(context).team} ${assignment.team.code ?? ''}'),
+        Flexible(
+          child: Text(
+            '${S.of(context).team} ${assignment.team.code ?? ''}',
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
